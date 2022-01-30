@@ -1,41 +1,29 @@
 <h1 align="center">
   <a href="https://uiuc.hack4impact.org"><img src="https://raw.githubusercontent.com/hack4impact-uiuc/uiuc.hack4impact.org/master/public/images/colored-logo.svg" alt="hack4impact logo" width="150"></a>
   <br/>
-  MERN Template
+  7000 Languages
   </br>
 </h1>
 
 <p align="center">
     <img src="https://img.shields.io/github/checks-status/hack4impact-uiuc/mern-template/main?style=flat-square">
-    <img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square">
 </p>
 
-<h4 align="center">A project by <a href="https://uiuc.hack4impact.org/" target="_blank">Hack4Impact UIUC</a> in collaboration with <a href="https://pineapple.lol" target="_blank">pineapplelol.</a></h4>
+<h4 align="center">A project by <a href="https://uiuc.hack4impact.org/" target="_blank">Hack4Impact UIUC</a></h4>
 
 <p align="center">
   <a href="#background">Background</a> •
   <a href="#usage">Usage</a> •
   <a href="#technologies">Technologies</a> •
   <a href="#team">Team</a> •
-  <a href="#license">License</a>
 </p>
 
 ## Background
-
-MERN is one of the most widely used stacks for modern web development. Composed of [MongoDB](https://www.mongodb.com), [Express](https://expressjs.com), [React](https://reactjs.org), and [Node](https://nodejs.org/en/), MERN represents the full stack from the frontend to the backend.
-
-This template is a starting repository for setting up a MERN project. It includes directories for both the frontend and backend, as well as linting and testing workflows and settings.
-
+WIP
 ## Usage
-
-The latest version of this application can be found at [pineapple.lol](https://pineapple.lol).
-
-To install and set up locally, follow the instructions in the [`/client`](https://github.com/hack4impact-uiuc/mern_template/tree/main/client) and [`/api`](https://github.com/hack4impact-uiuc/mern_template/tree/main/api) directories.
-
+WIP
 ## Technologies
-
-This application is built with React, Express, MongoDB, and tested with Cypress and Jest. Vercel is used for automatic deployment.
-
+WIP
 ## Team
 
 <table align="center">
@@ -55,7 +43,3 @@ This application is built with React, Express, MongoDB, and tested with Cypress 
 
   </tr>
 </table>
-
-## License
-
-[MIT](https://github.com/hack4impact-uiuc/ymca/blob/master/LICENSE) licensed. Copyright © 2021 [Hack4Impact UIUC](https://github.com/hack4impact-uiuc).
