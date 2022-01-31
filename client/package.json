@@ -7,6 +7,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
+    "format": "prettier --write \"./**/*.{js,jsx,json,md}\"",
+    "format:check": "prettier --check \"./**/*.{js,jsx,json,md}\"",
     "lint": "node_modules/.bin/eslint src/ --fix src/ --fix",
     "test": "node_modules/.bin/jest --passWithNoTests"
   },
