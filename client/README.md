@@ -4,25 +4,15 @@ This folder contains the frontend client of the application.
 
 ## Install & Run
 
-To set up, first `cd` into this directory. Then,
-
-```bash
-yarn && yarn start
-```
-
-Then go to [http://localhost:3000](http://localhost:3000) in your browser. Make sure that your backend is running in order for data to be populated.
-
+WIP
 ## Technologies
 
-Built with [React](https://reactjs.org/).
+WIP
 
 ### Testing
 
-Use Cypress to test. To run, `yarn test` in the directory.
-
+WIP
 ### Code Style
 
-Use [ESLint](https://eslint.org) with [Prettier](https://prettier.io/) and the [Airbnb Javascript Style Guide](https://github.com/airbnb/javascript).
-
-To run, `yarn lint` and `yarn format` in the directory.
+WIP
 
