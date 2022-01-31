@@ -8,22 +8,10 @@ There are three environments that the backend runs in: `production`, `dev`, and 
 
 ## Install & Run
 
-To set up, first create a `/config` directory in the `/api` directory. Then, create three `.env` files: `production.env`, `dev.env`, and `test.env`. Each should contain the following field, with unique values (a seperate database for each environment).
-
-```
-MONGO_URL=mongodb://<username>:<password>@<id>.mlab.com:<id/project>
-```
-
-Make sure that you have `dotenv-cli` installed globally with,
-
-```
-yarn global add dotenv-cli
-```
-
-Then,
+To set up, first `cd` into this directory. Then,
 
 ```bash
-yarn && yarn start
+yarn start
 ```
 
 This will create a server on [http://localhost:9000](http://localhost:9000).
@@ -31,10 +19,6 @@ This will create a server on [http://localhost:9000](http://localhost:9000).
 ## Technologies
 
 Built with [Express](https://expressjs.com/) and [MongoDB](https://www.mongodb.com/).
-
-## Development
-
-If you are working with the API, remember to change the `BASE_URL` in [`client/src/utils/apiWrapper.js`](https://github.com/hack4impact-uiuc/mern-template/blob/master/client/src/utils/apiWrapper.js) to the local server `http://localhost:9000/`.
 
 ### Code Style
 

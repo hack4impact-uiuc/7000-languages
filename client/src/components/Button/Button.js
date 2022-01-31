@@ -53,7 +53,7 @@ Button.defaultProps = {
   height: 'auto',
   color: 'black',
   backgroundColor: '#cacaca',
-  onPress: () => { },
+  onPress: () => {},
   children: null,
   textStyle: {},
   style: {},
