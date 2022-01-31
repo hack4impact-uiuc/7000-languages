@@ -8,6 +8,7 @@
     "start:dev": "nodemon -r dotenv/config ./bin/www",
     "lint": "eslint --fix src",
     "format": "prettier --write \"./**/*.{js,jsx,json,md}\"",
+    "format:check": " --check \"./**/*.{js,jsx,json,md}\"",
     "test": "jest --setupFiles dotenv/config"
   },
   "dependencies": {
