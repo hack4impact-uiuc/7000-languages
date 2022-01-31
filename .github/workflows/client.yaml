@@ -3,7 +3,7 @@ name: client
 on: push
 
 jobs:
-  format:
+  client-format:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -28,7 +28,7 @@ jobs:
         working-directory: ./client
         run: yarn format:check
 
-  lint:
+  client-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
