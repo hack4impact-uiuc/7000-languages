@@ -1,5 +1,5 @@
 {
-  "plugins": ["@hack4impact-uiuc"],
+  "plugins": ["@hack4impact-uiuc", "jest"],
   "extends": ["plugin:@hack4impact-uiuc/base"],
   "rules": {
     "require-await": "off"
