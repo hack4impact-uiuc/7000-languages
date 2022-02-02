@@ -15,7 +15,7 @@ const Stack = createStackNavigator()
 
 const navigationProps = {
   headerTintColor: 'white',
-  headerStyle: { backgroundColor: colors.darkPurple },
+  headerStyle: { backgroundColor: colors.darkRed },
   headerTitleStyle: { fontSize: 18 },
 }
 

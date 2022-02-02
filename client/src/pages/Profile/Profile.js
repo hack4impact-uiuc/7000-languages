@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.lightGrayPurple,
+    backgroundColor: colors.lightGray,
   },
   title: {
     fontSize: 24,
@@ -25,7 +25,7 @@ const Profile = ({ navigation }) => (
     <Button
       title="Go to Details"
       color="white"
-      backgroundColor={colors.lightPurple}
+      backgroundColor={colors.gold}
       onPress={() => {
         navigation.navigate('Details', { from: 'Profile' })
       }}

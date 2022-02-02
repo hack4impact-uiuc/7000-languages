@@ -10,11 +10,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.lightGrayPurple,
+    backgroundColor: colors.lightGray,
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
+    fontFamily: "GT_Haptik_oblique"
   },
 })
 
@@ -25,7 +26,7 @@ const Home = ({ navigation }) => (
     <Button
       title="Go to Details"
       color="white"
-      backgroundColor={colors.lightPurple}
+      backgroundColor={colors.gold}
       onPress={() => {
         navigation.navigate('Details', { from: 'Home' })
       }}

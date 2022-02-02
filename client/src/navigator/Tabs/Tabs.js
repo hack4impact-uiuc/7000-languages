@@ -19,7 +19,7 @@ const TabNavigator = () => (
             return (
               <FontIcon
                 name="home"
-                color={focused ? colors.lightPurple : colors.gray}
+                color={focused ? colors.darkRed : colors.gray}
                 size={20}
                 solid
               />
@@ -28,7 +28,7 @@ const TabNavigator = () => (
             return (
               <FontIcon
                 name="user"
-                color={focused ? colors.lightPurple : colors.gray}
+                color={focused ? colors.darkRed : colors.gray}
                 size={20}
                 solid
               />
@@ -39,7 +39,7 @@ const TabNavigator = () => (
       },
     })}
     tabBarOptions={{
-      activeTintColor: colors.lightPurple,
+      activeTintColor: colors.darkRed,
       inactiveTintColor: colors.gray,
       style: {
         // backgroundColor: 'white',

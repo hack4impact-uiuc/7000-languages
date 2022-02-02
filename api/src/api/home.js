@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { errorWrap } = require('../middleware');
-const { createResponse } = require('../utils');
+const { sendResponse } = require('../utils/response');
 
 // uncomment to use the schema
 // const Home = require('../models/home');
@@ -13,14 +13,7 @@ router.get(
     // const homeText = await Home.findOne();
     const homeText = "You've connected the database! Isn't it so beautiful???";
 
-    // Template for formulating a successful API response
-    const statusCode = 200;
-    const responseBody = createResponse(
-      statusCode,
-      'Successfully returned home text',
-      homeText,
-    );
-    res.status(statusCode).json(responseBody);
+    return sendResponse(res, 200, 'Successfully returned home text', homeText);
   }),
 );
 
