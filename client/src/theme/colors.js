@@ -9,12 +9,10 @@ const colors = {
   mediumRed: '#F2B8B5', // 40% tint of red
   darkRed: '#7A100E',
   // Shades of gray
-  lightGray: "#DEE5E9",
-  mediumLightGray: "#A6AFB5",
-  mediumDarkGray: "#7A8288",
-  darkGray: "#5A6065",
+  lightGray: '#DEE5E9',
+  mediumLightGray: '#A6AFB5',
+  mediumDarkGray: '#7A8288',
+  darkGray: '#5A6065',
 }
 
 export default colors
-
-
