@@ -30,9 +30,8 @@ const Home = ({ navigation }) => {
     const getData = async () => {
       let data = await getSampleData();
       console.log(data);
-      // setText(data);
     };
-    getData();
+    // getData();
   }, [setText])
 
   return (<View style={styles.root}>

@@ -22,9 +22,6 @@
     "packagerOpts": {
       "config": "metro.config.js",
       "sourceExts": ["js", "jsx", "svg", "ts", "tsx"]
-    },
-    "extra": {
-      "apiUrl": "https://api.hackillinois.org"
     }
   }
 }

@@ -1,4 +1,4 @@
-# API
+# 7000 Languages API
 
 This folder contains the backend api of the application.
 
@@ -6,15 +6,38 @@ This folder contains the backend api of the application.
 
 There are three environments that the backend runs in: `production`, `dev`, and `test`, each with their own database. `production` is set on deployment, `dev` is set whenever running locally, and `test` is set when tests are running. These environments are automatically set based on the task.
 
-## Install & Run
+_As of 02/04/2022, only the dev environment is available._
 
-To set up, first `cd` into this directory. Then,
+## Getting Started
+
+First, make sure you have [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed.
+
+Also, make sure you have [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) installed.
+
+Next, run `cd api` to move to this directory.
+
+To install all of the required node packages, run:
+
+```bash
+yarn install
+```
+
+Then, set the necessary environment variables in the `.env` file. 
+
+Finally, run:
 
 ```bash
 yarn start
 ```
-
 This will create a server on [http://localhost:9000](http://localhost:9000).
+
+## Run
+
+To run the API at any future time, use the following command:
+
+```bash
+yarn start
+```
 
 ## Technologies
 

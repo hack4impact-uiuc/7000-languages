@@ -1,8 +1,35 @@
-# Client
+# 7000 Languages Client
 
 This folder contains the frontend client of the application.
 
-## Install & Run
+## Getting Started
+
+First, make sure you have [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) installed.
+
+Also, make sure you have [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) installed.
+
+Next, install the [expo-cli](https://docs.expo.dev) with the following command:
+```bash
+npm install --global expo-cli
+```
+
+To install all of the required node packages, run:
+
+```bash
+yarn install
+```
+
+Finally, run:
+
+```bash
+expo start
+```
+
+This will start Metro Bundler, which is an HTTP server that compiles the JavaScript code of our app using Babel and serves it to the Expo app. It also pops up Expo Dev Tools, a graphical interface for Expo CLI.
+ 
+You will have the open to run the app on a connected device via USB, [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/), [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/), or on your own phone through the [Expo Go](https://expo.dev/client) app. I recommend using the Expo Go for day-to-day dev work, and your own device or simulator for checking features.
+
+## Run
 
 To set up, first `cd` into this directory. Then,
 
