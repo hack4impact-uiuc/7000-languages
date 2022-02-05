@@ -1,5 +1,9 @@
 #!/usr/bin/env node
-
+const path = require('path');
+// Configure additional environment variables
+require('dotenv').config({
+  path: path.resolve('development.env'),
+})
 const app = require('../src/app');
 const debug = require('debug')('api:server');
 const http = require('http');

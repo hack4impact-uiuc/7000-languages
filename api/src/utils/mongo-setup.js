@@ -1,13 +1,24 @@
 const mongoose = require('mongoose');
+const log = require('loglevel');
 
 // CONNECTION TO MONGO
-mongoose.connect(process.env.MONGO_URL, {
+
+/**
+ * Initalizes and connects to the DB. Should be called at app startup.
+ */
+module.exports.initDB = () => {
+  mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-});
+  });
 
-mongoose.Promise = global.Promise;
+  mongoose.Promise = global.Promise;
 
-mongoose.connection
-    .once('open', () => console.log('Connected to MongoLab instance.'))
-    .on('error', (error) => console.log('Error connecting to MongoLab:', error));
+  mongoose.connection
+    .once('open', () => {
+      log.info('Connected to the DB');
+    })
+    .on('error', (error) =>
+      log.error('Error connecting to the database: ', error),
+    );
+};

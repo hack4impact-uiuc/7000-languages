@@ -10,7 +10,8 @@
     "format": "prettier --write \"./**/*.{js,jsx,json,md}\"",
     "format:check": "prettier -- \"./**/*.{js,jsx,json,md}\"",
     "lint": "node_modules/.bin/eslint src/ --fix src/ --fix",
-    "test": "node_modules/.bin/jest --passWithNoTests"
+    "test": "node_modules/.bin/jest --passWithNoTests",
+    "style": "yarn format && yarn lint"
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",

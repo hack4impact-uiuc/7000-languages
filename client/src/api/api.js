@@ -1,6 +1,6 @@
 import instance from './axios-config'
 
-export const getSampleData = async () => {
+export const getSampleHome = async () => {
   const requestString = '/home'
   const res = await instance.get(requestString)
 

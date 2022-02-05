@@ -4,4 +4,4 @@ const Home = new mongoose.Schema({
   text: { type: String },
 });
 
-module.exports = mongoose.model('Home', Home);
+module.exports.Home = mongoose.model('Home', Home);

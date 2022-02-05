@@ -36,6 +36,12 @@ To set up, first `cd` into this directory. Then,
 ```bash
 expo start
 ```
+
+Before commiting and pushing code to the remote repository, run the two commands below:
+
+```bash
+yarn style
+```
 ## Technologies
 
 Built with [React Native](https://reactnative.dev/).

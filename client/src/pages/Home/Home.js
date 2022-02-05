@@ -5,7 +5,7 @@ import {
 } from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
-import { getSampleData } from 'api'
+import { getSampleHome } from 'api'
 
 const styles = StyleSheet.create({
   root: {
@@ -27,8 +27,8 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getSampleData()
-      setText(data.result)
+      const sampleHome = await getSampleHome()
+      setText(sampleHome.result.text)
     }
     getData()
   }, [setText])

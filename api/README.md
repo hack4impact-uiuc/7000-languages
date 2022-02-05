@@ -40,6 +40,12 @@ To run the API at any future time, use the following command:
 yarn start
 ```
 
+Before commiting and pushing code to the remote repository, run the two commands below:
+
+```bash
+yarn style
+```
+
 ## Technologies
 
 Built with [Express](https://expressjs.com/) and [MongoDB](https://www.mongodb.com/).

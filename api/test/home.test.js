@@ -6,17 +6,9 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-describe('GET / ', () => {
-  test('API should return working message', async () => {
-    const response = await request(app).get('/');
-    expect(response.body).toEqual('API working!');
-    expect(response.statusCode).toBe(200);
-  });
-});
-
-describe('GET /api/home/ ', () => {
+describe('GET /home/ ', () => {
   test('API should return home text', async () => {
-    const response = await request(app).get('/api/home/');
+    const response = await request(app).get('/home/');
     expect(response.body.message).toEqual('Successfully returned home text');
     expect(response.body.result).toEqual(
       "You've connected the database! Isn't it so beautiful???",
