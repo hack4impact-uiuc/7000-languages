@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "start": "if-env NODE_ENV=production ?? npm run start:prod || npm run start:dev",
-    "start:prod": "node -r dotenv/config ./bin/www",
-    "start:dev": "nodemon -r dotenv/config ./bin/www",
+    "start:prod": "NODE_ENV=production node -r dotenv/config ./bin/www",
+    "start:dev": "NODE_ENV=development nodemon -r dotenv/config ./bin/www",
     "lint": "eslint --fix src",
     "format": "prettier --write \"./**/*.{js,jsx,json,md}\"",
     "format:check": "prettier -- \"./**/*.{js,jsx,json,md}\"",
@@ -22,7 +22,6 @@
     "http-errors": "~1.8.0",
     "if-env": "^1.0.4",
     "isomorphic-unfetch": "^3.0.0",
-    "loglevel": "^1.8.0",
     "mongodb": "^3.3.2",
     "mongoose": "^5.11.13",
     "morgan": "~1.10.0",
@@ -38,6 +37,7 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "verbose": true
+    "verbose": true,
+    "testTimeout": 60000
   }
 }

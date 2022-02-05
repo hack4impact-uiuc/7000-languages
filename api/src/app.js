@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const apiRoutes = require('./api');
 const { errorHandler } = require('./middleware');
 const { initDB } = require('./utils/mongo-setup');
+const { ENV_TEST } = require('./utils/constants');
 
 const app = express();
 
@@ -19,7 +20,7 @@ app.use(bodyParser.json({ limit: '2.1mb' }));
 app.use(bodyParser.urlencoded({ limit: '2.1mb', extended: false }));
 
 // Mongo setup
-initDB();
+if (process.env.NODE_ENV !== ENV_TEST) {initDB();}
 
 // Routes
 app.use('/', apiRoutes);
