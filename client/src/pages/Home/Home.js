@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, Text, View, StatusBar } from 'react-native'
+import {
+  StyleSheet, Text, View, StatusBar,
+} from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
 import { getSampleData } from 'api'

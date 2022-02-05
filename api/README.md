@@ -22,13 +22,14 @@ To install all of the required node packages, run:
 yarn install
 ```
 
-Then, set the necessary environment variables in the `.env` file. 
+Then, set the necessary environment variables in the `.env` file.
 
 Finally, run:
 
 ```bash
 yarn start
 ```
+
 This will create a server on [http://localhost:9000](http://localhost:9000).
 
 ## Run

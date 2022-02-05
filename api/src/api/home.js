@@ -4,7 +4,7 @@ const { errorWrap } = require('../middleware');
 const { sendResponse } = require('../utils/response');
 
 // uncomment to use the schema
-// const Home = require('../models/home');
+const Home = require('../models/home');
 
 router.get(
   '/',
