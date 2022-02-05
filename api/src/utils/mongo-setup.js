@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const log = require('loglevel');
 
 // CONNECTION TO MONGO
 
@@ -16,9 +15,9 @@ module.exports.initDB = () => {
 
   mongoose.connection
     .once('open', () => {
-      log.info('Connected to the DB');
+      console.log('Connected to the DB');
     })
     .on('error', (error) =>
-      log.error('Error connecting to the database: ', error),
+      console.error('Error connecting to the database: ', error),
     );
 };

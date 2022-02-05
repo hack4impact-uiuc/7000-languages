@@ -2,7 +2,7 @@
 const path = require('path');
 // Configure additional environment variables
 require('dotenv').config({
-  path: path.resolve('development.env'),
+  path: path.resolve(`${process.env.NODE_ENV}.env`),
 })
 const app = require('../src/app');
 const debug = require('debug')('api:server');
