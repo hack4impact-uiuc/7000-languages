@@ -8,3 +8,5 @@ export const getSampleData = async () => {
 
   return res.data
 }
+
+export const getData = async () => {}

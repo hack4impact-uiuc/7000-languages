@@ -21,31 +21,31 @@ const styles = StyleSheet.create({
 })
 
 const Home = ({ navigation }) => {
-  const [text, setText] = useState("Go to Details");
-
-  console.log("did it work?")
+  const [text, setText] = useState('Loading data...')
 
   useEffect(() => {
-    console.log("do logs work????");
     const getData = async () => {
-      let data = await getSampleData();
-      console.log(data);
-    };
-    getData();
+      const data = await getSampleData()
+      setText(data.result)
+    }
+    getData()
   }, [setText])
 
-  return (<View style={styles.root}>
-    <StatusBar barStyle="light-content" />
-    <Text style={styles.title}>Home</Text>
-    <Button
-      title={text}
-      color="white"
-      backgroundColor={colors.gold}
-      onPress={() => {
-        navigation.navigate('Details', { from: 'Home' })
-      }}
-    />
-  </View>)
+  return (
+    <View style={styles.root}>
+      <StatusBar barStyle="light-content" />
+      <Text style={styles.title}>Home</Text>
+      <Text>{text}</Text>
+      <Button
+        title="Go to Details"
+        color="white"
+        backgroundColor={colors.gold}
+        onPress={() => {
+          navigation.navigate('Details', { from: 'Home' })
+        }}
+      />
+    </View>
+  )
 }
 
 Home.propTypes = {

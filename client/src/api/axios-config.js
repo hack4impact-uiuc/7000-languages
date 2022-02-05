@@ -1,18 +1,18 @@
 import axios from 'axios'
-import Constants from 'expo-constants';
+import Constants from 'expo-constants'
 
-const API_PORT = Constants.manifest.extra.developmentApiPort;
+const API_PORT = Constants.manifest.extra.developmentApiPort
 
-const uri = `http://${Constants.manifest.debuggerHost.split(':').shift()}:${developmentApiPort}`;
+const uri = `http://${Constants.manifest.debuggerHost
+  .split(':')
+  .shift()}:${API_PORT}`
 
-const BASE_URL = uri;
+const BASE_URL = uri
 
 // The configured axios instance to be exported
 const instance = axios.create({
   baseURL: BASE_URL,
-  validateStatus: () => {
-    return true
-  },
+  validateStatus: () => true,
 })
 
 export default instance

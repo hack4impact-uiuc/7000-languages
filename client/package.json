@@ -20,9 +20,11 @@
     "@react-navigation/stack": "^5.12.8",
     "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.24.0",
+    "eslint-import-resolver-babel-module": "^5.3.1",
     "expo": "^44.0.0",
     "expo-asset": "~8.4.5",
     "expo-cli": "^4.13.0",
+    "expo-constants": "~13.0.1",
     "expo-font": "~10.0.4",
     "global": "^4.4.0",
     "moment": "^2.24.0",
@@ -68,11 +70,6 @@
     "semi": false,
     "singleQuote": true,
     "bracketSpacing": true
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "jest": {
     "preset": "jest-expo",
