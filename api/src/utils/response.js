@@ -12,3 +12,5 @@ module.exports.sendResponse = async (res, code, message, data = {}) => {
     result: data,
   });
 };
+
+const isCodeSuccessful = (code) => code >= 200 && code < 300;

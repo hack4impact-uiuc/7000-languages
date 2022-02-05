@@ -21,8 +21,7 @@ app.use(bodyParser.urlencoded({ limit: '2.1mb', extended: false }));
 require('./utils/mongo-setup');
 
 // Routes
-app.use('/api', apiRoutes);
-app.get('/', (req, res) => res.json('API working!'));
+app.use('/', apiRoutes);
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.use(function (req, res, next) {

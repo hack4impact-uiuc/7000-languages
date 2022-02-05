@@ -31,7 +31,7 @@ const Home = ({ navigation }) => {
       let data = await getSampleData();
       console.log(data);
     };
-    // getData();
+    getData();
   }, [setText])
 
   return (<View style={styles.root}>
