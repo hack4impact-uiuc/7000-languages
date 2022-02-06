@@ -37,7 +37,7 @@ To set up, first `cd` into this directory. Then,
 expo start
 ```
 
-Before commiting and pushing code to the remote repository, run the two commands below:
+Before commiting and pushing code to the remote repository, run the command below for linting and formatting:
 
 ```bash
 yarn style
