@@ -8,6 +8,7 @@ import 'utils/ignore'
 import { imageAssets } from 'theme/images'
 import { fontAssets } from 'theme/fonts'
 import Navigator from './navigator'
+import { NativeBaseProvider } from "native-base";
 
 const App = () => {
   const [didLoad, setDidLoad] = useState(false)
@@ -24,10 +25,14 @@ const App = () => {
 
   return didLoad ? (
     <Provider store={store}>
-      <Navigator />
+      <NativeBaseProvider>
+        <Navigator />
+      </NativeBaseProvider>
     </Provider>
   ) : (
-    <View />
+    <NativeBaseProvider>
+      <View />
+    </NativeBaseProvider>
   )
 }
 

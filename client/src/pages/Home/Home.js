@@ -6,6 +6,7 @@ import {
 import Button from 'components/Button'
 import { colors } from 'theme'
 import { getSampleHome } from 'api'
+import { Box } from "native-base";
 
 const styles = StyleSheet.create({
   root: {
@@ -46,6 +47,7 @@ const Home = ({ navigation }) => {
           navigation.navigate('Details', { from: 'Home' })
         }}
       />
+      <Box>Hello world</Box>
     </View>
   )
 }
