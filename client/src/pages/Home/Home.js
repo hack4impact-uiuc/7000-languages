@@ -6,7 +6,7 @@ import {
 import Button from 'components/Button'
 import { colors } from 'theme'
 import { getSampleHome } from 'api'
-import { Box } from "native-base";
+import { Box } from 'native-base'
 
 const styles = StyleSheet.create({
   root: {
