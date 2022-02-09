@@ -20,7 +20,9 @@ app.use(bodyParser.json({ limit: '2.1mb' }));
 app.use(bodyParser.urlencoded({ limit: '2.1mb', extended: false }));
 
 // Mongo setup
-if (process.env.NODE_ENV !== ENV_TEST) {initDB();}
+if (process.env.NODE_ENV !== ENV_TEST) {
+  initDB();
+}
 
 // Routes
 app.use('/', apiRoutes);

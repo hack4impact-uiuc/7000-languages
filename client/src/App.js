@@ -7,8 +7,8 @@ import 'utils/ignore'
 // assets
 import { imageAssets } from 'theme/images'
 import { fontAssets } from 'theme/fonts'
+import { NativeBaseProvider } from 'native-base'
 import Navigator from './navigator'
-import { NativeBaseProvider } from "native-base";
 
 const App = () => {
   const [didLoad, setDidLoad] = useState(false)

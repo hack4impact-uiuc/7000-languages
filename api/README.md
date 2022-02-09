@@ -63,9 +63,3 @@ To test,
 ```bash
 yarn test
 ```
-
-If you are recieving the warning about [mismatched binaries](https://github.com/nodenv/nodenv/wiki/FAQ#npm-warning-about-mismatched-binaries), run
-
-```bash
-npm config set scripts-prepend-node-path auto
-```

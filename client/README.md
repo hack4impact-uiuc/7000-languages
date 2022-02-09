@@ -10,7 +10,7 @@ Also, make sure you have [yarn](https://classic.yarnpkg.com/lang/en/docs/install
 
 Next, install the [expo-cli](https://docs.expo.dev) with the following command:
 ```bash
-npm install --global expo-cli
+yarn global add expo-cli
 ```
 
 To install all of the required node packages, run:
