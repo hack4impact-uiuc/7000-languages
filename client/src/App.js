@@ -10,6 +10,7 @@ import { fontAssets } from 'theme/fonts'
 import { NativeBaseProvider, extendTheme } from 'native-base'
 import Navigator from './navigator'
 
+// Custom NativeBase theme
 const theme = extendTheme({
   fontConfig: {
     GT_Haptik: {
