@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { TouchableOpacity, Text } from 'react-native'
+import { Button } from "native-base"
+import { colors } from 'theme'
 
 const styles = {
   root: {
@@ -14,7 +16,7 @@ const styles = {
   },
 }
 
-const Button = ({
+const StyleButton = ({
   title,
   width,
   height,
@@ -35,7 +37,7 @@ const Button = ({
   )
 }
 
-Button.propTypes = {
+StyleButton.propTypes = {
   title: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
@@ -47,16 +49,16 @@ Button.propTypes = {
   style: PropTypes.shape({}),
 }
 
-Button.defaultProps = {
+StyleButton.defaultProps = {
   title: null,
   width: 'auto',
   height: 'auto',
   color: 'black',
-  backgroundColor: '#cacaca',
+  backgroundColor: colors.lightRed, 
   onPress: () => {},
   children: null,
   textStyle: {},
   style: {},
 }
 
-export default Button
+export default StyleButton
