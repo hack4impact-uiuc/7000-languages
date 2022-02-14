@@ -8,6 +8,7 @@ import 'utils/ignore'
 import { imageAssets } from 'theme/images'
 import { fontAssets } from 'theme/fonts'
 import { NativeBaseProvider } from 'native-base'
+import { nativebase } from 'theme'
 import Navigator from './navigator'
 
 const App = () => {
@@ -25,12 +26,12 @@ const App = () => {
 
   return didLoad ? (
     <Provider store={store}>
-      <NativeBaseProvider>
+      <NativeBaseProvider theme={nativebase}>
         <Navigator />
       </NativeBaseProvider>
     </Provider>
   ) : (
-    <NativeBaseProvider>
+    <NativeBaseProvider theme={nativebase}>
       <View />
     </NativeBaseProvider>
   )
