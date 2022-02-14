@@ -14,7 +14,6 @@ router.get(
       'Successfully returned home text',
       singleHome,
     );
-
   }),
 );
 

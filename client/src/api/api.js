@@ -9,4 +9,4 @@ export const getSampleHome = async () => {
   return res.data
 }
 
-export const getData = async () => { }
+export const getData = async () => {}
