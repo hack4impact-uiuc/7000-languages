@@ -36,8 +36,6 @@ const fonts = {
     boldItalic: 'GT_Haptik_bold_italic',
     rotalic: 'GT_Haptik_rotalic',
     boldRotalic: 'GT_Haptik_bold_rotalic',
-    oblique: 'GT_Haptik_rotalic',
-    boldOblique: 'GT_Haptik_bold_rotalic',
   },
 }
 
