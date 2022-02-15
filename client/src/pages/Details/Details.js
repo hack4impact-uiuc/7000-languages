@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, Text, View, StatusBar } from 'react-native'
+import {
+  StyleSheet, Text, View, StatusBar,
+} from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
 
@@ -10,7 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.gray.light,
   },
   title: {
     fontSize: 24,
@@ -27,7 +29,7 @@ const Details = ({ route, navigation }) => {
       <Button
         title="Go Back"
         color="white"
-        backgroundColor={colors.gold}
+        backgroundColor={colors.orange.dark}
         onPress={navigation.goBack}
       />
     </View>
