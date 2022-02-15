@@ -30,7 +30,12 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
-      <Text fontWeight="regular" fontStyle="italic" fontSize="6xl">
+      <Text
+        fontWeight="regular"
+        bg="green.500"
+        fontStyle="italic"
+        fontSize="6xl"
+      >
         Home
       </Text>
       <Text fontSize="6xl">{text}</Text>
