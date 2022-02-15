@@ -32,7 +32,7 @@ const Home = ({ navigation }) => {
       <StatusBar barStyle="light-content" />
       <Text
         fontWeight="regular"
-        bg="blue.100"
+        bg="green.500"
         fontStyle="italic"
         fontSize="6xl"
       >
