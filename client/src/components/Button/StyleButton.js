@@ -32,7 +32,7 @@ const StyleButton = ({
   const btnStyle = [styles.primary, { width, height, backgroundColor }, style]
   const txtStyle = [styles.text, { color }, textStyle]
   export default function StyleButton(props) {
-    const { onPress, text, children, type } = props;
+    const { onPress, title, children, type } = props;
 
     // can make this more concise 
     if (type === 'Primary') {
@@ -45,12 +45,13 @@ const StyleButton = ({
 
     return (
       <Pressable style={btnStyle} onPress={onPress}>
-        <Text style={txtStyle}>{text}</Text>
+        <Text style={txtStyle}>{title}</Text>
       </Pressable>
     );
   }
 }
 
+// Button object fields 
 StyleButton.propTypes = {
   title: PropTypes.string,
   width: PropTypes.string,
@@ -64,7 +65,7 @@ StyleButton.propTypes = {
 }
 
 StyleButton.defaultProps = {
-  title: null,
+  title: 'Button',
   width: 'auto',
   height: 'auto',
   color: 'black',
