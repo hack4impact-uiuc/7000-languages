@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TouchableOpacity, Text } from 'react-native'
+import { Button } from "native-base"
+import { colors } from 'theme'
 
 const styles = {
   root: {
@@ -11,11 +12,14 @@ const styles = {
   text: {
     textAlign: 'center',
     fontSize: 16,
+    fontStyle: 'italic',
+    fontWeight: 'regular' 
   },
 }
 
-const Button = ({
-  title,
+const StyleButton = ({
+  text,
+  type,
   width,
   height,
   color,
@@ -25,17 +29,29 @@ const Button = ({
   textStyle,
   style,
 }) => {
-  const btnStyle = [styles.root, { width, height, backgroundColor }, style]
+  const btnStyle = [styles.primary, { width, height, backgroundColor }, style]
   const txtStyle = [styles.text, { color }, textStyle]
-  return (
-    <TouchableOpacity onPress={onPress} style={btnStyle}>
-      {title && <Text style={txtStyle}>{title}</Text>}
-      {children}
-    </TouchableOpacity>
-  )
+  export default function StyleButton(props) {
+    const { onPress, text, children, type } = props;
+
+    // can make this more concise 
+    if (type === 'Primary') {
+      btnStyle = [styles.primary, { width, height, backgroundColor }, style]
+    } else if (type === 'Secondary') {
+      btnStyle = [styles.secondary, { width, height, backgroundColor }, style]
+    } else if (type === 'Transparent') {
+      btnStyle = [styles.transparent, { width, height, backgroundColor }, style]
+    }
+
+    return (
+      <Pressable style={btnStyle} onPress={onPress}>
+        <Text style={txtStyle}>{text}</Text>
+      </Pressable>
+    );
+  }
 }
 
-Button.propTypes = {
+StyleButton.propTypes = {
   title: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
@@ -47,16 +63,16 @@ Button.propTypes = {
   style: PropTypes.shape({}),
 }
 
-Button.defaultProps = {
+StyleButton.defaultProps = {
   title: null,
   width: 'auto',
   height: 'auto',
   color: 'black',
-  backgroundColor: '#cacaca',
+  backgroundColor: colors.lightRed, 
   onPress: () => {},
   children: null,
   textStyle: {},
   style: {},
 }
 
-export default Button
+export default StyleButton
