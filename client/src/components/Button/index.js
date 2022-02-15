@@ -1,3 +1,3 @@
-import Button from './Button'
+import StyleButton from './StyleButton'
 
-export default Button
+export default StyleButton
