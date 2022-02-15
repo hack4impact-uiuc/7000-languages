@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-//const roleEnum = { User: 0, Admin: 1 };
-
 const Home = new mongoose.Schema({
   role: { type: Number, required: true },
   authID: { type: String, required: true },
