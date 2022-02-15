@@ -1,18 +1,31 @@
+// 7000 Languages Primary Identity Colors
 const colors = {
-  // 7000 Langauges Primary Identity Colors
-  red: '#DF4E47',
-  blue: '#O4AFB2',
-  gold: '#F29723',
-  green: '#BCD331',
-  // Shades of gray. The number next to the color indicates the percent of tint.
-  lightRed: '#FBEDEC', // 10% tint of red
-  mediumRed: '#F2B8B5', // 40% tint of red
-  darkRed: '#7A100E',
-  // Shades of gray
-  lightGray: '#DEE5E9',
-  mediumLightGray: '#A6AFB5',
-  mediumDarkGray: '#7A8288',
-  darkGray: '#5A6065',
+  red: {
+    light: '#F9EDED', // 100
+    medium: '#E9BAB6', // 300
+    dark: '#CE584E', // 500
+  },
+  blue: {
+    light: '#E9F6F7',
+    medium: '#AADDDF',
+    dark: '#4FACB0',
+  },
+  orange: {
+    light: '#FFF1DD',
+    medium: '#FFC989',
+    dark: '#E59A41',
+  },
+  green: {
+    light: '#F6FBD4',
+    medium: '#D8E48B',
+    dark: '#C0D152',
+  },
+  gray: {
+    light: '#EFEFEF',
+    medium_light: '#A8AFB4',
+    medium: '#5B6165',
+    dark: '#060606',
+  },
 }
 
 export default colors

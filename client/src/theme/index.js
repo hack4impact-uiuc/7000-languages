@@ -7,4 +7,6 @@ import nativebase from './nativebase'
     The theme is based on the 7000 Languages Brand Identity Guide.
 */
 
-export { colors, fonts, images, nativebase }
+export {
+  colors, fonts, images, nativebase,
+}
