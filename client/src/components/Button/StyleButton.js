@@ -4,11 +4,26 @@ import { Button } from "native-base"
 import { colors } from 'theme'
 
 const styles = {
-  root: {
+  primary: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 5,
+    color: colors.red.500
   },
+  secondary: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    color: '#O4AFB2'
+  },
+  transparent: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    color: '#O4AFB2'
+  },
+  
+
   text: {
     textAlign: 'center',
     fontSize: 16,
@@ -18,7 +33,7 @@ const styles = {
 }
 
 const StyleButton = ({
-  text,
+  title,
   type,
   width,
   height,
@@ -54,6 +69,7 @@ const StyleButton = ({
 // Button object fields 
 StyleButton.propTypes = {
   title: PropTypes.string,
+  type: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
   color: PropTypes.string,
@@ -69,6 +85,7 @@ StyleButton.defaultProps = {
   width: 'auto',
   height: 'auto',
   color: 'black',
+  type: 'Primary', 
   backgroundColor: colors.lightRed, 
   onPress: () => {},
   children: null,
