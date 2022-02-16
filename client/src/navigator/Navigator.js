@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { Text } from 'react-native'
+import { Text } from 'native-base'
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticate } from 'slices/app.slice'
 
-import DrawerNavigator from './Drawer'
+import TabNavigator from './Tabs'
 
 const Navigator = () => {
   /*
@@ -22,12 +22,9 @@ const Navigator = () => {
     dispatch(authenticate({ loggedIn: true, checked: true }))
   }, [])
 
-  // TODO: switch router by loggedIn state
-  console.log('[##] loggedIn', loggedIn)
-
   return checked ? (
     <NavigationContainer>
-      <DrawerNavigator />
+      <TabNavigator />
     </NavigationContainer>
   ) : (
     <Text>Loading...</Text>

@@ -14,9 +14,6 @@ const HeaderLeft = ({ navigation }) => (
     name="bars"
     color="white"
     backgroundColor="transparent"
-    onPress={() => {
-      navigation.openDrawer()
-    }}
     style={styles.button}
   />
 )
