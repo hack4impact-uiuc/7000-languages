@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
@@ -8,52 +7,41 @@ import { useDispatch } from 'react-redux'
 import { authenticate } from 'slices/auth.slice'
 
 const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: colors.gray.light,
-    },
+  root: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.gray.light,
+  },
 })
 
-const Login = ({ navigation }) => {
+const Login = () => {
+  const dispatch = useDispatch()
 
-    const dispatch = useDispatch()
+  const loginUser = () => {
+    dispatch(authenticate({ loggedIn: true }))
+  }
 
-    const loginUser = () => {
-        dispatch(authenticate({ loggedIn: true }));
-    };
-
-    return (
-        <View style={styles.root}>
-            <StatusBar barStyle="light-content" />
-            <Text
-                fontWeight="regular"
-                color="blue.dark"
-                fontStyle="italic"
-                fontSize="6xl"
-            >
-                Login
-            </Text>
-            <Button
-                title="Go to Login"
-                color="white"
-                backgroundColor={colors.orange.dark}
-                onPress={loginUser}
-            />
-        </View>
-    )
-}
-
-Login.propTypes = {
-    navigation: PropTypes.shape({
-        navigate: PropTypes.func,
-    }),
-}
-
-Login.defaultProps = {
-    navigation: { navigate: () => null },
+  return (
+    <View style={styles.root}>
+      <StatusBar barStyle="light-content" />
+      <Text
+        fontWeight="regular"
+        color="blue.dark"
+        fontStyle="italic"
+        fontSize="6xl"
+      >
+        Login
+      </Text>
+      <Button
+        title="Go to Login"
+        color="white"
+        backgroundColor={colors.orange.dark}
+        onPress={loginUser}
+      />
+    </View>
+  )
 }
 
 export default Login

@@ -24,6 +24,18 @@ const navigationProps = {
 // Navigators
 // ------------------------------------
 
+/*
+
+This contains the major navigators in the app. A naviagtor is a component
+that takes route configuration as its children with additional props for configuration and renders our content.
+
+We will need a navigator for each of the screens with an icon on the tab bar, along with a
+navigator responsible for the login flow.
+
+More reading: https://reactnavigation.org/docs/stack-navigator/
+
+*/
+
 export const LoginNavigator = () => (
   <Stack.Navigator
     initialRouteName="Landing"
@@ -33,7 +45,7 @@ export const LoginNavigator = () => (
     <Stack.Screen
       name="Landing"
       component={Landing}
-      options={({ navigation }) => ({
+      options={() => ({
         title: 'Landing',
       })}
     />
@@ -56,7 +68,7 @@ export const HomeNavigator = () => (
     <Stack.Screen
       name="Home"
       component={Home}
-      options={({ navigation }) => ({
+      options={() => ({
         title: 'Home',
         headerTitle: () => <HeaderTitle />,
       })}
@@ -80,7 +92,7 @@ export const ProfileNavigator = () => (
     <Stack.Screen
       name="Profile"
       component={Profile}
-      options={({ navigation }) => ({
+      options={() => ({
         title: 'Profile',
         headerTitle: () => <HeaderTitle />,
       })}

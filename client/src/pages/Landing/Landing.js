@@ -6,47 +6,45 @@ import { colors } from 'theme'
 import { Text } from 'native-base'
 
 const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: colors.gray.light,
-    },
+  root: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.gray.light,
+  },
 })
 
-const Landing = ({ navigation }) => {
-    return (
-        <View style={styles.root}>
-            <StatusBar barStyle="light-content" />
-            <Text
-                fontWeight="regular"
-                color="blue.dark"
-                fontStyle="italic"
-                fontSize="6xl"
-            >
-                Landing
-            </Text>
-            <Button
-                title="Go to Login"
-                color="white"
-                backgroundColor={colors.orange.dark}
-                onPress={() => {
-                    navigation.navigate('Login', { from: 'Landing' })
-                }}
-            />
-        </View>
-    )
-}
+const Landing = ({ navigation }) => (
+  <View style={styles.root}>
+    <StatusBar barStyle="light-content" />
+    <Text
+      fontWeight="regular"
+      color="blue.dark"
+      fontStyle="italic"
+      fontSize="6xl"
+    >
+      Landing
+    </Text>
+    <Button
+      title="Go to Login"
+      color="white"
+      backgroundColor={colors.orange.dark}
+      onPress={() => {
+        navigation.navigate('Login', { from: 'Landing' })
+      }}
+    />
+  </View>
+)
 
 Landing.propTypes = {
-    navigation: PropTypes.shape({
-        navigate: PropTypes.func,
-    }),
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
 }
 
 Landing.defaultProps = {
-    navigation: { navigate: () => null },
+  navigation: { navigate: () => null },
 }
 
 export default Landing

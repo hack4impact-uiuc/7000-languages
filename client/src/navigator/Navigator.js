@@ -14,6 +14,12 @@ const Navigator = () => {
 
   const { loggedIn } = useSelector((state) => state.auth)
 
+  /*
+    Based on whether the user is logged in or not, we will present the appropriate navigators.
+
+    TODO: Load some authentication state from encrypted persistent storage (for example, SecureStore).
+  */
+
   return loggedIn ? (
     <NavigationContainer>
       <TabNavigator />
