@@ -4,6 +4,8 @@ import { StyleSheet, View, StatusBar } from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
 import { Text } from 'native-base'
+import { useDispatch } from 'react-redux'
+import { authenticate } from 'slices/auth.slice'
 
 const styles = StyleSheet.create({
     root: {
@@ -16,6 +18,13 @@ const styles = StyleSheet.create({
 })
 
 const Login = ({ navigation }) => {
+
+    const dispatch = useDispatch()
+
+    const loginUser = () => {
+        dispatch(authenticate({ loggedIn: true }));
+    };
+
     return (
         <View style={styles.root}>
             <StatusBar barStyle="light-content" />
@@ -27,6 +36,12 @@ const Login = ({ navigation }) => {
             >
                 Login
             </Text>
+            <Button
+                title="Go to Login"
+                color="white"
+                backgroundColor={colors.orange.dark}
+                onPress={loginUser}
+            />
         </View>
     )
 }

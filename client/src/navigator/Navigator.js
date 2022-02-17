@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { Text } from 'native-base'
-import { useSelector, useDispatch } from 'react-redux'
-import { authenticate } from 'slices/app.slice'
+import { useSelector } from 'react-redux'
 
 import TabNavigator from './Tabs'
+import { LoginNavigator } from './Stacks'
 
 const Navigator = () => {
   /*
@@ -13,21 +12,16 @@ const Navigator = () => {
     useSelector() will also subscribe to the Redux store, and run your selector whenever an action is dispatched.
   */
 
-  const { checked, loggedIn } = useSelector((state) => state.app)
-  const dispatch = useDispatch()
+  const { loggedIn } = useSelector((state) => state.auth)
 
-  useEffect(() => {
-    // Here is an example of a dispatch, which
-    // dispatches actions and trigger state changes to the store.
-    dispatch(authenticate({ loggedIn: true, checked: true }))
-  }, [])
-
-  return checked ? (
+  return loggedIn ? (
     <NavigationContainer>
       <TabNavigator />
     </NavigationContainer>
   ) : (
-    <Text>Loading...</Text>
+    <NavigationContainer>
+      <LoginNavigator />
+    </NavigationContainer>
   )
 }
 

@@ -6,7 +6,6 @@ import Profile from 'pages/Profile'
 import Landing from 'pages/Landing'
 import Login from 'pages/Login'
 import Details from 'pages/Details'
-import HeaderLeft from './HeaderLeft'
 import HeaderTitle from './HeaderTitle'
 
 // ------------------------------------
@@ -59,7 +58,6 @@ export const HomeNavigator = () => (
       component={Home}
       options={({ navigation }) => ({
         title: 'Home',
-        // headerLeft: () => <HeaderLeft navigation={navigation} />,
         headerTitle: () => <HeaderTitle />,
       })}
     />
@@ -84,7 +82,6 @@ export const ProfileNavigator = () => (
       component={Profile}
       options={({ navigation }) => ({
         title: 'Profile',
-        // headerLeft: () => <HeaderLeft navigation={navigation} />,
         headerTitle: () => <HeaderTitle />,
       })}
     />

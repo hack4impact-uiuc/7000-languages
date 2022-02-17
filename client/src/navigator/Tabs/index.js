@@ -1,3 +1,3 @@
-import Tabs from './Tabs'
+import TabNavigator from './TabNavigator'
 
-export default Tabs
+export default TabNavigator
