@@ -35,7 +35,7 @@ const Login = () => {
         Login
       </Text>
       <Button
-        title="Go to Login"
+        title="Login to app"
         color="white"
         backgroundColor={colors.orange.dark}
         onPress={loginUser}

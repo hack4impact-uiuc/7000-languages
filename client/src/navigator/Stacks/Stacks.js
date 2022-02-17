@@ -36,7 +36,7 @@ More reading: https://reactnavigation.org/docs/stack-navigator/
 
 */
 
-export const LoginNavigator = () => (
+export const AuthNavigator = () => (
   <Stack.Navigator
     initialRouteName="Landing"
     headerMode="screen"

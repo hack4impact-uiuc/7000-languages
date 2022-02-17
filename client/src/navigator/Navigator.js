@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
 
 import TabNavigator from './Tabs'
-import { LoginNavigator } from './Stacks'
+import { AuthNavigator } from './Stacks'
 
 const Navigator = () => {
   /*
@@ -26,7 +26,7 @@ const Navigator = () => {
     </NavigationContainer>
   ) : (
     <NavigationContainer>
-      <LoginNavigator />
+      <AuthNavigator />
     </NavigationContainer>
   )
 }
