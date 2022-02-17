@@ -5,7 +5,7 @@ const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js')
 
 router.post(
-  '/users',
+  '/user',
   errorWrap(async (req, res) => {
     const userInfo = req.body;
     const newUser = new models.User({
@@ -27,15 +27,14 @@ router.post(
 
 //testing only!
 router.get(
-  '/users',
+  '/user',
   errorWrap(async (req, res) => {
-    const successMessage =
-      "u did a get c:";
+    const users = await models.User.find();
     return sendResponse(
       res,
       200,
-      'Successfully returned success message',
-      successMessage,
+      'Successfully returned users',
+      users,
     );
   }),
 );
