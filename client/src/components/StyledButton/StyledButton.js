@@ -25,7 +25,8 @@ const StyledButton = ({
     return (
   
 
-<TouchableOpacity onPress={onPress} style={btnStyle}>
+<TouchableOpacity onPress={onPress} style={btnStyle}> 
+{/* change to button  */}
 {title && <Text style={txtStyle}>{title}</Text>}
 </TouchableOpacity>
     );
