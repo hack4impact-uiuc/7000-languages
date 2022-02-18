@@ -41,8 +41,7 @@ const Home = ({ navigation }) => {
       <Text fontSize="6xl">{text}</Text>
       <StyledButton
         title="Go to Details"
-        color="white"
-        type="Primary"
+        type="Secondary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}

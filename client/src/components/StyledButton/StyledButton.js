@@ -39,19 +39,19 @@ const styles = {
     alignItems:'center',
     justifyContent:'center',
     borderRadius: 5,
-    backgroundColor: colors.red
+    backgroundColor: colors.red.dark
   },
   secondary: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 5,
-    backgroundColor: colors.blue 
+    backgroundColor: colors.blue.dark
   },
   transparent: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 5,
-    backgroundColor: colors.transparent
+    backgroundColor: colors.gray.light
   },
 
   text: {
