@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, StatusBar } from 'react-native'
-import Button from 'components/Button'
+import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import { getSampleHome } from 'api'
 import { Box, Text } from 'native-base'
@@ -39,10 +39,10 @@ const Home = ({ navigation }) => {
         Home
       </Text>
       <Text fontSize="6xl">{text}</Text>
-      <Button
+      <StyledButton
         title="Go to Details"
         color="white"
-        backgroundColor={colors.orange.dark}
+        type="Primary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
