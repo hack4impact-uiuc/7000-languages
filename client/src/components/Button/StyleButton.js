@@ -59,9 +59,12 @@ const StyleButton = ({
     }
 
     return (
-      <Pressable style={btnStyle} onPress={onPress}>
-        <Text style={txtStyle}>{title}</Text>
-      </Pressable>
+  
+
+<TouchableOpacity onPress={onPress} style={btnStyle}>
+{title && <Text style={txtStyle}>{title}</Text>}
+{children}
+</TouchableOpacity>
     );
   }
 }
