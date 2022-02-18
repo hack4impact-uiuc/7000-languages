@@ -8,19 +8,19 @@ const styles = {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 5,
-    color: colors.red.500
+    color: colors.red
   },
   secondary: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 5,
-    color: '#O4AFB2'
+    color: colors.blue 
   },
   transparent: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 5,
-    color: '#O4AFB2'
+    color: colors.transparent
   },
   
 
