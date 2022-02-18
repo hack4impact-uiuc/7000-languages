@@ -7,6 +7,7 @@ import Landing from 'pages/Landing'
 import Login from 'pages/Login'
 import Details from 'pages/Details'
 import HeaderTitle from './HeaderTitle'
+import HeaderLeft from './HeaderLeft'
 
 // ------------------------------------
 // Constants
@@ -68,17 +69,20 @@ export const HomeNavigator = () => (
     <Stack.Screen
       name="Home"
       component={Home}
-      options={() => ({
+      options={(navigation) => ({
         title: 'Home',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
         headerTitle: () => <HeaderTitle />,
       })}
     />
     <Stack.Screen
       name="Details"
       component={Details}
-      options={{
-        title: 'Details',
-      }}
+      options={({ navigation }) => ({
+        title: 'Home',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
     />
   </Stack.Navigator>
 )
@@ -92,17 +96,20 @@ export const ProfileNavigator = () => (
     <Stack.Screen
       name="Profile"
       component={Profile}
-      options={() => ({
+      options={(navigation) => ({
         title: 'Profile',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
         headerTitle: () => <HeaderTitle />,
       })}
     />
     <Stack.Screen
       name="Details"
       component={Details}
-      options={{
-        title: 'Details',
-      }}
+      options={({ navigation }) => ({
+        title: 'Home',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
     />
   </Stack.Navigator>
 )
