@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.gray.light,
   },
 })
 
@@ -32,7 +32,7 @@ const Home = ({ navigation }) => {
       <StatusBar barStyle="light-content" />
       <Text
         fontWeight="regular"
-        bg="green.500"
+        color="blue.dark"
         fontStyle="italic"
         fontSize="6xl"
       >
@@ -42,7 +42,7 @@ const Home = ({ navigation }) => {
       <Button
         title="Go to Details"
         color="white"
-        backgroundColor={colors.gold}
+        backgroundColor={colors.orange.dark}
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
