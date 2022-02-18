@@ -3,24 +3,46 @@ import PropTypes from 'prop-types'
 import { Button } from "native-base"
 import { colors } from 'theme'
 
+export default function StyleButton(props) {
+  const { onPress, title, children, type } = props;
+
+  // can make this more concise 
+  if (type === 'Primary') {
+    btnStyle = [styles.primary, { width, height, backgroundColor }, style]
+  } else if (type === 'Secondary') {
+    btnStyle = [styles.secondary, { width, height, backgroundColor }, style]
+  } else if (type === 'Transparent') {
+    btnStyle = [styles.transparent, { width, height, backgroundColor }, style]
+  }
+
+  return (
+
+
+<TouchableOpacity onPress={onPress} style={btnStyle}>
+{title && <Text style={txtStyle}>{title}</Text>}
+{children}
+</TouchableOpacity>
+  );
+}
+
 const styles = {
   primary: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 5,
-    color: colors.red.500
+    color: colors.red
   },
   secondary: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 5,
-    color: '#O4AFB2'
+    color: colors.blue 
   },
   transparent: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 5,
-    color: '#O4AFB2'
+    color: colors.transparent
   },
   
 
@@ -46,25 +68,7 @@ const StyleButton = ({
 }) => {
   const btnStyle = [styles.primary, { width, height, backgroundColor }, style]
   const txtStyle = [styles.text, { color }, textStyle]
-  export default function StyleButton(props) {
-    const { onPress, title, children, type } = props;
-
-    // can make this more concise 
-    if (type === 'Primary') {
-      btnStyle = [styles.primary, { width, height, backgroundColor }, style]
-    } else if (type === 'Secondary') {
-      btnStyle = [styles.secondary, { width, height, backgroundColor }, style]
-    } else if (type === 'Transparent') {
-      btnStyle = [styles.transparent, { width, height, backgroundColor }, style]
-    }
-
-    return (
-      <Pressable style={btnStyle} onPress={onPress}>
-        <Text style={txtStyle}>{title}</Text>
-      </Pressable>
-    );
-  }
-}
+} 
 
 // Button object fields 
 StyleButton.propTypes = {
