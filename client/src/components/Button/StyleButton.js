@@ -17,7 +17,7 @@ const StyleButton = ({
 }) => {
   const btnStyle = [styles.primary, { width, height, backgroundColor }, style]
   const txtStyle = [styles.text, { color }, textStyle]
- export default function StyleButton(props) {
+  function StyleButton(props) {
     const { onPress, title, children, type } = props;
 
     // can make this more concise 
