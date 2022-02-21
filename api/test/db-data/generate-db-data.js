@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { faker } = require('@faker-js/faker');
+const mongoose = require('mongoose');
 
 const NUM_FAKE_ENTRIES = 50;
 
@@ -16,7 +17,7 @@ const saveDataToFile = (data, filename) => {
  */
 const generateUsers = (n) => {
     const generateUser = () => ({
-        _id: faker.datatype.uuid(),
+        _id: mongoose.Types.ObjectId(),
         role: 0,
         authID: faker.datatype.uuid(),
         adminLanguages: [],
