@@ -1,9 +1,9 @@
-const { Home } = require('./Home');
-const { User } = require('./User');
+const { Home } = require('./home');
+const { User } = require('./user');
 
 const models = {
   Home,
-  User
+  User,
 };
 
 module.exports = {
