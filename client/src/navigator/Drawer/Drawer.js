@@ -12,7 +12,6 @@ const Drawer = createDrawerNavigator()
 const DrawerMenuContainer = (props) => {
   const { state, ...rest } = props
   const newState = { ...state }
-  newState.routes = newState.routes.filter((item) => item.name !== 'Home')
   return (
     <DrawerContentScrollView {...props}>
       <DrawerMenu {...props} />
