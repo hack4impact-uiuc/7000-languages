@@ -4,7 +4,7 @@ import {
   getDefaultMiddleware,
 } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
-import appReducer from 'slices/app.slice'
+import authReducer from 'slices/auth.slice'
 
 /*
   This is the store. A store holds the whole state tree of your application.
@@ -17,7 +17,7 @@ import appReducer from 'slices/app.slice'
   performs a state update, returning the new state.
 */
 const rootReducer = combineReducers({
-  app: appReducer,
+  auth: authReducer,
   // add more reducers
 })
 
