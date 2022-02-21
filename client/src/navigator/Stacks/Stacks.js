@@ -69,7 +69,7 @@ export const HomeNavigator = () => (
     <Stack.Screen
       name="Home"
       component={Home}
-      options={(navigation) => ({
+      options={({ navigation }) => ({
         title: 'Home',
         headerLeft: () => <HeaderLeft navigation={navigation} />,
         headerTitle: () => <HeaderTitle />,
@@ -96,7 +96,7 @@ export const ProfileNavigator = () => (
     <Stack.Screen
       name="Profile"
       component={Profile}
-      options={(navigation) => ({
+      options={({ navigation }) => ({
         title: 'Profile',
         headerLeft: () => <HeaderLeft navigation={navigation} />,
         headerTitle: () => <HeaderTitle />,
