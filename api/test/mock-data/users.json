@@ -1,0 +1,402 @@
+[
+  {
+    "_id": "b070031e-ea4f-4df9-a05b-b6ad89e25fdc",
+    "role": 0,
+    "authID": "0ea7e206-edb6-4ae8-a50b-71f42eda3298",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "ec0c3d8e-5df2-414f-9bd4-feb4a534a870",
+    "role": 0,
+    "authID": "dfe977e6-98a8-4e70-b258-543bb82e1072",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "24b34475-1344-463f-a57a-ac1a92ab60ec",
+    "role": 0,
+    "authID": "d74c8061-3320-4b93-98aa-fe8f75b6bdf9",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "0553b43f-2527-43c0-bd81-f2c257d0dd56",
+    "role": 0,
+    "authID": "ef584d29-dfcf-486c-9522-ce7a2df406b8",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "a9f8bbc5-e705-4eac-b905-c3575bc43889",
+    "role": 0,
+    "authID": "759630ac-d637-4eb3-b77b-edc0af29ba32",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "1dad7d70-d421-4b21-9e42-38e5b0483dd4",
+    "role": 0,
+    "authID": "4353a358-8749-4c86-bada-80afdc371e63",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "4b9563fc-223b-4205-a35f-6532659e1e51",
+    "role": 0,
+    "authID": "36fd060b-8f75-48e8-8cd9-1159de6bb9c3",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "d2f55f72-98ad-43c2-a8b0-d50a9490bf41",
+    "role": 0,
+    "authID": "669407f6-ac70-4ae6-b5a9-b81248b34fdc",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "c62033ff-35dd-4419-9e29-0b90bc780cae",
+    "role": 0,
+    "authID": "577a41fc-8bed-4131-9032-5ff66574abc1",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "4f9aab58-7e01-46e7-a7d8-ba2b5495adb8",
+    "role": 0,
+    "authID": "08685a64-a120-4ae8-aeab-462b36b6ef07",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "d852d95c-95ce-4411-a57e-76b2419cf777",
+    "role": 0,
+    "authID": "98ee14ec-770e-4a86-89f1-0be48e1a2150",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "c2054c4c-d190-44ae-b790-84316c81225f",
+    "role": 0,
+    "authID": "9ead15fb-8c9f-46c7-b914-d02e4b0c0f3e",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "75741f9e-e426-4d1c-9c9b-d2bf5bb19ebe",
+    "role": 0,
+    "authID": "53b348b1-6545-404c-8bb3-b373bb6c58f2",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "5b080c77-54f0-4f47-b174-3772e81e482a",
+    "role": 0,
+    "authID": "db7308d6-59e1-481d-9194-0da874b7a31f",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "667a62fc-b6be-4055-aeea-f0b439df8a73",
+    "role": 0,
+    "authID": "f31eb6f6-cde1-48f9-80ef-d54245a43318",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "cd05dfdd-28b9-4a8a-a8ff-eee29d75b039",
+    "role": 0,
+    "authID": "28be1a77-cce2-4618-b8c5-d93286aad9ef",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "24093a48-556a-4ce0-84f4-8c9cd8e882e3",
+    "role": 0,
+    "authID": "7734f3ac-0ddd-4005-9e4e-c4d2a3e76990",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "319cd3b9-3991-4a81-a256-75fa1e0319ac",
+    "role": 0,
+    "authID": "88ca6511-8625-43ae-ad48-d839d10b511d",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "d28f71a6-4744-480d-90bf-e8b6f5026a3c",
+    "role": 0,
+    "authID": "59dc2a64-0f66-4915-9bd0-40f1f4671add",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "68ec807a-242d-415b-a5b4-c861a2f9f3e5",
+    "role": 0,
+    "authID": "5b845d0b-ba3a-4c22-8a64-fc13a0168415",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "2392c530-21cb-43f4-b741-47c3eb4a43eb",
+    "role": 0,
+    "authID": "18b55934-6085-4b23-b9ad-c7c801c71e50",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "f5c04376-8e81-4b5a-bf89-b100a67c6ec6",
+    "role": 0,
+    "authID": "98599c59-fc9b-485e-8bdf-d296eec93d71",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "8c6ce8d4-fb7e-4323-b9c3-14747a32d3e0",
+    "role": 0,
+    "authID": "531b69bd-ac60-4a9d-9174-893ccb751ada",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "ae96d298-52df-4846-b0f8-de58f921bc08",
+    "role": 0,
+    "authID": "db9abe15-16c6-4d2b-94cf-2d80f026555c",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "dbb16ca7-0464-4c89-9466-4b235bd1383b",
+    "role": 0,
+    "authID": "971b6b17-6971-41e5-b10a-afae8a4fd9e6",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "d602a1f9-7c1d-400d-b0af-ab94375aeaae",
+    "role": 0,
+    "authID": "a0e45607-3d30-48f5-85c3-484956822f18",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "bebc80d8-d70a-4dcd-843b-69dfa6366156",
+    "role": 0,
+    "authID": "5061f5b0-12f2-47a6-9587-f3da6dc326c2",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "2b504b98-dcb9-44bb-8e20-b6fb843ef9e2",
+    "role": 0,
+    "authID": "f0afc436-0dd4-43c0-97e8-f2adf80ae4c1",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "cd532f02-ea54-43da-a459-68b1bb94fb84",
+    "role": 0,
+    "authID": "48bb2b6b-21d0-4593-a95f-5b43af8babab",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "ddd3746a-ca35-4bfc-94b3-3bf3f2a97a61",
+    "role": 0,
+    "authID": "99ee3b08-e041-42f6-858b-300c57f0be95",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "36b8ff4a-cc65-4001-a711-c12040f763bf",
+    "role": 0,
+    "authID": "c8339a7c-ddb3-4347-8f9f-59240ae40757",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "2db79ed1-7201-40e6-9e9a-1d35400626af",
+    "role": 0,
+    "authID": "83951138-dd96-49cf-828f-040d06daa6f7",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "7e0342e3-abd9-4482-af24-f5ddc3231dc0",
+    "role": 0,
+    "authID": "3829938f-d8e9-417f-9aaf-5927c94cb8c1",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "7c0db1a9-de21-4591-8d2f-6f59b1b1498f",
+    "role": 0,
+    "authID": "fcba737b-daf1-43fd-a0e6-c8ea5cb3587e",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "65bc7dc2-2b18-4175-984c-ceb167a96a3a",
+    "role": 0,
+    "authID": "60712058-7ddc-40b4-92c3-04514c800dbe",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "2573f44f-b88f-4609-bdb0-d40cb7690ff1",
+    "role": 0,
+    "authID": "bc48e0fd-d4bb-4999-8c73-1fb1e186aec9",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "19b55cc5-a862-4573-a13a-7ccfba819ab6",
+    "role": 0,
+    "authID": "3013ad36-59ee-4cb1-8d33-9ac7ed035208",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "eaa202d2-79f3-4ab4-a649-796d0196a102",
+    "role": 0,
+    "authID": "c19b5f91-4a61-4d9d-972d-619e7712403a",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "5753f54e-bee8-40a2-a344-a91f9adf2e83",
+    "role": 0,
+    "authID": "e71bd8dc-a439-43e5-8fc7-56c66d368244",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "2bc08f30-3cc1-44e0-bca9-a626272d7db5",
+    "role": 0,
+    "authID": "f4b15a06-1830-40b0-87d2-76fdf08e22d0",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "ca8faa00-f27a-4b44-a6c5-3408a011214f",
+    "role": 0,
+    "authID": "cbb9647d-a38d-4154-a50c-724eff0ee5a9",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "e39847ef-7204-4165-ad89-89b8708b6171",
+    "role": 0,
+    "authID": "cdc319f3-1544-4c13-adee-f715b8343e32",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "62b21930-129e-442d-bf9c-deb6a8af30c1",
+    "role": 0,
+    "authID": "dbfeb628-d960-4586-b3da-1ac4ff0263e1",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "f94d8f70-7ad8-4071-b22a-01384e132508",
+    "role": 0,
+    "authID": "e36f0d54-2feb-45c0-9304-0e9aee225709",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "88c18df3-9d41-4c2d-b48e-03ef192665ad",
+    "role": 0,
+    "authID": "b7f71a6d-8099-466f-870d-e7d04a12ede5",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "c4c69828-3df4-4655-99c8-a7e212d4b058",
+    "role": 0,
+    "authID": "c43f3d35-d4a9-49fd-a5de-401777ca2507",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "2045cd0d-290e-49e7-af87-1b9594c22a66",
+    "role": 0,
+    "authID": "18a8060e-79d1-445f-a222-f307cf7343b7",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "06509dde-5820-495f-819c-c05e79f794fd",
+    "role": 0,
+    "authID": "390ff8c1-bfb9-4f3f-8986-f00b2b509d43",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "6d979cff-8d89-415e-b089-66665112776c",
+    "role": 0,
+    "authID": "61fab37e-e948-4d47-beea-23a7d00ddd98",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  },
+  {
+    "_id": "8dde4a18-f6fe-4c29-9a94-d758a484ec27",
+    "role": 0,
+    "authID": "f8db1797-1950-4dfe-86bd-aab6f96f565a",
+    "adminLanguages": [],
+    "learnerLanguages": [],
+    "collaboratorLanguages": []
+  }
+]
