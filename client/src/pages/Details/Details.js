@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.gray.light,
   },
   title: {
     fontSize: 24,
@@ -27,7 +27,7 @@ const Details = ({ route, navigation }) => {
       <Button
         title="Go Back"
         color="white"
-        backgroundColor={colors.gold}
+        backgroundColor={colors.orange.dark}
         onPress={navigation.goBack}
       />
     </View>
