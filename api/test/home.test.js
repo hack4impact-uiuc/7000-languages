@@ -1,7 +1,6 @@
 const app = require('../src/app');
 const mongoose = require('mongoose');
 const request = require('supertest');
-const { expectCt } = require('helmet');
 
 afterAll(async () => {
   await mongoose.connection.close();
