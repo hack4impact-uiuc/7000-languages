@@ -4,6 +4,33 @@ import colors from './colors'
 // Custom NativeBase theme
 const theme = extendTheme({
   colors,
+  components: {
+  Button: {
+    // Can simply pass default props to change default behaviour of components.
+    baseStyle: {
+      paddingVertical: 12,
+      paddingHorizontal: 32,
+      alignItems:'center',
+      justifyContent:'center',
+      borderRadius: 5,
+    },
+
+    // Fix colors to represent figma, can do later 
+    primary: {
+       // change text color to opposite 
+      backgroundColor: colors.red.dark
+    },
+    secondary: {
+       // change text color to opposite 
+      backgroundColor: colors.red.dark
+    },
+    tertiary: {
+      // need to change to white
+      // change text color to opposite 
+      backgroundColor: colors.gray.light
+    }, 
+  },
+},
   fontConfig: {
     GT_Haptik: {
       regular: {
