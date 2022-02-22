@@ -5,7 +5,7 @@ const userData = require('../db-data/users.json');
 
 let users = null;
 const replSet = new MongoMemoryReplSet({
-    replSet: { storageEngine: 'wiredTiger' },
+  replSet: { storageEngine: 'wiredTiger' },
 });
 
 /**
@@ -13,64 +13,65 @@ const replSet = new MongoMemoryReplSet({
  * Should only be called once per suite
  */
 module.exports.connect = async () => {
-    if (replSet._state !== 'running') {
-        await replSet.start();
-    }
-    await replSet.waitUntilRunning();
-    const uri = replSet.getUri();
+  if (replSet._state !== 'running') {
+    await replSet.start();
+  }
+  await replSet.waitUntilRunning();
+  const uri = replSet.getUri();
 
-    const mongooseOpts = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    };
+  const mongooseOpts = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  };
 
-    await mongoose.connect(uri, mongooseOpts);
-    await this.resetDatabase();
+  await mongoose.connect(uri, mongooseOpts);
+  await this.resetDatabase();
 };
 
 /**
  * Drop database, close the connection and stop mongod.
  */
 module.exports.closeDatabase = async () => {
-    await this.clearDatabase();
-    await mongoose.connection.dropDatabase();
+  // await this.clearDatabase();
+  // await mongoose.connection.dropDatabase();
+  await mongoose.connection.close();
 };
 
 /**
  * Resets the database to it's original state with mock data.
  */
 module.exports.resetDatabase = async () => {
-    await this.clearDatabase();
-    constructStaticData();
-    await saveMany(users);
+  await this.clearDatabase();
+  constructStaticData();
+  await saveMany(users);
 };
 
 const saveMany = async (modelList) => {
-    for (let i = 0; i < modelList.length; i++) {
-        const model = modelList[i];
-        model.isNew = true;
-        await model.save();
-    }
+  for (let i = 0; i < modelList.length; i++) {
+    const model = modelList[i];
+    model.isNew = true;
+    await model.save();
+  }
 };
 
 const constructStaticData = () => {
-    if (users) {
-        return;
-    }
+  if (users) {
+    return;
+  }
 
-    users = constructAll(userData, models.User);
+  users = constructAll(userData, models.User);
 };
 
 const constructAll = (data, constructor) =>
-    data.map((item) => new constructor(item));
+  data.map((item) => new constructor(item));
 
 /**
  * Remove all the data for all db collections.
  */
 module.exports.clearDatabase = async () => {
-    const { collections } = mongoose.connection;
-    for (const key in collections) {
-        const collection = collections[key];
-        await collection.deleteMany();
-    }
+  const { collections } = mongoose.connection;
+  for (const key in collections) {
+    const collection = collections[key];
+    await collection.deleteMany();
+  }
 };
