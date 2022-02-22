@@ -1,0 +1,25 @@
+version: 2
+updates:
+    # Maintain updates for github actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+            interval: "daily"
+            time: "11:00"
+    open-pull-requests-limit: 4
+
+    # Maintain updates for backend npm
+  - package-ecosystem: "npm"
+    directory: "/api"
+    schedule:
+            interval: "daily"
+            time: "11:00"
+    open-pull-requests-limit: 4
+
+    # Maintain updates for frontend npm
+  - package-ecosystem: "npm"
+    directory: "/client"
+    schedule:
+            interval: "daily"
+            time: "11:00"
+    open-pull-requests-limit: 4
