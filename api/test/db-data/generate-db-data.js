@@ -2,7 +2,7 @@ const fs = require('fs');
 const { faker } = require('@faker-js/faker');
 const mongoose = require('mongoose');
 
-const NUM_FAKE_ENTRIES = 50;
+const { NUM_FAKE_USER_ENTRIES } = require('../utils/constants');
 
 const saveDataToFile = (data, filename) => {
   const serializedData = JSON.stringify(data, null, 2);
@@ -31,7 +31,7 @@ const generateUsers = (n) => {
 
 // Change this to change what data is generated
 const generate = () => {
-  const userData = generateUsers(NUM_FAKE_ENTRIES);
+  const userData = generateUsers(NUM_FAKE_USER_ENTRIES);
 
   saveDataToFile(userData, './mock-data/users.json');
 };
