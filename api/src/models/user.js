@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Home = new mongoose.Schema({
+const User = new mongoose.Schema({
   role: { type: Number, required: true },
   authID: { type: String, required: true },
   adminLanguages: { type: [String], required: false, default: [] },
@@ -8,4 +8,4 @@ const Home = new mongoose.Schema({
   collaboratorLanguages: { type: [String], required: false, default: [] },
 });
 
-module.exports.Home = mongoose.model('Home', Home);
+module.exports.User = mongoose.model('User', User);
