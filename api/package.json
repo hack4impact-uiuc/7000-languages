@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "debug": "~4.3.1",
+    "debug": "~4.3.3",
     "dotenv": "^8.2.0",
     "eslint-plugin-jest": "^26.0.0",
     "express": "~4.17.1",
