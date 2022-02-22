@@ -26,7 +26,7 @@
     "lodash": "^4.17.21",
     "mongodb": "^3.3.2",
     "mongodb-memory-server": "^7.4.0",
-    "mongoose": "^6.2.2",
+    "mongoose": "^6.2.3",
     "morgan": "~1.10.0",
     "mpath": "^0.8.4"
   },
