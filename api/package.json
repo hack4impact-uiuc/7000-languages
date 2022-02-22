@@ -19,7 +19,7 @@
     "eslint-plugin-jest": "^26.1.1",
     "express": "~4.17.1",
     "fs": "^0.0.1-security",
-    "helmet": "^4.4.1",
+    "helmet": "^5.0.2",
     "http-errors": "~1.8.0",
     "if-env": "^1.0.4",
     "isomorphic-unfetch": "^3.0.0",
