@@ -22,7 +22,7 @@
     "http-errors": "~1.8.0",
     "if-env": "^1.0.4",
     "isomorphic-unfetch": "^3.0.0",
-    "mongodb": "^3.3.2",
+    "mongodb": "^4.4.0",
     "mongoose": "^5.11.13",
     "morgan": "~1.10.0",
     "mpath": "^0.8.4"
