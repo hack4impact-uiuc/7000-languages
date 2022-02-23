@@ -1,11 +1,10 @@
-name: auto-merge
+name: 'Merge Dependencies'
 
 on: [pull_request_target]
 
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
-    # Guarantee that commit comes from Dependabot (don't blindly trust external GitHub Actions)
     if: github.actor == 'dependabot[bot]'
     steps:
       - name: 'Checkout repository'
@@ -13,4 +12,4 @@ jobs:
       - name: 'Automerge dependency updates from Dependabot'
         uses: ahmadnassri/action-dependabot-auto-merge@v2.4.0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.DEPENDABOT_AUTOMERGE }}
