@@ -1,11 +1,9 @@
-import { ROLE_ENUM } from '../utils/constants.js';
-
 const express = require('express');
 const router = express.Router();
 const { errorWrap } = require('../middleware');
 const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
-
+const { ROLE_ENUM } = require('../utils/constants.js');
 
 /**
  * POST endpoint for new user
