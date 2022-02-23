@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
-const Course = new mongoose.Schema({
-  approved: { type: Boolean, required: true },
-  admin_id: { type: String, required: true },
-  details: { type: CourseDetails, required: true },
-});
-
 const CourseDetails = new mongoose.Schema({
   language_name: { type: String, required: false, default: '' },
   language_description: { type: String, required: false, default: '' },
   population_size: { type: Number, required: false, default: '' },
+});
+
+const Course = new mongoose.Schema({
+  approved: { type: Boolean, required: true },
+  admin_id: { type: String, required: true },
+  details: { type: CourseDetails, required: true },
 });
 
 const Unit = new mongoose.Schema({
