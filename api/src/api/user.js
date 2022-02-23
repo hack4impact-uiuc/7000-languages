@@ -4,16 +4,22 @@ const { errorWrap } = require('../middleware');
 const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
 
+/**
+ * POST endpoint for new user
+ *
+ * @param {newUser} New user
+ * @returns 200 success or error message
+ */
 router.post(
   '/',
   errorWrap(async (req, res) => {
     const userInfo = req.body;
     const newUser = new models.User({
-      role: userInfo.role,
+      role: ROLE_ENUM.USER,
       authID: userInfo.authID,
-      adminLanguages: userInfo.adminLanguages,
-      learnerLanguages: userInfo.learnerLanguages,
-      collaboratorLanguages: userInfo.collaboratorLanguages,
+      adminLanguages: [],
+      learnerLanguages: [],
+      collaboratorLanguages: [],
     });
     await newUser.save();
     return sendResponse(res, 200, 'Successfully created a new user', newUser);
@@ -21,6 +27,12 @@ router.post(
 );
 
 //testing only!
+/**
+ * GET endpoint for all users
+ *
+ * @param {newUser} none
+ * @returns 200 success or error message
+ */
 router.get(
   '/',
   errorWrap(async (req, res) => {
