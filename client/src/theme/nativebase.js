@@ -4,6 +4,23 @@ import colors from './colors'
 // Custom NativeBase theme
 const theme = extendTheme({
   colors,
+  components: {
+    Button: {
+      // Can simply pass default props to change default behaviour of components.
+      baseStyle: {
+        rounded: "md",
+      },
+      defaultProps: {
+        backgroundColor: "red.dark",
+      },
+      variants: {
+        rounded: {
+          bg: `red.500`,
+          rounded: "full"
+        }
+      }
+    },
+  },
   fontConfig: {
     GT_Haptik: {
       regular: {

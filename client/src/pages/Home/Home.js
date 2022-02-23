@@ -41,8 +41,7 @@ const Home = ({ navigation }) => {
       <Text fontSize="6xl">{text}</Text>
       <Button
         title="Go to Details"
-        color="white"
-        backgroundColor={colors.orange.dark}
+        type="secondary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}

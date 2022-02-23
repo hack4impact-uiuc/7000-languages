@@ -23,6 +23,7 @@ const App = () => {
   useEffect(() => {
     handleLoadAssets()
   }, [])
+  console.log("is this working????")
 
   return didLoad ? (
     <Provider store={store}>
