@@ -37,7 +37,7 @@
     "faker": "5.5.3",
     "jest": "^27.5.1",
     "nodemon": "^2.0.7",
-    "prettier": "^2.2.1",
+    "prettier": "^2.5.1",
     "supertest": "^6.2.2"
   },
   "jest": {
