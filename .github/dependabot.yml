@@ -16,9 +16,9 @@ updates:
             time: "11:00"
     open-pull-requests-limit: 4
     ignore:
-  - dependency-name: faker
-    versions:
-    - 5.5.3
+    - dependency-name: faker
+      versions:
+      - 5.5.3
 
     # Maintain updates for frontend npm
   - package-ecosystem: "npm"
