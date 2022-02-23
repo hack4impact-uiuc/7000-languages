@@ -17,7 +17,7 @@
     "debug": "~4.3.3",
     "dotenv": "^16.0.0",
     "eslint-plugin-jest": "^26.1.1",
-    "express": "~4.17.1",
+    "express": "~4.17.3",
     "fs": "^0.0.1-security",
     "helmet": "^5.0.2",
     "http-errors": "~1.8.0",
