@@ -1,7 +1,9 @@
 import { extendTheme } from 'native-base'
+import colors from './colors'
 
 // Custom NativeBase theme
 const theme = extendTheme({
+  colors,
   fontConfig: {
     GT_Haptik: {
       regular: {

@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, Text, View, StatusBar } from 'react-native'
+import { StyleSheet, View, StatusBar } from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
+import { Text } from 'native-base'
 
 const styles = StyleSheet.create({
   root: {
@@ -12,33 +13,38 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.gray.light,
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
 })
 
-const Profile = ({ navigation }) => (
+const Landing = ({ navigation }) => (
   <View style={styles.root}>
     <StatusBar barStyle="light-content" />
-    <Text style={styles.title}>Profile</Text>
+    <Text
+      fontWeight="regular"
+      color="blue.dark"
+      fontStyle="italic"
+      fontSize="6xl"
+    >
+      Landing
+    </Text>
     <Button
-      title="Go to Details"
+      title="Go to Login"
       color="white"
       backgroundColor={colors.orange.dark}
       onPress={() => {
-        navigation.navigate('Details', { from: 'Profile' })
+        navigation.navigate('Login', { from: 'Landing' })
       }}
     />
   </View>
 )
 
-Profile.propTypes = {
-  navigation: PropTypes.shape({ navigate: PropTypes.func }),
+Landing.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
 }
 
-Profile.defaultProps = {
+Landing.defaultProps = {
   navigation: { navigate: () => null },
 }
 
-export default Profile
+export default Landing
