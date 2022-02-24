@@ -6,10 +6,12 @@ const { models } = require('../models/index.js');
 const { ROLE_ENUM } = require('../utils/constants.js');
 
 /**
- * POST endpoint for new user
+ * Creates a new user in the database
  *
  * @param {newUser} New user
- * @returns 200 success or error message
+ * @returns a new user with their role set as user by default
+ * authID, and admin, learner, and collaborator languages set to
+ * an empty array
  */
 router.post(
   '/',
@@ -24,21 +26,6 @@ router.post(
     });
     await newUser.save();
     return sendResponse(res, 200, 'Successfully created a new user', newUser);
-  }),
-);
-
-//testing only!
-/**
- * GET endpoint for all users
- *
- * @param {newUser} none
- * @returns 200 success or error message
- */
-router.get(
-  '/',
-  errorWrap(async (req, res) => {
-    const users = await models.User.find();
-    return sendResponse(res, 200, 'Successfully returned users', users);
   }),
 );
 
