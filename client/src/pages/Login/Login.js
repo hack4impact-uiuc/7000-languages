@@ -6,6 +6,7 @@ import { Text } from 'native-base'
 import { useDispatch } from 'react-redux'
 import { authenticate } from 'slices/auth.slice'
 import * as Google from "expo-google-app-auth";
+import Constants from 'expo-constants'
 
 const styles = StyleSheet.create({
   root: {
@@ -26,8 +27,8 @@ const Login = () => {
     console.log("LoginScreen.js 6 | loggin in");
     try {
       const { type, user } = await Google.logInAsync({
-        iosClientId: `558041423211-hc41ckr5muh3l09rsqqrs4nkaspltrba.apps.googleusercontent.com`,
-        androidClientId: `558041423211-4g0ka2fsrdr0295kc041pq8e6be9496g.apps.googleusercontent.com`,
+        iosClientId: Constants.manifest.extra.iosClientId,
+        androidClientId: Constants.manifest.extra.androidClientId,
       });
 
       console.log(user);
