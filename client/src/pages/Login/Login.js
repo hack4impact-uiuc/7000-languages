@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
 import { Text } from 'native-base'
 import { useDispatch } from 'react-redux'
 import { authenticate } from 'slices/auth.slice'
-import * as Google from "expo-google-app-auth";
+import * as Google from 'expo-auth-session/providers/google';
 import Constants from 'expo-constants'
+import * as WebBrowser from 'expo-web-browser';
 
 const styles = StyleSheet.create({
   root: {
@@ -18,30 +19,45 @@ const styles = StyleSheet.create({
   },
 })
 
+WebBrowser.maybeCompleteAuthSession();
+
 const Login = () => {
   const dispatch = useDispatch()
 
-  console.log("in login");
+  alert("new test")
 
-  const signInAsync = async () => {
-    console.log("LoginScreen.js 6 | loggin in");
-    try {
-      const { type, user } = await Google.logInAsync({
-        iosClientId: Constants.manifest.extra.iosClientId,
-        androidClientId: Constants.manifest.extra.androidClientId,
-      });
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: Constants.manifest.extra.expoClientId,
+    iosClientId: Constants.manifest.extra.iosClientId,
+    androidClientId: Constants.manifest.extra.androidClientId,
+  });
 
-      console.log(user);
-
-      if (type === "success") {
-        console.log(user)
-        // Then you can use the Google REST API
-        console.log("LoginScreen.js 17 | success, navigating to profile");
-      }
-    } catch (error) {
-      console.log("LoginScreen.js 19 | error with login", error);
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { authentication } = response;
+      console.log(authentication);
+      alert("signed in")
     }
-  };
+  }, [response]);
+
+  // const signInAsync = async () => {
+
+  //   try {
+
+
+  //     alert("success")
+  //     console.log(response);
+
+  //     if (type === "success") {
+  //       console.log(user)
+  //       // Then you can use the Google REST API
+  //       console.log("LoginScreen.js 17 | success, navigating to profile");
+  //     }
+  //   } catch (error) {
+  //     alert(error)
+  //     console.log("LoginScreen.js 19 | error with login", error);
+  //   }
+  // };
 
   const loginUser = () => {
     dispatch(authenticate({ loggedIn: true }))
@@ -60,9 +76,12 @@ const Login = () => {
       </Text>
       <Button
         title="Login to app"
+        disabled={!request}
         color="white"
         backgroundColor={colors.orange.dark}
-        onPress={signInAsync}
+        onPress={() => {
+          promptAsync();
+        }}
       />
     </View>
   )

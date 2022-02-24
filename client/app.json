@@ -6,7 +6,7 @@
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo-sm-black.png",
+    "icon": "./assets/images/app-icon.png",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
