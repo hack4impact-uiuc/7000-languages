@@ -21,6 +21,16 @@ const Unit = new mongoose.Schema({
 
 Unit.index({ _course_id: 1 });
 
+const Vocab = new mongoose.Schema({
+  _order: { type: Number, required: true, index: true },
+  original: { type: String, required: true },
+  translation: { type: String, required: true },
+  image: { type: String, required: false, default: '' },
+  audio: { type: String, required: false, default: '' },
+});
+
+Vocab.index({ _order: 1 });
+
 const Lesson = new mongoose.Schema({
   _course_id: { type: String, required: true, index: true },
   _unit_id: { type: String, required: true, index: true },
@@ -31,16 +41,6 @@ const Lesson = new mongoose.Schema({
 });
 
 Lesson.index({ _course_id: 1, _unit_id: 1, _order: 1 });
-
-const Vocab = new mongoose.Schema({
-  _order: { type: Number, required: true, index: true },
-  original: { type: String, required: true },
-  translation: { type: String, required: true },
-  image: { type: String, required: false, default: '' },
-  audio: { type: String, required: false, default: '' },
-});
-
-Vocab.index({ _order: 1 });
 
 module.exports.Course = mongoose.model('Course', Course);
 module.exports.CourseDetails = mongoose.model('CourseDetails', CourseDetails);
