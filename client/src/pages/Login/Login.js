@@ -24,9 +24,14 @@ WebBrowser.maybeCompleteAuthSession();
 const Login = () => {
   const dispatch = useDispatch()
 
-  alert("new test")
+  /*
+    Sources:
+    https://docs.expo.dev/versions/latest/sdk/auth-session/
+    https://stackoverflow.com/questions/66966772/expo-auth-session-providers-google-google-useauthrequest 
+  */
 
   const [request, response, promptAsync] = Google.useAuthRequest({
+    responseType: "id_token",
     expoClientId: Constants.manifest.extra.expoClientId,
     iosClientId: Constants.manifest.extra.iosClientId,
     androidClientId: Constants.manifest.extra.androidClientId,
@@ -34,30 +39,13 @@ const Login = () => {
 
   useEffect(() => {
     if (response?.type === 'success') {
-      const { authentication } = response;
-      console.log(authentication);
+      const { params, authentication } = response;
+      // console.log(response);
+      // console.log(params);
+      // console.log(authentication);
       alert("signed in")
     }
   }, [response]);
-
-  // const signInAsync = async () => {
-
-  //   try {
-
-
-  //     alert("success")
-  //     console.log(response);
-
-  //     if (type === "success") {
-  //       console.log(user)
-  //       // Then you can use the Google REST API
-  //       console.log("LoginScreen.js 17 | success, navigating to profile");
-  //     }
-  //   } catch (error) {
-  //     alert(error)
-  //     console.log("LoginScreen.js 19 | error with login", error);
-  //   }
-  // };
 
   const loginUser = () => {
     dispatch(authenticate({ loggedIn: true }))
@@ -76,7 +64,6 @@ const Login = () => {
       </Text>
       <Button
         title="Login to app"
-        disabled={!request}
         color="white"
         backgroundColor={colors.orange.dark}
         onPress={() => {
