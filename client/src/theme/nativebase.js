@@ -8,6 +8,7 @@ const theme = extendTheme({
   Button: {
     // Can simply pass default props to change default behaviour of components.
     baseStyle: {
+      // fix sizesXvv v XXXXe≈
       paddingVertical: 12,
       paddingHorizontal: 32,
       alignItems:'center',
