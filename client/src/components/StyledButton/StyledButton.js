@@ -6,14 +6,9 @@ import { Text } from "native-base"
 
 const StyledButton = ({
   title,
-  variants,
-  onPress,
-}) => {
-
-    return (
   
 
-<Button onPress={onPress} variants={variants}> 
+<Button onPress={onPress} variant={variant} > 
 {title}
 </Button>
     );
@@ -21,14 +16,13 @@ const StyledButton = ({
 // Button object fields 
 StyledButton.propTypes = {
   title: PropTypes.string,
-  colorScheme: PropTypes.string,
-  variants: PropTypes.string,
+  variant: PropTypes.string,
   onPress: PropTypes.func,
 }
 
 StyledButton.defaultProps = {
-  title: 'Button', 
-  variant: "primary",
+  title: 'Button',
+  variant: 'primary', 
   onPress: () => {},  
 }
 
