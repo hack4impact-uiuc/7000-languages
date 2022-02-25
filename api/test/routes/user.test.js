@@ -8,6 +8,8 @@ const {
   POST_WRONG_USER_ADMIN,
   POST_WRONG_USER_NO_AUTH_ID,
   POST_WRONG_USER_ADDITIONAL_FIELDS,
+  POST_USER_ONE_LESS_FIELD,
+  POST_WRONG_USER_NO_ROLE,
 } = require('../mock-data/user-mock-data');
 
 // This block tests the POST /user/ endpoint.
@@ -46,7 +48,7 @@ describe('POST /user/ ', () => {
   });
 
   test('User Role is always 0', async () => {
-    const body = POST_WRONG_USER_ADMIN;
+    const body = POST_USER_ADMIN;
     const response = await request(app).post('/user/').send(body);
 
     const message = response.body.message;
@@ -65,6 +67,12 @@ describe('POST /user/ ', () => {
   test('No role still creates a new user', async () => {
     const body = POST_WRONG_USER_NO_ROLE;
     const response = await request(app).post('/user/').send(body);
+    expect(response.status).toBeGreaterThanOrEqual(400);
+  });
+
+  test('Additional fields still create a new user', async () => {
+    const body = POST_USER_ADDITIONAL_FIELDS;
+    const response = await request(app).post('/user/').send(body);
 
     const message = response.body.message;
     const result = _.omit(response.body.result, ['_id', '__v']);
@@ -73,8 +81,8 @@ describe('POST /user/ ', () => {
     expect(result).toEqual(POST_SIMPLE_USER_EXPECTED);
   });
 
-  test('Additional fields still create a new user', async () => {
-    const body = POST_WRONG_USER_ADDITIONAL_FIELDS;
+  test('One less field still create a new user', async () => {
+    const body = POST_USER_ONE_LESS_FIELD;
     const response = await request(app).post('/user/').send(body);
 
     const message = response.body.message;
