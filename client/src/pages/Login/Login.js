@@ -4,7 +4,6 @@ import Button from 'components/Button'
 import { colors } from 'theme'
 import { Text } from 'native-base'
 import { useDispatch } from 'react-redux'
-import { authenticate } from 'slices/auth.slice'
 import * as Google from 'expo-auth-session/providers/google';
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser';
@@ -22,7 +21,6 @@ const styles = StyleSheet.create({
 WebBrowser.maybeCompleteAuthSession();
 
 const Login = () => {
-  const dispatch = useDispatch()
 
   /*
     Sources:
@@ -43,13 +41,8 @@ const Login = () => {
       // console.log(response);
       // console.log(params);
       // console.log(authentication);
-      alert("signed in")
     }
   }, [response]);
-
-  const loginUser = () => {
-    dispatch(authenticate({ loggedIn: true }))
-  }
 
   return (
     <View style={styles.root}>
@@ -66,9 +59,7 @@ const Login = () => {
         title="Login to app"
         color="white"
         backgroundColor={colors.orange.dark}
-        onPress={() => {
-          promptAsync();
-        }}
+        onPress={promptAsync}
       />
     </View>
   )
