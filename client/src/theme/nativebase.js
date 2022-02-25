@@ -14,7 +14,7 @@ const theme = extendTheme({
       borderRadius: 12,
     }, 
 
-    colorScheme: {
+    variant: {
       primary: {
         color: "white.dark",
         bg: "red.dark",
@@ -24,7 +24,7 @@ const theme = extendTheme({
         bg: "white.dark"
       },
       tertiary: {
-        variant: "outline",
+        
         bg: "gray.light",
       }, 
       

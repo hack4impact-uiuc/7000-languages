@@ -41,8 +41,7 @@ const Home = ({ navigation }) => {
       <Text fontSize="6xl">{text}</Text>
       <StyledButton
         title="Primary Button"
-        colorScheme="primary"
-        variant="solid"
+        variant="primary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
@@ -50,8 +49,7 @@ const Home = ({ navigation }) => {
 
       <StyledButton 
         title="Secondary Button"
-        colorScheme="secondary"
-        variant="solid"
+        variant="secondary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
@@ -59,8 +57,7 @@ const Home = ({ navigation }) => {
       
       <StyledButton 
         title="Tertiary Button"
-        colorScheme="tertiary"
-        variant="outline"
+        variant="tertiary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
