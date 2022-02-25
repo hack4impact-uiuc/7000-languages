@@ -10,23 +10,42 @@ const theme = extendTheme({
     defaultProps: {
       px: 20,
       py: 4,
-      my: 1,
+      my: 2,
       borderRadius: 12,
+      w: "90%",
+      fontSize: "6xl",
     }, 
 
-    variant: {
+    variants: {
       primary: {
         color: "white.dark",
         bg: "red.dark",
+        _text: {
+          color: "white.dark",
+          fontFamily: "GT_Haptik_bold",
+          // fontSize: "0.05em",
+
+        }
       },
       secondary: {
         color: "red.dark",
-        bg: "white.dark"
+        bg: "white.dark",
+        _text: {
+          color: "red.dark",
+          fontFamily: "GT_Haptik_bold",
+        }
       },
       tertiary: {
-        
-        bg: "gray.light",
+        bg: "gray.medium:alpha.00",
+        borderColor: "white.dark",
+        borderWidth: 2,
+        _text: {
+          color: "white.dark",
+          fontFamily: "GT_Haptik_bold",
+        }
       }, 
+
+      
       
     },
   },
