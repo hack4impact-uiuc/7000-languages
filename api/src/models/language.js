@@ -19,7 +19,7 @@ const Unit = new mongoose.Schema({
   selected: { type: Boolean, required: true },
 });
 
-Unit.index({ _course_id: 1 });
+Unit.index({ _course_id: 1, _order: 1});
 
 const Vocab = new mongoose.Schema({
   _order: { type: Number, required: true, index: true },
