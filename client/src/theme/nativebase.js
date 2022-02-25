@@ -7,28 +7,28 @@ const theme = extendTheme({
   components: {
   Button: {
     // Can simply pass default props to change default behaviour of components.
-    baseStyle: {
-      paddingVertical: 12,
-      paddingHorizontal: 32,
-      alignItems:'center',
-      justifyContent:'center',
-      borderRadius: 5,
+    defaultProps: {
+      px: 20,
+      py: 4,
+      my: 1,
+      borderRadius: 12,
     },
 
-    // Fix colors to represent figma, can do later 
-    primary: {
-       // change text color to opposite 
-      backgroundColor: colors.red.dark
+    colorScheme: {
+      primary: {
+        color: "white.dark",
+        bg: "red.dark",
+      },
+      secondary: {
+        color: "red.dark",
+        bg: "white.dark"
+      },
+      tertiary: {
+        variant: "outline",
+        bg: "gray.light",
+      }, 
+      
     },
-    secondary: {
-       // change text color to opposite 
-      backgroundColor: colors.red.dark
-    },
-    tertiary: {
-      // need to change to white
-      // change text color to opposite 
-      backgroundColor: colors.gray.light
-    }, 
   },
 },
   fontConfig: {

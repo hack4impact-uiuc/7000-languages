@@ -26,6 +26,10 @@ const colors = {
     medium: '#5B6165', // 500 opacity
     dark: '#060606', // 800 opacity
   },
+  white: {
+    light: 'FAFAFA',
+    dark:'#FFFFFF',
+  },
 }
 
 export default colors
