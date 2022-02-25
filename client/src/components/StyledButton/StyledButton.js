@@ -6,33 +6,30 @@ import { Text } from "native-base"
 
 const StyledButton = ({
   title,
-  type,
+  variants,
   onPress,
 }) => {
 
     return (
   
 
-<Button onPress={onPress} variant={type}> 
+<Button onPress={onPress} variants={variants}> 
 {title}
 </Button>
     );
   }
-
-
-
-
 // Button object fields 
 StyledButton.propTypes = {
   title: PropTypes.string,
-  type: PropTypes.string,
+  colorScheme: PropTypes.string,
+  variants: PropTypes.string,
   onPress: PropTypes.func,
 }
 
 StyledButton.defaultProps = {
-  title: 'Button',
-  type: 'Primary', 
-  onPress: () => {},
+  title: 'Button', 
+  variant: "primary",
+  onPress: () => {},  
 }
 
 export default StyledButton

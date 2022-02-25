@@ -39,13 +39,30 @@ const Home = ({ navigation }) => {
         Home
       </Text>
       <Text fontSize="6xl">{text}</Text>
-      <StyledButton
-        title="Go to Details"
-        type="Secondary"
+      <StyledButton5
+        variant="primary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
       />
+
+      <StyledButton 
+        title="Secondary Button"
+        variant="secondary"
+        onPress={() => {
+          navigation.navigate('Details', { from: 'Home' })
+        }}
+      />
+      
+      <StyledButton 
+        title="Tertiary Button"
+        variant='secondary'
+        onPress={() => {
+          navigation.navigate('Details', { from: 'Home' })
+        }}
+      />
+
+
       <Box>Hello world</Box>
     </View>
   )
