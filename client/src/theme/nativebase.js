@@ -12,7 +12,7 @@ const theme = extendTheme({
       py: 4,
       my: 1,
       borderRadius: 12,
-    },
+    }, 
 
     colorScheme: {
       primary: {
