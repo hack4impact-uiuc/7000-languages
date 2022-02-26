@@ -4,6 +4,12 @@ import { StyleSheet, View, StatusBar } from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
 import { Text } from 'native-base'
+import Constants from 'expo-constants'
+import * as WebBrowser from 'expo-web-browser'
+import * as Google from 'expo-google-app-auth'
+import { authenticate, saveToken } from 'slices/auth.slice'
+import { useDispatch } from 'react-redux'
+import { saveUserIDToken } from '../../utils/auth'
 
 const styles = StyleSheet.create({
   root: {
@@ -15,8 +21,34 @@ const styles = StyleSheet.create({
   },
 })
 
-const Landing = ({ navigation }) => (
-  <View style={styles.root}>
+WebBrowser.maybeCompleteAuthSession();
+
+const Landing = () => {
+
+  /*
+      Sources:
+      https://docs.expo.dev/versions/latest/sdk/auth-session/
+      https://stackoverflow.com/questions/66966772/expo-auth-session-providers-google-google-useauthrequest
+    */
+  const dispatch = useDispatch()
+
+  const loginUser = async () => {
+    const { idToken } = await Google.logInAsync({
+      expoClientId: Constants.manifest.extra.expoClientId,
+      iosClientId: Constants.manifest.extra.iosClientId,
+      androidClientId: Constants.manifest.extra.androidClientId,
+    })
+
+    if (idToken !== undefined) {
+      await saveUserIDToken(idToken);
+      dispatch(saveToken(idToken));
+      dispatch(authenticate({ loggedIn: true, idToken: idToken }));
+    }
+  }
+
+
+
+  return (<View style={styles.root}>
     <StatusBar barStyle="light-content" />
     <Text
       fontWeight="regular"
@@ -27,24 +59,12 @@ const Landing = ({ navigation }) => (
       Landing
     </Text>
     <Button
-      title="Go to Login"
+      title="Login to app"
       color="white"
       backgroundColor={colors.orange.dark}
-      onPress={() => {
-        navigation.navigate('Login', { from: 'Landing' })
-      }}
+      onPress={loginUser}
     />
-  </View>
-)
-
-Landing.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }),
-}
-
-Landing.defaultProps = {
-  navigation: { navigate: () => null },
-}
+  </View>)
+};
 
 export default Landing

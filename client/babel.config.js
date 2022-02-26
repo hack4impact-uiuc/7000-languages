@@ -11,7 +11,7 @@ module.exports = (api) => {
             pages: './src/pages',
             theme: './src/theme',
             utils: './src/utils',
-            slices: './src/slices',
+            slices: './src/redux/slices',
             api: './src/api/api'
           },
         },

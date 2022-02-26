@@ -23,8 +23,8 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    authenticate: (state, action) => {
-      state.loggedIn = action.payload
+    authenticate: (state, { payload }) => {
+      state.loggedIn = payload.loggedIn;
     },
     saveToken: (state, { payload }) => {
       state.idToken = payload.idToken

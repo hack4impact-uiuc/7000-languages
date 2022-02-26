@@ -7,7 +7,7 @@ import { getSampleHome } from 'api'
 import { Box, Text } from 'native-base'
 import { authenticate, removeToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
-import { removeUserToken } from '../../utils/auth'
+import { removeUserIDToken } from '../../utils/auth'
 
 const styles = StyleSheet.create({
   root: {
@@ -33,9 +33,9 @@ const Home = ({ navigation }) => {
   }, [setText])
 
   const logoutUser = async () => {
-    await removeUserToken()
+    await removeUserIDToken()
     dispatch(removeToken())
-    dispatch(authenticate(false))
+    dispatch(authenticate({ loggedIn: false }))
   }
 
   return (

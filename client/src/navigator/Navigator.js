@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticate, saveToken } from 'slices/auth.slice'
-import { loadUserToken } from '../utils/auth'
+import { loadUserIDToken } from 'utils/auth'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator } from './Stacks'
 
@@ -16,12 +16,12 @@ const Navigator = () => {
 
   useEffect(() => {
     const loadAuthFromPersistentStorage = async () => {
-      const userToken = await loadUserToken()
-      if (userToken != null) {
+      const idToken = await loadUserIDToken()
+      if (idToken != null) {
         dispatch(saveToken(userToken))
-        dispatch(authenticate(true))
+        dispatch(authenticate({ loggedIn: true, idToken }))
       } else {
-        dispatch(authenticate(false))
+        dispatch(authenticate({ loggedIn: false }))
       }
     }
 
