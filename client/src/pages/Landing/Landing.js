@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
@@ -21,10 +20,9 @@ const styles = StyleSheet.create({
   },
 })
 
-WebBrowser.maybeCompleteAuthSession();
+WebBrowser.maybeCompleteAuthSession()
 
 const Landing = () => {
-
   /*
       Sources:
       https://docs.expo.dev/versions/latest/sdk/auth-session/
@@ -40,31 +38,31 @@ const Landing = () => {
     })
 
     if (idToken !== undefined) {
-      await saveUserIDToken(idToken);
-      dispatch(saveToken(idToken));
-      dispatch(authenticate({ loggedIn: true, idToken: idToken }));
+      await saveUserIDToken(idToken)
+      dispatch(saveToken(idToken))
+      dispatch(authenticate({ loggedIn: true, idToken }))
     }
   }
 
-
-
-  return (<View style={styles.root}>
-    <StatusBar barStyle="light-content" />
-    <Text
-      fontWeight="regular"
-      color="blue.dark"
-      fontStyle="italic"
-      fontSize="6xl"
-    >
-      Landing
-    </Text>
-    <Button
-      title="Login to app"
-      color="white"
-      backgroundColor={colors.orange.dark}
-      onPress={loginUser}
-    />
-  </View>)
-};
+  return (
+    <View style={styles.root}>
+      <StatusBar barStyle="light-content" />
+      <Text
+        fontWeight="regular"
+        color="blue.dark"
+        fontStyle="italic"
+        fontSize="6xl"
+      >
+        Landing
+      </Text>
+      <Button
+        title="Login to app"
+        color="white"
+        backgroundColor={colors.orange.dark}
+        onPress={loginUser}
+      />
+    </View>
+  )
+}
 
 export default Landing

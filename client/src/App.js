@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import { Provider } from 'react-redux'
-import store from './redux/store'
 import 'utils/ignore'
 
 // assets
@@ -10,6 +9,7 @@ import { fontAssets } from 'theme/fonts'
 import { NativeBaseProvider } from 'native-base'
 import { nativebase } from 'theme'
 import Navigator from './navigator'
+import store from './redux/store'
 
 const App = () => {
   const [didLoad, setDidLoad] = useState(false)

@@ -6,13 +6,13 @@ import { ASYNC_STORAGE_ID_TOKEN_KEY } from './constants'
  * @returns {String} The user token saved in Async Storage
  */
 export const loadUserIDToken = async () => {
-    try {
-        const userToken = await AsyncStorage.getItem(ASYNC_STORAGE_ID_TOKEN_KEY)
-        return userToken
-    } catch (e) {
-        console.error(e.message)
-        return null
-    }
+  try {
+    const userToken = await AsyncStorage.getItem(ASYNC_STORAGE_ID_TOKEN_KEY)
+    return userToken
+  } catch (e) {
+    console.error(e.message)
+    return null
+  }
 }
 
 /**
@@ -21,13 +21,13 @@ export const loadUserIDToken = async () => {
  * @returns {Boolean} true if the operation was successful
  */
 export const saveUserIDToken = async (value) => {
-    try {
-        await AsyncStorage.setItem(ASYNC_STORAGE_ID_TOKEN_KEY, value)
-        return true
-    } catch (e) {
-        console.error(e.message)
-        return false
-    }
+  try {
+    await AsyncStorage.setItem(ASYNC_STORAGE_ID_TOKEN_KEY, value)
+    return true
+  } catch (e) {
+    console.error(e.message)
+    return false
+  }
 }
 
 /**
@@ -35,11 +35,11 @@ export const saveUserIDToken = async (value) => {
  * @returns {Boolean} true if the operation was successful
  */
 export const removeUserIDToken = async () => {
-    try {
-        await AsyncStorage.removeItem(ASYNC_STORAGE_ID_TOKEN_KEY)
-        return true
-    } catch (e) {
-        console.error(e.message)
-        return false
-    }
+  try {
+    await AsyncStorage.removeItem(ASYNC_STORAGE_ID_TOKEN_KEY)
+    return true
+  } catch (e) {
+    console.error(e.message)
+    return false
+  }
 }

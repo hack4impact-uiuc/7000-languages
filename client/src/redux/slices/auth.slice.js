@@ -24,7 +24,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     authenticate: (state, { payload }) => {
-      state.loggedIn = payload.loggedIn;
+      state.loggedIn = payload.loggedIn
     },
     saveToken: (state, { payload }) => {
       state.idToken = payload.idToken
