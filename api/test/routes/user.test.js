@@ -102,8 +102,8 @@ describe('POST /user/ ', () => {
     const body_1 = POST_SIMPLE_USER_EXPECTED;
     const response_1 = await request(app).post('/user/').send(body_1);
 
-    const message = response_1.body_1.message;
-    const result = _.omit(response_1.body_1.result, ['_id', '__v']);
+    const message = response_1.body.message;
+    const result = _.omit(response_1.body.result, ['_id', '__v']);
 
     expect(message).toEqual('Successfully created a new user');
     expect(result).toEqual(POST_SIMPLE_USER_EXPECTED);
