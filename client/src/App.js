@@ -21,7 +21,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    handleLoadAssets();
+    handleLoadAssets()
   }, [])
 
   return didLoad ? (

@@ -5,9 +5,10 @@ import Button from 'components/Button'
 import { colors } from 'theme'
 import { getSampleHome } from 'api'
 import { Box, Text } from 'native-base'
-import { removeUserToken } from '../../utils/auth'
 import { authenticate, removeToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
+import { removeUserToken } from '../../utils/auth'
+
 const styles = StyleSheet.create({
   root: {
     flex: 1,
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
 const Home = ({ navigation }) => {
   const [text, setText] = useState('Loading data...')
 
-  let dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const getData = async () => {
@@ -32,9 +33,9 @@ const Home = ({ navigation }) => {
   }, [setText])
 
   const logoutUser = async () => {
-    await removeUserToken();
-    dispatch(removeToken());
-    dispatch(authenticate(false));
+    await removeUserToken()
+    dispatch(removeToken())
+    dispatch(authenticate(false))
   }
 
   return (
@@ -56,11 +57,7 @@ const Home = ({ navigation }) => {
           navigation.navigate('Details', { from: 'Home' })
         }}
       />
-      <Button
-        title="Logout"
-        type="secondary"
-        onPress={logoutUser}
-      />
+      <Button title="Logout" type="secondary" onPress={logoutUser} />
       <Box>Hello world</Box>
     </View>
   )

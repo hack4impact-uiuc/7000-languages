@@ -1,25 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from "native-base"
-import { colors } from 'theme'
-import { Text } from "native-base"
+import { Button } from 'native-base'
 
-const StyledButton = ({
-  title,
-  type,
-  onPress,
-}) => {
-  return (
-    <Button onPress={onPress} variant="rounded">
-      {title}
-    </Button>
-  );
-}
+const StyledButton = ({ title, type, onPress }) => (
+  <Button onPress={onPress} variant={type}>
+    {title}
+  </Button>
+)
 
-
-
-
-// Button object fields 
+// Button object fields
 StyledButton.propTypes = {
   title: PropTypes.string,
   type: PropTypes.string,
@@ -29,7 +18,7 @@ StyledButton.propTypes = {
 StyledButton.defaultProps = {
   title: 'Button',
   type: 'Primary',
-  onPress: () => { },
+  onPress: () => {},
 }
 
 export default StyledButton

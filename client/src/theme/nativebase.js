@@ -8,17 +8,17 @@ const theme = extendTheme({
     Button: {
       // Can simply pass default props to change default behaviour of components.
       baseStyle: {
-        rounded: "md",
+        rounded: 'md',
       },
       defaultProps: {
-        backgroundColor: "red.dark",
+        backgroundColor: 'red.dark',
       },
       variants: {
         rounded: {
-          bg: `red.500`,
-          rounded: "full"
-        }
-      }
+          bg: 'red.500',
+          rounded: 'full',
+        },
+      },
     },
   },
   fontConfig: {

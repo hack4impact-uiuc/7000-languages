@@ -4,11 +4,11 @@ import Button from 'components/Button'
 import { colors } from 'theme'
 import { Text } from 'native-base'
 import Constants from 'expo-constants'
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-google-app-auth';
-import { saveUserToken } from '../../utils/auth'
+import * as WebBrowser from 'expo-web-browser'
+import * as Google from 'expo-google-app-auth'
 import { authenticate, saveToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
+import { saveUserToken } from '../../utils/auth'
 
 const styles = StyleSheet.create({
   root: {
@@ -20,27 +20,27 @@ const styles = StyleSheet.create({
   },
 })
 
-WebBrowser.maybeCompleteAuthSession();
+WebBrowser.maybeCompleteAuthSession()
 
 const Login = () => {
   /*
     Sources:
     https://docs.expo.dev/versions/latest/sdk/auth-session/
-    https://stackoverflow.com/questions/66966772/expo-auth-session-providers-google-google-useauthrequest 
+    https://stackoverflow.com/questions/66966772/expo-auth-session-providers-google-google-useauthrequest
   */
-  let dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   const loginUser = async () => {
     const { idToken } = await Google.logInAsync({
       expoClientId: Constants.manifest.extra.expoClientId,
       iosClientId: Constants.manifest.extra.iosClientId,
       androidClientId: Constants.manifest.extra.androidClientId,
-    });
+    })
 
     if (idToken !== undefined) {
-      await saveUserToken(idToken);
-      dispatch(saveToken(idToken));
-      dispatch(authenticate(true));
+      await saveUserToken(idToken)
+      dispatch(saveToken(idToken))
+      dispatch(authenticate(true))
     }
   }
 

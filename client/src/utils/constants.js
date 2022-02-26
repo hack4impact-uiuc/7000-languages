@@ -1,1 +1,1 @@
-export const ASYNC_STORAGE_ID_TOKEN_KEY = 'userToken';
+module.export.ASYNC_STORAGE_ID_TOKEN_KEY = 'userToken'

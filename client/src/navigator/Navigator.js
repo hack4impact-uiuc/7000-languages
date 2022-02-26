@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
-import { loadUserToken } from '../utils/auth'
 import { authenticate, saveToken } from 'slices/auth.slice'
+import { loadUserToken } from '../utils/auth'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator } from './Stacks'
 
@@ -12,20 +12,20 @@ const Navigator = () => {
     The selector will be run whenever the function component renders.
     useSelector() will also subscribe to the Redux store, and run your selector whenever an action is dispatched.
   */
-  let dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const loadAuthFromPersistentStorage = async () => {
-      const userToken = await loadUserToken();
+      const userToken = await loadUserToken()
       if (userToken != null) {
-        dispatch(saveToken(userToken));
-        dispatch(authenticate(true));
+        dispatch(saveToken(userToken))
+        dispatch(authenticate(true))
       } else {
-        dispatch(authenticate(false));
+        dispatch(authenticate(false))
       }
     }
 
-    loadAuthFromPersistentStorage();
+    loadAuthFromPersistentStorage()
   }, [])
 
   const { loggedIn } = useSelector((state) => state.auth)
