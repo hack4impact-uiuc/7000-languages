@@ -62,17 +62,18 @@ describe('POST /user/ ', () => {
     const body = POST_WRONG_USER_NO_AUTH_ID;
     const response = await request(app).post('/user/').send(body);
     
-    const message = response.body.message;
-    const result = _.omit(response.body.result, ['_id', '__v']);
-
-    expect(message).toEqual('Successfully created a new user');
-    expect(result).toEqual(POST_SIMPLE_USER_EXPECTED);
+    expect(response.status).toBeGreaterThanOrEqual(400);
   });
 
   test('No role still creates a new user', async () => {
     const body = POST_WRONG_USER_NO_ROLE;
     const response = await request(app).post('/user/').send(body);
-    expect(response.status).toBeGreaterThanOrEqual(400);
+    
+    const message = response.body.message;
+    const result = _.omit(response.body.result, ['_id', '__v']);
+
+    expect(message).toEqual('Successfully created a new user');
+    expect(result).toEqual(POST_SIMPLE_USER_EXPECTED);
   });
 
   test('Additional fields still create a new user', async () => {
