@@ -1,32 +1,28 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from 'react-redux'
-import { authenticate, saveToken, removeToken } from 'slices/auth.slice'
 import { ASYNC_STORAGE_ID_TOKEN_KEY } from './constants';
 
-const dispatch = useDispatch()
 
-export const getUserToken = async () => {
+export const loadUserToken = async () => {
     try {
-        const userToken = await AsyncStorage.getItem(ASYNC_STORAGE_ID_TOKEN_KEY, value)
-        if (value != null) {
-            dispatch(saveToken(userToken));
-            dispatch(authenticate(true));
-        } else {
-            dispatch(authenticate(false));
-        }
+        const userToken = await AsyncStorage.getItem(ASYNC_STORAGE_ID_TOKEN_KEY);
+        return userToken;
     } catch (e) {
         console.error(e.message);
-        dispatch(authenticate(false));
+    }
+}
+
+export const saveUserToken = async (value) => {
+    try {
+        await AsyncStorage.setItem(ASYNC_STORAGE_ID_TOKEN_KEY, value);
+    } catch (e) {
+        console.error(e.message);
     }
 }
 
 export const removeUserToken = async () => {
     try {
-        await AsyncStorage.removeToken(ASYNC_STORAGE_ID_TOKEN_KEY);
-        dispatch(authenticate(false));
-        dispatch(removeToken())
+        await AsyncStorage.removeItem(ASYNC_STORAGE_ID_TOKEN_KEY);
     } catch (e) {
         console.error(e.message);
-        dispatch(authenticate(false));
     }
 }

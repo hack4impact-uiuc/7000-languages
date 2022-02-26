@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
 import { Text } from 'native-base'
-import { useDispatch } from 'react-redux'
-import * as Google from 'expo-auth-session/providers/google';
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-google-app-auth';
+import { saveUserToken } from '../../utils/auth'
+import { authenticate, saveToken } from 'slices/auth.slice'
+import { useDispatch } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -21,28 +23,26 @@ const styles = StyleSheet.create({
 WebBrowser.maybeCompleteAuthSession();
 
 const Login = () => {
-
   /*
     Sources:
     https://docs.expo.dev/versions/latest/sdk/auth-session/
     https://stackoverflow.com/questions/66966772/expo-auth-session-providers-google-google-useauthrequest 
   */
+  let dispatch = useDispatch()
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    responseType: "id_token",
-    expoClientId: Constants.manifest.extra.expoClientId,
-    iosClientId: Constants.manifest.extra.iosClientId,
-    androidClientId: Constants.manifest.extra.androidClientId,
-  });
+  const loginUser = async () => {
+    const { idToken } = await Google.logInAsync({
+      expoClientId: Constants.manifest.extra.expoClientId,
+      iosClientId: Constants.manifest.extra.iosClientId,
+      androidClientId: Constants.manifest.extra.androidClientId,
+    });
 
-  useEffect(() => {
-    if (response?.type === 'success') {
-      const { params, authentication } = response;
-      // console.log(response);
-      // console.log(params);
-      // console.log(authentication);
+    if (idToken !== undefined) {
+      await saveUserToken(idToken);
+      dispatch(saveToken(idToken));
+      dispatch(authenticate(true));
     }
-  }, [response]);
+  }
 
   return (
     <View style={styles.root}>
@@ -59,7 +59,7 @@ const Login = () => {
         title="Login to app"
         color="white"
         backgroundColor={colors.orange.dark}
-        onPress={promptAsync}
+        onPress={loginUser}
       />
     </View>
   )

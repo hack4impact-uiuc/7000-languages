@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { useSelector } from 'react-redux'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { loadUserToken } from '../utils/auth'
+import { authenticate, saveToken } from 'slices/auth.slice'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator } from './Stacks'
 
@@ -11,15 +12,27 @@ const Navigator = () => {
     The selector will be run whenever the function component renders.
     useSelector() will also subscribe to the Redux store, and run your selector whenever an action is dispatched.
   */
+  let dispatch = useDispatch()
+
+  useEffect(() => {
+    const loadAuthFromPersistentStorage = async () => {
+      const userToken = await loadUserToken();
+      if (userToken != null) {
+        dispatch(saveToken(userToken));
+        dispatch(authenticate(true));
+      } else {
+        dispatch(authenticate(false));
+      }
+    }
+
+    loadAuthFromPersistentStorage();
+  }, [])
 
   const { loggedIn } = useSelector((state) => state.auth)
 
   /*
     Based on whether the user is logged in or not, we will present the appropriate navigators.
-
-    TODO: Load some authentication state from encrypted persistent storage (for example, SecureStore).
   */
-
   return loggedIn ? (
     <NavigationContainer>
       <DrawerNavigator />
