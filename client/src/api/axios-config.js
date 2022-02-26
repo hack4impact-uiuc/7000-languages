@@ -32,12 +32,6 @@ const addAuthHeader = async (config) => {
   return updatedConfig
 }
 
-/**
- * Called when a request returns an error.
- * Set the token to null in case it was caused by an old auth token.
- */
-const onRequestError = (error) => Promise.reject(error)
-
-instance.interceptors.request.use(onRequestError, addAuthHeader)
+instance.interceptors.request.use(addAuthHeader)
 
 export default instance

@@ -26,11 +26,16 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const sampleHome = await getSampleHome()
-      setText(sampleHome.result.text)
+      const sampleHome = await getSampleHome();
+      setText(sampleHome.result)
     }
     getData()
   }, [setText])
+
+  const getAPIData = async () => {
+    const sampleHome = await getSampleHome();
+    setText(sampleHome.result)
+  }
 
   const logoutUser = async () => {
     await removeUserIDToken()
@@ -58,7 +63,7 @@ const Home = ({ navigation }) => {
         }}
       />
       <Button title="Logout" type="secondary" onPress={logoutUser} />
-      <Box>Hello world</Box>
+      <Button title="Get Data" type="secondary" onPress={getAPIData} />
     </View>
   )
 }

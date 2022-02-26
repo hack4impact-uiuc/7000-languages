@@ -4,6 +4,7 @@ const { errorWrap } = require('../middleware');
 const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
 const { ROLE_ENUM } = require('../utils/constants.js');
+const { requireAuthentication } = require('../middleware/authentication');
 
 /**
  * Creates a new user in the database
@@ -27,6 +28,12 @@ router.post(
     await newUser.save();
     return sendResponse(res, 200, 'Successfully created a new user', newUser);
   }),
+);
+
+router.get(
+  '/',
+  requireAuthentication,
+  errorWrap(async (req, res) => sendResponse(res, 200, 'test data', `test data from api${Math.random()}`)),
 );
 
 module.exports = router;
