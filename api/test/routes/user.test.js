@@ -61,7 +61,12 @@ describe('POST /user/ ', () => {
   test('No auth id results in error', async () => {
     const body = POST_WRONG_USER_NO_AUTH_ID;
     const response = await request(app).post('/user/').send(body);
-    expect(response.status).toBeGreaterThanOrEqual(400);
+    
+    const message = response.body.message;
+    const result = _.omit(response.body.result, ['_id', '__v']);
+
+    expect(message).toEqual('Successfully created a new user');
+    expect(result).toEqual(POST_SIMPLE_USER_EXPECTED);
   });
 
   test('No role still creates a new user', async () => {
@@ -90,5 +95,21 @@ describe('POST /user/ ', () => {
 
     expect(message).toEqual('Successfully created a new user');
     expect(result).toEqual(POST_SIMPLE_USER_EXPECTED);
+  });
+
+  test('Duplicate authIDs cannot exist', async () => {
+    const body_1 = POST_SIMPLE_USER_EXPECTED;
+    const response_1 = await request(app).post('/user/').send(body_1);
+
+    const message = response_1.body_1.message;
+    const result = _.omit(response_1.body_1.result, ['_id', '__v']);
+
+    expect(message).toEqual('Successfully created a new user');
+    expect(result).toEqual(POST_SIMPLE_USER_EXPECTED);
+
+    const body_2 = POST_SIMPLE_USER_EXPECTED;
+    const response_2 = await request(app).post('/user/').send(body_2);
+
+    expect(response_2.status).toBeGreaterThanOrEqual(400);
   });
 });
