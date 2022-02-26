@@ -33,7 +33,9 @@ router.post(
 router.get(
   '/',
   requireAuthentication,
-  errorWrap(async (req, res) => sendResponse(res, 200, 'test data', `test data from api${Math.random()}`)),
+  errorWrap(async (req, res) =>
+    sendResponse(res, 200, 'test data', `test data from api${Math.random()}`),
+  ),
 );
 
 module.exports = router;
