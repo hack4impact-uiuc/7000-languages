@@ -34,7 +34,7 @@ const Landing = () => {
     const { idToken } = await Google.logInAsync({
       iosClientId: Constants.manifest.extra.iosClientId,
       androidClientId: Constants.manifest.extra.androidClientId,
-    });
+    })
 
     if (idToken !== undefined) {
       await saveUserIDToken(idToken)

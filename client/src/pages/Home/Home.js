@@ -4,7 +4,7 @@ import { StyleSheet, View, StatusBar } from 'react-native'
 import Button from 'components/Button'
 import { colors } from 'theme'
 import { getSampleHome } from 'api'
-import { Box, Text } from 'native-base'
+import { Text } from 'native-base'
 import { authenticate, removeToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { removeUserIDToken } from '../../utils/auth'
@@ -26,14 +26,14 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const sampleHome = await getSampleHome();
+      const sampleHome = await getSampleHome()
       setText(sampleHome.result)
     }
     getData()
   }, [setText])
 
   const getAPIData = async () => {
-    const sampleHome = await getSampleHome();
+    const sampleHome = await getSampleHome()
     setText(sampleHome.result)
   }
 
