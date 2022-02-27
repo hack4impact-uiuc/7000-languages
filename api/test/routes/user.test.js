@@ -52,22 +52,15 @@ describe('POST /user/ ', () => {
   //   expect(result).toEqual(POST_SIMPLE_USER_EXPECTED);
   // });
 
-  test('API should create user', async () => {
-    const body = POST_SIMPLE_USER;
-    const response = await withAuthentication(
-      request(app).get('/user/').send(body),
-    );
+  // test('API should create user', async () => {
+  //   const body = POST_SIMPLE_USER;
+  //   const response = await withAuthentication(
+  //     request(app).get('/user/').send(body),
+  //   );
 
-    const message = response.body.message;
-    const result = _.omit(response.body.result, ['_id', '__v']);
+  //   const message = response.body.message;
+  //   const result = _.omit(response.body.result, ['_id', '__v']);
 
-    expect(message).toEqual('test data');
-  });
+  //   expect(message).toEqual('test data');
+  // });
 });
-
-// import { OAuth2Client } from "google-auth-library";
-// const mockedVerifyIdToken = jest.fn();
-// it("returns 404 on garbage token", async () => {
-//   OAuth2Client.prototype.verifyIdToken = mockedVerifyIdToken;
-//   mockedVerifyIdToken.mockRejectedValueOnce( Error("Wrong number of segments in token")
-// );
