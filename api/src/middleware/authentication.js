@@ -5,7 +5,7 @@ const {
 } = require('../utils/constants');
 const { sendResponse } = require('../utils/response');
 const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client(process.env.GOOGLE_AUTH_CLIENT_ID);
+const client = new OAuth2Client();
 const { models } = require('../models/index.js');
 
 /**
@@ -25,8 +25,8 @@ module.exports.requireAuthentication = async (req, res, next) => {
       sendResponse(res, 401, ERR_IMPROPER_ID_TOKEN);
     } else {
       // Checks if user exists in MongoDB
-      const user = models.User.findOne({ authID: user.sub }); // user.sub returns the user's Google Account unique ID
-      if (user) {
+      const userInMongo = await models.User.findOne({ authID: user.sub }); // user.sub returns the user's Google Account unique ID
+      if (userInMongo) {
         req.user = user;
         next();
       } else {
@@ -62,7 +62,9 @@ const getUserByIDToken = async (idToken) => {
  */
 const getUserFromRequest = async (req) => {
   const authHeader = req?.headers?.authorization?.split(' ');
-  if (authHeader?.length !== 2) {return null;}
+  if (authHeader?.length !== 2) {
+    return null;
+  }
   const idToken = authHeader[1];
 
   const user = await getUserByIDToken(idToken);
