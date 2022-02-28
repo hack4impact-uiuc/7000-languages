@@ -6,6 +6,11 @@ import { Text } from "native-base"
 
 const StyledButton = ({
   title,
+  variant,
+  onPress,
+}) => {
+
+    return (
   
 
 <Button onPress={onPress} variant={variant} > 

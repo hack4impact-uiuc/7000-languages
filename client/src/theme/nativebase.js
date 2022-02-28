@@ -14,7 +14,8 @@ const theme = extendTheme({
       borderRadius: 12,
     }, 
 
-    variant: {
+    
+    variants: {
       primary: {
         color: "white.dark",
         bg: "red.dark",
@@ -24,8 +25,8 @@ const theme = extendTheme({
         bg: "white.dark"
       },
       tertiary: {
-        
-        bg: "gray.light",
+        bg: "red.light",
+        variants:"ghost"
       }, 
     },
   },
