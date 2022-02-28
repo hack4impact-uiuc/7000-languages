@@ -42,6 +42,7 @@ const Home = ({ navigation }) => {
       <StyledButton
         title="Primary Button"
         variant="primary"
+        _text="color"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
