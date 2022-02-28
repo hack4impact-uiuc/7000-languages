@@ -9,6 +9,7 @@ import * as Google from 'expo-google-app-auth'
 import { authenticate, saveToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { saveUserIDToken } from '../../utils/auth'
+import { createUser } from '../../api/api'
 
 const styles = StyleSheet.create({
   root: {
@@ -37,7 +38,14 @@ const Landing = () => {
     })
 
     if (idToken !== undefined) {
+      const userData = {
+        idToken, // TODO: make sure API can take this value in
+      }
+      // call API
+      await createUser(userData)
+      // Save to Async Storage
       await saveUserIDToken(idToken)
+      // Update Redux Store
       dispatch(saveToken(idToken))
       dispatch(authenticate({ loggedIn: true, idToken }))
     }
