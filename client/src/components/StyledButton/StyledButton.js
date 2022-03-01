@@ -7,16 +7,15 @@ import { Text } from "native-base"
 const StyledButton = ({
   title,
   variant,
-  _text,
   onPress,
-  children
+  leftIcon,
 }) => {
 
     return (
   
 
-<Button onPress={onPress} variant={variant} _text={_text}> 
-{title} {children}
+<Button onPress={onPress} variant={variant} _text={{fontSize: "lg"}} leftIcon={leftIcon} > 
+{title}
 </Button>
     );
   }
@@ -25,8 +24,8 @@ StyledButton.propTypes = {
   title: PropTypes.string,
   variant: PropTypes.string,
   onPress: PropTypes.func,
-  _text: PropTypes.string,
   fontSize: PropTypes.string,
+  leftIcon: PropTypes.string
 }
 
 StyledButton.defaultProps = {
