@@ -27,7 +27,16 @@ module.exports.requireAuthentication = async (req, res, next) => {
       // Checks if user exists in MongoDB
       const userInMongo = await models.User.findOne({ authID: user.sub }); // user.sub returns the user's Google Account unique ID
       if (userInMongo) {
-        req.user = user;
+        const userData = {
+          userInMongo,
+          name: user.name,
+          locate: user.locale,
+          email: user.email,
+          picture: user.picture,
+          given_name: user.given_name,
+          family_name: user.family_name,
+        };
+        req.user = userData;
         next();
       } else {
         sendResponse(res, 401, ERR_NO_MONGO_DOCUMENT);
