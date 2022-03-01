@@ -13,8 +13,14 @@ const theme = extendTheme({
       my: 2,
       borderRadius: 12,
       w: "90%",
-      fontSize: "6xl",
+      fontSize: 9,
     }, 
+
+     breakpoints: {
+      base: "md",
+      md: "lg",
+      lg: "xl"
+    },
 
     variants: {
       primary: {
@@ -23,7 +29,7 @@ const theme = extendTheme({
         _text: {
           color: "white.dark",
           fontFamily: "GT_Haptik_bold",
-          // fontSize: "0.05em",
+          fontSize: "base",
 
         }
       },
@@ -33,6 +39,9 @@ const theme = extendTheme({
         _text: {
           color: "red.dark",
           fontFamily: "GT_Haptik_bold",
+          textS: {
+
+          }
         }
       },
       tertiary: {

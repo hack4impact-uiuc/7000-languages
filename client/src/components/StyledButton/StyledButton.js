@@ -9,13 +9,14 @@ const StyledButton = ({
   variant,
   _text,
   onPress,
+  children
 }) => {
 
     return (
   
 
 <Button onPress={onPress} variant={variant} _text={_text}> 
-{title}
+{title} {children}
 </Button>
     );
   }
