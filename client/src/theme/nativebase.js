@@ -13,7 +13,7 @@ const theme = extendTheme({
       my: 2,
       borderRadius: 12,
       w: "90%",
-      fontSize: "6xl",
+      fontSize: "sm",
     }, 
 
     variants: {

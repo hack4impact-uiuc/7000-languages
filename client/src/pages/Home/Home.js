@@ -49,7 +49,7 @@ const Home = ({ navigation }) => {
       />
 
       <StyledButton 
-        title="Secondary Button"
+        title="Continue with Google"
         variant="secondary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
