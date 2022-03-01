@@ -61,14 +61,14 @@ describe('POST /user/ ', () => {
   test('No auth id results in error', async () => {
     const body = POST_WRONG_USER_NO_AUTH_ID;
     const response = await request(app).post('/user/').send(body);
-    
+
     expect(response.status).toBeGreaterThanOrEqual(400);
   });
 
   test('No role still creates a new user', async () => {
     const body = POST_WRONG_USER_NO_ROLE;
     const response = await request(app).post('/user/').send(body);
-    
+
     const message = response.body.message;
     const result = _.omit(response.body.result, ['_id', '__v']);
 
@@ -111,6 +111,6 @@ describe('POST /user/ ', () => {
     const body_2 = POST_SIMPLE_USER_EXPECTED;
     const response_2 = await request(app).post('/user/').send(body_2);
 
-    expect(response_2.status).toBeGreaterThanOrEqual(400);
+    expect(response_2.status).toEqual(202);
   });
 });
