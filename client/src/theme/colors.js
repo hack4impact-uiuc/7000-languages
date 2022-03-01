@@ -28,7 +28,7 @@ const colors = {
   },
   white: {
     light: 'FAFAFA',
-    dark:'#FFFFFF',
+    dark: '#FFFFFF',
   },
 }
 
