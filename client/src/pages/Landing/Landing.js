@@ -37,9 +37,10 @@ const Landing = () => {
       androidClientId: Constants.manifest.extra.androidClientId,
     })
 
+
     if (idToken !== undefined) {
       const userData = {
-        idToken, // TODO: make sure API can take this value in
+        idToken // TODO: make sure API can take this value in
       }
       // call API
       await createUser(userData)
