@@ -43,8 +43,8 @@ module.exports.POST_WRONG_USER_NO_ROLE = {
 };
 
 module.exports.POST_USER_ONE_LESS_FIELD = {
+  role: ROLE_ENUM.USER,
   authID: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a7',
   adminLanguages: [],
   learnerLanguages: [],
-  collaboratorLanguages: [],
 };
