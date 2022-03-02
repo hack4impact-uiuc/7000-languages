@@ -36,7 +36,7 @@ const Vocab = new mongoose.Schema({
 Vocab.index({ _order: 1 });
 
 const Lesson = new mongoose.Schema({
-  _course_id: { type: String, required: true, index: true, unique: true },
+  _course_id: { type: String, required: true, index: true },
   _unit_id: { type: String, required: true, index: true },
   name: { type: String, required: true },
   _order: { type: Number, required: true, index: true, unique: true },
