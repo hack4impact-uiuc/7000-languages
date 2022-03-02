@@ -1,10 +1,10 @@
 module.exports.POST_SIMPLE_USER = {
-  role: 0,
+  role: ROLE_ENUM.USER,
   authID: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a7',
 };
 
 module.exports.POST_SIMPLE_USER_EXPECTED = {
-  role: 0,
+  role: ROLE_ENUM.USER,
   authID: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a7',
   adminLanguages: [],
   learnerLanguages: [],
@@ -12,14 +12,14 @@ module.exports.POST_SIMPLE_USER_EXPECTED = {
 };
 
 module.exports.POST_WRONG_USER_NO_AUTH_ID = {
-  role: 0,
+  role: ROLE_ENUM.USER,
   adminLanguages: [],
   learnerLanguages: [],
   collaboratorLanguages: [],
 };
 
 module.exports.POST_USER_ADMIN = {
-  role: 1,
+  role: ROLE_ENUM.ADMIN,
   authID: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a7',
   adminLanguages: [],
   learnerLanguages: [],
@@ -27,7 +27,7 @@ module.exports.POST_USER_ADMIN = {
 };
 
 module.exports.POST_USER_ADDITIONAL_FIELDS = {
-  role: 0,
+  role: ROLE_ENUM.USER,
   authID: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a7',
   adminLanguages: [],
   learnerLanguages: [],
