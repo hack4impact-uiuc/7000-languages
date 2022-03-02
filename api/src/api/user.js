@@ -19,7 +19,9 @@ router.post(
     const userInfo = req.body;
     const exists = await models.User.exists({ authID: userInfo.authID });
     if (exists) {
-      return sendResponse(res, 202, 'User with this authID already exists');
+      const returnInfo = req.body
+      delete returnInfo.authID
+      return sendResponse(res, 202, 'User with this authID already exists', returnInfo);
     }
     const newUser = new models.User({
       role: ROLE_ENUM.USER,
