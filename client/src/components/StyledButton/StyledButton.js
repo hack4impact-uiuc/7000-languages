@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'native-base'
-import { colors } from 'theme'
-import { Text } from 'native-base'
 
 const StyledButton = ({ title, variant, onPress, leftIcon }) => {
   return (
@@ -21,7 +19,6 @@ StyledButton.propTypes = {
   title: PropTypes.string,
   variant: PropTypes.string,
   onPress: PropTypes.func,
-  fontSize: PropTypes.string,
   leftIcon: PropTypes.element,
 }
 

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
+import { AntDesign } from '@expo/vector-icons'
 
 const styles = StyleSheet.create({
   root: {
