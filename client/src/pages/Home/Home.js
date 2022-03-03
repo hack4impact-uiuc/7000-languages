@@ -5,7 +5,6 @@ import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import { getSampleHome } from 'api'
 import { Box, Text } from 'native-base'
-import { AntDesign } from '@expo/vector-icons'
 
 const styles = StyleSheet.create({
   root: {
@@ -51,7 +50,6 @@ const Home = ({ navigation }) => {
 
       <StyledButton
         title="Continue with Google"
-        leftIcon={<AntDesign name="google" size={24} color="#CE584E" />}
         variant="secondary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })

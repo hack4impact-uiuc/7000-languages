@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
-import { AntDesign } from '@expo/vector-icons'
 
 const styles = StyleSheet.create({
   root: {
@@ -28,7 +27,6 @@ const Details = ({ route, navigation }) => {
 
       <StyledButton
         title="Go Back"
-        leftIcon={<AntDesign name="google" size={24} color="#E9BAB6" />}
         variant="secondary"
         onPress={() => {
           navigation.navigate('Home', { from: 'Details' })
