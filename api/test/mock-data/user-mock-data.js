@@ -1,4 +1,4 @@
-const { ROLE_ENUM } = require('../../utils/constants.js');
+const { ROLE_ENUM } = require('api/src/utils/constants.js');
 
 module.exports.POST_SIMPLE_USER = {
   role: ROLE_ENUM.USER,
