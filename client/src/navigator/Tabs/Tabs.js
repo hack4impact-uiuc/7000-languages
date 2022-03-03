@@ -21,10 +21,10 @@ const TabNavigator = () => (
       // eslint-disable-next-line react/prop-types
       tabBarIcon: ({ focused }) => {
         switch (route.name) {
-          case 'Home':
+          case 'Units':
             return (
               <FontIcon
-                name="home"
+                name="file"
                 color={focused ? colors.red.dark : colors.gray.dark}
                 size={20}
                 solid
@@ -58,7 +58,7 @@ const TabNavigator = () => (
     initialRouteName="Home"
     swipeEnabled={false}
   >
-    <Tab.Screen name="Home" component={HomeNavigator} />
+    <Tab.Screen name="Units" component={HomeNavigator} />
     <Tab.Screen name="Profile" component={ProfileNavigator} />
   </Tab.Navigator>
 )

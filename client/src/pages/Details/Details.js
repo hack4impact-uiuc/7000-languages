@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
-import Button from 'components/Button'
+import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 
 const styles = StyleSheet.create({
@@ -24,11 +24,13 @@ const Details = ({ route, navigation }) => {
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
       <Text style={styles.title}>{`Details (from ${from})`}</Text>
-      <Button
+
+      <StyledButton
         title="Go Back"
-        color="white"
-        backgroundColor={colors.orange.dark}
-        onPress={navigation.goBack}
+        variant="secondary"
+        onPress={() => {
+          navigation.navigate('Home', { from: 'Details' })
+        }}
       />
     </View>
   )
