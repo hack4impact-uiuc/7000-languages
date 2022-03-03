@@ -20,7 +20,7 @@ router.post(
     const userInfo = req.body;
     const exists = await models.User.exists({ authID: userInfo.authID });
     if (exists) {
-      const result = userInfo;
+      let result = userInfo;
       result = _.omit(result, ['authID']);
       return sendResponse(
         res,
@@ -37,7 +37,7 @@ router.post(
       collaboratorLanguages: [],
     });
     await newUser.save();
-    const newResult = newUser.toJSON();
+    let newResult = newUser.toJSON();
     newResult = _.omit(newResult, ['authID']);
     return sendResponse(res, 200, 'Successfully created a new user', newResult);
   }),
