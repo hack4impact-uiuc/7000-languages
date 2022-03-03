@@ -1,3 +1,5 @@
+const { ROLE_ENUM } = require('../../utils/constants.js');
+
 module.exports.POST_SIMPLE_USER = {
   role: ROLE_ENUM.USER,
   authID: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a7',
