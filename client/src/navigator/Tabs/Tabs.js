@@ -24,7 +24,7 @@ const TabNavigator = () => (
           case 'Home':
             return (
               <FontIcon
-                name="home"
+                name="file"
                 color={focused ? colors.red.dark : colors.gray.dark}
                 size={20}
                 solid
