@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, StatusBar } from 'react-native'
-import Button from 'components/Button'
+import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import { Text } from 'native-base'
 
@@ -26,7 +26,7 @@ const Landing = ({ navigation }) => (
     >
       Landing
     </Text>
-    <Button
+    <StyledButton
       title="Go to Login"
       color="white"
       backgroundColor={colors.orange.dark}

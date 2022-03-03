@@ -51,7 +51,7 @@ const Home = ({ navigation }) => {
 
       <StyledButton
         title="Continue with Google"
-        leftIcon={<AntDesign name="google" size={24} color="#E9BAB6" />}
+        leftIcon={<AntDesign name="google" size={24} color="#CE584E" />}
         variant="secondary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
@@ -66,7 +66,7 @@ const Home = ({ navigation }) => {
         }}
       />
 
-      <Box>Hello world</Box>
+      <Box>ghghghgh</Box>
     </View>
   )
 }

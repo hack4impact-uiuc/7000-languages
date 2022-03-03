@@ -22,12 +22,13 @@ StyledButton.propTypes = {
   variant: PropTypes.string,
   onPress: PropTypes.func,
   fontSize: PropTypes.string,
-  leftIcon: PropTypes.string,
+  leftIcon: PropTypes.element,
 }
 
 StyledButton.defaultProps = {
   title: 'Button',
   variant: 'primary',
+  leftIcon: null,
   onPress: () => {},
 }
 

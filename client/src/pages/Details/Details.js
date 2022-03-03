@@ -24,11 +24,14 @@ const Details = ({ route, navigation }) => {
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
       <Text style={styles.title}>{`Details (from ${from})`}</Text>
+
       <StyledButton
-        title="Go Back!!!"
-        color={colors.white.dark}
-        backgroundColor="red.dark"
-        onPress={navigation.goBack}
+        title="Go Back"
+        leftIcon={<AntDesign name="google" size={24} color="#E9BAB6" />}
+        variant="secondary"
+        onPress={() => {
+          navigation.navigate('Home', { from: 'Details' })
+        }}
       />
     </View>
   )

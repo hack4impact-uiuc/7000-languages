@@ -17,7 +17,6 @@ const theme = extendTheme({
 
       variants: {
         primary: {
-          color: 'white.dark',
           bg: 'red.dark',
           _text: {
             color: 'white.dark',
@@ -25,7 +24,6 @@ const theme = extendTheme({
           },
         },
         secondary: {
-          color: 'red.dark',
           bg: 'white.dark',
           _text: {
             color: 'red.dark',

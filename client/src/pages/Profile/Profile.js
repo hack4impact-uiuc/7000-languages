@@ -24,8 +24,7 @@ const Profile = ({ navigation }) => (
     <Text style={styles.title}>Profile</Text>
     <StyledButton
       title="Go to Details"
-      color="white"
-      backgroundColor={colors.orange.dark}
+      variant="primary"
       onPress={() => {
         navigation.navigate('Details', { from: 'Profile' })
       }}
