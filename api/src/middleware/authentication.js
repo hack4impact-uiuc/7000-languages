@@ -7,6 +7,7 @@ const { sendResponse } = require('../utils/response');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client();
 const { models } = require('../models/index.js');
+const _ = require('lodash');
 
 /**
  * Middleware requires the incoming request to be authenticated, meaning that they have previously
@@ -28,15 +29,18 @@ module.exports.requireAuthentication = async (req, res, next) => {
       const userInMongo = await models.User.findOne({ authID: user.sub }); // user.sub returns the user's Google Account unique ID
       if (userInMongo) {
         const userData = {
-          userInMongo,
           name: user.name,
-          locate: user.locale,
+          locale: user.locale,
           email: user.email,
           picture: user.picture,
           given_name: user.given_name,
           family_name: user.family_name,
         };
-        req.user = userData;
+
+
+
+        const mergedUserData = Object.assign(userData, userInMongo.toJSON());
+        req.user = mergedUserData;
         next();
       } else {
         sendResponse(res, 401, ERR_NO_MONGO_DOCUMENT);
