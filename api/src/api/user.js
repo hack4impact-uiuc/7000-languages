@@ -4,7 +4,7 @@ const { errorWrap } = require('../middleware');
 const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
 const { ROLE_ENUM } = require('../utils/constants.js');
-const { requireAuthentication } = require('../middleware/authentication');
+const { requireAuthentication, getUserByIDToken } = require('../middleware/authentication');
 const _ = require('lodash');
 
 /**
@@ -19,7 +19,14 @@ router.post(
   '/',
   errorWrap(async (req, res) => {
     const userInfo = req.body;
-    const exists = await models.User.exists({ authID: userInfo.authID });
+    const userData = await getUserByIDToken(userInfo.idToken);
+    const userAuthID = userData.sub;
+
+    if (userAuthID === null) {
+      return sendResponse(res, 400, 'Missing or improper idToken');
+    }
+
+    const exists = await models.User.exists({ authID: userAuthID });
     if (exists) {
       let result = userInfo;
       result = _.omit(result, ['authID']);

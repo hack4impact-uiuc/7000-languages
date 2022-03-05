@@ -32,14 +32,14 @@ const Landing = () => {
   const dispatch = useDispatch()
 
   const loginUser = async () => {
-    const { user, idToken } = await Google.logInAsync({
+    const { idToken } = await Google.logInAsync({
       iosClientId: Constants.manifest.extra.iosClientId,
       androidClientId: Constants.manifest.extra.androidClientId,
     })
 
     if (idToken !== undefined) {
       const userData = {
-        authID: user.id, // TODO: make sure API can take this value in
+        idToken,
       }
       // call API
       await createUser(userData)

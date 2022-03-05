@@ -6,7 +6,7 @@ const {
   POST_SIMPLE_USER,
   POST_SIMPLE_USER_EXPECTED,
   POST_USER_ADMIN,
-  POST_WRONG_USER_NO_AUTH_ID,
+  POST_WRONG_USER_NO_ID_TOKEN,
   POST_USER_ADDITIONAL_FIELDS,
   POST_USER_ONE_LESS_FIELD,
   POST_WRONG_USER_NO_ROLE,
@@ -75,8 +75,8 @@ describe('POST /user/ ', () => {
     expect(result).toEqual(POST_SIMPLE_USER_EXPECTED);
   });
 
-  test('No auth id results in error', async () => {
-    const body = POST_WRONG_USER_NO_AUTH_ID;
+  test('No id token results in error', async () => {
+    const body = POST_WRONG_USER_NO_ID_TOKEN;
     const response = await request(app).post('/user/').send(body);
 
     expect(response.status).toBeGreaterThanOrEqual(400);
