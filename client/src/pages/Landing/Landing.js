@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, StatusBar } from 'react-native'
-import Button from 'components/Button'
+import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import { Text } from 'native-base'
 import Constants from 'expo-constants'
@@ -62,10 +62,9 @@ const Landing = () => {
       >
         Landing
       </Text>
-      <Button
+      <StyledButton
         title="Login to app"
-        color="white"
-        backgroundColor={colors.orange.dark}
+        variant="primary"
         onPress={loginUser}
       />
     </View>

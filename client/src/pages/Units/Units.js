@@ -4,10 +4,7 @@ import { StyleSheet, View, StatusBar } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import { getSampleHome } from 'api'
-import { Text } from 'native-base'
-import { authenticate, removeToken } from 'slices/auth.slice'
-import { useDispatch } from 'react-redux'
-import { removeUserIDToken } from '../../utils/auth'
+import { Box, Text } from 'native-base'
 
 const styles = StyleSheet.create({
   root: {
@@ -19,29 +16,16 @@ const styles = StyleSheet.create({
   },
 })
 
-const Home = ({ navigation }) => {
+const Units = ({ navigation }) => {
   const [text, setText] = useState('Loading data...')
-
-  const dispatch = useDispatch()
 
   useEffect(() => {
     const getData = async () => {
       const sampleHome = await getSampleHome()
-      setText(sampleHome.result)
+      setText(sampleHome.result.text)
     }
     getData()
   }, [setText])
-
-  const getAPIData = async () => {
-    const sampleHome = await getSampleHome()
-    setText(sampleHome.result)
-  }
-
-  const logoutUser = async () => {
-    await removeUserIDToken()
-    dispatch(removeToken())
-    dispatch(authenticate({ loggedIn: false }))
-  }
 
   return (
     <View style={styles.root}>
@@ -59,23 +43,39 @@ const Home = ({ navigation }) => {
         title="Primary Button"
         variant="primary"
         onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
+          navigation.navigate('Details', { from: 'Units' })
         }}
       />
-      <StyledButton title="Logout" type="secondary" onPress={logoutUser} />
-      <StyledButton title="Get Data" type="tertiary" onPress={getAPIData} />
-    </View >
+
+      <StyledButton
+        title="Continue with Google"
+        variant="secondary"
+        onPress={() => {
+          navigation.navigate('Details', { from: 'Units' })
+        }}
+      />
+
+      <StyledButton
+        title="Tertiary Button"
+        variant="tertiary"
+        onPress={() => {
+          navigation.navigate('Details', { from: 'Units' })
+        }}
+      />
+
+      <Box>ghghghgh</Box>
+    </View>
   )
 }
 
-Home.propTypes = {
+Units.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }),
 }
 
-Home.defaultProps = {
+Units.defaultProps = {
   navigation: { navigate: () => null },
 }
 
-export default Home
+export default Units

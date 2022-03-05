@@ -7,16 +7,37 @@ const theme = extendTheme({
   components: {
     Button: {
       // Can simply pass default props to change default behaviour of components.
-      baseStyle: {
-        rounded: 'md',
-      },
       defaultProps: {
-        backgroundColor: 'red.dark',
+        px: 20,
+        py: 4,
+        my: 2,
+        borderRadius: 12,
+        w: '90%',
       },
+
       variants: {
-        rounded: {
-          bg: 'red.500',
-          rounded: 'full',
+        primary: {
+          bg: 'red.dark',
+          _text: {
+            color: 'white.dark',
+            fontFamily: 'GT_Haptik_bold',
+          },
+        },
+        secondary: {
+          bg: 'white.dark',
+          _text: {
+            color: 'red.dark',
+            fontFamily: 'GT_Haptik_bold',
+          },
+        },
+        tertiary: {
+          bg: 'gray.medium:alpha.00',
+          borderColor: 'white.dark',
+          borderWidth: 2,
+          _text: {
+            color: 'white.dark',
+            fontFamily: 'GT_Haptik_bold',
+          },
         },
       },
     },

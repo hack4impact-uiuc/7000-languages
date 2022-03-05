@@ -116,7 +116,7 @@ describe('POST /user/ ', () => {
   });
 
   test('Duplicate authIDs cannot exist', async () => {
-    const body_1 = POST_SIMPLE_USER_EXPECTED;
+    const body_1 = POST_SIMPLE_USER;
     const response_1 = await request(app).post('/user/').send(body_1);
 
     const message = response_1.body.message;
@@ -125,7 +125,7 @@ describe('POST /user/ ', () => {
     expect(message).toEqual('Successfully created a new user');
     expect(result).toEqual(POST_SIMPLE_USER_EXPECTED);
 
-    const body_2 = POST_SIMPLE_USER_EXPECTED;
+    const body_2 = POST_SIMPLE_USER;
     const response_2 = await request(app).post('/user/').send(body_2);
 
     expect(response_2.status).toEqual(202);

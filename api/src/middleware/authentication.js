@@ -36,9 +36,6 @@ module.exports.requireAuthentication = async (req, res, next) => {
           given_name: user.given_name,
           family_name: user.family_name,
         };
-
-
-
         const mergedUserData = Object.assign(userData, userInMongo.toJSON());
         req.user = mergedUserData;
         next();

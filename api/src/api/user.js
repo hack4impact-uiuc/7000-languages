@@ -5,6 +5,7 @@ const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
 const { ROLE_ENUM } = require('../utils/constants.js');
 const { requireAuthentication } = require('../middleware/authentication');
+const _ = require('lodash');
 
 /**
  * Creates a new user in the database
@@ -20,7 +21,14 @@ router.post(
     const userInfo = req.body;
     const exists = await models.User.exists({ authID: userInfo.authID });
     if (exists) {
-      return sendResponse(res, 202, 'User with this authID already exists');
+      let result = userInfo;
+      result = _.omit(result, ['authID']);
+      return sendResponse(
+        res,
+        202,
+        'User with this authID already exists',
+        result,
+      );
     }
     const newUser = new models.User({
       role: ROLE_ENUM.USER,
@@ -30,7 +38,9 @@ router.post(
       collaboratorLanguages: [],
     });
     await newUser.save();
-    return sendResponse(res, 200, 'Successfully created a new user', newUser);
+    let newResult = newUser.toJSON();
+    newResult = _.omit(newResult, ['authID']);
+    return sendResponse(res, 200, 'Successfully created a new user', newResult);
   }),
 );
 
@@ -38,7 +48,6 @@ router.get(
   '/',
   requireAuthentication,
   errorWrap(async (req, res) => {
-    console.log(req.user);
     sendResponse(res, 200, 'test data', `test data from api${Math.random()}`);
   }),
 );
