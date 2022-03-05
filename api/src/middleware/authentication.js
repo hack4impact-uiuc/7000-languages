@@ -79,6 +79,6 @@ const getUserFromRequest = async (req) => {
   }
   const idToken = authHeader[1];
 
-  const user = await getUserByIDToken(idToken);
+  const user = await self.getUserByIDToken(idToken);
   return user;
 };

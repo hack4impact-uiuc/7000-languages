@@ -4,7 +4,10 @@ const { errorWrap } = require('../middleware');
 const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
 const { ROLE_ENUM } = require('../utils/constants.js');
-const { requireAuthentication, getUserByIDToken } = require('../middleware/authentication');
+const {
+  requireAuthentication,
+  getUserByIDToken,
+} = require('../middleware/authentication');
 const _ = require('lodash');
 
 /**
@@ -20,15 +23,15 @@ router.post(
   errorWrap(async (req, res) => {
     const userInfo = req.body;
     const userData = await getUserByIDToken(userInfo.idToken);
-    const userAuthID = userData.sub;
 
-    if (userAuthID === null) {
+    if (!userData || !userData.sub) {
       return sendResponse(res, 400, 'Missing or improper idToken');
     }
+    const userAuthID = userData.sub;
 
-    const exists = await models.User.exists({ authID: userAuthID });
-    if (exists) {
-      let result = userInfo;
+    const userExists = await models.User.findOne({ authID: userAuthID });
+    if (userExists) {
+      let result = userExists;
       result = _.omit(result, ['authID']);
       return sendResponse(
         res,
@@ -39,7 +42,7 @@ router.post(
     }
     const newUser = new models.User({
       role: ROLE_ENUM.USER,
-      authID: userInfo.authID,
+      authID: userAuthID,
       adminLanguages: [],
       learnerLanguages: [],
       collaboratorLanguages: [],

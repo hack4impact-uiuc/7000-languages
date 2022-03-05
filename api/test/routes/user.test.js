@@ -27,7 +27,7 @@ const { OAuth2Client } = require('google-auth-library');
 const { verifyIdTokenMockReturnValue } = require('../mock-data/auth-mock-data');
 
 const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
-verifyIdTokenMock.mockResolvedValue(verifyIdTokenMockReturnValue);
+verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
 // This block tests the POST /user/ endpoint.
 describe('POST /user/ ', () => {

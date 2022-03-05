@@ -1,12 +1,21 @@
+const { DEFAULT_ID_TOKEN } = require('../utils/constants');
+
 /* 
 This function mocks the return value of the verifyIdToken() method of 
 the OAuth2Client class, which is part of google-auth-library.
 for more details on the function, visit: https://github.com/googleapis/google-auth-library-nodejs/blob/main/src/auth/oauth2client.ts 
 */
-module.exports.verifyIdTokenMockReturnValue = {
-  getPayload() {
-    return GOOGLE_AUTH_USER_DATA;
-  },
+module.exports.verifyIdTokenMockReturnValue = (data) => {
+  const userData = GOOGLE_AUTH_USER_DATA;
+  if (data.idToken !== DEFAULT_ID_TOKEN) {
+    userData.sub = data.idToken;
+  }
+
+  return {
+    getPayload() {
+      return GOOGLE_AUTH_USER_DATA;
+    },
+  };
 };
 
 // This is sample data returned about a Google User
