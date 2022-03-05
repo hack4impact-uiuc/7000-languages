@@ -7,7 +7,6 @@ const { sendResponse } = require('../utils/response');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client();
 const { models } = require('../models/index.js');
-const _ = require('lodash');
 
 /**
  * Middleware requires the incoming request to be authenticated, meaning that they have previously
