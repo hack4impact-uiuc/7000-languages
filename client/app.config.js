@@ -1,12 +1,12 @@
-import { API_PORT, IOS_CLIENT_ID, ANDROID_CLIENT_ID } from '@env'
+import 'dotenv/config'
 
 export default ({ config }) => {
   return {
     ...config,
     extra: {
-      developmentApiPort: API_PORT,
-      iosClientId: IOS_CLIENT_ID,
-      androidClientId: ANDROID_CLIENT_ID,
+      apiDevelopmentPort: process.env.API_PORT,
+      iosClientId: process.env.IOS_CLIENT_ID,
+      androidClientId: process.env.ANDROID_CLIENT_ID,
     },
   }
 }
