@@ -1,13 +1,13 @@
 // 7000 Languages Primary Identity Colors
 const colors = {
   red: {
-    light: '#F9EDED', // 100 opacity
-    medium: '#E9BAB6', // 300 opacity
-    dark: '#CE584E', // 500 opacity
+    light: '#FBEDEC', // 100 opacity
+    medium: '#F2B8B5', // 300 opacity
+    dark: '#DF4E47', // 500 opacity
   },
   blue: {
-    light: '#E9F6F7', // 100 opacity
-    medium: '#AADDDF', // 300 opacity
+    light: '#E5F7F7', // 100 opacity
+    medium: '#9ADFE0', // 300 opacity
     dark: '#4FACB0', // 500 opacity
   },
   orange: {
