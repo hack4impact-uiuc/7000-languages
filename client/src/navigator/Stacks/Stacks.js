@@ -62,15 +62,15 @@ export const AuthNavigator = () => (
 
 export const HomeNavigator = () => (
   <Stack.Navigator
-    initialRouteName="Home"
+    initialRouteName="Units"
     headerMode="screen"
     screenOptions={navigationProps}
   >
     <Stack.Screen
-      name="Home"
+      name="Units"
       component={Home}
       options={({ navigation }) => ({
-        title: 'Home',
+        title: 'Units',
         headerLeft: () => <HeaderLeft navigation={navigation} />,
         headerTitle: () => <HeaderTitle />,
       })}

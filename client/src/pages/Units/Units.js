@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const Home = ({ navigation }) => {
+const Units = ({ navigation }) => {
   const [text, setText] = useState('Loading data...')
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const Home = ({ navigation }) => {
         title="Primary Button"
         variant="primary"
         onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
+          navigation.navigate('Details', { from: 'Units' })
         }}
       />
 
@@ -51,7 +51,7 @@ const Home = ({ navigation }) => {
         title="Continue with Google"
         variant="secondary"
         onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
+          navigation.navigate('Details', { from: 'Units' })
         }}
       />
 
@@ -59,7 +59,7 @@ const Home = ({ navigation }) => {
         title="Tertiary Button"
         variant="tertiary"
         onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
+          navigation.navigate('Details', { from: 'Units' })
         }}
       />
 
@@ -68,14 +68,14 @@ const Home = ({ navigation }) => {
   )
 }
 
-Home.propTypes = {
+Units.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }),
 }
 
-Home.defaultProps = {
+Units.defaultProps = {
   navigation: { navigate: () => null },
 }
 
-export default Home
+export default Units

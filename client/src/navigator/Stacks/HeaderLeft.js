@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 
 const HeaderLeft = ({ navigation }) => {
   return (
-    < FontIcon.Button
+    <FontIcon.Button
       name="bars"
       color="white"
       backgroundColor="transparent"
@@ -22,7 +22,6 @@ const HeaderLeft = ({ navigation }) => {
     />
   )
 }
-
 
 HeaderLeft.propTypes = {
   navigation: PropTypes.shape({
