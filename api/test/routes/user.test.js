@@ -6,11 +6,28 @@ const {
   POST_SIMPLE_USER,
   POST_SIMPLE_USER_EXPECTED,
   POST_USER_ADMIN,
-  POST_WRONG_USER_NO_AUTH_ID,
+  POST_WRONG_USER_NO_ID_TOKEN,
   POST_USER_ADDITIONAL_FIELDS,
   POST_USER_ONE_LESS_FIELD,
   POST_WRONG_USER_NO_ROLE,
 } = require('../mock-data/user-mock-data');
+const { withAuthentication } = require('../utils/auth');
+
+/* 
+  Google Auth Mocker - uses jest to mock the Google Auth library.
+  Include the code below whenever you are testing an endpoint that uses the authentication middleware.
+
+  Sources: 
+  https://stackoverflow.com/questions/53740341/unit-testing-a-js-script-with-jest-can-i-mock-an-es6-class
+  https://jestjs.io/docs/mock-function-api#mockfnmockimplementationfn
+  https://medium.com/@rickhanlonii/understanding-jest-mocks-f0046c68e53c
+*/
+jest.mock('google-auth-library');
+const { OAuth2Client } = require('google-auth-library');
+const { verifyIdTokenMockReturnValue } = require('../mock-data/auth-mock-data');
+
+const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
+verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
 // This block tests the POST /user/ endpoint.
 describe('POST /user/ ', () => {
@@ -58,8 +75,8 @@ describe('POST /user/ ', () => {
     expect(result).toEqual(POST_SIMPLE_USER_EXPECTED);
   });
 
-  test('No auth id results in error', async () => {
-    const body = POST_WRONG_USER_NO_AUTH_ID;
+  test('No id token results in error', async () => {
+    const body = POST_WRONG_USER_NO_ID_TOKEN;
     const response = await request(app).post('/user/').send(body);
 
     expect(response.status).toBeGreaterThanOrEqual(400);

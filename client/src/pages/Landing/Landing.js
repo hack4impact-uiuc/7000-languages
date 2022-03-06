@@ -1,9 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import { Text } from 'native-base'
+import Constants from 'expo-constants'
+import * as WebBrowser from 'expo-web-browser'
+import * as Google from 'expo-google-app-auth'
+import { authenticate, saveToken } from 'slices/auth.slice'
+import { useDispatch } from 'react-redux'
+import { saveUserIDToken } from '../../utils/auth'
+import { createUser } from '../../api/api'
 
 const styles = StyleSheet.create({
   root: {
@@ -15,36 +21,54 @@ const styles = StyleSheet.create({
   },
 })
 
-const Landing = ({ navigation }) => (
-  <View style={styles.root}>
-    <StatusBar barStyle="light-content" />
-    <Text
-      fontWeight="regular"
-      color="blue.dark"
-      fontStyle="italic"
-      fontSize="6xl"
-    >
-      Landing
-    </Text>
-    <StyledButton
-      title="Go to Login"
-      color="white"
-      backgroundColor={colors.orange.dark}
-      onPress={() => {
-        navigation.navigate('Login', { from: 'Landing' })
-      }}
-    />
-  </View>
-)
+WebBrowser.maybeCompleteAuthSession()
 
-Landing.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-  }),
-}
+const Landing = () => {
+  /*
+      Sources:
+      https://docs.expo.dev/versions/latest/sdk/auth-session/
+      https://stackoverflow.com/questions/66966772/expo-auth-session-providers-google-google-useauthrequest
+    */
+  const dispatch = useDispatch()
 
-Landing.defaultProps = {
-  navigation: { navigate: () => null },
+  const loginUser = async () => {
+    const { idToken } = await Google.logInAsync({
+      iosClientId: Constants.manifest.extra.iosClientId,
+      androidClientId: Constants.manifest.extra.androidClientId,
+    })
+
+    if (idToken !== undefined) {
+      const userData = {
+        idToken,
+      }
+      // call API
+      await createUser(userData)
+      // Save to Async Storage
+      await saveUserIDToken(idToken)
+      // Update Redux Store
+      dispatch(saveToken(idToken))
+      dispatch(authenticate({ loggedIn: true, idToken }))
+    }
+  }
+
+  return (
+    <View style={styles.root}>
+      <StatusBar barStyle="light-content" />
+      <Text
+        fontWeight="regular"
+        color="blue.dark"
+        fontStyle="italic"
+        fontSize="6xl"
+      >
+        Landing
+      </Text>
+      <StyledButton
+        title="Login to app"
+        variant="primary"
+        onPress={loginUser}
+      />
+    </View>
+  )
 }
 
 export default Landing
