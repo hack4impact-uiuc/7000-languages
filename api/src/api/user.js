@@ -9,9 +9,7 @@ const {
   getUserByIDToken,
 } = require('../middleware/authentication');
 const _ = require('lodash');
-const {
-  ERR_IMPROPER_ID_TOKEN,
-} = require('../utils/constants');
+const { ERR_IMPROPER_ID_TOKEN } = require('../utils/constants');
 
 /**
  * Creates a new user in the database

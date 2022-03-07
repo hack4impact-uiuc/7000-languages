@@ -8,28 +8,30 @@ import { Alert } from 'react-native'
  * and a callback when a request errors out.
  */
 
-const defaultSuccessCallback = () => { }
-const defaultErrorCallback = () => { }
+const defaultSuccessCallback = () => {}
+const defaultErrorCallback = () => {}
 
-export const useErrorWrap = () => {
-    const errorWrapper = useCallback(
-        async (
-            func,
-            successCallback = defaultSuccessCallback,
-            errorCallback = defaultErrorCallback,
-        ) => {
-            try {
-                if (func) await func()
-                successCallback()
-            } catch (error) {
-                console.error(error)
-                Alert.alert('Error', error.message, [
-                    { text: 'OK', onPress: () => errorCallback() },
-                ])
-            }
-        },
-        [],
-    )
+const useErrorWrap = () => {
+  const errorWrapper = useCallback(
+    async (
+      func,
+      successCallback = defaultSuccessCallback,
+      errorCallback = defaultErrorCallback,
+    ) => {
+      try {
+        if (func) await func()
+        successCallback()
+      } catch (error) {
+        console.error(error)
+        Alert.alert('Error', error.message, [
+          { text: 'OK', onPress: () => errorCallback() },
+        ])
+      }
+    },
+    [],
+  )
 
-    return errorWrapper
+  return errorWrapper
 }
+
+export default useErrorWrap

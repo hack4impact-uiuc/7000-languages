@@ -8,9 +8,9 @@ import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-google-app-auth'
 import { authenticate, saveToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
+import { createUser } from 'api'
+import useErrorWrap from 'hooks/useErrorWrap'
 import { saveUserIDToken } from '../../utils/auth'
-import { createUser } from '../../api/api'
-import { useErrorWrap } from '../../hooks/useErrorWrap'
 
 const styles = StyleSheet.create({
   root: {
