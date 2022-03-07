@@ -4,7 +4,6 @@ import { colors } from 'theme'
 import Home from 'pages/Home'
 import Profile from 'pages/Profile'
 import Landing from 'pages/Landing'
-import Login from 'pages/Login'
 import Details from 'pages/Details'
 import HeaderTitle from './HeaderTitle'
 import HeaderLeft from './HeaderLeft'
@@ -49,13 +48,6 @@ export const AuthNavigator = () => (
       options={() => ({
         title: 'Landing',
       })}
-    />
-    <Stack.Screen
-      name="Login"
-      component={Login}
-      options={{
-        title: 'Login',
-      }}
     />
   </Stack.Navigator>
 )

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
-import { getSampleHome } from 'api'
 import { Box, Text } from 'native-base'
 
 const styles = StyleSheet.create({
@@ -16,57 +15,45 @@ const styles = StyleSheet.create({
   },
 })
 
-const Units = ({ navigation }) => {
-  const [text, setText] = useState('Loading data...')
+const Units = ({ navigation }) => (
+  <View style={styles.root}>
+    <StatusBar barStyle="light-content" />
+    <Text
+      fontWeight="regular"
+      color="blue.dark"
+      fontStyle="italic"
+      fontSize="6xl"
+    >
+      Home
+    </Text>
+    <Text fontSize="6xl">Loading data...</Text>
+    <StyledButton
+      title="Primary Button"
+      variant="primary"
+      onPress={() => {
+        navigation.navigate('Details', { from: 'Units' })
+      }}
+    />
 
-  useEffect(() => {
-    const getData = async () => {
-      const sampleHome = await getSampleHome()
-      setText(sampleHome.result.text)
-    }
-    getData()
-  }, [setText])
+    <StyledButton
+      title="Continue with Google"
+      variant="secondary"
+      onPress={() => {
+        navigation.navigate('Details', { from: 'Units' })
+      }}
+    />
 
-  return (
-    <View style={styles.root}>
-      <StatusBar barStyle="light-content" />
-      <Text
-        fontWeight="regular"
-        color="blue.dark"
-        fontStyle="italic"
-        fontSize="6xl"
-      >
-        Home
-      </Text>
-      <Text fontSize="6xl">{text}</Text>
-      <StyledButton
-        title="Primary Button"
-        variant="primary"
-        onPress={() => {
-          navigation.navigate('Details', { from: 'Units' })
-        }}
-      />
+    <StyledButton
+      title="Tertiary Button"
+      variant="tertiary"
+      onPress={() => {
+        navigation.navigate('Details', { from: 'Units' })
+      }}
+    />
 
-      <StyledButton
-        title="Continue with Google"
-        variant="secondary"
-        onPress={() => {
-          navigation.navigate('Details', { from: 'Units' })
-        }}
-      />
-
-      <StyledButton
-        title="Tertiary Button"
-        variant="tertiary"
-        onPress={() => {
-          navigation.navigate('Details', { from: 'Units' })
-        }}
-      />
-
-      <Box>ghghghgh</Box>
-    </View>
-  )
-}
+    <Box>ghghghgh</Box>
+  </View>
+)
 
 Units.propTypes = {
   navigation: PropTypes.shape({

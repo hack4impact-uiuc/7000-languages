@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, Text, View, StatusBar } from 'react-native'
+import {
+  StyleSheet, Text, View, StatusBar,
+} from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 

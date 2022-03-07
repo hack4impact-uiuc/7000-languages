@@ -2,18 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'native-base'
 
-const StyledButton = ({ title, variant, onPress, leftIcon }) => {
-  return (
-    <Button
-      onPress={onPress}
-      variant={variant}
-      _text={{ fontSize: 'lg' }}
-      leftIcon={leftIcon}
-    >
-      {title}
-    </Button>
-  )
-}
+const StyledButton = ({
+  title, variant, onPress, leftIcon,
+}) => (
+  <Button
+    onPress={onPress}
+    variant={variant}
+    _text={{ fontSize: 'lg' }}
+    leftIcon={leftIcon}
+  >
+    {title}
+  </Button>
+)
 // Button object fields
 StyledButton.propTypes = {
   title: PropTypes.string,
