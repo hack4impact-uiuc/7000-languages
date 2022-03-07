@@ -10,7 +10,7 @@ import { authenticate, saveToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { saveUserIDToken } from '../../utils/auth'
 import { createUser } from '../../api/api'
-import { useErrorWrap } from '../../hooks/useError'
+import { useErrorWrap } from '../../hooks/useErrorWrap'
 
 const styles = StyleSheet.create({
   root: {
@@ -35,7 +35,7 @@ const Landing = () => {
 
   const loginUser = async () => {
     await errorWrap(
-      () => {
+      async () => {
         const { idToken } = await Google.logInAsync({
           iosClientId: Constants.manifest.extra.iosClientId,
           androidClientId: Constants.manifest.extra.androidClientId,

@@ -56,13 +56,17 @@ module.exports.requireAuthentication = async (req, res, next) => {
  * @returns Google User Data
  */
 module.exports.getUserByIDToken = async (idToken) => {
-  if (idToken) {
-    const ticket = await client.verifyIdToken({
-      idToken,
-      audience: [process.env.IOS_CLIENT_ID, process.env.ANDROID_CLIENT_ID],
-    });
-    const data = ticket.getPayload();
-    return data;
+  try {
+    if (idToken) {
+      const ticket = await client.verifyIdToken({
+        idToken,
+        audience: [process.env.IOS_CLIENT_ID, process.env.ANDROID_CLIENT_ID],
+      });
+      const data = ticket.getPayload();
+      return data;
+    }
+  } catch (error) {
+    return null;
   }
   return null;
 };

@@ -23,10 +23,9 @@ export const useErrorWrap = () => {
                 successCallback()
             } catch (error) {
                 console.error(error)
-                Alert.alert('Error!', error.message, [
-                    { text: 'OK', onPress: () => console.log('OK Pressed') },
+                Alert.alert('Error', error.message, [
+                    { text: 'OK', onPress: () => errorCallback() },
                 ])
-                errorCallback()
             }
         },
         [],
