@@ -65,10 +65,10 @@ module.exports.getUserByIDToken = async (idToken) => {
       const data = ticket.getPayload();
       return data;
     }
+    return null;
   } catch (error) {
     return null;
   }
-  return null;
 };
 
 /**
