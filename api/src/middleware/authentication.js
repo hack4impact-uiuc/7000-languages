@@ -17,7 +17,8 @@ const { models } = require('../models/index.js');
  * the 'authentication' HTTP header, which should be of the format 'Bearer <ACCESS_TOKEN>'. If
  * successful, the user's data is attachted to req.user before calling the next function.
  */
-module.exports.requireAuthentication = async (req, res, next) => {
+
+const requireAuthentication = async (req, res, next) => {
   try {
     // Validate user using Google Auth ID Token
     const user = await getUserFromRequest(req);
@@ -55,7 +56,7 @@ module.exports.requireAuthentication = async (req, res, next) => {
  * @param {String} idToken Google Auth ID Token (JWT)
  * @returns Google User Data
  */
-module.exports.getUserByIDToken = async (idToken) => {
+const getUserByIDToken = async (idToken) => {
   if (idToken) {
     const ticket = await client.verifyIdToken({
       idToken,
@@ -74,11 +75,17 @@ module.exports.getUserByIDToken = async (idToken) => {
  */
 const getUserFromRequest = async (req) => {
   const authHeader = req?.headers?.authorization?.split(' ');
+
   if (authHeader?.length !== 2) {
     return null;
   }
   const idToken = authHeader[1];
 
-  const user = await self.getUserByIDToken(idToken);
+  const user = await getUserByIDToken(idToken);
   return user;
 };
+
+module.exports = {
+  getUserByIDToken,
+  requireAuthentication
+}
