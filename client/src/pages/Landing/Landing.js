@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { saveUserIDToken } from '../../utils/auth'
 import { createUser } from '../../api/api'
 import { AntDesign } from '@expo/vector-icons'
-import Logo from './client/assets/images/landing-logo.svg'
+// import Logo from './client/assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
   root: {
@@ -82,9 +82,7 @@ const Landing = () => {
       />
       </View>
 
-      <View style={styles.logo}>
-        <Logo height={160} width={160} />
-      </View>
+      <Image source={images.landing_logo} />
 
       <Image source={images.background_landing} />
     <View style={styles.quote} >
