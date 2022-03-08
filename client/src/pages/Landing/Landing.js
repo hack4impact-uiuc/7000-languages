@@ -43,7 +43,7 @@ const Landing = () => {
 
         if (idToken !== undefined) {
           const userData = {
-            idToken: '123',
+            idToken,
           }
 
           // call API
