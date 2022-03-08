@@ -35,8 +35,6 @@ const styles = StyleSheet.create({
   quote: {
     flex: 1,
     position: 'absolute',
-    left: 20,
-    bottom: 50,
     justifyContent: 'center',
   },
 
