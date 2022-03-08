@@ -10,6 +10,8 @@ import { authenticate, saveToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { saveUserIDToken } from '../../utils/auth'
 import { createUser } from '../../api/api'
+import { AntDesign } from '@expo/vector-icons'
+import Logo from './client/assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
   root: {
@@ -17,8 +19,25 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.gray.light,
+    backgroundColor: colors.red.dark,
+
   },
+  button: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginBottom: 36
+  },
+  logo: {
+    position: 'absolute',
+    left: 20,
+    bottom: 680
+  },
+  quote: {
+    flex: 1,
+    justifyContent: 'center',
+    
+  } 
+
 })
 
 WebBrowser.maybeCompleteAuthSession()
@@ -53,20 +72,41 @@ const Landing = () => {
 
   return (
     <View style={styles.root}>
-      <StatusBar barStyle="light-content" />
-      <Text
-        fontWeight="regular"
-        color="blue.dark"
-        fontStyle="italic"
-        fontSize="6xl"
-      >
-        Landing
-      </Text>
+
+      <View style={styles.button}>
       <StyledButton
-        title="Login to app"
-        variant="primary"
+        title="Continue with Google"
+        leftIcon={<AntDesign name="google" size={24} color= {colors.red.dark} />}
+        variant="secondary"
         onPress={loginUser}
       />
+      </View>
+
+      <View style={styles.logo}>
+        <Logo height={160} width={160} />
+      </View>
+
+      <Image source={images.background_landing} />
+    <View style={styles.quote} >
+    <Text
+        fontWeight="regular"
+        color="white.dark"
+        fontStyle="GT_Haptik_bold"
+        fontSize="8xl"
+      >
+        "To speak a language is {'\n'}
+         to take on a world,{'\n'}
+         a culture."
+         {'\n'}
+         - Frantz Fanon 
+
+      </Text>
+
+   
+    </View>
+ 
+
+
     </View>
   )
 }
