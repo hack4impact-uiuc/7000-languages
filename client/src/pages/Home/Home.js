@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 })
 
 const Home = ({ navigation }) => {
-  const [text, setText] = useState('Loading data...')
+  const [text, setText] = useState('Loading')
 
   useEffect(() => {
     const getData = async () => {
@@ -48,7 +48,7 @@ const Home = ({ navigation }) => {
       />
 
       <StyledButton
-        title="Continue with Google"
+        title="Secondary Button"
         variant="secondary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
