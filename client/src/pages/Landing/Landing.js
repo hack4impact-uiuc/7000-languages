@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import StyledButton from 'components/StyledButton'
-import { colors } from 'theme'
-import { Text } from 'native-base'
+import { colors, images } from 'theme'
+import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-google-app-auth'
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
   quote: {
     flex: 1,
     justifyContent: 'center',
-    
-  } 
+
+  }
 
 })
 
@@ -74,35 +74,35 @@ const Landing = () => {
     <View style={styles.root}>
 
       <View style={styles.button}>
-      <StyledButton
-        title="Continue with Google"
-        leftIcon={<AntDesign name="google" size={24} color= {colors.red.dark} />}
-        variant="secondary"
-        onPress={loginUser}
-      />
+        <StyledButton
+          title="Continue with Google"
+          leftIcon={<AntDesign name="google" size={24} color={colors.red.dark} />}
+          variant="secondary"
+          onPress={loginUser}
+        />
       </View>
 
-      <Image source={images.landing_logo} />
+      {/* <Image source={images.landing_logo} /> */}
 
       <Image source={images.background_landing} />
-    <View style={styles.quote} >
-    <Text
-        fontWeight="regular"
-        color="white.dark"
-        fontStyle="GT_Haptik_bold"
-        fontSize="8xl"
-      >
-        "To speak a language is {'\n'}
-         to take on a world,{'\n'}
-         a culture."
-         {'\n'}
-         - Frantz Fanon 
+      <View style={styles.quote} >
+        <Text
+          fontWeight="regular"
+          color="white.dark"
+          fontStyle="GT_Haptik_bold"
+          fontSize="4xl"
+        >
+          "To speak a language is {'\n'}
+          to take on a world,{'\n'}
+          a culture."
+          {'\n'}
+          - Frantz Fanon
 
-      </Text>
+        </Text>
 
-   
-    </View>
- 
+
+      </View>
+
 
 
     </View>
