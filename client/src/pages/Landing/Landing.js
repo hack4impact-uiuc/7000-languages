@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { saveUserIDToken } from '../../utils/auth'
 import { createUser } from '../../api/api'
 import { AntDesign } from '@expo/vector-icons'
-import Logo from '../../assets/images/landing-background.png'
+import Logo from '../../../assets/images/landing-background.png'
 
 const styles = StyleSheet.create({
   root: {
@@ -34,6 +34,9 @@ const styles = StyleSheet.create({
   },
   quote: {
     flex: 1,
+    position: 'absolute',
+    left: 20,
+    bottom: 50,
     justifyContent: 'center',
   },
 
