@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import StyledButton from 'components/StyledButton'
-import { colors, images, font } from 'theme'
+import { colors, images, fonts } from 'theme'
 import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
@@ -33,8 +33,14 @@ const styles = StyleSheet.create({
   },
   quote: {
     position: 'absolute',
-    left: 20,
+    left: 40,
     bottom: 200,
+  },
+
+  quote2: {
+    position: 'absolute',
+    left: 5,
+    bottom: 1,
   },
 })
 
@@ -90,12 +96,22 @@ const Landing = () => {
         <Text
           fontWeight="regular"
           color="white.dark"
-          fontStyle="GT_Haptik_bold"
+          fontStyle="fonts.GT_Haptik_bold"
           fontSize="3xl"
         >
           "To speak a language is {'\n'}
           to take on a world,{'\n'}a culture."
-          {'\n'}- Frantz Fanon
+          {'\n'}
+        </Text>
+
+        <Text
+          style={styles.quote2}
+          fontWeight="regular"
+          color="white.dark"
+          fontStyle="fonts.GT_Haptik_bold"
+          fontSize="2xl"
+        >
+          - Frantz Fanon
         </Text>
       </View>
     </View>
