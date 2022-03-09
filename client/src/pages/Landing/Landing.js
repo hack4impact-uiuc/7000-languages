@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import StyledButton from 'components/StyledButton'
-import { colors, images } from 'theme'
+import { colors, images, font } from 'theme'
 import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 import { saveUserIDToken } from '../../utils/auth'
 import { createUser } from '../../api/api'
 import { AntDesign } from '@expo/vector-icons'
-import Logo from '../../../assets/images/landing-background.png'
+import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
   root: {
@@ -20,25 +20,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.red.dark,
-
   },
   button: {
     flex: 1,
     justifyContent: 'flex-end',
-    marginBottom: 36
+    marginBottom: 60,
   },
   logo: {
     position: 'absolute',
     left: 20,
-    bottom: 680
+    bottom: 680,
   },
   quote: {
-    flex: 1,
     position: 'absolute',
-    justifyContent: 'center',
+    left: 20,
+    bottom: 200,
   },
-
-
 })
 
 WebBrowser.maybeCompleteAuthSession()
@@ -73,13 +70,13 @@ const Landing = () => {
 
   return (
     <View style={styles.root}>
-
-      <Image source={images.background_landing} />
-
+      <Image source={images.background_landing}></Image>
       <View style={styles.button}>
         <StyledButton
           title="Continue with Google"
-          leftIcon={<AntDesign name="google" size={24} color={colors.red.dark} />}
+          leftIcon={
+            <AntDesign name="google" size={24} color={colors.red.dark} />
+          }
           variant="secondary"
           onPress={loginUser}
         />
@@ -89,26 +86,18 @@ const Landing = () => {
         <Logo height={160} width={160} />
       </View>
 
-      <View style={styles.quote} >
+      <View style={styles.quote}>
         <Text
           fontWeight="regular"
           color="white.dark"
           fontStyle="GT_Haptik_bold"
-          fontSize="4xl"
+          fontSize="3xl"
         >
           "To speak a language is {'\n'}
-          to take on a world,{'\n'}
-          a culture."
-          {'\n'}
-          - Frantz Fanon
-
+          to take on a world,{'\n'}a culture."
+          {'\n'}- Frantz Fanon
         </Text>
-
-
       </View>
-
-
-
     </View>
   )
 }
