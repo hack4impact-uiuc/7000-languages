@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   logo: {
     position: 'absolute',
     left: 20,
-    bottom: 680,
+    bottom: 660,
   },
   quote: {
     position: 'absolute',
@@ -100,7 +100,7 @@ const Landing = () => {
           fontSize="3xl"
         >
           "To speak a language is {'\n'}
-          to take on a world,{'\n'}a culture."
+          to take on a world a,{'\n'} culture."
           {'\n'}
         </Text>
 

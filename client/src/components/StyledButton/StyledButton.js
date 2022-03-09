@@ -2,9 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'native-base'
 
-const StyledButton = ({
-  title, variant, onPress, leftIcon,
-}) => (
+const StyledButton = ({ title, variant, onPress, leftIcon }) => (
   <Button
     onPress={onPress}
     variant={variant}
