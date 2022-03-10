@@ -32,38 +32,64 @@ const Home = ({ navigation }) => {
       <StatusBar barStyle="light-content" />
       <Text
         fontWeight="regular"
-        color="blue.dark"
-        fontStyle="italic"
-        fontSize="6xl"
+        color="gray.medium"
+        fontSize="2xl"
       >
-        Home
+        Uh, Oh!
       </Text>
-      <Text fontSize="6xl">Wassup</Text>
+      <Text
+        fontWeight="regular"
+        color="gray.medium"
+        fontSize="xl"
+        textAlign="center"
+        paddingBottom="10px"
+      >
+        Looks like you don't have a {'\n'} language yet!
+      </Text>
       <StyledButton
-        title="Primary Button"
+        title="Search Languages"
         variant="primary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
       />
-
-      <StyledButton
-        title="Secondary Button"
-        variant="secondary"
+      <View 
+      style={{
+        flexDirection: 'row', 
+        alignItems: 'center'}}>
+      <View style={{
+        marginTop: "8%",
+        marginBottom: "8%",
+        height: 1, 
+        backgroundColor:'#C0C0C0',
+        width: '65%'
+        }} />
+      </View>
+      <Text
+        fontWeight="regular"
+        color="gray.medium"
+        fontSize="xl"
+        textAlign="center"
+        paddingBottom="10px"
+      >
+        Do you know an indigenous {'\n'} 
+        language that you would like to share {'\n'}
+        with the world? Apply to become a {'\n'}
+        contributer.
+      </Text>
+      <Text
+        fontWeight="regular"
+        paddingTop="8%"
+        paddingBottom="10%"
+        color="red.dark"
+        fontSize="xl"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
-      />
+      >
+        Apply to Contribute
+      </Text>
 
-      <StyledButton
-        title="Tertiary Button"
-        variant="tertiary"
-        onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
-        }}
-      />
-
-      <Box>ghghghgh</Box>
     </View>
   )
 }
