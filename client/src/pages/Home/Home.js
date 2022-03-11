@@ -32,9 +32,9 @@ const Home = ({ navigation }) => {
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
       <Text
-      style={{
-        fontFamily:"GT_Haptik_bold",
-      }}
+        style={{
+          fontFamily: 'GT_Haptik_bold',
+        }}
         fontWeight="regular"
         color="gray.medium"
         fontSize="2xl"
@@ -52,27 +52,29 @@ const Home = ({ navigation }) => {
       </Text>
       <StyledButton
         title="Search Languages"
-        leftIcon= {<AntDesign
-          name="search1"
-          size={24}
-          color={colors.white.dark}
-        />}
-        variant="primary"
+        leftIcon={
+          <AntDesign name="search1" size={24} color={colors.white.dark} />
+        }
+        variant="primary_short"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
       />
-      <View 
-      style={{
-        flexDirection: 'row', 
-        alignItems: 'center'}}>
-      <View style={{
-        marginTop: "8%",
-        marginBottom: "8%",
-        height: 1, 
-        backgroundColor:'#C0C0C0',
-        width: '65%'
-        }} />
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+      >
+        <View
+          style={{
+            marginTop: '8%',
+            marginBottom: '8%',
+            height: 1,
+            backgroundColor: '#C0C0C0',
+            width: '65%',
+          }}
+        />
       </View>
       <Text
         fontWeight="regular"
@@ -81,16 +83,23 @@ const Home = ({ navigation }) => {
         textAlign="center"
         paddingBottom="10px"
       >
-        Do you know an indigenous {'\n'} 
+        Do you know an indigenous {'\n'}
         language that you would like to share {'\n'}
-        with the world? 
+        with the world?
+        <Text
+          style={{
+            fontFamily: 'GT_Haptik_bold',
+          }}
+        >
+          {' '}
           Apply to become a {'\n'}
-        contributer.
+          contributor.
+        </Text>
       </Text>
-      <Text 
-      style={{
-        fontFamily:"GT_Haptik_bold",
-      }}
+      <Text
+        style={{
+          fontFamily: 'GT_Haptik_bold',
+        }}
         fontWeight="regular"
         fontStyle="normal"
         paddingTop="8%"
@@ -103,7 +112,6 @@ const Home = ({ navigation }) => {
       >
         Apply to Contribute
       </Text>
-
     </View>
   )
 }

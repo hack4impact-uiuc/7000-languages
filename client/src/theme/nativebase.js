@@ -12,12 +12,20 @@ const theme = extendTheme({
         py: 4,
         my: 2,
         borderRadius: 12,
-        w: '90%',
       },
 
       variants: {
         primary: {
           bg: 'red.dark',
+          w: '90%',
+          _text: {
+            color: 'white.dark',
+            fontFamily: 'GT_Haptik_bold',
+          },
+        },
+        primary_short: {
+          bg: 'red.dark',
+          w: '67%',
           _text: {
             color: 'white.dark',
             fontFamily: 'GT_Haptik_bold',
@@ -25,6 +33,7 @@ const theme = extendTheme({
         },
         secondary: {
           bg: 'white.dark',
+          w: '90%',
           _text: {
             color: 'red.dark',
             fontFamily: 'GT_Haptik_bold',
@@ -32,6 +41,7 @@ const theme = extendTheme({
         },
         tertiary: {
           bg: 'gray.medium:alpha.00',
+          w: '90%',
           borderColor: 'white.dark',
           borderWidth: 2,
           _text: {

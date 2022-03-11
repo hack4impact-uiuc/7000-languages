@@ -31,7 +31,7 @@ const TabNavigator = () => (
                 solid
               />
             )
-          
+
           default:
             return <View />
         }
