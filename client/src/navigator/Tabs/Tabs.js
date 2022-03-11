@@ -1,9 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
-import { HomeNavigator, ProfileNavigator } from '../Stacks'
+import { HomeNavigator } from '../Stacks'
 import { AntDesign } from '@expo/vector-icons'
 
 const Tab = createBottomTabNavigator()

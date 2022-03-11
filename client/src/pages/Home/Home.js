@@ -22,11 +22,11 @@ const styles = StyleSheet.create({
 const Home = ({ navigation }) => {
   const dispatch = useDispatch()
 
-  const logoutUser = async () => {
-    await removeUserIDToken()
-    dispatch(removeToken())
-    dispatch(authenticate({ loggedIn: false }))
-  }
+  // const logoutUser = async () => {
+  //   await removeUserIDToken()
+  //   dispatch(removeToken())
+  //   dispatch(authenticate({ loggedIn: false }))
+  // }
 
   return (
     <View style={styles.root}>
