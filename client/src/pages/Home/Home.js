@@ -7,6 +7,7 @@ import { Text } from 'native-base'
 import { authenticate, removeToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { removeUserIDToken } from '../../utils/auth'
+import { AntDesign } from '@expo/vector-icons'
 
 const styles = StyleSheet.create({
   root: {
@@ -31,6 +32,9 @@ const Home = ({ navigation }) => {
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
       <Text
+      style={{
+        fontFamily:"GT_Haptik_bold",
+      }}
         fontWeight="regular"
         color="gray.medium"
         fontSize="2xl"
@@ -48,6 +52,11 @@ const Home = ({ navigation }) => {
       </Text>
       <StyledButton
         title="Search Languages"
+        leftIcon= {<AntDesign
+          name="search1"
+          size={24}
+          color={colors.white.dark}
+        />}
         variant="primary"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
@@ -74,15 +83,20 @@ const Home = ({ navigation }) => {
       >
         Do you know an indigenous {'\n'} 
         language that you would like to share {'\n'}
-        with the world? Apply to become a {'\n'}
+        with the world? 
+          Apply to become a {'\n'}
         contributer.
       </Text>
-      <Text
+      <Text 
+      style={{
+        fontFamily:"GT_Haptik_bold",
+      }}
         fontWeight="regular"
+        fontStyle="normal"
         paddingTop="8%"
         paddingBottom="10%"
         color="red.dark"
-        fontSize="xl"
+        fontSize="2xl"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
