@@ -3,7 +3,7 @@ const { faker } = require('@faker-js/faker');
 const mongoose = require('mongoose');
 
 const {
-  DEFAULT_ID_TOKEN,
+  DEFAULT_AUTH_ID,
   NUM_FAKE_USER_ENTRIES,
   NUM_FAKE_COURSE_ENTRIES,
   NUM_FAKE_LESSONS_PER_UNIT,
@@ -51,7 +51,7 @@ const generateLanguages = (
   const generateCourse = () => ({
     _id: mongoose.Types.ObjectId(),
     approved: true,
-    admin_id: DEFAULT_ID_TOKEN,
+    admin_id: DEFAULT_AUTH_ID,
     details: {
       name: faker.lorem.word(),
       description: faker.lorem.paragraph(),
@@ -121,9 +121,11 @@ const generateLanguages = (
 
 // Change this to change what data you want generated
 const generate = () => {
-  // const userData = generateUsers(NUM_FAKE_USER_ENTRIES);
-  // saveDataToFile(userData, './mock-data/users.json');
+  // Generates users
+  const userData = generateUsers(NUM_FAKE_USER_ENTRIES);
+  saveDataToFile(userData, './mock-data/users.json');
 
+  // Generates course
   const { courseData, unitData, lessonData } = generateLanguages(
     NUM_FAKE_COURSE_ENTRIES,
     NUM_FAKE_UNITS_PER_COURSE,
