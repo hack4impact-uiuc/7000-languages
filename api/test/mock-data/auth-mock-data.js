@@ -23,7 +23,7 @@ const GOOGLE_AUTH_USER_DATA = {
   iss: 'https://accounts.google.com',
   azp: '',
   aud: '',
-  sub: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a6', // make sure there is a user in MongoDB with the same exact authID
+  sub: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a6', // matches the authID of the first user in api/test/db-data/users.json
   email: 'test@gmail.com',
   email_verified: true,
   at_hash: '',
