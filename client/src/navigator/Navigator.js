@@ -3,11 +3,11 @@ import { NavigationContainer } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticate, saveToken } from 'slices/auth.slice'
 import { loadUserIDToken } from 'utils/auth'
+import { createStackNavigator } from '@react-navigation/stack'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator, ModalNavigator } from './Stacks'
-import { createStackNavigator } from '@react-navigation/stack'
 
-const RootStack = createStackNavigator();
+const RootStack = createStackNavigator()
 const Navigator = () => {
   /*
     Here is an example of useSelector, a hook that allows you to extract data from the Redux store state.
@@ -42,23 +42,20 @@ const Navigator = () => {
       screenOptions={{ animationEnabled: true }}
       mode="modal"
     >
-      {loggedIn
-        ?
+      {loggedIn ? (
         <>
           <RootStack.Screen name="Drawer" component={DrawerNavigator} />
           <RootStack.Screen name="Modal" component={ModalNavigator} />
         </>
-        :
+      ) : (
         <RootStack.Screen name="Auth" component={AuthNavigator} />
-      }
+      )}
     </RootStack.Navigator>
   )
 }
 
-export default () => {
-  return (
-    <NavigationContainer>
-      <Navigator />
-    </NavigationContainer>
-  );
-};
+export default () => (
+  <NavigationContainer>
+    <Navigator />
+  </NavigationContainer>
+)
