@@ -1,3 +1,3 @@
-import { HomeNavigator, ProfileNavigator, AuthNavigator } from './Stacks'
+import { HomeNavigator, ProfileNavigator, AuthNavigator, ModalNavigator } from './Stacks'
 
-export { HomeNavigator, ProfileNavigator, AuthNavigator }
+export { HomeNavigator, ProfileNavigator, AuthNavigator, ModalNavigator }

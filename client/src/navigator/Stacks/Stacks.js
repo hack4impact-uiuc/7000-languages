@@ -5,6 +5,7 @@ import Home from 'pages/Home'
 import Profile from 'pages/Profile'
 import Landing from 'pages/Landing'
 import Details from 'pages/Details'
+import UnitDrawer from 'pages/UnitDrawer'
 import HeaderTitle from './HeaderTitle'
 import HeaderLeft from './HeaderLeft'
 
@@ -12,11 +13,19 @@ import HeaderLeft from './HeaderLeft'
 // Constants
 // ------------------------------------
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
+const AuthStack = createStackNavigator();
+const ModalStack = createStackNavigator();
 
 const navigationProps = {
   headerTintColor: 'white',
   headerStyle: { backgroundColor: colors.red.dark },
+  headerTitleStyle: { fontSize: 18 },
+}
+
+const modalNavigationProps = {
+  headerTintColor: 'white',
+  headerStyle: { backgroundColor: colors.blue.dark },
   headerTitleStyle: { fontSize: 18 },
 }
 
@@ -26,7 +35,7 @@ const navigationProps = {
 
 /*
 
-This contains the major navigators in the app. A naviagtor is a component
+This contains the major navigators in the app. A navigator is a component
 that takes route configuration as its children with additional props for configuration and renders our content.
 
 We will need a navigator for each of the screens with an icon on the tab bar, along with a
@@ -37,20 +46,35 @@ More reading: https://reactnavigation.org/docs/stack-navigator/
 */
 
 export const AuthNavigator = () => (
-  <Stack.Navigator
+  <AuthStack.Navigator
     initialRouteName="Landing"
     headerMode="screen"
     screenOptions={navigationProps}
   >
-    <Stack.Screen
+    <AuthStack.Screen
       name="Landing"
       component={Landing}
       options={() => ({
         title: 'Landing',
       })}
     />
-  </Stack.Navigator>
+  </AuthStack.Navigator>
 )
+
+export const ModalNavigator = () => (
+  <ModalStack.Navigator
+    initialRouteName="UnitDrawer"
+    screenOptions={modalNavigationProps}
+  >
+    <ModalStack.Screen
+      name="UnitDrawer"
+      component={UnitDrawer}
+      options={({ navigation }) => ({
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+      })}
+    />
+  </ModalStack.Navigator>
+);
 
 export const HomeNavigator = () => (
   <Stack.Navigator

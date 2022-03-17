@@ -46,6 +46,13 @@ const Home = ({ navigation }) => {
           navigation.navigate('Details', { from: 'Home' })
         }}
       />
+      <StyledButton
+        title="Unit Drawer"
+        variant="primary"
+        onPress={() => {
+          navigation.navigate('Modal', { screen: 'UnitDrawer' })
+        }}
+      />
       <StyledButton title="Logout" type="secondary" onPress={logoutUser} />
     </View>
   )
