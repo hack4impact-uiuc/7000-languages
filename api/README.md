@@ -21,8 +21,16 @@ To install all of the required node packages, run:
 ```bash
 yarn install
 ```
+Then, set the necessary environment variables by creating a `development.env` file in the `api` folder. Populate the file with the following:
+```
+NODE_ENV=development
+PORT=3000
+MONGO_URL=
+IOS_CLIENT_ID=
+ANDROID_CLIENT_ID=
+```
 
-Then, set the necessary environment variables in the `.env` file.
+You can obtain `MONGO_URL` by [creating a MongoDB Atlas Database](https://www.mongodb.com/atlas) and the `IOS_CLIENT_ID` and `ANDROID_CLIENT_ID` by creating [Google OAuth credentials](https://console.cloud.google.com/apis/credentials?pli=1).
 
 Finally, run:
 
