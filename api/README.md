@@ -21,7 +21,9 @@ To install all of the required node packages, run:
 ```bash
 yarn install
 ```
+
 Then, set the necessary environment variables by creating a `development.env` file in the `api` folder. Populate the file with the following:
+
 ```
 NODE_ENV=development
 PORT=3000
