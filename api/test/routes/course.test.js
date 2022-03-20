@@ -4,6 +4,12 @@ const db = require('../utils/db');
 const {
   POST_SIMPLE_COURSE,
   POST_SIMPLE_COURSE_EXPECTED,
+  POST_MISSING_FIELD_COURSE,
+  POST_MISSING_FIELD_COURSE_EXPECTED,
+  POST_WRONG_COURSE_MISSING_ISO,
+  POST_COURSE_ADDITIONAL_FIELDS,
+  POST_COURSE_ADDITIONAL_FIELDS_EXPECTED,
+
 } = require('../mock-data/course-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
@@ -43,12 +49,47 @@ describe('POST /user/ ', () => {
     const response = await withAuthentication(
         request(app).post('/language/course/').send(body)
     );
-    console.log(response)
     const message = response.body.message;
     const result = omitDeep(response.body.result, '_id', '__v'); 
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new course');
     expect(result).toEqual(POST_SIMPLE_COURSE_EXPECTED);
+  });
+
+  test('Missing field should create course', async () => {
+    const body = POST_MISSING_FIELD_COURSE;
+
+    const response = await withAuthentication(
+        request(app).post('/language/course/').send(body)
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '_id', '__v'); 
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully created a new course');
+    expect(result).toEqual(POST_MISSING_FIELD_COURSE_EXPECTED);
+  });
+
+  test('No id token results in error', async () => {
+    const body = POST_WRONG_COURSE_MISSING_ISO;
+
+    const response = await withAuthentication(
+        request(app).post('/language/course/').send(body)
+    );
+
+    expect(response.status).toBeGreaterThanOrEqual(400);
+  });
+
+  test('Additional fields should create course', async () => {
+    const body = POST_COURSE_ADDITIONAL_FIELDS;
+
+    const response = await withAuthentication(
+        request(app).post('/language/course/').send(body)
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '_id', '__v'); 
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully created a new course');
+    expect(result).toEqual(POST_COURSE_ADDITIONAL_FIELDS_EXPECTED);
   });
 
 });
