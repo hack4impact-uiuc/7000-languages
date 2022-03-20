@@ -6,8 +6,6 @@ const images = {
 }
 
 // image preloading
-export const imageAssets = Object.keys(images).map((key) =>
-  Asset.fromModule(images[key]).downloadAsync(),
-)
+export const imageAssets = Object.keys(images).map((key) => Asset.fromModule(images[key]).downloadAsync())
 
 export default images
