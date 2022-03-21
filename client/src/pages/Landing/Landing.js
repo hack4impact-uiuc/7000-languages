@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   logo: {
     position: 'absolute',
     left: 20,
-    bottom: 660,
+    bottom: 720,
   },
   quote: {
     position: 'absolute',
@@ -96,7 +96,9 @@ const Landing = () => {
         <Text
           fontWeight="regular"
           color="white.dark"
-          fontStyle="fonts.GT_Haptik_bold"
+          style={{
+            fontFamily: 'GT_Haptik_bold',
+          }}
           fontSize="3xl"
         >
           "To speak a language is {'\n'}
@@ -108,7 +110,6 @@ const Landing = () => {
           style={styles.quote2}
           fontWeight="regular"
           color="white.dark"
-          fontStyle="fonts.GT_Haptik_bold"
           fontSize="2xl"
         >
           - Frantz Fanon
