@@ -40,7 +40,9 @@ export const AuthNavigator = () => (
   <Stack.Navigator
     initialRouteName="Landing"
     headerMode="screen"
-    screenOptions={navigationProps}
+    screenOptions={{
+      headerShown: false,
+    }}
   >
     <Stack.Screen
       name="Landing"
