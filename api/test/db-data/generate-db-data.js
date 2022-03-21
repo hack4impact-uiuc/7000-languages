@@ -54,10 +54,15 @@ const generateLanguages = (
     admin_id: DEFAULT_AUTH_ID,
     details: {
       name: faker.lorem.word(),
+      adminName: faker.name.findName(),
+      adminEmail: faker.internet.email(),
       description: faker.lorem.paragraph(),
       translated_language: 'English',
       location: 'North America',
       iso: 'en',
+      glotto: 'stan1293',
+      population: faker.datatype.number(),
+      link: faker.internet.url(),
     },
   });
 
@@ -122,8 +127,8 @@ const generateLanguages = (
 // Change this to change what data you want generated
 const generate = () => {
   // Generates users
-  const userData = generateUsers(NUM_FAKE_USER_ENTRIES);
-  saveDataToFile(userData, './mock-data/users.json');
+  // const userData = generateUsers(NUM_FAKE_USER_ENTRIES);
+  // saveDataToFile(userData, './mock-data/users.json');
 
   // Generates course
   const { courseData, unitData, lessonData } = generateLanguages(
