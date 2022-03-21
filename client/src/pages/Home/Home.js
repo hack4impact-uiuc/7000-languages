@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
-import { getSampleHome } from 'api'
-import { Box, Text } from 'native-base'
-import { AntDesign } from '@expo/vector-icons';
+import { Text } from 'native-base'
+import { authenticate, removeToken } from 'slices/auth.slice'
+import { useDispatch } from 'react-redux'
+import { removeUserIDToken } from '../../utils/auth'
 
 const styles = StyleSheet.create({
   root: {
@@ -18,15 +19,13 @@ const styles = StyleSheet.create({
 })
 
 const Home = ({ navigation }) => {
-  const [text, setText] = useState('Loading data...')
+  const dispatch = useDispatch()
 
-  useEffect(() => {
-    const getData = async () => {
-      const sampleHome = await getSampleHome()
-      setText(sampleHome.result.text)
-    }
-    getData()
-  }, [setText])
+  const logoutUser = async () => {
+    await removeUserIDToken()
+    dispatch(removeToken())
+    dispatch(authenticate({ loggedIn: false }))
+  }
 
   return (
     <View style={styles.root}>
@@ -39,35 +38,15 @@ const Home = ({ navigation }) => {
       >
         Home
       </Text>
-      <Text fontSize="6xl">{text}</Text>
+      <Text fontSize="6xl">Wassup</Text>
       <StyledButton
         title="Primary Button"
         variant="primary"
-        _text="color"
         onPress={() => {
           navigation.navigate('Details', { from: 'Home' })
         }}
       />
-
-      <StyledButton 
-        title="Continue with Google"
-        leftIcon = {<AntDesign name="google" size={24} color="#E9BAB6" />}
-        variant="secondary"
-        onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
-        }}
-      />
-      
-      <StyledButton 
-        title="Tertiary Button"
-        variant="tertiary"
-        onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
-        }}
-      />
-
-
-      <Box>Hello world</Box>
+      <StyledButton title="Logout" type="secondary" onPress={logoutUser} />
     </View>
   )
 }

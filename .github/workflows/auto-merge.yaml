@@ -1,0 +1,15 @@
+name: 'Merge Dependencies'
+
+on: [pull_request_target]
+
+jobs:
+  auto-merge:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v2.3.4
+      - name: 'Automerge dependency updates from Dependabot'
+        uses: ahmadnassri/action-dependabot-auto-merge@v2.6
+        with:
+          github-token: ${{ secrets.DEPENDABOT_AUTOMERGE }}

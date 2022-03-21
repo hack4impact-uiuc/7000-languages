@@ -4,7 +4,8 @@ import {
   getDefaultMiddleware,
 } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
-import appReducer from 'slices/app.slice'
+import authReducer from './slices/auth.slice'
+import saveAuthToken from './middleware/auth.middleware'
 
 /*
   This is the store. A store holds the whole state tree of your application.
@@ -17,7 +18,7 @@ import appReducer from 'slices/app.slice'
   performs a state update, returning the new state.
 */
 const rootReducer = combineReducers({
-  app: appReducer,
+  auth: authReducer,
   // add more reducers
 })
 
@@ -34,7 +35,9 @@ const defaultMiddleware = getDefaultMiddleware({
 const store = configureStore({
   reducer: rootReducer,
   // eslint-disable-next-line no-undef
-  middleware: __DEV__ ? defaultMiddleware.concat(logger) : defaultMiddleware,
+  middleware: __DEV__
+    ? defaultMiddleware.concat(logger).concat(saveAuthToken)
+    : defaultMiddleware.concat(saveAuthToken),
 })
 
 export default store

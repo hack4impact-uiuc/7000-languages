@@ -26,11 +26,21 @@ const Details = ({ route, navigation }) => {
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
       <Text style={styles.title}>{`Details (from ${from})`}</Text>
+<<<<<<< HEAD
       <StyledButton
         title="Go Back!!!"
         color={colors.white.dark}
         backgroundColor="red.dark"
         onPress={navigation.goBack}
+=======
+
+      <StyledButton
+        title="Go Back"
+        variant="secondary"
+        onPress={() => {
+          navigation.navigate('Home', { from: 'Details' })
+        }}
+>>>>>>> dev
       />
     </View>
   )

@@ -3,9 +3,10 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { colors } from 'theme'
 import Home from 'pages/Home'
 import Profile from 'pages/Profile'
+import Landing from 'pages/Landing'
 import Details from 'pages/Details'
-import HeaderLeft from './HeaderLeft'
 import HeaderTitle from './HeaderTitle'
+import HeaderLeft from './HeaderLeft'
 
 // ------------------------------------
 // Constants
@@ -23,17 +24,45 @@ const navigationProps = {
 // Navigators
 // ------------------------------------
 
-export const HomeNavigator = () => (
+/*
+
+This contains the major navigators in the app. A naviagtor is a component
+that takes route configuration as its children with additional props for configuration and renders our content.
+
+We will need a navigator for each of the screens with an icon on the tab bar, along with a
+navigator responsible for the login flow.
+
+More reading: https://reactnavigation.org/docs/stack-navigator/
+
+*/
+
+export const AuthNavigator = () => (
   <Stack.Navigator
-    initialRouteName="Home"
+    initialRouteName="Landing"
     headerMode="screen"
     screenOptions={navigationProps}
   >
     <Stack.Screen
-      name="Home"
+      name="Landing"
+      component={Landing}
+      options={() => ({
+        title: 'Landing',
+      })}
+    />
+  </Stack.Navigator>
+)
+
+export const HomeNavigator = () => (
+  <Stack.Navigator
+    initialRouteName="Units"
+    headerMode="screen"
+    screenOptions={navigationProps}
+  >
+    <Stack.Screen
+      name="Units"
       component={Home}
       options={({ navigation }) => ({
-        title: 'Home',
+        title: 'Units',
         headerLeft: () => <HeaderLeft navigation={navigation} />,
         headerTitle: () => <HeaderTitle />,
       })}
@@ -68,9 +97,11 @@ export const ProfileNavigator = () => (
     <Stack.Screen
       name="Details"
       component={Details}
-      options={{
-        title: 'Details',
-      }}
+      options={({ navigation }) => ({
+        title: 'Home',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
     />
   </Stack.Navigator>
 )
