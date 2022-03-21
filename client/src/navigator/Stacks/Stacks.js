@@ -5,6 +5,7 @@ import Home from 'pages/Home'
 import Profile from 'pages/Profile'
 import Landing from 'pages/Landing'
 import Details from 'pages/Details'
+import Apply from 'pages/Apply'
 import HeaderTitle from './HeaderTitle'
 import HeaderLeft from './HeaderLeft'
 
@@ -105,3 +106,22 @@ export const ProfileNavigator = () => (
     />
   </Stack.Navigator>
 )
+
+export const ApplyNavigator = () => (
+  <Stack.Navigator
+    initialRouteName="Apply"
+    headerMode="screen"
+    screenOptions={navigationProps}
+  >
+    <Stack.Screen
+      name="Apply"
+      component={Apply}
+      options={({ navigation }) => ({
+        title: 'Apply to Contribute',
+        headerLeft: () => <HeaderLeft navigation={navigation} />,
+        headerTitle: () => <HeaderTitle />,
+      })}
+    />
+  </Stack.Navigator>
+)
+

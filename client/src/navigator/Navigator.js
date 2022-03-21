@@ -5,6 +5,7 @@ import { authenticate, saveToken } from 'slices/auth.slice'
 import { loadUserIDToken } from 'utils/auth'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator } from './Stacks'
+import { ApplyNavigator } from './Stacks'
 
 const Navigator = () => {
   /*
@@ -34,14 +35,19 @@ const Navigator = () => {
     Based on whether the user is logged in or not, we will present the appropriate navigators.
   */
   return loggedIn ? (
+
     <NavigationContainer>
       <DrawerNavigator />
     </NavigationContainer>
   ) : (
-    <NavigationContainer>
-      <AuthNavigator />
-    </NavigationContainer>
+  
+
+<NavigationContainer>
+<ApplyNavigator />
+</NavigationContainer>
   )
+
+  
 }
 
 export default Navigator

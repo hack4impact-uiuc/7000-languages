@@ -28,11 +28,7 @@ const colors = {
   },
   white: {
     light: 'FAFAFA',
-<<<<<<< HEAD
-    dark:'#FFFFFF',
-=======
     dark: '#FFFFFF',
->>>>>>> dev
   },
 }
 

@@ -21,18 +21,11 @@ const styles = StyleSheet.create({
 })
 
 const Details = ({ route, navigation }) => {
-  const from = route?.params?.from
+  const from = route.params.from
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
       <Text style={styles.title}>{`Details (from ${from})`}</Text>
-<<<<<<< HEAD
-      <StyledButton
-        title="Go Back!!!"
-        color={colors.white.dark}
-        backgroundColor="red.dark"
-        onPress={navigation.goBack}
-=======
 
       <StyledButton
         title="Go Back"
@@ -40,7 +33,6 @@ const Details = ({ route, navigation }) => {
         onPress={() => {
           navigation.navigate('Home', { from: 'Details' })
         }}
->>>>>>> dev
       />
     </View>
   )
