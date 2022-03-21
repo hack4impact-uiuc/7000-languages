@@ -3,18 +3,25 @@ const router = express.Router();
 const { errorWrap } = require('../middleware');
 const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
+const {
+  requireAuthentication,
+  getUserByIDToken,
+} = require('../middleware/authentication');
 
 /**
  * put
  */
 
  router.put(
-    '/language/course/:id',
+    '/:id',
     errorWrap(async (req, res) => {
       const updates = req.body;
       const course = await models.Course.findOne({_id: req.params.id});
-      if (updates.approved) {
-        course.approved = updates.approved;
+      if (updates.approved == true) {
+        course.approved = true;
+      }
+      if (updates.approved == false) {
+        course.approved = false;
       }
       if (updates.admin_id) {
         course.admin_id = updates.admin_id;

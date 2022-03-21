@@ -4,10 +4,7 @@ const { errorWrap } = require('../middleware');
 const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
 const { ROLE_ENUM } = require('../utils/constants.js');
-const {
-  requireAuthentication,
-  getUserByIDToken,
-} = require('../middleware/authentication');
+const { requireAuthentication } = require('../middleware/authentication');
 const _ = require('lodash');
 
 /**
@@ -19,7 +16,7 @@ const _ = require('lodash');
  * an empty array
  */
 router.post(
-  '/',
+  '/', requireAuthentication,
   errorWrap(async (req, res) => {
     const userInfo = req.body;
     const userData = await getUserByIDToken(userInfo.idToken);
