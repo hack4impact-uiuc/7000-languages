@@ -9,7 +9,6 @@ const {
   POST_WRONG_COURSE_MISSING_NAME,
   POST_COURSE_ADDITIONAL_FIELDS,
   POST_COURSE_ADDITIONAL_FIELDS_EXPECTED,
-
 } = require('../mock-data/course-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
@@ -47,11 +46,11 @@ describe('POST /user/ ', () => {
     const body = POST_SIMPLE_COURSE;
 
     const response = await withAuthentication(
-        request(app).post('/language/course/').send(body)
+      request(app).post('/language/course/').send(body),
     );
-    console.log(response)
+    console.log(response);
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '_id', '__v'); 
+    const result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new course');
     expect(result).toEqual(POST_SIMPLE_COURSE_EXPECTED);
@@ -61,10 +60,10 @@ describe('POST /user/ ', () => {
     const body = POST_MISSING_FIELD_COURSE;
 
     const response = await withAuthentication(
-        request(app).post('/language/course/').send(body)
+      request(app).post('/language/course/').send(body),
     );
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '_id', '__v'); 
+    const result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new course');
     expect(result).toEqual(POST_MISSING_FIELD_COURSE_EXPECTED);
@@ -74,7 +73,7 @@ describe('POST /user/ ', () => {
     const body = POST_WRONG_COURSE_MISSING_NAME;
 
     const response = await withAuthentication(
-        request(app).post('/language/course/').send(body)
+      request(app).post('/language/course/').send(body),
     );
 
     expect(response.status).toBeGreaterThanOrEqual(400);
@@ -84,13 +83,12 @@ describe('POST /user/ ', () => {
     const body = POST_COURSE_ADDITIONAL_FIELDS;
 
     const response = await withAuthentication(
-        request(app).post('/language/course/').send(body)
+      request(app).post('/language/course/').send(body),
     );
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '_id', '__v'); 
+    const result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new course');
     expect(result).toEqual(POST_COURSE_ADDITIONAL_FIELDS_EXPECTED);
   });
-
 });

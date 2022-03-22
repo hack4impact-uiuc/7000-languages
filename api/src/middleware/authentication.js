@@ -91,5 +91,5 @@ const getUserFromRequest = async (req) => {
 
 module.exports = {
   getUserByIDToken,
-  requireAuthentication
-}
+  requireAuthentication,
+};
