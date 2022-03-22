@@ -4,6 +4,7 @@ const CourseDetails = new mongoose.Schema({
   adminName: { type: String, required: true },
   adminEmail: { type: String, required: true },
   name: { type: String, required: true },
+  alternativeName: { type: String, required: true, default: '' },
   description: { type: String, required: true, default: '' },
   iso: { type: String, required: true, default: '' },
   glotto: { type: String, required: true, default: '' },

@@ -54,6 +54,7 @@ const generateLanguages = (
     admin_id: DEFAULT_AUTH_ID,
     details: {
       name: faker.lorem.word(),
+      alternativeName: faker.lorem.word(),
       adminName: faker.name.findName(),
       adminEmail: faker.internet.email(),
       description: faker.lorem.paragraph(),
