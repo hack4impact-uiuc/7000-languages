@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const CourseDetails = new mongoose.Schema({
-  adminName: { type: String, required: true },
-  adminEmail: { type: String, required: true },
+  admin_name: { type: String, required: true },
+  admin_email: { type: String, required: true },
   name: { type: String, required: true },
-  alternativeName: { type: String, required: true, default: '' },
+  alternative_name: { type: String, required: true, default: '' },
   description: { type: String, required: true, default: '' },
   iso: { type: String, required: true, default: '' },
   glotto: { type: String, required: true, default: '' },
