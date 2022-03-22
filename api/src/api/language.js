@@ -20,13 +20,7 @@ router.post(
     const newCourse = new models.Course({
       approved: true,
       admin_id: user.authID,
-      details: {
-        name: req.body.details.name,
-        description: req.body.details.description,
-        translated_language: req.body.details.translated_language,
-        location: req.body.details.location,
-        iso: req.body.details.iso,
-      },
+      details: req.body.details,
     });
 
     await newCourse.save();

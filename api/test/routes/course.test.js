@@ -6,7 +6,7 @@ const {
   POST_SIMPLE_COURSE_EXPECTED,
   POST_MISSING_FIELD_COURSE,
   POST_MISSING_FIELD_COURSE_EXPECTED,
-  POST_WRONG_COURSE_MISSING_ISO,
+  POST_WRONG_COURSE_MISSING_NAME,
   POST_COURSE_ADDITIONAL_FIELDS,
   POST_COURSE_ADDITIONAL_FIELDS_EXPECTED,
 
@@ -49,6 +49,7 @@ describe('POST /user/ ', () => {
     const response = await withAuthentication(
         request(app).post('/language/course/').send(body)
     );
+    console.log(response)
     const message = response.body.message;
     const result = omitDeep(response.body.result, '_id', '__v'); 
     expect(response.status).toBe(200);
@@ -70,7 +71,7 @@ describe('POST /user/ ', () => {
   });
 
   test('No id token results in error', async () => {
-    const body = POST_WRONG_COURSE_MISSING_ISO;
+    const body = POST_WRONG_COURSE_MISSING_NAME;
 
     const response = await withAuthentication(
         request(app).post('/language/course/').send(body)

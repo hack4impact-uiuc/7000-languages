@@ -56,17 +56,7 @@ const requireAuthentication = async (req, res, next) => {
  * @param {String} idToken Google Auth ID Token (JWT)
  * @returns Google User Data
  */
-<<<<<<< HEAD
 const getUserByIDToken = async (idToken) => {
-  if (idToken) {
-    const ticket = await client.verifyIdToken({
-      idToken,
-      audience: [process.env.IOS_CLIENT_ID, process.env.ANDROID_CLIENT_ID],
-    });
-    const data = ticket.getPayload();
-    return data;
-=======
-module.exports.getUserByIDToken = async (idToken) => {
   try {
     if (idToken) {
       const ticket = await client.verifyIdToken({
@@ -79,7 +69,6 @@ module.exports.getUserByIDToken = async (idToken) => {
     return null;
   } catch (error) {
     return null;
->>>>>>> 76abad66c0feffb48356034ef2278c37dd3de33f
   }
 };
 
