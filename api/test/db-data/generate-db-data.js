@@ -54,9 +54,9 @@ const generateLanguages = (
     admin_id: DEFAULT_AUTH_ID,
     details: {
       name: faker.lorem.word(),
-      alternativeName: faker.lorem.word(),
-      adminName: faker.name.findName(),
-      adminEmail: faker.internet.email(),
+      alternative_name: faker.lorem.word(),
+      admin_name: faker.name.findName(),
+      admin_email: faker.internet.email(),
       description: faker.lorem.paragraph(),
       translated_language: 'English',
       location: 'North America',
