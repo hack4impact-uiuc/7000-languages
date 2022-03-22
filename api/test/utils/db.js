@@ -2,10 +2,15 @@ const mongoose = require('mongoose');
 const { MongoMemoryReplSet } = require('mongodb-memory-server');
 const { models } = require('../../src/models');
 const userData = require('../db-data/users.json');
-const courseData = require('../db-data/courses.json')
+const courseData = require('../db-data/courses.json');
+const unitData = require('../db-data/units.json');
+const lessonData = require('../db-data/lessons.json');
 
 let users = null;
 let courses = null;
+let units = null;
+let lessons = null;
+
 const replSet = new MongoMemoryReplSet({
   replSet: { storageEngine: 'wiredTiger' },
 });
@@ -47,6 +52,8 @@ module.exports.resetDatabase = async () => {
   constructStaticData();
   await saveMany(users);
   await saveMany(courses);
+  await saveMany(units);
+  await saveMany(lessons);
 };
 
 const saveMany = async (modelList) => {
@@ -64,6 +71,11 @@ const constructStaticData = () => {
   if (!courses) {
     courses = constructAll(courseData, models.Course);
   }
+
+  users = constructAll(userData, models.User);
+  courses = constructAll(courseData, models.Course);
+  units = constructAll(unitData, models.Unit);
+  lessons = constructAll(lessonData, models.Lesson);
 };
 
 const constructAll = (data, constructor) =>

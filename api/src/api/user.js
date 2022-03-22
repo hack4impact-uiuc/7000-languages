@@ -6,6 +6,7 @@ const { models } = require('../models/index.js');
 const { ROLE_ENUM } = require('../utils/constants.js');
 const { requireAuthentication } = require('../middleware/authentication');
 const _ = require('lodash');
+const { ERR_IMPROPER_ID_TOKEN } = require('../utils/constants');
 
 /**
  * Creates a new user in the database
@@ -22,7 +23,7 @@ router.post(
     const userData = await getUserByIDToken(userInfo.idToken);
 
     if (!userData || !userData.sub) {
-      return sendResponse(res, 400, 'Missing or improper idToken');
+      return sendResponse(res, 400, ERR_IMPROPER_ID_TOKEN);
     }
     const userAuthID = userData.sub;
 
