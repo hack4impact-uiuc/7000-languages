@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 
 const CourseDetails = new mongoose.Schema({
-  name: { type: String, required: false, default: '' },
-  description: { type: String, required: false, default: '' },
+  admin_name: { type: String, required: true },
+  admin_email: { type: String, required: true },
+  name: { type: String, required: true },
+  alternative_name: { type: String, required: true, default: '' },
+  description: { type: String, required: true, default: '' },
+  iso: { type: String, required: true, default: '' },
+  glotto: { type: String, required: true, default: '' },
   translated_language: { type: String, required: true, default: 'English' },
+  population: { type: String, required: true, default: '' },
   location: { type: String, required: true, default: '' },
-  iso: { type: String, required: true },
+  link: { type: String, required: true, default: '' },
 });
 
 const Course = new mongoose.Schema({
