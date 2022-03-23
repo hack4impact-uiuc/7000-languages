@@ -6,19 +6,25 @@ import Profile from 'pages/Profile'
 import Landing from 'pages/Landing'
 import Details from 'pages/Details'
 import Apply from 'pages/Apply'
-import HeaderTitle from './HeaderTitle'
-import HeaderLeft from './HeaderLeft'
+import UnitDrawer from 'pages/UnitDrawer'
+import DrawerButton from './DrawerButton'
 
 // ------------------------------------
 // Constants
 // ------------------------------------
 
 const Stack = createStackNavigator()
+const AuthStack = createStackNavigator()
+const ModalStack = createStackNavigator()
 
 const navigationProps = {
   headerTintColor: 'white',
   headerStyle: { backgroundColor: colors.red.dark },
-  headerTitleStyle: { fontSize: 18 },
+  headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+}
+
+const modalNavigationProps = {
+  headerShown: false,
 }
 
 // ------------------------------------
@@ -27,7 +33,7 @@ const navigationProps = {
 
 /*
 
-This contains the major navigators in the app. A naviagtor is a component
+This contains the major navigators in the app. A navigator is a component
 that takes route configuration as its children with additional props for configuration and renders our content.
 
 We will need a navigator for each of the screens with an icon on the tab bar, along with a
@@ -38,19 +44,28 @@ More reading: https://reactnavigation.org/docs/stack-navigator/
 */
 
 export const AuthNavigator = () => (
-  <Stack.Navigator
+  <AuthStack.Navigator
     initialRouteName="Landing"
     headerMode="screen"
     screenOptions={navigationProps}
   >
-    <Stack.Screen
+    <AuthStack.Screen
       name="Landing"
       component={Landing}
       options={() => ({
         title: 'Landing',
       })}
     />
-  </Stack.Navigator>
+  </AuthStack.Navigator>
+)
+
+export const ModalNavigator = () => (
+  <ModalStack.Navigator
+    initialRouteName="UnitDrawer"
+    screenOptions={modalNavigationProps}
+  >
+    <ModalStack.Screen name="UnitDrawer" component={UnitDrawer} />
+  </ModalStack.Navigator>
 )
 
 export const HomeNavigator = () => (
@@ -64,8 +79,7 @@ export const HomeNavigator = () => (
       component={Home}
       options={({ navigation }) => ({
         title: 'Units',
-        headerLeft: () => <HeaderLeft navigation={navigation} />,
-        headerTitle: () => <HeaderTitle />,
+        headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
     />
     <Stack.Screen
@@ -73,8 +87,7 @@ export const HomeNavigator = () => (
       component={Details}
       options={({ navigation }) => ({
         title: 'Home',
-        headerLeft: () => <HeaderLeft navigation={navigation} />,
-        headerTitle: () => <HeaderTitle />,
+        headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
     />
   </Stack.Navigator>
@@ -91,8 +104,7 @@ export const ProfileNavigator = () => (
       component={Profile}
       options={({ navigation }) => ({
         title: 'Profile',
-        headerLeft: () => <HeaderLeft navigation={navigation} />,
-        headerTitle: () => <HeaderTitle />,
+        headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
     />
     <Stack.Screen
@@ -100,8 +112,7 @@ export const ProfileNavigator = () => (
       component={Details}
       options={({ navigation }) => ({
         title: 'Home',
-        headerLeft: () => <HeaderLeft navigation={navigation} />,
-        headerTitle: () => <HeaderTitle />,
+        headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
     />
   </Stack.Navigator>

@@ -5,6 +5,13 @@ import colors from './colors'
 const theme = extendTheme({
   colors,
   components: {
+    Text: {
+      baseStyle: {
+        fontFamily: 'body',
+        fontWeight: 'regular',
+        fontSize: 'lg',
+      },
+    },
     Button: {
       // Can simply pass default props to change default behaviour of components.
       defaultProps: {
@@ -14,7 +21,6 @@ const theme = extendTheme({
         borderRadius: 12,
         w: '90%',
       },
-
       variants: {
         primary: {
           bg: 'red.dark',
@@ -49,7 +55,9 @@ const theme = extendTheme({
         italic: 'GT_Haptik_regular_italic',
         rotalic: 'GT_Haptik_rotalic',
       },
-      bold: {
+    },
+    GT_Haptik_bold: {
+      regular: {
         normal: 'GT_Haptik_bold',
         italic: 'GT_Haptik_bold_italic',
         rotalic: 'GT_Haptik_rotalic',
@@ -57,7 +65,7 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    heading: 'GT_Haptik',
+    heading: 'GT_Haptik_bold',
     body: 'GT_Haptik',
     mono: 'GT_Haptik',
   },
