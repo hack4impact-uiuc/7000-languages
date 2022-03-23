@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 })
 
 const Apply = ({ navigation }) => {
-  const dispatch = useDispatch()
+
 
   
 

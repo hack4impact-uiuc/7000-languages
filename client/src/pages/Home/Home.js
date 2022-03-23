@@ -43,8 +43,12 @@ const Home = ({ navigation }) => {
         title="Primary Button"
         variant="primary"
         onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
+          navigation.navigate('Apply', { from: 'Home' })
         }}
+        //<StyledButton
+        title="Go to Ishaan's page"
+        variant="primary"
+      />
       />
       <StyledButton title="Logout" type="secondary" onPress={logoutUser} />
     </View>

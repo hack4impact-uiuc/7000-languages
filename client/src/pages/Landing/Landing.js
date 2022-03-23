@@ -78,10 +78,22 @@ const Landing = () => {
       <StyledButton
         title="Login to app"
         variant="primary"
-        onPress={loginUser}
+        onPress={() => {
+          navigation.navigate('Apply', { from: 'Landing' })
+        }}
       />
     </View>
   )
+}
+
+Landing.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
+}
+
+Landing.defaultProps = {
+  navigation: { navigate: () => null },
 }
 
 export default Landing

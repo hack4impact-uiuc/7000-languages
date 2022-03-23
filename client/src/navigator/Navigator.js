@@ -35,19 +35,15 @@ const Navigator = () => {
     Based on whether the user is logged in or not, we will present the appropriate navigators.
   */
   return loggedIn ? (
-
+    
     <NavigationContainer>
       <DrawerNavigator />
     </NavigationContainer>
   ) : (
-  
-
-<NavigationContainer>
-<ApplyNavigator />
-</NavigationContainer>
+    <NavigationContainer>
+      <AuthNavigator />
+    </NavigationContainer>
   )
-
-  
 }
 
 export default Navigator
