@@ -5,6 +5,4 @@ import {
   ModalNavigator,
 } from './Stacks'
 
-export {
-  HomeNavigator, ProfileNavigator, AuthNavigator, ModalNavigator,
-}
+export { HomeNavigator, ProfileNavigator, AuthNavigator, ModalNavigator }

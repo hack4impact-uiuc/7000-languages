@@ -1,14 +1,13 @@
-import React from 'react'
-import { StyleSheet, View, StatusBar } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
-import { colors, images, fonts } from 'theme'
+import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-google-app-auth'
 import { authenticate, saveToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
-import { createUser } from 'api'
 import useErrorWrap from 'hooks/useErrorWrap'
 import { saveUserIDToken } from '../../utils/auth'
 import { createUser } from '../../api/api'
@@ -43,6 +42,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 5,
     bottom: 1,
+  },
+  backgroundImage: {
+    width: '100%',
   },
 })
 
@@ -90,7 +92,11 @@ const Landing = () => {
 
   return (
     <View style={styles.root}>
-      <Image source={images.background_landing}></Image>
+      <Image
+        source={images.background_landing}
+        style={styles.backgroundImage}
+        alt="description of image"
+      ></Image>
       <View style={styles.button}>
         <StyledButton
           title="Continue with Google"
