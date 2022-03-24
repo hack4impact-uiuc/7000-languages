@@ -2,8 +2,8 @@ import React from 'react'
 import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { colors } from 'theme'
-import { HomeNavigator } from '../Stacks'
 import { AntDesign } from '@expo/vector-icons'
+import { HomeNavigator } from '../Stacks'
 
 const Tab = createBottomTabNavigator()
 

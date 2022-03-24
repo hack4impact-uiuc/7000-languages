@@ -5,11 +5,9 @@ import PropTypes from 'prop-types'
 // import { removeUserIDToken } from '../../utils/auth'
 import HomeBaseCase from '../../components/HomeBaseCase/HomeBaseCase'
 
-const Home = ({ navigation }) => {
-return (
-<HomeBaseCase navigation={navigation} />
-  )
-}
+const Home = ({ navigation }) => (
+  <HomeBaseCase navigation={navigation} />
+)
 Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
