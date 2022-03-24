@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
 
 const CourseDetails = new mongoose.Schema({
-  name: { type: String, required: false, default: '' },
+  admin_name: { type: String, required: true },
+  admin_email: { type: String, required: true },
+  name: { type: String, required: true },
+  alternative_name: { type: String, required: false, default: '' },
   description: { type: String, required: false, default: '' },
-  translated_language: { type: String, required: true, default: 'English' },
-  location: { type: String, required: true, default: '' },
-  iso: { type: String, required: true },
+  iso: { type: String, required: false, default: '' },
+  glotto: { type: String, required: false, default: '' },
+  translated_language: { type: String, required: false, default: 'English' },
+  population: { type: String, required: false, default: '' },
+  location: { type: String, required: false, default: '' },
+  link: { type: String, required: false, default: '' },
 });
 
 const Course = new mongoose.Schema({
@@ -17,7 +23,7 @@ const Course = new mongoose.Schema({
 const Unit = new mongoose.Schema({
   _course_id: { type: String, required: true, index: true },
   name: { type: String, required: true },
-  _order: { type: Number, required: true, index: true, unique: true },
+  _order: { type: Number, required: true, index: true },
   selected: { type: Boolean, required: true },
   description: { type: String, required: true, default: '' },
 });
@@ -25,7 +31,7 @@ const Unit = new mongoose.Schema({
 Unit.index({ _course_id: 1, _order: 1 });
 
 const Vocab = new mongoose.Schema({
-  _order: { type: Number, required: true, index: true, unique: true },
+  _order: { type: Number, required: true, index: true },
   original: { type: String, required: true },
   translation: { type: String, required: true },
   image: { type: String, required: false, default: '' },
@@ -39,7 +45,7 @@ const Lesson = new mongoose.Schema({
   _course_id: { type: String, required: true, index: true },
   _unit_id: { type: String, required: true, index: true },
   name: { type: String, required: true },
-  _order: { type: Number, required: true, index: true, unique: true },
+  _order: { type: Number, required: true, index: true },
   selected: { type: Boolean, required: true },
   vocab: { type: [Vocab], required: true, default: [] },
   description: { type: String, required: true, default: '' },

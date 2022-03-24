@@ -28,9 +28,7 @@ const Details = ({ route, navigation }) => {
       <StyledButton
         title="Go Back"
         variant="secondary"
-        onPress={() => {
-          navigation.navigate('Home', { from: 'Details' })
-        }}
+        onPress={navigation.goBack}
       />
     </View>
   )
