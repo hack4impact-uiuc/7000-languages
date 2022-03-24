@@ -16,16 +16,16 @@ const { ERR_NO_COURSE_DETAILS } = require('../utils/constants');
 router.post(
   '/course',
   requireAuthentication,
-
   errorWrap(async (req, res) => {
     const user = req.user;
-    if (!req.body.details) {
+    const courseData = req.body;
+    if (!courseData.details) {
       return sendResponse(res, 404, ERR_NO_COURSE_DETAILS);
     }
     const newCourse = new models.Course({
       approved: true,
       admin_id: user.authID,
-      details: req.body.details,
+      details: courseData.details,
     });
 
     await newCourse.save();

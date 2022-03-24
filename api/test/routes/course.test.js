@@ -4,8 +4,8 @@ const db = require('../utils/db');
 const {
   POST_SIMPLE_COURSE,
   POST_SIMPLE_COURSE_EXPECTED,
-  POST_MISSING_FIELD_COURSE,
-  POST_MISSING_FIELD_COURSE_EXPECTED,
+  POST_MISSING_NON_REQ_FIELD_COURSE,
+  POST_MISSING_NON_REQ_FIELD_COURSE_EXPECTED,
   POST_WRONG_COURSE_MISSING_NAME,
   POST_COURSE_ADDITIONAL_FIELDS,
   POST_COURSE_ADDITIONAL_FIELDS_EXPECTED,
@@ -56,8 +56,8 @@ describe('POST /user/ ', () => {
     expect(result).toEqual(POST_SIMPLE_COURSE_EXPECTED);
   });
 
-  test('Missing field should create course', async () => {
-    const body = POST_MISSING_FIELD_COURSE;
+  test('Missing non req field should create course', async () => {
+    const body = POST_MISSING_NON_REQ_FIELD_COURSE;
 
     const response = await withAuthentication(
       request(app).post('/language/course/').send(body),
@@ -66,7 +66,7 @@ describe('POST /user/ ', () => {
     const result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new course');
-    expect(result).toEqual(POST_MISSING_FIELD_COURSE_EXPECTED);
+    expect(result).toEqual(POST_MISSING_NON_REQ_FIELD_COURSE_EXPECTED);
   });
 
   test('No id token results in error', async () => {

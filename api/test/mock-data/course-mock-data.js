@@ -32,7 +32,7 @@ module.exports.POST_SIMPLE_COURSE_EXPECTED = {
   },
 };
 
-module.exports.POST_MISSING_FIELD_COURSE = {
+module.exports.POST_MISSING_NON_REQ_FIELD_COURSE = {
   approved: true,
   details: {
     admin_name: 'Jessica Singh',
@@ -44,7 +44,7 @@ module.exports.POST_MISSING_FIELD_COURSE = {
   },
 };
 
-module.exports.POST_MISSING_FIELD_COURSE_EXPECTED = {
+module.exports.POST_MISSING_NON_REQ_FIELD_COURSE_EXPECTED = {
   approved: true,
   details: {
     admin_name: 'Jessica Singh',
@@ -86,6 +86,7 @@ module.exports.POST_COURSE_ADDITIONAL_FIELDS = {
     population: '',
     location: 'Michigan',
     link: '',
+    extraDetails: '',
   },
 };
 
