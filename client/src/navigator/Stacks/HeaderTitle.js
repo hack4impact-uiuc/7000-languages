@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, Image } from 'react-native'
-import { images } from 'theme'
+import { StyleSheet } from 'react-native'
+import { Text } from 'native-base'
 
 const styles = StyleSheet.create({
   logo: {
@@ -9,7 +9,16 @@ const styles = StyleSheet.create({
   },
 })
 
-const HeaderTitle = () => <Image source={images.logo_sm} style={styles.logo} />
+const HeaderTitle = () => <Text
+  style={{
+  fontFamily: 'GT_Haptik_bold',
+  }}
+  fontWeight="regular"
+  color="white.dark"
+  fontSize="2xl"
+>
+Home
+</Text>
 
 HeaderTitle.propTypes = {}
 HeaderTitle.defaultProps = {}

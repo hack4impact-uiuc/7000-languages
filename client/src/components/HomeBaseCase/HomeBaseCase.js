@@ -2,10 +2,13 @@ import React from 'react'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import { Text } from 'native-base'
+import { StyleSheet, View, StatusBar } from 'react-native'
 import { authenticate, removeToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
+import PropTypes from 'prop-types'
 import { removeUserIDToken } from '../../utils/auth'
 import { AntDesign } from '@expo/vector-icons'
+
 
 const styles = StyleSheet.create({
     root: {
@@ -16,7 +19,7 @@ const styles = StyleSheet.create({
       backgroundColor: colors.gray.light,
     },
   })
-  const HomeBaseCase = ({ navigation }) => {
+  const HomeBaseCase = ({ }) => {
     const dispatch = useDispatch()
   
     const logoutUser = async () => {
@@ -24,7 +27,9 @@ const styles = StyleSheet.create({
       dispatch(removeToken())
       dispatch(authenticate({ loggedIn: false }))
     }
-    <View style={styles.root}>
+
+    return (
+      <View style={styles.root}>
       <StatusBar barStyle="light-content" />
       <Text
         style={{
@@ -43,17 +48,15 @@ const styles = StyleSheet.create({
         textAlign="center"
         paddingBottom="10px"
       >
-        Looks like you don't have a {'\n'} language yet!
+        Looks like you aren't a student in {'\n'} any courses yet!
       </Text>
       <StyledButton
-        title="Search Languages"
+        title="Search Courses"
         leftIcon={
           <AntDesign name="search1" size={24} color={colors.white.dark} />
         }
         variant="primary_short"
-        onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
-        }}
+        // add onPress function to future page 
       />
       <View
         style={{
@@ -101,14 +104,15 @@ const styles = StyleSheet.create({
         paddingBottom="10%"
         color="red.dark"
         fontSize="2xl"
-        onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
-        }}
+        // add on press to future page 
       >
         Apply to Contribute
       </Text>
     </View>
-}  
+    )
+
+  }
+  
 // Home Base Case Object Fields 
 HomeBaseCase.propTypes = {
     navigation: PropTypes.shape({
