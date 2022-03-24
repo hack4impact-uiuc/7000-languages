@@ -6,7 +6,9 @@ import Profile from 'pages/Profile'
 import Landing from 'pages/Landing'
 import Details from 'pages/Details'
 import UnitDrawer from 'pages/UnitDrawer'
+import ManageUnits from 'pages/ManageUnits'
 import DrawerButton from './DrawerButton'
+import BackButton from './BackButton'
 
 // ------------------------------------
 // Constants
@@ -24,6 +26,12 @@ const navigationProps = {
 
 const modalNavigationProps = {
   headerShown: false,
+}
+
+const manageNavigationProps = {
+  headerTintColor: 'black',
+  headerStyle: { backgroundColor: colors.white.dark },
+  headerTitleStyle: { color: colors.black, fontSize: 18, fontFamily: 'GT_Haptik_bold' },
 }
 
 // ------------------------------------
@@ -79,6 +87,15 @@ export const HomeNavigator = () => (
       options={({ navigation }) => ({
         title: 'Units',
         headerLeft: () => <DrawerButton navigation={navigation} />,
+      })}
+    />
+    <Stack.Screen
+      name="ManageUnits"
+      component={ManageUnits}
+      options={({ navigation }) => ({
+        ...manageNavigationProps,
+        title: 'Manage Units',
+        headerLeft: () => <BackButton navigation={navigation} />,
       })}
     />
     <Stack.Screen
