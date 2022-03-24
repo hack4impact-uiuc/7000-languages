@@ -5,7 +5,7 @@ import { authenticate, saveToken } from 'slices/auth.slice'
 import { loadUserIDToken } from 'utils/auth'
 import { createStackNavigator } from '@react-navigation/stack'
 import DrawerNavigator from './Drawer'
-import { AuthNavigator, ModalNavigator } from './Stacks'
+import { AuthNavigator, ModalNavigator, ApplyNavigator } from './Stacks'
 
 const RootStack = createStackNavigator()
 const Navigator = () => {

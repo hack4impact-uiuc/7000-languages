@@ -4,9 +4,8 @@ import { StyleSheet, View, StatusBar } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import { Text } from 'native-base'
-import { authenticate, removeToken } from 'slices/auth.slice'
-import { useDispatch } from 'react-redux'
-import { removeUserIDToken } from '../../utils/auth'
+
+
 
 const styles = StyleSheet.create({
   root: {
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.gray.light,
+    backgroundColor: colors.white,
   },
 })
 
@@ -28,7 +27,7 @@ const Apply = ({ navigation }) => {
       <StatusBar barStyle="light-content" />
       <Text
         fontWeight="regular"
-        color="blue.dark"
+        color="black"
         fontStyle="italic"
         fontSize="6xl"
       >
@@ -36,10 +35,10 @@ const Apply = ({ navigation }) => {
       </Text>
       <Text fontSize="6xl">Wassup</Text>
       <StyledButton
-        title="Primary Button"
+        title="Apply To Contribute"
         variant="primary"
         onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
+          // api call 
         }}
       />
       <StyledButton title="Logout" type="secondary" onPress={logoutUser} />

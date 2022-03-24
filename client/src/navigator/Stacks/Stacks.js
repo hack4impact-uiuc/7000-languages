@@ -82,6 +82,15 @@ export const HomeNavigator = () => (
         headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
     />
+
+<Stack.Screen
+      name="Apply"
+      component={Apply}
+      options={({ navigation }) => ({
+        title: 'Apply to Contribute',
+        headerLeft: () => <DrawerButton navigation={navigation} />
+      })}
+    />
     <Stack.Screen
       name="Details"
       component={Details}
@@ -118,21 +127,4 @@ export const ProfileNavigator = () => (
   </Stack.Navigator>
 )
 
-export const ApplyNavigator = () => (
-  <Stack.Navigator
-    initialRouteName="Apply"
-    headerMode="screen"
-    screenOptions={navigationProps}
-  >
-    <Stack.Screen
-      name="Apply"
-      component={Apply}
-      options={({ navigation }) => ({
-        title: 'Apply to Contribute',
-        headerLeft: () => <HeaderLeft navigation={navigation} />,
-        headerTitle: () => <HeaderTitle />,
-      })}
-    />
-  </Stack.Navigator>
-)
 
