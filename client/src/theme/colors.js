@@ -1,7 +1,7 @@
 // 7000 Languages Primary Identity Colors
 const colors = {
   red: {
-    light: '#FBEDEC', // 100 opacity
+    light: '#FBEAE9', // 100 opacity
     medium: '#F2B8B5', // 300 opacity
     dark: '#DF4E47', // 500 opacity
   },
@@ -23,7 +23,7 @@ const colors = {
   gray: {
     light: '#EFEFEF', // 100 opacity
     medium_light: '#A8AFB4', // 300 opacity
-    medium: '#5B6165', // 500 opacity
+    medium: '#A4A4A4', // 500 opacity
     dark: '#060606', // 800 opacity
   },
   white: {

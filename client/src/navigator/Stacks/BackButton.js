@@ -34,7 +34,6 @@ export default BackButton
 
 /*
 
-1.finish up hover background for this component
 2. Create Selected Units and Unselected Units header
 3. Add add units button
 4. Add necessary props so far

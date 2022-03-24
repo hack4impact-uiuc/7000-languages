@@ -15,15 +15,15 @@ const theme = extendTheme({
     Button: {
       // Can simply pass default props to change default behaviour of components.
       defaultProps: {
-        px: 20,
-        py: 4,
-        my: 2,
         borderRadius: 12,
-        w: '90%',
       },
       variants: {
         primary: {
           bg: 'red.dark',
+          w: '90%',
+          my: 2,
+          px: 20,
+          py: 4,
           _text: {
             color: 'white.dark',
             fontFamily: 'GT_Haptik_bold',
@@ -31,6 +31,10 @@ const theme = extendTheme({
         },
         secondary: {
           bg: 'white.dark',
+          w: '90%',
+          my: 2,
+          px: 20,
+          py: 4,
           _text: {
             color: 'red.dark',
             fontFamily: 'GT_Haptik_bold',
@@ -38,10 +42,25 @@ const theme = extendTheme({
         },
         tertiary: {
           bg: 'gray.medium:alpha.00',
+          w: '90%',
+          my: 2,
+          px: 20,
+          py: 4,
           borderColor: 'white.dark',
           borderWidth: 2,
           _text: {
             color: 'white.dark',
+            fontFamily: 'GT_Haptik_bold',
+          },
+        },
+        small: {
+          bg: 'red.light',
+          borderColor: 'white.dark',
+          borderWidth: 2,
+          px: 2,
+          py: 4,
+          _text: {
+            color: 'red.dark',
             fontFamily: 'GT_Haptik_bold',
           },
         },
