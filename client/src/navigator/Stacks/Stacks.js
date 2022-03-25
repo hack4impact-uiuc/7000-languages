@@ -7,7 +7,6 @@ import Landing from 'pages/Landing'
 import Details from 'pages/Details'
 import UnitDrawer from 'pages/UnitDrawer'
 import DrawerButton from './DrawerButton'
-
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -76,10 +75,9 @@ export const HomeNavigator = () => (
     screenOptions={navigationProps}
   >
     <Stack.Screen
-      name="Units"
+      name="Home"
       component={Home}
       options={({ navigation }) => ({
-        title: 'Units',
         headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
     />
