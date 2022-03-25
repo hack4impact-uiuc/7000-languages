@@ -27,7 +27,7 @@ const HomeBaseCase = () => (
       }}
       fontWeight="regular"
       color="gray.medium"
-      fontSize="2xl"
+      fontSize="xl"
     >
       Uh, Oh!
     </Text>

@@ -9,13 +9,13 @@ const theme = extendTheme({
       baseStyle: {
         fontFamily: 'body',
         fontWeight: 'regular',
-        fontSize: 'lg',
+        fontSize: 'xl',
       },
     },
     Button: {
       // Can simply pass default props to change default behaviour of components.
       defaultProps: {
-        px: 20,
+        px: 0,
         py: 4,
         my: 2,
         borderRadius: 12,
@@ -25,6 +25,7 @@ const theme = extendTheme({
           bg: 'red.dark',
           w: '90%',
           _text: {
+            fontSize: '2xl',
             color: 'white.dark',
             fontFamily: 'GT_Haptik_bold',
           },

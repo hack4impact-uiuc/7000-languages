@@ -8,7 +8,7 @@ const StyledButton = ({
   <Button
     onPress={onPress}
     variant={variant}
-    _text={{ fontSize: 'lg' }}
+    _text={{ fontSize: 'xl' }}
     leftIcon={leftIcon}
   >
     {title}
