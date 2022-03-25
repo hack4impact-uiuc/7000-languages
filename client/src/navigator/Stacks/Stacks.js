@@ -46,7 +46,9 @@ export const AuthNavigator = () => (
   <AuthStack.Navigator
     initialRouteName="Landing"
     headerMode="screen"
-    screenOptions={navigationProps}
+    screenOptions={{
+      headerShown: false,
+    }}
   >
     <AuthStack.Screen
       name="Landing"

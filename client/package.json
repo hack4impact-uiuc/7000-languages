@@ -14,6 +14,7 @@
     "style": "yarn format && yarn lint"
   },
   "dependencies": {
+    "@expo/vector-icons": "^12.0.5",
     "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.2",
@@ -44,8 +45,8 @@
     "react-native-reanimated": "~2.4.1",
     "react-native-safe-area-context": "3.4.1",
     "react-native-screens": "~3.12.0",
-    "react-native-svg": "12.1.1",
-    "react-native-svg-transformer": "^0.14.3",
+    "react-native-svg": "^12.3.0",
+    "react-native-svg-transformer": "^1.0.0",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "0.17.1",
     "react-redux": "^7.1.1",
