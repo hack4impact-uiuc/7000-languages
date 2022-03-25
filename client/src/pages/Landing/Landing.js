@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
@@ -9,9 +9,9 @@ import * as Google from 'expo-google-app-auth'
 import { authenticate, saveToken } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import useErrorWrap from 'hooks/useErrorWrap'
+import { AntDesign } from '@expo/vector-icons'
 import { saveUserIDToken } from '../../utils/auth'
 import { createUser } from '../../api/api'
-import { AntDesign } from '@expo/vector-icons'
 import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
@@ -96,7 +96,7 @@ const Landing = () => {
         source={images.background_landing}
         style={styles.backgroundImage}
         alt="description of image"
-      ></Image>
+      />
       <View style={styles.button}>
         <StyledButton
           title="Continue with Google"
@@ -121,9 +121,7 @@ const Landing = () => {
           }}
           fontSize="3xl"
         >
-          "To speak a language is {'\n'}
-          to take on a world a,{'\n'} culture."
-          {'\n'}
+          {'"To speak a language is \n to take on a world a,\n culture."\n'}
         </Text>
 
         <Text
