@@ -6,3 +6,5 @@ module.exports.ERR_AUTH_FAILED =
   'Authentication failed. Please log out and try again.';
 module.exports.ERR_NO_MONGO_DOCUMENT =
   'You do not have a record in our database. Please log out and try again.';
+module.exports.ERR_NO_COURSE_DETAILS =
+  'Missing Course details. Please log out and try again.';

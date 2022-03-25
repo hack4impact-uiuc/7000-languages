@@ -29,7 +29,8 @@
     "mongodb-memory-server": "^8.4.0",
     "mongoose": "^6.2.3",
     "morgan": "~1.10.0",
-    "mpath": "^0.8.4"
+    "mpath": "^0.8.4",
+    "omit-deep-lodash": "^1.1.6"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7",
