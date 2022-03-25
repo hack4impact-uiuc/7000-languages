@@ -40,7 +40,6 @@ const Home = ({ navigation }) => {
       </Text>
       <Text fontSize="6xl">Wassup</Text>
       <StyledButton
-        title="Primary Button"
         variant="primary"
         onPress={() => {
           navigation.navigate('Apply', { from: 'Home' })
@@ -49,7 +48,7 @@ const Home = ({ navigation }) => {
         title="Go to Ishaan's page"
         variant="primary"
       />
-      />
+
       <StyledButton
         title="Unit Drawer"
         variant="primary"

@@ -83,12 +83,17 @@ export const HomeNavigator = () => (
       })}
     />
 
-<Stack.Screen
+    <Stack.Screen
       name="Apply"
       component={Apply}
       options={({ navigation }) => ({
-        title: 'Apply to Contribute',
-        headerLeft: () => <DrawerButton navigation={navigation} />
+        title: 'Apply To Contribute',
+        headerStyle: { backgroundColor: 'colors.white.dark' },
+        headerTitleStyle: {
+          fontSize: 18,
+          fontFamily: 'GT_Haptik_bold',
+          color: 'black',
+        },
       })}
     />
     <Stack.Screen
@@ -126,5 +131,3 @@ export const ProfileNavigator = () => (
     />
   </Stack.Navigator>
 )
-
-
