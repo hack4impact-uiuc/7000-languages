@@ -9,7 +9,7 @@ const theme = extendTheme({
       baseStyle: {
         fontFamily: 'body',
         fontWeight: 'regular',
-        fontSize: 'lg',
+        fontSize: 'xl',
       },
     },
     Button: {
@@ -24,6 +24,15 @@ const theme = extendTheme({
           my: 2,
           px: 20,
           py: 4,
+          _text: {
+            fontSize: '2xl',
+            color: 'white.dark',
+            fontFamily: 'GT_Haptik_bold',
+          },
+        },
+        primary_short: {
+          bg: 'red.dark',
+          w: '67%',
           _text: {
             color: 'white.dark',
             fontFamily: 'GT_Haptik_bold',

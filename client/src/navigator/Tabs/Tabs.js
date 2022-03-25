@@ -1,9 +1,9 @@
 import React from 'react'
 import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
-import { HomeNavigator, ProfileNavigator } from '../Stacks'
+import { AntDesign } from '@expo/vector-icons'
+import { HomeNavigator } from '../Stacks'
 
 const Tab = createBottomTabNavigator()
 
@@ -23,22 +23,14 @@ const TabNavigator = () => (
         switch (route.name) {
           case 'Units':
             return (
-              <FontIcon
-                name="file"
+              <AntDesign
+                name="appstore1"
                 color={focused ? colors.red.dark : colors.gray.dark}
                 size={20}
                 solid
               />
             )
-          case 'Profile':
-            return (
-              <FontIcon
-                name="user"
-                color={focused ? colors.red.dark : colors.gray.dark}
-                size={20}
-                solid
-              />
-            )
+
           default:
             return <View />
         }
@@ -59,7 +51,6 @@ const TabNavigator = () => (
     swipeEnabled={false}
   >
     <Tab.Screen name="Units" component={HomeNavigator} />
-    <Tab.Screen name="Profile" component={ProfileNavigator} />
   </Tab.Navigator>
 )
 

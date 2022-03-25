@@ -54,7 +54,9 @@ export const AuthNavigator = () => (
   <AuthStack.Navigator
     initialRouteName="Landing"
     headerMode="screen"
-    screenOptions={navigationProps}
+    screenOptions={{
+      headerShown: false,
+    }}
   >
     <AuthStack.Screen
       name="Landing"
@@ -82,10 +84,9 @@ export const HomeNavigator = () => (
     screenOptions={navigationProps}
   >
     <Stack.Screen
-      name="Units"
+      name="Home"
       component={Home}
       options={({ navigation }) => ({
-        title: 'Units',
         headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
     />
