@@ -10,7 +10,7 @@ const {
   POST_USER_ADDITIONAL_FIELDS,
   POST_USER_ONE_LESS_FIELD,
   POST_WRONG_USER_NO_ROLE,
-} = require('../mock-data/user-mock-data');
+} = require('../mock-data/language-mock-data');
 const { withAuthentication } = require('../utils/auth');
 
 /* 

@@ -3,6 +3,7 @@ let app = require('../../src/app');
 const request = require('supertest');
 const db = require('../utils/db');
 const {
+  PUT_ORIGINAL_COURSE,
   PUT_EXPECTED_COURSE_UPDATED_APPROVAL,
   PUT_EXPECTED_COURSE_UPDATED_ADMIN_ID,
   PUT_EXPECTED_COURSE_UPDATED_COURSE_DETAILS,
@@ -49,60 +50,59 @@ describe('PUT /course/ ', () => {
   });
 
   test('Put request should update course approval status', async () => {
-    const original = require("../db-data/courses");
-
     const body =  PUT_UPDATE_APPROVAL;
-    const response = await request(app).put('/course/' + original._id/* ? */).send(body);
-
+    const response = await request(app).put('/course/62391a30487d5ae343c82311').send(body);
+    
     const result = _.omit(response.body.result, ['_id', '__v']);
-
+    delete result["details"]["_id"]
+    
     expect(result).toEqual(PUT_EXPECTED_COURSE_UPDATED_APPROVAL);
     expect(response.status).toBe(200);
   });
 
   test('Put request should updated course admin id', async () => {
-    const original = require("../db-data/courses");
-
     const body =  PUT_UPDATE_ADMIN_ID;
-    const response = await request(app).put('/course/' + original._id/* ? */).send(body);
+    const response = await request(app).put('/course/62391a30487d5ae343c82311').send(body);
 
     const result = _.omit(response.body.result, ['_id', '__v']);
+    delete result["details"]["_id"]
 
     expect(result).toEqual(PUT_EXPECTED_COURSE_UPDATED_ADMIN_ID);
     expect(response.status).toBe(200);
   });
 
   test('Put request should updated course details', async () => {
-    const original = require("../db-data/courses");
-
     const body =  PUT_UPDATE_COURSE_DETAILS;
-    const response = await request(app).put('/course/' + original._id/* ? */).send(body);
+    const response = await request(app).put('/course/62391a30487d5ae343c82311').send(body);
 
     const result = _.omit(response.body.result, ['_id', '__v']);
+    delete result["details"]["_id"]
 
     expect(result).toEqual(PUT_EXPECTED_COURSE_UPDATED_COURSE_DETAILS);
     expect(response.status).toBe(200);
   });
 
   test('Put request should do nothing for invalid fields', async () => {
-    const original = require("../db-data/courses");
+    const original = PUT_ORIGINAL_COURSE;
 
     const body =  PUT_UPDATE_INVALID_FIELD;
-    const response = await request(app).put('/course/' + original._id/* ? */).send(body);
+    const response = await request(app).put('/course/62391a30487d5ae343c82311').send(body);
 
     const result = _.omit(response.body.result, ['_id', '__v']);
+    delete result["details"]["_id"]
 
     expect(result).toEqual(original);
     expect(response.status).toBe(200);
   });
 
   test('Put request should maintain boolean type for approval status', async () => {
-    const original = require("../db-data/courses");
+    const original = PUT_ORIGINAL_COURSE;
 
     const body =  PUT_UPDATE_NON_BOOLEAN_APPROVAL;
-    const response = await request(app).put('/course/' + original._id/* ? */).send(body);
+    const response = await request(app).put('/course/62391a30487d5ae343c82311').send(body);
 
     const result = _.omit(response.body.result, ['_id', '__v']);
+    delete result["details"]["_id"]
 
     expect(result).toEqual(original);
     expect(response.status).toBe(200);
