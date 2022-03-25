@@ -9,9 +9,19 @@ const {
   POST_WRONG_COURSE_MISSING_NAME,
   POST_COURSE_ADDITIONAL_FIELDS,
   POST_COURSE_ADDITIONAL_FIELDS_EXPECTED,
+  PUT_ORIGINAL_COURSE,
+  PUT_EXPECTED_COURSE_UPDATED_APPROVAL,
+  PUT_EXPECTED_COURSE_UPDATED_ADMIN_ID,
+  PUT_EXPECTED_COURSE_UPDATED_COURSE_DETAILS,
+  PUT_UPDATE_APPROVAL,
+  PUT_UPDATE_ADMIN_ID,
+  PUT_UPDATE_COURSE_DETAILS,
+  PUT_UPDATE_INVALID_FIELD,
+  PUT_UPDATE_NON_BOOLEAN_APPROVAL,
 } = require('../mock-data/course-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
+const _ = require('lodash');
 
 /* 
   Google Auth Mocker - uses jest to mock the Google Auth library.
@@ -48,7 +58,6 @@ describe('POST /user/ ', () => {
     const response = await withAuthentication(
       request(app).post('/language/course/').send(body),
     );
-    console.log(response);
     const message = response.body.message;
     const result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
@@ -91,4 +100,83 @@ describe('POST /user/ ', () => {
     expect(message).toEqual('Successfully created a new course');
     expect(result).toEqual(POST_COURSE_ADDITIONAL_FIELDS_EXPECTED);
   });
+});
+
+
+// This block tests the PUT language/course/ endpoint.
+describe('PUT /language/course/ ', () => {
+  /* 
+    We have to make sure we connect to a MongoDB mock db before the test 
+    and close the connection at the end.
+  */
+  afterAll(async () => await db.closeDatabase());
+  afterEach(async () => await db.resetDatabase());
+
+  beforeAll(async () => {
+    await db.connect();
+  });
+
+  test('simple test', async () => {
+    expect(1).toEqual(1);
+  });
+  
+
+  test('Put request should update course approval status', async () => {
+    const body =  PUT_UPDATE_APPROVAL;
+    const response = await withAuthentication(request(app).put('/language/course/62391a30487d5ae343c82311').send(body));
+    
+    const result = _.omit(response.body.result, ['_id', '__v']);
+    delete result["details"]["_id"]
+    
+    expect(result).toEqual(PUT_EXPECTED_COURSE_UPDATED_APPROVAL);
+    expect(response.status).toBe(200);
+  });
+
+  test('Put request should updated course admin id', async () => {
+    const body =  PUT_UPDATE_ADMIN_ID;
+    const response = await withAuthentication(request(app).put('/language/course/62391a30487d5ae343c82311').send(body));
+
+    const result = _.omit(response.body.result, ['_id', '__v']);
+    delete result["details"]["_id"]
+
+    expect(result).toEqual(PUT_EXPECTED_COURSE_UPDATED_ADMIN_ID);
+    expect(response.status).toBe(200);
+  });
+
+  test('Put request should updated course details', async () => {
+    const body =  PUT_UPDATE_COURSE_DETAILS;
+    const response = await withAuthentication(request(app).put('/language/course/62391a30487d5ae343c82311').send(body));
+
+    const result = _.omit(response.body.result, ['_id', '__v']);
+    delete result["details"]["_id"]
+
+    expect(result).toEqual(PUT_EXPECTED_COURSE_UPDATED_COURSE_DETAILS);
+    expect(response.status).toBe(200);
+  });
+
+  test('Put request should do nothing for invalid fields', async () => {
+    const original = PUT_ORIGINAL_COURSE;
+
+    const body =  PUT_UPDATE_INVALID_FIELD;
+    const response = await withAuthentication(request(app).put('/language/course/62391a30487d5ae343c82311').send(body));
+
+    const result = _.omit(response.body.result, ['_id', '__v']);
+    delete result["details"]["_id"]
+
+    expect(result).toEqual(original);
+    expect(response.status).toBe(200);
+  });
+
+  test('Put request should maintain boolean type for approval status', async () => {
+    const original = PUT_ORIGINAL_COURSE;
+
+    const body =  PUT_UPDATE_NON_BOOLEAN_APPROVAL;
+    const response = await withAuthentication(request(app).put('/language/course/62391a30487d5ae343c82311').send(body));
+
+    const result = _.omit(response.body.result, ['_id', '__v']);
+    delete result["details"]["_id"]
+
+    expect(result).toEqual(original);
+    expect(response.status).toBe(200);
+  });  
 });

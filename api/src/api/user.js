@@ -4,7 +4,7 @@ const { errorWrap } = require('../middleware');
 const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
 const { ROLE_ENUM } = require('../utils/constants.js');
-const { requireAuthentication } = require('../middleware/authentication');
+const { getUserByIDToken, requireAuthentication } = require('../middleware/authentication');
 const _ = require('lodash');
 const { ERR_IMPROPER_ID_TOKEN } = require('../utils/constants');
 
