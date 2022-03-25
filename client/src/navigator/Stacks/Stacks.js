@@ -79,17 +79,17 @@ export const ModalNavigator = () => (
 
 export const HomeNavigator = () => (
   <Stack.Navigator
-    initialRouteName="Units"
+    initialRouteName="ManageUnits"
     headerMode="screen"
     screenOptions={navigationProps}
   >
-    <Stack.Screen
+    {/* <Stack.Screen
       name="Home"
       component={Home}
       options={({ navigation }) => ({
         headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
-    />
+    /> */}
     <Stack.Screen
       name="ManageUnits"
       component={ManageUnits}
@@ -99,14 +99,14 @@ export const HomeNavigator = () => (
         headerLeft: () => <BackButton navigation={navigation} />,
       })}
     />
-    <Stack.Screen
+    {/* <Stack.Screen
       name="Details"
       component={Details}
       options={({ navigation }) => ({
         title: 'Home',
         headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
-    />
+    /> */}
   </Stack.Navigator>
 )
 

@@ -4,18 +4,20 @@ import { Text, Divider } from 'native-base'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
-import FontIcon from 'react-native-vector-icons/Feather'
+import FontIcon from 'react-native-vector-icons/AntDesign'
+import { AntDesign } from '@expo/vector-icons'
 
 const styles = StyleSheet.create({
     root: {
         backgroundColor: colors.white.dark,
     },
     selected: {
-        width: '90%',
+        marginTop: 10,
+        width: '95%',
         height: 'auto',
     },
     unselected: {
-        width: '90%',
+        width: '95%',
         height: 'auto',
     },
     header: {
@@ -45,6 +47,8 @@ const ManageView = ({
                 <StyledButton
                     title={addText}
                     variant="small"
+                    rightIcon={<AntDesign name="pluscircle" size={18} color={colors.red.dark} />
+                    }
                 />
             </View>
             <Text fontFamily="body" fontWeight="regular" fontSize="md" color="gray.medium">

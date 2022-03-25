@@ -66,7 +66,7 @@ const theme = extendTheme({
           bg: 'red.light',
           borderColor: 'white.dark',
           borderWidth: 2,
-          px: 2,
+          px: 0,
           py: 4,
           _text: {
             color: 'red.dark',
