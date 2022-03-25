@@ -45,7 +45,7 @@ any courses yet!`}
       title="Search Courses"
       leftIcon={
         <AntDesign name="search1" size={24} color={colors.white.dark} />
-        }
+      }
       variant="primary_short"
     />
     <View
