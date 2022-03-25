@@ -11,28 +11,28 @@ const { ERR_NO_COURSE_DETAILS } = require('../utils/constants');
  * put
  */
 
- router.put(
-    '/course/:id',
-    requireAuthentication,
-    errorWrap(async (req, res) => {
-      const updates = req.body;
-      const course = await models.Course.findOne({_id: req.params.id});
-      if (updates.approved == true) {
-        course.approved = true;
-      }
-      if (updates.approved == false) {
-        course.approved = false;
-      }
-      if (updates.admin_id) {
-        course.admin_id = updates.admin_id;
-      }
-      if (updates.details) {
-        course.details = updates.details;
-      }
-      await course.save();
-      return sendResponse(res, 200, 'Successfully updated course', course);
-    }),
-  );
+router.put(
+  '/course/:id',
+  requireAuthentication,
+  errorWrap(async (req, res) => {
+    const updates = req.body;
+    const course = await models.Course.findOne({ _id: req.params.id });
+    if (updates.approved === true) {
+      course.approved = true;
+    }
+    if (updates.approved === false) {
+      course.approved = false;
+    }
+    if (updates.admin_id) {
+      course.admin_id = updates.admin_id;
+    }
+    if (updates.details) {
+      course.details = updates.details;
+    }
+    await course.save();
+    return sendResponse(res, 200, 'Successfully updated course', course);
+  }),
+);
 
 /**
  * Creates a new course in the database
