@@ -32,8 +32,8 @@ const { PUT_INVALID_FIELD } = require('../mock-data/language-mock-data');
 const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
 verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
-// This block tests the PUT /course/ endpoint.
-describe('PUT /course/ ', () => {
+// This block tests the PUT language/course/ endpoint.
+describe('PUT /language/course/ ', () => {
   /* 
     We have to make sure we connect to a MongoDB mock db before the test 
     and close the connection at the end.
@@ -51,7 +51,7 @@ describe('PUT /course/ ', () => {
 
   test('Put request should update course approval status', async () => {
     const body =  PUT_UPDATE_APPROVAL;
-    const response = await request(app).put('/course/62391a30487d5ae343c82311').send(body);
+    const response = await request(app).put('/language/course/62391a30487d5ae343c82311').send(body);
     
     const result = _.omit(response.body.result, ['_id', '__v']);
     delete result["details"]["_id"]
@@ -62,7 +62,7 @@ describe('PUT /course/ ', () => {
 
   test('Put request should updated course admin id', async () => {
     const body =  PUT_UPDATE_ADMIN_ID;
-    const response = await request(app).put('/course/62391a30487d5ae343c82311').send(body);
+    const response = await request(app).put('/language/course/62391a30487d5ae343c82311').send(body);
 
     const result = _.omit(response.body.result, ['_id', '__v']);
     delete result["details"]["_id"]
@@ -73,7 +73,7 @@ describe('PUT /course/ ', () => {
 
   test('Put request should updated course details', async () => {
     const body =  PUT_UPDATE_COURSE_DETAILS;
-    const response = await request(app).put('/course/62391a30487d5ae343c82311').send(body);
+    const response = await request(app).put('/language/course/62391a30487d5ae343c82311').send(body);
 
     const result = _.omit(response.body.result, ['_id', '__v']);
     delete result["details"]["_id"]
@@ -86,7 +86,7 @@ describe('PUT /course/ ', () => {
     const original = PUT_ORIGINAL_COURSE;
 
     const body =  PUT_UPDATE_INVALID_FIELD;
-    const response = await request(app).put('/course/62391a30487d5ae343c82311').send(body);
+    const response = await request(app).put('/language/course/62391a30487d5ae343c82311').send(body);
 
     const result = _.omit(response.body.result, ['_id', '__v']);
     delete result["details"]["_id"]
@@ -99,7 +99,7 @@ describe('PUT /course/ ', () => {
     const original = PUT_ORIGINAL_COURSE;
 
     const body =  PUT_UPDATE_NON_BOOLEAN_APPROVAL;
-    const response = await request(app).put('/course/62391a30487d5ae343c82311').send(body);
+    const response = await request(app).put('/language/course/62391a30487d5ae343c82311').send(body);
 
     const result = _.omit(response.body.result, ['_id', '__v']);
     delete result["details"]["_id"]

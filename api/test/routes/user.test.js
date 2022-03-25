@@ -42,10 +42,6 @@ describe('POST /user/ ', () => {
     await db.connect();
   });
 
-  test('simple test', async () => {
-    expect(1).toEqual(1);
-  });
-
   test('API should create user', async () => {
     const body = POST_SIMPLE_USER;
     const response = await request(app).post('/user/').send(body);
