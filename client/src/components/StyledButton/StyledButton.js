@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { Button } from 'native-base'
 
 const StyledButton = ({
-  title, variant, onPress, leftIcon, rightIcon
+  title, variant, onPress, leftIcon, rightIcon, fontSize
 }) => (
   <Button
     onPress={onPress}
     variant={variant}
-    _text={{ fontSize: 'xl' }}
+    _text={{ fontSize }}
     leftIcon={leftIcon}
     endIcon={rightIcon}
   >
@@ -30,6 +30,7 @@ StyledButton.defaultProps = {
   leftIcon: null,
   rightIcon: null,
   onPress: () => { },
+  fontSize: 'xl'
 }
 
 export default StyledButton

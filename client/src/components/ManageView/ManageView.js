@@ -4,7 +4,7 @@ import { Text, Divider } from 'native-base'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
-import FontIcon from 'react-native-vector-icons/AntDesign'
+import StyledCard from 'components/StyledCard'
 import { AntDesign } from '@expo/vector-icons'
 
 const styles = StyleSheet.create({
@@ -41,12 +41,13 @@ const ManageView = ({
     }} style={styles.root}>
         <View style={styles.selected}>
             <View style={styles.header}>
-                <Text fontFamily="heading" fontWeight="regular" fontSize="2xl">
+                <Text fontFamily="heading" fontWeight="regular" fontSize="xl">
                     {selectedTitleText}
                 </Text>
                 <StyledButton
                     title={addText}
                     variant="small"
+                    fontSize="md"
                     rightIcon={<AntDesign name="pluscircle" size={18} color={colors.red.dark} />
                     }
                 />
@@ -54,11 +55,12 @@ const ManageView = ({
             <Text fontFamily="body" fontWeight="regular" fontSize="md" color="gray.medium">
                 {selectedBodyText}
             </Text>
+            <StyledCard />
         </View>
         <Divider my={2} />
         <View style={styles.unselected}>
             <View style={styles.header}>
-                <Text fontFamily="heading" fontWeight="regular" fontSize="2xl">
+                <Text fontFamily="heading" fontWeight="regular" fontSize="xl">
                     {unselectedTitleText}
                 </Text>
             </View>
