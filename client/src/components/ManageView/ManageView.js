@@ -6,6 +6,8 @@ import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import StyledCard from 'components/StyledCard'
 import { Feather, AntDesign } from '@expo/vector-icons'
+import { AutoDragSortableView } from 'react-native-drag-sort'
+import { Dimensions, Image, SafeAreaView } from 'react-native'
 
 const styles = StyleSheet.create({
     root: {
@@ -30,54 +32,151 @@ const styles = StyleSheet.create({
     body: {},
 })
 
+/* 
+
+1. Add save button
+2. State management + props with selected and unselected 
+3. Remove unncesasry code (Profile) and comments (current plan b old)
+4. final props + revert navigation to what it was prior
+
+*/
+
+
+/*
+
+Current: https://github.com/mochixuan/react-native-drag-sort
+
+Plan B:
+
+https://github.com/computerjazz/react-native-draggable-flatlist
+https://www.npmjs.com/package/react-native-draggable
+
+Old:
+https://github.com/gitim/react-native-sortable-list - old
+https://baseweb.design/components/dnd-list
+
+*/
+
+const { width } = Dimensions.get('window')
+
+const parentWidth = width
+const childrenWidth = width - 20
+const childrenHeight = 70
+
+const sampleSelected = [
+    { title: "Initial Phrases", body: "2 Lessons", isComplete: true },
+    { title: "Identity", body: "5 Lessons", isComplete: false },
+    { title: "Initial Phrases", body: "2 Lessons", isComplete: true },
+    { title: "Identity", body: "5 Lessons", isComplete: false },
+    { title: "Initial Phrases", body: "2 Lessons", isComplete: true },
+    { title: "Identity", body: "5 Lessons", isComplete: false },
+]
+
+const sampleUnselected = [
+    { title: "Initial Phrases", body: "2 Lessons", isComplete: true },
+    { title: "Identity", body: "5 Lessons", isComplete: false },
+    { title: "Initial Phrases", body: "2 Lessons", isComplete: true },
+    { title: "Identity", body: "5 Lessons", isComplete: false },
+]
+
 const ManageView = ({
     selectedTitleText, unselectedTitleText,
     selectedBodyText, unselectedBodyText,
     addText
-}) => (
-    <ScrollView contentContainerStyle={{
-        alignItems: 'center',
-        justifyContent: 'center'
-    }} style={styles.root}>
-        <View style={styles.selected}>
-            <View style={styles.header}>
-                <Text fontFamily="heading" fontWeight="regular" fontSize="xl">
-                    {selectedTitleText}
+}) => {
+
+    const renderSelectedItems = (item, index) => {
+        return (
+            <StyledCard
+                titleText={item.title}
+                bodyText={item.body}
+                leftIcon={<AntDesign name="minuscircle" size={20} color={colors.red.dark} />}
+                rightIcon={<Feather name="menu" size={25} color={colors.gray.medium} />}
+                volumeIconCallback={() => alert("clicked")}
+                showCompleteIndicator={item.isComplete}
+                width={childrenWidth}
+                height={childrenHeight}
+            />
+        )
+    }
+
+    const renderUnselectedItems = (item, index) => {
+        return (
+            <StyledCard
+                titleText={item.title}
+                bodyText={item.body}
+                leftIcon={<AntDesign name="pluscircle" size={20} color={colors.green.medium} />}
+                rightIcon={<Feather name="menu" size={25} color={colors.gray.medium} />}
+                volumeIconCallback={() => alert("clicked")}
+                showCompleteIndicator={item.isComplete}
+                width={childrenWidth}
+                height={childrenHeight}
+            />
+        )
+    }
+
+    return (
+        <ScrollView contentContainerStyle={{
+            alignItems: 'center',
+            justifyContent: 'center'
+        }} style={styles.root}>
+            <View style={styles.selected}>
+                <View style={styles.header}>
+                    <Text fontFamily="heading" fontWeight="regular" fontSize="xl">
+                        {selectedTitleText}
+                    </Text>
+                    <StyledButton
+                        title={addText}
+                        variant="small"
+                        fontSize="md"
+                        rightIcon={<AntDesign name="pluscircle" size={18} color={colors.red.dark} />
+                        }
+                    />
+                </View>
+                <Text fontFamily="body" fontWeight="regular" fontSize="md" color="gray.medium">
+                    {selectedBodyText}
                 </Text>
-                <StyledButton
-                    title={addText}
-                    variant="small"
-                    fontSize="md"
-                    rightIcon={<AntDesign name="pluscircle" size={18} color={colors.red.dark} />
-                    }
+                <AutoDragSortableView
+                    dataSource={sampleSelected}
+                    parentWidth={parentWidth}
+                    childrenWidth={childrenWidth}
+                    childrenHeight={childrenHeight}
+                    onDataChange={(d) => {
+                        console.log(d);
+                    }}
+                    keyExtractor={(item, index) => index}
+                    renderItem={(item, index) => {
+                        return renderSelectedItems(item, index)
+                    }}
                 />
             </View>
-            <Text fontFamily="body" fontWeight="regular" fontSize="md" color="gray.medium">
-                {selectedBodyText}
-            </Text>
-            <StyledCard
-                titleText="Initial Phrases"
-                bodyText="2 lessons"
-                leftIcon={<Feather name="menu" size={25} color={colors.gray.medium} />}
-                rightIcon={<AntDesign name="minuscircle" size={20} color={colors.red.dark} />}
-                imageUri='https://wallpaperaccess.com/full/317501.jpg'
-                showVolumeIcon
-                volumeIconCallback={() => alert("clicked")}
-            />
-        </View>
-        <Divider my={2} />
-        <View style={styles.unselected}>
-            <View style={styles.header}>
-                <Text fontFamily="heading" fontWeight="regular" fontSize="xl">
-                    {unselectedTitleText}
+            <Divider my={2} />
+            <View style={styles.unselected}>
+                <View style={styles.header}>
+                    <Text fontFamily="heading" fontWeight="regular" fontSize="xl">
+                        {unselectedTitleText}
+                    </Text>
+                </View>
+                <Text fontFamily="body" fontWeight="regular" fontSize="md" color="gray.medium">
+                    {unselectedBodyText}
                 </Text>
+                <AutoDragSortableView
+                    dataSource={sampleUnselected}
+                    parentWidth={parentWidth}
+                    childrenWidth={childrenWidth}
+                    childrenHeight={childrenHeight}
+                    onDataChange={(d) => {
+                        console.log(d);
+                    }}
+                    keyExtractor={(item, index) => index}
+                    renderItem={(item, index) => {
+                        return renderUnselectedItems(item, index)
+                    }}
+                />
             </View>
-            <Text fontFamily="body" fontWeight="regular" fontSize="md" color="gray.medium">
-                {unselectedBodyText}
-            </Text>
-        </View>
-    </ScrollView>
-)
+        </ScrollView>
+    )
+}
 
 // Button object fields
 ManageView.propTypes = {

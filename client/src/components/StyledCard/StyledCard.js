@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 })
 
 const StyledCard = ({
-    titleText, bodyText, leftIcon, rightIcon, imageUri, showCompleteIndicator, showVolumeIcon, volumeIconCallback
+    titleText, bodyText, leftIcon, rightIcon, imageUri, showCompleteIndicator, showVolumeIcon, volumeIconCallback, width, height
 }) => {
     const generateLeftIcon = leftIcon ? <Box style={styles.icon}>{leftIcon}</Box> : null;
     const generateRightIcon = leftIcon ? <Box style={styles.icon}>{rightIcon}</Box> : null;
@@ -59,7 +59,7 @@ const StyledCard = ({
     </Box> : null
 
     return (
-        <Box py="3" style={styles.root} borderRadius="md" bg="white.dark">
+        <Box py="3" width={width} height={height} style={styles.root} borderRadius="md" bg="white.dark">
             <Box px="2" style={styles.left}>
                 {generateLeftIcon}
                 <Box>
