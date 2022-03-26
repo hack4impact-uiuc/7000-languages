@@ -5,7 +5,7 @@ import { StyleSheet, View, ScrollView } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import StyledCard from 'components/StyledCard'
-import { AntDesign } from '@expo/vector-icons'
+import { Feather, AntDesign } from '@expo/vector-icons'
 
 const styles = StyleSheet.create({
     root: {
@@ -55,7 +55,15 @@ const ManageView = ({
             <Text fontFamily="body" fontWeight="regular" fontSize="md" color="gray.medium">
                 {selectedBodyText}
             </Text>
-            <StyledCard />
+            <StyledCard
+                titleText="Initial Phrases"
+                bodyText="2 lessons"
+                leftIcon={<Feather name="menu" size={25} color={colors.gray.medium} />}
+                rightIcon={<AntDesign name="minuscircle" size={20} color={colors.red.dark} />}
+                imageUri='https://wallpaperaccess.com/full/317501.jpg'
+                showVolumeIcon
+                volumeIconCallback={() => alert("clicked")}
+            />
         </View>
         <Divider my={2} />
         <View style={styles.unselected}>

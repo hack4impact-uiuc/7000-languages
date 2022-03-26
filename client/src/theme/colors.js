@@ -11,13 +11,13 @@ const colors = {
     dark: '#4FACB0', // 500 opacity
   },
   orange: {
-    light: '#FFF1DD', // 100 opacity
-    medium: '#FFC989', // 300 opacity
+    light: '#FFF9E2', // 100 opacity
+    medium: '#E08B5B', // 300 opacity
     dark: '#E59A41', // 500 opacity
   },
   green: {
-    light: '#F6FBD4', // 100 opacity
-    medium: '#D8E48B', // 300 opacity
+    light: '#E8FFEC', // 100 opacity
+    medium: '#63B079', // 300 opacity
     dark: '#C0D152', // 500 opacity
   },
   gray: {

@@ -14,7 +14,7 @@ const theme = extendTheme({
     },
     Button: {
       // Can simply pass default props to change default behaviour of components.
-      defaultProps: {
+      baseStyle: {
         borderRadius: 12,
       },
       variants: {
@@ -73,6 +73,27 @@ const theme = extendTheme({
             fontFamily: 'GT_Haptik_bold',
           },
         },
+        complete: {
+          bg: 'green.light',
+          borderColor: 'white.dark',
+          borderRadius: 70,
+          py: 0,
+          _text: {
+            py: 0,
+            color: 'green.medium',
+            fontFamily: 'GT_Haptik_bold',
+          },
+        },
+        incomplete: {
+          bg: 'orange.light',
+          borderColor: 'white.dark',
+          borderRadius: 70,
+          py: 10,
+          _text: {
+            color: 'orange.medium',
+            fontFamily: 'GT_Haptik_bold',
+          },
+        }
       },
     },
   },
