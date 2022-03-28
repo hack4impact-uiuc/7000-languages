@@ -21,7 +21,6 @@ const { ERR_IMPROPER_ID_TOKEN } = require('../utils/constants');
  */
 router.post(
   '/',
-  requireAuthentication,
   errorWrap(async (req, res) => {
     const userInfo = req.body;
     const userData = await getUserByIDToken(userInfo.idToken);
@@ -53,14 +52,6 @@ router.post(
     let newResult = newUser.toJSON();
     newResult = _.omit(newResult, ['authID']);
     return sendResponse(res, 200, 'Successfully created a new user', newResult);
-  }),
-);
-
-router.get(
-  '/',
-  requireAuthentication,
-  errorWrap(async (req, res) => {
-    sendResponse(res, 200, 'test data', `test data from api${Math.random()}`);
   }),
 );
 

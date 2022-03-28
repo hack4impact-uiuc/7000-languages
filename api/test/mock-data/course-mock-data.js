@@ -92,7 +92,7 @@ module.exports.POST_COURSE_ADDITIONAL_FIELDS = {
 
 module.exports.POST_COURSE_ADDITIONAL_FIELDS_EXPECTED = this.POST_SIMPLE_COURSE;
 
-module.exports.PUT_ORIGINAL_COURSE = {
+module.exports.PATCH_ORIGINAL_COURSE = {
   approved: true,
   admin_id: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a6',
   details: {
@@ -111,7 +111,7 @@ module.exports.PUT_ORIGINAL_COURSE = {
   },
 };
 
-module.exports.PUT_EXPECTED_COURSE_UPDATED_APPROVAL = {
+module.exports.PATCH_EXPECTED_COURSE_UPDATED_APPROVAL = {
   approved: false,
   admin_id: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a6',
   details: {
@@ -130,7 +130,7 @@ module.exports.PUT_EXPECTED_COURSE_UPDATED_APPROVAL = {
   },
 };
 
-module.exports.PUT_EXPECTED_COURSE_UPDATED_ADMIN_ID = {
+module.exports.PATCH_EXPECTED_COURSE_UPDATED_ADMIN_ID = {
   approved: true,
   admin_id: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a7',
   details: {
@@ -149,7 +149,7 @@ module.exports.PUT_EXPECTED_COURSE_UPDATED_ADMIN_ID = {
   },
 };
 
-module.exports.PUT_EXPECTED_COURSE_UPDATED_COURSE_DETAILS = {
+module.exports.PATCH_EXPECTED_COURSE_UPDATED_COURSE_DETAILS = {
   approved: true,
   admin_id: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a6',
   details: {
@@ -168,15 +168,15 @@ module.exports.PUT_EXPECTED_COURSE_UPDATED_COURSE_DETAILS = {
   },
 };
 
-module.exports.PUT_UPDATE_APPROVAL = {
+module.exports.PATCH_UPDATE_APPROVAL = {
   approved: false,
 };
 
-module.exports.PUT_UPDATE_ADMIN_ID = {
+module.exports.PATCH_UPDATE_ADMIN_ID = {
   admin_id: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a7',
 };
 
-module.exports.PUT_UPDATE_COURSE_DETAILS = {
+module.exports.PATCH_UPDATE_COURSE_DETAILS = {
   details: {
     name: 'vero',
     alternative_name: 'architecto',
@@ -193,10 +193,10 @@ module.exports.PUT_UPDATE_COURSE_DETAILS = {
   },
 };
 
-module.exports.PUT_UPDATE_INVALID_FIELD = {
+module.exports.PATCH_UPDATE_INVALID_FIELD = {
   invalid: 'should do nothing',
 };
 
-module.exports.PUT_UPDATE_NON_BOOLEAN_APPROVAL = {
+module.exports.PATCH_UPDATE_NON_BOOLEAN_APPROVAL = {
   approved: 'should do nothing',
 };

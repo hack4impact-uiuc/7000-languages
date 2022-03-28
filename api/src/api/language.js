@@ -8,10 +8,10 @@ const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../utils/constants');
 
 /**
- * put
+ * patch
  */
 
-router.put(
+router.patch(
   '/course/:id',
   requireAuthentication,
   errorWrap(async (req, res) => {

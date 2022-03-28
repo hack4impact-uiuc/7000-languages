@@ -60,7 +60,6 @@ describe('POST /user/ ', () => {
     const response = await withAuthentication(
       request(app).post('/user/').send(body),
     );
-    console.log(response);
     expect(response.status).toBe(200);
   });
 
