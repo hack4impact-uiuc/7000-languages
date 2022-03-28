@@ -58,7 +58,9 @@ const Landing = () => {
     */
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
-  const [quote, _] = useState('"To speak a language is \n to take on a world, a\n culture."\n')
+  const [quote] = useState(
+    '"To speak a language is \n to take on a world, a\n culture."\n',
+  )
 
   const loginUser = async () => {
     await errorWrap(

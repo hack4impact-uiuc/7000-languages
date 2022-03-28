@@ -30,7 +30,7 @@ const colors = {
     light: 'FAFAFA',
     dark: '#FFFFFF',
   },
-  black: '#000000'
+  black: '#000000',
 }
 
 export default colors

@@ -29,7 +29,11 @@ const modalNavigationProps = {
 const manageNavigationProps = {
   headerTintColor: 'black',
   headerStyle: { backgroundColor: colors.white.dark },
-  headerTitleStyle: { color: colors.black, fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+  headerTitleStyle: {
+    color: colors.black,
+    fontSize: 18,
+    fontFamily: 'GT_Haptik_bold',
+  },
 }
 
 // ------------------------------------
@@ -81,13 +85,13 @@ export const HomeNavigator = () => (
     headerMode="screen"
     screenOptions={navigationProps}
   >
-    {/* <Stack.Screen
+    <Stack.Screen
       name="Home"
       component={Home}
       options={({ navigation }) => ({
         headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
-    /> */}
+    />
     <Stack.Screen
       name="ManageUnits"
       component={ManageUnits}

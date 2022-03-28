@@ -93,7 +93,7 @@ const theme = extendTheme({
             color: 'orange.medium',
             fontFamily: 'GT_Haptik_bold',
           },
-        }
+        },
       },
     },
   },

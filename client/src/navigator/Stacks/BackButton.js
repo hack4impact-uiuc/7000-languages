@@ -4,30 +4,30 @@ import { StyleSheet } from 'react-native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 
 const styles = StyleSheet.create({
-    button: {
-        paddingLeft: 15,
-    },
+  button: {
+    paddingLeft: 15,
+  },
 })
 
 const BackButton = ({ navigation }) => (
-    <FontIcon.Button
-        name="arrow-left"
-        color="black"
-        size={25}
-        backgroundColor="transparent"
-        onPress={navigation.goBack}
-        style={styles.button}
-    />
+  <FontIcon.Button
+    name="arrow-left"
+    color="black"
+    size={25}
+    backgroundColor="transparent"
+    onPress={navigation.goBack}
+    style={styles.button}
+  />
 )
 
 BackButton.propTypes = {
-    navigation: PropTypes.shape({
-        goBack: PropTypes.func,
-    }),
+  navigation: PropTypes.shape({
+    goBack: PropTypes.func,
+  }),
 }
 
 BackButton.defaultProps = {
-    navigation: { goBack: () => null },
+  navigation: { goBack: () => null },
 }
 
 export default BackButton
