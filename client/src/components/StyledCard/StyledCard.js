@@ -8,18 +8,15 @@ import Indicator from 'components/Indicator';
 
 const styles = StyleSheet.create({
     root: {
-        display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: 'center'
     },
     left: {
-        display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
     },
     right: {
-        display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
     },
