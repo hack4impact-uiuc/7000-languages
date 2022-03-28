@@ -122,7 +122,9 @@ describe('PATCH /language/course/ ', () => {
   test('Patch request should update course approval status', async () => {
     const body = PATCH_UPDATE_APPROVAL;
     const response = await withAuthentication(
-      request(app).patch('/language/course/62391a30487d5ae343c82311').send(body),
+      request(app)
+        .patch('/language/course/62391a30487d5ae343c82311')
+        .send(body),
     );
 
     const result = _.omit(response.body.result, ['_id', '__v']);
@@ -135,7 +137,9 @@ describe('PATCH /language/course/ ', () => {
   test('Patch request should updated course admin id', async () => {
     const body = PATCH_UPDATE_ADMIN_ID;
     const response = await withAuthentication(
-      request(app).patch('/language/course/62391a30487d5ae343c82311').send(body),
+      request(app)
+        .patch('/language/course/62391a30487d5ae343c82311')
+        .send(body),
     );
 
     const result = _.omit(response.body.result, ['_id', '__v']);
@@ -148,7 +152,9 @@ describe('PATCH /language/course/ ', () => {
   test('Patch request should updated course details', async () => {
     const body = PATCH_UPDATE_COURSE_DETAILS;
     const response = await withAuthentication(
-      request(app).patch('/language/course/62391a30487d5ae343c82311').send(body),
+      request(app)
+        .patch('/language/course/62391a30487d5ae343c82311')
+        .send(body),
     );
 
     const result = _.omit(response.body.result, ['_id', '__v']);
@@ -163,7 +169,9 @@ describe('PATCH /language/course/ ', () => {
 
     const body = PATCH_UPDATE_INVALID_FIELD;
     const response = await withAuthentication(
-      request(app).patch('/language/course/62391a30487d5ae343c82311').send(body),
+      request(app)
+        .patch('/language/course/62391a30487d5ae343c82311')
+        .send(body),
     );
 
     const result = _.omit(response.body.result, ['_id', '__v']);
@@ -178,7 +186,9 @@ describe('PATCH /language/course/ ', () => {
 
     const body = PATCH_UPDATE_NON_BOOLEAN_APPROVAL;
     const response = await withAuthentication(
-      request(app).patch('/language/course/62391a30487d5ae343c82311').send(body),
+      request(app)
+        .patch('/language/course/62391a30487d5ae343c82311')
+        .send(body),
     );
 
     const result = _.omit(response.body.result, ['_id', '__v']);
