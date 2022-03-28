@@ -13,7 +13,7 @@ const BackButton = ({ navigation }) => (
     <FontIcon.Button
         name="arrow-left"
         color="black"
-        size="25"
+        size={25}
         backgroundColor="transparent"
         onPress={navigation.goBack}
         style={styles.button}

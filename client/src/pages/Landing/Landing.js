@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
@@ -58,6 +58,7 @@ const Landing = () => {
     */
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
+  const [quote, _] = useState('"To speak a language is \n to take on a world, a\n culture."\n')
 
   const loginUser = async () => {
     await errorWrap(
@@ -120,7 +121,7 @@ const Landing = () => {
           }}
           fontSize="3xl"
         >
-          {'"To speak a language is \n to take on a world a,\n culture."\n'}
+          {quote}
         </Text>
 
         <Text

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, HTMLElement } from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { Text, Divider } from 'native-base'
 import { StyleSheet, View, ScrollView } from 'react-native'
@@ -7,9 +7,9 @@ import { colors } from 'theme'
 import StyledCard from 'components/StyledCard'
 import { Feather, AntDesign } from '@expo/vector-icons'
 import { AutoDragSortableView } from 'react-native-drag-sort'
-import { Dimensions, Image, SafeAreaView } from 'react-native'
+import { Dimensions } from 'react-native'
 import _ from 'lodash'
-import { DRAGGABLE_LIST_COMPONENT_DELAY } from 'utils/constants'
+import { DRAGGABLE_LIST_COMPONENT_DELAY, DRAGGABLE_LIST_CARD_WIDTH_FACTOR, DRAGGABLE_LIST_CARD_HEIGHT } from 'utils/constants'
 
 const styles = StyleSheet.create({
     root: {
@@ -37,38 +37,11 @@ const styles = StyleSheet.create({
     }
 })
 
-/* 
-
-1. Memo
-2. Draggable
-2. Update state with new order of draggable list + pass it up to parent components
-3. Remove unncesasry code (Profile) and comments (current plan b old)
-4. Add proper documentation in all functions created
-4. final props + revert navigation to what it was prior
-
-*/
-
-
-/*
-
-Current: https://github.com/mochixuan/react-native-drag-sort
-
-Plan B:
-
-https://github.com/computerjazz/react-native-draggable-flatlist
-https://www.npmjs.com/package/react-native-draggable
-
-Old:
-https://github.com/gitim/react-native-sortable-list - old
-https://baseweb.design/components/dnd-list
-
-*/
-
 const { width } = Dimensions.get('window')
 
 const parentWidth = width
-const childrenWidth = width - 20
-const childrenHeight = 70
+const childrenWidth = width + DRAGGABLE_LIST_CARD_WIDTH_FACTOR
+const childrenHeight = DRAGGABLE_LIST_CARD_HEIGHT
 
 const ManageView = ({
     selectedTitleText, unselectedTitleText,
@@ -77,8 +50,23 @@ const ManageView = ({
 }) => {
     const [selectedData, setSelectedData] = useState(initialSelectedData);
     const [unselectedData, setUnselectedData] = useState(initialUnselectedData);
-    const scrollViewRef = useRef(null);
 
+    /**
+     * The useRef hook is used to increase performance and user experience when using this component.
+     * - scrollViewRef is used to prevent scrolling when using draggable components.
+     * - selectedDraggableListRef and unselectedDraggableListRef are used to limit the re-rendering of
+     * the draggable components and decrease the time it takes to drag and drop a card.
+     * 
+     * Draggable Component:
+     * - https://github.com/mochixuan/react-native-drag-sort
+     */
+    const scrollViewRef = useRef(null);
+    const selectedDraggableListRef = useRef(null);
+    const unselectedDraggableListRef = useRef(null);
+
+    /**
+     * Updates the selected and unselected data after an operation on both lists
+     */
     const updateData = (newSelectedData, newUnselectedData) => {
         setSelectedData(newSelectedData);
         setUnselectedData(newUnselectedData);
@@ -89,8 +77,9 @@ const ManageView = ({
      * @param {Number} index Index of the data to move in unselectedData
      */
     const moveToSelected = (index) => {
-        const updatedUnselectedData = _.cloneDeep(unselectedData);
-        const updatedSelectedData = _.cloneDeep(selectedData);
+        const data = getData();
+        const updatedUnselectedData = _.cloneDeep(data.unselected);
+        const updatedSelectedData = _.cloneDeep(data.selected);
         const removedData = updatedUnselectedData.splice(index, 1);
         updatedSelectedData.push(removedData[0]);
 
@@ -102,8 +91,9 @@ const ManageView = ({
      * @param {Number} index Index of the data to move in unselectedData
      */
     const moveToUnselected = (index) => {
-        const updatedUnselectedData = _.cloneDeep(unselectedData);
-        const updatedSelectedData = _.cloneDeep(selectedData);
+        const data = getData();
+        const updatedUnselectedData = _.cloneDeep(data.unselected);
+        const updatedSelectedData = _.cloneDeep(data.selected);
         const removedData = updatedSelectedData.splice(index, 1);
         updatedUnselectedData.push(removedData[0]);
 
@@ -162,6 +152,21 @@ const ManageView = ({
         });
     }
 
+    const getData = () => {
+        const selected = selectedDraggableListRef.current.state.dataSource.map((data) => data.data);
+        const unselected = unselectedDraggableListRef.current.state.dataSource.map((data) => data.data);
+        return { selected, unselected };
+    }
+
+    /**
+     * Fetches the data saved to the state of the draggable list components and passes it up to the parent component
+     * Source: https://github.com/mochixuan/react-native-drag-sort/blob/master/lib/AutoDragSortableView.js
+     */
+    const saveData = () => {
+        const data = getData();
+        saveCallback(data.selected, data.unselected);
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <ScrollView ref={scrollViewRef}
@@ -186,14 +191,12 @@ const ManageView = ({
                         {selectedBodyText}
                     </Text>
                     <AutoDragSortableView
+                        ref={selectedDraggableListRef}
                         dataSource={selectedData}
                         parentWidth={parentWidth}
                         childrenWidth={childrenWidth}
                         childrenHeight={childrenHeight}
-                        onDataChange={(d) => {
-                            // setFinalSelectedData(d);
-                        }}
-                        delayLongPress={0.75}
+                        delayLongPress={DRAGGABLE_LIST_COMPONENT_DELAY}
                         keyExtractor={(item, index) => index}
                         renderItem={(item, index) => {
                             return renderSelectedItems(item, index)
@@ -213,13 +216,11 @@ const ManageView = ({
                         {unselectedBodyText}
                     </Text>
                     <AutoDragSortableView
+                        ref={unselectedDraggableListRef}
                         dataSource={unselectedData}
                         parentWidth={parentWidth}
                         childrenWidth={childrenWidth}
                         childrenHeight={childrenHeight}
-                        onDataChange={(d) => {
-                            // setFinalUnselectedData(d);
-                        }}
                         delayLongPress={DRAGGABLE_LIST_COMPONENT_DELAY}
                         keyExtractor={(item, index) => index}
                         renderItem={(item, index) => {
@@ -235,7 +236,7 @@ const ManageView = ({
                     title="Save Changes"
                     variant="primary"
                     fontSize="md"
-                    onPress={saveCallback}
+                    onPress={saveData}
                 />
             </View>
         </View>

@@ -4,7 +4,7 @@ import ManageView from 'components/ManageView'
 
 const ManageUnits = ({ navigation }) => {
 
-    const saveChanges = () => {
+    const saveChanges = (selectedData, unselectedData) => {
         alert("saved");
     }
 
