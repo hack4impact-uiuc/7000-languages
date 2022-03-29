@@ -6,6 +6,7 @@ const { models } = require('../models/index.js');
 const { requireAuthentication } = require('../middleware/authentication');
 const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../utils/constants');
+const { Course, Unit } = require('../models/language');
 
 /**
  * Creates a new course in the database
@@ -43,6 +44,37 @@ router.post(
       'Successfully created a new course',
       newResult,
     );
+  }),
+);
+
+const returnedData = {
+  course: Course, //remove admin_id
+  units: [unit1, unit2, unit3]
+}
+
+const unit1 = {
+  _course_id: { type: String, required: true, index: true },
+  name: { type: String, required: true },
+  _order: { type: Number, required: true, index: true },
+  selected: { type: Boolean, required: true },
+  description: { type: String, required: true, default: '' },
+  numLessons: 10
+}
+
+router.get(
+  '/course',
+  requireAuthentication,
+  errorWrap(async (req, res) => {
+    
+    const course = req.query.body
+    const units = await Unit.find({ _course_id: req.query._id });
+    const numLessons = await Unit.count();
+    course = _.omit(newResult, ['admin_id']);
+    const returnedData = {
+      course: course, //remove admin_id
+      units: units
+    }
+    sendResponse(res, 200, 'test data', 'Successfully fetched course');
   }),
 );
 
