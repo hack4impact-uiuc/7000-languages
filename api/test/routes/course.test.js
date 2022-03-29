@@ -91,4 +91,30 @@ describe('POST /user/ ', () => {
     expect(message).toEqual('Successfully created a new course');
     expect(result).toEqual(POST_COURSE_ADDITIONAL_FIELDS_EXPECTED);
   });
+
+});
+
+describe('DELETE /language/course/ ', () => {
+  afterAll(async () => await db.closeDatabase());
+  afterEach(async () => await db.resetDatabase());
+
+  beforeAll(async () => {
+    await db.connect();
+  });
+
+  test('API should create course', async () => {
+    const body = POST_SIMPLE_COURSE;
+
+    const response = await withAuthentication(
+      request(app).post('/language/course/').send(body),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '_id', '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully created a new course');
+    expect(result).toEqual(POST_SIMPLE_COURSE_EXPECTED);
+
+    const response = 
+  });
+    
 });
