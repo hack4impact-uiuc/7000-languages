@@ -17,18 +17,13 @@ router.patch(
   errorWrap(async (req, res) => {
     const updates = req.body;
     const course = await models.Course.findOne({ _id: req.params.id });
-    if (updates.approved === true) {
-      course.approved = true;
+
+    for (var key in updates) {
+      if (typeof course[key] === typeof updates[key]) {
+        course[key] = updates[key];
+      }
     }
-    if (updates.approved === false) {
-      course.approved = false;
-    }
-    if (updates.admin_id) {
-      course.admin_id = updates.admin_id;
-    }
-    if (updates.details) {
-      course.details = updates.details;
-    }
+
     await course.save();
     return sendResponse(res, 200, 'Successfully updated course', course);
   }),
