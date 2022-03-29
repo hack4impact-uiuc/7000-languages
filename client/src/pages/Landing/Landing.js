@@ -107,6 +107,7 @@ const Landing = () => {
           }
           variant="secondary"
           onPress={loginUser}
+          style={{ paddingRight: 40 }}
         />
       </View>
 

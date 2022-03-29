@@ -21,10 +21,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  icon: {
+  leftIcon: {
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 20,
+  },
+  rightIcon: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 30,
   },
   soundIcon: {
     alignItems: 'center',
@@ -49,35 +54,33 @@ const StyledCard = ({
   height,
 }) => {
   const generateLeftIcon = leftIcon ? (
-    <Box style={styles.icon}>{leftIcon}</Box>
+    <Box style={styles.leftIcon}>{leftIcon}</Box>
   ) : null
-  const generateRightIcon = leftIcon ? (
-    <Box style={styles.icon}>{rightIcon}</Box>
+  const generateRightIcon = rightIcon ? (
+    <Box style={styles.rightIcon}>{rightIcon}</Box>
   ) : null
 
-  const indicator =
-    indicatorType !== INDICATOR_TYPES.NONE ? (
-      <Box style={styles.indicator}>
-        <Indicator isComplete={indicatorType === INDICATOR_TYPES.COMPLETE} />
-      </Box>
-    ) : null
+  const indicator = indicatorType !== INDICATOR_TYPES.NONE ? (
+    <Box style={styles.indicator}>
+      <Indicator isComplete={indicatorType === INDICATOR_TYPES.COMPLETE} />
+    </Box>
+  ) : null
 
-  const generateRightImage =
-    imageUri === '' ? (
-      indicator
-    ) : (
-      <Box style={styles.indicator}>
-        <Image
-          source={{
-            uri: imageUri,
-          }}
-          alt="Alternate Text"
-          size="md"
-          resizeMode="contain"
-          borderRadius={5}
-        />
-      </Box>
-    )
+  const generateRightImage = imageUri === '' ? (
+    indicator
+  ) : (
+    <Box style={styles.indicator}>
+      <Image
+        source={{
+          uri: imageUri,
+        }}
+        alt="Alternate Text"
+        size="md"
+        resizeMode="contain"
+        borderRadius={5}
+      />
+    </Box>
+  )
   const generateVolumeIcon = showVolumeIcon ? (
     <Box style={styles.soundIcon}>
       <FontAwesome

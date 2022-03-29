@@ -1,19 +1,22 @@
 import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { Text, Divider } from 'native-base'
-import { StyleSheet, View, ScrollView, Dimensions } from 'react-native'
+import {
+  StyleSheet, View, ScrollView, Dimensions,
+} from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import StyledCard from 'components/StyledCard'
 import { Feather, AntDesign } from '@expo/vector-icons'
 import { AutoDragSortableView } from 'react-native-drag-sort'
-import lodash from 'lodash'
+
 import {
   DRAGGABLE_LIST_COMPONENT_DELAY,
   DRAGGABLE_LIST_CARD_WIDTH_FACTOR,
   DRAGGABLE_LIST_CARD_HEIGHT,
   INDICATOR_TYPES,
 } from 'utils/constants'
+import { moveFromList } from 'utils/manageHelper'
 
 const styles = StyleSheet.create({
   root: {
@@ -39,8 +42,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  draggable_list: {
+    height: 'auto',
+    width: 'auto',
+    borderWidth: 2,
+    borderColor: colors.gray.light,
+    borderStyle: 'dashed',
+    marginTop: 20,
+    marginBottom: 25,
+  },
 })
 
+/**
+ * These values are used for setting the height and width of the draggable list component.
+ */
 const { width } = Dimensions.get('window')
 
 const parentWidth = width
@@ -61,11 +76,12 @@ const ManageView = ({
 }) => {
   const [selectedData, setSelectedData] = useState(initialSelectedData)
   const [unselectedData, setUnselectedData] = useState(initialUnselectedData)
+  const [shouldShowButtons, setShouldShowButtons] = useState(false)
 
   /**
    * The useRef hook is used to increase performance and user experience when using this component.
    * - scrollViewRef is used to prevent scrolling when using draggable components.
-   * - selectedDraggableListRef and unselectedDraggableListRef are used to limit the re-rendering of
+   * - selectedDraggableListRef is used to limit the re-rendering of
    * the draggable components and decrease the time it takes to drag and drop a card.
    *
    * Draggable Component:
@@ -73,7 +89,6 @@ const ManageView = ({
    */
   const scrollViewRef = useRef(null)
   const selectedDraggableListRef = useRef(null)
-  const unselectedDraggableListRef = useRef(null)
 
   /**
    * Fetches the data saved to the state of the draggable list components
@@ -82,10 +97,16 @@ const ManageView = ({
     const selected = selectedDraggableListRef.current.state.dataSource.map(
       (data) => data.data,
     )
-    const unselected = unselectedDraggableListRef.current.state.dataSource.map(
-      (data) => data.data,
-    )
-    return { selected, unselected }
+
+    return { selected, unselected: unselectedData }
+  }
+
+  /**
+   * Updates the flag for showing the save and discard button only if it hasn't been shown.
+   * Also prevents an additional re-render when shouldShowSaveButton is already true.
+   */
+  const updateShouldShowButtons = () => {
+    if (!shouldShowButtons) setShouldShowButtons(true)
   }
 
   /**
@@ -94,6 +115,13 @@ const ManageView = ({
   const updateData = (newSelectedData, newUnselectedData) => {
     setSelectedData(newSelectedData)
     setUnselectedData(newUnselectedData)
+    updateShouldShowButtons()
+  }
+
+  const discardChanges = () => {
+    setSelectedData(initialSelectedData)
+    setUnselectedData(initialUnselectedData)
+    setShouldShowButtons(false)
   }
 
   /**
@@ -102,12 +130,8 @@ const ManageView = ({
    */
   const moveToSelected = (index) => {
     const data = getData()
-    const updatedUnselectedData = lodash.cloneDeep(data.unselected)
-    const updatedSelectedData = lodash.cloneDeep(data.selected)
-    const removedData = updatedUnselectedData.splice(index, 1)
-    updatedSelectedData.push(removedData[0])
-
-    updateData(updatedSelectedData, updatedUnselectedData)
+    const { src, dest } = moveFromList(data.unselected, data.selected, index)
+    updateData(dest, src)
   }
 
   /**
@@ -116,12 +140,8 @@ const ManageView = ({
    */
   const moveToUnselected = (index) => {
     const data = getData()
-    const updatedUnselectedData = lodash.cloneDeep(data.unselected)
-    const updatedSelectedData = lodash.cloneDeep(data.selected)
-    const removedData = updatedSelectedData.splice(index, 1)
-    updatedUnselectedData.push(removedData[0])
-
-    updateData(updatedSelectedData, updatedUnselectedData)
+    const { src, dest } = moveFromList(data.selected, data.unselected, index)
+    updateData(src, dest)
   }
 
   /**
@@ -132,16 +152,17 @@ const ManageView = ({
    */
   const renderSelectedItems = (item, index) => (
     <StyledCard
+      key={index}
       titleText={item.title}
       bodyText={item.body}
-      leftIcon={
+      leftIcon={(
         <AntDesign
           name="minuscircle"
           size={20}
           color={colors.red.dark}
           onPress={() => moveToUnselected(index)}
         />
-      }
+      )}
       rightIcon={<Feather name="menu" size={25} color={colors.gray.medium} />}
       volumeIconCallback={playAudio}
       indicatorType={
@@ -160,17 +181,18 @@ const ManageView = ({
    */
   const renderUnselectedItems = (item, index) => (
     <StyledCard
+      key={index}
       titleText={item.title}
       bodyText={item.body}
-      leftIcon={
+      leftIcon={(
         <AntDesign
           name="pluscircle"
           size={20}
           color={colors.green.medium}
           onPress={() => moveToSelected(index)}
         />
-      }
-      rightIcon={<Feather name="menu" size={25} color={colors.gray.medium} />}
+      )}
+      rightIcon={null}
       volumeIconCallback={playAudio}
       indicatorType={
         item.isComplete ? INDICATOR_TYPES.COMPLETE : INDICATOR_TYPES.INCOMPLETE
@@ -184,10 +206,9 @@ const ManageView = ({
    * Enables/disables scroll of the Scroll View. Used to disable scroll when using the draggable list component.
    * Source: https://stackoverflow.com/questions/67259797/react-native-scrollview-prevent-allow-scrolling-on-scroll-start-event
    */
-  const updateScroll = (isScrollEnabaled) =>
-    scrollViewRef.current?.setNativeProps({
-      scrollEnabled: isScrollEnabaled,
-    })
+  const updateScroll = (isScrollEnabaled) => scrollViewRef.current?.setNativeProps({
+    scrollEnabled: isScrollEnabaled,
+  })
 
   /**
    * Fetches the data saved to the state of the draggable list components and passes it up to the parent component
@@ -197,6 +218,33 @@ const ManageView = ({
     const data = getData()
     saveCallback(data.selected, data.unselected)
   }
+
+  /**
+   * Creates an row of unselected item components
+   */
+  const generateUnselectedUnits = unselectedData.map((data, index) => renderUnselectedItems(data, index))
+
+  /**
+   * Generates the button for saving the data changes made with this component
+   */
+  const saveAndDiscardButtons = shouldShowButtons ? (
+    <View style={styles.save}>
+      <StyledButton
+        title="Save Changes"
+        variant="primary"
+        fontSize="md"
+        onPress={saveData}
+        style={{ width: '47%' }}
+      />
+      <StyledButton
+        title="Discard Changes"
+        variant="secondary"
+        fontSize="md"
+        onPress={discardChanges}
+        style={{ width: '47%' }}
+      />
+    </View>
+  ) : null
 
   return (
     <View style={{ flex: 1 }}>
@@ -217,13 +265,13 @@ const ManageView = ({
               title={addText}
               variant="small"
               fontSize="md"
-              rightIcon={
+              rightIcon={(
                 <AntDesign
                   name="pluscircle"
                   size={18}
                   color={colors.red.dark}
                 />
-              }
+              )}
               onPress={addCallback}
             />
           </View>
@@ -235,22 +283,25 @@ const ManageView = ({
           >
             {selectedBodyText}
           </Text>
-          <AutoDragSortableView
-            ref={selectedDraggableListRef}
-            dataSource={selectedData}
-            parentWidth={parentWidth}
-            childrenWidth={childrenWidth}
-            childrenHeight={childrenHeight}
-            delayLongPress={DRAGGABLE_LIST_COMPONENT_DELAY}
-            keyExtractor={(item, index) => index}
-            renderItem={(item, index) => renderSelectedItems(item, index)}
-            onDragStart={() => {
-              updateScroll(false)
-            }}
-            onDragEnd={() => {
-              updateScroll(true)
-            }}
-          />
+          <View style={styles.draggable_list}>
+            <AutoDragSortableView
+              ref={selectedDraggableListRef}
+              dataSource={selectedData}
+              parentWidth={parentWidth}
+              childrenWidth={childrenWidth}
+              childrenHeight={childrenHeight}
+              delayLongPress={DRAGGABLE_LIST_COMPONENT_DELAY}
+              keyExtractor={(item, index) => index}
+              renderItem={(item, index) => renderSelectedItems(item, index)}
+              onDataChange={() => updateShouldShowButtons()}
+              onDragStart={() => {
+                updateScroll(false)
+              }}
+              onDragEnd={() => {
+                updateScroll(true)
+              }}
+            />
+          </View>
         </View>
         <Divider my={2} />
         <View style={styles.unselected}>
@@ -267,32 +318,10 @@ const ManageView = ({
           >
             {unselectedBodyText}
           </Text>
-          <AutoDragSortableView
-            ref={unselectedDraggableListRef}
-            dataSource={unselectedData}
-            parentWidth={parentWidth}
-            childrenWidth={childrenWidth}
-            childrenHeight={childrenHeight}
-            delayLongPress={DRAGGABLE_LIST_COMPONENT_DELAY}
-            keyExtractor={(item, index) => index}
-            renderItem={(item, index) => renderUnselectedItems(item, index)}
-            onDragStart={() => {
-              updateScroll(false)
-            }}
-            onDragEnd={() => {
-              updateScroll(true)
-            }}
-          />
+          {generateUnselectedUnits}
         </View>
       </ScrollView>
-      <View style={styles.save}>
-        <StyledButton
-          title="Save Changes"
-          variant="primary"
-          fontSize="md"
-          onPress={saveData}
-        />
-      </View>
+      {saveAndDiscardButtons}
     </View>
   )
 }

@@ -42,7 +42,6 @@ const theme = extendTheme({
           bg: 'white.dark',
           w: '90%',
           my: 2,
-          pr: 10,
           py: 4,
           _text: {
             color: 'red.dark',
