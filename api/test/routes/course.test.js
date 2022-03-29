@@ -102,19 +102,31 @@ describe('DELETE /language/course/ ', () => {
     await db.connect();
   });
 
-  test('API should create course', async () => {
-    const body = POST_SIMPLE_COURSE;
-
+  test('API should delete course', async () => {
     const response = await withAuthentication(
-      request(app).post('/language/course/').send(body),
+      request(app).delete('/language/course/62391a30487d5ae343c82311').send(),
     );
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
-    expect(message).toEqual('Successfully created a new course');
-    expect(result).toEqual(POST_SIMPLE_COURSE_EXPECTED);
+    expect(message).toEqual('Successfully deleted course');
+    
+  });
 
-    const response = 
+  test('API should return 404 course if course does not exist', async () => {
+    const response = await withAuthentication(
+      request(app).delete('/language/course/62391a30487d5ae343c82311').send(),
+    );
+    const message = response.body.message;
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully deleted course');
+
+    const second_response = await withAuthentication(
+      request(app).delete('/language/course/62391a30487d5ae343c82311').send(),
+    );
+    const second_message = second_response.body.message;
+    expect(second_response.status).toBe(404);
+    expect(second_message).toEqual('Course not found');
+    
   });
     
 });
