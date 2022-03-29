@@ -24,9 +24,9 @@ const ManageUnits = ({ navigation }) => {
 
   const sampleUnselected = [
     { title: 'Unselected 1', body: '2 Lessons', isComplete: true },
-    { title: 'Unselected 2', body: '5 Lessons', isComplete: false },
+    { title: 'Unselected 2', body: '5 Lessons', isComplete: true },
     { title: 'Unselected 3', body: '2 Lessons', isComplete: true },
-    { title: 'Unselected 4', body: '5 Lessons', isComplete: false },
+    { title: 'Unselected 4', body: '5 Lessons', isComplete: true },
   ]
 
   return (

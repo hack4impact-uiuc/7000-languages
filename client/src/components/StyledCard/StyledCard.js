@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { colors } from 'theme'
 import Indicator from 'components/Indicator'
+import { INDICATOR_TYPES } from 'utils/constants'
 
 const styles = StyleSheet.create({
   root: {
@@ -41,7 +42,7 @@ const StyledCard = ({
   leftIcon,
   rightIcon,
   imageUri,
-  showCompleteIndicator,
+  indicatorType,
   showVolumeIcon,
   volumeIconCallback,
   width,
@@ -53,11 +54,17 @@ const StyledCard = ({
   const generateRightIcon = leftIcon ? (
     <Box style={styles.icon}>{rightIcon}</Box>
   ) : null
+
+  const indicator =
+    indicatorType !== INDICATOR_TYPES.NONE ? (
+      <Box style={styles.indicator}>
+        <Indicator isComplete={indicatorType === INDICATOR_TYPES.COMPLETE} />
+      </Box>
+    ) : null
+
   const generateRightImage =
     imageUri === '' ? (
-      <Box style={styles.indicator}>
-        <Indicator isComplete={showCompleteIndicator} />
-      </Box>
+      indicator
     ) : (
       <Box style={styles.indicator}>
         <Image
@@ -118,7 +125,7 @@ StyledCard.propTypes = {
   bodyText: PropTypes.string,
   leftIcon: PropTypes.element,
   rightIcon: PropTypes.element,
-  showCompleteIndicator: PropTypes.bool,
+  indicatorType: PropTypes.number,
   imageUri: PropTypes.string,
   showVolumeIcon: PropTypes.bool,
   volumeIconCallback: PropTypes.func,
@@ -131,7 +138,7 @@ StyledCard.defaultProps = {
   bodyText: '',
   leftIcon: null,
   rightIcon: null,
-  showCompleteIndicator: false,
+  indicatorType: INDICATOR_TYPES.NONE,
   imageUri: '',
   showVolumeIcon: false,
   volumeIconCallback: () => {},

@@ -3,3 +3,8 @@ export const ERROR_ALERT_TITLE = 'Error'
 export const DRAGGABLE_LIST_COMPONENT_DELAY = 0.5
 export const DRAGGABLE_LIST_CARD_WIDTH_FACTOR = -10
 export const DRAGGABLE_LIST_CARD_HEIGHT = 70
+export const INDICATOR_TYPES = {
+  NONE: 0,
+  COMPLETE: 1,
+  INCOMPLETE: 2,
+}

@@ -12,6 +12,7 @@ import {
   DRAGGABLE_LIST_COMPONENT_DELAY,
   DRAGGABLE_LIST_CARD_WIDTH_FACTOR,
   DRAGGABLE_LIST_CARD_HEIGHT,
+  INDICATOR_TYPES,
 } from 'utils/constants'
 
 const styles = StyleSheet.create({
@@ -143,7 +144,9 @@ const ManageView = ({
       }
       rightIcon={<Feather name="menu" size={25} color={colors.gray.medium} />}
       volumeIconCallback={playAudio}
-      showCompleteIndicator={item.isComplete}
+      indicatorType={
+        item.isComplete ? INDICATOR_TYPES.COMPLETE : INDICATOR_TYPES.INCOMPLETE
+      }
       width={childrenWidth}
       height={childrenHeight}
     />
@@ -169,7 +172,9 @@ const ManageView = ({
       }
       rightIcon={<Feather name="menu" size={25} color={colors.gray.medium} />}
       volumeIconCallback={playAudio}
-      showCompleteIndicator={item.isComplete}
+      indicatorType={
+        item.isComplete ? INDICATOR_TYPES.COMPLETE : INDICATOR_TYPES.INCOMPLETE
+      }
       width={childrenWidth}
       height={childrenHeight}
     />
@@ -301,8 +306,8 @@ ManageView.propTypes = {
   addText: PropTypes.string,
   saveCallback: PropTypes.func,
   addCallback: PropTypes.func,
-  initialSelectedData: PropTypes.arrayOf(PropTypes.Object),
-  initialUnselectedData: PropTypes.arrayOf(PropTypes.Object),
+  initialSelectedData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
+  initialUnselectedData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   playAudio: PropTypes.func,
 }
 
