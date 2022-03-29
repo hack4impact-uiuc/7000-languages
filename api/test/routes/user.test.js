@@ -10,8 +10,10 @@ const {
   POST_USER_ADDITIONAL_FIELDS,
   POST_USER_ONE_LESS_FIELD,
   POST_WRONG_USER_NO_ROLE,
+  EXPECTED_GET_USER_DATA,
 } = require('../mock-data/user-mock-data');
 const { withAuthentication } = require('../utils/auth');
+const { SUCCESS_GETTING_USER_DATA } = require('../../src/utils/constants');
 
 /* 
   Google Auth Mocker - uses jest to mock the Google Auth library.
@@ -28,6 +30,30 @@ const { verifyIdTokenMockReturnValue } = require('../mock-data/auth-mock-data');
 
 const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
 verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
+
+// This block tests the GET /user/ endpoint.
+describe('GET /user/ ', () => {
+  /* 
+    We have to make sure we connect to a MongoDB mock db before the test 
+    and close the connection at the end.
+  */
+  afterAll(async () => await db.closeDatabase());
+  afterEach(async () => await db.resetDatabase());
+
+  beforeAll(async () => {
+    await db.connect();
+  });
+
+  test('API should fetch user data', async () => {
+    const response = await withAuthentication(request(app).get('/user/'));
+
+    const message = response.body.message;
+    const result = _.omit(response.body.result, ['_id', '__v']);
+
+    expect(message).toEqual(SUCCESS_GETTING_USER_DATA);
+    expect(result).toEqual(EXPECTED_GET_USER_DATA);
+  });
+});
 
 // This block tests the POST /user/ endpoint.
 describe('POST /user/ ', () => {

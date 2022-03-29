@@ -9,8 +9,12 @@ const {
   getUserByIDToken,
 } = require('../middleware/authentication');
 const _ = require('lodash');
-const { ERR_IMPROPER_ID_TOKEN, SUCCESS_GETTING_USER_DATA, ERR_GETTING_USER_DATA } = require('../utils/constants');
-const { getCoursesByUser } = require('../utils/userHelper')
+const {
+  ERR_IMPROPER_ID_TOKEN,
+  SUCCESS_GETTING_USER_DATA,
+  ERR_GETTING_USER_DATA,
+} = require('../utils/constants');
+const { getCoursesByUser } = require('../utils/userHelper');
 
 /**
  * Creates a new user in the database
@@ -62,16 +66,24 @@ router.get(
   errorWrap(async (req, res) => {
     const userData = req.user;
 
-    // for some reason, there is no user data to work with
+    // if for some reason, there is no user data to work with
     if (!userData) {
       return sendResponse(res, 400, ERR_GETTING_USER_DATA);
     }
 
     const dataToReturn = _.omit(userData, ['authID']);
 
-    dataToReturn.adminLanguages = await getCoursesByUser(dataToReturn.adminLanguages);
-    dataToReturn.learnerLanguages = await getCoursesByUser(dataToReturn.learnerLanguages);
-    dataToReturn.collaboratorLanguages = await getCoursesByUser(dataToReturn.collaboratorLanguages);
+    // reformats the data related to the courses that the user belongs to
+
+    dataToReturn.adminLanguages = await getCoursesByUser(
+      dataToReturn.adminLanguages,
+    );
+    dataToReturn.learnerLanguages = await getCoursesByUser(
+      dataToReturn.learnerLanguages,
+    );
+    dataToReturn.collaboratorLanguages = await getCoursesByUser(
+      dataToReturn.collaboratorLanguages,
+    );
 
     return sendResponse(res, 200, SUCCESS_GETTING_USER_DATA, dataToReturn);
   }),
