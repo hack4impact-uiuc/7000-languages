@@ -13,7 +13,10 @@ const {
   EXPECTED_GET_USER_DATA,
 } = require('../mock-data/user-mock-data');
 const { withAuthentication } = require('../utils/auth');
-const { SUCCESS_GETTING_USER_DATA } = require('../../src/utils/constants');
+const {
+  SUCCESS_GETTING_USER_DATA,
+  ERR_IMPROPER_ID_TOKEN,
+} = require('../../src/utils/constants');
 
 /* 
   Google Auth Mocker - uses jest to mock the Google Auth library.
@@ -50,8 +53,20 @@ describe('GET /user/ ', () => {
     const message = response.body.message;
     const result = _.omit(response.body.result, ['_id', '__v']);
 
+    expect(response.status).toBe(200);
     expect(message).toEqual(SUCCESS_GETTING_USER_DATA);
     expect(result).toEqual(EXPECTED_GET_USER_DATA);
+  });
+
+  test('API should fail to fetch user data due to invalid user token', async () => {
+    const response = await withAuthentication(
+      request(app).get('/user/'),
+      'invalid id token',
+    );
+
+    const message = response.body.message;
+    expect(response.status).toBe(401);
+    expect(message).toEqual(ERR_IMPROPER_ID_TOKEN);
   });
 });
 
