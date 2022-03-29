@@ -3,9 +3,52 @@ const router = express.Router();
 const { errorWrap } = require('../middleware');
 const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
+const { requireAuthentication } = require('../middleware/authentication');
+const _ = require('lodash');
+const { ERR_NO_COURSE_DETAILS } = require('../utils/constants');
+
+/**
+ * Creates a new course in the database
+ *
+ * @param {newUser} New course
+ * @returns a new course under the given language
+ */
+router.post(
+  '/course',
+  requireAuthentication,
+  errorWrap(async (req, res) => {
+    const user = req.user;
+    const courseData = req.body;
+    if (!courseData.details) {
+      return sendResponse(res, 404, ERR_NO_COURSE_DETAILS);
+    }
+    const newCourse = new models.Course({
+      approved: true,
+      admin_id: user.authID,
+      details: courseData.details,
+    });
+
+    await newCourse.save();
+    let newResult = newCourse.toJSON();
+    newResult = _.omit(newResult, ['admin_id']);
+
+    await models.User.updateOne(
+      { _id: user._id },
+      { $push: { adminLanguages: newCourse._id } },
+    );
+
+    return sendResponse(
+      res,
+      200,
+      'Successfully created a new course',
+      newResult,
+    );
+  }),
+);
 
 router.delete(
-  '/:id',
+  '/course/:id',
+  requireAuthentication,
   errorWrap(async (req, res) => {
     deleteCount = await models.Course.deleteOne({_id: req.params.id});
     if (deleteCount == 1) {
@@ -13,8 +56,7 @@ router.delete(
     } else {
       return sendResponse(res, 404, 'Course not found')
     }
-  }),
+  })
 );
 
 module.exports = router;
-

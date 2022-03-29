@@ -9,29 +9,26 @@ const styles = StyleSheet.create({
   },
 })
 
-const HeaderLeft = ({ navigation }) => {
-  return (
-    < FontIcon.Button
-      name="bars"
-      color="white"
-      backgroundColor="transparent"
-      onPress={() => {
-        navigation.openDrawer()
-      }}
-      style={styles.button}
-    />
-  )
-}
+const DrawerButton = ({ navigation }) => (
+  <FontIcon.Button
+    name="bars"
+    color="white"
+    backgroundColor="transparent"
+    onPress={() => {
+      navigation.openDrawer()
+    }}
+    style={styles.button}
+  />
+)
 
-
-HeaderLeft.propTypes = {
+DrawerButton.propTypes = {
   navigation: PropTypes.shape({
     openDrawer: PropTypes.func,
   }),
 }
 
-HeaderLeft.defaultProps = {
+DrawerButton.defaultProps = {
   navigation: { openDrawer: () => null },
 }
 
-export default HeaderLeft
+export default DrawerButton

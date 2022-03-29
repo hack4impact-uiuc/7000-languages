@@ -19,6 +19,7 @@
     "eslint-plugin-jest": "^26.1.1",
     "express": "~4.17.1",
     "fs": "^0.0.1-security",
+    "google-auth-library": "^7.14.0",
     "helmet": "^5.0.2",
     "http-errors": "~1.8.0",
     "if-env": "^1.0.4",
@@ -28,7 +29,8 @@
     "mongodb-memory-server": "^8.4.0",
     "mongoose": "^6.2.3",
     "morgan": "~1.10.0",
-    "mpath": "^0.8.4"
+    "mpath": "^0.8.4",
+    "omit-deep-lodash": "^1.1.6"
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7",

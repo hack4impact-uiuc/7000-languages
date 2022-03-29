@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const apiRoutes = require('./api');
-const { errorHandler } = require('./middleware');
+const { errorHandler, errorWrap } = require('./middleware');
 const { initDB } = require('./utils/mongo-setup');
 const { ENV_TEST } = require('./utils/constants');
 
@@ -32,6 +32,6 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.use(errorHandler);
+app.use(errorHandler, errorWrap);
 
 module.exports = app;

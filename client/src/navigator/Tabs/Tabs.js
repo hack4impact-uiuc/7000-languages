@@ -1,9 +1,9 @@
 import React from 'react'
 import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
-import { HomeNavigator, ProfileNavigator } from '../Stacks'
+import { AntDesign } from '@expo/vector-icons'
+import { HomeNavigator } from '../Stacks'
 
 const Tab = createBottomTabNavigator()
 
@@ -21,24 +21,16 @@ const TabNavigator = () => (
       // eslint-disable-next-line react/prop-types
       tabBarIcon: ({ focused }) => {
         switch (route.name) {
-          case 'Home':
+          case 'Units':
             return (
-              <FontIcon
-                name="home"
+              <AntDesign
+                name="appstore1"
                 color={focused ? colors.red.dark : colors.gray.dark}
                 size={20}
                 solid
               />
             )
-          case 'Profile':
-            return (
-              <FontIcon
-                name="user"
-                color={focused ? colors.red.dark : colors.gray.dark}
-                size={20}
-                solid
-              />
-            )
+
           default:
             return <View />
         }
@@ -58,8 +50,7 @@ const TabNavigator = () => (
     initialRouteName="Home"
     swipeEnabled={false}
   >
-    <Tab.Screen name="Home" component={HomeNavigator} />
-    <Tab.Screen name="Profile" component={ProfileNavigator} />
+    <Tab.Screen name="Units" component={HomeNavigator} />
   </Tab.Navigator>
 )
 

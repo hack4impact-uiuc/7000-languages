@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, StatusBar } from 'react-native'
-import Button from 'components/Button'
+import Button from 'components/StyledButton'
 import { colors } from 'theme'
 import { Text } from 'native-base'
 import { useDispatch } from 'react-redux'
