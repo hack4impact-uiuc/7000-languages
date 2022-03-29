@@ -91,7 +91,6 @@ describe('POST /user/ ', () => {
     expect(message).toEqual('Successfully created a new course');
     expect(result).toEqual(POST_COURSE_ADDITIONAL_FIELDS_EXPECTED);
   });
-
 });
 
 describe('DELETE /language/course/ ', () => {
@@ -109,7 +108,6 @@ describe('DELETE /language/course/ ', () => {
     const message = response.body.message;
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully deleted course');
-    
   });
 
   test('API should return 404 course if course does not exist', async () => {
@@ -126,7 +124,5 @@ describe('DELETE /language/course/ ', () => {
     const second_message = second_response.body.message;
     expect(second_response.status).toBe(404);
     expect(second_message).toEqual('Course not found');
-    
   });
-    
 });

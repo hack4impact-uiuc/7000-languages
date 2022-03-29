@@ -50,13 +50,13 @@ router.delete(
   '/course/:id',
   requireAuthentication,
   errorWrap(async (req, res) => {
-    deleteCount = await models.Course.deleteOne({_id: req.params.id});
-    if (deleteCount == 1) {
+    const deleteCount = await models.Course.deleteOne({ _id: req.params.id });
+    if (deleteCount['deletedCount'] === 1) {
       return sendResponse(res, 200, 'Successfully deleted course');
-    } else {
-      return sendResponse(res, 404, 'Course not found')
-    }
-  })
+    } 
+      return sendResponse(res, 404, 'Course not found');
+    
+  }),
 );
 
 module.exports = router;
