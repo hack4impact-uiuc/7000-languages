@@ -3,16 +3,15 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem,
-  DrawerContent,
 } from '@react-navigation/drawer'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
-import { Text, Icon, InputLeftAddon } from 'native-base'
+import { Text } from 'native-base'
 import { FontAwesome } from '@expo/vector-icons'
 import { colors } from 'theme'
 import { View, Pressable } from 'react-native'
 import StyledButton from 'components/StyledButton'
+import OwnershipButton from '../../components/OwnershipButton'
 
 const Drawer = createDrawerNavigator()
 
@@ -107,6 +106,9 @@ export default () => (
         <View>
     <Text style={{ fontFamily: 'GT_Haptik_bold', fontSize: 20,}}>French</Text> 
     <Text style={{ fontFamily: 'GT_Haptik_regular', fontSize: 20, color: "#A4A4A4"}}>8 Units</Text>
+    <OwnershipButton
+    isContributor={true}
+    ></OwnershipButton>
     </View>,
         drawerIcon: () => <FontAwesome 
         name="square"

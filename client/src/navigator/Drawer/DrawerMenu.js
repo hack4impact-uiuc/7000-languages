@@ -5,8 +5,6 @@ import { Text } from 'native-base'
 import { DrawerActions } from '@react-navigation/native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
-import StyledButton from 'components/StyledButton'
-
 const styles = {
   root: {
     flex: 1,
