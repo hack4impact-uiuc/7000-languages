@@ -68,7 +68,10 @@ router.get(
     
     const course = req.query.body
     const units = await Unit.find({ _course_id: req.query._id });
-    const numLessons = await Unit.count();
+    units.forEach(unit => {
+      const numLessons = await Unit.find({ _unit_id: unit._id });
+      //append numLessons to each unit JSON
+    });
     course = _.omit(newResult, ['admin_id']);
     const returnedData = {
       course: course, //remove admin_id
