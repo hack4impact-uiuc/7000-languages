@@ -27,13 +27,14 @@ const authSlice = createSlice({
       state.loggedIn = payload.loggedIn
       state.idToken = payload.idToken
     },
-    removeToken: (state) => {
+    logout: (state) => {
+      state.loggedIn = initialState.loggedIn
       state.idToken = initialState.idToken
     },
   },
 })
 
 export const { action } = authSlice
-export const { authenticate, removeToken } = authSlice.actions
+export const { authenticate, logout } = authSlice.actions
 
 export default authSlice.reducer
