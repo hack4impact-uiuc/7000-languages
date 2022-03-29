@@ -68,16 +68,19 @@ router.get(
     
     const course = req.query.body
     const units = await Unit.find({ _course_id: req.query._id });
+    //cannot use forEach loop, use for loop
     units.forEach(unit => {
-      const numLessons = await Unit.find({ _unit_id: unit._id });
+      const numLessons = await Unit.find({ _unit_id: unit._id }).count();
       //append numLessons to each unit JSON
+      //$push: { adminLanguages: newCourse._id }
+      unit.addProperty("num_lessons", numLessons);
     });
     course = _.omit(newResult, ['admin_id']);
     const returnedData = {
       course: course, //remove admin_id
       units: units
     }
-    sendResponse(res, 200, 'test data', 'Successfully fetched course');
+    sendResponse(res, 200, returnedData, 'Successfully fetched course');
   }),
 );
 
