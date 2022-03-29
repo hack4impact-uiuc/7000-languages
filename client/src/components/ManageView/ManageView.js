@@ -192,7 +192,9 @@ const ManageView = ({
           onPress={() => moveToSelected(index)}
         />
       )}
-      rightIcon={null}
+      rightIcon={
+        <Feather name="trash-2" size={25} color={colors.gray.medium} />
+      }
       volumeIconCallback={playAudio}
       indicatorType={
         item.isComplete ? INDICATOR_TYPES.COMPLETE : INDICATOR_TYPES.INCOMPLETE
