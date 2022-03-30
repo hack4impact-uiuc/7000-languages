@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import StyledButton from 'components/StyledButton'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
 import { colors } from 'theme'
+import { INDICATOR_TYPES } from 'utils/constants'
 
-const Indicator = ({ isComplete }) => {
-  switch (isComplete) {
-    case true:
+const Indicator = ({ indicatorType }) => {
+  switch (indicatorType) {
+    case INDICATOR_TYPES.COMPLETE:
       return (
         <StyledButton
           title="COMPLETE"
@@ -21,7 +22,7 @@ const Indicator = ({ isComplete }) => {
           fontSize="10"
         />
       )
-    case false:
+    case INDICATOR_TYPES.INCOMPLETE:
       return (
         <StyledButton
           title="INCOMPLETE"
@@ -32,6 +33,8 @@ const Indicator = ({ isComplete }) => {
           fontSize="10"
         />
       )
+    case INDICATOR_TYPES.NONE:
+      return null
     default:
       return null
   }
@@ -39,11 +42,11 @@ const Indicator = ({ isComplete }) => {
 
 // Button object fields
 Indicator.propTypes = {
-  isComplete: PropTypes.bool,
+  indicatorType: PropTypes.number,
 }
 
 Indicator.defaultProps = {
-  isComplete: false,
+  indicatorType: INDICATOR_TYPES.COMPLETE,
 }
 
 export default Indicator

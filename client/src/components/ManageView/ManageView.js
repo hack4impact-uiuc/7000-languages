@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
 const { width } = Dimensions.get('window')
 
 const parentWidth = width
-const childrenWidth = width + DRAGGABLE_LIST_CARD_WIDTH_FACTOR
+let widthFlag = false
+let childrenWidth = width + DRAGGABLE_LIST_CARD_WIDTH_FACTOR
 const childrenHeight = DRAGGABLE_LIST_CARD_HEIGHT
 
 const ManageView = ({
@@ -119,9 +120,16 @@ const ManageView = ({
   }
 
   const discardChanges = () => {
+    setShouldShowButtons(false)
+
+    /**
+     * This cheeky hack allows the state of AutoDragSortableView (Draggable component) to update on discard.
+     */
+    childrenWidth += widthFlag ? 0.001 : -0.001
+    widthFlag = !widthFlag
+
     setSelectedData(initialSelectedData)
     setUnselectedData(initialUnselectedData)
-    setShouldShowButtons(false)
   }
 
   /**
@@ -158,7 +166,7 @@ const ManageView = ({
       leftIcon={(
         <AntDesign
           name="minuscircle"
-          size={20}
+          size={25}
           color={colors.red.dark}
           onPress={() => moveToUnselected(index)}
         />
@@ -187,14 +195,11 @@ const ManageView = ({
       leftIcon={(
         <AntDesign
           name="pluscircle"
-          size={20}
+          size={25}
           color={colors.green.medium}
           onPress={() => moveToSelected(index)}
         />
       )}
-      rightIcon={
-        <Feather name="trash-2" size={25} color={colors.gray.medium} />
-      }
       volumeIconCallback={playAudio}
       indicatorType={
         item.isComplete ? INDICATOR_TYPES.COMPLETE : INDICATOR_TYPES.INCOMPLETE

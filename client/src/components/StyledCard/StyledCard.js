@@ -62,7 +62,7 @@ const StyledCard = ({
 
   const indicator = indicatorType !== INDICATOR_TYPES.NONE ? (
     <Box style={styles.indicator}>
-      <Indicator isComplete={indicatorType === INDICATOR_TYPES.COMPLETE} />
+      <Indicator indicatorType={indicatorType} />
     </Box>
   ) : null
 
