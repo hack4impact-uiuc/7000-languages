@@ -17,7 +17,7 @@ router.patch(
   errorWrap(async (req, res) => {
     const updates = req.body;
 
-    await models.Course.exists({_id: req.params.id}, function(err) {
+    await models.Course.exists({ _id: req.params.id }, function (err) {
       if (err) {
         return sendResponse(res, 404, 'Course not found');
       }

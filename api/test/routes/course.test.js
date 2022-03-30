@@ -203,12 +203,10 @@ describe('PATCH /language/course/ ', () => {
 
     const body = PATCH_UPDATE_NON_BOOLEAN_APPROVAL;
     const response = await withAuthentication(
-      request(app)
-        .patch('/language/course/12345')
-        .send(body),
+      request(app).patch('/language/course/12345').send(body),
     );
     const message = response.body.message;
-    
+
     expect(response.status).toBe(404);
     expect(message).toEqual('Course not found');
   });
