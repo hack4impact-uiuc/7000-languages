@@ -16,10 +16,17 @@ router.patch(
   requireAuthentication,
   errorWrap(async (req, res) => {
     const updates = req.body;
-    const course = await models.Course.findOne({ _id: req.params.id });
+
+    await models.Course.exists({_id: req.params.id}, function(err) {
+      if (err) {
+        return sendResponse(res, 404, 'Course not found');
+      }
+    });
+
+    const course = await models.Course.findById(req.params.id);
 
     for (var key in updates) {
-      if (typeof course[key] === typeof updates[key]) {
+      if (key in course && typeof course[key] === typeof updates[key]) {
         course[key] = updates[key];
       }
     }
