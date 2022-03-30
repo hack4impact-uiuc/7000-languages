@@ -25,17 +25,16 @@ const authSlice = createSlice({
   reducers: {
     authenticate: (state, { payload }) => {
       state.loggedIn = payload.loggedIn
-    },
-    saveToken: (state, { payload }) => {
       state.idToken = payload.idToken
     },
-    removeToken: (state) => {
+    logout: (state) => {
+      state.loggedIn = initialState.loggedIn
       state.idToken = initialState.idToken
     },
   },
 })
 
 export const { action } = authSlice
-export const { authenticate, saveToken, removeToken } = authSlice.actions
+export const { authenticate, logout } = authSlice.actions
 
 export default authSlice.reducer
