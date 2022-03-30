@@ -32,9 +32,9 @@ verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 // This block tests the POST /user/ endpoint.
 describe('POST /user/ ', () => {
   /* 
-    We have to make sure we connect to a MongoDB mock db before the test 
-    and close the connection at the end.
-  */
+      We have to make sure we connect to a MongoDB mock db before the test 
+      and close the connection at the end.
+    */
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
 
@@ -48,7 +48,6 @@ describe('POST /user/ ', () => {
     const response = await withAuthentication(
       request(app).post('/language/course/').send(body),
     );
-    console.log(response);
     const message = response.body.message;
     const result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
