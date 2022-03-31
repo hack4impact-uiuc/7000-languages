@@ -8,6 +8,35 @@ const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../utils/constants');
 
 /**
+ * patch
+ */
+
+router.patch(
+  '/course/:id',
+  requireAuthentication,
+  errorWrap(async (req, res) => {
+    const updates = req.body;
+
+    await models.Course.exists({ _id: req.params.id }, function (err) {
+      if (err) {
+        return sendResponse(res, 404, 'Course not found');
+      }
+    });
+
+    const course = await models.Course.findById(req.params.id);
+
+    for (var key in updates) {
+      if (key in course && typeof course[key] === typeof updates[key]) {
+        course[key] = updates[key];
+      }
+    }
+
+    await course.save();
+    return sendResponse(res, 200, 'Successfully updated course', course);
+  }),
+);
+
+/**
  * Creates a new course in the database
  *
  * @param {newUser} New course

@@ -85,8 +85,10 @@ describe('POST /user/ ', () => {
 
   test('API should create user', async () => {
     const body = POST_SIMPLE_USER;
-    const response = await request(app).post('/user/').send(body);
 
+    const response = await withAuthentication(
+      request(app).post('/user/').send(body),
+    );
     const message = response.body.message;
     const result = _.omit(response.body.result, ['_id', '__v']);
 
@@ -96,14 +98,17 @@ describe('POST /user/ ', () => {
 
   test('HTTP response status code', async () => {
     const body = POST_SIMPLE_USER;
-    const response = await request(app).post('/user/').send(body);
-
+    const response = await withAuthentication(
+      request(app).post('/user/').send(body),
+    );
     expect(response.status).toBe(200);
   });
 
   test('User Role is always 0', async () => {
     const body = POST_USER_ADMIN;
-    const response = await request(app).post('/user/').send(body);
+    const response = await withAuthentication(
+      request(app).post('/user/').send(body),
+    );
 
     const message = response.body.message;
     const result = _.omit(response.body.result, ['_id', '__v']);
@@ -114,14 +119,18 @@ describe('POST /user/ ', () => {
 
   test('No id token results in error', async () => {
     const body = POST_WRONG_USER_NO_ID_TOKEN;
-    const response = await request(app).post('/user/').send(body);
+    const response = await withAuthentication(
+      request(app).post('/user/').send(body),
+    );
 
     expect(response.status).toBeGreaterThanOrEqual(400);
   });
 
   test('No role still creates a new user', async () => {
     const body = POST_WRONG_USER_NO_ROLE;
-    const response = await request(app).post('/user/').send(body);
+    const response = await withAuthentication(
+      request(app).post('/user/').send(body),
+    );
 
     const message = response.body.message;
     const result = _.omit(response.body.result, ['_id', '__v']);
@@ -132,7 +141,9 @@ describe('POST /user/ ', () => {
 
   test('Additional fields still create a new user', async () => {
     const body = POST_USER_ADDITIONAL_FIELDS;
-    const response = await request(app).post('/user/').send(body);
+    const response = await withAuthentication(
+      request(app).post('/user/').send(body),
+    );
 
     const message = response.body.message;
     const result = _.omit(response.body.result, ['_id', '__v']);
@@ -143,7 +154,9 @@ describe('POST /user/ ', () => {
 
   test('One less field still create a new user', async () => {
     const body = POST_USER_ONE_LESS_FIELD;
-    const response = await request(app).post('/user/').send(body);
+    const response = await withAuthentication(
+      request(app).post('/user/').send(body),
+    );
 
     const message = response.body.message;
     const result = _.omit(response.body.result, ['_id', '__v']);
