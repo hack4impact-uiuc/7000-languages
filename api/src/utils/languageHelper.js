@@ -17,14 +17,18 @@ module.exports.deleteAssociatedUnits = async (courseId) => {
   if (!courseId) {
     return null;
   }
-  const numUnitsDeleted = await models.Unit.deleteMany({ _course_id: courseId });
+  const numUnitsDeleted = await models.Unit.deleteMany({
+    _course_id: courseId,
+  });
   return numUnitsDeleted;
-}
+};
 
 module.exports.deleteAssociatedLessons = async (courseId) => {
   if (!courseId) {
     return null;
   }
-  const numLessonsDeleted = await models.Lesson.deleteMany({ _course_id: courseId });
+  const numLessonsDeleted = await models.Lesson.deleteMany({
+    _course_id: courseId,
+  });
   return numLessonsDeleted;
-}
+};

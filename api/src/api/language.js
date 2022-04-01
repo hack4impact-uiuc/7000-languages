@@ -5,8 +5,14 @@ const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
 const { requireAuthentication } = require('../middleware/authentication');
 const _ = require('lodash');
-const { ERR_NO_COURSE_DETAILS } = require('../utils/constants');
-const { deleteAssociatedUnits, deleteAssociatedLessons } = require('../utils/languageHelper');
+const {
+  ERR_NO_COURSE_DETAILS,
+  DELETION_FAILURE,
+} = require('../utils/constants');
+const {
+  deleteAssociatedUnits,
+  deleteAssociatedLessons,
+} = require('../utils/languageHelper');
 
 /**
  * Creates a new course in the database
@@ -52,17 +58,23 @@ router.delete(
   requireAuthentication,
   errorWrap(async (req, res) => {
     const deleteCount = await models.Course.deleteOne({ _id: req.params.id });
-    deleteCount['deletedCount'] = ('deletedCount' in deleteCount) ? deleteCount['deletedCount'] : -1;
-      
+    deleteCount['deletedCount'] =
+      'deletedCount' in deleteCount
+        ? deleteCount['deletedCount']
+        : DELETION_FAILURE;
+
     if (deleteCount['deletedCount'] === 1) {
       await deleteAssociatedUnits(req.params.id);
       await deleteAssociatedLessons(req.params.id);
-      return sendResponse(res, 200, 'Successfully deleted course and associated units + lessons');
-    } else if (deleteCount['deletedCount'] === -1) {
+      return sendResponse(
+        res,
+        200,
+        'Successfully deleted course and associated units + lessons',
+      );
+    } else if (deleteCount['deletedCount'] === DELETION_FAILURE) {
       return sendResponse(res, 500, 'Deletion field');
-    } else {
-      return sendResponse(res, 404, 'Course not found');
     }
+    return sendResponse(res, 404, 'Course not found');
   }),
 );
 
