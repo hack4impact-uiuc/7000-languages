@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white.dark,
   },
   form: {
-    width: '90%',
+    width: '95%',
     height: '80%',
   },
   header: {
