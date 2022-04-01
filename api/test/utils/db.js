@@ -72,8 +72,6 @@ const constructStaticData = () => {
     courses = constructAll(courseData, models.Course);
   }
 
-  users = constructAll(userData, models.User);
-  courses = constructAll(courseData, models.Course);
   units = constructAll(unitData, models.Unit);
   lessons = constructAll(lessonData, models.Lesson);
 };

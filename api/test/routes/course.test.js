@@ -106,7 +106,7 @@ describe('DELETE /language/course/ ', () => {
     );
     const message = response.body.message;
     expect(response.status).toBe(200);
-    expect(message).toEqual('Successfully deleted course');
+    expect(message).toEqual('Successfully deleted course and associated units + lessons');
   });
 
   test('API should return 404 course if course does not exist', async () => {
@@ -115,7 +115,7 @@ describe('DELETE /language/course/ ', () => {
     );
     const message = response.body.message;
     expect(response.status).toBe(200);
-    expect(message).toEqual('Successfully deleted course');
+    expect(message).toEqual('Successfully deleted course and associated units + lessons');
 
     const second_response = await withAuthentication(
       request(app).delete('/language/course/62391a30487d5ae343c82311').send(),
