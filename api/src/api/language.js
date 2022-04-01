@@ -77,11 +77,12 @@ router.post(
   }),
 );
 
+// TODO: get lesson data as well
 /**
- * Gets all of the vocab (words, phrases, etc) for a specific lesson in a certain unit
+ * Gets lesson data and corresponding vocab data (words, phrases, etc) for a specific lesson in a certain unit
  */
 router.get(
-  '/vocab',
+  '/lesson',
   requireAuthentication,
   errorWrap(async (req, res) => {
     const { unit_id, course_id, lesson_id } = req.query;
@@ -104,9 +105,9 @@ router.get(
 
     if (lesson) {
       // sorts vocab in order of _order
-      const vocab = lesson.vocab.sort((a, b) => a._order - b._order);
+      lesson.vocab.sort((a, b) => a._order - b._order);
 
-      return sendResponse(res, 200, SUCCESS_GETTING_VOCAB_DATA, vocab);
+      return sendResponse(res, 200, SUCCESS_GETTING_VOCAB_DATA, lesson);
     }
     return sendResponse(res, 404, ERR_GETTING_VOCAB_DATA, {});
   }),
