@@ -13,6 +13,14 @@ module.exports.getNumUnitsInCourse = async (courseId) => {
   return numUnits;
 };
 
+module.exports.getNumLessonsInCourse = async (courseId) => {
+  if (!courseId) {
+    return null;
+  }
+  const numLessons = await models.Lesson.countDocuments({ _course_id: courseId });
+  return numLessons;
+};
+
 module.exports.deleteAssociatedUnits = async (courseId) => {
   if (!courseId) {
     return null;

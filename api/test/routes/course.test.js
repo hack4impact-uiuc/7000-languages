@@ -12,6 +12,7 @@ const {
 } = require('../mock-data/course-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
+const { getNumUnitsInCourse, getNumLessonsInCourse } = require('../../src/utils/languageHelper');
 
 /* 
   Google Auth Mocker - uses jest to mock the Google Auth library.
@@ -25,6 +26,7 @@ const omitDeep = require('omit-deep-lodash');
 jest.mock('google-auth-library');
 const { OAuth2Client } = require('google-auth-library');
 const { verifyIdTokenMockReturnValue } = require('../mock-data/auth-mock-data');
+const { ObjectId } = require('mongodb');
 
 const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
 verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
@@ -127,5 +129,35 @@ describe('DELETE /language/course/ ', () => {
     const second_message = second_response.body.message;
     expect(second_response.status).toBe(404);
     expect(second_message).toEqual('Course not found');
+  });
+
+  test('Course deletion should also delete associated units', async () => {
+    const originalUnitCount = await getNumUnitsInCourse(ObjectId('62391a30487d5ae343c82311'));
+    expect(originalUnitCount).toBeGreaterThan(0);
+    const response = await withAuthentication(
+      request(app).delete('/language/course/62391a30487d5ae343c82311').send(),
+    );
+    const message = response.body.message;
+    expect(response.status).toBe(200);
+    expect(message).toEqual(
+      'Successfully deleted course and associated units + lessons',
+    );
+    const newUnitCount = await getNumUnitsInCourse(ObjectId('62391a30487d5ae343c82311'));
+    expect(newUnitCount).toBe(0);
+  });
+
+  test('Course deletion should also delete associated lessons', async () => {
+    const originalLessonCount = await getNumLessonsInCourse(ObjectId('62391a30487d5ae343c82311'));
+    expect(originalLessonCount).toBeGreaterThan(0);
+    const response = await withAuthentication(
+      request(app).delete('/language/course/62391a30487d5ae343c82311').send(),
+    );
+    const message = response.body.message;
+    expect(response.status).toBe(200);
+    expect(message).toEqual(
+      'Successfully deleted course and associated units + lessons',
+    );
+    const newLessonCount = await getNumLessonsInCourse(ObjectId('62391a30487d5ae343c82311'));
+    expect(newLessonCount).toBe(0);
   });
 });
