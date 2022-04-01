@@ -47,34 +47,40 @@ router.post(
   }),
 );
 
-const returnedData = {
-  course: Course, //remove admin_id
-  units: [unit1, unit2, unit3]
-}
+// const returnedData = {
+//   course: Course, //remove admin_id
+//   units: [unit1, unit2, unit3]
+// }
 
-const unit1 = {
-  _course_id: { type: String, required: true, index: true },
-  name: { type: String, required: true },
-  _order: { type: Number, required: true, index: true },
-  selected: { type: Boolean, required: true },
-  description: { type: String, required: true, default: '' },
-  numLessons: 10
-}
+// const unit1 = {
+//   _course_id: { type: String, required: true, index: true },
+//   name: { type: String, required: true },
+//   _order: { type: Number, required: true, index: true },
+//   selected: { type: Boolean, required: true },
+//   description: { type: String, required: true, default: '' },
+//   numLessons: 10
+// }
 
 router.get(
-  '/course',
-  requireAuthentication,
+  '/course/:id',
+  //requireAuthentication,
   errorWrap(async (req, res) => {
     
     const course = req.query.body
-    const units = await Unit.find({ _course_id: req.query._id });
+    const units = await Unit.find({ _course_id: req.params.id });
     //cannot use forEach loop, use for loop
-    units.forEach(unit => {
+    for(var i = 0; i < units.length; i++){
       const numLessons = await Unit.find({ _unit_id: unit._id }).count();
       //append numLessons to each unit JSON
       //$push: { adminLanguages: newCourse._id }
       unit.addProperty("num_lessons", numLessons);
-    });
+    }
+    // units.forEach(unit => {
+    //   const numLessons = await Unit.find({ _unit_id: unit._id }).count();
+    //   //append numLessons to each unit JSON
+    //   //$push: { adminLanguages: newCourse._id }
+    //   unit.addProperty("num_lessons", numLessons);
+    // });
     course = _.omit(newResult, ['admin_id']);
     const returnedData = {
       course: course, //remove admin_id
