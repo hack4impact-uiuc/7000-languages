@@ -7,8 +7,8 @@ const { requireAuthentication } = require('../middleware/authentication');
 const _ = require('lodash');
 const {
   ERR_NO_COURSE_DETAILS,
-  ERR_GETTING_VOCAB_DATA,
-  SUCCESS_GETTING_VOCAB_DATA,
+  SUCCESS_GETTING_LESSON_DATA,
+  ERR_GETTING_LESSON_DATA,
   ERR_MISSING_OR_INVALID_DATA,
 } = require('../utils/constants');
 
@@ -107,9 +107,9 @@ router.get(
       // sorts vocab in order of _order
       lesson.vocab.sort((a, b) => a._order - b._order);
 
-      return sendResponse(res, 200, SUCCESS_GETTING_VOCAB_DATA, lesson);
+      return sendResponse(res, 200, SUCCESS_GETTING_LESSON_DATA, lesson);
     }
-    return sendResponse(res, 404, ERR_GETTING_VOCAB_DATA, {});
+    return sendResponse(res, 404, ERR_GETTING_LESSON_DATA, {});
   }),
 );
 
