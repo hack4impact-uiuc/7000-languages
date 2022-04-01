@@ -12,7 +12,10 @@ const {
 } = require('../mock-data/course-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
-const { getNumUnitsInCourse, getNumLessonsInCourse } = require('../../src/utils/languageHelper');
+const {
+  getNumUnitsInCourse,
+  getNumLessonsInCourse,
+} = require('../../src/utils/languageHelper');
 
 /* 
   Google Auth Mocker - uses jest to mock the Google Auth library.
@@ -132,7 +135,9 @@ describe('DELETE /language/course/ ', () => {
   });
 
   test('Course deletion should also delete associated units', async () => {
-    const originalUnitCount = await getNumUnitsInCourse(ObjectId('62391a30487d5ae343c82311'));
+    const originalUnitCount = await getNumUnitsInCourse(
+      ObjectId('62391a30487d5ae343c82311'),
+    );
     expect(originalUnitCount).toBeGreaterThan(0);
     const response = await withAuthentication(
       request(app).delete('/language/course/62391a30487d5ae343c82311').send(),
@@ -142,12 +147,16 @@ describe('DELETE /language/course/ ', () => {
     expect(message).toEqual(
       'Successfully deleted course and associated units + lessons',
     );
-    const newUnitCount = await getNumUnitsInCourse(ObjectId('62391a30487d5ae343c82311'));
+    const newUnitCount = await getNumUnitsInCourse(
+      ObjectId('62391a30487d5ae343c82311'),
+    );
     expect(newUnitCount).toBe(0);
   });
 
   test('Course deletion should also delete associated lessons', async () => {
-    const originalLessonCount = await getNumLessonsInCourse(ObjectId('62391a30487d5ae343c82311'));
+    const originalLessonCount = await getNumLessonsInCourse(
+      ObjectId('62391a30487d5ae343c82311'),
+    );
     expect(originalLessonCount).toBeGreaterThan(0);
     const response = await withAuthentication(
       request(app).delete('/language/course/62391a30487d5ae343c82311').send(),
@@ -157,7 +166,9 @@ describe('DELETE /language/course/ ', () => {
     expect(message).toEqual(
       'Successfully deleted course and associated units + lessons',
     );
-    const newLessonCount = await getNumLessonsInCourse(ObjectId('62391a30487d5ae343c82311'));
+    const newLessonCount = await getNumLessonsInCourse(
+      ObjectId('62391a30487d5ae343c82311'),
+    );
     expect(newLessonCount).toBe(0);
   });
 });

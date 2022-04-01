@@ -17,7 +17,9 @@ module.exports.getNumLessonsInCourse = async (courseId) => {
   if (!courseId) {
     return null;
   }
-  const numLessons = await models.Lesson.countDocuments({ _course_id: courseId });
+  const numLessons = await models.Lesson.countDocuments({
+    _course_id: courseId,
+  });
   return numLessons;
 };
 
