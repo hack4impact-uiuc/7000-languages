@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, StatusBar } from 'react-native'
+import { StyleSheet, View, Linking } from 'react-native'
 import StyledButton from 'components/StyledButton'
-import { colors } from 'theme'
-import { Text, ScrollView, Input, Stack} from 'native-base'
+import { colors, fonts } from 'theme'
+import { Text, ScrollView, Input, Checkbox, FormControl } from 'native-base'
+
 
 const styles = StyleSheet.create({
   root: {
@@ -15,16 +16,17 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   header: {
-    flex: 2,
-    bottom: 10,
+    //flex: 2,
+    //bottom: 10,
+    marginTop: 8,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
   subhead: {
-    
-    flex: 4,
-    bottom:30,
+    //flex: 4,
+    //bottom: 80,
+    marginBottom: 30,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -32,36 +34,133 @@ const styles = StyleSheet.create({
   },
   submitForm: {
     flex: 3,
-    bottom:50 ,
+    bottom: 1,
     alignItems: 'center',
   },
   scrollView: {
     flex: 8,
-    width: "90%",
-    height: "100%",
+    width: '90%',
+    height: '100%',
     marginHorizontal: 100,
   },
   input: {
-    height: 60,
-    margin: 12,
-    borderWidth: 1,
-    padding: 20,
+    backgroundColor: colors.gray.light,
+    padding: 20
   },
+  inputLarge: {
+    backgroundColor: colors.gray.light,
+    height: "20%",
+    marginBottom: 20,
+  }, 
+  checkboxes: {
+    marginBottom: 25
+  }, 
+
 })
 
+// things to do:
+// fix styling for inputs + checkbox
+// fix scroll view styling
+// add submit
 const Apply = ({ navigation }) => {
   // applicaton fields
-  const [name, setName] = useState(' ')
-  const [email, setEmail] = useState(' ')
-  const [language, setLanguage] = useState(' ')
-  const [otherNames, setOtherNames] = useState(' ')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [language, setLanguage] = useState('')
+  const [otherNames, setOtherNames] = useState('')
+  const [isoCode, setIsoCode] = useState('')
+  const [glottoCode, setGlottoCode] = useState('')
+  const [location, setLocation] = useState('')
+  const [acceptTerms, setAcceptTerms] = useState(false)
+  const [contact, setContact] = useState(false)
+
+  const [errors, setErrors] = useState({})
+
+  const validate = () => {
+    const validateErrors = {}
+
+    if (name === '') {
+
+      validateErrors['name'] = 'Name is required'
+       
+    }  if (email === '') {
+      validateErrors['email'] = 'Email is required'
+      
+    }  if (language === '') {
+      validateErrors['Language'] = 'Language is required'
+
+    } if (acceptTerms === false) {
+      validateErrors['acceptTerms'] = 'Terms is required'
+
+    } 
+    setErrors(validateErrors) 
+    
+    if (Object.keys(validateErrors).length === 0 ) {
+      return true
+    } else {
+      return false 
+    }
+  }
+
+
+  
+
+
+  
+
+  // const submitApplication = async () => {
+  //   const applicationData = {
+  //     name: name,
+  //     email: email,
+  //     language: language,
+  //     otherNames: otherNames,
+  //     isoCode: isoCode,
+  //     glottoCode: glottoCode,
+  //     location: location,
+  //     acceptTerms: acceptTerms,
+  //     contact: contact
+  //   };
+  //   await errorWrap(
+  //     async () => {
+  //       const { idToken } = await Google.logInAsync({
+
+  //       })
+
+  //       if (idToken !== undefined) {
+  //         const userData = {
+  //           idToken,
+  //         }
+
+  //         // call API
+  //         await postApplication(applicationData)
+  //         // Save to Async Storage
+  //         // Update Redux Stor
+  //       }
+  //     },
+  //     () => {
+  //       console.log('success')
+  //     },
+  //     () => {
+  //       console.log('error')
+  //     },
+  //   )
+  // }
+
+  const onSubmit = () => {
+
+    console.log(acceptTerms)
+    validate() ? console.log('Submitted') : console.log('Validation Failed');
+
+  };
+
+  
+
 
   // should this be string?? Can check DB later
-  const [isoCode, setIsoCode] = useState(' ')
 
   return (
+   
     <View style={styles.root}>
-    
       <View style={styles.header}>
         <Text
           style={{
@@ -75,8 +174,6 @@ const Apply = ({ navigation }) => {
           Thanks for your interest in contributing a language.
         </Text>
       </View>
-
-      
 
       <View style={styles.subhead}>
         <Text
@@ -92,29 +189,275 @@ const Apply = ({ navigation }) => {
       </View>
 
       <View style={styles.scrollView}>
-      <ScrollView  >
+        <ScrollView>
+          <FormControl is Required isInvalid={'name' in errors}>
+            <Text
+              style={{
+                fontFamily: 'GT_Haptik_regular',
+              }}
+              fontWeight="regular"
+              color="black"
+              fontStyle="regular"
+              fontSize="md"
+            >
+              Your Name*
+            </Text>
+            <View style={styles.input}>
+              <Input
+                size="2xl"
+                style={{ height: '50px' }}
+                onChangeText={(text) => setName(text)}
+                style={{
+                  
+                }}
+  
+              />
+              {'name' in errors ? (
+                <FormControl.ErrorMessage>Required.</FormControl.ErrorMessage>
+              ) : null}
+            </View>
+          </FormControl>
+          <FormControl isRequired isInvalid={'email' in errors}>
+            <Text
+              style={{
+                fontFamily: 'GT_Haptik_regular',
+              }}
+              fontWeight="regular"
+              color="black"
+              fontStyle="regular"
+              fontSize="md"
+            >
+              Email*
+            </Text>
+            <View style={styles.input}>
+              <Input
+                size="xl"
+                style={{ height: '50px' }}
+                onChangeText={(text) => setEmail(text) }
+              />
+              {'email' in errors ? (
+                <FormControl.ErrorMessage>Required.</FormControl.ErrorMessage>
+              ) : null}
+            </View>
+          </FormControl>
+          <FormControl isRequired isInvalid={'Language' in errors}>
+            <Text
+              style={{
+                fontFamily: 'GT_Haptik_regular',
+              }}
+              fontWeight="regular"
+              color="black"
+              fontStyle="regular"
+              fontSize="md"
+            >
+              Name of Language*
+            </Text>
+            <View style={styles.input}>
+              <Input
+                size="xl"
+                style={{ height: '50px' }}
+                onChangeText={(text) => setLanguage(text)}
+              />
+              {'Language' in errors ? (
+                <FormControl.ErrorMessage>Required.</FormControl.ErrorMessage>
+              ) : null}
+            </View>
+          </FormControl>
 
-        <Text         
-          fontWeight="regular"
-          color="black"
-          fontStyle="regular"
-          fontSize="md">
-            Your Name*
-        </Text>
-      <Input size="xl" 
-      style={styles.input}
-          onChangeText={text => setName(text)}
+          <Text
+            style={{
+              fontFamily: 'GT_Haptik_regular',
+            }}
+            fontWeight="regular"
+            color="black"
+            fontStyle="regular"
+            fontSize="md"
+          >
+            Any alternative names?
+          </Text>
+          <View style={styles.input}>
+            <Input
+              size="xl"
+              style={{ height: '50px' }}
+              onChangeText={(text) => setOtherNames(text)}
+            />
+          </View>
+
+          <Text
+            style={{
+              fontFamily: 'GT_Haptik_regular',
+            }}
+            fontWeight="regular"
+            color="black"
+            fontStyle="regular"
+            fontSize="md"
+          >
+            ISO Code
+          </Text>
+
+          {/* Make a URL link */}
+          <Text
+            style={{
+              fontFamily: 'GT_Haptik_regular',
+            }}
+            fontWeight="regular"
+            color="gray.medium"
+            fontStyle="regular"
+            fontSize="md"
+          >
+            You can find the ISO code here
+          </Text>
+          <View style={styles.input}>
+            <Input
+              size="xl"
+              style={{ height: '50px' }}
+              onChangeText={(text) => setIsoCode(text)}
+            />
+          </View>
+
+          <Text
+            style={{
+              fontFamily: 'GT_Haptik_regular',
+            }}
+            fontWeight="regular"
+            color="black"
+            fontStyle="regular"
+            fontSize="md"
+            onPress={() => Linking.openURL('https://google.com')}
+          >
+            Glotto Code
+          </Text>
+
+          {/* Make a URL link */}
+          <Text
+            style={{
+              fontFamily: 'GT_Haptik_regular',
+            }}
+            fontWeight="regular"
+            color="gray.medium"
+            fontStyle="regular"
+            fontSize="md"
+          >
+            You can find the Glotto code here
+          </Text>
+          <View style={styles.input}>
+            <Input
+              size="xl"
+              style={{ height: '50px' }}
+              onChangeText={(text) => setGlottoCode(text)}
+            />
+          </View>
+
+          <Text
+            style={{
+              fontFamily: 'GT_Haptik_regular',
+            }}
+            fontWeight="regular"
+            color="black"
+            fontStyle="regular"
+            fontSize="md"
+          >
+            Where is this language spoken?
+          </Text>
+          <View style={styles.input}>
+            <Input
+              size="xl"
+              style={{ height: '50px' }}
+              onChangeText={(text) => setLocation(text)}
+            />
+          </View>
+
+          <Text
+            style={{
+              fontFamily: 'GT_Haptik_regular',
+            }}
+            fontWeight="regular"
+            color="black"
+            fontStyle="regular"
+            fontSize="md"
+          >
+            Approximately how many people speak this language?
+          </Text>
+          <View style={styles.input}>
+            <Input
+              size="xl"
+              style={{ height: '50px' }}
+              onChangeText={(text) => setName(text)}
+            />
+          </View>
+
+          <Text
+            style={{
+              fontFamily: 'GT_Haptik_regular',
+            }}
+            fontWeight="regular"
+            color="black"
+            fontStyle="regular"
+            fontSize="md"
+          >
+            link to additional information about the page.
+          </Text>
+          <View style={styles.input}>
+            <Input
+              size="xl"
+              style={{ height: '50px' }}
+              onChangeText={(text) => setName(text)}
+            />
+          </View>
+
+          <View style={styles.checkboxes}>
+          <FormControl is Required isInvalid={'acceptTerms' in errors}>
+            <Checkbox value="accepted" colorScheme="danger"  onChange={setAcceptTerms}>
+            {'acceptTerms' in errors ? (
+                <FormControl.ErrorMessage>Required.</FormControl.ErrorMessage>
+              ) : null}
+              <Text
+                style={{
+                  fontFamily: 'GT_Haptik_regular',
+                }}
+                fontWeight="regular"
+                color="black"
+                fontStyle="regular"
+                fontSize="md"
+              >
+                I agree to the
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'GT_Haptik_bold',
+                }}
+                fontWeight="regular"
+                color="black"
+                fontStyle="regular"
+                fontSize="md"
+              >
+                Terms and Conditions
+              </Text>
+            </Checkbox>
+            </FormControl>
+            <Checkbox value="two" colorScheme="danger">
+              <Text
+                style={{
+                  fontFamily: 'GT_Haptik_regular',
+                }}
+                fontWeight="regular"
+                color="black"
+                fontStyle="regular"
+                fontSize="md"
+              >
+               I would like a team member from 7000 languages {'\n'}
+                to follow up with you about creating additional {'\n'}
+                resources for my language.
+              </Text>
+            </Checkbox>
+            </View>
+        
+          <View style={styles.submitForm}>
+        <StyledButton title="Apply To Contribute" variant="primary"
+        
+                onPress={() => onSubmit()}
         />
-
-       </ScrollView>
-      </View>
- 
-
-    
-    
-      <View style={styles.submitForm}>
-        <StyledButton title="Apply To Contribute" variant="primary" />
-
+        
         <Text
           fontWeight="regular"
           color="gray.medium"
@@ -125,12 +468,14 @@ const Apply = ({ navigation }) => {
           community/speakers to create language learning materials
         </Text>
       </View>
-
-   
+        </ScrollView>
+      </View>
     </View>
     
   )
+
 }
+
 
 Apply.propTypes = {
   navigation: PropTypes.shape({

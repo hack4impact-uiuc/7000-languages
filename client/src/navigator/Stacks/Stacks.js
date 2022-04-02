@@ -87,7 +87,7 @@ export const HomeNavigator = () => (
       name="Apply"
       component={Apply}
       options={({ navigation }) => ({
-        title: 'Apply To Contribute',
+        title: 'Become a Contributor',
         headerStyle: { backgroundColor: 'colors.white.dark' },
         headerTitleStyle: {
           fontSize: 18,

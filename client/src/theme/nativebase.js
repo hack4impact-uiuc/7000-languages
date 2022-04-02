@@ -5,6 +5,14 @@ import colors from './colors'
 const theme = extendTheme({
   colors,
   components: {
+    Input: {
+      baseStyle: {
+        color: 'blue.400',
+        fontSize: 80
+      },
+      defaultProps: { size: '2xl' },
+    },
+
     Text: {
       baseStyle: {
         fontFamily: 'body',
