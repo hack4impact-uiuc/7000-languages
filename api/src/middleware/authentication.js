@@ -44,7 +44,7 @@ const requireAuthentication = async (req, res, next) => {
       }
     }
   } catch (error) {
-    console.error(error);
+    console.error('Error during authentication middleware:', error);
     sendResponse(res, 401, ERR_AUTH_FAILED);
   }
 };
