@@ -4,7 +4,10 @@ const { errorWrap } = require('../../middleware');
 const { sendResponse } = require('../../utils/response');
 const { models } = require('../../models/index.js');
 const { requireAuthentication } = require('../../middleware/authentication');
-const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
+const {
+  ERR_MISSING_OR_INVALID_DATA,
+  SUCCESS_POSTING_VOCAB_DATA,
+} = require('../../utils/constants');
 
 /**
  * Creates a new vocab item in a lesson
@@ -15,7 +18,7 @@ router.post(
   errorWrap(async (req, res) => {
     const { course_id, unit_id, lesson_id, vocab } = req.body;
     if (!course_id || !unit_id || !lesson_id || !vocab) {
-      return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
     try {
@@ -31,12 +34,7 @@ router.post(
       lessonData.vocab.push(vocab);
       await lessonData.save();
 
-      return sendResponse(
-        res,
-        200,
-        'Successfully created a new vocab item',
-        vocab,
-      );
+      return sendResponse(res, 200, SUCCESS_POSTING_VOCAB_DATA, vocab);
     } catch (error) {
       console.error('POST /vocab/: ', error.message);
       return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);

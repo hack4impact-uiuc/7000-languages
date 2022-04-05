@@ -49,8 +49,6 @@ const requireAuthentication = async (req, res, next) => {
   }
 };
 
-// TODO: Setup middleware for authorizing user/giving access to a specific course
-
 /**
  * Valides a user with their Google Auth ID Token
  * @param {String} idToken Google Auth ID Token (JWT)

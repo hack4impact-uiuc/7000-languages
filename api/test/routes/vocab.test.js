@@ -16,7 +16,10 @@ const {
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
 const _ = require('lodash');
-const { ERR_MISSING_OR_INVALID_DATA } = require('../../src/utils/constants');
+const {
+  ERR_MISSING_OR_INVALID_DATA,
+  SUCCESS_POSTING_VOCAB_DATA,
+} = require('../../src/utils/constants');
 
 jest.mock('google-auth-library');
 const { OAuth2Client } = require('google-auth-library');
@@ -38,8 +41,6 @@ describe('POST /vocab/ ', () => {
     await db.connect();
   });
 
-  // TODO: write additional tests with GET /lesson/
-
   test('Create two new vocab items with success', async () => {
     var response = await withAuthentication(
       request(app).post('/language/vocab/').send(POST_FIRST_VOCAB_ITEM),
@@ -47,7 +48,7 @@ describe('POST /vocab/ ', () => {
     var message = response.body.message;
     var result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
-    expect(message).toEqual('Successfully created a new vocab item'); // TODO: Ask developers - should this be a constant value?
+    expect(message).toEqual(SUCCESS_POSTING_VOCAB_DATA); // TODO: Ask developers - should this be a constant value?
     expect(result).toEqual(POST_FIRST_VOCAB_ITEM_EXPECTED);
 
     response = await withAuthentication(
@@ -56,7 +57,7 @@ describe('POST /vocab/ ', () => {
     message = response.body.message;
     result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
-    expect(message).toEqual('Successfully created a new vocab item');
+    expect(message).toEqual(SUCCESS_POSTING_VOCAB_DATA);
     expect(result).toEqual(POST_SECOND_VOCAB_ITEM_EXPECTED);
   });
 
@@ -67,7 +68,7 @@ describe('POST /vocab/ ', () => {
     const message = response.body.message;
     const result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
-    expect(message).toEqual('Successfully created a new vocab item');
+    expect(message).toEqual(SUCCESS_POSTING_VOCAB_DATA);
     expect(result).toEqual(POST_DETAILED_VOCAB_ITEM_EXPECTED);
   });
 
@@ -77,7 +78,7 @@ describe('POST /vocab/ ', () => {
     );
     var message = response.body.message;
     expect(response.status).toBe(200);
-    expect(message).toEqual('Successfully created a new vocab item');
+    expect(message).toEqual(SUCCESS_POSTING_VOCAB_DATA);
   });
 
   test('Error creating new vocab item - Missing required vocab item fields', async () => {
@@ -96,7 +97,7 @@ describe('POST /vocab/ ', () => {
       request(app).post('/language/vocab/').send(POST_VOCAB_ITEM_MISSING_ID),
     );
     var message = response.body.message;
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(400);
     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
   });
 
