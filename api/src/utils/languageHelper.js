@@ -12,3 +12,13 @@ module.exports.getNumUnitsInCourse = async (courseId) => {
   const numUnits = await models.Unit.countDocuments({ _course_id: courseId });
   return numUnits;
 };
+
+module.exports.getVocabIndexByID = (vocabId, lesson) => {
+  for (let i = 0; i < lesson.vocab.length; i++) {
+    if (lesson.vocab[i]._id.toString() === vocabId) {
+      return i;
+    }
+  }
+  // eslint-disable-next-line no-magic-numbers
+  return -1;
+};
