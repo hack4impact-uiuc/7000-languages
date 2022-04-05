@@ -65,15 +65,15 @@ router.get(
   '/course/:id',
   //requireAuthentication,
   errorWrap(async (req, res) => {
-    
-    const course = req.query.body
+    const course = await Course.findOne({ _id: req.params.id });
+    console.log(course);
     const units = await Unit.find({ _course_id: req.params.id });
     //cannot use forEach loop, use for loop
-    for(var i = 0; i < units.length; i++){
-      const numLessons = await Unit.find({ _unit_id: unit._id }).count();
+    for (var i = 0; i < units.length; i++) {
+      const numLessons = await Unit.find({ _unit_id: units[i]._id }).count();
       //append numLessons to each unit JSON
       //$push: { adminLanguages: newCourse._id }
-      unit.addProperty("num_lessons", numLessons);
+      units[i].addProperty('num_lessons', numLessons);
     }
     // units.forEach(unit => {
     //   const numLessons = await Unit.find({ _unit_id: unit._id }).count();
@@ -81,12 +81,12 @@ router.get(
     //   //$push: { adminLanguages: newCourse._id }
     //   unit.addProperty("num_lessons", numLessons);
     // });
-    course = _.omit(newResult, ['admin_id']);
+    const newCourse = _.omit(course, ['admin_id']);
     const returnedData = {
-      course: course, //remove admin_id
-      units: units
-    }
-    sendResponse(res, 200, returnedData, 'Successfully fetched course');
+      course: newCourse, //remove admin_id
+      units: units,
+    };
+    return sendResponse(res, 200, 'Successfully fetched course', returnedData);
   }),
 );
 

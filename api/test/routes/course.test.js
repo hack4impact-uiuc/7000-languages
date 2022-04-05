@@ -2,6 +2,7 @@ let app = require('../../src/app');
 const request = require('supertest');
 const db = require('../utils/db');
 const {
+  GET_SIMPLE_COURSE_EXPECTED,
   POST_SIMPLE_COURSE,
   POST_SIMPLE_COURSE_EXPECTED,
   POST_MISSING_NON_REQ_FIELD_COURSE,
@@ -29,8 +30,22 @@ const { verifyIdTokenMockReturnValue } = require('../mock-data/auth-mock-data');
 const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
 verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
+describe('GET /language/course/ ', () => {
+  test('API should get a simple course', async () => {
+    const response = await withAuthentication(
+      request(app).get('/language/course/62391a30487d5ae343c82311'),
+    );
+    console.error(response);
+    const message = response.body.message;
+    const result = response.body.result;
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully fetched course');
+    expect(result).toEqual(GET_SIMPLE_COURSE_EXPECTED);
+  });
+});
+
 // This block tests the POST /user/ endpoint.
-describe('POST /user/ ', () => {
+describe('POST /language/course/ ', () => {
   /* 
     We have to make sure we connect to a MongoDB mock db before the test 
     and close the connection at the end.
