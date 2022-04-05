@@ -20,7 +20,7 @@ router.get(
     const { unit_id, course_id, lesson_id } = req.query;
 
     if (!unit_id || !course_id || !lesson_id) {
-      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA, {});
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
     let lesson;
@@ -32,7 +32,7 @@ router.get(
         _unit_id: unit_id,
       });
     } catch (error) {
-      return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA, {});
+      return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
     }
 
     if (lesson) {
@@ -41,7 +41,7 @@ router.get(
 
       return sendResponse(res, 200, SUCCESS_GETTING_LESSON_DATA, lesson);
     }
-    return sendResponse(res, 404, ERR_GETTING_LESSON_DATA, {});
+    return sendResponse(res, 404, ERR_GETTING_LESSON_DATA);
   }),
 );
 

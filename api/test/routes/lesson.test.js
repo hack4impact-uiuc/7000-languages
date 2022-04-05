@@ -27,7 +27,7 @@ const {
 const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
 verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
-// This block tests the POST /user/ endpoint.
+// This block tests the GET /lesson/ endpoint.
 describe('GET /lesson/ ', () => {
   /* 
           We have to make sure we connect to a MongoDB mock db before the test 

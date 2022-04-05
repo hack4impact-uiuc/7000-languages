@@ -18,3 +18,4 @@ module.exports.ERR_MISSING_OR_INVALID_DATA =
   'Missing or invalid data in the request. Please try again.';
 module.exports.SUCCESS_POSTING_VOCAB_DATA =
   'Successfully created a new vocab item';
+module.exports.NOT_FOUND_INDEX = -1;
