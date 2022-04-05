@@ -1,4 +1,5 @@
 const { models } = require('../models/index.js');
+const { NOT_FOUND_INDEX } = require('../utils/constants');
 
 /**
  * Determines the number of units in a course
@@ -19,6 +20,5 @@ module.exports.getVocabIndexByID = (vocabId, lesson) => {
       return i;
     }
   }
-  // eslint-disable-next-line no-magic-numbers
-  return -1;
+  return NOT_FOUND_INDEX;
 };

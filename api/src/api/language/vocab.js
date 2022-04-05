@@ -7,6 +7,7 @@ const { requireAuthentication } = require('../../middleware/authentication');
 const {
   ERR_MISSING_OR_INVALID_DATA,
   SUCCESS_POSTING_VOCAB_DATA,
+  NOT_FOUND_INDEX,
 } = require('../../utils/constants');
 const { getVocabIndexByID } = require('../../utils/languageHelper');
 
@@ -20,48 +21,47 @@ router.patch(
     const { course_id, unit_id, lesson_id, vocab_id, vocab_update } = req.body;
 
     if (!course_id || !unit_id || !lesson_id || !vocab_id || !vocab_update) {
-      return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
-    await models.Lesson.exists(
-      {
+    /* Get the lesson data from MongoDB */
+    let lesson;
+
+    try {
+      lesson = await models.Lesson.findById({
         _course_id: course_id,
         _unit_id: unit_id,
         _id: lesson_id,
-      },
-      function (err) {
-        if (err) {
-          return sendResponse(res, 404, 'Vocab item not found');
-        }
-      },
-    );
-
-    const lesson = await models.Lesson.findById({
-      _course_id: course_id,
-      _unit_id: unit_id,
-      _id: lesson_id,
-    });
-
-    const vocabIndex = getVocabIndexByID(vocab_id, lesson);
-
-    // eslint-disable-next-line no-magic-numbers
-    if (vocabIndex === -1) {
-      return sendResponse(res, 404, 'Vocab item not found');
+      });
+    } catch (error) {
+      return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
     }
 
-    let vocabData = lesson.vocab[vocabIndex];
+    if (lesson) {
+      /* Obtain the index of the vocab item that we want to update */
+      const vocabIndex = getVocabIndexByID(vocab_id, lesson);
 
-    for (var key in vocab_update) {
-      if (
-        key in vocabData &&
-        typeof vocabData[key] === typeof vocab_update[key]
-      ) {
-        vocabData[key] = vocab_update[key];
+      if (vocabIndex === NOT_FOUND_INDEX) {
+        return sendResponse(res, 404, 'Vocab item not found');
       }
+
+      /* Using the index, apply changes to the lesson data */
+      let vocabData = lesson.vocab[vocabIndex];
+
+      for (var key in vocab_update) {
+        if (
+          key in vocabData &&
+          typeof vocabData[key] === typeof vocab_update[key]
+        ) {
+          vocabData[key] = vocab_update[key];
+        }
+      }
+
+      await lesson.save();
+      return sendResponse(res, 200, 'Successfully updated vocab item', lesson);
     }
 
-    await lesson.save();
-    return sendResponse(res, 200, 'Successfully updated vocab item', lesson);
+    return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
   }),
 );
 
@@ -78,6 +78,7 @@ router.post(
     }
 
     try {
+      // Obtain the lesson mongoose document
       const lessonData = await models.Lesson.findOne({
         _course_id: course_id,
         _unit_id: unit_id,
@@ -86,6 +87,7 @@ router.post(
       if (lessonData === null) {
         return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
       }
+      // Give the new vocab item an order value and push to lesson mongoose document
       vocab._order = lessonData.vocab.length;
       lessonData.vocab.push(vocab);
       await lessonData.save();

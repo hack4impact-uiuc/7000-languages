@@ -39,7 +39,7 @@ const { verifyIdTokenMockReturnValue } = require('../mock-data/auth-mock-data');
 const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
 verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
-// This block tests the POST /user/ endpoint.
+// This block tests the PATCH /vocab/ endpoint.
 describe('PATCH /vocab/ ', () => {
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
@@ -102,7 +102,7 @@ describe('PATCH /vocab/ ', () => {
     );
 
     const message = response.body.message;
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(400);
     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
   });
 
@@ -124,7 +124,7 @@ describe('PATCH /vocab/ ', () => {
     );
 
     const message = response.body.message;
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(400);
     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
   });
 
@@ -143,7 +143,7 @@ describe('PATCH /vocab/ ', () => {
   });
 });
 
-// This block tests the POST /user/ endpoint.
+// This block tests the POST /vocab/ endpoint.
 describe('POST /vocab/ ', () => {
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
