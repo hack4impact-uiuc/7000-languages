@@ -1,18 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { errorWrap } = require('../middleware');
-const { sendResponse } = require('../utils/response');
-const { models } = require('../models/index.js');
-const { requireAuthentication } = require('../middleware/authentication');
+const { errorWrap } = require('../../middleware');
+const { sendResponse } = require('../../utils/response');
+const { models } = require('../../models/index.js');
+const { requireAuthentication } = require('../../middleware/authentication');
 const _ = require('lodash');
-const { ERR_NO_COURSE_DETAILS } = require('../utils/constants');
+const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
 
 /**
  * patch
  */
 
 router.patch(
-  '/course/:id',
+  '/:id',
   requireAuthentication,
   errorWrap(async (req, res) => {
     const updates = req.body;
@@ -43,7 +43,7 @@ router.patch(
  * @returns a new course under the given language
  */
 router.post(
-  '/course',
+  '/',
   requireAuthentication,
   errorWrap(async (req, res) => {
     const user = req.user;
