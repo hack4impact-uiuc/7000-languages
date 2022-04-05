@@ -8,9 +8,9 @@ const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
 
 /**
- * patch
+ * Does a patch update a single course in the database, meaning
+ * it makes changes to parts of the course specified in the request.
  */
-
 router.patch(
   '/:id',
   requireAuthentication,
@@ -38,9 +38,6 @@ router.patch(
 
 /**
  * Creates a new course in the database
- *
- * @param {newUser} New course
- * @returns a new course under the given language
  */
 router.post(
   '/',
