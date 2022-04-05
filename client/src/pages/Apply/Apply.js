@@ -45,13 +45,8 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: colors.gray.light,
-    padding: 20
+    marginBottom: 10
   },
-  inputLarge: {
-    backgroundColor: colors.gray.light,
-    height: "20%",
-    marginBottom: 20,
-  }, 
   checkboxes: {
     marginBottom: 25
   }, 
@@ -420,7 +415,7 @@ const Apply = ({ navigation }) => {
                 fontStyle="regular"
                 fontSize="md"
               >
-                I agree to the
+                I agree to the {''}
               </Text>
               <Text
                 style={{
@@ -431,7 +426,7 @@ const Apply = ({ navigation }) => {
                 fontStyle="regular"
                 fontSize="md"
               >
-                Terms and Conditions
+                Terms and Conditions {'\n'}
               </Text>
             </Checkbox>
             </FormControl>
@@ -445,8 +440,8 @@ const Apply = ({ navigation }) => {
                 fontStyle="regular"
                 fontSize="md"
               >
-               I would like a team member from 7000 languages {'\n'}
-                to follow up with you about creating additional {'\n'}
+               I would like a team member from 7000 languages 
+                to follow up with you about creating additional 
                 resources for my language.
               </Text>
             </Checkbox>

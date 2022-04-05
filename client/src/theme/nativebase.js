@@ -7,10 +7,11 @@ const theme = extendTheme({
   components: {
     Input: {
       baseStyle: {
-        color: 'blue.400',
-        fontSize: 80
+        size: "20",
+        //lineHeight: "xl",
+        selectionColor: 'coolGray.800'
       },
-      defaultProps: { size: '2xl' },
+      defaultProps: { size: 'sm' },
     },
 
     Text: {
