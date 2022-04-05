@@ -8,7 +8,7 @@ export const createUser = async (userData) => {
   return res.data
 }
 
-export const postApplication = async (applicationData) => {
+export const createCourse = async (applicationData) => {
   const requestString = '/newApplication'
   const res = await instance.post(requestString, applicationData)
 

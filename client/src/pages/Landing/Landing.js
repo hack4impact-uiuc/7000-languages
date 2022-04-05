@@ -1,16 +1,18 @@
-import React from 'react'
-import { StyleSheet, View, StatusBar } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
-import { colors } from 'theme'
-import { Text } from 'native-base'
+import { colors, images } from 'theme'
+import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-google-app-auth'
-import { authenticate, saveToken } from 'slices/auth.slice'
+import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
-import { createUser } from 'api'
 import useErrorWrap from 'hooks/useErrorWrap'
+import { AntDesign } from '@expo/vector-icons'
 import { saveUserIDToken } from '../../utils/auth'
+import { createUser } from '../../api/api'
+import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
   root: {
@@ -18,7 +20,31 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.gray.light,
+    backgroundColor: colors.red.dark,
+  },
+  button: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginBottom: 60,
+  },
+  logo: {
+    position: 'absolute',
+    left: 20,
+    bottom: 720,
+  },
+  quote: {
+    position: 'absolute',
+    left: 40,
+    bottom: 200,
+  },
+
+  quote2: {
+    position: 'absolute',
+    left: 5,
+    bottom: 1,
+  },
+  backgroundImage: {
+    width: '100%',
   },
 })
 
@@ -32,6 +58,9 @@ const Landing = () => {
     */
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
+  const [quote] = useState(
+    '"To speak a language is \n to take on a world, a\n culture."\n',
+  )
 
   const loginUser = async () => {
     await errorWrap(
@@ -51,7 +80,6 @@ const Landing = () => {
           // Save to Async Storage
           await saveUserIDToken(idToken)
           // Update Redux Store
-          dispatch(saveToken(idToken))
           dispatch(authenticate({ loggedIn: true, idToken }))
         }
       },
@@ -66,20 +94,48 @@ const Landing = () => {
 
   return (
     <View style={styles.root}>
-      <StatusBar barStyle="light-content" />
-      <Text
-        fontWeight="regular"
-        color="blue.dark"
-        fontStyle="italic"
-        fontSize="6xl"
-      >
-        Landing
-      </Text>
-      <StyledButton
-        title="Login to app"
-        variant="primary"
-        onPress={loginUser}
+      <Image
+        source={images.background_landing}
+        style={styles.backgroundImage}
+        alt="description of image"
       />
+      <View style={styles.button}>
+        <StyledButton
+          title="Continue with Google"
+          leftIcon={
+            <AntDesign name="google" size={24} color={colors.red.dark} />
+          }
+          variant="secondary"
+          onPress={loginUser}
+          style={{ paddingRight: 40 }}
+        />
+      </View>
+
+      <View style={styles.logo}>
+        <Logo height={160} width={160} />
+      </View>
+
+      <View style={styles.quote}>
+        <Text
+          fontWeight="regular"
+          color="white.dark"
+          style={{
+            fontFamily: 'GT_Haptik_bold',
+          }}
+          fontSize="3xl"
+        >
+          {quote}
+        </Text>
+
+        <Text
+          style={styles.quote2}
+          fontWeight="regular"
+          color="white.dark"
+          fontSize="2xl"
+        >
+          - Frantz Fanon
+        </Text>
+      </View>
     </View>
   )
 }

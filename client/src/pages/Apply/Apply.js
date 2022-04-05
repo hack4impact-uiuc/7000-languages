@@ -68,6 +68,8 @@ const Apply = ({ navigation }) => {
   const [location, setLocation] = useState('')
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [contact, setContact] = useState(false)
+  const [link, setLink] = useState(false)
+
 
   const [errors, setErrors] = useState({})
 
@@ -105,33 +107,38 @@ const Apply = ({ navigation }) => {
 
   // const submitApplication = async () => {
   //   const applicationData = {
-  //     name: name,
-  //     email: email,
-  //     language: language,
-  //     otherNames: otherNames,
-  //     isoCode: isoCode,
-  //     glottoCode: glottoCode,
-  //     location: location,
-  //     acceptTerms: acceptTerms,
-  //     contact: contact
+  //     details: {
+  //       admin_name: name,
+  //       admin_email: email, 
+  //       name: language,
+  //       alternative_name: otherNames,
+  //       description: "", 
+  //       iso: isoCode,
+  //       glotto: glottoCode,
+  //       population: population, 
+  //       location: location,
+  //       link: link
+  //     },
   //   };
+
+  //   // admin_name: { type: String, required: true },
+  //   // admin_email: { type: String, required: true },
+  //   // name: { type: String, required: true },
+  //   // alternative_name: { type: String, required: false, default: '' },
+  //   // description: { type: String, required: false, default: '' },
+  //   // iso: { type: String, required: false, default: '' },
+  //   // glotto: { type: String, required: false, default: '' },
+  //   // translated_language: { type: String, required: false, default: 'English' },
+  //   // population: { type: String, required: false, default: '' },
+  //   // location: { type: String, required: false, default: '' },
+  //   // link: { type: String, required: false, default: '' },
   //   await errorWrap(
-  //     async () => {
-  //       const { idToken } = await Google.logInAsync({
-
-  //       })
-
-  //       if (idToken !== undefined) {
-  //         const userData = {
-  //           idToken,
-  //         }
 
   //         // call API
-  //         await postApplication(applicationData)
+  //         await createCourse(applicationData)
   //         // Save to Async Storage
   //         // Update Redux Stor
-  //       }
-  //     },
+
   //     () => {
   //       console.log('success')
   //     },
@@ -377,7 +384,7 @@ const Apply = ({ navigation }) => {
             <Input
               size="xl"
               style={{ height: '50px' }}
-              onChangeText={(text) => setName(text)}
+              onChangeText={(text) => setPopulation(text)}
             />
           </View>
 
@@ -396,7 +403,7 @@ const Apply = ({ navigation }) => {
             <Input
               size="xl"
               style={{ height: '50px' }}
-              onChangeText={(text) => setName(text)}
+              onChangeText={(text) => setLink(text)}
             />
           </View>
 

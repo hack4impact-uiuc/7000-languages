@@ -65,8 +65,11 @@ const saveMany = async (modelList) => {
 };
 
 const constructStaticData = () => {
-  if (users) {
-    return;
+  if (!users) {
+    users = constructAll(userData, models.User);
+  }
+  if (!courses) {
+    courses = constructAll(courseData, models.Course);
   }
 
   users = constructAll(userData, models.User);
