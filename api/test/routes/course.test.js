@@ -31,6 +31,16 @@ const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
 verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
 describe('GET /language/course/ ', () => {
+  /* 
+    We have to make sure we connect to a MongoDB mock db before the test 
+    and close the connection at the end.
+  */
+  afterAll(async () => await db.closeDatabase());
+  afterEach(async () => await db.resetDatabase());
+  beforeAll(async () => {
+    await db.connect();
+  });
+
   test('API should get a simple course', async () => {
     const response = await withAuthentication(
       request(app).get('/language/course/62391a30487d5ae343c82311'),
