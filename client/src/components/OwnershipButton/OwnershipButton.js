@@ -7,10 +7,10 @@ const OwnershipButton = ({ isContributor }) => {
     case true:
       return (
         <StyledButton
-          title="Contributor"
+          title="CONTRIBUTOR"
           // add variant in nativebase 
           variant="contributor"
-          fontSize="12"
+          fontSize="8"
         />
       )
     default:

@@ -13,6 +13,7 @@ import { View, Pressable } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import OwnershipButton from '../../components/OwnershipButton'
 
+
 const Drawer = createDrawerNavigator()
 
 
@@ -39,12 +40,12 @@ const DrawerMenuContainer = (props) => {
         >
           <Text
       fontWeight="regular"
-      color="gray.medium"
-      fontSize="lg"
+      color="gray.dark"
+      fontSize="sm"
       textAlign="left"
 
     >
-      Do you know an indigenous {'\n'}
+      Do you know an indigenous 
       language that you would like to share
       with the world?
       <Text
@@ -58,6 +59,7 @@ const DrawerMenuContainer = (props) => {
     </Text>
     <StyledButton
     title="Apply Now"
+    fontSize='sm'
     ></StyledButton>
     </Pressable>
           ) : null}
@@ -86,9 +88,12 @@ export default () => (
       component={TabNavigator}
       options={({}) => ({
         drawerLabel: () => 
-    <View>
-    <Text style={{ fontFamily: 'GT_Haptik_bold', fontSize: 20,}}>Spanish</Text> 
-    <Text style={{ fontFamily: 'GT_Haptik_regular', fontSize: 20, color: "#A4A4A4"}}>14 Units</Text>
+    <View
+    style={{
+      flexDirection: 'column',
+    }}>
+    <Text style={{ fontFamily: 'GT_Haptik_bold', fontSize: 20, flex: 3}}>Spanish</Text> 
+    <Text style={{ fontFamily: 'GT_Haptik_regular', fontSize: 20, color: "#A4A4A4", flex: 3}}>14 Units</Text>
     </View>,
     drawerIcon: () => <FontAwesome 
     name="square"
@@ -103,9 +108,11 @@ export default () => (
       component={TabNavigator}
       options={({}) => ({
         drawerLabel: () => 
-        <View>
-    <Text style={{ fontFamily: 'GT_Haptik_bold', fontSize: 20,}}>French</Text> 
-    <Text style={{ fontFamily: 'GT_Haptik_regular', fontSize: 20, color: "#A4A4A4"}}>8 Units</Text>
+        <View style={{
+          flexDirection: 'column',
+        }}>
+    <Text style={{ fontFamily: 'GT_Haptik_bold', fontSize: 20, flex: 0}}>French</Text> 
+    <Text style={{ fontFamily: 'GT_Haptik_regular', fontSize: 20, color: "#A4A4A4", flex: 3}}>8 Units</Text>
     <OwnershipButton
     isContributor={true}
     ></OwnershipButton>
