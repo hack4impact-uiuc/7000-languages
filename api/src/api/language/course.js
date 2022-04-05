@@ -1,11 +1,40 @@
 const express = require('express');
 const router = express.Router();
-const { errorWrap } = require('../middleware');
-const { sendResponse } = require('../utils/response');
-const { models } = require('../models/index.js');
-const { requireAuthentication } = require('../middleware/authentication');
+const { errorWrap } = require('../../middleware');
+const { sendResponse } = require('../../utils/response');
+const { models } = require('../../models/index.js');
+const { requireAuthentication } = require('../../middleware/authentication');
 const _ = require('lodash');
-const { ERR_NO_COURSE_DETAILS } = require('../utils/constants');
+const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
+
+/**
+ * patch
+ */
+
+router.patch(
+  '/:id',
+  requireAuthentication,
+  errorWrap(async (req, res) => {
+    const updates = req.body;
+
+    await models.Course.exists({ _id: req.params.id }, function (err) {
+      if (err) {
+        return sendResponse(res, 404, 'Course not found');
+      }
+    });
+
+    const course = await models.Course.findById(req.params.id);
+
+    for (var key in updates) {
+      if (key in course && typeof course[key] === typeof updates[key]) {
+        course[key] = updates[key];
+      }
+    }
+
+    await course.save();
+    return sendResponse(res, 200, 'Successfully updated course', course);
+  }),
+);
 
 /**
  * Creates a new course in the database
@@ -14,7 +43,7 @@ const { ERR_NO_COURSE_DETAILS } = require('../utils/constants');
  * @returns a new course under the given language
  */
 router.post(
-  '/course',
+  '/',
   requireAuthentication,
   errorWrap(async (req, res) => {
     const user = req.user;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
@@ -6,7 +6,7 @@ import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-google-app-auth'
-import { authenticate, saveToken } from 'slices/auth.slice'
+import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import useErrorWrap from 'hooks/useErrorWrap'
 import { AntDesign } from '@expo/vector-icons'
@@ -58,6 +58,9 @@ const Landing = () => {
     */
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
+  const [quote] = useState(
+    '"To speak a language is \n to take on a world, a\n culture."\n',
+  )
 
   const loginUser = async () => {
     await errorWrap(
@@ -77,7 +80,6 @@ const Landing = () => {
           // Save to Async Storage
           await saveUserIDToken(idToken)
           // Update Redux Store
-          dispatch(saveToken(idToken))
           dispatch(authenticate({ loggedIn: true, idToken }))
         }
       },
@@ -105,6 +107,7 @@ const Landing = () => {
           }
           variant="secondary"
           onPress={loginUser}
+          style={{ paddingRight: 40 }}
         />
       </View>
 
@@ -121,7 +124,7 @@ const Landing = () => {
           }}
           fontSize="3xl"
         >
-          {'"To speak a language is \n to take on a world a,\n culture."\n'}
+          {quote}
         </Text>
 
         <Text

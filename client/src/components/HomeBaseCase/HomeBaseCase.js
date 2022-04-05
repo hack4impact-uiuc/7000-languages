@@ -3,10 +3,7 @@ import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import { Text } from 'native-base'
 import { StyleSheet, View, StatusBar } from 'react-native'
-// import { authenticate, removeToken } from 'slices/auth.slice'
-// import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
-// import { removeUserIDToken } from '../../utils/auth'
 import { AntDesign } from '@expo/vector-icons'
 
 const styles = StyleSheet.create({
@@ -45,7 +42,7 @@ any courses yet!`}
       title="Search Courses"
       leftIcon={
         <AntDesign name="search1" size={24} color={colors.white.dark} />
-        }
+      }
       variant="primary_short"
     />
     <View
