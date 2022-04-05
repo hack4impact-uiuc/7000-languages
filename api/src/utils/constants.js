@@ -13,6 +13,8 @@ module.exports.ERR_GETTING_USER_DATA =
 module.exports.SUCCESS_GETTING_USER_DATA = 'Successfully fetched user data';
 module.exports.ERR_GETTING_LESSON_DATA =
   'Error fetching vocab data, please try again.';
-module.exports.SUCCESS_GETTING_LESSON_DATA = 'Successfully fetched vocab data';
+module.exports.SUCCESS_GETTING_LESSON_DATA = 'Successfully fetched lesson data';
 module.exports.ERR_MISSING_OR_INVALID_DATA =
   'Missing or invalid data in the request. Please try again.';
+module.exports.SUCCESS_POSTING_VOCAB_DATA =
+  'Successfully created a new vocab item';
