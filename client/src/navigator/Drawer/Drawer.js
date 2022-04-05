@@ -28,8 +28,13 @@ const DrawerMenuContainer = (props) => {
       <DrawerItemList state={newState} {...rest} />
       
       {drawerApply ? (
+        <View style={{
+          flexDirection:'row',
+          marginTop: 10,
+        }}>
         <Pressable
         style={{
+        flex: 1,
         alignItems:'center',
         justifyContent:'center',
         paddingVertical: 12,
@@ -37,6 +42,10 @@ const DrawerMenuContainer = (props) => {
         borderRadius:10,
         marginHorizontal: 10,
         backgroundColor: '#F9F9F9'}}
+        forceInset={{
+          top: 'always',
+          horizontal: 'never',
+        }}
         >
           <Text
       fontWeight="regular"
@@ -62,6 +71,8 @@ const DrawerMenuContainer = (props) => {
     fontSize='sm'
     ></StyledButton>
     </Pressable>
+    </View>
+
           ) : null}
     </DrawerContentScrollView>
   )
