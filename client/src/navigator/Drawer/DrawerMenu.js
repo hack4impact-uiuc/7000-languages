@@ -5,6 +5,7 @@ import { Text } from 'native-base'
 import { DrawerActions } from '@react-navigation/native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
+
 const styles = {
   root: {
     flex: 1,
@@ -33,17 +34,17 @@ const styles = {
 const DrawerMenu = ({ navigation }) => (
   <SafeAreaView style={styles.head}>
     <View style={styles.root}>
-    <Text
-      style={{
-        fontFamily: 'GT_Haptik_bold',
-        paddingBottom: 10,
-      }}
-      fontWeight="regular"
-      color="black"
-      fontSize="25px"
-    >
-      My Languages
-    </Text>
+      <Text
+        style={{
+          fontFamily: 'GT_Haptik_bold',
+          paddingBottom: 10,
+        }}
+        fontWeight="regular"
+        color="black"
+        fontSize="25px"
+      >
+        My Languages
+      </Text>
     </View>
     <View style={styles.head}>
       <FontIcon.Button
@@ -56,8 +57,7 @@ const DrawerMenu = ({ navigation }) => (
         }}
       />
     </View>
-    
-    
+
   </SafeAreaView>
 )
 
