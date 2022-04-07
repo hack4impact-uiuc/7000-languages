@@ -8,12 +8,9 @@ const {
   SUCCESS_GETTING_LESSON_DATA,
   ERR_GETTING_LESSON_DATA,
   ERR_MISSING_OR_INVALID_DATA,
-  SUCCESS_PATCHING_LESSON_DATA
+  SUCCESS_PATCHING_LESSON_DATA,
 } = require('../../utils/constants');
-const {
-  checkIds,
-  patchDocument
-} = require('../../utils/languageHelper');
+const { checkIds, patchDocument } = require('../../utils/languageHelper');
 
 /**
  * Gets lesson data and corresponding vocab data (words, phrases, etc) for a specific lesson in a certain unit
@@ -58,13 +55,13 @@ router.patch(
   '/',
   requireAuthentication,
   errorWrap(async (req, res) => {
-    const { unit_id, course_id, lesson_id, updates } = req.query;
+    const { unit_id, course_id, lesson_id, updates } = req.body;
 
     if (!unit_id || !course_id || !lesson_id || !updates) {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
-    // Checks if the ids are valid
+    // Checks if the ids are defined, valid ObjectIDs, and exist in MongoDB
     const isValid = await checkIds({ course_id, unit_id, lesson_id });
 
     if (!isValid) {
@@ -82,7 +79,7 @@ router.patch(
       await lesson.save();
       return sendResponse(res, 200, SUCCESS_PATCHING_LESSON_DATA, lesson);
     }
-    return sendResponse(res, 404, ERR_GETTING_LESSON_DATA);
+    return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
   }),
 );
 

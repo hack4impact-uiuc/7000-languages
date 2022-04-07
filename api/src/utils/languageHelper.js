@@ -48,20 +48,20 @@ module.exports.getVocabIndexByID = (vocabId, lesson) => {
 };
 
 /* 
-  The methods below determine if a _id for a course, unit, and/or lesson is valid, 
-  meaning that a document exists in the appropriate collection for that given _id. 
+  The methods below determine if a list of ids for a course, unit, and/or lesson is valid, meaning that all of the ids
+  are valid ObjectIds and a document exists in the appropriate collection for each _id. 
 */
 module.exports.checkIds = async ({
-  course_id = undefined,
-  unit_id = undefined,
-  lesson_id = undefined,
+  course_id = null,
+  unit_id = null,
+  lesson_id = null,
 }) => {
   var allModels = [models.Course, models.Unit, models.Lesson];
   let ids = [course_id, unit_id, lesson_id];
 
   for (let i = 0; i < 3; i++) {
     const id = ids[i];
-    if (id) {
+    if (id !== null) {
       const isValid = await isValidId(allModels[i], id);
       if (!isValid) {
         return false;
@@ -80,8 +80,8 @@ const isValidId = async (model, id) => {
 
 /**
  * Replaces the fields in document with the matching fields in update
- * @param {Mongoose Document} document 
- * @param {Object} update 
+ * @param {Mongoose Document} document
+ * @param {Object} update
  */
 module.exports.patchDocument = (document, updates) => {
   for (var key in updates) {
@@ -89,4 +89,4 @@ module.exports.patchDocument = (document, updates) => {
       document[key] = updates[key];
     }
   }
-}
+};
