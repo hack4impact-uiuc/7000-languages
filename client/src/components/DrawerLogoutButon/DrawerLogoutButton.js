@@ -3,8 +3,20 @@ import React from 'react'
 import { Pressable, View } from 'react-native'
 import { colors } from 'theme'
 import { Text } from 'native-base'
+import { logout } from 'slices/auth.slice'
+import { useDispatch } from 'react-redux'
+import { removeUserIDToken } from '../../utils/auth'
 
-const DrawerLogoutButton = () => (
+
+
+const DrawerLogoutButton = () => {
+const dispatch = useDispatch()
+const logoutUser = async () => {
+  await removeUserIDToken()
+  dispatch(logout())
+}
+
+  return(
   <View
     style={{
       marginTop: 10,
@@ -12,7 +24,9 @@ const DrawerLogoutButton = () => (
       marginBottom: 35,
     }}
   >
-    <Pressable>
+    <Pressable
+    onPress={logoutUser}
+    >
       <View
         style={{
           display: 'flex',
@@ -33,6 +47,8 @@ const DrawerLogoutButton = () => (
       </View>
     </Pressable>
   </View>
-)
+  )
+
+}
 
 export default DrawerLogoutButton
