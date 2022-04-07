@@ -177,3 +177,94 @@ module.exports.GET_LESSON_INVALID_ID =
   '?course_id=hello&unit_id=how&lesson_id=areyou';
 module.exports.GET_LESSON_DOES_NOT_EXIST =
   '?course_id=62391a30487d5ae343c82311&unit_id=62391a30487d5ae343c82312&lesson_id=62391a30487d5ae343c12345';
+
+module.exports.POST_LESSON = {
+  unit_id: '62391a30487d5ae343c82312',
+  course_id: '62391a30487d5ae343c82311',
+  lesson: {
+    name: 'Animals in Spanish',
+    selected: true,
+    description:
+      'Pariatur fuga occaecati corporis placeat nobis rerum et et et. Error qui veritatis nam. Quae qui nobis. Ratione rerum cupiditate optio esse. Voluptatem velit ut cupiditate dolorem sit amet nam nostrum unde.',
+  },
+};
+
+module.exports.POST_LESSON_EXPECTED = {
+  name: 'Animals in Spanish',
+  selected: true,
+  _order: 5,
+  _unit_id: '62391a30487d5ae343c82312',
+  _course_id: '62391a30487d5ae343c82311',
+  vocab: [],
+  description:
+    'Pariatur fuga occaecati corporis placeat nobis rerum et et et. Error qui veritatis nam. Quae qui nobis. Ratione rerum cupiditate optio esse. Voluptatem velit ut cupiditate dolorem sit amet nam nostrum unde.',
+};
+
+module.exports.POST_LESSON_MISSING_COURSE_ID = {
+  unit_id: '62391a30487d5ae343c82312',
+  lesson: {
+    name: 'Animals in Spanish',
+    selected: true,
+    description:
+      'Pariatur fuga occaecati corporis placeat nobis rerum et et et. Error qui veritatis nam. Quae qui nobis. Ratione rerum cupiditate optio esse. Voluptatem velit ut cupiditate dolorem sit amet nam nostrum unde.',
+  },
+};
+
+module.exports.POST_LESSON_INVALID_COURSE_ID = {
+  unit_id: '62391a30487d5ae343c82312',
+  course_id: '62391a30487d5ae343cab311',
+  lesson: {
+    name: 'Animals in Spanish',
+    selected: true,
+    description:
+      'Pariatur fuga occaecati corporis placeat nobis rerum et et et. Error qui veritatis nam. Quae qui nobis. Ratione rerum cupiditate optio esse. Voluptatem velit ut cupiditate dolorem sit amet nam nostrum unde.',
+  },
+};
+
+module.exports.POST_LESSON_INVALID_UNIT_ID = {
+  unit_id: '62391a30487d5ae343c82abc',
+  course_id: '62391a30487d5ae343c82311',
+  lesson: {
+    name: 'Animals in Spanish',
+    selected: true,
+    description:
+      'Pariatur fuga occaecati corporis placeat nobis rerum et et et. Error qui veritatis nam. Quae qui nobis. Ratione rerum cupiditate optio esse. Voluptatem velit ut cupiditate dolorem sit amet nam nostrum unde.',
+  },
+};
+
+module.exports.POST_LESSON_MISSING_REQUIRED_LESSON_DATA = {
+  unit_id: '62391a30487d5ae343c82312',
+  course_id: '62391a30487d5ae343c82311',
+  lesson: {
+    selected: true,
+    description:
+      'Pariatur fuga occaecati corporis placeat nobis rerum et et et. Error qui veritatis nam. Quae qui nobis. Ratione rerum cupiditate optio esse. Voluptatem velit ut cupiditate dolorem sit amet nam nostrum unde.',
+  },
+};
+
+module.exports.POST_LESSON_EXTRA_DATA = {
+  unit_id: '62391a30487d5ae343c82312',
+  course_id: '62391a30487d5ae343c82311',
+  lesson: {
+    name: 'Animals in Spanish',
+    field1: {
+      a: 1,
+      b: 2,
+      c: 3,
+    },
+    selected: true,
+    description:
+      'Pariatur fuga occaecati corporis placeat nobis rerum et et et. Error qui veritatis nam. Quae qui nobis. Ratione rerum cupiditate optio esse. Voluptatem velit ut cupiditate dolorem sit amet nam nostrum unde.',
+  },
+};
+
+module.exports.POST_LESSON_EXTRA_DATA_EXPECTED = {
+  name: 'Animals in Spanish',
+  selected: true,
+  _order: 5,
+  _unit_id: '62391a30487d5ae343c82312',
+  _course_id: '62391a30487d5ae343c82311',
+  vocab: [],
+  description:
+    'Pariatur fuga occaecati corporis placeat nobis rerum et et et. Error qui veritatis nam. Quae qui nobis. Ratione rerum cupiditate optio esse. Voluptatem velit ut cupiditate dolorem sit amet nam nostrum unde.',
+};

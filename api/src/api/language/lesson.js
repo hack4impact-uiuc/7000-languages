@@ -8,7 +8,50 @@ const {
   SUCCESS_GETTING_LESSON_DATA,
   ERR_GETTING_LESSON_DATA,
   ERR_MISSING_OR_INVALID_DATA,
+  SUCCESS_POSTING_LESSON_DATA,
 } = require('../../utils/constants');
+const {
+  getNumLessonsInUnit,
+  isValidCourseId,
+  isValidUnitId,
+} = require('../../utils/languageHelper');
+
+/**
+ * Creates a new lesson with 0 vocab items in the database
+ */
+router.post(
+  '/',
+  requireAuthentication,
+  errorWrap(async (req, res) => {
+    const { course_id, unit_id, lesson } = req.body;
+
+    // Checks if any required data is missing
+    if (!course_id || !unit_id || !lesson) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    // Checks if the ids are valid
+    const isCourseValid = await isValidCourseId(course_id);
+    const isUnitValid = await isValidUnitId(unit_id);
+
+    if (!isCourseValid || !isUnitValid) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    // Creates a new lesson
+    const numLessons = await getNumLessonsInUnit(course_id, unit_id);
+
+    lesson._order = numLessons;
+    lesson.vocab = [];
+    lesson._course_id = course_id;
+    lesson._unit_id = unit_id;
+
+    const newLesson = new models.Lesson(lesson);
+    await newLesson.save();
+
+    return sendResponse(res, 200, SUCCESS_POSTING_LESSON_DATA, newLesson);
+  }),
+);
 
 /**
  * Gets lesson data and corresponding vocab data (words, phrases, etc) for a specific lesson in a certain unit
