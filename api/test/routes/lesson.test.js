@@ -106,7 +106,7 @@ describe('GET /lesson/ ', () => {
     );
     const message = response.body.message;
     expect(response.status).toBe(400);
-    expect(message).toEqual(ERR_GETTING_LESSON_DATA);
+    expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
   });
 });
 
