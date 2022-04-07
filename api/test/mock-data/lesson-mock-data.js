@@ -222,7 +222,7 @@ module.exports.POST_LESSON_INVALID_COURSE_ID = {
 };
 
 module.exports.POST_LESSON_INVALID_UNIT_ID = {
-  unit_id: '62391a30487d5ae343c82abc',
+  unit_id: 'hello_world',
   course_id: '62391a30487d5ae343c82311',
   lesson: {
     name: 'Animals in Spanish',

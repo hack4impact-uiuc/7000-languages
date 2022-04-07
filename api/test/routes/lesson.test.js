@@ -36,78 +36,79 @@ const {
 const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
 verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
-// // This block tests the GET /lesson/ endpoint.
-// describe('GET /lesson/ ', () => {
-//   /*
-//           We have to make sure we connect to a MongoDB mock db before the test
-//           and close the connection at the end.
-//         */
-//   afterAll(async () => await db.closeDatabase());
-//   afterEach(async () => await db.resetDatabase());
+// This block tests the GET /lesson/ endpoint.
+describe('GET /lesson/ ', () => {
+  /*
+          We have to make sure we connect to a MongoDB mock db before the test
+          and close the connection at the end.
+        */
+  afterAll(async () => await db.closeDatabase());
+  afterEach(async () => await db.resetDatabase());
 
-//   beforeAll(async () => {
-//     await db.connect();
-//   });
+  beforeAll(async () => {
+    await db.connect();
+  });
 
-//   test('Success getting lesson data', async () => {
-//     const response = await withAuthentication(
-//       request(app).get(`/language/lesson${GET_LESSON}`),
-//     );
-//     const message = response.body.message;
-//     const result = omitDeep(response.body.result, '__v');
-//     expect(response.status).toBe(200);
-//     expect(message).toEqual(SUCCESS_GETTING_LESSON_DATA);
-//     expect(result).toEqual(GET_LESSON_EXPECTED);
-//   });
+  test('Success getting lesson data', async () => {
+    const response = await withAuthentication(
+      request(app).get(`/language/lesson${GET_LESSON}`),
+    );
+    const message = response.body.message;
 
-//   test('Error getting lesson data - missing data in request', async () => {
-//     var response = await withAuthentication(
-//       request(app).get(`/language/lesson${GET_LESSON_MISSING_ALL_DATA}`),
-//     );
-//     var message = response.body.message;
-//     expect(response.status).toBe(400);
-//     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
+    const result = omitDeep(response.body.result, '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual(SUCCESS_GETTING_LESSON_DATA);
+    expect(result).toEqual(GET_LESSON_EXPECTED);
+  });
 
-//     response = await withAuthentication(
-//       request(app).get(`/language/lesson${GET_LESSON_MISSING_COURSE_ID}`),
-//     );
-//     message = response.body.message;
-//     expect(response.status).toBe(400);
-//     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
+  test('Error getting lesson data - missing data in request', async () => {
+    var response = await withAuthentication(
+      request(app).get(`/language/lesson${GET_LESSON_MISSING_ALL_DATA}`),
+    );
+    var message = response.body.message;
+    expect(response.status).toBe(400);
+    expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
 
-//     response = await withAuthentication(
-//       request(app).get(`/language/lesson${GET_LESSON_MISSING_LESSON_ID}`),
-//     );
-//     message = response.body.message;
-//     expect(response.status).toBe(400);
-//     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
+    response = await withAuthentication(
+      request(app).get(`/language/lesson${GET_LESSON_MISSING_COURSE_ID}`),
+    );
+    message = response.body.message;
+    expect(response.status).toBe(400);
+    expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
 
-//     response = await withAuthentication(
-//       request(app).get(`/language/lesson${GET_LESSON_MISSING_UNIT_ID}`),
-//     );
-//     message = response.body.message;
-//     expect(response.status).toBe(400);
-//     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
-//   });
+    response = await withAuthentication(
+      request(app).get(`/language/lesson${GET_LESSON_MISSING_LESSON_ID}`),
+    );
+    message = response.body.message;
+    expect(response.status).toBe(400);
+    expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
 
-//   test('Error getting lesson data - invalid length of course, unit, lesson id', async () => {
-//     const response = await withAuthentication(
-//       request(app).get(`/language/lesson${GET_LESSON_INVALID_ID}`),
-//     );
-//     const message = response.body.message;
-//     expect(response.status).toBe(404);
-//     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
-//   });
+    response = await withAuthentication(
+      request(app).get(`/language/lesson${GET_LESSON_MISSING_UNIT_ID}`),
+    );
+    message = response.body.message;
+    expect(response.status).toBe(400);
+    expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
+  });
 
-//   test('Error getting lesson data - course, unit, and lesson does not exist', async () => {
-//     const response = await withAuthentication(
-//       request(app).get(`/language/lesson${GET_LESSON_DOES_NOT_EXIST}`),
-//     );
-//     const message = response.body.message;
-//     expect(response.status).toBe(404);
-//     expect(message).toEqual(ERR_GETTING_LESSON_DATA);
-//   });
-// });
+  test('Error getting lesson data - invalid length of course, unit, lesson id', async () => {
+    const response = await withAuthentication(
+      request(app).get(`/language/lesson${GET_LESSON_INVALID_ID}`),
+    );
+    const message = response.body.message;
+    expect(response.status).toBe(400);
+    expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
+  });
+
+  test('Error getting lesson data - course, unit, and lesson does not exist', async () => {
+    const response = await withAuthentication(
+      request(app).get(`/language/lesson${GET_LESSON_DOES_NOT_EXIST}`),
+    );
+    const message = response.body.message;
+    expect(response.status).toBe(400);
+    expect(message).toEqual(ERR_GETTING_LESSON_DATA);
+  });
+});
 
 // This block tests the POST /lesson/ endpoint.
 describe('POST /lesson/ ', () => {

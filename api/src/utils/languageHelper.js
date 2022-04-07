@@ -1,4 +1,4 @@
-const { models } = require('../models/index.js');
+const { models } = require('../models');
 const { NOT_FOUND_INDEX } = require('../utils/constants');
 const mongoose = require('mongoose');
 
@@ -48,21 +48,32 @@ module.exports.getVocabIndexByID = (vocabId, lesson) => {
 };
 
 /* 
-  The methods below determine if a _id for a course/unit is valid, 
+  The methods below determine if a _id for a course, unit, and/or lesson is valid, 
   meaning that a document exists in the appropriate collection for that given _id. 
 */
-module.exports.isValidCourseId = async (courseId) => {
-  if (mongoose.isValidObjectId(courseId)) {
-    const courseExists = await models.Course.exists({ _id: courseId });
-    return courseExists;
+module.exports.checkIds = async ({
+  course_id = undefined,
+  unit_id = undefined,
+  lesson_id = undefined,
+}) => {
+  var allModels = [models.Course, models.Unit, models.Lesson];
+  let ids = [course_id, unit_id, lesson_id];
+
+  for (let i = 0; i < 3; i++) {
+    const id = ids[i];
+    if (id) {
+      const isValid = await isValidId(allModels[i], id);
+      if (!isValid) {
+        return false;
+      }
+    }
   }
-  return false;
+  return true;
 };
 
-module.exports.isValidUnitId = async (unitId) => {
-  if (mongoose.isValidObjectId(unitId)) {
-    const courseExists = await models.Unit.exists({ _id: unitId });
-    return courseExists;
+const isValidId = async (model, id) => {
+  if (mongoose.isValidObjectId(id)) {
+    const exists = await model.exists({ _id: id });
+    return exists;
   }
-  return false;
 };
