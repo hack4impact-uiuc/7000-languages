@@ -13,7 +13,8 @@ module.exports = (api) => {
             utils: './src/utils',
             slices: './src/redux/slices',
             api: './src/api/api',
-            hooks: './src/hooks'
+            hooks: './src/hooks',
+            utils: './src/utils'
           },
         },
       ],

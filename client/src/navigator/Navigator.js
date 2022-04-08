@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
-import { authenticate, saveToken } from 'slices/auth.slice'
+import { authenticate } from 'slices/auth.slice'
 import { loadUserIDToken } from 'utils/auth'
+import { createStackNavigator } from '@react-navigation/stack'
 import DrawerNavigator from './Drawer'
-import { AuthNavigator } from './Stacks'
+import { AuthNavigator, ModalNavigator } from './Stacks'
 
+const RootStack = createStackNavigator()
 const Navigator = () => {
   /*
     Here is an example of useSelector, a hook that allows you to extract data from the Redux store state.
@@ -18,7 +20,6 @@ const Navigator = () => {
     const loadAuthFromPersistentStorage = async () => {
       const idToken = await loadUserIDToken()
       if (idToken != null) {
-        dispatch(saveToken(idToken))
         dispatch(authenticate({ loggedIn: true, idToken }))
       } else {
         dispatch(authenticate({ loggedIn: false }))
@@ -33,15 +34,27 @@ const Navigator = () => {
   /*
     Based on whether the user is logged in or not, we will present the appropriate navigators.
   */
-  return loggedIn ? (
-    <NavigationContainer>
-      <DrawerNavigator />
-    </NavigationContainer>
-  ) : (
-    <NavigationContainer>
-      <AuthNavigator />
-    </NavigationContainer>
+
+  return (
+    <RootStack.Navigator
+      headerMode="none"
+      screenOptions={{ animationEnabled: true, gestureEnabled: true }}
+      mode="modal"
+    >
+      {loggedIn ? (
+        <>
+          <RootStack.Screen name="Drawer" component={DrawerNavigator} />
+          <RootStack.Screen name="Modal" component={ModalNavigator} />
+        </>
+      ) : (
+        <RootStack.Screen name="Auth" component={AuthNavigator} />
+      )}
+    </RootStack.Navigator>
   )
 }
 
-export default Navigator
+export default () => (
+  <NavigationContainer>
+    <Navigator />
+  </NavigationContainer>
+)
