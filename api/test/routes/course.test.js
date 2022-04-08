@@ -45,9 +45,9 @@ describe('GET /language/course/ ', () => {
     const response = await withAuthentication(
       request(app).get('/language/course/62391a30487d5ae343c82311'),
     );
-    console.error(response);
+    //console.error(response);
     const message = response.body.message;
-    const result = response.body.result;
+    const result = omitDeep(response.body.result, '__v');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully fetched course');
     expect(result).toEqual(GET_SIMPLE_COURSE_EXPECTED);

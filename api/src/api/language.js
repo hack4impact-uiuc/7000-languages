@@ -5,8 +5,8 @@ const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
 const { requireAuthentication } = require('../middleware/authentication');
 const _ = require('lodash');
+
 const { ERR_NO_COURSE_DETAILS } = require('../utils/constants');
-const { Course, Unit } = require('../models/language');
 
 /**
  * Creates a new course in the database
@@ -65,27 +65,26 @@ router.get(
   '/course/:id',
   //requireAuthentication,
   errorWrap(async (req, res) => {
-    const course = await Course.findOne({ _id: req.params.id });
-    console.log(course);
-    const units = await Unit.find({ _course_id: req.params.id });
-    //cannot use forEach loop, use for loop
+    let course = await models.Course.findOne({ _id: req.params.id });
+    course = course.toJSON();
+    //console.log(course);
+    let units = await models.Unit.find({ _course_id: req.params.id });
+    //units = units.toJSON();
     for (var i = 0; i < units.length; i++) {
-      const numLessons = await Unit.find({ _unit_id: units[i]._id }).count();
+      const numLessons = await models.Lesson.countDocuments({_unit_id: {$eq: units[i]._id}});
       //append numLessons to each unit JSON
       //$push: { adminLanguages: newCourse._id }
-      units[i].addProperty('num_lessons', numLessons);
+      units[i] = units[i].toJSON();
+      units[i].num_lessons = numLessons;
+      console.log(units[i]);
     }
-    // units.forEach(unit => {
-    //   const numLessons = await Unit.find({ _unit_id: unit._id }).count();
-    //   //append numLessons to each unit JSON
-    //   //$push: { adminLanguages: newCourse._id }
-    //   unit.addProperty("num_lessons", numLessons);
-    // });
-    const newCourse = _.omit(course, ['admin_id']);
+    let newCourse = _.omit(course, ['admin_id']);
+    console.log(newCourse);
     const returnedData = {
       course: newCourse, //remove admin_id
       units: units,
     };
+    //let newReturnedData = newCourse.toJSON();
     return sendResponse(res, 200, 'Successfully fetched course', returnedData);
   }),
 );

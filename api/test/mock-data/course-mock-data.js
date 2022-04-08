@@ -20,6 +20,7 @@ module.exports.GET_SIMPLE_COURSE_EXPECTED = {
     _id: '62391a30487d5ae343c82311',
     approved: true,
     details: {
+      _id: "62391a30487d5ae343c82312",
       name: 'vero',
       alternative_name: 'architecto',
       admin_name: 'Miss Priscilla Nienow',
@@ -30,7 +31,7 @@ module.exports.GET_SIMPLE_COURSE_EXPECTED = {
       location: 'North America',
       iso: 'en',
       glotto: 'stan1293',
-      population: 8750,
+      population: '8750',
       link: 'https://tepid-toll.com',
     },
   }, //remove admin_id
