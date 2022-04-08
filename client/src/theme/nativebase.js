@@ -97,7 +97,7 @@ const theme = extendTheme({
           bg: 'red.light',
           borderColor: 'white.dark',
           borderRadius: 70,
-          py: 10,
+          my: 3,
           _text: {
             color: 'red.dark',
             fontFamily: 'GT_Haptik_bold',

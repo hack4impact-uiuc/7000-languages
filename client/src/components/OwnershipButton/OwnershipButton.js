@@ -10,7 +10,7 @@ const OwnershipButton = ({ isContributor }) => {
           title="CONTRIBUTOR"
           // add variant in nativebase
           variant="contributor"
-          fontSize="8"
+          fontSize="12"
         />
       )
     default:

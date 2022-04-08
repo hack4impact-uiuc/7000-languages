@@ -76,8 +76,23 @@ const DrawerMenuContainer = (props) => {
           </View>
         ) : null}
       </DrawerContentScrollView>
+      <View
+        style={{
+          marginTop: '8%',
+          marginBottom: '8%',
+          height: 1,
+          backgroundColor: '#EFEFEF',
+          width: '90%',
+        }}
+      />
+  
       {/* Full View of Profile */}
       <View>
+        
+        
+        {/* Photo from Google Auth goes here */}
+
+
         {/* TEXT Profile View */}
         <View
           style={{
@@ -85,7 +100,7 @@ const DrawerMenuContainer = (props) => {
             flexDirection: 'column',
             marginRight: 20,
           }}
-        >
+          >
           <Text
             style={{
               paddingLeft: 10,
@@ -103,10 +118,26 @@ const DrawerMenuContainer = (props) => {
           >
             michaelscott@gmail.com
           </Text>
+
+          
         </View>
+
+        
       </View>
+      
       {/* DRAWER LOGOUT BUTTON */}
+      <View
+        style={{
+          marginTop: '8%',
+         
+          height: 1,
+          backgroundColor: '#EFEFEF',
+          width: '90%',
+        }}
+      />
       <DrawerLogoutButton />
+      
+      
     </>
   )
 }
@@ -162,12 +193,19 @@ export default () => (
         drawerLabel: () => (
           <View
             style={{
-              flexDirection: 'column',
+              flexDirection: 'row',
               justifyContent: 'space-between',
             }}
           >
+            <View
+              style={{
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+              }}
+            >
             <Text
               style={{
+                marginRight: 15,
                 fontFamily: 'GT_Haptik_bold',
                 fontSize: 20,
               }}
@@ -184,6 +222,7 @@ export default () => (
             >
               8 Units
             </Text>
+            </View>
             <OwnershipButton isContributor />
           </View>
         ),
