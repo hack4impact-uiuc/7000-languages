@@ -75,12 +75,18 @@ const Landing = () => {
             idToken,
           }
 
+          console.log("got id token")
+          console.log(idToken);
+
           // call API
           await createUser(userData)
+          console.log("created user");
           // Save to Async Storage
           await saveUserIDToken(idToken)
+          console.log('saved user id token');
           // Update Redux Store
           dispatch(authenticate({ loggedIn: true, idToken }))
+          console.log('ran dispatch');
         }
       },
       () => {
