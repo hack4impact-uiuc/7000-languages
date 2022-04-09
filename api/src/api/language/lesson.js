@@ -9,6 +9,29 @@ const {
   ERR_GETTING_LESSON_DATA,
   ERR_MISSING_OR_INVALID_DATA,
 } = require('../../utils/constants');
+const mongoose = require('mongoose');
+const { updateLessonsInTransaction } = require('../../utils/languageHelper')
+
+/**
+ * Updates multiple lessons in a unit at once
+ */
+router.put(
+  '/',
+  requireAuthentication,
+  errorWrap(async (req, res) => {
+    let lessonData = [];
+    /* 
+      A Mongoose transaction is an execution of many operations (insert, update or delete) as a single unit that takes the database 
+      from a consistent state and lets it to a consistent one. If one operation fails, all the operations are canceled.
+    */
+    await mongoose.connection.transaction(async (session) => {
+      lessonData = await updateLessonsInTransaction(req.body, session);
+    });
+
+    return sendResponse(res, 200, 'Updated lessons with success', lessonData);
+  }),
+);
+
 
 /**
  * Gets lesson data and corresponding vocab data (words, phrases, etc) for a specific lesson in a certain unit
