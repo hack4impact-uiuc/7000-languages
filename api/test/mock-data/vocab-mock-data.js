@@ -1,7 +1,5 @@
 module.exports.PATCH_VOCAB_ITEM = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab_id: '62391a30487d5ae343c8231d',
   vocab_update: {
     original: 'Yeet',
@@ -12,8 +10,6 @@ module.exports.PATCH_VOCAB_ITEM = {
 
 module.exports.PATCH_VOCAB_SECOND_ITEM = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab_id: '62391a30487d5ae343c82322',
   vocab_update: {
     notes:
@@ -347,8 +343,6 @@ module.exports.PATCH_VOCAB_SECOND_ITEM_EXPECTED = {
 
 module.exports.PATCH_VOCAB_ITEM_EXTRA_FIELDS = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab_id: '62391a30487d5ae343c8231e',
   vocab_update: {
     original: 'original',
@@ -525,8 +519,6 @@ module.exports.PATCH_VOCAB_ITEM_EXTRA_FIELDS_EXPECTED = {
 
 module.exports.PATCH_VOCAB_ITEM_MISSING_ID = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab_update: {
     original: 'Yeet',
     translation: 'This is a translation',
@@ -536,8 +528,6 @@ module.exports.PATCH_VOCAB_ITEM_MISSING_ID = {
 
 module.exports.PATCH_VOCAB_ITEM_INVALID_ID = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab_id: 'abcd1a30487d5ae343c8231d',
   vocab_update: {
     original: 'Yeet',
@@ -548,15 +538,11 @@ module.exports.PATCH_VOCAB_ITEM_INVALID_ID = {
 
 module.exports.PATCH_VOCAB_ITEM_MISSING_VOCAB = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab_id: 'abcd1a30487d5ae343c8231d',
 };
 
 module.exports.PATCH_VOCAB_ITEM_INVALID_VOCAB = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab_id: '62391a30487d5ae343c8231d',
   vocab_update: {
     test: 12341,
@@ -736,8 +722,6 @@ module.exports.PATCH_VOCAB_ITEM_INVALID_VOCAB_EXPECTED = {
 };
 module.exports.POST_FIRST_VOCAB_ITEM = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab: {
     original: 'Hello',
     translation: 'Hola',
@@ -752,8 +736,6 @@ module.exports.POST_FIRST_VOCAB_ITEM_EXPECTED = {
 
 module.exports.POST_SECOND_VOCAB_ITEM = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab: {
     original: 'Morning',
     translation: 'Manana',
@@ -768,8 +750,6 @@ module.exports.POST_SECOND_VOCAB_ITEM_EXPECTED = {
 
 module.exports.POST_DETAILED_VOCAB_ITEM = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab: {
     original: 'Hello',
     translation: 'Hola',
@@ -792,15 +772,11 @@ module.exports.POST_DETAILED_VOCAB_ITEM_EXPECTED = {
 
 module.exports.POST_VOCAB_ITEM_MISSING_REQUIRED_FIELDS = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab: {},
 };
 
 module.exports.POST_VOCAB_ITEM_EXTRA_FIELDS = {
   lesson_id: '62391a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab: {
     original: 'Hello',
     translation: 'Hola',
@@ -810,8 +786,6 @@ module.exports.POST_VOCAB_ITEM_EXTRA_FIELDS = {
 };
 
 module.exports.POST_VOCAB_ITEM_MISSING_ID = {
-  lesson_id: '62391a30487d5ae343c8231c',
-  unit_id: '62391a30487d5ae343c82312',
   vocab: {
     original: 'Hello',
     translation: 'Hola',
@@ -820,8 +794,6 @@ module.exports.POST_VOCAB_ITEM_MISSING_ID = {
 
 module.exports.POST_VOCAB_ITEM_INVALID_ID = {
   lesson_id: '12345a30487d5ae343c8231c',
-  course_id: '62391a30487d5ae343c82311',
-  unit_id: '62391a30487d5ae343c82312',
   vocab: {
     original: 'Hello',
     translation: 'Hola',

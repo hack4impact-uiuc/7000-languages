@@ -18,9 +18,9 @@ router.patch(
   '/',
   requireAuthentication,
   errorWrap(async (req, res) => {
-    const { course_id, unit_id, lesson_id, vocab_id, vocab_update } = req.body;
+    const { lesson_id, vocab_id, vocab_update } = req.body;
 
-    if (!course_id || !unit_id || !lesson_id || !vocab_id || !vocab_update) {
+    if (!lesson_id || !vocab_id || !vocab_update) {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
@@ -28,11 +28,7 @@ router.patch(
     let lesson;
 
     try {
-      lesson = await models.Lesson.findById({
-        _course_id: course_id,
-        _unit_id: unit_id,
-        _id: lesson_id,
-      });
+      lesson = await models.Lesson.findById(lesson_id);
     } catch (error) {
       return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
     }
@@ -72,18 +68,14 @@ router.post(
   '/',
   requireAuthentication,
   errorWrap(async (req, res) => {
-    const { course_id, unit_id, lesson_id, vocab } = req.body;
-    if (!course_id || !unit_id || !lesson_id || !vocab) {
+    const { lesson_id, vocab } = req.body;
+    if (!lesson_id || !vocab) {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
     try {
       // Obtain the lesson mongoose document
-      const lessonData = await models.Lesson.findOne({
-        _course_id: course_id,
-        _unit_id: unit_id,
-        _id: lesson_id,
-      });
+      const lessonData = await models.Lesson.findById(lesson_id);
       if (lessonData === null) {
         return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
       }

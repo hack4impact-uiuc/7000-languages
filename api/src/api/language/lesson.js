@@ -10,28 +10,37 @@ const {
   ERR_MISSING_OR_INVALID_DATA,
 } = require('../../utils/constants');
 const mongoose = require('mongoose');
-const { updateLessonsInTransaction } = require('../../utils/languageHelper')
+const { updateLessonsInTransaction } = require('../../utils/languageHelper');
 
 /**
- * Updates multiple lessons in a unit at once
+ * Updates multiple lessons in a unit at once with a a Mongoose transaction (an execution of many operations
+ * (insert, update or delete) as a single unit that takes the database from a consistent state and lets it to a consistent one).
+ * If the lessons are invalid or missing data, we roll back the changes and return 400.
+ *
+ * Source: https://blog.tericcabrel.com/how-to-use-mongodb-transaction-in-node-js/
  */
 router.put(
   '/',
   requireAuthentication,
   errorWrap(async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
     let lessonData = [];
-    /* 
-      A Mongoose transaction is an execution of many operations (insert, update or delete) as a single unit that takes the database 
-      from a consistent state and lets it to a consistent one. If one operation fails, all the operations are canceled.
-    */
-    await mongoose.connection.transaction(async (session) => {
-      lessonData = await updateLessonsInTransaction(req.body, session);
-    });
 
+    try {
+      lessonData = await updateLessonsInTransaction(req.body, session);
+      // Commit the changes
+      await session.commitTransaction();
+    } catch (error) {
+      // Rollback any changes made in the database
+      await session.abortTransaction();
+      return sendResponse(res, 400, `Could not update lessons: ${error}`);
+    }
+    // Ending the session
+    session.endSession();
     return sendResponse(res, 200, 'Updated lessons with success', lessonData);
   }),
 );
-
 
 /**
  * Gets lesson data and corresponding vocab data (words, phrases, etc) for a specific lesson in a certain unit
@@ -40,20 +49,16 @@ router.get(
   '/',
   requireAuthentication,
   errorWrap(async (req, res) => {
-    const { unit_id, course_id, lesson_id } = req.query;
+    const { lesson_id } = req.query;
 
-    if (!unit_id || !course_id || !lesson_id) {
+    if (!lesson_id) {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
     let lesson;
 
     try {
-      lesson = await models.Lesson.findOne({
-        _id: lesson_id,
-        _course_id: course_id,
-        _unit_id: unit_id,
-      });
+      lesson = await models.Lesson.findById(lesson_id);
     } catch (error) {
       return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
     }
