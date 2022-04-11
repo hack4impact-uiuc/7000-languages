@@ -93,7 +93,6 @@ const isUniqueOrder = async (params, _id, model, session = null) => {
     documents[0]._id.toString() !== string_id &&
     documents[1]._id.toString() !== string_id
   ) {
-    console.error('bad _id');
     return false;
   }
 
@@ -101,26 +100,10 @@ const isUniqueOrder = async (params, _id, model, session = null) => {
   return documents[0].selected !== documents[1].selected;
 };
 
-// Run validator when _order is changed.
-Lesson.path('_order').validate(async function () {
-  const isUnique = await isUniqueOrder(
-    {
-      _order: this._order,
-      _course_id: this._course_id,
-      _unit_id: this._unit_id,
-    },
-    this._id,
-    LessonModel,
-  );
-  return isUnique;
-});
-
 /* Exports */
-const LessonModel = mongoose.model('Lesson', Lesson);
-
 module.exports.Course = mongoose.model('Course', Course);
 module.exports.CourseDetails = mongoose.model('CourseDetails', CourseDetails);
 module.exports.Unit = mongoose.model('Unit', Unit);
-module.exports.Lesson = LessonModel;
+module.exports.Lesson = mongoose.model('Lesson', Lesson);
 module.exports.Vocab = mongoose.model('Vocab', Vocab);
 module.exports.isUniqueOrder = isUniqueOrder;
