@@ -24,7 +24,7 @@ const styles = {
   },
   line: {
     marginTop: '8%',
-    marginBottom: '8%',
+    marginBottom: '4%',
     height: 1,
     backgroundColor: '#C0C0C0',
     width: '65%',
@@ -43,7 +43,7 @@ const DrawerMenu = ({ navigation }) => (
         color="black"
         fontSize="25px"
       >
-        My Languages
+        My Courses
       </Text>
     </View>
     <View style={styles.head}>

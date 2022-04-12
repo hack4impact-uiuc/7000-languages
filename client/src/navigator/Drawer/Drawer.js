@@ -77,8 +77,8 @@ const DrawerMenuContainer = (props) => {
       </DrawerContentScrollView>
       <View
         style={{
-          marginTop: '8%',
-          marginBottom: '8%',
+          marginTop: '10%',
+          marginBottom: '5%',
           height: 1,
           backgroundColor: '#EFEFEF',
           width: '90%',
@@ -121,7 +121,7 @@ const DrawerMenuContainer = (props) => {
       </View>
       <View
         style={{
-          marginTop: '8%',
+          marginTop: '3%',
           height: 1,
           backgroundColor: '#EFEFEF',
           width: '90%',
