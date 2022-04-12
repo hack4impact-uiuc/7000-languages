@@ -3,9 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { colors } from 'theme'
 import Home from 'pages/Home'
 import Landing from 'pages/Landing'
-import UnitDrawer from 'pages/UnitDrawer'
+import CreateUnit from 'pages/CreateUnit'
 import ManageUnits from 'pages/ManageUnits'
-import Apply from 'pages/Apply'
 import DrawerButton from './DrawerButton'
 import BackButton from './BackButton'
 
@@ -73,10 +72,10 @@ export const AuthNavigator = () => (
 
 export const ModalNavigator = () => (
   <ModalStack.Navigator
-    initialRouteName="UnitDrawer"
+    initialRouteName="CreateUnit"
     screenOptions={modalNavigationProps}
   >
-    <ModalStack.Screen name="UnitDrawer" component={UnitDrawer} />
+    <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
   </ModalStack.Navigator>
 )
 
@@ -94,19 +93,6 @@ export const HomeNavigator = () => (
       })}
     />
 
-    <Stack.Screen
-      name="Apply"
-      component={Apply}
-      options={({ navigation }) => ({
-        title: 'Become a Contributor',
-        headerStyle: { backgroundColor: 'colors.white.dark' },
-        headerTitleStyle: {
-          fontSize: 18,
-          fontFamily: 'GT_Haptik_bold',
-          color: 'black',
-        },
-      })}
-    />
     <Stack.Screen
       name="ManageUnits"
       component={ManageUnits}

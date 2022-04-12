@@ -16,5 +16,4 @@ export const createCourse = async (applicationData) => {
   return res.data
 }
 
-
 export const getData = async () => {}
