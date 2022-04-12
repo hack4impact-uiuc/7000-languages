@@ -17,7 +17,7 @@ const DrawerLogoutButton = () => {
   return (
     <View
       style={{
-        marginTop: 10,
+        marginTop: 15,
         marginLeft: 8,
         marginBottom: 35,
       }}
