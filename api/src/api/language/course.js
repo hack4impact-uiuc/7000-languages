@@ -72,32 +72,20 @@ router.post(
   }),
 );
 
-// const returnedData = {
-//   course: Course, //remove admin_id
-//   units: [unit1, unit2, unit3]
-// }
-
-// const unit1 = {
-//   _course_id: { type: String, required: true, index: true },
-//   name: { type: String, required: true },
-//   _order: { type: Number, required: true, index: true },
-//   selected: { type: Boolean, required: true },
-//   description: { type: String, required: true, default: '' },
-//   numLessons: 10
-// }
+/**
+ * Fetches specified course in the database
+ */
 router.get(
   '/:id',
-  //requireAuthentication,
+  requireAuthentication,
   errorWrap(async (req, res) => {
     let course = await models.Course.findOne({ _id: req.params.id });
     course = course.toJSON();
-    //console.log(course);
     let units = await models.Unit.find({ _course_id: req.params.id });
-    //units = units.toJSON();
     for (var i = 0; i < units.length; i++) {
-      const numLessons = await models.Lesson.countDocuments({_unit_id: {$eq: units[i]._id}});
-      //append numLessons to each unit JSON
-      //$push: { adminLanguages: newCourse._id }
+      const numLessons = await models.Lesson.countDocuments({
+        _unit_id: { $eq: units[i]._id },
+      });
       units[i] = units[i].toJSON();
       units[i].num_lessons = numLessons;
       console.log(units[i]);
@@ -105,10 +93,9 @@ router.get(
     let newCourse = _.omit(course, ['admin_id']);
     console.log(newCourse);
     const returnedData = {
-      course: newCourse, //remove admin_id
+      course: newCourse,
       units: units,
     };
-    //let newReturnedData = newCourse.toJSON();
     return sendResponse(res, 200, 'Successfully fetched course', returnedData);
   }),
 );

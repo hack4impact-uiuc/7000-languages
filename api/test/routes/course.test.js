@@ -41,8 +41,6 @@ const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
 verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
 describe('GET /language/course/ ', () => {
-  //add missing id test
-  //add invalid id test
   /* 
     We have to make sure we connect to a MongoDB mock db before the test 
     and close the connection at the end.
@@ -63,6 +61,26 @@ describe('GET /language/course/ ', () => {
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully fetched course');
     expect(result).toEqual(GET_SIMPLE_COURSE_EXPECTED);
+  });
+
+  test('No id results in error', async () => {
+    const body = POST_WRONG_COURSE_MISSING_NAME;
+
+    const response = await withAuthentication(
+      request(app).get('/language/course/'),
+    );
+
+    expect(response.status).toBeGreaterThanOrEqual(400);
+  });
+
+  test('Invalid id results in error', async () => {
+    const body = POST_WRONG_COURSE_MISSING_NAME;
+
+    const response = await withAuthentication(
+      request(app).get('/language/course/62391a30487d5ae343caaaaa'),
+    );
+
+    expect(response.status).toBeGreaterThanOrEqual(400);
   });
 });
 

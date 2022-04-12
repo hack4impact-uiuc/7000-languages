@@ -20,7 +20,7 @@ module.exports.GET_SIMPLE_COURSE_EXPECTED = {
     _id: '62391a30487d5ae343c82311',
     approved: true,
     details: {
-      _id: "62391a30487d5ae343c82312",
+      _id: '62391a30487d5ae343c82312',
       name: 'vero',
       alternative_name: 'architecto',
       admin_name: 'Miss Priscilla Nienow',
