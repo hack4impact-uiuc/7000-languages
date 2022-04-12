@@ -5,6 +5,7 @@ import Home from 'pages/Home'
 import Landing from 'pages/Landing'
 import UnitDrawer from 'pages/UnitDrawer'
 import ManageUnits from 'pages/ManageUnits'
+import Apply from 'pages/Apply'
 import DrawerButton from './DrawerButton'
 import BackButton from './BackButton'
 

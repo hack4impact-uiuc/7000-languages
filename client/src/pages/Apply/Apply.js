@@ -148,12 +148,54 @@ const Apply = ({ navigation }) => {
   //   )
   // }
 
+
+  // const applyCourse = async () => {
+  //       const applicationData = {
+  //     details: {
+  //       admin_name: name,
+  //       admin_email: email, 
+  //       name: language,
+  //       alternative_name: otherNames,
+  //       description: "", 
+  //       iso: isoCode,
+  //       glotto: glottoCode,
+  //       population: population, 
+  //       location: location,
+  //       link: link
+  //     },
+  //   };
+  //   await errorWrap(
+  //     async () => {
+  
+  //         // call API
+  //         await createCourse(applicationData)
+  //       }
+  // },
+  //     () => {
+  //       console.log('success')
+  //     },
+  //     () => {
+  //       console.log('error')
+  //     },
+  //   )
+  // }
+
   const onSubmit = () => {
 
     console.log(acceptTerms)
-    validate() ? console.log('Submitted') : console.log('Validation Failed');
+    if (validate() === true) {
+      applyCourse(); 
+      routeSuccess();
+    } else {
+        console.log('Validation Failed');
+    }
+
+
 
   };
+
+
+  function routeSuccess
 
   
 
