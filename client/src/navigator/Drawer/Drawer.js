@@ -140,7 +140,7 @@ export default () => (
       inactiveTintColor: 'black',
       activeBackgroundColor: '#F9F9F9',
       inactiveBackgroundColor: 'white',
-      itemStyle: { marginVertical: 4},
+      itemStyle: { marginVertical: 4 },
     }}
     drawerStyle={{
       width: 350,
