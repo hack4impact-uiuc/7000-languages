@@ -88,10 +88,8 @@ router.get(
       });
       units[i] = units[i].toJSON();
       units[i].num_lessons = numLessons;
-      console.log(units[i]);
     }
     let newCourse = _.omit(course, ['admin_id']);
-    console.log(newCourse);
     const returnedData = {
       course: newCourse,
       units: units,
