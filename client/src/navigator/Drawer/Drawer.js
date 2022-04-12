@@ -22,21 +22,25 @@ const Drawer = createDrawerNavigator()
 
 const data = [
   {
+    _id: 'abcdef',
     title: 'Spanish',
     units: '14 Units',
     isContributor: false,
   },
   {
+    _id: 'aenasdas',
     title: 'French',
     units: '10 Units',
     isContributor: true,
   },
   {
+    _id: 'asdnemsa',
     title: 'Chinese',
     units: '8 Units',
     isContributor: false,
   },
   {
+    _id: 'mehjasjd',
     title: 'German',
     units: '8 Units',
     isContributor: true,
@@ -57,6 +61,7 @@ const tabColors = [
  */
 const generateTabs = (tabData) => tabData.map((element, index) => (
   <Drawer.Screen
+    key={element._id}
     name={element.title}
     component={TabNavigator}
     options={() => ({
