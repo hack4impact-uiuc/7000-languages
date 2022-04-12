@@ -40,7 +40,6 @@ const DrawerMenuContainer = (props) => {
           >
             <Pressable
               style={{
-                // flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
                 paddingVertical: 12,
@@ -85,13 +84,11 @@ const DrawerMenuContainer = (props) => {
           width: '90%',
         }}
       />
-  
+
       {/* Full View of Profile */}
       <View>
-        
-        
-        {/* Photo from Google Auth goes here */}
 
+        {/* Photo from Google Auth goes here */}
 
         {/* TEXT Profile View */}
         <View
@@ -100,7 +97,7 @@ const DrawerMenuContainer = (props) => {
             flexDirection: 'column',
             marginRight: 20,
           }}
-          >
+        >
           <Text
             style={{
               paddingLeft: 10,
@@ -119,25 +116,19 @@ const DrawerMenuContainer = (props) => {
             michaelscott@gmail.com
           </Text>
 
-          
         </View>
 
-        
       </View>
-      
-      {/* DRAWER LOGOUT BUTTON */}
       <View
         style={{
           marginTop: '8%',
-         
           height: 1,
           backgroundColor: '#EFEFEF',
           width: '90%',
         }}
       />
       <DrawerLogoutButton />
-      
-      
+
     </>
   )
 }
@@ -149,7 +140,10 @@ export default () => (
       inactiveTintColor: 'black',
       activeBackgroundColor: '#F9F9F9',
       inactiveBackgroundColor: 'white',
-      itemStyle: { marginVertical: 2 },
+      itemStyle: { marginVertical: 4},
+    }}
+    drawerStyle={{
+      width: 350,
     }}
     initialRouteName="Home"
     drawerContent={DrawerMenuContainer}
@@ -174,7 +168,6 @@ export default () => (
                 fontFamily: 'GT_Haptik_regular',
                 fontSize: 20,
                 color: '#A4A4A4',
-                flex: 3,
               }}
             >
               14 Units
@@ -203,25 +196,24 @@ export default () => (
                 justifyContent: 'space-between',
               }}
             >
-            <Text
-              style={{
-                marginRight: 15,
-                fontFamily: 'GT_Haptik_bold',
-                fontSize: 20,
-              }}
-            >
-              French
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'GT_Haptik_regular',
-                fontSize: 20,
-                color: '#A4A4A4',
-                flex: 1,
-              }}
-            >
-              8 Units
-            </Text>
+              <Text
+                style={{
+                  marginRight: 15,
+                  fontFamily: 'GT_Haptik_bold',
+                  fontSize: 20,
+                }}
+              >
+                French
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'GT_Haptik_regular',
+                  fontSize: 20,
+                  color: '#A4A4A4',
+                }}
+              >
+                8 Units
+              </Text>
             </View>
             <OwnershipButton isContributor />
           </View>
