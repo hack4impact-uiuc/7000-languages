@@ -9,7 +9,7 @@
     "lint": "eslint --fix src",
     "format": "prettier --write \"./**/*.{js,jsx,json,md}\"",
     "format:check": "prettier -- \"./**/*.{js,jsx,json,md}\"",
-    "test": "jest --setupFiles dotenv/config --runInBand --forceExit",
+    "test": "jest --setupFiles dotenv/config --runInBand --forceExit --coverage",
     "style": "yarn format && yarn lint"
   },
   "dependencies": {

@@ -129,7 +129,7 @@ const generateLanguages = (
 const generate = () => {
   // Generates users
   // const userData = generateUsers(NUM_FAKE_USER_ENTRIES);
-  // saveDataToFile(userData, './mock-data/users.json');
+  // saveDataToFile(userData, './db-data/users.json');
 
   // Generates course
   const { courseData, unitData, lessonData } = generateLanguages(

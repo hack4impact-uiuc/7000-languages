@@ -25,7 +25,7 @@ const Unit = new mongoose.Schema({
   name: { type: String, required: true },
   _order: { type: Number, required: true, index: true },
   selected: { type: Boolean, required: true },
-  description: { type: String, required: true, default: '' },
+  description: { type: String, required: false, default: '' },
 });
 
 Unit.index({ _course_id: 1, _order: 1 });
@@ -36,7 +36,7 @@ const Vocab = new mongoose.Schema({
   translation: { type: String, required: true },
   image: { type: String, required: false, default: '' },
   audio: { type: String, required: false, default: '' },
-  notes: { type: String, required: true, default: '' },
+  notes: { type: String, required: false, default: '' },
 });
 
 Vocab.index({ _order: 1 });
@@ -48,7 +48,7 @@ const Lesson = new mongoose.Schema({
   _order: { type: Number, required: true, index: true },
   selected: { type: Boolean, required: true },
   vocab: { type: [Vocab], required: true, default: [] },
-  description: { type: String, required: true, default: '' },
+  description: { type: String, required: false, default: '' },
 });
 
 Lesson.index({ _course_id: 1, _unit_id: 1, _order: 1 });
