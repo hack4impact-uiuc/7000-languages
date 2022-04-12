@@ -2,8 +2,16 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
 import { colors, fonts } from 'theme'
-import { Input, Text, TextArea, View } from 'native-base'
+import {
+  Input,
+  Text,
+  TextArea,
+  View,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'native-base'
 import { Foundation } from '@expo/vector-icons'
+import dismissKeyboard from 'react-native-dismiss-keyboard'
 
 const CreateUnit = ({ navigation }) => {
   const close = () => {
@@ -26,7 +34,7 @@ const CreateUnit = ({ navigation }) => {
           borderWidth: 0.5,
           padding: 5,
           backgroundColor: colors.blue.light,
-          borderColor: colors.blue.light
+          borderColor: colors.blue.light,
         }}
       >
         <View style={{ flexDirection: 'row' }}>
@@ -57,6 +65,7 @@ const CreateUnit = ({ navigation }) => {
       />
 
       <Text>What is the purpose of this unit?</Text>
+
       <TextArea
         size="2xl"
         h={40}
