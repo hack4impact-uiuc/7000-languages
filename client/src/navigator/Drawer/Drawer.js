@@ -9,14 +9,98 @@ import { FontAwesome } from '@expo/vector-icons'
 import { colors } from 'theme'
 import { View, Pressable } from 'react-native'
 import StyledButton from 'components/StyledButton'
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import OwnershipButton from 'components/OwnershipButton'
 import TabNavigator from '../Tabs'
 import DrawerMenu from './DrawerMenu'
 import DrawerLogoutButton from '../../components/DrawerLogoutButon'
 
 const Drawer = createDrawerNavigator()
-// const Tab = createBottomTabNavigator()
+
+/**
+ * Data used for rendering the Drawer Tab
+ */
+
+const data = [
+  {
+    title: 'Spanish',
+    units: '14 Units',
+    isContributor: false,
+  },
+  {
+    title: 'French',
+    units: '10 Units',
+    isContributor: true,
+  },
+  {
+    title: 'Chinese',
+    units: '8 Units',
+    isContributor: false,
+  },
+  {
+    title: 'German',
+    units: '8 Units',
+    isContributor: true,
+  },
+]
+
+const tabColors = [
+  colors.red.dark,
+  colors.blue.dark,
+  colors.orange.dark,
+  colors.green.dark,
+]
+
+/**
+ * Generates the course tabs for the Drawer Tab Bar
+ * @param {Array} data Array of Course Data to use for each tab bar
+ * @returns
+ */
+const generateTabs = (tabData) => tabData.map((element, index) => (
+  <Drawer.Screen
+    name={element.title}
+    component={TabNavigator}
+    options={() => ({
+      drawerLabel: () => (
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Text
+              style={{ fontFamily: 'GT_Haptik_bold', fontSize: 20, flex: 3 }}
+            >
+              {element.title}
+            </Text>
+            <Text
+              style={{
+                fontFamily: 'GT_Haptik_regular',
+                fontSize: 20,
+                color: '#A4A4A4',
+              }}
+            >
+              {element.units}
+            </Text>
+          </View>
+          {element.isContributor ? <OwnershipButton isContributor /> : null}
+        </View>
+      ),
+      drawerIcon: () => (
+        <FontAwesome
+          name="square"
+          size={45}
+          color={tabColors[index % tabColors.length]}
+        />
+      ),
+    })}
+  />
+))
 
 const DrawerMenuContainer = (props) => {
   const { state, ...rest } = props
@@ -87,7 +171,6 @@ const DrawerMenuContainer = (props) => {
 
       {/* Full View of Profile */}
       <View>
-
         {/* Photo from Google Auth goes here */}
 
         {/* TEXT Profile View */}
@@ -115,9 +198,7 @@ const DrawerMenuContainer = (props) => {
           >
             michaelscott@gmail.com
           </Text>
-
         </View>
-
       </View>
       <View
         style={{
@@ -128,7 +209,6 @@ const DrawerMenuContainer = (props) => {
         }}
       />
       <DrawerLogoutButton />
-
     </>
   )
 }
@@ -148,106 +228,6 @@ export default () => (
     initialRouteName="Home"
     drawerContent={DrawerMenuContainer}
   >
-    <Drawer.Screen
-      name="Spanish"
-      component={TabNavigator}
-      options={() => ({
-        drawerLabel: () => (
-          <View
-            style={{
-              flexDirection: 'column',
-            }}
-          >
-            <Text
-              style={{ fontFamily: 'GT_Haptik_bold', fontSize: 20, flex: 3 }}
-            >
-              Spanish
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'GT_Haptik_regular',
-                fontSize: 20,
-                color: '#A4A4A4',
-              }}
-            >
-              14 Units
-            </Text>
-          </View>
-        ),
-        drawerIcon: () => (
-          <FontAwesome name="square" size={45} color={colors.red.dark} />
-        ),
-      })}
-    />
-    <Drawer.Screen
-      name="French"
-      component={TabNavigator}
-      options={() => ({
-        drawerLabel: () => (
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <View
-              style={{
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-              }}
-            >
-              <Text
-                style={{
-                  marginRight: 15,
-                  fontFamily: 'GT_Haptik_bold',
-                  fontSize: 20,
-                }}
-              >
-                French
-              </Text>
-              <Text
-                style={{
-                  fontFamily: 'GT_Haptik_regular',
-                  fontSize: 20,
-                  color: '#A4A4A4',
-                }}
-              >
-                8 Units
-              </Text>
-            </View>
-            <OwnershipButton isContributor />
-          </View>
-        ),
-        drawerIcon: () => (
-          <FontAwesome name="square" size={45} color={colors.blue.dark} />
-        ),
-      })}
-    />
-
-    <Drawer.Screen
-      name="Chinese"
-      component={TabNavigator}
-      options={() => ({
-        drawerLabel: () => (
-          <View>
-            <Text style={{ fontFamily: 'GT_Haptik_bold', fontSize: 20 }}>
-              Chinese
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'GT_Haptik_regular',
-                fontSize: 20,
-                color: '#A4A4A4',
-              }}
-            >
-              10 Units
-            </Text>
-          </View>
-        ),
-        drawerIcon: () => (
-          <FontAwesome name="square" size={45} color={colors.orange.dark} />
-        ),
-      })}
-    />
+    {(() => generateTabs(data))()}
   </Drawer.Navigator>
 )
