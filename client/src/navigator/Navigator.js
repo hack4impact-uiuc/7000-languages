@@ -18,7 +18,7 @@ const Navigator = () => {
 
   useEffect(() => {
     const loadAuthFromPersistentStorage = async () => {
-      const idToken = await loadUserIDToken()
+      const idToken = await loadUserIDToken() // change to loadUserData() ? 
       if (idToken != null) {
         dispatch(authenticate({ loggedIn: true, idToken }))
       } else {

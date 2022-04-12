@@ -26,10 +26,16 @@ const authSlice = createSlice({
     authenticate: (state, { payload }) => {
       state.loggedIn = payload.loggedIn
       state.idToken = payload.idToken
+      state.email = payload.email
+      state.name = payload.name
+      state.photoUrl = payload.photoUrl
     },
     logout: (state) => {
       state.loggedIn = initialState.loggedIn
       state.idToken = initialState.idToken
+      state.email = initialState.email
+      state.name = initialState.name
+      state.photoUrl = initialState.photoUrl
     },
   },
 })

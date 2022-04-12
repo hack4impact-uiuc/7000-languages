@@ -65,7 +65,7 @@ const Landing = () => {
   const loginUser = async () => {
     await errorWrap(
       async () => {
-        const { idToken } = await Google.logInAsync({
+        const { idToken, email, name, photoUrl } = await Google.logInAsync({
           iosClientId: Constants.manifest.extra.iosClientId,
           androidClientId: Constants.manifest.extra.androidClientId,
         })
@@ -78,10 +78,16 @@ const Landing = () => {
           await createUser(userData)
           console.log('created user')
           // Save to Async Storage
-          await saveUserIDToken(idToken)
-          console.log('saved user id token')
+          await saveUserData(idToken, email, name, photoUrl)
+          console.log('saved user data')
           // Update Redux Store
           dispatch(authenticate({ loggedIn: true, idToken }))
+          console.log('ran dispatch')
+          dispatch(authenticate({ loggedIn: true, email }))
+          console.log('ran dispatch')
+          dispatch(authenticate({ loggedIn: true, name }))
+          console.log('ran dispatch')
+          dispatch(authenticate({ loggedIn: true, photoUrl }))
           console.log('ran dispatch')
         }
       },
