@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray.light,
   },
 })
-const HomeBaseCase = () => (
+const HomeBaseCase = ({ navigation }) => (
   <View style={styles.root}>
     <StatusBar barStyle="light-content" />
     <Text
@@ -94,6 +94,15 @@ any courses yet!`}
     >
       Apply to Contribute
     </Text>
+
+    <StyledButton
+      title="Unit Drawer"
+      variant="primary"
+      onPress={() => {
+        navigation.navigate('Modal', { screen: 'UnitDrawer' })
+      }}
+    />
+  
   </View>
 )
 
