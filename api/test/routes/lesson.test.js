@@ -68,7 +68,7 @@ describe('GET /lesson/ ', () => {
     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
   });
 
-  test('Error getting vocab - invalid length of course, unit, lesson id', async () => {
+  test('Error getting vocab - invalid length of lesson id', async () => {
     const response = await withAuthentication(
       request(app).get(`/language/lesson${GET_LESSON_INVALID_ID}`),
     );
@@ -77,7 +77,7 @@ describe('GET /lesson/ ', () => {
     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
   });
 
-  test('Error getting vocab - course, unit, and lesson does not exist', async () => {
+  test('Error getting vocab - lesson does not exist', async () => {
     const response = await withAuthentication(
       request(app).get(`/language/lesson${GET_LESSON_DOES_NOT_EXIST}`),
     );

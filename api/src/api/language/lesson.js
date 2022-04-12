@@ -26,9 +26,10 @@ router.put(
     const session = await mongoose.startSession();
     session.startTransaction();
     let lessonData = [];
+    const lessonUpdates = req.body.updates;
 
     try {
-      lessonData = await updateLessonsInTransaction(req.body, session);
+      lessonData = await updateLessonsInTransaction(lessonUpdates, session);
       // Commit the changes
       await session.commitTransaction();
     } catch (error) {

@@ -1,4 +1,5 @@
-module.exports.GET_LESSON = '?lesson_id=62391a30487d5ae343c8231c';
+module.exports.GET_LESSON =
+  '?course_id=62391a30487d5ae343c82311&lesson_id=62391a30487d5ae343c8231c';
 
 module.exports.GET_LESSON_EXPECTED = {
   _id: '62391a30487d5ae343c8231c',
@@ -163,46 +164,50 @@ module.exports.GET_LESSON_EXPECTED = {
   ],
 };
 
-module.exports.GET_LESSON_MISSING_LESSON_ID = '';
+module.exports.GET_LESSON_MISSING_LESSON_ID =
+  '?course_id=62391a30487d5ae343c82311';
 
-module.exports.GET_LESSON_INVALID_ID = '?lesson_id=areyou';
+module.exports.GET_LESSON_INVALID_ID = '?course_id=hello&lesson_id=areyou';
 module.exports.GET_LESSON_DOES_NOT_EXIST =
-  '?lesson_id=62391a30487d5ae343c12345';
+  '?course_id=62391a30487d5ae343c82311&lesson_id=62391a30487d5ae343c12345';
 
-module.exports.PUT_LESSON_UPDATE_SELECTED = [
-  {
-    _id: '62391a30487d5ae343c8231c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 0,
-    selected: false,
-  },
-  {
-    _id: '62391a30487d5ae343c8232c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 0,
-  },
-  {
-    _id: '62391a30487d5ae343c8233c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 1,
-  },
-  {
-    _id: '62391a30487d5ae343c8234c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 2,
-  },
-  {
-    _id: '62391a30487d5ae343c8235c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 1,
-    selected: false,
-  },
-];
+module.exports.PUT_LESSON_UPDATE_SELECTED = {
+  course_id: '62391a30487d5ae343c82311',
+  updates: [
+    {
+      _id: '62391a30487d5ae343c8231c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 0,
+      selected: false,
+    },
+    {
+      _id: '62391a30487d5ae343c8232c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 0,
+    },
+    {
+      _id: '62391a30487d5ae343c8233c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 1,
+    },
+    {
+      _id: '62391a30487d5ae343c8234c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 2,
+    },
+    {
+      _id: '62391a30487d5ae343c8235c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 1,
+      selected: false,
+    },
+  ],
+};
 
 module.exports.PUT_LESSON_UPDATE_SELECTED_EXPECTED = [
   {
@@ -257,38 +262,41 @@ module.exports.PUT_LESSON_UPDATE_SELECTED_EXPECTED = [
   },
 ];
 
-module.exports.PUT_LESSON_UPDATE_ORDER = [
-  {
-    _id: '62391a30487d5ae343c8231c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 2,
-  },
-  {
-    _id: '62391a30487d5ae343c8232c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 0,
-  },
-  {
-    _id: '62391a30487d5ae343c8233c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 3,
-  },
-  {
-    _id: '62391a30487d5ae343c8234c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 4,
-  },
-  {
-    _id: '62391a30487d5ae343c8235c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 1,
-  },
-];
+module.exports.PUT_LESSON_UPDATE_ORDER = {
+  course_id: '62391a30487d5ae343c82311',
+  updates: [
+    {
+      _id: '62391a30487d5ae343c8231c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 2,
+    },
+    {
+      _id: '62391a30487d5ae343c8232c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 0,
+    },
+    {
+      _id: '62391a30487d5ae343c8233c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 3,
+    },
+    {
+      _id: '62391a30487d5ae343c8234c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 4,
+    },
+    {
+      _id: '62391a30487d5ae343c8235c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 1,
+    },
+  ],
+};
 
 module.exports.PUT_LESSON_UPDATE_ORDER_EXPECTED = [
   {
@@ -343,38 +351,41 @@ module.exports.PUT_LESSON_UPDATE_ORDER_EXPECTED = [
   },
 ];
 
-module.exports.PUT_LESSON_MOVE_TO_UNSELECTED = [
-  {
-    _id: '62391a30487d5ae343c8231c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    selected: false,
-  },
-  {
-    _id: '62391a30487d5ae343c8232c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    selected: false,
-  },
-  {
-    _id: '62391a30487d5ae343c8233c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    selected: false,
-  },
-  {
-    _id: '62391a30487d5ae343c8234c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    selected: false,
-  },
-  {
-    _id: '62391a30487d5ae343c8235c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    selected: false,
-  },
-];
+module.exports.PUT_LESSON_MOVE_TO_UNSELECTED = {
+  course_id: '62391a30487d5ae343c82311',
+  updates: [
+    {
+      _id: '62391a30487d5ae343c8231c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      selected: false,
+    },
+    {
+      _id: '62391a30487d5ae343c8232c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      selected: false,
+    },
+    {
+      _id: '62391a30487d5ae343c8233c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      selected: false,
+    },
+    {
+      _id: '62391a30487d5ae343c8234c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      selected: false,
+    },
+    {
+      _id: '62391a30487d5ae343c8235c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      selected: false,
+    },
+  ],
+};
 
 module.exports.PUT_LESSON_MOVE_TO_UNSELECTED_EXPECTED = [
   {
@@ -429,105 +440,117 @@ module.exports.PUT_LESSON_MOVE_TO_UNSELECTED_EXPECTED = [
   },
 ];
 
-module.exports.PUT_LESSON_MISSING_ID = [
-  {
-    _id: '62391a30487d5ae343c8231c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 1,
-  },
-  {
-    _order: 0,
-  },
-];
-
-module.exports.PUT_LESSON_INVALID_ID = [
-  {
-    _id: '62391a30487d5ae343c8231c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 1,
-  },
-  {
-    _id: 'invalid_id',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 0,
-  },
-];
-
-module.exports.PUT_LESSON_DUPLICATE_ORDER = [
-  {
-    _id: '62391a30487d5ae343c8231c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 2,
-  },
-  {
-    _id: '62391a30487d5ae343c8232c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 0,
-  },
-  {
-    _id: '62391a30487d5ae343c8233c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 2,
-  },
-  {
-    _id: '62391a30487d5ae343c8234c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 4,
-  },
-  {
-    _id: '62391a30487d5ae343c8235c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 0,
-  },
-];
-
-module.exports.PUT_LESSON_EXTRA_FIELDS = [
-  {
-    _id: '62391a30487d5ae343c8231c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 2,
-    test: 'asdaseasd',
-  },
-  {
-    _id: '62391a30487d5ae343c8232c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 0,
-    extrafield: false,
-  },
-  {
-    _id: '62391a30487d5ae343c8233c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 3,
-  },
-  {
-    _id: '62391a30487d5ae343c8234c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 4,
-    compount: {
-      a: 123,
-      b: 1231,
-      c: undefined,
+module.exports.PUT_LESSON_MISSING_ID = {
+  course_id: '62391a30487d5ae343c82311',
+  updates: [
+    {
+      _id: '62391a30487d5ae343c8231c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 1,
     },
-  },
-  {
-    _id: '62391a30487d5ae343c8235c',
-    _course_id: '62391a30487d5ae343c82311',
-    _unit_id: '62391a30487d5ae343c82312',
-    _order: 1,
-  },
-];
+    {
+      _order: 0,
+    },
+  ],
+};
+
+module.exports.PUT_LESSON_INVALID_ID = {
+  course_id: '62391a30487d5ae343c82311',
+  updates: [
+    {
+      _id: '62391a30487d5ae343c8231c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 1,
+    },
+    {
+      _id: 'invalid_id',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 0,
+    },
+  ],
+};
+
+module.exports.PUT_LESSON_DUPLICATE_ORDER = {
+  course_id: '62391a30487d5ae343c82311',
+  updates: [
+    {
+      _id: '62391a30487d5ae343c8231c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 2,
+    },
+    {
+      _id: '62391a30487d5ae343c8232c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 0,
+    },
+    {
+      _id: '62391a30487d5ae343c8233c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 2,
+    },
+    {
+      _id: '62391a30487d5ae343c8234c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 4,
+    },
+    {
+      _id: '62391a30487d5ae343c8235c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 0,
+    },
+  ],
+};
+
+module.exports.PUT_LESSON_EXTRA_FIELDS = {
+  course_id: '62391a30487d5ae343c82311',
+  updates: [
+    {
+      _id: '62391a30487d5ae343c8231c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 2,
+      test: 'asdaseasd',
+    },
+    {
+      _id: '62391a30487d5ae343c8232c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 0,
+      extrafield: false,
+    },
+    {
+      _id: '62391a30487d5ae343c8233c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 3,
+    },
+    {
+      _id: '62391a30487d5ae343c8234c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 4,
+      compount: {
+        a: 123,
+        b: 1231,
+        c: undefined,
+      },
+    },
+    {
+      _id: '62391a30487d5ae343c8235c',
+      _course_id: '62391a30487d5ae343c82311',
+      _unit_id: '62391a30487d5ae343c82312',
+      _order: 1,
+    },
+  ],
+};
 
 module.exports.PUT_LESSON_EXTRA_FIELDS_EXPECTED = [
   {
