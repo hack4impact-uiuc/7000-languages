@@ -6,7 +6,7 @@ const { models } = require('../../models/index.js');
 const { requireAuthentication } = require('../../middleware/authentication');
 const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
-const { patchDocument } = require('../../utils/languageHelper');
+const { patchDocument, checkIds } = require('../../utils/languageHelper');
 /**
  * Does a patch update a single course in the database, meaning
  * it makes changes to parts of the course specified in the request.
@@ -17,11 +17,14 @@ router.patch(
   errorWrap(async (req, res) => {
     const updates = req.body;
 
-    await models.Course.exists({ _id: req.params.id }, function (err) {
-      if (err) {
-        return sendResponse(res, 404, 'Course not found');
-      }
-    });
+    const course_id = req.params.id;
+
+    // Checks if the ids are valid
+    const isValid = await checkIds({ course_id });
+
+    if (!isValid) {
+      return sendResponse(res, 404, 'Course not found');
+    }
 
     const course = await models.Course.findById(req.params.id);
 

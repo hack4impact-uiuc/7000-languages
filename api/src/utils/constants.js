@@ -20,3 +20,5 @@ module.exports.SUCCESS_POSTING_VOCAB_DATA =
   'Successfully created a new vocab item';
 module.exports.NOT_FOUND_INDEX = -1;
 module.exports.SUCCESS_PATCHING_LESSON_DATA = 'Success patching lesson data';
+module.exports.SUCCESS_POSTING_LESSON_DATA =
+  'Successfully created a new lesson';
