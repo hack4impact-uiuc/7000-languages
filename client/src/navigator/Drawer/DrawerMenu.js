@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View, SafeAreaView, Text } from 'react-native'
-
+import { View, SafeAreaView } from 'react-native'
+import { Text } from 'native-base'
 import { DrawerActions } from '@react-navigation/native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
@@ -10,7 +10,7 @@ const styles = {
   root: {
     flex: 1,
     flexDirection: 'column',
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   head: {
     flexDirection: 'row',
@@ -22,10 +22,30 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
+  line: {
+    marginTop: '8%',
+    marginBottom: '4%',
+    height: 1,
+    backgroundColor: '#C0C0C0',
+    width: '65%',
+  },
 }
 
 const DrawerMenu = ({ navigation }) => (
-  <SafeAreaView style={styles.root}>
+  <SafeAreaView style={styles.head}>
+    <View style={styles.root}>
+      <Text
+        style={{
+          fontFamily: 'GT_Haptik_bold',
+          paddingBottom: 10,
+        }}
+        fontWeight="regular"
+        color="black"
+        fontSize="25px"
+      >
+        My Courses
+      </Text>
+    </View>
     <View style={styles.head}>
       <FontIcon.Button
         name="times"
@@ -36,9 +56,6 @@ const DrawerMenu = ({ navigation }) => (
           navigation.dispatch(DrawerActions.closeDrawer())
         }}
       />
-    </View>
-    <View style={styles.main}>
-      <Text>Drawer Menu</Text>
     </View>
   </SafeAreaView>
 )
