@@ -217,7 +217,7 @@ describe('POST /vocab/ ', () => {
       request(app).post('/language/vocab/').send(POST_VOCAB_ITEM_INVALID_ID),
     );
     var message = response.body.message;
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(400);
     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
   });
 });

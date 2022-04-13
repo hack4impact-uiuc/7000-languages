@@ -150,9 +150,9 @@ describe('POST /language/course/ ', () => {
 // This block tests the PATCH language/course/ endpoint.
 describe('PATCH /language/course/ ', () => {
   /*
-    We have to make sure we connect to a MongoDB mock db before the test
-    and close the connection at the end.
-  */
+      We have to make sure we connect to a MongoDB mock db before the test
+      and close the connection at the end.
+    */
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
 
@@ -244,8 +244,6 @@ describe('PATCH /language/course/ ', () => {
   });
 
   test('Patch request specifies nonexistent course', async () => {
-    const original = PATCH_ORIGINAL_COURSE;
-
     const body = PATCH_UPDATE_NON_BOOLEAN_APPROVAL;
     const response = await withAuthentication(
       request(app).patch('/language/course/12345').send(body),

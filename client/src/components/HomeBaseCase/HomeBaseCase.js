@@ -67,18 +67,17 @@ any courses yet!`}
       fontSize="xl"
       textAlign="center"
       paddingBottom="10px"
+      marginX="20px"
     >
-      Do you know an indigenous {'\n'}
-      language that you would like to share {'\n'}
-      with the world?
+      Our mission is to help communities teach, learn, and sustain their
+      endangered languages.
       <Text
         style={{
           fontFamily: 'GT_Haptik_bold',
         }}
       >
         {' '}
-        Apply to become a {'\n'}
-        contributor.
+        We’d love to support your revitalization efforts.
       </Text>
     </Text>
     <Text
@@ -92,7 +91,7 @@ any courses yet!`}
       color="red.dark"
       fontSize="2xl"
     >
-      Apply to Contribute
+      Become a contributor
     </Text>
   </View>
 )
