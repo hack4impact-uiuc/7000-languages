@@ -8,9 +8,14 @@ const {
   SUCCESS_GETTING_LESSON_DATA,
   ERR_GETTING_LESSON_DATA,
   ERR_MISSING_OR_INVALID_DATA,
+  SUCCESS_PATCHING_LESSON_DATA,
   SUCCESS_POSTING_LESSON_DATA,
 } = require('../../utils/constants');
-const { getNumLessonsInUnit, checkIds } = require('../../utils/languageHelper');
+const {
+  checkIds,
+  getNumLessonsInUnit,
+  patchDocument,
+} = require('../../utils/languageHelper');
 
 /**
  * Creates a new lesson with 0 vocab items in the database
@@ -80,6 +85,42 @@ router.get(
       return sendResponse(res, 200, SUCCESS_GETTING_LESSON_DATA, lesson);
     }
     return sendResponse(res, 404, ERR_GETTING_LESSON_DATA);
+  }),
+);
+
+/**
+ * Does a patch update on a single lesson in the database, meaning
+ * it makes changes to parts of the lesson specified in the request.
+ */
+router.patch(
+  '/',
+  requireAuthentication,
+  errorWrap(async (req, res) => {
+    const { unit_id, course_id, lesson_id, updates } = req.body;
+
+    if (!unit_id || !course_id || !lesson_id || !updates) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    // Checks if the ids are defined, valid ObjectIDs, and exist in MongoDB
+    const isValid = await checkIds({ course_id, unit_id, lesson_id });
+
+    if (!isValid) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    let lesson = await models.Lesson.findOne({
+      _id: lesson_id,
+      _course_id: course_id,
+      _unit_id: unit_id,
+    });
+
+    if (lesson) {
+      patchDocument(lesson, updates);
+      await lesson.save();
+      return sendResponse(res, 200, SUCCESS_PATCHING_LESSON_DATA, lesson);
+    }
+    return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
   }),
 );
 

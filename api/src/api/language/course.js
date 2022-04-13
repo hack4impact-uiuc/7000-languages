@@ -6,8 +6,7 @@ const { models } = require('../../models/index.js');
 const { requireAuthentication } = require('../../middleware/authentication');
 const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
-const { checkIds } = require('../../utils/languageHelper');
-
+const { patchDocument, checkIds } = require('../../utils/languageHelper');
 /**
  * Does a patch update a single course in the database, meaning
  * it makes changes to parts of the course specified in the request.
@@ -29,11 +28,7 @@ router.patch(
 
     const course = await models.Course.findById(req.params.id);
 
-    for (var key in updates) {
-      if (key in course && typeof course[key] === typeof updates[key]) {
-        course[key] = updates[key];
-      }
-    }
+    patchDocument(course, updates);
 
     await course.save();
     return sendResponse(res, 200, 'Successfully updated course', course);
