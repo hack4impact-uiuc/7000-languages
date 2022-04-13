@@ -57,19 +57,15 @@ Lesson.index({ _course_id: 1, _unit_id: 1, _order: 1 });
 
 /* Validation Methods */
 
-// TODO: update find to consider course and unit id
-
 /**
- * Checks if the step number is unique among all other steps. This
- * function is meant to be called in transactions.
- * @param {Number} stepNumber The step number to check.
- * @param {String} stepKey The stepKey for the step we're validating.
- * @param {Object} session The session object for this transaction.
- * @returns True if the step number is unique.
+ * Determines whether a document with a specific _id has a specific order
+ * @param {JSON} params Parameters considered when searching for all documents in model
+ * @param {ObjectId} _id document that we are checking
+ * @param {Mongoose Model} model Model that the document belongs to
+ * @param {Object} session Mongoose Transaction Session object
+ * @returns true if the document with _id has a unique order
  */
 const isUniqueOrder = async (params, _id, model, session = null) => {
-  // Find all steps with this step number
-
   let documents;
 
   if (session) {
