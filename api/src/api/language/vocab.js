@@ -9,7 +9,7 @@ const {
   SUCCESS_POSTING_VOCAB_DATA,
   NOT_FOUND_INDEX,
 } = require('../../utils/constants');
-const { getVocabIndexByID } = require('../../utils/languageHelper');
+const { getVocabIndexByID, checkIds } = require('../../utils/languageHelper');
 
 /**
  * Updates the fields for a vocab item
@@ -24,18 +24,19 @@ router.patch(
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
-    /* Get the lesson data from MongoDB */
-    let lesson;
+    // Checks if the ids are valid
+    const isValid = await checkIds({ course_id, unit_id, lesson_id });
 
-    try {
-      lesson = await models.Lesson.findById({
-        _course_id: course_id,
-        _unit_id: unit_id,
-        _id: lesson_id,
-      });
-    } catch (error) {
-      return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
+    if (!isValid) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
+
+    /* Get the lesson data from MongoDB */
+    let lesson = await models.Lesson.findById({
+      _course_id: course_id,
+      _unit_id: unit_id,
+      _id: lesson_id,
+    });
 
     if (lesson) {
       /* Obtain the index of the vocab item that we want to update */
@@ -77,16 +78,24 @@ router.post(
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
+    // Checks if the ids are valid
+    const isValid = await checkIds({ course_id, unit_id, lesson_id });
+
+    if (!isValid) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    // Obtain the lesson mongoose document
+    const lessonData = await models.Lesson.findOne({
+      _course_id: course_id,
+      _unit_id: unit_id,
+      _id: lesson_id,
+    });
+    if (lessonData === null) {
+      return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
+    }
+
     try {
-      // Obtain the lesson mongoose document
-      const lessonData = await models.Lesson.findOne({
-        _course_id: course_id,
-        _unit_id: unit_id,
-        _id: lesson_id,
-      });
-      if (lessonData === null) {
-        return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
-      }
       // Give the new vocab item an order value and push to lesson mongoose document
       vocab._order = lessonData.vocab.length;
       lessonData.vocab.push(vocab);

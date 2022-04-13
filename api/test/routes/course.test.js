@@ -199,8 +199,6 @@ describe('PATCH /language/course/ ', () => {
   });
 
   test('Patch request specifies nonexistent course', async () => {
-    const original = PATCH_ORIGINAL_COURSE;
-
     const body = PATCH_UPDATE_NON_BOOLEAN_APPROVAL;
     const response = await withAuthentication(
       request(app).patch('/language/course/12345').send(body),
