@@ -37,9 +37,9 @@ verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 // This block tests the GET /user/ endpoint.
 describe('GET /user/ ', () => {
   /*
-    We have to make sure we connect to a MongoDB mock db before the test
-    and close the connection at the end.
-  */
+      We have to make sure we connect to a MongoDB mock db before the test
+      and close the connection at the end.
+    */
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
 
@@ -73,9 +73,9 @@ describe('GET /user/ ', () => {
 // This block tests the POST /user/ endpoint.
 describe('POST /user/ ', () => {
   /*
-    We have to make sure we connect to a MongoDB mock db before the test
-    and close the connection at the end.
-  */
+      We have to make sure we connect to a MongoDB mock db before the test
+      and close the connection at the end.
+    */
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
 
