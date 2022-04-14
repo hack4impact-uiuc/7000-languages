@@ -2,6 +2,7 @@ let app = require('../../src/app');
 const request = require('supertest');
 const db = require('../utils/db');
 const {
+  GET_SIMPLE_COURSE_EXPECTED,
   POST_SIMPLE_COURSE,
   POST_SIMPLE_COURSE_EXPECTED,
   POST_MISSING_NON_REQ_FIELD_COURSE,
@@ -39,12 +40,56 @@ const { verifyIdTokenMockReturnValue } = require('../mock-data/auth-mock-data');
 const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
 verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
+describe('GET /language/course/ ', () => {
+  /*
+    We have to make sure we connect to a MongoDB mock db before the test
+    and close the connection at the end.
+  */
+  afterAll(async () => await db.closeDatabase());
+  afterEach(async () => await db.resetDatabase());
+  beforeAll(async () => {
+    await db.connect();
+  });
+
+  test('API should get a simple course', async () => {
+    const response = await withAuthentication(
+      request(app).get('/language/course/62391a30487d5ae343c82311'),
+    );
+    console.error(response);
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully fetched course');
+    expect(result).toEqual(GET_SIMPLE_COURSE_EXPECTED);
+  });
+
+  test('No id results in error', async () => {
+    const body = POST_WRONG_COURSE_MISSING_NAME;
+
+    const response = await withAuthentication(
+      request(app).get('/language/course/'),
+    );
+
+    expect(response.status).toBeGreaterThanOrEqual(400);
+  });
+
+  test('Invalid id results in error', async () => {
+    const body = POST_WRONG_COURSE_MISSING_NAME;
+
+    const response = await withAuthentication(
+      request(app).get('/language/course/62391a30487d5ae343caaaaa'),
+    );
+
+    expect(response.status).toBeGreaterThanOrEqual(400);
+  });
+});
+
 // This block tests the POST /user/ endpoint.
-describe('POST /user/ ', () => {
+describe('POST /language/course/ ', () => {
   /* 
-      We have to make sure we connect to a MongoDB mock db before the test 
-      and close the connection at the end.
-    */
+    We have to make sure we connect to a MongoDB mock db before the test
+    and close the connection at the end.
+  */
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
 
@@ -104,10 +149,10 @@ describe('POST /user/ ', () => {
 
 // This block tests the PATCH language/course/ endpoint.
 describe('PATCH /language/course/ ', () => {
-  /* 
-    We have to make sure we connect to a MongoDB mock db before the test 
-    and close the connection at the end.
-  */
+  /*
+      We have to make sure we connect to a MongoDB mock db before the test
+      and close the connection at the end.
+    */
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
 

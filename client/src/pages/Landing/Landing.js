@@ -74,13 +74,15 @@ const Landing = () => {
           const userData = {
             idToken,
           }
-
           // call API
           await createUser(userData)
+          console.log('created user')
           // Save to Async Storage
           await saveUserIDToken(idToken)
+          console.log('saved user id token')
           // Update Redux Store
           dispatch(authenticate({ loggedIn: true, idToken }))
+          console.log('ran dispatch')
         }
       },
       () => {
@@ -107,7 +109,7 @@ const Landing = () => {
           }
           variant="secondary"
           onPress={loginUser}
-          style={{ paddingRight: 40 }}
+          style={{ paddingRight: 60 }}
         />
       </View>
 

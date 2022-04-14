@@ -44,12 +44,10 @@ const requireAuthentication = async (req, res, next) => {
       }
     }
   } catch (error) {
-    console.error(error);
+    console.error('Error during authentication middleware:', error);
     sendResponse(res, 401, ERR_AUTH_FAILED);
   }
 };
-
-// TODO: Setup middleware for authorizing user/giving access to a specific course
 
 /**
  * Valides a user with their Google Auth ID Token
