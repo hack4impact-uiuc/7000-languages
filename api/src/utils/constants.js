@@ -10,4 +10,5 @@ module.exports.ERR_NO_COURSE_DETAILS =
   'Missing Course details. Please log out and try again.';
 module.exports.ERR_GETTING_USER_DATA =
   'Error fetching user data, please try again.';
+module.exports.ERR_NOT_AUTHORIZED = 'You are not authorized to access this course.';
 module.exports.SUCCESS_GETTING_USER_DATA = 'Successfully fetched user data';

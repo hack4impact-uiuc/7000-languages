@@ -198,12 +198,25 @@ describe('PATCH /language/course/ ', () => {
     expect(response.status).toBe(200);
   });
 
+  test('Patch request specifies invalid course id', async () => {
+    const original = PATCH_ORIGINAL_COURSE;
+
+    const body = PATCH_UPDATE_APPROVAL;
+    const response = await withAuthentication(
+      request(app).patch('/language/course/12345').send(body),
+    );
+    const message = response.body.message;
+
+    expect(response.status).toBe(404);
+    expect(message).toEqual('Course not found');
+  });
+
   test('Patch request specifies nonexistent course', async () => {
     const original = PATCH_ORIGINAL_COURSE;
 
-    const body = PATCH_UPDATE_NON_BOOLEAN_APPROVAL;
+    const body = PATCH_UPDATE_APPROVAL;
     const response = await withAuthentication(
-      request(app).patch('/language/course/12345').send(body),
+      request(app).patch('/language/course/62391a30487d5ae343c82310').send(body),
     );
     const message = response.body.message;
 

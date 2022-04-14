@@ -6,6 +6,7 @@ const { models } = require('../../models/index.js');
 const { requireAuthentication } = require('../../middleware/authentication');
 const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
+const { requireLanguageAuthorization } = require('../../middleware/authorization');
 
 /**
  * patch
@@ -14,6 +15,7 @@ const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
 router.patch(
   '/:id',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const updates = req.body;
 
