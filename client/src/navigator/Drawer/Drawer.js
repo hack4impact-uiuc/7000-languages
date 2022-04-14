@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/drawer'
 import { Text, Image } from 'native-base'
 import { FontAwesome } from '@expo/vector-icons'
-import { colors } from 'theme'
+import { colors, images } from 'theme'
 import { View, Pressable, StyleSheet } from 'react-native'
 import OwnershipButton from 'components/OwnershipButton'
 import DrawerLogoutButton from 'components/DrawerLogoutButon'
@@ -205,9 +205,11 @@ const DrawerMenuContainer = (props) => {
       <View style={drawerStyles.topDivider} />
       <View style={drawerStyles.bottomContainer}>
         <Image
-          source={{
-            uri: props.profileUrl,
-          }}
+          source={
+            props.profileUrl === ''
+              ? images.default_icon
+              : { uri: props.profileUrl }
+          }
           alt="Profile Icon"
           size="sm"
           resizeMode="contain"
