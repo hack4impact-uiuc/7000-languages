@@ -60,27 +60,29 @@ const StyledCard = ({
     <Box style={styles.rightIcon}>{rightIcon}</Box>
   ) : null
 
-  const indicator = indicatorType !== INDICATOR_TYPES.NONE ? (
-    <Box style={styles.indicator}>
-      <Indicator indicatorType={indicatorType} />
-    </Box>
-  ) : null
+  const indicator =
+    indicatorType !== INDICATOR_TYPES.NONE ? (
+      <Box style={styles.indicator}>
+        <Indicator indicatorType={indicatorType} />
+      </Box>
+    ) : null
 
-  const generateRightImage = imageUri === '' ? (
-    indicator
-  ) : (
-    <Box style={styles.indicator}>
-      <Image
-        source={{
-          uri: imageUri,
-        }}
-        alt="Alternate Text"
-        size="md"
-        resizeMode="contain"
-        borderRadius={5}
-      />
-    </Box>
-  )
+  const generateRightImage =
+    imageUri === '' ? (
+      indicator
+    ) : (
+      <Box style={styles.indicator}>
+        <Image
+          source={{
+            uri: imageUri,
+          }}
+          alt="Alternate Text"
+          size="md"
+          resizeMode="contain"
+          borderRadius={5}
+        />
+      </Box>
+    )
   const generateVolumeIcon = showVolumeIcon ? (
     <Box style={styles.soundIcon}>
       <FontAwesome

@@ -3,8 +3,15 @@ import PropTypes from 'prop-types'
 import { StyleSheet, View, Linking } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, fonts } from 'theme'
-import { Text, ScrollView, Input, Checkbox, FormControl } from 'native-base'
-
+import {
+  Text,
+  ScrollView,
+  Input,
+  Checkbox,
+  FormControl,
+  TextArea,
+} from 'native-base'
+//import { SuccessAnimation } from "react-native-success-animation";
 
 const styles = StyleSheet.create({
   root: {
@@ -45,12 +52,11 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: colors.gray.light,
-    marginBottom: 10
+    marginBottom: 10,
   },
   checkboxes: {
-    marginBottom: 25
-  }, 
-
+    marginBottom: 25,
+  },
 })
 
 // things to do:
@@ -70,140 +76,83 @@ const Apply = ({ navigation }) => {
   const [contact, setContact] = useState(false)
   const [link, setLink] = useState(false)
 
-
   const [errors, setErrors] = useState({})
 
   const validate = () => {
     const validateErrors = {}
 
     if (name === '') {
-
       validateErrors['name'] = 'Name is required'
-       
-    }  if (email === '') {
+    }
+    if (email === '') {
       validateErrors['email'] = 'Email is required'
-      
-    }  if (language === '') {
+    }
+    if (language === '') {
       validateErrors['Language'] = 'Language is required'
-
-    } if (acceptTerms === false) {
+    }
+    if (acceptTerms === false) {
       validateErrors['acceptTerms'] = 'Terms is required'
+    }
+    setErrors(validateErrors)
 
-    } 
-    setErrors(validateErrors) 
-    
-    if (Object.keys(validateErrors).length === 0 ) {
+    if (Object.keys(validateErrors).length === 0) {
       return true
     } else {
-      return false 
+      return false
+    }
+  }
+
+  const applyCourse = async () => {
+    const applicationData = {
+      details: {
+        admin_name: name,
+        admin_email: email,
+        name: language,
+        alternative_name: otherNames,
+        description: '',
+        iso: isoCode,
+        glotto: glottoCode,
+        population: population,
+        location: location,
+        link: link,
+      },
+    }
+    await errorWrap(
+      async () => {
+        // call API
+        await createCourse(applicationData)
+        // Save to Async Storage
+
+        // Update Redux Store
+      },
+      () => {
+        console.log('success')
+      },
+      () => {
+        console.log('error')
+      },
+    )
+  }
+
+  const onSubmit = () => {
+    console.log(acceptTerms)
+    if (validate() === true) {
+      applyCourse()
+     // routeSuccess()
+    } else {
+      console.log('Validation Failed')
     }
   }
 
 
-  
+  function routeSuccess() {
+    
 
-
-  
-
-  // const submitApplication = async () => {
-  //   const applicationData = {
-  //     details: {
-  //       admin_name: name,
-  //       admin_email: email, 
-  //       name: language,
-  //       alternative_name: otherNames,
-  //       description: "", 
-  //       iso: isoCode,
-  //       glotto: glottoCode,
-  //       population: population, 
-  //       location: location,
-  //       link: link
-  //     },
-  //   };
-
-  //   // admin_name: { type: String, required: true },
-  //   // admin_email: { type: String, required: true },
-  //   // name: { type: String, required: true },
-  //   // alternative_name: { type: String, required: false, default: '' },
-  //   // description: { type: String, required: false, default: '' },
-  //   // iso: { type: String, required: false, default: '' },
-  //   // glotto: { type: String, required: false, default: '' },
-  //   // translated_language: { type: String, required: false, default: 'English' },
-  //   // population: { type: String, required: false, default: '' },
-  //   // location: { type: String, required: false, default: '' },
-  //   // link: { type: String, required: false, default: '' },
-  //   await errorWrap(
-
-  //         // call API
-  //         await createCourse(applicationData)
-  //         // Save to Async Storage
-  //         // Update Redux Stor
-
-  //     () => {
-  //       console.log('success')
-  //     },
-  //     () => {
-  //       console.log('error')
-  //     },
-  //   )
-  // }
-
-
-  // const applyCourse = async () => {
-  //       const applicationData = {
-  //     details: {
-  //       admin_name: name,
-  //       admin_email: email, 
-  //       name: language,
-  //       alternative_name: otherNames,
-  //       description: "", 
-  //       iso: isoCode,
-  //       glotto: glottoCode,
-  //       population: population, 
-  //       location: location,
-  //       link: link
-  //     },
-  //   };
-  //   await errorWrap(
-  //     async () => {
-  
-  //         // call API
-  //         await createCourse(applicationData)
-  //       }
-  // },
-  //     () => {
-  //       console.log('success')
-  //     },
-  //     () => {
-  //       console.log('error')
-  //     },
-  //   )
-  // }
-
-  const onSubmit = () => {
-
-    console.log(acceptTerms)
-    if (validate() === true) {
-      applyCourse(); 
-      routeSuccess();
-    } else {
-        console.log('Validation Failed');
-    }
-
-
-
-  };
-
-
-  function routeSuccess
-
-  
-
+  }
 
   // should this be string?? Can check DB later
 
   return (
-   
     <View style={styles.root}>
       <View style={styles.header}>
         <Text
@@ -251,10 +200,7 @@ const Apply = ({ navigation }) => {
                 size="2xl"
                 style={{ height: '50px' }}
                 onChangeText={(text) => setName(text)}
-                style={{
-                  
-                }}
-  
+                style={{}}
               />
               {'name' in errors ? (
                 <FormControl.ErrorMessage>Required.</FormControl.ErrorMessage>
@@ -277,7 +223,7 @@ const Apply = ({ navigation }) => {
               <Input
                 size="xl"
                 style={{ height: '50px' }}
-                onChangeText={(text) => setEmail(text) }
+                onChangeText={(text) => setEmail(text)}
               />
               {'email' in errors ? (
                 <FormControl.ErrorMessage>Required.</FormControl.ErrorMessage>
@@ -320,9 +266,11 @@ const Apply = ({ navigation }) => {
             Any alternative names?
           </Text>
           <View style={styles.input}>
-            <Input
-              size="xl"
-              style={{ height: '50px' }}
+            <TextArea
+              size="2xl"
+              h={40}
+              variant="filled"
+              placeholder=""
               onChangeText={(text) => setOtherNames(text)}
             />
           </View>
@@ -404,9 +352,11 @@ const Apply = ({ navigation }) => {
             Where is this language spoken?
           </Text>
           <View style={styles.input}>
-            <Input
-              size="xl"
-              style={{ height: '50px' }}
+            <TextArea
+              size="2xl"
+              h={40}
+              variant="filled"
+              placeholder=""
               onChangeText={(text) => setLocation(text)}
             />
           </View>
@@ -450,34 +400,38 @@ const Apply = ({ navigation }) => {
           </View>
 
           <View style={styles.checkboxes}>
-          <FormControl is Required isInvalid={'acceptTerms' in errors}>
-            <Checkbox value="accepted" colorScheme="danger"  onChange={setAcceptTerms}>
-            {'acceptTerms' in errors ? (
-                <FormControl.ErrorMessage>Required.</FormControl.ErrorMessage>
-              ) : null}
-              <Text
-                style={{
-                  fontFamily: 'GT_Haptik_regular',
-                }}
-                fontWeight="regular"
-                color="black"
-                fontStyle="regular"
-                fontSize="md"
+            <FormControl is Required isInvalid={'acceptTerms' in errors}>
+              <Checkbox
+                value="accepted"
+                colorScheme="danger"
+                onChange={setAcceptTerms}
               >
-                I agree to the {''}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: 'GT_Haptik_bold',
-                }}
-                fontWeight="regular"
-                color="black"
-                fontStyle="regular"
-                fontSize="md"
-              >
-                Terms and Conditions {'\n'}
-              </Text>
-            </Checkbox>
+                {'acceptTerms' in errors ? (
+                  <FormControl.ErrorMessage>Required.</FormControl.ErrorMessage>
+                ) : null}
+                <Text
+                  style={{
+                    fontFamily: 'GT_Haptik_regular',
+                  }}
+                  fontWeight="regular"
+                  color="black"
+                  fontStyle="regular"
+                  fontSize="md"
+                >
+                  I agree to the {''}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'GT_Haptik_bold',
+                  }}
+                  fontWeight="regular"
+                  color="black"
+                  fontStyle="regular"
+                  fontSize="md"
+                >
+                  Terms and Conditions {'\n'}
+                </Text>
+              </Checkbox>
             </FormControl>
             <Checkbox value="two" colorScheme="danger">
               <Text
@@ -489,37 +443,34 @@ const Apply = ({ navigation }) => {
                 fontStyle="regular"
                 fontSize="md"
               >
-               I would like a team member from 7000 languages 
-                to follow up with you about creating additional 
-                resources for my language.
+                I would like a team member from 7000 languages to follow up with
+                you about creating additional resources for my language.
               </Text>
             </Checkbox>
-            </View>
-        
+          </View>
+
           <View style={styles.submitForm}>
-        <StyledButton title="Apply To Contribute" variant="primary"
-        
-                onPress={() => onSubmit()}
-        />
-        
-        <Text
-          fontWeight="regular"
-          color="gray.medium"
-          fontStyle="regular"
-          fontSize="sm"
-        >
-          By selecting this button, you have permission from the
-          community/speakers to create language learning materials
-        </Text>
-      </View>
+            <StyledButton
+              title="Apply To Contribute"
+              variant="primary"
+              onPress={() => onSubmit()}
+            />
+
+            <Text
+              fontWeight="regular"
+              color="gray.medium"
+              fontStyle="regular"
+              fontSize="sm"
+            >
+              By selecting this button, you have permission from the
+              community/speakers to create language learning materials
+            </Text>
+          </View>
         </ScrollView>
       </View>
     </View>
-    
   )
-
 }
-
 
 Apply.propTypes = {
   navigation: PropTypes.shape({

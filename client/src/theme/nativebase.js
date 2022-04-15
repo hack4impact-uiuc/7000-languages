@@ -7,9 +7,9 @@ const theme = extendTheme({
   components: {
     Input: {
       baseStyle: {
-        size: "20",
+        size: '20',
         //lineHeight: "xl",
-        selectionColor: 'coolGray.800'
+        selectionColor: 'coolGray.800',
       },
       defaultProps: { size: 'sm' },
     },
