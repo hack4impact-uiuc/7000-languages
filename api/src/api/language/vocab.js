@@ -5,8 +5,8 @@ const { sendResponse } = require('../../utils/response');
 const { models } = require('../../models/index.js');
 const { requireAuthentication } = require('../../middleware/authentication');
 const {
-    requireLanguageAuthorization,
-  } = require('../../middleware/authorization');
+  requireLanguageAuthorization,
+} = require('../../middleware/authorization');
 const {
   ERR_MISSING_OR_INVALID_DATA,
   SUCCESS_POSTING_VOCAB_DATA,
@@ -20,6 +20,7 @@ const { getVocabIndexByID, checkIds } = require('../../utils/languageHelper');
 router.patch(
   '/',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const { lesson_id, vocab_id, vocab_update } = req.body;
 
