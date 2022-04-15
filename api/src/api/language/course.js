@@ -4,6 +4,9 @@ const { errorWrap } = require('../../middleware');
 const { sendResponse } = require('../../utils/response');
 const { models } = require('../../models/index.js');
 const { requireAuthentication } = require('../../middleware/authentication');
+const {
+  requireLanguageAuthorization,
+} = require('../../middleware/authorization');
 const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
 const { patchDocument, checkIds } = require('../../utils/languageHelper');

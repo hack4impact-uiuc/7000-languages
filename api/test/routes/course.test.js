@@ -261,7 +261,9 @@ describe('PATCH /language/course/ ', () => {
 
     const body = PATCH_UPDATE_APPROVAL;
     const response = await withAuthentication(
-      request(app).patch('/language/course/62391a30487d5ae343c82310').send(body),
+      request(app)
+        .patch('/language/course/62391a30487d5ae343c82310')
+        .send(body),
     );
     const message = response.body.message;
 
