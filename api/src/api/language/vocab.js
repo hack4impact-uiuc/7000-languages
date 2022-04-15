@@ -5,6 +5,9 @@ const { sendResponse } = require('../../utils/response');
 const { models } = require('../../models/index.js');
 const { requireAuthentication } = require('../../middleware/authentication');
 const {
+    requireLanguageAuthorization,
+  } = require('../../middleware/authorization');
+const {
   ERR_MISSING_OR_INVALID_DATA,
   SUCCESS_POSTING_VOCAB_DATA,
   NOT_FOUND_INDEX,

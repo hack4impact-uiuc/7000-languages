@@ -81,6 +81,7 @@ router.post(
 router.get(
   '/:id',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     let course = await models.Course.findOne({ _id: req.params.id });
     course = course.toJSON();

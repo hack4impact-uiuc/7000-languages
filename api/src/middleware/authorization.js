@@ -6,27 +6,25 @@ const requireLanguageAuthorization = async (req, res, next) => {
   var current_language = '';
   if (req.body.course_id) {
     current_language = req.body.course_id;
-  } else if (req.query.id) {
-    current_language = req.query.id;
+  } else if (req.query.course_id) {
+    current_language = req.query.course_id;
   } else if (req.params.id) {
     current_language = req.params.id;
   } else {
-    sendResponse(res, 401, ERR_AUTH_FAILED);
-    return;
+    return sendResponse(res, 401, ERR_AUTH_FAILED);
   }
   var ObjectId = require('mongoose').Types.ObjectId;
   if (!ObjectId.isValid(current_language)) {
-    sendResponse(res, 404, 'Course not found');
+    next();
     return;
   }
-  const courseExists = await models.Course.findOne({ _id: current_language });
+  const courseExists = await models.Course.findById(current_language);
   if (!courseExists) {
-    sendResponse(res, 404, 'Course not found');
+    next();
     return;
   }
   try {
     //check if language is in user's adminLanguages field
-
     var authorized_languages = req.user.adminLanguages;
     var currentInAuthorized = false;
     for (let i = 0; i < authorized_languages.length; i++) {
@@ -36,18 +34,19 @@ const requireLanguageAuthorization = async (req, res, next) => {
       }
     }
     if (!currentInAuthorized) {
-      sendResponse(res, 401, ERR_NOT_AUTHORIZED);
-      return;
+        console.log("2")
+      return sendResponse(res, 401, ERR_NOT_AUTHORIZED);
     }
     //check if course contains admin id of user
     const course = await models.Course.findById(current_language);
     if (course.admin_id !== req.user.authID) {
-      sendResponse(res, 401, ERR_NOT_AUTHORIZED);
-      return;
+        console.log("3")
+      return sendResponse(res, 401, ERR_NOT_AUTHORIZED);
     }
     next();
   } catch (error) {
-    sendResponse(res, 401, ERR_AUTH_FAILED);
+    console.log("4")
+    return sendResponse(res, 401, ERR_AUTH_FAILED);
   }
 };
 
