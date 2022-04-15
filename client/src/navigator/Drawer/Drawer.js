@@ -177,8 +177,14 @@ const DrawerMenuContainer = (props) => {
       {/* Full View of Profile */}
       <View>
         {/* Photo from Google Auth goes here */}
-
-        {/* TEXT Profile View */}
+        {/* <Image
+        style={{
+          width: 50,
+          height: 50,
+        }}
+                source={require({picture})}
+              /> */}
+        {/* TEXT Profile View */} 
         <View
           style={{
             display: 'flex',
