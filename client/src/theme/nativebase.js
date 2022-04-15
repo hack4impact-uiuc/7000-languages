@@ -8,8 +8,8 @@ const theme = extendTheme({
     Input: {
       baseStyle: {
         size: '20',
-        //lineHeight: "xl",
-        selectionColor: 'coolGray.800',
+        selectionColor: 'blue.medium',
+        borderColor: 'coolGray.800',
       },
       defaultProps: { size: 'sm' },
     },

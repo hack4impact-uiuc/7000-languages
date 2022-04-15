@@ -1,17 +1,27 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
-import { colors, fonts } from 'theme'
+import { colors } from 'theme'
 import {
   Input,
   Text,
   TextArea,
   View,
-  Keyboard,
-  TouchableWithoutFeedback,
 } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
-import dismissKeyboard from 'react-native-dismiss-keyboard'
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 2,
+    borderWidth: 0.5,
+    padding: 5,
+    backgroundColor: colors.blue.light,
+    borderColor: colors.blue.light,
+  },
+  textRow: {
+    flexDirection: 'row',
+  },
+})
 
 const CreateUnit = ({ navigation }) => {
   const close = () => {
@@ -19,8 +29,11 @@ const CreateUnit = ({ navigation }) => {
   }
 
   const success = () => {
-    // call api request here
-    console.log('success')
+    const newUnit = {
+      name,
+      purpose,
+    }
+    console.log(newUnit, 'success')
   }
 
   const [name, setName] = useState('')
@@ -29,15 +42,9 @@ const CreateUnit = ({ navigation }) => {
   const body = (
     <>
       <View
-        style={{
-          borderRadius: 2,
-          borderWidth: 0.5,
-          padding: 5,
-          backgroundColor: colors.blue.light,
-          borderColor: colors.blue.light,
-        }}
+        style={styles.container}
       >
-        <View style={{ flexDirection: 'row' }}>
+        <View style={styles.textRow}>
           <Foundation name="lightbulb" size={24} color={colors.blue.dark} />
           <Text
             style={{
@@ -61,16 +68,20 @@ const CreateUnit = ({ navigation }) => {
         size="lg"
         variant="filled"
         placeholder=""
+        returnKeyType="done"
         onChangeText={(text) => setName(text)}
       />
 
       <Text>What is the purpose of this unit?</Text>
-
+      <br />
       <TextArea
         size="2xl"
         h={40}
         variant="filled"
         placeholder=""
+        keyboardType="default"
+        returnKeyType="done"
+        blurOnSubmit
         onChangeText={(text) => setPurpose(text)}
       />
     </>

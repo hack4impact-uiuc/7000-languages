@@ -12,13 +12,13 @@ const Indicator = ({ indicatorType }) => {
         <StyledButton
           title="COMPLETE"
           variant="complete"
-          rightIcon={
+          rightIcon={(
             <AntDesign
               name="checkcircle"
               size={12}
               color={colors.green.medium}
             />
-          }
+          )}
           fontSize="10"
         />
       )
