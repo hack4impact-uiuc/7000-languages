@@ -8,8 +8,17 @@ const theme = extendTheme({
     Input: {
       baseStyle: {
         size: '20',
-        //lineHeight: "xl",
-        selectionColor: 'coolGray.800',
+        selectionColor: 'blue.medium',
+        backgroundColor: 'gray.medium_light',
+      },
+      defaultProps: { size: 'sm' },
+    },
+
+    TextArea: {
+      baseStyle: {
+        size: '20',
+        selectionColor: 'blue.medium',
+        backgroundColor: 'gray.medium_light',
       },
       defaultProps: { size: 'sm' },
     },

@@ -99,12 +99,13 @@ export const HomeNavigator = () => (
       component={Apply}
       options={({ navigation }) => ({
         title: 'Become a Contributor',
-        headerStyle: { backgroundColor: 'colors.white.dark' },
+        headerStyle: { backgroundColor: colors.white.light },
         headerTitleStyle: {
           fontSize: 18,
           fontFamily: 'GT_Haptik_bold',
           color: 'black',
         },
+        headerLeft: () => <BackButton navigation={navigation} />,
       })}
     />
     <Stack.Screen

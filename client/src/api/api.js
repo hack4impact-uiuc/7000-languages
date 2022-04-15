@@ -9,7 +9,7 @@ export const createUser = async (userData) => {
 }
 
 export const createCourse = async (applicationData) => {
-  const requestString = '/newApplication'
+  const requestString = '/course'
   const res = await instance.post(requestString, applicationData)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)

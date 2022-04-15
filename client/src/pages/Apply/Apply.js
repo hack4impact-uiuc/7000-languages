@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, Linking } from 'react-native'
+import { StyleSheet, View, Linking, Alert } from 'react-native'
 import StyledButton from 'components/StyledButton'
-import { colors, fonts } from 'theme'
+import { colors } from 'theme'
 import {
   Text,
   ScrollView,
@@ -11,7 +11,8 @@ import {
   FormControl,
   TextArea,
 } from 'native-base'
-//import { SuccessAnimation } from "react-native-success-animation";
+import useErrorWrap from 'hooks/useErrorWrap'
+import createCourse from 'api'
 
 const styles = StyleSheet.create({
   root: {
@@ -19,20 +20,16 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.white,
+    backgroundColor: colors.white.light,
     color: 'black',
   },
   header: {
-    //flex: 2,
-    //bottom: 10,
     marginTop: 8,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
   subhead: {
-    //flex: 4,
-    //bottom: 80,
     marginBottom: 30,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -51,18 +48,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 100,
   },
   input: {
-    backgroundColor: colors.gray.light,
+  
     marginBottom: 10,
   },
   checkboxes: {
     marginBottom: 25,
+    marginLeft: 10
   },
+  inputHeight: {
+    height: '50px'
+  }
 })
 
-// things to do:
-// fix styling for inputs + checkbox
-// fix scroll view styling
-// add submit
+
 const Apply = ({ navigation }) => {
   // applicaton fields
   const [name, setName] = useState('')
@@ -72,10 +70,11 @@ const Apply = ({ navigation }) => {
   const [isoCode, setIsoCode] = useState('')
   const [glottoCode, setGlottoCode] = useState('')
   const [location, setLocation] = useState('')
+  const [population, setPopulation] = useState('')  
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [contact, setContact] = useState(false)
   const [link, setLink] = useState(false)
-
+  const errorWrap = useErrorWrap()
   const [errors, setErrors] = useState({})
 
   const validate = () => {
@@ -134,23 +133,28 @@ const Apply = ({ navigation }) => {
     )
   }
 
+
+
+
   const onSubmit = () => {
     console.log(acceptTerms)
     if (validate() === true) {
       applyCourse()
-     // routeSuccess()
+      routeSuccess()
     } else {
       console.log('Validation Failed')
     }
   }
 
 
-  function routeSuccess() {
-    
-
+  const routeSuccess = () => {
+    Alert.alert(
+      "Success!",
+      "You have succesfully submitted your application!",
+      [
+        { text: "OK", onPress: () => navigation.goBack() }
+      ])
   }
-
-  // should this be string?? Can check DB later
 
   return (
     <View style={styles.root}>
@@ -198,9 +202,9 @@ const Apply = ({ navigation }) => {
             <View style={styles.input}>
               <Input
                 size="2xl"
-                style={{ height: '50px' }}
+                style={styles.inputHeight}
+                returnKeyType="done"
                 onChangeText={(text) => setName(text)}
-                style={{}}
               />
               {'name' in errors ? (
                 <FormControl.ErrorMessage>Required.</FormControl.ErrorMessage>
@@ -222,7 +226,8 @@ const Apply = ({ navigation }) => {
             <View style={styles.input}>
               <Input
                 size="xl"
-                style={{ height: '50px' }}
+                style={styles.inputHeight}
+                returnKeyType="done"
                 onChangeText={(text) => setEmail(text)}
               />
               {'email' in errors ? (
@@ -245,7 +250,8 @@ const Apply = ({ navigation }) => {
             <View style={styles.input}>
               <Input
                 size="xl"
-                style={{ height: '50px' }}
+                style={styles.inputHeight}
+                returnKeyType="done"
                 onChangeText={(text) => setLanguage(text)}
               />
               {'Language' in errors ? (
@@ -271,6 +277,9 @@ const Apply = ({ navigation }) => {
               h={40}
               variant="filled"
               placeholder=""
+              keyboardType="default"
+              returnKeyType="done"
+              blurOnSubmit={true}
               onChangeText={(text) => setOtherNames(text)}
             />
           </View>
@@ -302,7 +311,8 @@ const Apply = ({ navigation }) => {
           <View style={styles.input}>
             <Input
               size="xl"
-              style={{ height: '50px' }}
+              style={styles.inputHeight}
+              returnKeyType="done"
               onChangeText={(text) => setIsoCode(text)}
             />
           </View>
@@ -335,7 +345,8 @@ const Apply = ({ navigation }) => {
           <View style={styles.input}>
             <Input
               size="xl"
-              style={{ height: '50px' }}
+              style={styles.inputHeight}
+              returnKeyType="done"
               onChangeText={(text) => setGlottoCode(text)}
             />
           </View>
@@ -357,6 +368,9 @@ const Apply = ({ navigation }) => {
               h={40}
               variant="filled"
               placeholder=""
+              keyboardType="default"
+              returnKeyType="done"
+              blurOnSubmit={true}
               onChangeText={(text) => setLocation(text)}
             />
           </View>
@@ -375,7 +389,8 @@ const Apply = ({ navigation }) => {
           <View style={styles.input}>
             <Input
               size="xl"
-              style={{ height: '50px' }}
+              style={styles.inputHeight}
+              returnKeyType="done"
               onChangeText={(text) => setPopulation(text)}
             />
           </View>
@@ -394,7 +409,8 @@ const Apply = ({ navigation }) => {
           <View style={styles.input}>
             <Input
               size="xl"
-              style={{ height: '50px' }}
+              style={styles.inputHeight}
+              returnKeyType="done"
               onChangeText={(text) => setLink(text)}
             />
           </View>
