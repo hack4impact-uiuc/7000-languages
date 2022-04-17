@@ -5,6 +5,34 @@ import colors from './colors'
 const theme = extendTheme({
   colors,
   components: {
+    Input: {
+      baseStyle: {
+        backgroundColor: 'gray.medium_light',
+        borderColor: 'gray.medium_light',
+        fontFamily: 'GT_Haptik_regular',
+        selectionColor: 'black',
+        _focus: {
+          borderColor: 'blue.medium',
+          _hover: { borderColor: 'primary.600' },
+        },
+        my: 2,
+      },
+      defaultProps: { size: 'xl' },
+    },
+    TextArea: {
+      baseStyle: {
+        backgroundColor: 'gray.medium_light',
+        borderColor: 'gray.medium_light',
+        fontFamily: 'GT_Haptik_regular',
+        selectionColor: 'black',
+        _focus: {
+          borderColor: 'blue.medium',
+          _hover: { borderColor: 'primary.600' },
+        },
+        my: 2,
+      },
+      defaultProps: { size: 'xl' },
+    },
     Text: {
       baseStyle: {
         fontFamily: 'body',
@@ -13,9 +41,8 @@ const theme = extendTheme({
       },
     },
     Button: {
-      // Can simply pass default props to change default behaviour of components.
       baseStyle: {
-        borderRadius: 12,
+        borderRadius: 8,
       },
       variants: {
         primary: {
@@ -48,16 +75,14 @@ const theme = extendTheme({
             fontFamily: 'GT_Haptik_bold',
           },
         },
-        tertiary: {
-          bg: 'gray.medium:alpha.00',
-          w: '90%',
+        image_picker: {
+          bg: 'gray.medium_light',
+          w: '100%',
           my: 2,
-          px: 20,
-          py: 4,
-          borderColor: 'white.dark',
-          borderWidth: 2,
+          mx: 1,
           _text: {
-            color: 'white.dark',
+            fontSize: 20,
+            color: 'black',
             fontFamily: 'GT_Haptik_bold',
           },
         },

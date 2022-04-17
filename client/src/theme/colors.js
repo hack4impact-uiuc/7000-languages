@@ -22,7 +22,7 @@ const colors = {
   },
   gray: {
     light: '#EFEFEF', // 100 opacity
-    medium_light: '#A8AFB4', // 300 opacity
+    medium_light: '#F5F5F5', // 300 opacity
     medium: '#A4A4A4', // 500 opacity
     dark: '#060606', // 800 opacity
   },

@@ -8,3 +8,8 @@ export const INDICATOR_TYPES = {
   COMPLETE: 1,
   INCOMPLETE: 2,
 }
+export const RECORDING = {
+  INCOMPLETE: 0,
+  IN_PROGRESS: 1,
+  COMPLETE: 2,
+}

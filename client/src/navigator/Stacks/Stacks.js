@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { colors } from 'theme'
 import Home from 'pages/Home'
 import Landing from 'pages/Landing'
-import UnitDrawer from 'pages/UnitDrawer'
+import AddWordDrawer from 'pages/AddWordDrawer'
 import ManageUnits from 'pages/ManageUnits'
 import DrawerButton from './DrawerButton'
 import BackButton from './BackButton'
@@ -72,10 +72,10 @@ export const AuthNavigator = () => (
 
 export const ModalNavigator = () => (
   <ModalStack.Navigator
-    initialRouteName="UnitDrawer"
+    initialRouteName="AddWordDrawer"
     screenOptions={modalNavigationProps}
   >
-    <ModalStack.Screen name="UnitDrawer" component={UnitDrawer} />
+    <ModalStack.Screen name="AddWordDrawer" component={AddWordDrawer} />
   </ModalStack.Navigator>
 )
 
