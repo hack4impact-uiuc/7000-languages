@@ -6,7 +6,7 @@ const { models } = require('../../models/index.js');
 const { requireAuthentication } = require('../../middleware/authentication');
 const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
-
+const { patchDocument, checkIds } = require('../../utils/languageHelper');
 /**
  * Does a patch update a single course in the database, meaning
  * it makes changes to parts of the course specified in the request.
@@ -17,19 +17,18 @@ router.patch(
   errorWrap(async (req, res) => {
     const updates = req.body;
 
-    await models.Course.exists({ _id: req.params.id }, function (err) {
-      if (err) {
-        return sendResponse(res, 404, 'Course not found');
-      }
-    });
+    const course_id = req.params.id;
+
+    // Checks if the ids are valid
+    const isValid = await checkIds({ course_id });
+
+    if (!isValid) {
+      return sendResponse(res, 404, 'Course not found');
+    }
 
     const course = await models.Course.findById(req.params.id);
 
-    for (var key in updates) {
-      if (key in course && typeof course[key] === typeof updates[key]) {
-        course[key] = updates[key];
-      }
-    }
+    patchDocument(course, updates);
 
     await course.save();
     return sendResponse(res, 200, 'Successfully updated course', course);
@@ -69,6 +68,32 @@ router.post(
       'Successfully created a new course',
       newResult,
     );
+  }),
+);
+
+/**
+ * Fetches specified course in the database
+ */
+router.get(
+  '/:id',
+  requireAuthentication,
+  errorWrap(async (req, res) => {
+    let course = await models.Course.findOne({ _id: req.params.id });
+    course = course.toJSON();
+    let units = await models.Unit.find({ _course_id: req.params.id });
+    for (var i = 0; i < units.length; i++) {
+      const numLessons = await models.Lesson.countDocuments({
+        _unit_id: { $eq: units[i]._id },
+      });
+      units[i] = units[i].toJSON();
+      units[i].num_lessons = numLessons;
+    }
+    let newCourse = _.omit(course, ['admin_id']);
+    const returnedData = {
+      course: newCourse,
+      units: units,
+    };
+    return sendResponse(res, 200, 'Successfully fetched course', returnedData);
   }),
 );
 
