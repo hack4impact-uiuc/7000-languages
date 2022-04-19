@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray.light,
   },
 })
-const HomeBaseCase = () => (
+const HomeBaseCase = ({ navigation }) => (
   <View style={styles.root}>
     <StatusBar barStyle="light-content" />
     <Text
@@ -90,6 +90,7 @@ any courses yet!`}
       paddingBottom="10%"
       color="red.dark"
       fontSize="2xl"
+      onPress={() => navigation.navigate('Modal', { screen: 'VocabDrawer' })}
     >
       Become a contributor
     </Text>

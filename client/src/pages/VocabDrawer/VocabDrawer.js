@@ -12,8 +12,13 @@ import { StyleSheet, Alert } from 'react-native'
 import { Audio } from 'expo-av'
 import { RECORDING } from 'utils/constants'
 
-const AddWordDrawer = ({ navigation }) => {
-  // TODO: replace original and translated useState with useSelector (Redux) code
+const WordDrawer = ({ navigation }) => {
+  /* TODO:
+    1. replace original and translated useState with useSelector (Redux) code
+    2. Check if there is a selected vocab in Redux. If so, populate the drawer with the vocab item data. Also add some
+    marker in state that indicates whether we are using this WordDrawer to add a new vocab item or edit an existing vocab item.
+  */
+
   const [originalLanguage] = useState('English')
   const [translatedLanguage] = useState('Spanish')
 
@@ -57,7 +62,7 @@ const AddWordDrawer = ({ navigation }) => {
     //   audio: '',
     //   notes: additionalInformation,
     // }
-    // TODO: call the POST vocab and API S3 Endpoints and go back
+    // TODO: call either the POST 'vocab' or PATCH 'vocab' and API S3 Endpoints and go back
   }
 
   /**
@@ -295,15 +300,15 @@ const AddWordDrawer = ({ navigation }) => {
   )
 }
 
-AddWordDrawer.propTypes = {
+WordDrawer.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     goBack: PropTypes.func,
   }),
 }
 
-AddWordDrawer.defaultProps = {
+WordDrawer.defaultProps = {
   navigation: { navigate: () => null, goBack: () => null },
 }
 
-export default AddWordDrawer
+export default WordDrawer
