@@ -18,12 +18,12 @@ const requireLanguageAuthorization = async (req, res, next) => {
     next();
     return;
   }
-  const courseExists = await models.Course.findById(current_language);
-  if (!courseExists) {
-    next();
-    return;
-  }
   try {
+    const courseExists = await models.Course.findById(current_language);
+    if (!courseExists) {
+      next();
+      return;
+    }
     //check if language is in user's adminLanguages field
     var authorized_languages = req.user.adminLanguages;
     var currentInAuthorized = false;
@@ -34,18 +34,15 @@ const requireLanguageAuthorization = async (req, res, next) => {
       }
     }
     if (!currentInAuthorized) {
-      console.log('2');
       return sendResponse(res, 401, ERR_NOT_AUTHORIZED);
     }
     //check if course contains admin id of user
     const course = await models.Course.findById(current_language);
     if (course.admin_id !== req.user.authID) {
-      console.log('3');
       return sendResponse(res, 401, ERR_NOT_AUTHORIZED);
     }
     next();
   } catch (error) {
-    console.log('4');
     return sendResponse(res, 401, ERR_AUTH_FAILED);
   }
 };
