@@ -106,9 +106,9 @@ const theme = extendTheme({
         manage: {
           bg: 'red.light',
           borderRadius: 10,
-          w: 150,
-          my: 2,
-          mx: 2,
+          w: 160,
+          my: 3,
+          mx: 5,
           _text: {
             color: 'red.dark',
             fontFamily: 'GT_Haptik_bold',

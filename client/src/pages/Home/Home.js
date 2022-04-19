@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import HomeBaseCase from '../../components/HomeBaseCase/HomeBaseCase'
-import CourseHome from '../CourseHome/CourseHome'
+// import HomeBaseCase from '../../components/HomeBaseCase/HomeBaseCase'
+import CourseNavHome from 'components/CourseNavHome'
 
-const Home = ({ navigation }) => <CourseHome navigation={navigation}></CourseHome>
+const Home = ({ navigation }) => <CourseNavHome navigation={navigation}></CourseNavHome>
 {/* <HomeBaseCase navigation={navigation} /> */}
 Home.propTypes = {
   navigation: PropTypes.shape({

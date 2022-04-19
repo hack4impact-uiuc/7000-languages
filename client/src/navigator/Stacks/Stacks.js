@@ -65,6 +65,7 @@ export const AuthNavigator = () => (
       component={Landing}
       options={() => ({
         title: 'Landing',
+        
       })}
     />
   </AuthStack.Navigator>
@@ -74,6 +75,7 @@ export const ModalNavigator = () => (
   <ModalStack.Navigator
     initialRouteName="UnitDrawer"
     screenOptions={modalNavigationProps}
+    
   >
     <ModalStack.Screen name="UnitDrawer" component={UnitDrawer} />
   </ModalStack.Navigator>
@@ -84,12 +86,14 @@ export const HomeNavigator = () => (
     initialRouteName="Home"
     headerMode="screen"
     screenOptions={navigationProps}
+    
   >
     <Stack.Screen
       name="Home"
       component={Home}
       options={({ navigation }) => ({
         headerLeft: () => <DrawerButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' }
       })}
     />
     <Stack.Screen
@@ -99,6 +103,7 @@ export const HomeNavigator = () => (
         ...manageNavigationProps,
         title: 'Manage Units',
         headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' }
       })}
     />
   </Stack.Navigator>

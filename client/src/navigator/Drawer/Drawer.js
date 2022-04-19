@@ -45,6 +45,7 @@ const data = [
     units: '8 Units',
     isContributor: true,
   },
+  
 ]
 
 const tabColors = [
@@ -177,14 +178,6 @@ const DrawerMenuContainer = (props) => {
       {/* Full View of Profile */}
       <View>
         {/* Photo from Google Auth goes here */}
-        {/* <Image
-        style={{
-          width: 50,
-          height: 50,
-        }}
-                source={require({picture})}
-              /> */}
-        {/* TEXT Profile View */} 
         <View
           style={{
             display: 'flex',
