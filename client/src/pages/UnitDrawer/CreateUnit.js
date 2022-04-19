@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { StyleSheet, View } from 'react-native'
 import Drawer from 'components/Drawer'
 import { colors } from 'theme'
 import {
   Input,
   Text,
-  TextArea,
-  View,
+  TextArea
 } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
 
@@ -29,6 +29,7 @@ const CreateUnit = ({ navigation }) => {
   }
 
   const success = () => {
+    
     const newUnit = {
       name,
       purpose,
@@ -73,7 +74,7 @@ const CreateUnit = ({ navigation }) => {
       />
 
       <Text>What is the purpose of this unit?</Text>
-      <br />
+
       <TextArea
         size="2xl"
         h={40}
