@@ -26,6 +26,7 @@ module.exports = {
     'react/prop-types': [1],
     'global-require': 'off',
     'no-console': 'off',
+    'no-underscore-dangle': 'off',
     'react/jsx-props-no-spreading': 'off',
     'import/no-extraneous-dependencies': [
       'error',

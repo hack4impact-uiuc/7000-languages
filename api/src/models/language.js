@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+/* Schemas */
+
 const CourseDetails = new mongoose.Schema({
   admin_name: { type: String, required: true },
   admin_email: { type: String, required: true },
@@ -25,7 +27,7 @@ const Unit = new mongoose.Schema({
   name: { type: String, required: true },
   _order: { type: Number, required: true, index: true },
   selected: { type: Boolean, required: true },
-  description: { type: String, required: true, default: '' },
+  description: { type: String, required: false, default: '' },
 });
 
 Unit.index({ _course_id: 1, _order: 1 });
@@ -36,7 +38,7 @@ const Vocab = new mongoose.Schema({
   translation: { type: String, required: true },
   image: { type: String, required: false, default: '' },
   audio: { type: String, required: false, default: '' },
-  notes: { type: String, required: true, default: '' },
+  notes: { type: String, required: false, default: '' },
 });
 
 Vocab.index({ _order: 1 });
@@ -48,13 +50,56 @@ const Lesson = new mongoose.Schema({
   _order: { type: Number, required: true, index: true },
   selected: { type: Boolean, required: true },
   vocab: { type: [Vocab], required: true, default: [] },
-  description: { type: String, required: true, default: '' },
+  description: { type: String, required: false, default: '' },
 });
 
 Lesson.index({ _course_id: 1, _unit_id: 1, _order: 1 });
 
+/* Validation Methods */
+
+/**
+ * Determines whether a document with a specific _id has a specific order
+ * @param {JSON} params Parameters considered when searching for all documents in model
+ * @param {ObjectId} _id document that we are checking
+ * @param {Mongoose Model} model Model that the document belongs to
+ * @param {Object} session Mongoose Transaction Session object
+ * @returns true if the document with _id has a unique order
+ */
+const isUniqueOrder = async (params, _id, model, session = null) => {
+  let documents;
+
+  if (session) {
+    documents = await model.find(params).session(session).lean();
+  } else {
+    documents = await model.find(params).lean();
+  }
+
+  if (documents.length > 2) {
+    // If there's more than two, it's not unique.
+    return false;
+  } else if (documents.length <= 1) {
+    // If there is one, it is unique
+    return true;
+  }
+
+  const string_id = _id.toString();
+
+  // If there's exactly two, the _id better match
+  if (
+    documents[0]._id.toString() !== string_id &&
+    documents[1]._id.toString() !== string_id
+  ) {
+    return false;
+  }
+
+  // If there is exactly two, only one document should be selected
+  return documents[0].selected !== documents[1].selected;
+};
+
+/* Exports */
 module.exports.Course = mongoose.model('Course', Course);
 module.exports.CourseDetails = mongoose.model('CourseDetails', CourseDetails);
 module.exports.Unit = mongoose.model('Unit', Unit);
 module.exports.Lesson = mongoose.model('Lesson', Lesson);
 module.exports.Vocab = mongoose.model('Vocab', Vocab);
+module.exports.isUniqueOrder = isUniqueOrder;

@@ -18,11 +18,11 @@ const {
   ERR_IMPROPER_ID_TOKEN,
 } = require('../../src/utils/constants');
 
-/* 
+/*
   Google Auth Mocker - uses jest to mock the Google Auth library.
   Include the code below whenever you are testing an endpoint that uses the authentication middleware.
 
-  Sources: 
+  Sources:
   https://stackoverflow.com/questions/53740341/unit-testing-a-js-script-with-jest-can-i-mock-an-es6-class
   https://jestjs.io/docs/mock-function-api#mockfnmockimplementationfn
   https://medium.com/@rickhanlonii/understanding-jest-mocks-f0046c68e53c
@@ -36,10 +36,10 @@ verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
 // This block tests the GET /user/ endpoint.
 describe('GET /user/ ', () => {
-  /* 
-    We have to make sure we connect to a MongoDB mock db before the test 
-    and close the connection at the end.
-  */
+  /*
+      We have to make sure we connect to a MongoDB mock db before the test
+      and close the connection at the end.
+    */
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
 
@@ -72,10 +72,10 @@ describe('GET /user/ ', () => {
 
 // This block tests the POST /user/ endpoint.
 describe('POST /user/ ', () => {
-  /* 
-    We have to make sure we connect to a MongoDB mock db before the test 
-    and close the connection at the end.
-  */
+  /*
+      We have to make sure we connect to a MongoDB mock db before the test
+      and close the connection at the end.
+    */
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
 
