@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, Linking, Alert } from 'react-native'
+import {
+  StyleSheet, View, Linking, Alert,
+} from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import {
@@ -48,25 +50,23 @@ const styles = StyleSheet.create({
     marginHorizontal: 100,
   },
   input: {
-  
     marginBottom: 10,
   },
   checkboxes: {
     marginBottom: 2,
-    marginLeft: 7
+    marginLeft: 7,
   },
   inputHeight: {
-    height: '50px'
+    height: '50px',
   },
   termsText: {
     bottom: 4,
-    left: 16
+    left: 16,
   },
   checkboxText2: {
-    left: 10
-  }
+    left: 10,
+  },
 })
-
 
 const Apply = ({ navigation }) => {
   // applicaton fields
@@ -77,9 +77,8 @@ const Apply = ({ navigation }) => {
   const [isoCode, setIsoCode] = useState('')
   const [glottoCode, setGlottoCode] = useState('')
   const [location, setLocation] = useState('')
-  const [population, setPopulation] = useState('')  
+  const [population, setPopulation] = useState('')
   const [acceptTerms, setAcceptTerms] = useState(false)
-  const [contact, setContact] = useState(false)
   const [link, setLink] = useState(false)
   const errorWrap = useErrorWrap()
   const [errors, setErrors] = useState({})
@@ -88,24 +87,23 @@ const Apply = ({ navigation }) => {
     const validateErrors = {}
 
     if (name === '') {
-      validateErrors['name'] = 'Name is required'
+      validateErrors.name = 'Name is required'
     }
     if (email === '') {
-      validateErrors['email'] = 'Email is required'
+      validateErrors.email = 'Email is required'
     }
     if (language === '') {
-      validateErrors['Language'] = 'Language is required'
+      validateErrors.Language = 'Language is required'
     }
     if (acceptTerms === false) {
-      validateErrors['acceptTerms'] = 'Terms is required'
+      validateErrors.acceptTerms = 'Terms is required'
     }
     setErrors(validateErrors)
 
     if (Object.keys(validateErrors).length === 0) {
       return true
-    } else {
-      return false
     }
+    return false
   }
 
   const applyCourse = async () => {
@@ -118,24 +116,20 @@ const Apply = ({ navigation }) => {
         description: '',
         iso: isoCode,
         glotto: glottoCode,
-        population: population,
-        location: location,
-        link: link,
+        population,
+        location,
+        link,
       },
     }
 
-      async () => {
-        // call API
-        await createCourse(applicationData)
-        // Save to Async Storage
+    async () => {
+      // call API
+      await createCourse(applicationData)
+      // Save to Async Storage
 
-        // Update Redux Store
-      }
-   
+      // Update Redux Store
+    }
   }
-
-
-
 
   const onSubmit = () => {
     console.log(acceptTerms)
@@ -147,14 +141,12 @@ const Apply = ({ navigation }) => {
     }
   }
 
-
   const routeSuccess = () => {
     Alert.alert(
-      "Success!",
-      "You have succesfully submitted your application!",
-      [
-        { text: "OK", onPress: () => navigation.goBack() }
-      ])
+      'Success!',
+      'You have succesfully submitted your application!',
+      [{ text: 'OK', onPress: () => navigation.goBack() }],
+    )
   }
 
   return (
@@ -280,7 +272,7 @@ const Apply = ({ navigation }) => {
               placeholder=""
               keyboardType="default"
               returnKeyType="done"
-              blurOnSubmit={true}
+              blurOnSubmit
               onChangeText={(text) => setOtherNames(text)}
             />
           </View>
@@ -327,7 +319,6 @@ const Apply = ({ navigation }) => {
             color="black"
             fontStyle="regular"
             fontSize="md"
-            
           >
             Glotto Code
           </Text>
@@ -373,7 +364,7 @@ const Apply = ({ navigation }) => {
               placeholder=""
               keyboardType="default"
               returnKeyType="done"
-              blurOnSubmit={true}
+              blurOnSubmit
               onChangeText={(text) => setLocation(text)}
             />
           </View>
@@ -428,7 +419,38 @@ const Apply = ({ navigation }) => {
                 {'acceptTerms' in errors ? (
                   <FormControl.ErrorMessage>Required.</FormControl.ErrorMessage>
                 ) : null}
-              <View style={styles.termsText} >
+                <View style={styles.termsText}>
+                  <Text
+                    style={{
+                      fontFamily: 'GT_Haptik_regular',
+                    }}
+                    fontWeight="regular"
+                    color="black"
+                    fontStyle="regular"
+                    fontSize="md"
+                  >
+                    I agree to the
+                  </Text>
+
+                  <Text
+                    style={{
+                      fontFamily: 'GT_Haptik_bold',
+                    }}
+                    fontWeight="regular"
+                    color="black"
+                    fontStyle="regular"
+                    fontSize="md"
+                    onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                  >
+                    Terms and Conditions {'\n'}
+                  </Text>
+                </View>
+              </Checkbox>
+            </FormControl>
+          </View>
+          <View style={styles.checkboxes}>
+            <Checkbox value="two" colorScheme="danger">
+              <View style={styles.checkboxText2}>
                 <Text
                   style={{
                     fontFamily: 'GT_Haptik_regular',
@@ -438,42 +460,10 @@ const Apply = ({ navigation }) => {
                   fontStyle="regular"
                   fontSize="md"
                 >
-                  I agree to the {''}
+                  I would like a team member from 7000 languages to follow up
+                  with you about {'\n'}creating additional resources{'\n'}for my
+                  language.
                 </Text>
-  
-                <Text
-                  style={{
-                    fontFamily: 'GT_Haptik_bold',
-                  }}
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="regular"
-                  fontSize="md"
-                  onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
-                >
-                  Terms and Conditions {'\n'}
-                </Text>
-                </View>
-              </Checkbox>
-            </FormControl>
-            </View>
-            <View style={styles.checkboxes}>
-            <Checkbox value="two" colorScheme="danger">
-              <View style={styles.checkboxText2}>
-
-             
-              <Text
-                style={{
-                  fontFamily: 'GT_Haptik_regular',
-                }}
-                fontWeight="regular"
-                color="black"
-                fontStyle="regular"
-                fontSize="md"
-              >
-                I would like a team member from 7000 languages to follow up with
-                you about {'\n'}creating additional resources{'\n'}for my language.
-              </Text>
               </View>
             </Checkbox>
           </View>
