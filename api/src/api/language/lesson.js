@@ -12,7 +12,7 @@ const {
 } = require('../../utils/constants');
 const mongoose = require('mongoose');
 const {
-  updateLessonsInTransaction,
+  updateDocumentsInTransaction,
   checkIds,
   getNumLessonsInUnit,
   patchDocument,
@@ -35,7 +35,11 @@ router.put(
     const lessonUpdates = req.body.updates;
 
     try {
-      lessonData = await updateLessonsInTransaction(lessonUpdates, session);
+      lessonData = await updateDocumentsInTransaction(
+        models.Lesson,
+        lessonUpdates,
+        session,
+      );
       // Commit the changes
       await session.commitTransaction();
     } catch (error) {
