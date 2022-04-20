@@ -1,18 +1,93 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer'
-import { Text } from 'native-base'
+import { Text, Image } from 'native-base'
 import { FontAwesome } from '@expo/vector-icons'
-import { colors } from 'theme'
-import { View, Pressable } from 'react-native'
-import StyledButton from 'components/StyledButton'
+import { colors, images } from 'theme'
+import { View, Pressable, StyleSheet } from 'react-native'
 import OwnershipButton from 'components/OwnershipButton'
-import TabNavigator from '../Tabs'
+import DrawerLogoutButton from 'components/DrawerLogoutButon'
+import useErrorWrap from 'hooks/useErrorWrap'
+import { getUser } from 'api'
+import StyledButton from 'components/StyledButton'
+import { NO_COURSE_ID } from 'utils/constants'
+import { updateAllCourses } from 'slices/language.slice'
+import { useDispatch } from 'react-redux'
 import DrawerMenu from './DrawerMenu'
-import DrawerLogoutButton from '../../components/DrawerLogoutButon'
+import TabNavigator from '../Tabs'
+
+const tabStyles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  title: {
+    fontFamily: 'GT_Haptik_bold',
+    fontSize: 20,
+    flex: 3,
+  },
+  units: {
+    fontFamily: 'GT_Haptik_regular',
+    fontSize: 20,
+    color: '#A4A4A4',
+  },
+})
+
+const drawerStyles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  pressable: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    marginHorizontal: 10,
+    backgroundColor: '#F9F9F9',
+  },
+  topDivider: {
+    marginTop: '10%',
+    marginBottom: '5%',
+    height: 1,
+    backgroundColor: '#EFEFEF',
+    width: '90%',
+  },
+  bottomDivider: {
+    marginTop: '3%',
+    height: 1,
+    backgroundColor: '#EFEFEF',
+    width: '90%',
+  },
+  bottomContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginLeft: 10,
+  },
+  userInfoContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginRight: 20,
+    justifyContent: 'flex-end',
+  },
+  userName: {
+    paddingLeft: 10,
+    fontFamily: 'GT_Haptik_bold',
+    fontSize: 20,
+  },
+  userEmail: {
+    fontSize: 15,
+    paddingLeft: 10,
+  },
+})
 
 const Drawer = createDrawerNavigator()
 
@@ -20,32 +95,32 @@ const Drawer = createDrawerNavigator()
  * Data used for rendering the Drawer Tab
  */
 
-const data = [
-  {
-    _id: 'abcdef',
-    title: 'Spanish',
-    units: '14 Units',
-    isContributor: false,
-  },
-  {
-    _id: 'aenasdas',
-    title: 'French',
-    units: '10 Units',
-    isContributor: true,
-  },
-  {
-    _id: 'asdnemsa',
-    title: 'Chinese',
-    units: '8 Units',
-    isContributor: false,
-  },
-  {
-    _id: 'mehjasjd',
-    title: 'German',
-    units: '8 Units',
-    isContributor: true,
-  },
-]
+// const data = [
+//   {
+//     _id: 'abcdef',
+//     name: 'Spanish',
+//     num_units: '14 Units',
+//     isContributor: false,
+//   },
+//   {
+//     _id: 'aenasdas',
+//     name: 'French',
+//     num_units: '10 Units',
+//     isContributor: true,
+//   },
+//   {
+//     _id: 'asdnemsa',
+//     name: 'Chinese',
+//     num_units: '8 Units',
+//     isContributor: false,
+//   },
+//   {
+//     _id: 'mehjasjd',
+//     name: 'German',
+//     num_units: '8 Units',
+//     isContributor: true,
+//   },
+// ]
 
 const tabColors = [
   colors.red.dark,
@@ -62,36 +137,14 @@ const tabColors = [
 const generateTabs = (tabData) => tabData.map((element, index) => (
   <Drawer.Screen
     key={element._id}
-    name={element.title}
+    name={element._id}
     component={TabNavigator}
     options={() => ({
       drawerLabel: () => (
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}
-        >
-          <View
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
-          >
-            <Text
-              style={{ fontFamily: 'GT_Haptik_bold', fontSize: 20, flex: 3 }}
-            >
-              {element.title}
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'GT_Haptik_regular',
-                fontSize: 20,
-                color: '#A4A4A4',
-              }}
-            >
-              {element.units}
-            </Text>
+        <View style={tabStyles.container}>
+          <View>
+            <Text style={tabStyles.title}>{element.name}</Text>
+            <Text style={tabStyles.units}>{element.num_units}</Text>
           </View>
           {element.isContributor ? <OwnershipButton isContributor /> : null}
         </View>
@@ -119,24 +172,9 @@ const DrawerMenuContainer = (props) => {
         <DrawerItemList state={newState} {...rest} />
 
         {drawerApply ? (
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              marginTop: 10,
-            }}
-          >
+          <View style={drawerStyles.container}>
             <Pressable
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                paddingVertical: 12,
-                paddingHorizontal: 10,
-                borderRadius: 10,
-                marginHorizontal: 10,
-                backgroundColor: '#F9F9F9',
-              }}
+              style={drawerStyles.pressable}
               forceInset={{
                 top: 'always',
                 horizontal: 'never',
@@ -164,75 +202,121 @@ const DrawerMenuContainer = (props) => {
           </View>
         ) : null}
       </DrawerContentScrollView>
-      <View
-        style={{
-          marginTop: '10%',
-          marginBottom: '5%',
-          height: 1,
-          backgroundColor: '#EFEFEF',
-          width: '90%',
-        }}
-      />
-
-      {/* Full View of Profile */}
-      <View>
-        {/* Photo from Google Auth goes here */}
-
-        {/* TEXT Profile View */}
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginRight: 20,
-          }}
-        >
-          <Text
-            style={{
-              paddingLeft: 10,
-              fontFamily: 'GT_Haptik_bold',
-              fontSize: 20,
-            }}
-          >
-            Michael Scott
-          </Text>
-          <Text
-            style={{
-              fontSize: 15,
-              paddingLeft: 10,
-            }}
-          >
-            michaelscott@gmail.com
-          </Text>
+      <View style={drawerStyles.topDivider} />
+      <View style={drawerStyles.bottomContainer}>
+        <Image
+          source={
+            props.profileUrl === ''
+              ? images.default_icon
+              : { uri: props.profileUrl }
+          }
+          alt="Profile Icon"
+          size="sm"
+          resizeMode="contain"
+          borderRadius={100}
+        />
+        <View style={drawerStyles.userInfoContainer}>
+          <Text style={drawerStyles.userName}>{props.name}</Text>
+          <Text style={drawerStyles.userEmail}>{props.email}</Text>
         </View>
       </View>
-      <View
-        style={{
-          marginTop: '3%',
-          height: 1,
-          backgroundColor: '#EFEFEF',
-          width: '90%',
-        }}
-      />
+      <View style={drawerStyles.bottomDivider} />
       <DrawerLogoutButton />
     </>
   )
 }
 
-export default () => (
-  <Drawer.Navigator
-    drawerContentOptions={{
-      activeTintColor: 'black',
-      inactiveTintColor: 'black',
-      activeBackgroundColor: '#F9F9F9',
-      inactiveBackgroundColor: 'white',
-      itemStyle: { marginVertical: 4 },
-    }}
-    drawerStyle={{
-      width: 350,
-    }}
-    initialRouteName="Home"
-    drawerContent={DrawerMenuContainer}
-  >
-    {(() => generateTabs(data))()}
-  </Drawer.Navigator>
-)
+const DrawerNavigator = () => {
+  const [drawerData, setDrawerData] = useState([
+    {
+      _id: NO_COURSE_ID,
+      name: 'No Courses',
+      num_units: 'Join or start a course!',
+      isContributor: false,
+    },
+  ])
+  const [userEmail, setEmail] = useState('')
+  const [userName, setName] = useState('Loading...')
+  const [profileUrl, setProfileUrl] = useState('')
+  const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const getUserData = async () => {
+      await errorWrap(async () => {
+        const { result } = await getUser()
+        const {
+          name,
+          email,
+          picture,
+          adminLanguages,
+          collaboratorLanguages,
+          learnerLanguages,
+        } = result
+        // Set personal info
+        setProfileUrl(picture)
+        setName(name)
+        setEmail(email)
+
+        // Build list of courses that they belong to
+        if (
+          adminLanguages.length
+            + collaboratorLanguages.length
+            + learnerLanguages.length
+          > 0
+        ) {
+          // No Languages
+          const allCourses = []
+
+          for (let i = 0; i < adminLanguages.length; i += 1) {
+            allCourses.push({ ...adminLanguages[i], isContributor: true })
+          }
+
+          for (let i = 0; i < collaboratorLanguages.length; i += 1) {
+            allCourses.push({
+              ...collaboratorLanguages[i],
+              isContributor: true,
+            })
+          }
+
+          for (let i = 0; i < learnerLanguages.length; i += 1) {
+            allCourses.push({ ...learnerLanguages[i], isContributor: false })
+          }
+
+          const sortedCourses = allCourses.sort((a, b) => a.name.localeCompare(b.name))
+          dispatch(updateAllCourses({ allCourses: sortedCourses }))
+          setDrawerData(sortedCourses)
+        }
+      })
+    }
+    getUserData()
+  }, [])
+
+  return (
+    <Drawer.Navigator
+      drawerContentOptions={{
+        activeTintColor: 'black',
+        inactiveTintColor: 'black',
+        activeBackgroundColor: '#F9F9F9',
+        inactiveBackgroundColor: 'white',
+        itemStyle: { marginVertical: 4 },
+      }}
+      drawerStyle={{
+        width: 350,
+      }}
+      initialRouteName="Units"
+      drawerContent={(props) => (
+        <DrawerMenuContainer
+          email={userEmail}
+          name={userName}
+          profileUrl={profileUrl}
+          {...props}
+        />
+      )}
+    >
+      {(() => generateTabs(drawerData))()}
+    </Drawer.Navigator>
+  )
+}
+
+export default DrawerNavigator
