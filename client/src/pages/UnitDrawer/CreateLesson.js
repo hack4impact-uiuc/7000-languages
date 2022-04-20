@@ -4,7 +4,7 @@ import Drawer from 'components/Drawer'
 import {
   Input,
   Text,
-  TextArea
+  TextArea,
 } from 'native-base'
 
 const CreateLesson = ({ navigation }) => {
@@ -12,17 +12,16 @@ const CreateLesson = ({ navigation }) => {
     navigation.goBack()
   }
 
-  const success = () => {
+  const [name, setName] = useState('')
+  const [purpose, setPurpose] = useState('')
 
-    const newUnit = {
+  const success = () => {
+    const newLesson = {
       name,
       purpose,
     }
-    console.log(newUnit, 'success')
+    console.log(newLesson, 'success')
   }
-
-  const [name, setName] = useState('')
-  const [purpose, setPurpose] = useState('')
 
   const body = (
     <>
@@ -61,14 +60,14 @@ const CreateLesson = ({ navigation }) => {
   )
 }
 
-CreateUnit.propTypes = {
+CreateLesson.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     goBack: PropTypes.func,
   }),
 }
 
-CreateUnit.defaultProps = {
+CreateLesson.defaultProps = {
   navigation: { navigate: () => null, goBack: () => null },
 }
 

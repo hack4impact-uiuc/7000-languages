@@ -6,7 +6,7 @@ import { colors } from 'theme'
 import {
   Input,
   Text,
-  TextArea
+  TextArea,
 } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
 
@@ -28,17 +28,16 @@ const CreateUnit = ({ navigation }) => {
     navigation.goBack()
   }
 
+  const [name, setName] = useState('')
+  const [purpose, setPurpose] = useState('')
+
   const success = () => {
-    
     const newUnit = {
       name,
       purpose,
     }
     console.log(newUnit, 'success')
   }
-
-  const [name, setName] = useState('')
-  const [purpose, setPurpose] = useState('')
 
   const body = (
     <>
@@ -58,9 +57,7 @@ const CreateUnit = ({ navigation }) => {
           </Text>
         </View>
         <Text color={colors.blue.dark} fontSize="md">
-          When creating a unit, think about how it'll be used. {'\n'}
-          More text here explaining what they should look for {'\n'}
-          when making a unit.
+          When creating a unit, think about how it will be used. More text here explaining what they should look for when making a unit.
         </Text>
       </View>
 
