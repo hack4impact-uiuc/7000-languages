@@ -36,7 +36,7 @@ const CreateUnit = ({ navigation }) => {
       name,
       purpose,
     }
-    console.log(newUnit, 'success')
+    console.log(newUnit, 'success!')
   }
 
   const body = (
