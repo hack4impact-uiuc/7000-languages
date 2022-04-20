@@ -8,3 +8,4 @@ export const INDICATOR_TYPES = {
   COMPLETE: 1,
   INCOMPLETE: 2,
 }
+export const NO_COURSE_ID = 'default'

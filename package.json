@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@expo/vector-icons": "^12.0.5"
+    "@expo/vector-icons": "^12.0.5",
+    "aws-sdk": "^2.1117.0"
   }
 }
