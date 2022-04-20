@@ -306,7 +306,7 @@ const Apply = ({ navigation }) => {
             color="gray.medium"
             fontStyle="regular"
             fontSize="md"
-            onPress={() => Linking.openURL('https://google.com')}
+            onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
           >
             You can find the ISO code here
           </Text>
@@ -341,7 +341,7 @@ const Apply = ({ navigation }) => {
             color="gray.medium"
             fontStyle="regular"
             fontSize="md"
-            onPress={() => Linking.openURL('https://google.com')}
+            onPress={() => Linking.openURL('https://glottolog.org/glottolog')}
           >
             You can find the Glotto code here
           </Text>
