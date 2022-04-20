@@ -52,11 +52,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   checkboxes: {
-    marginBottom: 25,
-    marginLeft: 10
+    marginBottom: 2,
+    marginLeft: 7
   },
   inputHeight: {
     height: '50px'
+  },
+  termsText: {
+    bottom: 4,
+    left: 16
+  },
+  checkboxText2: {
+    left: 10
   }
 })
 
@@ -116,21 +123,15 @@ const Apply = ({ navigation }) => {
         link: link,
       },
     }
-    await errorWrap(
+
       async () => {
         // call API
         await createCourse(applicationData)
         // Save to Async Storage
 
         // Update Redux Store
-      },
-      () => {
-        console.log('success')
-      },
-      () => {
-        console.log('error')
-      },
-    )
+      }
+   
   }
 
 
@@ -305,6 +306,7 @@ const Apply = ({ navigation }) => {
             color="gray.medium"
             fontStyle="regular"
             fontSize="md"
+            onPress={() => Linking.openURL('https://google.com')}
           >
             You can find the ISO code here
           </Text>
@@ -325,7 +327,7 @@ const Apply = ({ navigation }) => {
             color="black"
             fontStyle="regular"
             fontSize="md"
-            onPress={() => Linking.openURL('https://google.com')}
+            
           >
             Glotto Code
           </Text>
@@ -339,6 +341,7 @@ const Apply = ({ navigation }) => {
             color="gray.medium"
             fontStyle="regular"
             fontSize="md"
+            onPress={() => Linking.openURL('https://google.com')}
           >
             You can find the Glotto code here
           </Text>
@@ -425,6 +428,7 @@ const Apply = ({ navigation }) => {
                 {'acceptTerms' in errors ? (
                   <FormControl.ErrorMessage>Required.</FormControl.ErrorMessage>
                 ) : null}
+              <View style={styles.termsText} >
                 <Text
                   style={{
                     fontFamily: 'GT_Haptik_regular',
@@ -436,6 +440,7 @@ const Apply = ({ navigation }) => {
                 >
                   I agree to the {''}
                 </Text>
+  
                 <Text
                   style={{
                     fontFamily: 'GT_Haptik_bold',
@@ -444,12 +449,19 @@ const Apply = ({ navigation }) => {
                   color="black"
                   fontStyle="regular"
                   fontSize="md"
+                  onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
                 >
                   Terms and Conditions {'\n'}
                 </Text>
+                </View>
               </Checkbox>
             </FormControl>
+            </View>
+            <View style={styles.checkboxes}>
             <Checkbox value="two" colorScheme="danger">
+              <View style={styles.checkboxText2}>
+
+             
               <Text
                 style={{
                   fontFamily: 'GT_Haptik_regular',
@@ -460,8 +472,9 @@ const Apply = ({ navigation }) => {
                 fontSize="md"
               >
                 I would like a team member from 7000 languages to follow up with
-                you about creating additional resources for my language.
+                you about {'\n'}creating additional resources{'\n'}for my language.
               </Text>
+              </View>
             </Checkbox>
           </View>
 
