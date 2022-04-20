@@ -14,7 +14,7 @@ import {
   TextArea,
 } from 'native-base'
 import useErrorWrap from 'hooks/useErrorWrap'
-import createCourse from 'api'
+import { createCourse } from 'api'
 
 const styles = StyleSheet.create({
   root: {
@@ -96,7 +96,7 @@ const Apply = ({ navigation }) => {
       validateErrors.Language = 'Language is required'
     }
     if (acceptTerms === false) {
-      validateErrors.acceptTerms = 'Terms is required'
+      validateErrors.acceptTerms = 'Terms are required'
     }
     setErrors(validateErrors)
 
@@ -122,22 +122,19 @@ const Apply = ({ navigation }) => {
       },
     }
 
-    async () => {
-      // call API
-      await createCourse(applicationData)
-      // Save to Async Storage
-
-      // Update Redux Store
-    }
+    await errorWrap(
+      async () => {
+        await createCourse(applicationData);
+      },
+      () => {
+        routeSuccess();
+      }
+    )
   }
 
-  const onSubmit = () => {
-    console.log(acceptTerms)
+  const onSubmit = async () => {
     if (validate() === true) {
-      applyCourse()
-      routeSuccess()
-    } else {
-      console.log('Validation Failed')
+      await applyCourse();
     }
   }
 
@@ -153,9 +150,7 @@ const Apply = ({ navigation }) => {
     <View style={styles.root}>
       <View style={styles.header}>
         <Text
-          style={{
-            fontFamily: 'GT_Haptik_bold',
-          }}
+          fontFamily="body"
           fontWeight="bold"
           color="black"
           fontStyle="regular"
@@ -182,9 +177,7 @@ const Apply = ({ navigation }) => {
         <ScrollView>
           <FormControl is Required isInvalid={'name' in errors}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_regular',
-              }}
+              fontFamily="body"
               fontWeight="regular"
               color="black"
               fontStyle="regular"
@@ -206,9 +199,7 @@ const Apply = ({ navigation }) => {
           </FormControl>
           <FormControl isRequired isInvalid={'email' in errors}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_regular',
-              }}
+              fontFamily="body"
               fontWeight="regular"
               color="black"
               fontStyle="regular"
@@ -230,9 +221,7 @@ const Apply = ({ navigation }) => {
           </FormControl>
           <FormControl isRequired isInvalid={'Language' in errors}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_regular',
-              }}
+              fontFamily="body"
               fontWeight="regular"
               color="black"
               fontStyle="regular"
@@ -252,11 +241,8 @@ const Apply = ({ navigation }) => {
               ) : null}
             </View>
           </FormControl>
-
           <Text
-            style={{
-              fontFamily: 'GT_Haptik_regular',
-            }}
+            fontFamily="body"
             fontWeight="regular"
             color="black"
             fontStyle="regular"
@@ -278,9 +264,7 @@ const Apply = ({ navigation }) => {
           </View>
 
           <Text
-            style={{
-              fontFamily: 'GT_Haptik_regular',
-            }}
+            fontFamily="body"
             fontWeight="regular"
             color="black"
             fontStyle="regular"
@@ -288,12 +272,8 @@ const Apply = ({ navigation }) => {
           >
             ISO Code
           </Text>
-
-          {/* Make a URL link */}
           <Text
-            style={{
-              fontFamily: 'GT_Haptik_regular',
-            }}
+            fontFamily="body"
             fontWeight="regular"
             color="gray.medium"
             fontStyle="regular"
@@ -312,9 +292,7 @@ const Apply = ({ navigation }) => {
           </View>
 
           <Text
-            style={{
-              fontFamily: 'GT_Haptik_regular',
-            }}
+            fontFamily="body"
             fontWeight="regular"
             color="black"
             fontStyle="regular"
@@ -322,12 +300,8 @@ const Apply = ({ navigation }) => {
           >
             Glotto Code
           </Text>
-
-          {/* Make a URL link */}
           <Text
-            style={{
-              fontFamily: 'GT_Haptik_regular',
-            }}
+            fontFamily="body"
             fontWeight="regular"
             color="gray.medium"
             fontStyle="regular"
@@ -346,9 +320,7 @@ const Apply = ({ navigation }) => {
           </View>
 
           <Text
-            style={{
-              fontFamily: 'GT_Haptik_regular',
-            }}
+            fontFamily="body"
             fontWeight="regular"
             color="black"
             fontStyle="regular"
@@ -370,9 +342,7 @@ const Apply = ({ navigation }) => {
           </View>
 
           <Text
-            style={{
-              fontFamily: 'GT_Haptik_regular',
-            }}
+            fontFamily="body"
             fontWeight="regular"
             color="black"
             fontStyle="regular"
@@ -390,15 +360,13 @@ const Apply = ({ navigation }) => {
           </View>
 
           <Text
-            style={{
-              fontFamily: 'GT_Haptik_regular',
-            }}
+            fontFamily="body"
             fontWeight="regular"
             color="black"
             fontStyle="regular"
             fontSize="md"
           >
-            link to additional information about the page.
+            Link to additional information about this language.
           </Text>
           <View style={styles.input}>
             <Input
@@ -421,9 +389,7 @@ const Apply = ({ navigation }) => {
                 ) : null}
                 <View style={styles.termsText}>
                   <Text
-                    style={{
-                      fontFamily: 'GT_Haptik_regular',
-                    }}
+                    fontFamily="body"
                     fontWeight="regular"
                     color="black"
                     fontStyle="regular"
@@ -433,9 +399,7 @@ const Apply = ({ navigation }) => {
                   </Text>
 
                   <Text
-                    style={{
-                      fontFamily: 'GT_Haptik_bold',
-                    }}
+                    fontFamily="body"
                     fontWeight="regular"
                     color="black"
                     fontStyle="regular"
@@ -452,9 +416,7 @@ const Apply = ({ navigation }) => {
             <Checkbox value="two" colorScheme="danger">
               <View style={styles.checkboxText2}>
                 <Text
-                  style={{
-                    fontFamily: 'GT_Haptik_regular',
-                  }}
+                  fontFamily="body"
                   fontWeight="regular"
                   color="black"
                   fontStyle="regular"
@@ -472,7 +434,7 @@ const Apply = ({ navigation }) => {
             <StyledButton
               title="Apply To Contribute"
               variant="primary"
-              onPress={() => onSubmit()}
+              onPress={onSubmit}
             />
 
             <Text
