@@ -3,7 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { colors } from 'theme'
 import Home from 'pages/Home'
 import Landing from 'pages/Landing'
-import CreateUnit from 'pages/UnitDrawer/CreateUnit'
+import CreateLesson from 'pages/CreateLesson'
+import CreateUnit from 'pages/CreateUnit'
 import ManageUnits from 'pages/ManageUnits'
 import DrawerButton from './DrawerButton'
 import BackButton from './BackButton'
@@ -76,7 +77,9 @@ export const ModalNavigator = () => (
     screenOptions={modalNavigationProps}
   >
     <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
+    <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
   </ModalStack.Navigator>
+
 )
 
 export const HomeNavigator = () => (
@@ -92,7 +95,6 @@ export const HomeNavigator = () => (
         headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
     />
-
     <Stack.Screen
       name="ManageUnits"
       component={ManageUnits}

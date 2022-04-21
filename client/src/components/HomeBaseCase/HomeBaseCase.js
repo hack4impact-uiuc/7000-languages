@@ -95,10 +95,10 @@ any courses yet!`}
     </Text>
 
     <StyledButton
-      title="Unit Drawer"
+      title="Create Lesson"
       variant="primary"
       onPress={() => {
-        navigation.navigate('Modal', { screen: 'UnitDrawer' })
+        navigation.navigate('Modal', { screen: 'CreateLesson' })
       }}
     />
   </View>
