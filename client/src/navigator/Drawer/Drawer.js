@@ -91,43 +91,16 @@ const drawerStyles = StyleSheet.create({
 
 const Drawer = createDrawerNavigator()
 
-/**
- * Data used for rendering the Drawer Tab
- */
-
-// const data = [
-//   {
-//     _id: 'abcdef',
-//     name: 'Spanish',
-//     num_units: '14 Units',
-//     isContributor: false,
-//   },
-//   {
-//     _id: 'aenasdas',
-//     name: 'French',
-//     num_units: '10 Units',
-//     isContributor: true,
-//   },
-//   {
-//     _id: 'asdnemsa',
-//     name: 'Chinese',
-//     num_units: '8 Units',
-//     isContributor: false,
-//   },
-//   {
-//     _id: 'mehjasjd',
-//     name: 'German',
-//     num_units: '8 Units',
-//     isContributor: true,
-//   },
-// ]
-
 const tabColors = [
   colors.red.dark,
-  colors.blue.dark,
-  colors.orange.dark,
-  colors.green.dark,
 ]
+
+const generateUnitLabel = (numUnits) => {
+  if (parseInt(numUnits) === 1) {
+    return "1 Unit";
+  }
+  return `${numUnits} Units`
+}
 
 /**
  * Generates the course tabs for the Drawer Tab Bar
@@ -144,7 +117,7 @@ const generateTabs = (tabData) => tabData.map((element, index) => (
         <View style={tabStyles.container}>
           <View>
             <Text style={tabStyles.title}>{element.name}</Text>
-            <Text style={tabStyles.units}>{element.num_units}</Text>
+            <Text style={tabStyles.units}>{generateUnitLabel(element.num_units)}</Text>
           </View>
           {element.isContributor ? <OwnershipButton isContributor /> : null}
         </View>
@@ -197,7 +170,7 @@ const DrawerMenuContainer = (props) => {
                   Become a contributor.
                 </Text>
               </Text>
-              <StyledButton title="Apply Now" fontSize="sm" />
+              <StyledButton title="Apply Now" fontSize="sm" onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })} />
             </Pressable>
           </View>
         ) : null}
@@ -261,8 +234,8 @@ const DrawerNavigator = () => {
         // Build list of courses that they belong to
         if (
           adminLanguages.length
-            + collaboratorLanguages.length
-            + learnerLanguages.length
+          + collaboratorLanguages.length
+          + learnerLanguages.length
           > 0
         ) {
           // No Languages

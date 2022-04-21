@@ -29,6 +29,7 @@ const TabNavigator = (navigationData) => {
     const {
       route: { name },
     } = navigationData
+    console.log(name);
     dispatch(setCurrentCourse({ currentCourseId: name }))
   }, [navigationData])
 

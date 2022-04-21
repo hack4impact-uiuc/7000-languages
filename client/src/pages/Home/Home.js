@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { NO_COURSE_ID } from 'utils/constants'
 import HomeBaseCase from '../../components/HomeBaseCase/HomeBaseCase'
+import { Text } from 'native-base'
 
 const Home = ({ navigation }) => {
   const { currentCourseId } = useSelector((state) => state.language)
@@ -12,8 +13,7 @@ const Home = ({ navigation }) => {
   }
 
   // TODO: add logic for rendering course page
-
-  return null
+  return <Text>{currentCourseId}</Text>
 }
 Home.propTypes = {
   navigation: PropTypes.shape({
