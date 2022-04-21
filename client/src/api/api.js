@@ -23,4 +23,3 @@ export const getUser = async () => {
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
-

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
 import {
   createDrawerNavigator,
@@ -11,11 +12,10 @@ import { View, Pressable, StyleSheet } from 'react-native'
 import OwnershipButton from 'components/OwnershipButton'
 import DrawerLogoutButton from 'components/DrawerLogoutButon'
 import useErrorWrap from 'hooks/useErrorWrap'
-import { getUser } from 'api'
+import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
-import { NO_COURSE_ID } from 'utils/constants'
 import { updateAllCourses } from 'slices/language.slice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
 
@@ -91,13 +91,14 @@ const drawerStyles = StyleSheet.create({
 
 const Drawer = createDrawerNavigator()
 
-const tabColors = [
-  colors.red.dark,
-]
+const tabColors = [colors.red.dark]
 
 const generateUnitLabel = (numUnits) => {
-  if (parseInt(numUnits) === 1) {
-    return "1 Unit";
+  if (Number.isNaN(numUnits)) {
+    return numUnits
+  }
+  if (parseInt(numUnits, 10) === 1) {
+    return '1 Unit'
   }
   return `${numUnits} Units`
 }
@@ -117,7 +118,9 @@ const generateTabs = (tabData) => tabData.map((element, index) => (
         <View style={tabStyles.container}>
           <View>
             <Text style={tabStyles.title}>{element.name}</Text>
-            <Text style={tabStyles.units}>{generateUnitLabel(element.num_units)}</Text>
+            <Text style={tabStyles.units}>
+              {generateUnitLabel(element.num_units)}
+            </Text>
           </View>
           {element.isContributor ? <OwnershipButton isContributor /> : null}
         </View>
@@ -170,7 +173,11 @@ const DrawerMenuContainer = (props) => {
                   Become a contributor.
                 </Text>
               </Text>
-              <StyledButton title="Apply Now" fontSize="sm" onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })} />
+              <StyledButton
+                title="Apply Now"
+                fontSize="sm"
+                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+              />
             </Pressable>
           </View>
         ) : null}
@@ -200,14 +207,8 @@ const DrawerMenuContainer = (props) => {
 }
 
 const DrawerNavigator = () => {
-  const [drawerData, setDrawerData] = useState([
-    {
-      _id: NO_COURSE_ID,
-      name: 'No Courses',
-      num_units: 'Join or start a course!',
-      isContributor: false,
-    },
-  ])
+  const { allCourses } = useSelector((state) => state.language)
+
   const [userEmail, setEmail] = useState('')
   const [userName, setName] = useState('Loading...')
   const [profileUrl, setProfileUrl] = useState('')
@@ -217,48 +218,17 @@ const DrawerNavigator = () => {
   useEffect(() => {
     const getUserData = async () => {
       await errorWrap(async () => {
-        const { result } = await getUser()
         const {
-          name,
-          email,
-          picture,
-          adminLanguages,
-          collaboratorLanguages,
-          learnerLanguages,
-        } = result
+          picture, name, email, courses,
+        } = await getAllUserCourses()
+
         // Set personal info
         setProfileUrl(picture)
         setName(name)
         setEmail(email)
 
-        // Build list of courses that they belong to
-        if (
-          adminLanguages.length
-          + collaboratorLanguages.length
-          + learnerLanguages.length
-          > 0
-        ) {
-          // No Languages
-          const allCourses = []
-
-          for (let i = 0; i < adminLanguages.length; i += 1) {
-            allCourses.push({ ...adminLanguages[i], isContributor: true })
-          }
-
-          for (let i = 0; i < collaboratorLanguages.length; i += 1) {
-            allCourses.push({
-              ...collaboratorLanguages[i],
-              isContributor: true,
-            })
-          }
-
-          for (let i = 0; i < learnerLanguages.length; i += 1) {
-            allCourses.push({ ...learnerLanguages[i], isContributor: false })
-          }
-
-          const sortedCourses = allCourses.sort((a, b) => a.name.localeCompare(b.name))
-          dispatch(updateAllCourses({ allCourses: sortedCourses }))
-          setDrawerData(sortedCourses)
+        if (allCourses.length > 0) {
+          dispatch(updateAllCourses({ allCourses: courses }))
         }
       })
     }
@@ -287,7 +257,7 @@ const DrawerNavigator = () => {
         />
       )}
     >
-      {(() => generateTabs(drawerData))()}
+      {(() => generateTabs(allCourses))()}
     </Drawer.Navigator>
   )
 }

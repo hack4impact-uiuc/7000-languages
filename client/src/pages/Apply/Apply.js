@@ -15,6 +15,9 @@ import {
 } from 'native-base'
 import useErrorWrap from 'hooks/useErrorWrap'
 import { createCourse } from 'api'
+import { getAllUserCourses } from 'utils/languageHelper'
+import { useDispatch } from 'react-redux'
+import { updateAllCourses } from 'slices/language.slice'
 
 const styles = StyleSheet.create({
   root: {
@@ -53,6 +56,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   checkboxes: {
+    width: '100%',
     marginBottom: 2,
     marginLeft: 7,
   },
@@ -60,16 +64,14 @@ const styles = StyleSheet.create({
     height: '50px',
   },
   termsText: {
+    width: '100%',
     bottom: 4,
     left: 16,
-  },
-  checkboxText2: {
-    left: 10,
   },
 })
 
 const Apply = ({ navigation }) => {
-  // applicaton fields
+  // application fields
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [language, setLanguage] = useState('')
@@ -82,7 +84,9 @@ const Apply = ({ navigation }) => {
   const [link, setLink] = useState(false)
   const errorWrap = useErrorWrap()
   const [errors, setErrors] = useState({})
+  const dispatch = useDispatch()
 
+  // Validates the course application form
   const validate = () => {
     const validateErrors = {}
 
@@ -100,10 +104,16 @@ const Apply = ({ navigation }) => {
     }
     setErrors(validateErrors)
 
-    if (Object.keys(validateErrors).length === 0) {
-      return true
-    }
-    return false
+    return Object.keys(validateErrors).length === 0
+  }
+
+  // Called when a user successfuly creates a new course
+  const routeSuccess = () => {
+    Alert.alert(
+      'Success!',
+      'You have succesfully submitted your application!',
+      [{ text: 'OK', onPress: () => navigation.goBack() }],
+    )
   }
 
   const applyCourse = async () => {
@@ -122,28 +132,33 @@ const Apply = ({ navigation }) => {
       },
     }
 
+    let courseId = null
+
     await errorWrap(
       async () => {
-        await createCourse(applicationData);
+        const { result } = await createCourse(applicationData)
+        courseId = result._id
       },
-      () => {
-        routeSuccess();
-      }
+      async () => {
+        const { courses } = await getAllUserCourses()
+
+        if (courses.length > 0) {
+          // On success, update the drawer tab
+          dispatch(updateAllCourses({ allCourses: courses }))
+          // Navigate to newly created course
+          navigation.navigate(courseId)
+        }
+
+        // Go to the home page
+        routeSuccess()
+      },
     )
   }
 
   const onSubmit = async () => {
     if (validate() === true) {
-      await applyCourse();
+      await applyCourse()
     }
-  }
-
-  const routeSuccess = () => {
-    Alert.alert(
-      'Success!',
-      'You have succesfully submitted your application!',
-      [{ text: 'OK', onPress: () => navigation.goBack() }],
-    )
   }
 
   return (
@@ -151,9 +166,9 @@ const Apply = ({ navigation }) => {
       <View style={styles.header}>
         <Text
           fontFamily="body"
-          fontWeight="bold"
+          fontWeight="regular"
           color="black"
-          fontStyle="regular"
+          fontStyle="normal"
           fontSize="md"
         >
           Thanks for your interest in contributing a language.
@@ -162,9 +177,10 @@ const Apply = ({ navigation }) => {
 
       <View style={styles.subhead}>
         <Text
+          fontFamily="body"
           fontWeight="regular"
           color="black"
-          fontStyle="regular"
+          fontStyle="normal"
           fontSize="sm"
         >
           We are always seeking to expand our library of languages. {'\n'}
@@ -180,7 +196,7 @@ const Apply = ({ navigation }) => {
               fontFamily="body"
               fontWeight="regular"
               color="black"
-              fontStyle="regular"
+              fontStyle="normal"
               fontSize="md"
             >
               Your Name*
@@ -202,7 +218,7 @@ const Apply = ({ navigation }) => {
               fontFamily="body"
               fontWeight="regular"
               color="black"
-              fontStyle="regular"
+              fontStyle="normal"
               fontSize="md"
             >
               Email*
@@ -224,7 +240,7 @@ const Apply = ({ navigation }) => {
               fontFamily="body"
               fontWeight="regular"
               color="black"
-              fontStyle="regular"
+              fontStyle="normal"
               fontSize="md"
             >
               Name of Language*
@@ -245,7 +261,7 @@ const Apply = ({ navigation }) => {
             fontFamily="body"
             fontWeight="regular"
             color="black"
-            fontStyle="regular"
+            fontStyle="normal"
             fontSize="md"
           >
             Any alternative names?
@@ -267,7 +283,7 @@ const Apply = ({ navigation }) => {
             fontFamily="body"
             fontWeight="regular"
             color="black"
-            fontStyle="regular"
+            fontStyle="normal"
             fontSize="md"
           >
             ISO Code
@@ -276,7 +292,7 @@ const Apply = ({ navigation }) => {
             fontFamily="body"
             fontWeight="regular"
             color="gray.medium"
-            fontStyle="regular"
+            fontStyle="normal"
             fontSize="md"
             onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
           >
@@ -295,7 +311,7 @@ const Apply = ({ navigation }) => {
             fontFamily="body"
             fontWeight="regular"
             color="black"
-            fontStyle="regular"
+            fontStyle="normal"
             fontSize="md"
           >
             Glotto Code
@@ -304,7 +320,7 @@ const Apply = ({ navigation }) => {
             fontFamily="body"
             fontWeight="regular"
             color="gray.medium"
-            fontStyle="regular"
+            fontStyle="normal"
             fontSize="md"
             onPress={() => Linking.openURL('https://glottolog.org/glottolog')}
           >
@@ -323,7 +339,7 @@ const Apply = ({ navigation }) => {
             fontFamily="body"
             fontWeight="regular"
             color="black"
-            fontStyle="regular"
+            fontStyle="normal"
             fontSize="md"
           >
             Where is this language spoken?
@@ -345,7 +361,7 @@ const Apply = ({ navigation }) => {
             fontFamily="body"
             fontWeight="regular"
             color="black"
-            fontStyle="regular"
+            fontStyle="normal"
             fontSize="md"
           >
             Approximately how many people speak this language?
@@ -363,7 +379,7 @@ const Apply = ({ navigation }) => {
             fontFamily="body"
             fontWeight="regular"
             color="black"
-            fontStyle="regular"
+            fontStyle="normal"
             fontSize="md"
           >
             Link to additional information about this language.
@@ -392,44 +408,21 @@ const Apply = ({ navigation }) => {
                     fontFamily="body"
                     fontWeight="regular"
                     color="black"
-                    fontStyle="regular"
+                    fontStyle="normal"
                     fontSize="md"
                   >
-                    I agree to the
-                  </Text>
-
-                  <Text
-                    fontFamily="body"
-                    fontWeight="regular"
-                    color="black"
-                    fontStyle="regular"
-                    fontSize="md"
-                    onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
-                  >
-                    Terms and Conditions {'\n'}
+                    I agree to the{' '}
+                    <Text
+                      fontFamily="heading"
+                      onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                    >
+                      Terms and Conditions
+                    </Text>
                   </Text>
                 </View>
               </Checkbox>
             </FormControl>
           </View>
-          <View style={styles.checkboxes}>
-            <Checkbox value="two" colorScheme="danger">
-              <View style={styles.checkboxText2}>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="regular"
-                  fontSize="md"
-                >
-                  I would like a team member from 7000 languages to follow up
-                  with you about {'\n'}creating additional resources{'\n'}for my
-                  language.
-                </Text>
-              </View>
-            </Checkbox>
-          </View>
-
           <View style={styles.submitForm}>
             <StyledButton
               title="Apply To Contribute"
@@ -438,10 +431,11 @@ const Apply = ({ navigation }) => {
             />
 
             <Text
+              fontFamily="body"
               fontWeight="regular"
-              color="gray.medium"
-              fontStyle="regular"
-              fontSize="sm"
+              color="black"
+              fontStyle="normal"
+              fontSize="md"
             >
               By selecting this button, you have permission from the
               community/speakers to create language learning materials
@@ -456,11 +450,12 @@ const Apply = ({ navigation }) => {
 Apply.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    goBack: PropTypes.func,
   }),
 }
 
 Apply.defaultProps = {
-  navigation: { navigate: () => null },
+  navigation: { navigate: () => null, goBack: () => null },
 }
 
 export default Apply

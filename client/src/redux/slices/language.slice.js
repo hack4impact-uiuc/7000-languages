@@ -1,12 +1,20 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
+import { NO_COURSE_ID } from 'utils/constants'
 
 // ------------------------------------
 // Constants
 // ------------------------------------
 
 const initialState = {
-  allCourses: [],
+  allCourses: [
+    {
+      _id: NO_COURSE_ID,
+      name: 'No Courses',
+      num_units: 'Join or start a course!',
+      isContributor: false,
+    },
+  ],
   currentCourseId: '',
 }
 

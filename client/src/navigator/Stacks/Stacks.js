@@ -6,6 +6,8 @@ import Landing from 'pages/Landing'
 import UnitDrawer from 'pages/UnitDrawer'
 import ManageUnits from 'pages/ManageUnits'
 import Apply from 'pages/Apply'
+import { NO_COURSE_ID } from 'utils/constants'
+import PropTypes from 'prop-types'
 import DrawerButton from './DrawerButton'
 import BackButton from './BackButton'
 
@@ -80,16 +82,17 @@ export const ModalNavigator = () => (
   </ModalStack.Navigator>
 )
 
-export const HomeNavigator = () => (
+export const HomeNavigator = ({ courseId }) => (
   <Stack.Navigator
     initialRouteName="Home"
     headerMode="screen"
     screenOptions={navigationProps}
   >
     <Stack.Screen
-      name="Home"
-      component={Home}
+      name={courseId}
+      children={(props) => <Home {...props} courseId={courseId} />}
       options={({ navigation }) => ({
+        title: 'Home',
         headerLeft: () => <DrawerButton navigation={navigation} />,
       })}
     />
@@ -119,3 +122,11 @@ export const HomeNavigator = () => (
     />
   </Stack.Navigator>
 )
+
+HomeNavigator.propTypes = {
+  courseId: PropTypes.string,
+}
+
+HomeNavigator.defaultProps = {
+  courseId: NO_COURSE_ID,
+}
