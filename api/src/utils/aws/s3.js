@@ -7,6 +7,13 @@ const {
   SECRET_ACCESS_KEY,
 } = require('./awsExports');
 
+const S3_CREDENTIALS = {
+    accessKeyId: ACCESS_KEY_ID,
+    secretAccessKey: SECRET_ACCESS_KEY,
+};
+
+
+
 const getS3 = (credentials) => {
   const s3 = new AWS.S3({
     accessKeyId: ACCESS_KEY_ID,
