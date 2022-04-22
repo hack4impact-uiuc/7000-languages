@@ -252,8 +252,8 @@ describe('PATCH /language/course/ ', () => {
     );
     const message = response.body.message;
 
-    expect(response.status).toBe(404);
-    expect(message).toEqual('Course not found');
+    expect(response.status).toBe(400);
+    expect(message).toEqual('Invalid ObjectID');
   });
 
   test('Patch request specifies nonexistent course', async () => {
@@ -268,6 +268,6 @@ describe('PATCH /language/course/ ', () => {
     const message = response.body.message;
 
     expect(response.status).toBe(404);
-    expect(message).toEqual('Course not found');
+    expect(message).toEqual('Course does not exist');
   });
 });

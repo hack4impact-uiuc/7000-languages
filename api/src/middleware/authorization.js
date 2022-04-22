@@ -11,18 +11,16 @@ const requireLanguageAuthorization = async (req, res, next) => {
   } else if (req.params.id) {
     current_language = req.params.id;
   } else {
-    return sendResponse(res, 401, ERR_AUTH_FAILED);
+    return sendResponse(res, 403, ERR_AUTH_FAILED);
   }
   var ObjectId = require('mongoose').Types.ObjectId;
   if (!ObjectId.isValid(current_language)) {
-    next();
-    return;
+    return sendResponse(res, 400, 'Invalid ObjectID');
   }
   try {
     const courseExists = await models.Course.findById(current_language);
     if (!courseExists) {
-      next();
-      return;
+      return sendResponse(res, 404, 'Course does not exist');
     }
     //check if language is in user's adminLanguages field
     var authorized_languages = req.user.adminLanguages;
@@ -34,16 +32,16 @@ const requireLanguageAuthorization = async (req, res, next) => {
       }
     }
     if (!currentInAuthorized) {
-      return sendResponse(res, 401, ERR_NOT_AUTHORIZED);
+      return sendResponse(res, 403, ERR_NOT_AUTHORIZED);
     }
     //check if course contains admin id of user
     const course = await models.Course.findById(current_language);
     if (course.admin_id !== req.user.authID) {
-      return sendResponse(res, 401, ERR_NOT_AUTHORIZED);
+      return sendResponse(res, 403, ERR_NOT_AUTHORIZED);
     }
     next();
   } catch (error) {
-    return sendResponse(res, 401, ERR_AUTH_FAILED);
+    return sendResponse(res, 403, ERR_AUTH_FAILED);
   }
 };
 

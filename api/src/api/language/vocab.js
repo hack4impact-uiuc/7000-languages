@@ -92,7 +92,6 @@ router.post(
 
       return sendResponse(res, 200, SUCCESS_POSTING_VOCAB_DATA, vocab);
     } catch (error) {
-      console.error('POST /vocab/: ', error.message);
       return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
     }
   }),
