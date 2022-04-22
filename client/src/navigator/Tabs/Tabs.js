@@ -3,7 +3,9 @@ import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { colors } from 'theme'
 import { AntDesign } from '@expo/vector-icons'
+import PropTypes from 'prop-types'
 import { HomeNavigator } from '../Stacks'
+import { NO_COURSE_ID } from '../../utils/constants'
 
 const Tab = createBottomTabNavigator()
 
@@ -15,7 +17,7 @@ const Tab = createBottomTabNavigator()
   More reading: https://reactnavigation.org/docs/tab-based-navigation
 */
 
-const TabNavigator = () => (
+const TabNavigator = (navigationData) => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
       // eslint-disable-next-line react/prop-types
@@ -39,19 +41,29 @@ const TabNavigator = () => (
     tabBarOptions={{
       activeTintColor: colors.red.dark,
       inactiveTintColor: colors.gray.dark,
-      style: {
-        // backgroundColor: 'white',
-        // borderTopColor: 'gray',
-        // borderTopWidth: 1,
-        // paddingBottom: 5,
-        // paddingTop: 5,
-      },
     }}
-    initialRouteName="Home"
+    initialRouteName="Units"
     swipeEnabled={false}
   >
-    <Tab.Screen name="Units" component={HomeNavigator} />
+    <Tab.Screen
+      name="Units"
+      children={(props) => (
+        <HomeNavigator {...props} courseId={navigationData.route.name} />
+      )}
+    />
   </Tab.Navigator>
 )
+
+TabNavigator.propTypes = {
+  navigationData: PropTypes.shape({
+    route: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  }),
+}
+
+TabNavigator.defaultProps = {
+  navigationData: { route: { name: NO_COURSE_ID } },
+}
 
 export default TabNavigator

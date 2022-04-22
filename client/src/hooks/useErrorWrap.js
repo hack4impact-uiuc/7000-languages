@@ -8,8 +8,8 @@ import { ERROR_ALERT_TITLE } from '../utils/constants'
  * and a callback when a request errors out.
  */
 
-const defaultSuccessCallback = () => { }
-const defaultErrorCallback = () => { }
+const defaultSuccessCallback = () => {}
+const defaultErrorCallback = () => {}
 
 const useErrorWrap = () => {
   const errorWrapper = async (
@@ -21,7 +21,7 @@ const useErrorWrap = () => {
       if (func) await func()
       successCallback()
     } catch (error) {
-      console.error('useErrorWrap(): error caught: ', error.message);
+      console.error('useErrorWrap(): error caught: ', error.message)
       Alert.alert(ERROR_ALERT_TITLE, error.message, [
         { text: 'OK', onPress: () => errorCallback() },
       ])
