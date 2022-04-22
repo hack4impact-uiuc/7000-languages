@@ -63,8 +63,6 @@ describe('GET /language/course/ ', () => {
   });
 
   test('No id results in error', async () => {
-    const body = POST_WRONG_COURSE_MISSING_NAME;
-
     const response = await withAuthentication(
       request(app).get('/language/course/'),
     );
@@ -73,8 +71,6 @@ describe('GET /language/course/ ', () => {
   });
 
   test('Invalid id results in error', async () => {
-    const body = POST_WRONG_COURSE_MISSING_NAME;
-
     const response = await withAuthentication(
       request(app).get('/language/course/62391a30487d5ae343caaaaa'),
     );
