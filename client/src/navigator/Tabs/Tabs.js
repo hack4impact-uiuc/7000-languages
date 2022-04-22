@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { colors } from 'theme'
 import { AntDesign } from '@expo/vector-icons'
-import { setCurrentCourse } from 'slices/language.slice'
-import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import { HomeNavigator } from '../Stacks'
 import { NO_COURSE_ID } from '../../utils/constants'
@@ -19,51 +17,42 @@ const Tab = createBottomTabNavigator()
   More reading: https://reactnavigation.org/docs/tab-based-navigation
 */
 
-const TabNavigator = (navigationData) => {
-  const dispatch = useDispatch()
+const TabNavigator = (navigationData) => (
+  <Tab.Navigator
+    screenOptions={({ route }) => ({
+      // eslint-disable-next-line react/prop-types
+      tabBarIcon: ({ focused }) => {
+        switch (route.name) {
+          case 'Units':
+            return (
+              <AntDesign
+                name="appstore1"
+                color={focused ? colors.red.dark : colors.gray.dark}
+                size={20}
+                solid
+              />
+            )
 
-  /**
-   * Sets the selected course in Redux
-   */
-  useEffect(() => {
-    const {
-      route: { name },
-    } = navigationData
-    dispatch(setCurrentCourse({ currentCourseId: name }))
-  }, [navigationData])
-
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        // eslint-disable-next-line react/prop-types
-        tabBarIcon: ({ focused }) => {
-          switch (route.name) {
-            case 'Units':
-              return (
-                <AntDesign
-                  name="appstore1"
-                  color={focused ? colors.red.dark : colors.gray.dark}
-                  size={20}
-                  solid
-                />
-              )
-
-            default:
-              return <View />
-          }
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: colors.red.dark,
-        inactiveTintColor: colors.gray.dark,
-      }}
-      initialRouteName="Units"
-      swipeEnabled={false}
-    >
-      <Tab.Screen name="Units" component={HomeNavigator} />
-    </Tab.Navigator>
-  )
-}
+          default:
+            return <View />
+        }
+      },
+    })}
+    tabBarOptions={{
+      activeTintColor: colors.red.dark,
+      inactiveTintColor: colors.gray.dark,
+    }}
+    initialRouteName="Units"
+    swipeEnabled={false}
+  >
+    <Tab.Screen
+      name="Units"
+      children={(props) => (
+        <HomeNavigator {...props} courseId={navigationData.route.name} />
+      )}
+    />
+  </Tab.Navigator>
+)
 
 TabNavigator.propTypes = {
   navigationData: PropTypes.shape({

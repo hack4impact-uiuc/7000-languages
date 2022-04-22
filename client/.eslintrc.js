@@ -29,6 +29,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/destructuring-assignment': 'off',
+    'react/no-children-prop': 'off',
     'import/no-extraneous-dependencies': [
       'error',
       {

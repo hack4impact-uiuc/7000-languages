@@ -90,6 +90,9 @@ any courses yet!`}
       paddingBottom="10%"
       color="red.dark"
       fontSize="2xl"
+      onPress={() => {
+        navigation.navigate('Apply', { from: 'HomeBaseCase' })
+      }}
     >
       Become a contributor
     </Text>
