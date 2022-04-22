@@ -3,7 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { colors } from 'theme'
 import Home from 'pages/Home'
 import Landing from 'pages/Landing'
-import UnitDrawer from 'pages/UnitDrawer'
+import CreateLesson from 'pages/CreateLesson'
+import CreateUnit from 'pages/CreateUnit'
 import ManageUnits from 'pages/ManageUnits'
 import Apply from 'pages/Apply'
 import { NO_COURSE_ID } from 'utils/constants'
@@ -75,11 +76,13 @@ export const AuthNavigator = () => (
 
 export const ModalNavigator = () => (
   <ModalStack.Navigator
-    initialRouteName="UnitDrawer"
+    initialRouteName="CreateUnit"
     screenOptions={modalNavigationProps}
   >
-    <ModalStack.Screen name="UnitDrawer" component={UnitDrawer} />
+    <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
+    <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
   </ModalStack.Navigator>
+
 )
 
 export const HomeNavigator = ({ courseId }) => (

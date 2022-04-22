@@ -9,16 +9,7 @@ const theme = extendTheme({
       baseStyle: {
         size: '20',
         selectionColor: 'blue.medium',
-        backgroundColor: 'gray.medium_light',
-      },
-      defaultProps: { size: 'sm' },
-    },
-
-    TextArea: {
-      baseStyle: {
-        size: '20',
-        selectionColor: 'blue.medium',
-        backgroundColor: 'gray.medium_light',
+        borderColor: 'coolGray.800',
       },
       defaultProps: { size: 'sm' },
     },

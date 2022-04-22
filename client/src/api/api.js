@@ -8,10 +8,10 @@ export const createUser = async (userData) => {
   return res.data
 }
 
-export const createCourse = async (applicationData) => {
-  const requestString = 'language/course'
+export const createUnit = async (applicationData) => {
+  const requestString = '/language/course'
   const res = await instance.post(requestString, applicationData)
-
+  
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
@@ -19,7 +19,8 @@ export const createCourse = async (applicationData) => {
 export const getUser = async () => {
   const requestString = '/user'
   const res = await instance.get(requestString)
-
+  
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
+
