@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray.light,
   },
 })
-const HomeBaseCase = () => (
+const HomeBaseCase = ({ navigation }) => (
   <View style={styles.root}>
     <StatusBar barStyle="light-content" />
     <Text
@@ -93,6 +93,14 @@ any courses yet!`}
     >
       Become a contributor
     </Text>
+
+    <StyledButton
+      title="Create Lesson"
+      variant="primary"
+      onPress={() => {
+        navigation.navigate('Modal', { screen: 'CreateLesson' })
+      }}
+    />
   </View>
 )
 
