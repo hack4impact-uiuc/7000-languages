@@ -5,8 +5,7 @@ import PropTypes from 'prop-types'
 import { ScrollView, Text } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import StyledCard from '../StyledCard/StyledCard'
-import { INDICATOR_TYPES } from '../../utils/constants'
+import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 
 const styles = StyleSheet.create({
@@ -19,7 +18,8 @@ const styles = StyleSheet.create({
     },
     top: {
         backgroundColor: colors.red.dark,
-        height: 160,
+        minHeight: 100,
+        overflow: 'hidden',
         display: 'flex',
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20
@@ -29,86 +29,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
-    selected: {
-
-    }
   })
-  const ManageView =({
+
+  const LanguageHome = ({
+    navigation,
     languageName,
     languageDescription,
-    unitsNumber,
+    valueName,
     buttonText,
     rightIconName,
-    unitsName,
-    lessonNumber,
-    statusTag,
-
-  })
-  const data = [
-    {
-      _id: 'abcdef',
-      title: 'Unit 1',
-      lessons: '2 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'aenasdas',
-      title: 'Unit 2',
-      lessons: '7 Lessons',
-      indicatorType: INDICATOR_TYPES.INCOMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 3',
-      lessons: '4 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 5',
-      lessons: '3 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 3',
-      lessons: '4 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 5',
-      lessons: '3 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 3',
-      lessons: '4 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 5',
-      lessons: '3 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 3',
-      lessons: '4 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 5',
-      lessons: '3 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    
-  ]
-
-  const CourseNavHome = ({navigation}) => {
+    toNavigate,
+    toNext,
+    data,
+  }) => {
     return (
         <>
         <View
@@ -123,6 +56,7 @@ const styles = StyleSheet.create({
             fontSize={35}
             paddingLeft={5}
             paddingTop={5}
+            paddingBottom={1}
     >
       {languageName}
       </Text>
@@ -136,6 +70,7 @@ const styles = StyleSheet.create({
             lineHeight={20}
             paddingLeft={5}
             paddingRight={5}
+            paddingBottom={5}
             adjustsFontSizeToFit={true}
     >
       {languageDescription}
@@ -154,7 +89,7 @@ style={styles.manageBar}
       paddingTop={3}
       paddingLeft={5}
       >    
-{unitsNumber} 4 Units
+{data.length} {valueName}
     </Text>
     <StyledButton
         title={buttonText}
@@ -165,7 +100,7 @@ style={styles.manageBar}
         color={colors.red.dark}
         size={20}
         > </MaterialCommunityIcons>}
-        onPress={() => navigation.navigate('ManageUnits')}
+        onPress={() => navigation.navigate(toNavigate)}
     ></StyledButton>
 </View>
 
@@ -194,6 +129,7 @@ style={{
               name="pencil"
               color='black'
               size={20}
+              onPress={() => navigation.navigate(toNext)} // ????
               > </MaterialCommunityIcons>}
         >
             </StyledCard>)
@@ -205,20 +141,27 @@ style={{
   }
 
   // Page Object Fields 
-  ManageView.propTypes = {
-    languageName: PropTypes.string,
-    languageDescription: PropTypes.string,
-    unitsNumber: PropTypes.number,
+  LanguageHome.propTypes = {
+    languageName: PropTypes.func,
+    languageDescription: PropTypes.func,
+    valueName: PropTypes.string,
     buttonText: PropTypes.string,
-    rightIcon: PropTypes.string,
+    rightIconName: PropTypes.string,
+    toNavigate: PropTypes.string,
+    data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
+
   }
 
-  ManageView.propTypes = {
-    languageName: '',
-    languageDescription: '',
-    unitsNumber: 1,
+  // Page Default Fields 
+  LanguageHome.propTypes = {
+    languageName: {},
+    languageDescription: {},
+    valueName: '',
     buttonText: '',
     rightIconName: '',
+    toNavigate: '',
+    toNext: '',
+    data: [],
   }
 
-  export default CourseNavHome
+  export default LanguageHome

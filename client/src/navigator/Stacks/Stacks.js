@@ -7,8 +7,10 @@ import UnitDrawer from 'pages/UnitDrawer'
 import ManageUnits from 'pages/ManageUnits'
 import DrawerButton from './DrawerButton'
 import BackButton from './BackButton'
+import UnitHome from 'pages/UnitHome'
+import LessonHome from 'pages/LessonHome'
 
-// ------------------------------------
+// ------------------------------------ 
 // Constants
 // ------------------------------------
 
@@ -91,6 +93,22 @@ export const HomeNavigator = () => (
     <Stack.Screen
       name="Home"
       component={Home}
+      options={({ navigation }) => ({
+        headerLeft: () => <DrawerButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' }
+      })}
+    />
+     <Stack.Screen
+      name="UnitHome"
+      component={UnitHome}
+      options={({ navigation }) => ({
+        headerLeft: () => <DrawerButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' }
+      })}
+    />
+     <Stack.Screen
+      name="LessonHome"
+      component={UnitHome} // change 
       options={({ navigation }) => ({
         headerLeft: () => <DrawerButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' }
