@@ -112,6 +112,17 @@ const theme = extendTheme({
             fontFamily: 'GT_Haptik_bold',
           },
         },
+        manage: {
+          bg: 'red.light',
+          borderRadius: 10,
+          minW: 100,
+          my: 3,
+          mx: 5,
+          _text: {
+            color: 'red.dark',
+            fontFamily: 'GT_Haptik_bold',
+          },
+        },
       },
     },
   },

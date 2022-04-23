@@ -1,11 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
-import {
-  Input,
-  Text,
-  TextArea,
-} from 'native-base'
+import { Input, Text, TextArea } from 'native-base'
 
 const CreateLesson = ({ navigation }) => {
   const close = () => {
