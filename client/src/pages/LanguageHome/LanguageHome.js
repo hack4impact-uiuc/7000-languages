@@ -145,7 +145,6 @@ style={{
         <Text
         style={{
           fontFamily: 'GT_Haptik_bold',
-          
         }}
               color="white.dark:alpha.40"
               fontSize={'xl'}
