@@ -96,14 +96,6 @@ any courses yet!`}
     >
       Become a contributor
     </Text>
-
-    <StyledButton
-      title="Create Lesson"
-      variant="primary"
-      onPress={() => {
-        navigation.navigate('Modal', { screen: 'CreateLesson' })
-      }}
-    />
   </View>
 )
 
