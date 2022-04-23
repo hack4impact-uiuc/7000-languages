@@ -14,3 +14,4 @@ export const RECORDING = {
   CONFIRMATION: 2,
   COMPLETE: 3,
 }
+export const NO_COURSE_ID = 'no_course_id'

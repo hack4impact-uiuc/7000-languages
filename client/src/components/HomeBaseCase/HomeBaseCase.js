@@ -98,10 +98,10 @@ any courses yet!`}
     </Text>
 
     <StyledButton
-      title="Create Lesson"
+      title="Vocab Drawer"
       variant="primary"
       onPress={() => {
-        navigation.navigate('Modal', { screen: 'CreateLesson' })
+        navigation.navigate('Modal', { screen: 'VocabDrawer' })
       }}
     />
   </View>

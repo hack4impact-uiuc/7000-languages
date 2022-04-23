@@ -241,7 +241,7 @@ const WordDrawer = ({ navigation }) => {
         value={translatedText}
         onChangeText={(val) => setTranslatedText(val)}
       />
-      <RecordAudioView recordingStage={recordingStage} />
+      <RecordAudioView recordingStage={recordingStage} startRecording={startRecording} stopRecording={stopRecording} />
       <Text>{`${originalLanguage}*`}</Text>
       <Input
         placeholder=""

@@ -94,7 +94,7 @@ const Drawer = createDrawerNavigator()
 const tabColors = [colors.red.dark]
 
 const generateUnitLabel = (numUnits) => {
-  if (Number.isNaN(numUnits)) {
+  if (isNaN(numUnits)) {
     return numUnits
   }
   if (parseInt(numUnits, 10) === 1) {
@@ -215,25 +215,25 @@ const DrawerNavigator = () => {
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    const getUserData = async () => {
-      await errorWrap(async () => {
-        const {
-          picture, name, email, courses,
-        } = await getAllUserCourses()
+  // useEffect(() => {
+  //   const getUserData = async () => {
+  //     await errorWrap(async () => {
+  //       const {
+  //         picture, name, email, courses,
+  //       } = await getAllUserCourses()
 
-        // Set personal info
-        setProfileUrl(picture)
-        setName(name)
-        setEmail(email)
+  //       // Set personal info
+  //       setProfileUrl(picture)
+  //       setName(name)
+  //       setEmail(email)
 
-        if (allCourses.length > 0) {
-          dispatch(updateAllCourses({ allCourses: courses }))
-        }
-      })
-    }
-    getUserData()
-  }, [])
+  //       if (allCourses.length > 0) {
+  //         dispatch(updateAllCourses({ allCourses: courses }))
+  //       }
+  //     })
+  //   }
+  //   getUserData()
+  // }, [])
 
   return (
     <Drawer.Navigator
