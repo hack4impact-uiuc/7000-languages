@@ -3,8 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { colors } from 'theme'
 import Home from 'pages/Home'
 import Landing from 'pages/Landing'
-import UnitDrawer from 'pages/UnitDrawer'
+import CreateLesson from 'pages/CreateLesson'
+import CreateUnit from 'pages/CreateUnit'
 import ManageUnits from 'pages/ManageUnits'
+import Apply from 'pages/Apply'
+import { NO_COURSE_ID } from 'utils/constants'
+import PropTypes from 'prop-types'
 import DrawerButton from './DrawerButton'
 import BackButton from './BackButton'
 import UnitHome from 'pages/UnitHome'
@@ -76,15 +80,17 @@ export const AuthNavigator = () => (
 
 export const ModalNavigator = () => (
   <ModalStack.Navigator
-    initialRouteName="UnitDrawer"
+    initialRouteName="CreateUnit"
     screenOptions={modalNavigationProps}
     
   >
-    <ModalStack.Screen name="UnitDrawer" component={UnitDrawer} />
+    <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
+    <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
   </ModalStack.Navigator>
+
 )
 
-export const HomeNavigator = () => (
+export const HomeNavigator = ({ courseId }) => (
   <Stack.Navigator
     initialRouteName="Home"
     headerMode="screen"
@@ -92,9 +98,10 @@ export const HomeNavigator = () => (
     
   >
     <Stack.Screen
-      name="Home"
-      component={Home}
+      name={courseId}
+      children={(props) => <Home {...props} courseId={courseId} />}
       options={({ navigation }) => ({
+        title: 'Home',
         headerLeft: () => <DrawerButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' }
       })}
@@ -113,6 +120,21 @@ export const HomeNavigator = () => (
       options={({ navigation }) => ({
         headerLeft: () => <BackButton navigation={navigation} color={'white'}/>,
         cardStyle: { backgroundColor: 'white' }
+      })}
+    />
+
+    <Stack.Screen
+      name="Apply"
+      component={Apply}
+      options={({ navigation }) => ({
+        title: 'Become a Contributor',
+        headerStyle: { backgroundColor: colors.white.light },
+        headerTitleStyle: {
+          fontSize: 18,
+          fontFamily: 'GT_Haptik_bold',
+          color: 'black',
+        },
+        headerLeft: () => <BackButton navigation={navigation} />,
       })}
     />
     <Stack.Screen
@@ -137,3 +159,11 @@ export const HomeNavigator = () => (
     />
   </Stack.Navigator>
 )
+
+HomeNavigator.propTypes = {
+  courseId: PropTypes.string,
+}
+
+HomeNavigator.defaultProps = {
+  courseId: NO_COURSE_ID,
+}

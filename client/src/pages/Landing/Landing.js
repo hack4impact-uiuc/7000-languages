@@ -10,8 +10,8 @@ import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import useErrorWrap from 'hooks/useErrorWrap'
 import { AntDesign } from '@expo/vector-icons'
-import { saveUserIDToken } from '../../utils/auth'
-import { createUser } from '../../api/api'
+import { saveUserIDToken } from 'utils/auth'
+import { createUser } from 'api'
 import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
@@ -63,35 +63,24 @@ const Landing = () => {
   )
 
   const loginUser = async () => {
-    await errorWrap(
-      async () => {
-        const { idToken } = await Google.logInAsync({
-          iosClientId: Constants.manifest.extra.iosClientId,
-          androidClientId: Constants.manifest.extra.androidClientId,
-        })
+    await errorWrap(async () => {
+      const { idToken } = await Google.logInAsync({
+        iosClientId: Constants.manifest.extra.iosClientId,
+        androidClientId: Constants.manifest.extra.androidClientId,
+      })
 
-        if (idToken !== undefined) {
-          const userData = {
-            idToken,
-          }
-          // call API
-          await createUser(userData)
-          console.log('created user')
-          // Save to Async Storage
-          await saveUserIDToken(idToken)
-          console.log('saved user id token')
-          // Update Redux Store
-          dispatch(authenticate({ loggedIn: true, idToken }))
-          console.log('ran dispatch')
+      if (idToken !== undefined) {
+        const userData = {
+          idToken,
         }
-      },
-      () => {
-        console.log('success')
-      },
-      () => {
-        console.log('error')
-      },
-    )
+        // call API
+        await createUser(userData)
+        // Save to Async Storage
+        await saveUserIDToken(idToken)
+        // Update Redux Store
+        dispatch(authenticate({ loggedIn: true, idToken }))
+      }
+    })
   }
 
   return (

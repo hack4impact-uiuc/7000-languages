@@ -5,6 +5,15 @@ import colors from './colors'
 const theme = extendTheme({
   colors,
   components: {
+    Input: {
+      baseStyle: {
+        size: '20',
+        selectionColor: 'blue.medium',
+        borderColor: 'coolGray.800',
+      },
+      defaultProps: { size: 'sm' },
+    },
+
     Text: {
       baseStyle: {
         fontFamily: 'body',

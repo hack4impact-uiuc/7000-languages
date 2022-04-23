@@ -10,7 +10,7 @@ export const loadUserIDToken = async () => {
     const userToken = await AsyncStorage.getItem(ASYNC_STORAGE_ID_TOKEN_KEY)
     return userToken
   } catch (e) {
-    console.error('loadUserIDToken(): ', e.message);
+    console.error('loadUserIDToken(): ', e.message)
     return null
   }
 }
@@ -25,7 +25,7 @@ export const saveUserIDToken = async (value) => {
     await AsyncStorage.setItem(ASYNC_STORAGE_ID_TOKEN_KEY, value)
     return true
   } catch (e) {
-    console.error('saveUserIDToken(): ', e.message);
+    console.error('saveUserIDToken(): ', e.message)
     return false
   }
 }
@@ -39,7 +39,7 @@ export const removeUserIDToken = async () => {
     await AsyncStorage.removeItem(ASYNC_STORAGE_ID_TOKEN_KEY)
     return true
   } catch (e) {
-    console.error('saveUserIDToken(): ', e.message);
+    console.error('saveUserIDToken(): ', e.message)
     return false
   }
 }

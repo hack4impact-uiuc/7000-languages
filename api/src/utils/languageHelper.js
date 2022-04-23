@@ -47,63 +47,63 @@ module.exports.getVocabIndexByID = (vocabId, lesson) => {
   return NOT_FOUND_INDEX;
 };
 
-const validateLesson = async (lesson, session) => {
+const validateDocument = async (model, document, session) => {
   // Run synchronous tests
-  const error = lesson.validateSync();
+  const error = document.validateSync();
   if (error) {
     throw `Validation error: ${error}`;
   }
 
+  let query = {
+    _order: document._order,
+    _course_id: document._course_id,
+    _unit_id: document._unit_id,
+  };
+
   // Run async test manually
-  const isValid = await isUniqueOrder(
-    {
-      _order: lesson._order,
-      _course_id: lesson._course_id,
-      _unit_id: lesson._unit_id,
-    },
-    lesson._id,
-    models.Lesson,
-    session,
-  );
+  const isValid = await isUniqueOrder(query, document._id, model, session);
   if (!isValid) {
-    throw `Validation error: ${lesson._id} does not have unique _order`;
+    throw `Validation error: ${document._id} does not have unique _order`;
   }
 };
 
-const validateLessons = async (lessons, session) => {
-  const validations = lessons.map(async (lesson) =>
-    validateLesson(lesson, session),
+const validateDocuments = async (model, documents, session) => {
+  const validations = documents.map(async (document) =>
+    validateDocument(model, document, session),
   );
   await Promise.all(validations);
 };
 
-module.exports.updateLessonsInTransaction = async (updatedLessons, session) => {
-  let lessonData = [];
+module.exports.updateDocumentsInTransaction = async (
+  model,
+  updatedDocuments,
+  session,
+) => {
+  let documentData = [];
   // Go through all of the step updates in the request body and apply them
-  for (let lessonIdx = 0; lessonIdx < updatedLessons.length; lessonIdx++) {
+  for (let idx = 0; idx < updatedDocuments.length; idx++) {
     // eslint-disable-next-line max-len
-    const updatedLesson = await updateLessonInTransaction(
-      updatedLessons[lessonIdx],
+    const updatedDocument = await updateDocumentInTransaction(
+      model,
+      updatedDocuments[idx],
       session,
     );
-    lessonData.push(updatedLesson);
+    documentData.push(updatedDocument);
   }
 
   // Go through the updated models and check validation
-  await validateLessons(lessonData, session);
-  return lessonData;
+  await validateDocuments(model, documentData, session);
+  return documentData;
 };
 
-const updateLessonInTransaction = async (stepBody, session) => {
-  const lessonToEdit = await models.Lesson.findById(stepBody._id).session(
-    session,
-  );
+const updateDocumentInTransaction = async (model, document, session) => {
+  const documentToEdit = await model.findById(document._id).session(session);
 
-  patchDocument(lessonToEdit, stepBody);
-  await lessonToEdit.save({ session, validateBeforeSave: false });
+  patchDocument(documentToEdit, document);
+  await documentToEdit.save({ session, validateBeforeSave: false });
 
   // Return the model so that we can do validation later
-  return lessonToEdit;
+  return documentToEdit;
 };
 
 /* 
