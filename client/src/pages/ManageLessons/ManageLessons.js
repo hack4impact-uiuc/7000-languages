@@ -33,8 +33,8 @@ const ManageLessons = ({ navigation }) => {
     <ManageView
       selectedTitleText="Selected Lessons"
       unselectedTitleText="Unselected Lessons"
-      selectedBodyText="These units will be available to your students. Drag them around to reorder them."
-      unselectedBodyText="These units are not included in your course. You can still continue to edit them."
+      selectedBodyText="These lessons will be available to your students. Drag them around to reorder them."
+      unselectedBodyText="These lessons are not included in your course. You can still continue to edit them."
       addText="Create Lessons"
       saveCallback={saveChanges}
       addCallback={add}

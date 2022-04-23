@@ -9,6 +9,7 @@ import DrawerButton from './DrawerButton'
 import BackButton from './BackButton'
 import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
+import ManageLessons from 'pages/ManageLessons'
 
 // ------------------------------------ 
 // Constants
@@ -102,15 +103,15 @@ export const HomeNavigator = () => (
       name="UnitHome"
       component={UnitHome}
       options={({ navigation }) => ({
-        headerLeft: () => <DrawerButton navigation={navigation} />,
+        headerLeft: () => <BackButton navigation={navigation} color={'white'}/>,
         cardStyle: { backgroundColor: 'white' }
       })}
     />
      <Stack.Screen
       name="LessonHome"
-      component={UnitHome} // change 
+      component={LessonHome} // change 
       options={({ navigation }) => ({
-        headerLeft: () => <DrawerButton navigation={navigation} />,
+        headerLeft: () => <BackButton navigation={navigation} color={'white'}/>,
         cardStyle: { backgroundColor: 'white' }
       })}
     />
@@ -120,6 +121,16 @@ export const HomeNavigator = () => (
       options={({ navigation }) => ({
         ...manageNavigationProps,
         title: 'Manage Units',
+        headerLeft: () => <BackButton navigation={navigation}/>,
+        cardStyle: { backgroundColor: 'white' }
+      })}
+    />
+    <Stack.Screen
+      name="ManageLessons"
+      component={ManageLessons}
+      options={({ navigation }) => ({
+        ...manageNavigationProps,
+        title: 'Manage Lessons',
         headerLeft: () => <BackButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' }
       })}

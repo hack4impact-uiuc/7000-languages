@@ -106,7 +106,7 @@ const theme = extendTheme({
         manage: {
           bg: 'red.light',
           borderRadius: 10,
-          minW: 160,
+          minW: 100,
           my: 3,
           mx: 5,
           _text: {

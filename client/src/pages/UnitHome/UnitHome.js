@@ -34,7 +34,8 @@ const UnitHome = ({ navigation }) => {
           valueName='Lessons'
           buttonText='Manage Lessons'
           rightIconName='plus-circle'
-          toNavigate='manageLessons'
+          toNavigate='ManageLessons'
+          toNext='LessonHome'
           data={data}
           >
 
