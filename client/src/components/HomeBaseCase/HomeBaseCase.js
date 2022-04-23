@@ -90,10 +90,20 @@ any courses yet!`}
       paddingBottom="10%"
       color="red.dark"
       fontSize="2xl"
-      onPress={() => navigation.navigate('Modal', { screen: 'VocabDrawer' })}
+      onPress={() => {
+        navigation.navigate('Apply', { from: 'HomeBaseCase' })
+      }}
     >
       Become a contributor
     </Text>
+
+    <StyledButton
+      title="Create Lesson"
+      variant="primary"
+      onPress={() => {
+        navigation.navigate('Modal', { screen: 'CreateLesson' })
+      }}
+    />
   </View>
 )
 

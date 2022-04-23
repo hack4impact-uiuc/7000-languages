@@ -27,7 +27,7 @@ const colors = {
     dark: '#060606', // 800 opacity
   },
   white: {
-    light: 'FAFAFA',
+    light: '#FAFAFA',
     dark: '#FFFFFF',
   },
   black: '#000000',
