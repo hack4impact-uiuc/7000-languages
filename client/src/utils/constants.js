@@ -11,5 +11,6 @@ export const INDICATOR_TYPES = {
 export const RECORDING = {
   INCOMPLETE: 0,
   IN_PROGRESS: 1,
-  COMPLETE: 2,
+  CONFIRMATION: 2,
+  COMPLETE: 3,
 }

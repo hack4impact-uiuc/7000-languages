@@ -8,9 +8,38 @@ import StyledButton from 'components/StyledButton'
 import { Entypo } from '@expo/vector-icons'
 import { colors } from 'theme'
 import * as ImagePicker from 'expo-image-picker'
-import { StyleSheet, Alert } from 'react-native'
+import { StyleSheet, Alert, ImageBackground } from 'react-native'
 import { Audio } from 'expo-av'
 import { RECORDING } from 'utils/constants'
+import RecordAudioView from 'components/RecordAudioView'
+
+const expoImageSettings = {
+  mediaTypes: ImagePicker.MediaTypeOptions.All,
+  allowsMultipleSelection: false,
+  aspect: [16, 9],
+  quality: 1,
+}
+
+const styles = StyleSheet.create({
+  imageSelectorContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    paddingVertical: 10,
+    justifyContent: 'center'
+  },
+  imageButtonContainer: {
+    position: 'absolute',
+    bottom: -20,
+    right: -20,
+    flexDirection: 'row',
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.red.light,
+    borderRadius: 50
+  },
+})
 
 const WordDrawer = ({ navigation }) => {
   /* TODO:
@@ -28,19 +57,6 @@ const WordDrawer = ({ navigation }) => {
   const [image, setImage] = useState(null)
   const [audioRecording, setAudioRecording] = useState(null)
   const [recordingStage, setRecordingState] = useState(RECORDING.INCOMPLETE)
-
-  const styles = StyleSheet.create({
-    imageSelectorContainer: {
-      alignItems: 'center',
-      flexDirection: 'column',
-      backgroundColor: colors.gray.medium_light,
-      paddingVertical: 10,
-    },
-    imageButtonContainer: {
-      flexDirection: 'row',
-      // justifyContent: "space-between"
-    },
-  })
 
   /*
     Allows audio to be recorded and played back in silent mode
@@ -82,12 +98,7 @@ const WordDrawer = ({ navigation }) => {
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsMultipleSelection: false,
-      aspect: [4, 3],
-      quality: 1,
-    })
+    const result = await ImagePicker.launchImageLibraryAsync(expoImageSettings)
 
     if (!result.cancelled) {
       setImage(result.uri)
@@ -96,12 +107,7 @@ const WordDrawer = ({ navigation }) => {
 
   const takeImage = async () => {
     // No permissions request is necessary for launching the image library
-    const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsMultipleSelection: false,
-      aspect: [4, 3],
-      quality: 1,
-    })
+    const result = await ImagePicker.launchCameraAsync(expoImageSettings);
 
     if (!result.cancelled) {
       setImage(result.uri)
@@ -142,6 +148,31 @@ const WordDrawer = ({ navigation }) => {
     ])
   }
 
+  const selectImageWithRemove = async () => {
+    Alert.alert('Update Image', '', [
+      {
+        text: 'Select from Picture Library',
+        onPress: () => {
+          pickImage()
+        },
+      },
+      {
+        text: 'Take with Camera',
+        onPress: () => {
+          takeImage()
+        },
+      },
+      {
+        text: 'Remove Image',
+        onPress: () => setImage(null),
+      },
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+    ])
+  }
+
   const stopRecording = async () => {
     setAudioRecording(undefined)
     await audioRecording.stopAndUnloadAsync()
@@ -170,84 +201,33 @@ const WordDrawer = ({ navigation }) => {
     if (image) {
       return (
         <View style={styles.imageSelectorContainer}>
-          <Image
+          <ImageBackground
             source={{
               uri: image,
             }}
-            alt="Image representing Vocab Item in the Translated Language"
-            size="2xl"
-          />
-          <View style={styles.imageButtonContainer}>
-            <StyledButton
-              leftIcon={<Entypo name="image" size={24} color={colors.black} />}
-              title="Change Image"
-              variant="image_picker"
-              onPress={selectImage}
-              style={{ width: '50%' }}
-            />
-            <StyledButton
-              leftIcon={<Entypo name="cross" size={24} color={colors.black} />}
-              title="Remove Image"
-              variant="image_picker"
-              onPress={() => setImage(null)}
-              style={{ width: '50%' }}
-            />
-          </View>
+            imageStyle={{ borderRadius: 10 }}
+            style={{
+              width: 200,
+              height: 200,
+              borderRadius: 20
+            }}
+          >
+            <View style={styles.imageButtonContainer}>
+              <Entypo name="image" size={24} color={colors.red.dark} onPress={selectImageWithRemove} />
+            </View>
+          </ImageBackground>
         </View>
       )
     }
     return (
       <StyledButton
-        leftIcon={<Entypo name="image" size={24} color={colors.black} />}
+        leftIcon={<Entypo name="image" size={24} color={colors.red.dark} />}
         title="Add Image"
         variant="image_picker"
         onPress={selectImage}
         style={{ height: 100 }}
       />
     )
-  }
-
-  const generateAudioContainer = () => {
-    switch (recordingStage) {
-      case RECORDING.INCOMPLETE:
-        return (
-          <StyledButton
-            title="Record Audio"
-            onPress={startRecording}
-            style={{ width: '100%' }}
-          />
-        )
-      case RECORDING.IN_PROGRESS:
-        return (
-          <StyledButton
-            title="Stop Recording"
-            onPress={stopRecording}
-            style={{ width: '100%' }}
-          />
-        )
-      case RECORDING.COMPLETE:
-        return (
-          <>
-            <StyledButton
-              title="Play Audio"
-              onPress={playRecording}
-              style={{ width: '100%' }}
-            />
-            <StyledButton
-              title="Re-record Audio"
-              onPress={startRecording}
-              style={{ width: '100%' }}
-            />
-            <StyledButton
-              title="Remove Audio"
-              onPress={clearRecording}
-              style={{ width: '100%' }}
-            />
-          </>
-        )
-      default:
-        return null
-    }
   }
 
   const body = (
@@ -261,7 +241,7 @@ const WordDrawer = ({ navigation }) => {
         value={translatedText}
         onChangeText={(val) => setTranslatedText(val)}
       />
-      {generateAudioContainer()}
+      <RecordAudioView recordingStage={recordingStage} />
       <Text>{`${originalLanguage}*`}</Text>
       <Input
         placeholder=""
