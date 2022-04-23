@@ -17,7 +17,7 @@ const theme = extendTheme({
     Text: {
       baseStyle: {
         fontFamily: 'body',
-        fontWeight: 'regular',
+        fontWeight: 'normal',
         fontSize: 'xl',
       },
     },
