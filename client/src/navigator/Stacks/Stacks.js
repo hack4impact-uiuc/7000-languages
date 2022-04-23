@@ -9,13 +9,13 @@ import ManageUnits from 'pages/ManageUnits'
 import Apply from 'pages/Apply'
 import { NO_COURSE_ID } from 'utils/constants'
 import PropTypes from 'prop-types'
-import DrawerButton from './DrawerButton'
-import BackButton from './BackButton'
 import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
+import BackButton from './BackButton'
+import DrawerButton from './DrawerButton'
 
-// ------------------------------------ 
+// ------------------------------------
 // Constants
 // ------------------------------------
 
@@ -72,7 +72,6 @@ export const AuthNavigator = () => (
       component={Landing}
       options={() => ({
         title: 'Landing',
-        
       })}
     />
   </AuthStack.Navigator>
@@ -82,12 +81,10 @@ export const ModalNavigator = () => (
   <ModalStack.Navigator
     initialRouteName="CreateUnit"
     screenOptions={modalNavigationProps}
-    
   >
     <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
     <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
   </ModalStack.Navigator>
-
 )
 
 export const HomeNavigator = ({ courseId }) => (
@@ -95,7 +92,6 @@ export const HomeNavigator = ({ courseId }) => (
     initialRouteName="Home"
     headerMode="screen"
     screenOptions={navigationProps}
-    
   >
     <Stack.Screen
       name={courseId}
@@ -103,23 +99,23 @@ export const HomeNavigator = ({ courseId }) => (
       options={({ navigation }) => ({
         title: 'Home',
         headerLeft: () => <DrawerButton navigation={navigation} />,
-        cardStyle: { backgroundColor: 'white' }
+        cardStyle: { backgroundColor: 'white' },
       })}
     />
-     <Stack.Screen
+    <Stack.Screen
       name="UnitHome"
       component={UnitHome}
       options={({ navigation }) => ({
-        headerLeft: () => <BackButton navigation={navigation} color={'white'}/>,
-        cardStyle: { backgroundColor: 'white' }
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
       })}
     />
-     <Stack.Screen
+    <Stack.Screen
       name="LessonHome"
-      component={LessonHome} // change 
+      component={LessonHome} // change
       options={({ navigation }) => ({
-        headerLeft: () => <BackButton navigation={navigation} color={'white'}/>,
-        cardStyle: { backgroundColor: 'white' }
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
       })}
     />
 
@@ -143,8 +139,8 @@ export const HomeNavigator = ({ courseId }) => (
       options={({ navigation }) => ({
         ...manageNavigationProps,
         title: 'Manage Units',
-        headerLeft: () => <BackButton navigation={navigation}/>,
-        cardStyle: { backgroundColor: 'white' }
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
       })}
     />
     <Stack.Screen
@@ -154,7 +150,7 @@ export const HomeNavigator = ({ courseId }) => (
         ...manageNavigationProps,
         title: 'Manage Lessons',
         headerLeft: () => <BackButton navigation={navigation} />,
-        cardStyle: { backgroundColor: 'white' }
+        cardStyle: { backgroundColor: 'white' },
       })}
     />
   </Stack.Navigator>

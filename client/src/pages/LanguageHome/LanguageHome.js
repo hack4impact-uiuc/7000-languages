@@ -24,12 +24,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     display: 'flex',
     borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20
+    borderBottomRightRadius: 20,
   },
   manageBar: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
 })
 
@@ -50,26 +50,21 @@ const LanguageHome = ({
     case true:
       return (
         <>
-          <View
-            style={styles.top}
-          >
+          <View style={styles.top}>
             <Text
               style={{
                 fontFamily: 'GT_Haptik_bold',
               }}
               color="white.dark:alpha.40"
-              fontSize={'xl'}
+              fontSize="xl"
               lineHeight={20}
               padding={5}
-              adjustsFontSizeToFit={true}
+              adjustsFontSizeToFit
             >
               {lessonDescription}
             </Text>
-
           </View>
-          <View
-            style={styles.manageBar}
-          >
+          <View style={styles.manageBar}>
             <Text
               style={{
                 fontFamily: 'GT_Haptik_bold',
@@ -81,46 +76,47 @@ const LanguageHome = ({
               {data.length} Vocabulary Items
             </Text>
             <StyledButton
-              title='Add New'
+              title="Add New"
               variant="manage"
               fontSize={15}
-              rightIcon={<MaterialCommunityIcons
-                name='plus-circle'
-                color={colors.red.dark}
-                size={20}
-              > </MaterialCommunityIcons>}
+              rightIcon={(
+                <MaterialCommunityIcons
+                  name="plus-circle"
+                  color={colors.red.dark}
+                  size={20}
+                />
+              )}
               onPress={() => navigation.navigate('')}
-            ></StyledButton>
+            />
           </View>
 
           <ScrollView>
             <View
-
               style={{
                 display: 'flex',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
             >
-              {
-                data.map((element, index) =>
-                  <StyledCard
-                    key={index}
-                    titleText={element.title}
-                    bodyText={element.lessons}
-                    imageUri={element.imageUri}
-                    showVolumeIcon={element.audio}
-                    volumeIconCallback={{}}
-                    width={width * 0.97}
-                    height={75}
-                    rightIcon={<MaterialCommunityIcons
+              {data.map((element) => (
+                <StyledCard
+                  key={`${element.title}${element.lessons}`}
+                  titleText={element.title}
+                  bodyText={element.lessons}
+                  imageUri={element.imageUri}
+                  showVolumeIcon={element.audio}
+                  volumeIconCallback={{}}
+                  width={width * 0.97}
+                  height={75}
+                  rightIcon={(
+                    <MaterialCommunityIcons
                       name="pencil"
-                      color='black'
+                      color="black"
                       size={20}
                       onPress={() => navigation.navigate('')}
-                    > </MaterialCommunityIcons>}
-                  >
-                  </StyledCard>)
-              }
+                    />
+                  )}
+                />
+              ))}
             </View>
           </ScrollView>
         </>
@@ -128,13 +124,10 @@ const LanguageHome = ({
     default:
       return (
         <>
-          <View
-            style={styles.top}
-          >
+          <View style={styles.top}>
             <Text
               style={{
                 fontFamily: 'GT_Haptik_bold',
-
               }}
               color="white.dark"
               fontSize={35}
@@ -149,24 +142,20 @@ const LanguageHome = ({
                 fontFamily: 'GT_Haptik_bold',
               }}
               color="white.dark:alpha.40"
-              fontSize={'xl'}
+              fontSize="xl"
               lineHeight={20}
               paddingLeft={5}
               paddingRight={5}
               paddingBottom={5}
-              adjustsFontSizeToFit={true}
+              adjustsFontSizeToFit
             >
               {languageDescription}
             </Text>
-
           </View>
-          <View
-            style={styles.manageBar}
-          >
+          <View style={styles.manageBar}>
             <Text
               style={{
                 fontFamily: 'GT_Haptik_bold',
-
               }}
               fontSize={23}
               paddingTop={3}
@@ -178,54 +167,51 @@ const LanguageHome = ({
               title={buttonText}
               variant="manage"
               fontSize={15}
-              rightIcon={<MaterialCommunityIcons
-                name={rightIconName}
-                color={colors.red.dark}
-                size={20}
-              > </MaterialCommunityIcons>}
+              rightIcon={(
+                <MaterialCommunityIcons
+                  name={rightIconName}
+                  color={colors.red.dark}
+                  size={20}
+                />
+              )}
               onPress={() => navigation.navigate(toNavigate)}
-            ></StyledButton>
+            />
           </View>
 
           <ScrollView>
             <View
-
               style={{
                 display: 'flex',
-                alignItems: 'center'
+                alignItems: 'center',
               }}
             >
-              {
-                data.map((element, index) =>
-                  <StyledCard
-                    key={index}
-                    leftIcon={<NumberBox
-                      number={index + 1}
-                    ></NumberBox>
-                    }
-                    titleText={element.title}
-                    bodyText={element.lessons}
-                    width='97%'
-                    height={75}
-                    indicatorType={element.indicatorType}
-                    rightIcon={<MaterialCommunityIcons
+              {data.map((element, index) => (
+                <StyledCard
+                  key={`${element.title}${element.lessons}`}
+                  leftIcon={<NumberBox number={index + 1} />}
+                  titleText={element.title}
+                  bodyText={element.lessons}
+                  width="97%"
+                  height={75}
+                  indicatorType={element.indicatorType}
+                  rightIcon={(
+                    <MaterialCommunityIcons
                       name="pencil"
-                      color='black'
+                      color="black"
                       size={20}
                       onPress={() => navigation.navigate(toNext)}
-                    > </MaterialCommunityIcons>}
-                  >
-                  </StyledCard>)
-              }
+                    />
+                  )}
+                />
+              ))}
             </View>
           </ScrollView>
         </>
       )
   }
-
 }
 
-// Page Object Fields 
+// Page Object Fields
 LanguageHome.propTypes = {
   isLessonHome: PropTypes.bool,
   languageName: PropTypes.string,
@@ -235,12 +221,16 @@ LanguageHome.propTypes = {
   buttonText: PropTypes.string,
   rightIconName: PropTypes.string,
   toNavigate: PropTypes.string,
+  toNext: PropTypes.string,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
-
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    goBack: PropTypes.func,
+  }),
 }
 
-// Page Default Fields 
-LanguageHome.propTypes = {
+// Page Default Fields
+LanguageHome.defaultProps = {
   isLessonHome: false,
   languageName: '',
   languageDescription: '',
@@ -251,6 +241,7 @@ LanguageHome.propTypes = {
   toNavigate: '',
   toNext: '',
   data: [],
+  navigation: { navigate: () => null, goBack: () => null },
 }
 
 export default LanguageHome

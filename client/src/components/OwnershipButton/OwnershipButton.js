@@ -6,11 +6,7 @@ const OwnershipButton = ({ isContributor }) => {
   switch (isContributor) {
     case true:
       return (
-        <StyledButton
-          title="CONTRIBUTOR"
-          variant="contributor"
-          fontSize="12"
-        />
+        <StyledButton title="CONTRIBUTOR" variant="contributor" fontSize="12" />
       )
     default:
       return null
