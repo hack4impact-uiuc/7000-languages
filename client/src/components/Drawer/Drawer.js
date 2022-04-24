@@ -1,7 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Text } from 'native-base'
-import { StyleSheet, View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  View,
+  Platform,
+} from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import FontIcon from 'react-native-vector-icons/Feather'
@@ -23,7 +29,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 20,
   },
-  body: {},
+  body: {
+    width: '100%',
+  },
 })
 
 const Drawer = ({
@@ -33,7 +41,11 @@ const Drawer = ({
   successText,
   body,
 }) => (
-  <View style={styles.root}>
+  <KeyboardAvoidingView
+    KeyboardAvoidingView
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    style={styles.root}
+  >
     <View style={styles.form}>
       <View style={styles.header}>
         <Text fontFamily="heading" fontWeight="regular" fontSize="2xl">
@@ -41,14 +53,14 @@ const Drawer = ({
         </Text>
         <FontIcon name="x" size={30} solid onPress={closeCallback} />
       </View>
-      <View style={styles.body}>{body}</View>
+      <ScrollView style={styles.body}>{body}</ScrollView>
     </View>
     <StyledButton
       title={successText}
       onPress={successCallback}
       variant="primary"
     />
-  </View>
+  </KeyboardAvoidingView>
 )
 // Button object fields
 Drawer.propTypes = {

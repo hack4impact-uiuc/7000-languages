@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { colors } from 'theme'
 import Home from 'pages/Home'
 import Landing from 'pages/Landing'
+import VocabDrawer from 'pages/VocabDrawer'
 import CreateLesson from 'pages/CreateLesson'
 import CreateUnit from 'pages/CreateUnit'
 import ManageUnits from 'pages/ManageUnits'
@@ -79,9 +80,10 @@ export const AuthNavigator = () => (
 
 export const ModalNavigator = () => (
   <ModalStack.Navigator
-    initialRouteName="CreateUnit"
+    initialRouteName="VocabDrawer"
     screenOptions={modalNavigationProps}
   >
+    <ModalStack.Screen name="VocabDrawer" component={VocabDrawer} />
     <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
     <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
   </ModalStack.Navigator>
