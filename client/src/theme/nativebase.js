@@ -36,7 +36,7 @@ const theme = extendTheme({
     Text: {
       baseStyle: {
         fontFamily: 'body',
-        fontWeight: 'regular',
+        fontWeight: 'normal',
         fontSize: 'xl',
       },
     },
@@ -126,6 +126,17 @@ const theme = extendTheme({
           borderColor: 'white.dark',
           borderRadius: 70,
           my: 3,
+          _text: {
+            color: 'red.dark',
+            fontFamily: 'GT_Haptik_bold',
+          },
+        },
+        manage: {
+          bg: 'red.light',
+          borderRadius: 10,
+          minW: 100,
+          my: 3,
+          mx: 5,
           _text: {
             color: 'red.dark',
             fontFamily: 'GT_Haptik_bold',

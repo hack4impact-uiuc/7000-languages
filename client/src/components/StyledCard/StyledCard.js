@@ -104,7 +104,7 @@ const StyledCard = ({
       <Box px="2" style={styles.left}>
         {generateLeftIcon}
         <Box>
-          <Text fontFamily="heading" fontWeight="regular" fontSize="md">
+          <Text fontFamily="heading" fontWeight="normal" fontSize="md">
             {titleText}
           </Text>
           <Text color="gray.medium" fontSize="md">

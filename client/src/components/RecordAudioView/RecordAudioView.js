@@ -153,8 +153,8 @@ const RecordAudioView = ({
   }
 
   /**
-     * Cleans up a number to be presented as a part of the timer
-     */
+   * Cleans up a number to be presented as a part of the timer
+   */
   const addZeroToNum = (num) => {
     const floored = Math.floor(num)
     if (floored < 10) {
@@ -164,8 +164,8 @@ const RecordAudioView = ({
   }
 
   /**
-     * Generates the text that shows the length of the recording in minutes and seconds
-     */
+   * Generates the text that shows the length of the recording in minutes and seconds
+   */
   const generateTimeText = () => {
     const secondsToDisplay = isPlayActive ? playSeconds : seconds
 
@@ -292,7 +292,7 @@ const RecordAudioView = ({
                 size={35}
                 color={colors.red.dark}
               />
-                        )}
+            )}
             onPress={rerecord}
           />
         </View>
@@ -315,12 +315,12 @@ RecordAudioView.propTypes = {
 
 RecordAudioView.defaultProps = {
   recordingStage: RECORDING.IN_COMPLETE,
-  startRecording: () => { },
-  stopRecording: () => { },
-  playRecording: () => { },
-  discardRecording: () => { },
-  confirmRecording: () => { },
-  stopPlayingRecording: () => { },
+  startRecording: () => {},
+  stopRecording: () => {},
+  playRecording: () => {},
+  discardRecording: () => {},
+  confirmRecording: () => {},
+  stopPlayingRecording: () => {},
 }
 
 export default RecordAudioView

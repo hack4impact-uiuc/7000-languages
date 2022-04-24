@@ -94,6 +94,7 @@ const Drawer = createDrawerNavigator()
 const tabColors = [colors.red.dark]
 
 const generateUnitLabel = (numUnits) => {
+  // eslint-disable-next-line no-restricted-globals
   if (isNaN(numUnits)) {
     return numUnits
   }
@@ -227,7 +228,7 @@ const DrawerNavigator = () => {
         setName(name)
         setEmail(email)
 
-        if (allCourses.length > 0) {
+        if (courses.length > 0) {
           dispatch(updateAllCourses({ allCourses: courses }))
         }
       })

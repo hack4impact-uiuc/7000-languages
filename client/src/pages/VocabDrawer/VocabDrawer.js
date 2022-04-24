@@ -98,11 +98,14 @@ const WordDrawer = ({ navigation }) => {
   }, [])
 
   /* Always unload the Sound after using it to prevent memory leaks. */
-  React.useEffect(() => (listeningSound
-    ? () => {
-      listeningSound.unloadAsync()
-    }
-    : undefined), [listeningSound])
+  React.useEffect(
+    () => (listeningSound
+      ? () => {
+        listeningSound.unloadAsync()
+      }
+      : undefined),
+    [listeningSound],
+  )
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
