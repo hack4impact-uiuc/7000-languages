@@ -84,7 +84,6 @@ export const ModalNavigator = () => (
     <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
     <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
   </ModalStack.Navigator>
-
 )
 
 export const HomeNavigator = ({ courseId }) => (

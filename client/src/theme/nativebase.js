@@ -82,7 +82,7 @@ const theme = extendTheme({
           borderStyle: 'dashed',
           borderWidth: 2,
           borderRadius: 1,
-          borderColor: "red.dark",
+          borderColor: 'red.dark',
           _text: {
             fontSize: 20,
             color: 'red.dark',

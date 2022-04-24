@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
 import {
-  View, Input, Text, TextArea, Image,
+  View, Input, Text, TextArea,
 } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Entypo } from '@expo/vector-icons'
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     paddingVertical: 10,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   imageButtonContainer: {
     position: 'absolute',
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.red.light,
-    borderRadius: 50
+    borderRadius: 50,
   },
 })
 
@@ -55,8 +55,9 @@ const WordDrawer = ({ navigation }) => {
   const [translatedText, setTranslatedText] = useState('')
   const [additionalInformation, setAdditionalInformation] = useState('')
   const [image, setImage] = useState(null)
-  const [audioRecording, setAudioRecording] = useState(null)
-  const [recordingStage, setRecordingState] = useState(RECORDING.INCOMPLETE)
+  const [audioRecording, setAudioRecording] = useState(null) // keeps track of the audio recording
+  const [recordingStage, setRecordingState] = useState(RECORDING.INCOMPLETE) // which recording stage the user is at
+  const [listeningSound, setListeningSound] = useState(null) // the data for the recording when the user is listening to it
 
   /*
     Allows audio to be recorded and played back in silent mode
@@ -96,6 +97,13 @@ const WordDrawer = ({ navigation }) => {
     })()
   }, [])
 
+  /* Always unload the Sound after using it to prevent memory leaks. */
+  React.useEffect(() => (listeningSound
+    ? () => {
+      listeningSound.unloadAsync()
+    }
+    : undefined), [listeningSound])
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync(expoImageSettings)
@@ -107,7 +115,7 @@ const WordDrawer = ({ navigation }) => {
 
   const takeImage = async () => {
     // No permissions request is necessary for launching the image library
-    const result = await ImagePicker.launchCameraAsync(expoImageSettings);
+    const result = await ImagePicker.launchCameraAsync(expoImageSettings)
 
     if (!result.cancelled) {
       setImage(result.uri)
@@ -117,6 +125,10 @@ const WordDrawer = ({ navigation }) => {
   const startRecording = async () => {
     try {
       setRecordingState(RECORDING.IN_PROGRESS)
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: true,
+        playsInSilentModeIOS: true,
+      })
       const { recording } = await Audio.Recording.createAsync(
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY,
       )
@@ -178,6 +190,10 @@ const WordDrawer = ({ navigation }) => {
     await audioRecording.stopAndUnloadAsync()
     const uri = audioRecording.getURI()
     setAudioRecording(uri)
+    setRecordingState(RECORDING.CONFIRMATION)
+  }
+
+  const confirmRecording = () => {
     setRecordingState(RECORDING.COMPLETE)
   }
 
@@ -186,7 +202,14 @@ const WordDrawer = ({ navigation }) => {
       allowsRecordingIOS: false,
     })
     const { sound } = await Audio.Sound.createAsync({ uri: audioRecording })
+    setListeningSound(sound)
     await sound.playAsync()
+  }
+
+  const stopPlayingRecording = async () => {
+    if (listeningSound) {
+      await listeningSound.unloadAsync()
+    }
   }
 
   const clearRecording = () => {
@@ -209,11 +232,16 @@ const WordDrawer = ({ navigation }) => {
             style={{
               width: 200,
               height: 200,
-              borderRadius: 20
+              borderRadius: 20,
             }}
           >
             <View style={styles.imageButtonContainer}>
-              <Entypo name="image" size={24} color={colors.red.dark} onPress={selectImageWithRemove} />
+              <Entypo
+                name="image"
+                size={24}
+                color={colors.red.dark}
+                onPress={selectImageWithRemove}
+              />
             </View>
           </ImageBackground>
         </View>
@@ -241,7 +269,15 @@ const WordDrawer = ({ navigation }) => {
         value={translatedText}
         onChangeText={(val) => setTranslatedText(val)}
       />
-      <RecordAudioView recordingStage={recordingStage} startRecording={startRecording} stopRecording={stopRecording} />
+      <RecordAudioView
+        recordingStage={recordingStage}
+        startRecording={startRecording}
+        stopRecording={stopRecording}
+        playRecording={playRecording}
+        confirmRecording={confirmRecording}
+        discardRecording={clearRecording}
+        stopPlayingRecording={stopPlayingRecording}
+      />
       <Text>{`${originalLanguage}*`}</Text>
       <Input
         placeholder=""
