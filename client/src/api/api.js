@@ -42,79 +42,79 @@ export const getUnit = async (courseID, unitID) => {
   return res.data
 }
 
-export const updateUnits = async (course_id, updates) => {
+export const updateUnits = async (courseID, updates) => {
   const body = {
-    course_id,
-    updates
+    course_id: courseID,
+    updates,
   }
-  const requestString = `/language/course`
-  const res = await instance.put(requestString, body);
+  const requestString = '/language/course'
+  const res = await instance.put(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
 
-export const getLesson = async (course_id, lesson_id) => {
-  const requestString = `/language/lesson?course_id=${course_id}&lesson_id=${lesson_id}`
-  const res = await instance.get(requestString);
+export const getLesson = async (courseID, lessonID) => {
+  const requestString = `/language/lesson?course_id=${courseID}&lesson_id=${lessonID}`
+  const res = await instance.get(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
 
-export const updateLessons = async (course_id, updates) => {
+export const updateLessons = async (courseID, updates) => {
   const body = {
-    course_id,
-    updates
+    course_id: courseID,
+    updates,
   }
-  const requestString = `/language/lesson`
-  const res = await instance.put(requestString, body);
+  const requestString = '/language/lesson'
+  const res = await instance.put(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
 
-export const createLesson = async (course_id, unit_id, lesson) => {
+export const createLesson = async (courseID, unitID, lesson) => {
   const body = {
-    course_id,
-    unit_id,
-    lesson
+    course_id: courseID,
+    unit_id: unitID,
+    lesson,
   }
-  const requestString = `/language/lesson`
-  const res = await instance.post(requestString, body);
+  const requestString = '/language/lesson'
+  const res = await instance.post(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
 
-export const createVocabItem = async (course_id, lesson_id, vocab) => {
+export const createVocabItem = async (courseID, lessonID, vocab) => {
   const body = {
-    course_id,
-    lesson_id,
-    vocab
+    course_id: courseID,
+    lesson_id: lessonID,
+    vocab,
   }
-  const requestString = `/language/vocab`
-  const res = await instance.post(requestString, body);
+  const requestString = '/language/vocab'
+  const res = await instance.post(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
 
-export const updateVocabItem = async (course_id, lesson_id, vocab_id, vocab_update) => {
+export const updateVocabItem = async (
+  courseID,
+  lessonID,
+  vocabID,
+  vocabUpdate,
+) => {
   const body = {
-    course_id,
-    lesson_id,
-    vocab_id,
-    vocab_update
+    course_id: courseID,
+    lesson_id: lessonID,
+    vocab_id: vocabID,
+    vocab_update: vocabUpdate,
   }
-  const requestString = `/language/vocab`
-  const res = await instance.patch(requestString, body);
+  const requestString = '/language/vocab'
+  const res = await instance.patch(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
-
-
-
-
-
