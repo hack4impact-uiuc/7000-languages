@@ -62,7 +62,7 @@ module.exports.EXPECTED_GET_USER_DATA = {
     { name: 'vero', _id: '62391a30487d5ae343c82311', num_units: 10 },
     {
       name: 'Course with no units',
-      _id: '62391a30487d5ae343c82312',
+      _id: '62391a30487d5ae343c82315',
       num_units: 0,
     },
   ],

@@ -34,13 +34,13 @@ export const getCourse = async (courseID) => {
 
 // TODO: add create unit
 
-// export const getUnit = async (courseID) => {
-//   const requestString = `/course/${courseID}`
-//   const res = await instance.get(requestString)
+export const getUnit = async (courseID, unitID) => {
+  const requestString = `/course?course_id=${courseID}&unit_id=${unitID}`
+  const res = await instance.get(requestString)
 
-//   if (!res?.data?.success) throw new Error(res?.data?.message)
-//   return res.data
-// }
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
 
 export const updateUnits = async (course_id, updates) => {
   const body = {
