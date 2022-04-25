@@ -27,13 +27,13 @@ const initialState = {
     translated_language: 'English',
     population: '',
     location: '',
-    link: ''
+    link: '',
   },
   allUnits: [],
   currentUnitId: '',
   allLessons: [],
   currentLessonId: '',
-  currentVocabId: ''
+  currentVocabId: '',
 }
 
 // ------------------------------------
