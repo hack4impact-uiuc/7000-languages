@@ -5,6 +5,9 @@ const { sendResponse } = require('../../utils/response');
 const { models } = require('../../models/index.js');
 const { requireAuthentication } = require('../../middleware/authentication');
 const {
+  requireLanguageAuthorization,
+} = require('../../middleware/authorization');
+const {
   SUCCESS_GETTING_LESSON_DATA,
   ERR_MISSING_OR_INVALID_DATA,
   SUCCESS_PATCHING_LESSON_DATA,
@@ -28,6 +31,7 @@ const {
 router.put(
   '/',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -95,6 +99,7 @@ router.post(
 router.get(
   '/',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const { lesson_id } = req.query;
 
@@ -123,6 +128,7 @@ router.get(
 router.patch(
   '/',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const { lesson_id, updates } = req.body;
 

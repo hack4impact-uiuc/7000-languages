@@ -41,8 +41,8 @@ const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;
 verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
 describe('GET /language/course/ ', () => {
-  /* 
-    We have to make sure we connect to a MongoDB mock db before the test 
+  /*
+    We have to make sure we connect to a MongoDB mock db before the test
     and close the connection at the end.
   */
   afterAll(async () => await db.closeDatabase());
@@ -82,7 +82,7 @@ describe('GET /language/course/ ', () => {
 // This block tests the POST /user/ endpoint.
 describe('POST /language/course/ ', () => {
   /* 
-    We have to make sure we connect to a MongoDB mock db before the test 
+    We have to make sure we connect to a MongoDB mock db before the test
     and close the connection at the end.
   */
   afterAll(async () => await db.closeDatabase());
@@ -238,14 +238,31 @@ describe('PATCH /language/course/ ', () => {
     expect(response.status).toBe(200);
   });
 
-  test('Patch request specifies nonexistent course', async () => {
-    const body = PATCH_UPDATE_NON_BOOLEAN_APPROVAL;
+  test('Patch request specifies invalid course id', async () => {
+    const original = PATCH_ORIGINAL_COURSE;
+
+    const body = PATCH_UPDATE_APPROVAL;
     const response = await withAuthentication(
       request(app).patch('/language/course/12345').send(body),
     );
     const message = response.body.message;
 
+    expect(response.status).toBe(400);
+    expect(message).toEqual('Invalid ObjectID');
+  });
+
+  test('Patch request specifies nonexistent course', async () => {
+    const original = PATCH_ORIGINAL_COURSE;
+
+    const body = PATCH_UPDATE_APPROVAL;
+    const response = await withAuthentication(
+      request(app)
+        .patch('/language/course/62391a30487d5ae343c82310')
+        .send(body),
+    );
+    const message = response.body.message;
+
     expect(response.status).toBe(404);
-    expect(message).toEqual('Course not found');
+    expect(message).toEqual('Course does not exist');
   });
 });
