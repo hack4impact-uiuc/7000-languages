@@ -1,35 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import LanguageHome from 'pages/LanguageHome'
 import PropTypes from 'prop-types'
 
+import { useSelector, useDispatch } from 'react-redux' // import at the top of the file
+import { setCurrentVocabId } from 'slices/language.slice'
+
 const LessonHome = ({ navigation }) => {
+  const { allLessons, currentLessonId } = useSelector((state) => state.language)
+
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const lessonIndex = allLessons.findIndex(
+      (element) => element._id === currentLessonId,
+    )
+    setData(allLessons[lessonIndex].vocab)
+  }, [currentLessonId])
+
+  const dispatch = useDispatch()
+
   const navigateTo = () => {
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
-  const goToNextPage = () => {
+  const goToNextPage = (element) => {
+    const currentVocabId = element._id
+    dispatch(setCurrentVocabId({ currentVocabId }))
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
-
-  const data = [
-    {
-      _id: 'aenasdas',
-      title: '¿Como se dice?',
-      lessons: 'How do you say ___?',
-      audio: true,
-    },
-    {
-      _id: 'asdnemsa',
-      title: '¿Que hora es?',
-      lessons: 'What time is it?',
-    },
-    {
-      _id: 'mehjasjd',
-      title: '¿Donde esta la playa?',
-      lessons: 'Where is the beach?',
-      audio: true,
-    },
-  ]
 
   return (
     <LanguageHome

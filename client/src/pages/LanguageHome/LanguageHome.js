@@ -111,7 +111,7 @@ const LanguageHome = ({
                       name="pencil"
                       color="black"
                       size={20}
-                      onPress={nextPageCallback}
+                      onPress={() => nextPageCallback(element)}
                     />
                   )}
                 />
@@ -198,7 +198,7 @@ const LanguageHome = ({
                       name="pencil"
                       color="black"
                       size={20}
-                      onPress={nextPageCallback}
+                      onPress={() => nextPageCallback(element)}
                     />
                   )}
                 />
