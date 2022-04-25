@@ -4,27 +4,36 @@ import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux' // import at the top of the file
 import { setCurrentVocabId } from 'slices/language.slice'
+import { getLesson } from 'api'
 
 const LessonHome = ({ navigation }) => {
-  const { allLessons, currentLessonId } = useSelector((state) => state.language)
+
+  const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
+  const { currentCourseId, currentLessonId } = useSelector((state) => state.language)
 
   const [data, setData] = useState([])
 
   useEffect(() => {
-    const lessonIndex = allLessons.findIndex(
-      (element) => element._id === currentLessonId,
-    )
-    setData(allLessons[lessonIndex].vocab)
-  }, [currentLessonId])
+    const getLessonData = async () => {
+      errorWrap(
+        async () => {
+          const { result } = await getLesson(currentCourseId, currentLessonId);
+          setData(result.vocab);
+        }
+      )
+    }
 
-  const dispatch = useDispatch()
+    getLessonData();
+
+  }, [currentLessonId])
 
   const navigateTo = () => {
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
   const goToNextPage = (element) => {
-    const currentVocabId = element._id
+    const currentVocabId = element._id;
     dispatch(setCurrentVocabId({ currentVocabId }))
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }

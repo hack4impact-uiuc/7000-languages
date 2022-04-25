@@ -33,6 +33,7 @@ const initialState = {
   currentUnitId: '',
   allLessons: [],
   currentLessonId: '',
+  lessonData: {},
   currentVocabId: '',
 }
 
@@ -52,6 +53,9 @@ const languageSlice = createSlice({
     },
     setCurrentVocabId: (state, { payload }) => {
       state.currentVocabId = payload.currentVocabId
+    },
+    setLessonData: (state, { payload }) => {
+      state.lessonData = payload.lessonData;
     },
     addVocab: (state, { payload }) => {
       const lessonIndex = state.allLessons.findIndex(
@@ -79,6 +83,7 @@ export const {
   addVocab,
   updateVocab,
   setCurrentVocabId,
+  setLessonData
 } = languageSlice.actions
 
 export default languageSlice.reducer
