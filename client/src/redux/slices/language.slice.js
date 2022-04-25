@@ -16,6 +16,24 @@ const initialState = {
     },
   ],
   currentCourseId: '',
+  courseDetails: {
+    admin_name: '',
+    admin_email: '',
+    name: '',
+    alternative_name: '',
+    description: '',
+    iso: '',
+    glotto: '',
+    translated_language: 'English',
+    population: '',
+    location: '',
+    link: '',
+  },
+  allUnits: [],
+  currentUnitId: '',
+  allLessons: [],
+  currentLessonId: '',
+  currentVocabId: '',
 }
 
 // ------------------------------------

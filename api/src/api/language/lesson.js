@@ -63,6 +63,7 @@ router.put(
 router.post(
   '/',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const { course_id, unit_id, lesson } = req.body;
 
