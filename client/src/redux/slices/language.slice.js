@@ -50,10 +50,28 @@ const languageSlice = createSlice({
     setCurrentCourse: (state, { payload }) => {
       state.currentCourseId = payload.currentCourseId
     },
+    addVocab: (state, { payload }) => {
+      const lessonIndex = state.allLessons.findIndex(
+        (element) => element._id === state.currentLessonId,
+      )
+      state.allLessons[lessonIndex].vocab.push(payload.vocab)
+    },
+    updateVocab: (state, { payload }) => {
+      const lessonIndex = state.allLessons.findIndex(
+        (element) => element._id === state.currentLessonId,
+      )
+      const vocabIndex = state.allLessons[lessonIndex].vocab.findIndex(
+        (element) => element._id === state.currentVocabId,
+      )
+
+      state.allLessons[lessonIndex].vocab[vocabIndex] = payload.vocab
+    },
   },
 })
 
 export const { action } = languageSlice
-export const { updateAllCourses, setCurrentCourse } = languageSlice.actions
+export const {
+  updateAllCourses, setCurrentCourse, addVocab, updateVocab,
+} = languageSlice.actions
 
 export default languageSlice.reducer

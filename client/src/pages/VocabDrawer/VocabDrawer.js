@@ -12,6 +12,11 @@ import { StyleSheet, Alert, ImageBackground } from 'react-native'
 import { Audio } from 'expo-av'
 import { RECORDING } from 'utils/constants'
 import RecordAudioView from 'components/RecordAudioView'
+import { useSelector, useDispatch } from 'react-redux' // import at the top of the file
+import { addVocab, updateVocab } from 'slices/language.slice'
+
+import { createVocabItem, updateVocabItem } from 'api'
+import useErrorWrap from 'hooks/useErrorWrap'
 
 const expoImageSettings = {
   mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -48,8 +53,19 @@ const WordDrawer = ({ navigation }) => {
     marker in state that indicates whether we are using this WordDrawer to add a new vocab item or edit an existing vocab item.
   */
 
-  const [originalLanguage] = useState('English')
-  const [translatedLanguage] = useState('Spanish')
+  const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
+
+  const {
+    currentCourseID,
+    currentLessonId,
+    currentVocabId,
+    courseDetails,
+    allLessons,
+  } = useSelector((state) => state.language)
+
+  const [originalLanguage] = useState(courseDetails.translated_language)
+  const [translatedLanguage] = useState(courseDetails.name)
 
   const [originalText, setOriginalText] = useState('')
   const [translatedText, setTranslatedText] = useState('')
@@ -58,6 +74,20 @@ const WordDrawer = ({ navigation }) => {
   const [audioRecording, setAudioRecording] = useState(null) // keeps track of the audio recording
   const [recordingStage, setRecordingState] = useState(RECORDING.INCOMPLETE) // which recording stage the user is at
   const [listeningSound, setListeningSound] = useState(null) // the data for the recording when the user is listening to it
+
+  useEffect(() => {
+    const index = allLessons?.vocab?.findIndex(
+      (element) => element._id === currentVocabId,
+    )
+
+    if (index && index >= 0) {
+      const vocabItem = allLessons.vocab[index]
+      setOriginalText(vocabItem.original)
+      setTranslatedText(vocabItem.translation)
+      setAdditionalInformation(vocabItem.notes)
+      // TODO: call GET 'audio" and GET 'image'
+    }
+  }, [currentVocabId, allLessons])
 
   /*
     Allows audio to be recorded and played back in silent mode
@@ -71,15 +101,41 @@ const WordDrawer = ({ navigation }) => {
     navigation.goBack()
   }
 
-  const success = () => {
-    // const vocabItem = {
-    //   original: originalText,
-    //   translation: translatedText,
-    //   image: '',
-    //   audio: '',
-    //   notes: additionalInformation,
-    // }
-    // TODO: call either the POST 'vocab' or PATCH 'vocab' and API S3 Endpoints and go back
+  const success = async () => {
+    errorWrap(
+      async () => {
+        const vocabItem = {
+          original: originalText,
+          translation: translatedText,
+          image: '',
+          audio: '',
+          notes: additionalInformation,
+        }
+        // TODO: call POST 'audio' and POST 'image'
+
+        if (currentVocabId === '') {
+          // Need to create a new vocab item
+          const { result } = await createVocabItem(
+            currentCourseID,
+            currentLessonId,
+            vocabItem,
+          )
+          dispatch(addVocab({ vocab: result }))
+        } else {
+          // update vocab item
+          const { result } = await updateVocabItem(
+            currentCourseID,
+            currentLessonId,
+            currentVocabId,
+            vocabItem,
+          )
+          dispatch(updateVocab({ vocab: result }))
+        }
+      },
+      () => {
+        close() // on success, close the modal
+      },
+    )
   }
 
   /**
@@ -310,7 +366,7 @@ const WordDrawer = ({ navigation }) => {
 
   return (
     <Drawer
-      titleText="Add a Vocab Item"
+      titleText={currentVocabId !== '' ? 'Edit Vocab Item' : 'Add a Vocab Item'}
       successText="Add Item"
       successCallback={success}
       closeCallback={close}

@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
 })
 
 const LanguageHome = ({
-  navigation,
   isLessonHome,
   languageName,
   languageDescription,
@@ -42,8 +41,8 @@ const LanguageHome = ({
   valueName,
   buttonText,
   rightIconName,
-  toNavigate,
-  toNext,
+  buttonCallback,
+  nextPageCallback,
   data,
 }) => {
   switch (isLessonHome) {
@@ -86,7 +85,7 @@ const LanguageHome = ({
                   size={20}
                 />
               )}
-              onPress={() => navigation.navigate('')}
+              onPress={buttonCallback}
             />
           </View>
 
@@ -112,7 +111,7 @@ const LanguageHome = ({
                       name="pencil"
                       color="black"
                       size={20}
-                      onPress={() => navigation.navigate('')}
+                      onPress={nextPageCallback}
                     />
                   )}
                 />
@@ -174,7 +173,7 @@ const LanguageHome = ({
                   size={20}
                 />
               )}
-              onPress={() => navigation.navigate(toNavigate)}
+              onPress={buttonCallback}
             />
           </View>
 
@@ -199,7 +198,7 @@ const LanguageHome = ({
                       name="pencil"
                       color="black"
                       size={20}
-                      onPress={() => navigation.navigate(toNext)}
+                      onPress={nextPageCallback}
                     />
                   )}
                 />
@@ -220,13 +219,9 @@ LanguageHome.propTypes = {
   valueName: PropTypes.string,
   buttonText: PropTypes.string,
   rightIconName: PropTypes.string,
-  toNavigate: PropTypes.string,
-  toNext: PropTypes.string,
+  buttonCallback: PropTypes.func,
+  nextPageCallback: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-    goBack: PropTypes.func,
-  }),
 }
 
 // Page Default Fields
@@ -238,10 +233,9 @@ LanguageHome.defaultProps = {
   valueName: '',
   buttonText: '',
   rightIconName: '',
-  toNavigate: '',
-  toNext: '',
+  buttonCallback: () => {},
+  nextPageCallback: () => {},
   data: [],
-  navigation: { navigate: () => null, goBack: () => null },
 }
 
 export default LanguageHome

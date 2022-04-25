@@ -25,15 +25,22 @@ const UnitHome = ({ navigation }) => {
     },
   ]
 
+  const navigateToManage = () => {
+    navigation.navigate('ManageLessons')
+  }
+
+  const goToNextPage = () => {
+    navigation.navigate('LessonHome')
+  }
+
   return (
     <LanguageHome
-      navigation={navigation}
       languageDescription="Some text describing this unit. Hopefully they write 2-3 sentences here to make it look nice."
       valueName="Lessons"
       buttonText="Manage Lessons"
       rightIconName="plus-circle"
-      toNavigate="ManageLessons"
-      toNext="LessonHome"
+      buttonCallback={navigateToManage}
+      nextPageCallback={goToNextPage}
       data={data}
     />
   )
