@@ -45,32 +45,14 @@ const languageSlice = createSlice({
   name: 'language',
   initialState,
   reducers: {
-    updateAllCourses: (state, { payload }) => {
-      state.allCourses = payload.allCourses
-    },
-    setCurrentCourse: (state, { payload }) => {
-      state.currentCourseId = payload.currentCourseId
-    },
-    setCurrentVocabId: (state, { payload }) => {
-      state.currentVocabId = payload.currentVocabId
-    },
-    setAllUnits: (state, { payload }) => {
-      state.allUnits = payload.allUnits
+    setField: (state, { payload }) => {
+      state[payload.key] = payload.value
     },
     addUnit: (state, { payload }) => {
       state.allUnits.push(payload.unit)
     },
-    setCurrentLessonId: (state, { payload }) => {
-      state.currentLessonId = payload.currentLessonId
-    },
-    setAllLessons: (state, { payload }) => {
-      state.allLessons = payload.allLessons
-    },
     addLesson: (state, { payload }) => {
       state.allLessons.push(payload.lesson)
-    },
-    setLessonData: (state, { payload }) => {
-      state.lessonData = payload.lessonData
     },
     addVocab: (state, { payload }) => {
       state.lessonData.vocab.push(payload.vocab)
@@ -86,17 +68,7 @@ const languageSlice = createSlice({
 
 export const { action } = languageSlice
 export const {
-  updateAllCourses,
-  setCurrentCourse,
-  addVocab,
-  updateVocab,
-  setCurrentVocabId,
-  setCurrentLessonId,
-  setLessonData,
-  setAllLessons,
-  addLesson,
-  addUnit,
-  setAllUnits,
+  setField, addUnit, addLesson, addVocab, updateVocab,
 } = languageSlice.actions
 
 export default languageSlice.reducer

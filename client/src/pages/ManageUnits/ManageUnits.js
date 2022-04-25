@@ -4,7 +4,7 @@ import ManageView from 'components/ManageView'
 
 import useErrorWrap from 'hooks/useErrorWrap'
 import { useSelector, useDispatch } from 'react-redux'
-import { setAllUnits } from 'slices/language.slice'
+import { setField } from 'slices/language.slice'
 import { updateUnits } from 'api'
 
 const ManageUnits = ({ navigation }) => {
@@ -51,7 +51,7 @@ const ManageUnits = ({ navigation }) => {
         const updates = selectedData.concat(unselectedData)
         const { result } = await updateUnits(currentCourseId, updates)
 
-        dispatch(setAllUnits({ allUnits: result }))
+        dispatch(setField({ key: 'allUnits', value: result }))
       },
       () => {
         // on success, go back

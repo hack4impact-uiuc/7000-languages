@@ -3,7 +3,7 @@ import LanguageHome from 'pages/LanguageHome'
 import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setCurrentVocabId, setLessonData } from 'slices/language.slice'
+import { setField } from 'slices/language.slice'
 import { getLesson } from 'api'
 import useErrorWrap from 'hooks/useErrorWrap'
 
@@ -29,7 +29,7 @@ const LessonHome = ({ navigation }) => {
         navigation.setOptions({
           title: result.name,
         })
-        dispatch(setLessonData({ lessonData: result }))
+        dispatch(setField({ key: 'lessonData', value: result }))
 
         const formattedVocabData = []
 
@@ -57,7 +57,7 @@ const LessonHome = ({ navigation }) => {
 
   const goToNextPage = (element) => {
     const currentVocabId = element._id
-    dispatch(setCurrentVocabId({ currentVocabId }))
+    dispatch(setField({ key: 'currentVocabId', value: currentVocabId }))
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 

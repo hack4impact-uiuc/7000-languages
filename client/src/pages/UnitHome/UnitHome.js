@@ -3,7 +3,7 @@ import LanguageHome from 'pages/LanguageHome'
 import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setCurrentLessonId, setAllLessons } from 'slices/language.slice'
+import { setField } from 'slices/language.slice'
 import { getUnit } from 'api'
 import useErrorWrap from 'hooks/useErrorWrap'
 import { INDICATOR_TYPES } from '../../utils/constants'
@@ -33,7 +33,7 @@ const UnitHome = ({ navigation }) => {
           title: unit.name,
         })
 
-        dispatch(setAllLessons({ allLessons: lessons }))
+        dispatch(setField({ key: 'allLessons', value: lessons }))
 
         const formattedLessonData = []
 
@@ -63,7 +63,7 @@ const UnitHome = ({ navigation }) => {
 
   const goToNextPage = (element) => {
     const currentLessonId = element._id
-    dispatch(setCurrentLessonId({ currentLessonId }))
+    dispatch(setField({ key: 'currentLessonId', value: currentLessonId }))
     navigation.navigate('LessonHome')
   }
 

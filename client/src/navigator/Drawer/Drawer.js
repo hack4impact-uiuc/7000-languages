@@ -14,7 +14,7 @@ import DrawerLogoutButton from 'components/DrawerLogoutButton'
 import useErrorWrap from 'hooks/useErrorWrap'
 import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
-import { updateAllCourses } from 'slices/language.slice'
+import { setField } from 'slices/language.slice'
 import { useDispatch, useSelector } from 'react-redux'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
@@ -229,7 +229,7 @@ const DrawerNavigator = () => {
         setEmail(email)
 
         if (courses.length > 0) {
-          dispatch(updateAllCourses({ allCourses: courses }))
+          dispatch(setField({ key: 'allCourses', value: courses }))
         }
       })
     }

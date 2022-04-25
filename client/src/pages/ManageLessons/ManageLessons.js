@@ -4,7 +4,7 @@ import ManageView from 'components/ManageView'
 
 import useErrorWrap from 'hooks/useErrorWrap'
 import { useSelector, useDispatch } from 'react-redux'
-import { setAllLessons } from 'slices/language.slice'
+import { setField } from 'slices/language.slice'
 import { updateLessons } from 'api'
 
 const ManageLessons = ({ navigation }) => {
@@ -51,7 +51,7 @@ const ManageLessons = ({ navigation }) => {
         const updates = selectedData.concat(unselectedData)
         const { result } = await updateLessons(currentCourseId, updates)
 
-        dispatch(setAllLessons({ allLessons: result }))
+        dispatch(setField({ key: 'allLessons', value: result }))
       },
       () => {
         // on success, go back
