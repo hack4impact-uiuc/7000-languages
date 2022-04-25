@@ -3,7 +3,18 @@ import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
 import { Input, Text, TextArea } from 'native-base'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { addLesson } from 'slices/language.slice'
+import { createLesson } from 'api'
+import useErrorWrap from 'hooks/useErrorWrap'
+
 const CreateLesson = ({ navigation }) => {
+  const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
+  const { currentCourseId, currentUnitId } = useSelector(
+    (state) => state.language,
+  )
+
   const close = () => {
     navigation.goBack()
   }
@@ -11,12 +22,26 @@ const CreateLesson = ({ navigation }) => {
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
 
-  const success = () => {
-    const newLesson = {
-      name,
-      purpose,
-    }
-    console.log(newLesson, 'success')
+  const success = async () => {
+    errorWrap(
+      async () => {
+        const newLesson = {
+          name,
+          description: purpose,
+        }
+
+        const { result } = await createLesson(
+          currentCourseId,
+          currentUnitId,
+          newLesson,
+        )
+        dispatch(addLesson({ lesson: result }))
+      },
+      () => {
+        // on success, close the modal
+        close()
+      },
+    )
   }
 
   const body = (

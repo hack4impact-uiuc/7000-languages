@@ -98,9 +98,9 @@ const LanguageHome = ({
             >
               {data.map((element) => (
                 <StyledCard
-                  key={`${element.title}${element.lessons}`}
-                  titleText={element.title}
-                  bodyText={element.lessons}
+                  key={`${element.name}${element.body}`}
+                  titleText={element.name}
+                  bodyText={element.body}
                   imageUri={element.imageUri}
                   showVolumeIcon={element.audio}
                   volumeIconCallback={{}}
@@ -186,10 +186,10 @@ const LanguageHome = ({
             >
               {data.map((element, index) => (
                 <StyledCard
-                  key={`${element.title}${element.lessons}`}
+                  key={`${element.name}${element.body}`}
                   leftIcon={<NumberBox number={index + 1} />}
-                  titleText={element.title}
-                  bodyText={element.lessons}
+                  titleText={element.name}
+                  bodyText={element.body}
                   width="97%"
                   height={75}
                   indicatorType={element.indicatorType}

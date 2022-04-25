@@ -6,6 +6,11 @@ import { colors } from 'theme'
 import { Input, Text, TextArea } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { addUnit } from 'slices/language.slice'
+import { createUnit } from 'api'
+import useErrorWrap from 'hooks/useErrorWrap'
+
 const styles = StyleSheet.create({
   container: {
     borderRadius: 2,
@@ -24,15 +29,29 @@ const CreateUnit = ({ navigation }) => {
     navigation.goBack()
   }
 
+  const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
+  const { currentCourseId } = useSelector((state) => state.language)
+
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
 
-  const success = () => {
-    const newUnit = {
-      name,
-      purpose,
-    }
-    console.log(newUnit, 'success!')
+  const success = async () => {
+    errorWrap(
+      async () => {
+        const newLesson = {
+          name,
+          description: purpose,
+        }
+
+        const { result } = await createUnit(currentCourseId, newLesson)
+        dispatch(addUnit({ unit: result }))
+      },
+      () => {
+        // on success, close the modal
+        close()
+      },
+    )
   }
 
   const body = (

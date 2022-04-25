@@ -54,24 +54,32 @@ const languageSlice = createSlice({
     setCurrentVocabId: (state, { payload }) => {
       state.currentVocabId = payload.currentVocabId
     },
+    setAllUnits: (state, { payload }) => {
+      state.allUnits = payload.allUnits
+    },
+    addUnit: (state, { payload }) => {
+      state.allUnits.push(payload.unit)
+    },
+    setCurrentLessonId: (state, { payload }) => {
+      state.currentLessonId = payload.currentLessonId
+    },
+    setAllLessons: (state, { payload }) => {
+      state.allLessons = payload.allLessons
+    },
+    addLesson: (state, { payload }) => {
+      state.allLessons.push(payload.lesson)
+    },
     setLessonData: (state, { payload }) => {
-      state.lessonData = payload.lessonData;
+      state.lessonData = payload.lessonData
     },
     addVocab: (state, { payload }) => {
-      const lessonIndex = state.allLessons.findIndex(
-        (element) => element._id === state.currentLessonId,
-      )
-      state.allLessons[lessonIndex].vocab.push(payload.vocab)
+      state.lessonData.vocab.push(payload.vocab)
     },
     updateVocab: (state, { payload }) => {
-      const lessonIndex = state.allLessons.findIndex(
-        (element) => element._id === state.currentLessonId,
-      )
-      const vocabIndex = state.allLessons[lessonIndex].vocab.findIndex(
+      const vocabIndex = state.lessonData.vocab.findIndex(
         (element) => element._id === state.currentVocabId,
       )
-
-      state.allLessons[lessonIndex].vocab[vocabIndex] = payload.vocab
+      state.lessonData.vocab[vocabIndex] = payload.vocab
     },
   },
 })
@@ -83,7 +91,12 @@ export const {
   addVocab,
   updateVocab,
   setCurrentVocabId,
-  setLessonData
+  setCurrentLessonId,
+  setLessonData,
+  setAllLessons,
+  addLesson,
+  addUnit,
+  setAllUnits,
 } = languageSlice.actions
 
 export default languageSlice.reducer
