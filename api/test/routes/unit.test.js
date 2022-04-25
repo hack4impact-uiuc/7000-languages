@@ -40,7 +40,9 @@ describe('GET /language/unit/ ', () => {
 
   test('API should get a simple unit', async () => {
     const response = await withAuthentication(
-      request(app).get('/language/unit/62391a30487d5ae343c82312'),
+      request(app).get(
+        '/language/unit?course_id=62391a30487d5ae343c82311&unit_id=62391a30487d5ae343c82312',
+      ),
     );
     const message = response.body.message;
     const result = omitDeep(response.body.result, '__v');
@@ -51,7 +53,7 @@ describe('GET /language/unit/ ', () => {
 
   test('No id results in error', async () => {
     const response = await withAuthentication(
-      request(app).get('/language/unit/'),
+      request(app).get('/language/unit'),
     );
 
     expect(response.status).toBeGreaterThanOrEqual(400);
@@ -59,7 +61,9 @@ describe('GET /language/unit/ ', () => {
 
   test('Invalid id results in error', async () => {
     const response = await withAuthentication(
-      request(app).get('/language/unit/62391a30487d5ae343caaaaa'),
+      request(app).get(
+        '/language/unit?course_id=62391a30487d5ae343c82311&unit_id=62391a30487d5ae343caaaaa',
+      ),
     );
 
     expect(response.status).toBeGreaterThanOrEqual(400);

@@ -68,6 +68,7 @@ router.patch(
 router.post(
   '/',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const { lesson_id, vocab } = req.body;
     if (!lesson_id || !vocab) {
