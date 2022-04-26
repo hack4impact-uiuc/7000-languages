@@ -8,8 +8,15 @@ const apiRoutes = require('./api');
 const { errorHandler, errorWrap } = require('./middleware');
 const { initDB } = require('./utils/mongo-setup');
 const { ENV_TEST } = require('./utils/constants');
+const fileUpload = require('express-fileupload');
 
 const app = express();
+
+app.use(
+  fileUpload({
+    createParentPath: true,
+  }),
+);
 
 app.use(helmet());
 app.use(cors());
