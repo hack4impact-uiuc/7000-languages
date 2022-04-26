@@ -18,10 +18,16 @@ router.get(
         const {
             course_id, unit_id, lesson_id, vocab_id,
         } = req.params;
+        
+        const isValid = await checkIds({ course_id, unit_id, lesson_id, vocab_id });
 
+        if (!isValid) {
+        return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+        }
+        
         // Open a stream from the S3 bucket
         const s3Stream = downloadFile(
-            `${course_id}/${unit_id}/${lesson_id}/${vocab_id}`,
+            `files/${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio`,
         ).createReadStream();
 
         // Setup callbacks for stream error and stream close

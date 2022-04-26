@@ -114,7 +114,7 @@ module.exports.checkIds = async ({
   course_id = null,
   unit_id = null,
   lesson_id = null,
-  
+  vocab_id = null,
 }) => {
   var allModels = [models.Course, models.Unit, models.Lesson];
   let ids = [course_id, unit_id, lesson_id];
@@ -128,6 +128,17 @@ module.exports.checkIds = async ({
       }
     }
   }
+  let lesson = await models.Lesson.findById(lesson_id);
+  lesson = lesson.toJSON();
+  if(lesson){
+    lesson = lesson.toJSON();
+    const matchId = (vocabItem) => vocabItem._id === vocab_id;
+    const index = lesson.vocab.findIndex(matchId);
+    if(index === -1){
+      return false;
+    }
+  }
+  
   return true;
 };
 
