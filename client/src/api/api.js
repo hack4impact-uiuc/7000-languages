@@ -32,7 +32,6 @@ export const getCourse = async (courseID) => {
   return res.data
 }
 
-// TODO: update this
 export const createUnit = async (courseID, unit) => {
   const body = {
     course_id: courseID,

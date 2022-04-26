@@ -1,10 +1,10 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import LanguageHome from 'pages/LanguageHome'
 import { INDICATOR_TYPES } from '../../utils/constants'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
-import { getUnit } from 'api'
+import { getCourse } from 'api'
 import useErrorWrap from 'hooks/useErrorWrap'
 
 
@@ -36,7 +36,7 @@ const CourseHome = ({ navigation }) => {
 
         const formattedUnitData = []
 
-        for (let i = 0; i < lessons.length; i += 1) {
+        for (let i = 0; i < units.length; i += 1) {
           const item = units[i]
 
           const formattedItem = {
@@ -47,10 +47,10 @@ const CourseHome = ({ navigation }) => {
             }`,
             indicatorType: INDICATOR_TYPES.COMPLETE,
           }
-          formattedLessonData.push(formattedItem)
+          formattedUnitData.push(formattedItem)
         }
 
-        setData(formattedLessonData)
+        setData(formattedUnitData)
       })
     }
     getCourseData()
