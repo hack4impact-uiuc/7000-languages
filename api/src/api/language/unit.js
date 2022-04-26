@@ -48,6 +48,14 @@ router.post(
   errorWrap(async (req, res) => {
     const unitData = req.body;
 
+    if (unitData.name === '' || unitData.description === '') {
+      return sendResponse(
+        res,
+        400,
+        'You are missing a unit name and/or description. Please try again.',
+      );
+    }
+
     const course_id = unitData.course_id;
 
     const order = await getNumUnitsInCourse(course_id);
@@ -62,6 +70,7 @@ router.post(
 
     await newUnit.save();
     let newResult = newUnit.toJSON();
+    newResult.num_lessons = 0;
 
     return sendResponse(res, 200, 'Successfully created a new unit', newResult);
   }),

@@ -36,7 +36,8 @@ const theme = extendTheme({
     Text: {
       baseStyle: {
         fontFamily: 'body',
-        fontWeight: 'normal',
+        fontStyle: 'normal',
+        fontWeight: 'regular',
         fontSize: 'xl',
       },
     },
@@ -148,7 +149,8 @@ const theme = extendTheme({
   fontConfig: {
     GT_Haptik: {
       regular: {
-        normal: 'GT_Haptik_regular',
+        // weight
+        normal: 'GT_Haptik_regular', // style
         italic: 'GT_Haptik_regular_italic',
         rotalic: 'GT_Haptik_rotalic',
       },

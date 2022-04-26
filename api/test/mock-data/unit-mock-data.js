@@ -521,6 +521,7 @@ module.exports.POST_EXPECTED_UNIT = {
   name: 'verbs',
   selected: true,
   description: 'simple unit',
+  num_lessons: 0,
 };
 
 module.exports.POST_MISSING_REQ_UNIT = {
@@ -535,6 +536,7 @@ module.exports.POST_EXTRA_FIELD_UNIT = {
   selected: true,
   description: 'simple unit',
   hi: 'hi',
+  num_lessons: 0,
 };
 
 module.exports.POST_INVALID_COURSE_UNIT = {

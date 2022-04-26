@@ -190,7 +190,7 @@ const LanguageHome = ({
                   leftIcon={<NumberBox number={index + 1} />}
                   titleText={element.name}
                   bodyText={element.body}
-                  width="97%"
+                  width={width * 0.97}
                   height={75}
                   indicatorType={element.indicatorType}
                   rightIcon={(

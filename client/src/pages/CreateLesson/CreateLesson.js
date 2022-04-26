@@ -28,6 +28,7 @@ const CreateLesson = ({ navigation }) => {
         const newLesson = {
           name,
           description: purpose,
+          selected: true,
         }
 
         const { result } = await createLesson(
@@ -35,6 +36,9 @@ const CreateLesson = ({ navigation }) => {
           currentUnitId,
           newLesson,
         )
+
+        result.num_vocab = 0
+
         dispatch(addLesson({ lesson: result }))
       },
       () => {
@@ -49,7 +53,6 @@ const CreateLesson = ({ navigation }) => {
       <Text>Give your lesson a name</Text>
       <Input
         size="lg"
-        variant="filled"
         placeholder=""
         returnKeyType="done"
         onChangeText={(text) => setName(text)}
@@ -58,9 +61,8 @@ const CreateLesson = ({ navigation }) => {
       <Text>What are the goals of this lesson?</Text>
 
       <TextArea
-        size="2xl"
+        size="xl"
         h={40}
-        variant="filled"
         placeholder=""
         keyboardType="default"
         returnKeyType="done"

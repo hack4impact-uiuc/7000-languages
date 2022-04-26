@@ -29,9 +29,9 @@ const HomeBaseCase = ({ navigation }) => (
       Uh, Oh!
     </Text>
     <Text
-    style={{
-      fontFamily: 'GT_Haptik_regular',
-    }}
+      style={{
+        fontFamily: 'GT_Haptik_regular',
+      }}
       fontWeight="normal"
       color="gray.medium"
       fontSize="xl"
@@ -65,9 +65,9 @@ any courses yet!`}
       />
     </View>
     <Text
-     style={{
-      fontFamily: 'GT_Haptik_regular',
-    }}
+      style={{
+        fontFamily: 'GT_Haptik_regular',
+      }}
       fontWeight="normal"
       color="gray.medium"
       fontSize="xl"

@@ -11,7 +11,7 @@ import { INDICATOR_TYPES } from '../../utils/constants'
 const UnitHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
-  const { currentCourseId, currentUnitId } = useSelector(
+  const { currentCourseId, currentUnitId, allLessons } = useSelector(
     (state) => state.language,
   )
 
@@ -34,28 +34,38 @@ const UnitHome = ({ navigation }) => {
         })
 
         dispatch(setField({ key: 'allLessons', value: lessons }))
-
-        const formattedLessonData = []
-
-        for (let i = 0; i < lessons.length; i += 1) {
-          const item = lessons[i]
-
-          const formattedItem = {
-            _id: item._id,
-            name: item.name,
-            body: `${item.num_vocab} Vocab ${
-              item.num_vocab === 1 ? 'Item' : 'Items'
-            }`,
-            indicatorType: INDICATOR_TYPES.COMPLETE,
-          }
-          formattedLessonData.push(formattedItem)
-        }
-
-        setData(formattedLessonData)
       })
     }
     getLessonData()
   }, [currentCourseId])
+
+  useEffect(() => {
+    let formattedLessonData = []
+
+    for (let i = 0; i < allLessons.length; i += 1) {
+      const item = allLessons[i]
+
+      // don't display unselected items
+      if (item.selected) {
+        const formattedItem = {
+          _id: item._id,
+          name: item.name,
+          body: `${item.num_vocab} Vocab ${
+            item.num_vocab === 1 ? 'Item' : 'Items'
+          }`,
+          indicatorType: INDICATOR_TYPES.INCOMPLETE,
+          _order: item._order,
+        }
+        formattedLessonData.push(formattedItem)
+      }
+    }
+
+    formattedLessonData = formattedLessonData.sort(
+      (a, b) => a._order - b._order,
+    )
+
+    setData(formattedLessonData)
+  }, [allLessons])
 
   const navigateToManage = () => {
     navigation.navigate('ManageLessons')

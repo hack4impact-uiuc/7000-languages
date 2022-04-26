@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Text, Divider } from 'native-base'
 import {
@@ -78,6 +78,11 @@ const ManageView = ({
   const [selectedData, setSelectedData] = useState(initialSelectedData)
   const [unselectedData, setUnselectedData] = useState(initialUnselectedData)
   const [shouldShowButtons, setShouldShowButtons] = useState(false)
+
+  useEffect(() => {
+    setSelectedData(initialSelectedData)
+    setUnselectedData(initialUnselectedData)
+  }, [initialSelectedData, initialUnselectedData])
 
   /**
    * The useRef hook is used to increase performance and user experience when using this component.

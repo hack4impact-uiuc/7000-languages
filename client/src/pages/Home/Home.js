@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import { NO_COURSE_ID } from 'utils/constants'
 import HomeBaseCase from 'components/HomeBaseCase'
 import { setField } from 'slices/language.slice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import CourseHome from 'pages/CourseHome'
 
 const Home = ({ navigation, courseId }) => {
   const dispatch = useDispatch()
+  const { currentCourseId } = useSelector((state) => state.language)
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -18,7 +19,7 @@ const Home = ({ navigation, courseId }) => {
     return unsubscribe
   }, [navigation])
 
-  if (courseId === NO_COURSE_ID) {
+  if (courseId === NO_COURSE_ID || currentCourseId === NO_COURSE_ID) {
     return <HomeBaseCase navigation={navigation} />
   }
 

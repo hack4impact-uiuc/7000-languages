@@ -6,6 +6,7 @@ import useErrorWrap from 'hooks/useErrorWrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import { updateLessons } from 'api'
+import _ from 'lodash'
 
 const ManageLessons = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -28,13 +29,14 @@ const ManageLessons = ({ navigation }) => {
         body: `${item.num_vocab} Vocab ${
           item.num_vocab === 1 ? 'Item' : 'Items'
         }`,
-        isComplete: true,
+        isComplete: false,
+        _order: item._order,
       }
 
       if (item.selected) {
         selectedList.push(formattedItem)
       } else {
-        selectedList.push(formattedItem)
+        unselectedList.push(formattedItem)
       }
     }
 
@@ -48,10 +50,27 @@ const ManageLessons = ({ navigation }) => {
   const saveChanges = async (selectedData, unselectedData) => {
     errorWrap(
       async () => {
-        const updates = selectedData.concat(unselectedData)
-        const { result } = await updateLessons(currentCourseId, updates)
+        /* We need to iterate through allLessons, and update the selected and _order fields */
+        const updatedAllLessons = _.cloneDeep(allLessons)
 
-        dispatch(setField({ key: 'allLessons', value: result }))
+        for (let i = 0; i < selectedData.length; i += 1) {
+          const updatedIdx = updatedAllLessons.findIndex(
+            (element) => element._id === selectedData[i]._id,
+          )
+          updatedAllLessons[updatedIdx].selected = true
+          updatedAllLessons[updatedIdx]._order = i
+        }
+
+        for (let i = 0; i < unselectedData.length; i += 1) {
+          const updatedIdx = updatedAllLessons.findIndex(
+            (element) => element._id === unselectedData[i]._id,
+          )
+          updatedAllLessons[updatedIdx].selected = false
+          updatedAllLessons[updatedIdx]._order = i
+        }
+
+        await updateLessons(currentCourseId, updatedAllLessons)
+        dispatch(setField({ key: 'allLessons', value: updatedAllLessons }))
       },
       () => {
         // on success, go back
@@ -61,7 +80,7 @@ const ManageLessons = ({ navigation }) => {
   }
 
   const add = () => {
-    navigation.navigate('Modal', { to: 'CreateLesson' })
+    navigation.navigate('Modal', { screen: 'CreateLesson' })
   }
 
   return (

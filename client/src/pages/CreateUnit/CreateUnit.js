@@ -42,9 +42,11 @@ const CreateUnit = ({ navigation }) => {
         const newLesson = {
           name,
           description: purpose,
+          course_id: currentCourseId,
+          selected: true,
         }
 
-        const { result } = await createUnit(currentCourseId, newLesson)
+        const { result } = await createUnit(newLesson)
         dispatch(addUnit({ unit: result }))
       },
       () => {
@@ -60,9 +62,9 @@ const CreateUnit = ({ navigation }) => {
         <View style={styles.textRow}>
           <Foundation name="lightbulb" size={24} color={colors.blue.dark} />
           <Text
-            style={{
-              fontFamily: 'GT_Haptik_bold',
-            }}
+            fontFamily="heading"
+            fontWeight="regular"
+            fontStyle="normal"
             color={colors.blue.dark}
           >
             {' '}
@@ -77,8 +79,7 @@ const CreateUnit = ({ navigation }) => {
 
       <Text>Give your unit a name</Text>
       <Input
-        size="lg"
-        variant="filled"
+        size="xl"
         placeholder=""
         returnKeyType="done"
         onChangeText={(text) => setName(text)}
@@ -87,9 +88,8 @@ const CreateUnit = ({ navigation }) => {
       <Text>What is the purpose of this unit?</Text>
 
       <TextArea
-        size="2xl"
+        size="xl"
         h={40}
-        variant="filled"
         placeholder=""
         keyboardType="default"
         returnKeyType="done"

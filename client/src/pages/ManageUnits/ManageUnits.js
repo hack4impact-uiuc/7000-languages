@@ -6,6 +6,7 @@ import useErrorWrap from 'hooks/useErrorWrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import { updateUnits } from 'api'
+import _ from 'lodash'
 
 const ManageUnits = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -28,13 +29,14 @@ const ManageUnits = ({ navigation }) => {
         body: `${item.num_lessons} ${
           item.num_vocab === 1 ? 'Lesson' : 'Lessons'
         }`,
-        isComplete: true,
+        isComplete: false,
+        _order: item._order,
       }
 
       if (item.selected) {
         selectedList.push(formattedItem)
       } else {
-        selectedList.push(formattedItem)
+        unselectedList.push(formattedItem)
       }
     }
 
@@ -48,10 +50,28 @@ const ManageUnits = ({ navigation }) => {
   const saveChanges = async (selectedData, unselectedData) => {
     errorWrap(
       async () => {
-        const updates = selectedData.concat(unselectedData)
-        const { result } = await updateUnits(currentCourseId, updates)
+        /* We need to iterate through allUnits, and update the selected and _order fields */
+        const updatedAllUnits = _.cloneDeep(allUnits)
 
-        dispatch(setField({ key: 'allUnits', value: result }))
+        for (let i = 0; i < selectedData.length; i += 1) {
+          const updatedIdx = updatedAllUnits.findIndex(
+            (element) => element._id === selectedData[i]._id,
+          )
+          updatedAllUnits[updatedIdx].selected = true
+          updatedAllUnits[updatedIdx]._order = i
+        }
+
+        for (let i = 0; i < unselectedData.length; i += 1) {
+          const updatedIdx = updatedAllUnits.findIndex(
+            (element) => element._id === unselectedData[i]._id,
+          )
+          updatedAllUnits[updatedIdx].selected = false
+          updatedAllUnits[updatedIdx]._order = i
+        }
+
+        await updateUnits(currentCourseId, updatedAllUnits)
+
+        dispatch(setField({ key: 'allUnits', value: updatedAllUnits }))
       },
       () => {
         // on success, go back
@@ -61,7 +81,7 @@ const ManageUnits = ({ navigation }) => {
   }
 
   const add = () => {
-    navigation.navigate('Modal', { to: 'CreateUnit' })
+    navigation.navigate('Modal', { screen: 'CreateUnit' })
   }
 
   return (

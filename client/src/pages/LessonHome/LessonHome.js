@@ -10,7 +10,7 @@ import useErrorWrap from 'hooks/useErrorWrap'
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
-  const { currentCourseId, currentLessonId } = useSelector(
+  const { currentCourseId, currentLessonId, lessonData } = useSelector(
     (state) => state.language,
   )
 
@@ -30,28 +30,35 @@ const LessonHome = ({ navigation }) => {
           title: result.name,
         })
         dispatch(setField({ key: 'lessonData', value: result }))
-
-        const formattedVocabData = []
-
-        for (let i = 0; i < result.vocab.length; i += 1) {
-          const item = result.vocab[i]
-          const formattedItem = {
-            _id: item._id,
-            name: item.original,
-            body: item.translation,
-            audio: item.audio !== '',
-          }
-          formattedVocabData.push(formattedItem)
-        }
-
-        setData(formattedVocabData)
       })
     }
 
     getLessonData()
   }, [currentCourseId, currentLessonId, navigation])
 
+  useEffect(() => {
+    let formattedVocabData = []
+
+    for (let i = 0; i < lessonData.vocab.length; i += 1) {
+      const item = lessonData.vocab[i]
+
+      const formattedItem = {
+        _id: item._id,
+        name: item.original,
+        body: item.translation,
+        audio: item.audio !== '',
+        _order: item._order,
+      }
+      formattedVocabData.push(formattedItem)
+    }
+
+    formattedVocabData = formattedVocabData.sort((a, b) => a._order - b._order)
+
+    setData(formattedVocabData)
+  }, [lessonData])
+
   const navigateTo = () => {
+    dispatch(setField({ key: 'currentVocabId', value: '' }))
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 

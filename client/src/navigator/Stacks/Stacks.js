@@ -79,12 +79,9 @@ export const AuthNavigator = () => (
 )
 
 export const ModalNavigator = () => (
-  <ModalStack.Navigator
-    initialRouteName="VocabDrawer"
-    screenOptions={modalNavigationProps}
-  >
-    <ModalStack.Screen name="VocabDrawer" component={VocabDrawer} />
+  <ModalStack.Navigator screenOptions={modalNavigationProps}>
     <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
+    <ModalStack.Screen name="VocabDrawer" component={VocabDrawer} />
     <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
   </ModalStack.Navigator>
 )
