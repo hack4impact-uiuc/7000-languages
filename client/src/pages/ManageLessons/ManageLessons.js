@@ -16,6 +16,9 @@ const ManageLessons = ({ navigation }) => {
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
 
+  /**
+   * Filers all of the lessons into selected and unselected lists
+   */
   useEffect(() => {
     let selectedList = []
     let unselectedList = []
@@ -29,7 +32,7 @@ const ManageLessons = ({ navigation }) => {
         body: `${item.num_vocab} Vocab ${
           item.num_vocab === 1 ? 'Item' : 'Items'
         }`,
-        isComplete: false,
+        isComplete: false, // TODO: remove hard-coded value
         _order: item._order,
       }
 
@@ -40,6 +43,7 @@ const ManageLessons = ({ navigation }) => {
       }
     }
 
+    // Lessons have order, so we must sort them before they are saved to local state
     selectedList = selectedList.sort((a, b) => a._order - b._order)
     unselectedList = unselectedList.sort((a, b) => a._order - b._order)
 
@@ -47,6 +51,11 @@ const ManageLessons = ({ navigation }) => {
     setUnselected(unselectedList)
   }, [allLessons])
 
+  /**
+   * Calls API in order to update lesson data
+   * @param {*} selectedData List of Unit objects that are marked as selected
+   * @param {*} unselectedData List of unit objects that are marked as unselected
+   */
   const saveChanges = async (selectedData, unselectedData) => {
     errorWrap(
       async () => {
@@ -79,6 +88,9 @@ const ManageLessons = ({ navigation }) => {
     )
   }
 
+  /**
+   * Navigates to the Create Lesson modal
+   */
   const add = () => {
     navigation.navigate('Modal', { screen: 'CreateLesson' })
   }

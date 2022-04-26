@@ -16,6 +16,9 @@ const ManageUnits = ({ navigation }) => {
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
 
+  /**
+   * Filers all of the units into selected and unselected lists
+   */
   useEffect(() => {
     let selectedList = []
     let unselectedList = []
@@ -29,7 +32,7 @@ const ManageUnits = ({ navigation }) => {
         body: `${item.num_lessons} ${
           item.num_vocab === 1 ? 'Lesson' : 'Lessons'
         }`,
-        isComplete: false,
+        isComplete: false, // TODO: remove hard-coded value
         _order: item._order,
       }
 
@@ -40,6 +43,7 @@ const ManageUnits = ({ navigation }) => {
       }
     }
 
+    // Units have order, so we must sort them before they are saved to local state
     selectedList = selectedList.sort((a, b) => a._order - b._order)
     unselectedList = unselectedList.sort((a, b) => a._order - b._order)
 
@@ -47,6 +51,11 @@ const ManageUnits = ({ navigation }) => {
     setUnselected(unselectedList)
   }, [allUnits])
 
+  /**
+   * Calls API in order to update unit data
+   * @param {*} selectedData List of Unit objects that are marked as selected
+   * @param {*} unselectedData List of unit objects that are marked as unselected
+   */
   const saveChanges = async (selectedData, unselectedData) => {
     errorWrap(
       async () => {
@@ -80,6 +89,9 @@ const ManageUnits = ({ navigation }) => {
     )
   }
 
+  /**
+   * Navigates to the Create Unit modal
+   */
   const add = () => {
     navigation.navigate('Modal', { screen: 'CreateUnit' })
   }

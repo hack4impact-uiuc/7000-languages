@@ -83,7 +83,6 @@ router.get(
       const numLessons = await models.Lesson.countDocuments({
         _unit_id: { $eq: units[i]._id },
       });
-      units[i] = units[i].toJSON();
       units[i].num_lessons = numLessons;
     }
     let newCourse = _.omit(course, ['admin_id']);

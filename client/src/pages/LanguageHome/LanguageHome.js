@@ -47,6 +47,7 @@ const LanguageHome = ({
 }) => {
   switch (isLessonHome) {
     case true:
+      // Generates the Lesson Home Page
       return (
         <>
           <View style={styles.top}>
@@ -121,6 +122,7 @@ const LanguageHome = ({
         </>
       )
     default:
+      // Generates the Course or Unit Home page
       return (
         <>
           <View style={styles.top}>

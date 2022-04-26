@@ -98,10 +98,16 @@ const WordDrawer = ({ navigation }) => {
     Audio.setAudioModeAsync({ playsInSilentModeIOS: true })
   })
 
+  /**
+   * Closes the modal
+   */
   const close = () => {
     navigation.goBack()
   }
 
+  /**
+   * Either updates the vocab item or creates a new vocab item
+   */
   const success = async () => {
     errorWrap(
       async () => {
@@ -112,8 +118,6 @@ const WordDrawer = ({ navigation }) => {
           audio: '',
           notes: additionalInformation,
         }
-        // TODO: call POST 'audio' and POST 'image'
-
         if (currentVocabId === '') {
           // Need to create a new vocab item
           const { result } = await createVocabItem(
@@ -134,6 +138,7 @@ const WordDrawer = ({ navigation }) => {
             updateVocab({ vocab: { ...vocabItem, _id: currentVocabId } }),
           )
         }
+        // TODO: call POST 'audio' and POST 'image'
       },
       () => {
         close() // on success, close the modal
@@ -370,7 +375,7 @@ const WordDrawer = ({ navigation }) => {
   return (
     <Drawer
       titleText={currentVocabId !== '' ? 'Edit Vocab Item' : 'Add a Vocab Item'}
-      successText={currentVocabId !== '' ? 'Update Item' : 'Add Item'}
+      successText={currentVocabId !== '' ? 'Save Changes' : 'Add Item'}
       successCallback={success}
       closeCallback={close}
       body={body}

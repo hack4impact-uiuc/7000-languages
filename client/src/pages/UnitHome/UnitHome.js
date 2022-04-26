@@ -29,6 +29,7 @@ const UnitHome = ({ navigation }) => {
 
         setUnitDescription(unit.description)
 
+        // Sets the title of the page
         navigation.setOptions({
           title: unit.name,
         })
@@ -39,13 +40,16 @@ const UnitHome = ({ navigation }) => {
     getLessonData()
   }, [currentCourseId])
 
+  /**
+   * Formats the lesson data in order to be presented on this page
+   */
   useEffect(() => {
     let formattedLessonData = []
 
     for (let i = 0; i < allLessons.length; i += 1) {
       const item = allLessons[i]
 
-      // don't display unselected items
+      // Make sure to not display unselected items
       if (item.selected) {
         const formattedItem = {
           _id: item._id,
@@ -60,6 +64,7 @@ const UnitHome = ({ navigation }) => {
       }
     }
 
+    // Units have order, so we must sort them before they are saved in local state
     formattedLessonData = formattedLessonData.sort(
       (a, b) => a._order - b._order,
     )
@@ -67,13 +72,20 @@ const UnitHome = ({ navigation }) => {
     setData(formattedLessonData)
   }, [allLessons])
 
+  /**
+   * Navigates to the manage lessons page
+   */
   const navigateToManage = () => {
     navigation.navigate('ManageLessons')
   }
 
+  /**
+   * Navigates to the Lesson Home page for a selected lesson
+   * @param {Object} element The Lesson that was selected
+   */
   const goToNextPage = (element) => {
     const currentLessonId = element._id
-    dispatch(setField({ key: 'currentLessonId', value: currentLessonId }))
+    dispatch(setField({ key: 'currentLessonId', value: currentLessonId })) // make sure to save the lesson that was selected
     navigation.navigate('LessonHome')
   }
 

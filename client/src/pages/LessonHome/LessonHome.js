@@ -36,6 +36,9 @@ const LessonHome = ({ navigation }) => {
     getLessonData()
   }, [currentCourseId, currentLessonId, navigation])
 
+  /**
+   * Updates the formatted vocab data that will be presented on this page
+   */
   useEffect(() => {
     let formattedVocabData = []
 
@@ -57,13 +60,22 @@ const LessonHome = ({ navigation }) => {
     setData(formattedVocabData)
   }, [lessonData])
 
+  /**
+   * Navigates to the Vocab Drawer for adding a vocab item
+   */
   const navigateTo = () => {
+    // Since we aren't editing a vocab item, we need to clear the current vocab id
     dispatch(setField({ key: 'currentVocabId', value: '' }))
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
+  /**
+   * Navigates to the Vocab Drawer for editing a vocab item
+   * @param {Object} element Vocab Item that was selected
+   */
   const goToNextPage = (element) => {
     const currentVocabId = element._id
+    // Save the id of the vocab item that we need to edit
     dispatch(setField({ key: 'currentVocabId', value: currentVocabId }))
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }

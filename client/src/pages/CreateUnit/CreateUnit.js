@@ -36,6 +36,9 @@ const CreateUnit = ({ navigation }) => {
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
 
+  /**
+   * Posts a new unit to the API and saves the new unit in state
+   */
   const success = async () => {
     errorWrap(
       async () => {

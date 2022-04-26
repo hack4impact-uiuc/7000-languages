@@ -17,7 +17,9 @@ const CourseHome = ({ navigation }) => {
   const [courseDescription, setCourseDescription] = useState('')
   const [courseName, setCourseName] = useState('')
 
-  // Gets course data from the API
+  /**
+   * Gets course data from the API and updates the title and description of the page
+   * */
   useEffect(() => {
     const getCourseData = async () => {
       errorWrap(async () => {
@@ -37,14 +39,16 @@ const CourseHome = ({ navigation }) => {
     getCourseData()
   }, [currentCourseId])
 
-  // Updates the units shown on this page
+  /**
+   * Updates the units presented in a list on this page
+   */
   useEffect(() => {
     let formattedUnitData = []
 
     for (let i = 0; i < allUnits.length; i += 1) {
       const item = allUnits[i]
 
-      // don't display unselected items
+      // filters out unselected items
       if (item.selected) {
         const formattedItem = {
           _id: item._id,
@@ -59,18 +63,26 @@ const CourseHome = ({ navigation }) => {
       }
     }
 
+    // Units have order, so we must sort them before presenting to the user
     formattedUnitData = formattedUnitData.sort((a, b) => a._order - b._order)
 
     setData(formattedUnitData)
   }, [allUnits])
 
+  /**
+   * Navigates to the Manage Units Page
+   */
   const navigateToManage = () => {
     navigation.navigate('ManageUnits')
   }
 
+  /**
+   * Navigates to the Unit Page
+   * @param {Object} element Unit that was selected on this page
+   */
   const goToNextPage = (element) => {
     const currentUnitId = element._id
-    dispatch(setField({ key: 'currentUnitId', value: currentUnitId }))
+    dispatch(setField({ key: 'currentUnitId', value: currentUnitId })) // make sure to save the selected unit in state
     navigation.navigate('UnitHome')
   }
 
