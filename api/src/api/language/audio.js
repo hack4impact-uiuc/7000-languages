@@ -4,7 +4,7 @@ const { errorWrap } = require('../../middleware');
 const { sendResponse } = require('../../utils/response');
 const { models } = require('../../models/index.js');
 const { requireAuthentication } = require('../../middleware/authentication');
-const { uploadFile } = require('api/src/app.js');
+const { uploadFile } = require('../../utils/aws/s3');
 const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
 const { checkIds } = require('../../utils/languageHelper');
 
