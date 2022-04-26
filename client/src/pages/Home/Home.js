@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { NO_COURSE_ID } from 'utils/constants'
 import HomeBaseCase from 'components/HomeBaseCase'
-import { setCurrentCourse } from 'slices/language.slice'
+import { setField } from 'slices/language.slice'
 import { useDispatch } from 'react-redux'
 import CourseHome from 'pages/CourseHome'
 
@@ -12,7 +12,7 @@ const Home = ({ navigation, courseId }) => {
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       // do something
-      dispatch(setCurrentCourse({ currentCourseId: courseId }))
+      dispatch(setField({ key: 'currentCourseId', value: courseId }))
     })
 
     return unsubscribe

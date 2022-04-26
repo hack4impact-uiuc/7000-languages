@@ -1,33 +1,68 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ManageView from 'components/ManageView'
 
+import useErrorWrap from 'hooks/useErrorWrap'
+import { useSelector, useDispatch } from 'react-redux'
+import { setField } from 'slices/language.slice'
+import { updateUnits } from 'api'
+
 const ManageUnits = ({ navigation }) => {
-  const saveChanges = (selectedData, unselectedData) => {
-    console.log(selectedData)
-    console.log(unselectedData)
-    navigation.goBack()
+  const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
+  const { allUnits, currentCourseId } = useSelector((state) => state.language)
+
+  const [selected, setSelected] = useState([])
+  const [unselected, setUnselected] = useState([])
+
+  useEffect(() => {
+    let selectedList = []
+    let unselectedList = []
+
+    for (let i = 0; i < allUnits.length; i += 1) {
+      const item = allUnits[i]
+
+      const formattedItem = {
+        _id: item._id,
+        title: item.name,
+        body: `${item.num_lessons} ${
+          item.num_vocab === 1 ? 'Lesson' : 'Lessons'
+        }`,
+        isComplete: true,
+      }
+
+      if (item.selected) {
+        selectedList.push(formattedItem)
+      } else {
+        selectedList.push(formattedItem)
+      }
+    }
+
+    selectedList = selectedList.sort((a, b) => a._order - b._order)
+    unselectedList = unselectedList.sort((a, b) => a._order - b._order)
+
+    setSelected(selectedList)
+    setUnselected(unselectedList)
+  }, [allUnits])
+
+  const saveChanges = async (selectedData, unselectedData) => {
+    errorWrap(
+      async () => {
+        const updates = selectedData.concat(unselectedData)
+        const { result } = await updateUnits(currentCourseId, updates)
+
+        dispatch(setField({ key: 'allUnits', value: result }))
+      },
+      () => {
+        // on success, go back
+        navigation.goBack()
+      },
+    )
   }
 
   const add = () => {
-    console.log('adding')
+    navigation.navigate('Modal', { to: 'CreateUnit' })
   }
-
-  const sampleSelected = [
-    { title: 'Selected 1', body: '2 Lessons', isComplete: true },
-    { title: 'Selected 2', body: '5 Lessons', isComplete: false },
-    { title: 'Selected 3', body: '2 Lessons', isComplete: true },
-    { title: 'Selected 4', body: '5 Lessons', isComplete: false },
-    { title: 'Selected 5', body: '2 Lessons', isComplete: true },
-    { title: 'Selected 6', body: '5 Lessons', isComplete: false },
-  ]
-
-  const sampleUnselected = [
-    { title: 'Unselected 1', body: '2 Lessons', isComplete: true },
-    { title: 'Unselected 2', body: '5 Lessons', isComplete: true },
-    { title: 'Unselected 3', body: '2 Lessons', isComplete: true },
-    { title: 'Unselected 4', body: '5 Lessons', isComplete: true },
-  ]
 
   return (
     <ManageView
@@ -38,8 +73,8 @@ const ManageUnits = ({ navigation }) => {
       addText="Create Unit"
       saveCallback={saveChanges}
       addCallback={add}
-      initialSelectedData={sampleSelected}
-      initialUnselectedData={sampleUnselected}
+      initialSelectedData={selected}
+      initialUnselectedData={unselected}
     />
   )
 }

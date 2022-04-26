@@ -16,6 +16,25 @@ const initialState = {
     },
   ],
   currentCourseId: '',
+  courseDetails: {
+    admin_name: '',
+    admin_email: '',
+    name: '',
+    alternative_name: '',
+    description: '',
+    iso: '',
+    glotto: '',
+    translated_language: 'English',
+    population: '',
+    location: '',
+    link: '',
+  },
+  allUnits: [],
+  currentUnitId: '',
+  allLessons: [],
+  currentLessonId: '',
+  lessonData: {},
+  currentVocabId: '',
 }
 
 // ------------------------------------
@@ -26,16 +45,30 @@ const languageSlice = createSlice({
   name: 'language',
   initialState,
   reducers: {
-    updateAllCourses: (state, { payload }) => {
-      state.allCourses = payload.allCourses
+    setField: (state, { payload }) => {
+      state[payload.key] = payload.value
     },
-    setCurrentCourse: (state, { payload }) => {
-      state.currentCourseId = payload.currentCourseId
+    addUnit: (state, { payload }) => {
+      state.allUnits.push(payload.unit)
+    },
+    addLesson: (state, { payload }) => {
+      state.allLessons.push(payload.lesson)
+    },
+    addVocab: (state, { payload }) => {
+      state.lessonData.vocab.push(payload.vocab)
+    },
+    updateVocab: (state, { payload }) => {
+      const vocabIndex = state.lessonData.vocab.findIndex(
+        (element) => element._id === state.currentVocabId,
+      )
+      state.lessonData.vocab[vocabIndex] = payload.vocab
     },
   },
 })
 
 export const { action } = languageSlice
-export const { updateAllCourses, setCurrentCourse } = languageSlice.actions
+export const {
+  setField, addUnit, addLesson, addVocab, updateVocab,
+} = languageSlice.actions
 
 export default languageSlice.reducer
