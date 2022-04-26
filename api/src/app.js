@@ -10,7 +10,6 @@ const { initDB } = require('./utils/mongo-setup');
 const { ENV_TEST } = require('./utils/constants');
 const fileUpload = require('express-fileupload');
 
-
 app.use(
   fileUpload({
     createParentPath: true,
