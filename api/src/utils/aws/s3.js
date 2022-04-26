@@ -7,14 +7,7 @@ const {
   SECRET_ACCESS_KEY,
 } = require('./awsExports');
 
-const S3_CREDENTIALS = {
-    accessKeyId: ACCESS_KEY_ID,
-    secretAccessKey: SECRET_ACCESS_KEY,
-};
-
-
-
-const getS3 = (credentials) => {
+const getS3 = () => {
   const s3 = new AWS.S3({
     accessKeyId: ACCESS_KEY_ID,
     secretAccessKey: SECRET_ACCESS_KEY,
@@ -24,13 +17,15 @@ const getS3 = (credentials) => {
   return s3;
 };
 
-const uploadFile = async (content, remoteFileName) => {
+ module.exports.uploadFile = async (content, remoteFileName) => {
   const params = {
     Body: content,
     Bucket: S3_BUCKET_NAME,
     Key: remoteFileName,
   };
 
-  const s3 = getS3(S3_CREDENTIALS);
+  const s3 = getS3();
   await s3.putObject(params).promise();
 };
+
+ 
