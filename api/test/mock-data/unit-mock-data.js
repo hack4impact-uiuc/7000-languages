@@ -507,3 +507,35 @@ module.exports.PUT_UNIT_EXTRA_FIELDS_EXPECTED = [
       'Vel aperiam minima magnam hic pariatur. Rem neque culpa. Quae sit in. Magni enim illum architecto et labore quo ut accusamus.',
   },
 ];
+
+module.exports.POST_SIMPLE_UNIT = {
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'verbs',
+  _order: 0,
+  selected: true,
+  description: 'simple unit',
+};
+
+module.exports.POST_MISSING_REQ_UNIT = {
+  _course_id: '62391a30487d5ae343c82311',
+  _order: 0,
+  selected: true,
+  description: 'simple unit',
+};
+
+module.exports.POST_EXTRA_FIELD_UNIT = {
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'verbs',
+  _order: 0,
+  selected: true,
+  description: 'simple unit',
+  hi: 'hi',
+};
+
+module.exports.POST_INVALID_COURSE_UNIT = {
+  _course_id: '62391a30487d5ae343c82123',
+  name: 'verbs',
+  _order: 0,
+  selected: true,
+  description: 'invalid',
+};
