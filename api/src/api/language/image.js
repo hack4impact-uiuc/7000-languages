@@ -43,7 +43,7 @@ router.post(
         return sendResponse(
           res,
           200,
-          'Success posting vocab image file path',
+          'Success posting vocab image file Path',
           lesson,
         );
       }
