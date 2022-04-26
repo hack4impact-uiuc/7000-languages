@@ -10,13 +10,14 @@ const { initDB } = require('./utils/mongo-setup');
 const { ENV_TEST } = require('./utils/constants');
 const fileUpload = require('express-fileupload');
 
+const app = express();
+
 app.use(
   fileUpload({
     createParentPath: true,
   }),
 );
 
-const app = express();
 
 app.use(helmet());
 app.use(cors());
