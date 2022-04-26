@@ -36,6 +36,24 @@ router.get(
       lessons: lessons,
     };
     return sendResponse(res, 200, 'Successfully fetched course', returnedData);
+                                                                                                           }),
+);
+
+router.patch(
+  '/:id',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const updates = req.body;
+
+    const unit_id = req.params.id;
+
+    const unit = await models.Unit.findById(unit_id);
+
+    patchDocument(unit, updates);
+
+    await unit.save();
+    return sendResponse(res, 200, 'Successfully updated unit', unit);
   }),
 );
 
