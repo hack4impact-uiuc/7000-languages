@@ -1,24 +1,27 @@
 const AWS = require('aws-sdk');
 
 const {
-    S3_BUCKET_NAME, S3_REGION, ACCESS_KEY_ID, SECRET_ACCESS_KEY,
+  S3_BUCKET_NAME,
+  S3_REGION,
+  ACCESS_KEY_ID,
+  SECRET_ACCESS_KEY,
 } = require('./awsExports');
 
-const getS3 = (credentials) => {
-    const s3 = new AWS.S3({
-        accessKeyId: ACCESS_KEY_ID,
-        secretAccessKey: SECRET_ACCESS_KEY,
-        region: S3_REGION,
-    });
-
-    return s3;
-}
-
-// S3 Credential Object created with access id and secret key
-const S3_CREDENTIALS = {
+const getS3 = () => {
+  const s3 = new AWS.S3({
     accessKeyId: ACCESS_KEY_ID,
     secretAccessKey: SECRET_ACCESS_KEY,
+    region: S3_REGION,
+  });
+
+  return s3;
 };
+
+// S3 Credential Object created with access id and secret key
+// const S3_CREDENTIALS = {
+//     accessKeyId: ACCESS_KEY_ID,
+//     secretAccessKey: SECRET_ACCESS_KEY,
+// };
 
 /**
  * Downloads file from the S3 bucket
@@ -26,14 +29,16 @@ const S3_CREDENTIALS = {
  * @param credentials The temporary credentials of the end user. Frontend should provide this.
  * @param onDownloaded Callback after finished downloading. Params are (err, data).
  */
-const downloadFile = (objectKey) => {
-    const params = {
-        Bucket: S3_BUCKET_NAME,
-        Key: objectKey,
-    };
+module.exports.downloadFile = (objectKey) => {
+  const params = {
+    Bucket: S3_BUCKET_NAME,
+    Key: objectKey,
+  };
 
-    const s3 = getS3(S3_CREDENTIALS);
-    const object = s3.getObject(params);
+  const s3 = getS3();
+  const object = s3.getObject(params);
 
-    return object;
+  return object;
 };
+
+// module.exports.downloadFile;

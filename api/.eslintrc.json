@@ -5,6 +5,8 @@
     "jest/globals": true
   },
   "rules": {
-    "require-await": "off"
+    "require-await": "off",
+    "no-magic-numbers": "off",
+    "@hack4impact-uiuc/no-redundant-functions": "off"
   }
 }

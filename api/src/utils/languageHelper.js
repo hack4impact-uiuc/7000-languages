@@ -130,15 +130,15 @@ module.exports.checkIds = async ({
   }
   let lesson = await models.Lesson.findById(lesson_id);
   lesson = lesson.toJSON();
-  if(lesson){
+  if (lesson) {
     lesson = lesson.toJSON();
     const matchId = (vocabItem) => vocabItem._id === vocab_id;
     const index = lesson.vocab.findIndex(matchId);
-    if(index === -1){
+    if (index === -1) {
       return false;
     }
   }
-  
+
   return true;
 };
 

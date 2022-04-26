@@ -11,36 +11,34 @@ const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
 const { checkIds } = require('../../utils/languageHelper');
 
 router.get(
-    // '/:id/files/:stepKey/:fieldKey/:fileName',
-    '/:course_id/:unit_id/:lesson_id/:vocab_id/',
-    requireAuthentication,
-    requireLanguageAuthorization,
-    errorWrap(async (req, res) => {
-        const {
-            course_id, unit_id, lesson_id, vocab_id,
-        } = req.params;
-        
-        const isValid = await checkIds({ course_id, unit_id, lesson_id, vocab_id });
+  // '/:id/files/:stepKey/:fieldKey/:fileName',
+  '/:course_id/:unit_id/:lesson_id/:vocab_id/',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const { course_id, unit_id, lesson_id, vocab_id } = req.params;
 
-        if (!isValid) {
-        return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
-        }
-        
-        // Open a stream from the S3 bucket
-        const s3Stream = downloadFile(
-            `files/${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio`,
-        ).createReadStream();
+    const isValid = await checkIds({ course_id, unit_id, lesson_id, vocab_id });
 
-        // Setup callbacks for stream error and stream close
-        s3Stream
-            .on('error', (err) => {
-                res.json(`S3 Error:${err}`);
-            })
-            .on('close', () => {
-                res.end();
-            });
+    if (!isValid) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
 
-        // Pipe the stream to the client
-        s3Stream.pipe(res);
-    }),
+    // Open a stream from the S3 bucket
+    const s3Stream = downloadFile(
+      `files/${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio`,
+    ).createReadStream();
+
+    // Setup callbacks for stream error and stream close
+    s3Stream
+      .on('error', (err) => {
+        res.json(`S3 Error:${err}`);
+      })
+      .on('close', () => {
+        res.end();
+      });
+
+    // Pipe the stream to the client
+    s3Stream.pipe(res);
+  }),
 );
