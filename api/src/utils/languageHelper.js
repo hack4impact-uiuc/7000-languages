@@ -114,6 +114,7 @@ module.exports.checkIds = async ({
   course_id = null,
   unit_id = null,
   lesson_id = null,
+  
 }) => {
   var allModels = [models.Course, models.Unit, models.Lesson];
   let ids = [course_id, unit_id, lesson_id];
