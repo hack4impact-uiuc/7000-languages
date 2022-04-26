@@ -2,70 +2,60 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import LanguageHome from 'pages/LanguageHome'
 import { INDICATOR_TYPES } from '../../utils/constants'
+import { useSelector, useDispatch } from 'react-redux'
+import { setField } from 'slices/language.slice'
+import { getUnit } from 'api'
+import useErrorWrap from 'hooks/useErrorWrap'
+
 
 const CourseHome = ({ navigation }) => {
-  const data = [
-    {
-      _id: 'abcdef',
-      title: 'Unit 1',
-      lessons: '1 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'aenasdas',
-      title: 'Unit 2',
-      lessons: '2 Lessons',
-      indicatorType: INDICATOR_TYPES.INCOMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 3',
-      lessons: '3 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 4',
-      lessons: '4 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 5',
-      lessons: '5 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 6',
-      lessons: '6 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 7',
-      lessons: '7 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 8',
-      lessons: '8 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 9',
-      lessons: '9 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 10',
-      lessons: '10 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-  ]
+  const { currentCourseId } = useSelector((state) => state.language)
+
+  const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
+
+  const [data, setData] = useState([])
+  const [courseDescription, setCourseDescription] = useState('')
+  const [courseName, setCourseName] = useState('')
+
+  useEffect(() => {
+    const getCourseData = async () => {
+      
+      errorWrap(async () => {
+        const { result } = await getCourse(currentCourseId)
+        const { course, units } = result
+
+        setCourseDescription(course.details.description)
+        setCourseName(course.details.name)
+
+        navigation.setOptions({
+          title: 'Course Home',
+        })
+        dispatch(setField({ key: 'courseDetails', value: course.details }))
+        dispatch(setField({ key: 'allUnits', value: units }))
+
+        const formattedUnitData = []
+
+        for (let i = 0; i < lessons.length; i += 1) {
+          const item = units[i]
+
+          const formattedItem = {
+            _id: item._id,
+            name: item.name,
+            body: `${item.num_lessons} ${
+              item.num_lessons === 1 ? 'Lesson' : 'Lessons'
+            }`,
+            indicatorType: INDICATOR_TYPES.COMPLETE,
+          }
+          formattedLessonData.push(formattedItem)
+        }
+
+        setData(formattedLessonData)
+      })
+    }
+    getCourseData()
+  }, [currentCourseId])
+
 
   const navigateToManage = () => {
     navigation.navigate('ManageUnits')
@@ -77,8 +67,8 @@ const CourseHome = ({ navigation }) => {
 
   return (
     <LanguageHome
-      languageName="Spanish"
-      languageDescription="Spanish is a wonderful language that prides itself in its world reach and rich, diverse cultures."
+      languageName={courseName}
+      languageDescription={courseDescription}
       valueName="Units"
       buttonText="Manage Units"
       rightIconName="pencil"

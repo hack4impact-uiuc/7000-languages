@@ -7,10 +7,12 @@ const {
   requireLanguageAuthorization,
 } = require('../../middleware/authorization');
 const mongoose = require('mongoose');
-const { updateDocumentsInTransaction } = require('../../utils/languageHelper');
+const {
+  updateDocumentsInTransaction,
+  getNumUnitsInCourse,
+} = require('../../utils/languageHelper');
 const { models } = require('../../models/index.js');
 const _ = require('lodash');
-
 /**
  * Fetches specified unit in the database
  */
@@ -36,6 +38,32 @@ router.get(
       lessons: lessons,
     };
     return sendResponse(res, 200, 'Successfully fetched course', returnedData);
+  }),
+);
+
+router.post(
+  '/',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const unitData = req.body;
+
+    const course_id = unitData.course_id;
+
+    const order = await getNumUnitsInCourse(course_id);
+
+    const newUnit = new models.Unit({
+      _course_id: course_id,
+      name: unitData.name,
+      _order: order,
+      selected: unitData.selected,
+      description: unitData.description,
+    });
+
+    await newUnit.save();
+    let newResult = newUnit.toJSON();
+
+    return sendResponse(res, 200, 'Successfully created a new unit', newResult);
   }),
 );
 
