@@ -2,18 +2,19 @@ const express = require('express');
 const router = express.Router();
 const { errorWrap } = require('../../middleware');
 const { sendResponse } = require('../../utils/response');
-const { models } = require('../../models/index.js');
+const { downloadFile } = require('../../utils/aws/s3.js');
 const { requireAuthentication } = require('../../middleware/authentication');
 const {
   requireLanguageAuthorization,
 } = require('../../middleware/authorization');
-const _ = require('lodash');
-const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
+const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
 const { checkIds } = require('../../utils/languageHelper');
 
 router.get(
     // '/:id/files/:stepKey/:fieldKey/:fileName',
     '/:course_id/:unit_id/:lesson_id/:vocab_id/',
+    requireAuthentication,
+    requireLanguageAuthorization,
     errorWrap(async (req, res) => {
         const {
             course_id, unit_id, lesson_id, vocab_id,
