@@ -32,10 +32,21 @@ export const getCourse = async (courseID) => {
   return res.data
 }
 
-// TODO: add create unit
+// TODO: update this
+export const createUnit = async (courseID, unit) => {
+  const body = {
+    course_id: courseID,
+    unit,
+  }
+  const requestString = '/language/course'
+  const res = await instance.post(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
 
 export const getUnit = async (courseID, unitID) => {
-  const requestString = `/course?course_id=${courseID}&unit_id=${unitID}`
+  const requestString = `/language/course?course_id=${courseID}&unit_id=${unitID}`
   const res = await instance.get(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)

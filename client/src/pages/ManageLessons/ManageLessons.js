@@ -1,33 +1,68 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import ManageView from 'components/ManageView'
 
+import useErrorWrap from 'hooks/useErrorWrap'
+import { useSelector, useDispatch } from 'react-redux'
+import { setField } from 'slices/language.slice'
+import { updateLessons } from 'api'
+
 const ManageLessons = ({ navigation }) => {
-  const saveChanges = (selectedData, unselectedData) => {
-    console.log(selectedData)
-    console.log(unselectedData)
-    navigation.goBack()
+  const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
+  const { allLessons, currentCourseId } = useSelector((state) => state.language)
+
+  const [selected, setSelected] = useState([])
+  const [unselected, setUnselected] = useState([])
+
+  useEffect(() => {
+    let selectedList = []
+    let unselectedList = []
+
+    for (let i = 0; i < allLessons.length; i += 1) {
+      const item = allLessons[i]
+
+      const formattedItem = {
+        _id: item._id,
+        title: item.name,
+        body: `${item.num_vocab} Vocab ${
+          item.num_vocab === 1 ? 'Item' : 'Items'
+        }`,
+        isComplete: true,
+      }
+
+      if (item.selected) {
+        selectedList.push(formattedItem)
+      } else {
+        selectedList.push(formattedItem)
+      }
+    }
+
+    selectedList = selectedList.sort((a, b) => a._order - b._order)
+    unselectedList = unselectedList.sort((a, b) => a._order - b._order)
+
+    setSelected(selectedList)
+    setUnselected(unselectedList)
+  }, [allLessons])
+
+  const saveChanges = async (selectedData, unselectedData) => {
+    errorWrap(
+      async () => {
+        const updates = selectedData.concat(unselectedData)
+        const { result } = await updateLessons(currentCourseId, updates)
+
+        dispatch(setField({ key: 'allLessons', value: result }))
+      },
+      () => {
+        // on success, go back
+        navigation.goBack()
+      },
+    )
   }
 
   const add = () => {
-    console.log('adding')
+    navigation.navigate('Modal', { to: 'CreateLesson' })
   }
-
-  const sampleSelected = [
-    { title: 'Selected 1', body: '2 Vocab Items', isComplete: true },
-    { title: 'Selected 2', body: '5 Vocab Items', isComplete: false },
-    { title: 'Selected 3', body: '2 Vocab Items', isComplete: true },
-    { title: 'Selected 4', body: '5 Vocab Items', isComplete: false },
-    { title: 'Selected 5', body: '2 Vocab Items', isComplete: true },
-    { title: 'Selected 6', body: '5 Vocab Items', isComplete: false },
-  ]
-
-  const sampleUnselected = [
-    { title: 'Unselected 1', body: '2 Vocab Items', isComplete: true },
-    { title: 'Unselected 2', body: '5 Vocab Items', isComplete: true },
-    { title: 'Unselected 3', body: '2 Vocab Items', isComplete: true },
-    { title: 'Unselected 4', body: '5 Vocab Items', isComplete: true },
-  ]
 
   return (
     <ManageView
@@ -38,8 +73,8 @@ const ManageLessons = ({ navigation }) => {
       addText="Create Lessons"
       saveCallback={saveChanges}
       addCallback={add}
-      initialSelectedData={sampleSelected}
-      initialUnselectedData={sampleUnselected}
+      initialSelectedData={selected}
+      initialUnselectedData={unselected}
     />
   )
 }
