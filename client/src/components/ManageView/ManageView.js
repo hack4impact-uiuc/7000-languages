@@ -14,7 +14,6 @@ import {
   DRAGGABLE_LIST_COMPONENT_DELAY,
   DRAGGABLE_LIST_CARD_WIDTH_FACTOR,
   DRAGGABLE_LIST_CARD_HEIGHT,
-  INDICATOR_TYPES,
 } from 'utils/constants'
 import { moveFromList } from 'utils/manageHelper'
 
@@ -178,9 +177,7 @@ const ManageView = ({
       )}
       rightIcon={<Feather name="menu" size={25} color={colors.gray.medium} />}
       volumeIconCallback={playAudio}
-      indicatorType={
-        item.isComplete ? INDICATOR_TYPES.COMPLETE : INDICATOR_TYPES.INCOMPLETE
-      }
+      indicatorType={item.indicatorType}
       width={childrenWidth}
       height={childrenHeight}
     />
@@ -206,9 +203,7 @@ const ManageView = ({
         />
       )}
       volumeIconCallback={playAudio}
-      indicatorType={
-        item.isComplete ? INDICATOR_TYPES.COMPLETE : INDICATOR_TYPES.INCOMPLETE
-      }
+      indicatorType={item.indicatorType}
       width={childrenWidth}
       height={childrenHeight}
     />

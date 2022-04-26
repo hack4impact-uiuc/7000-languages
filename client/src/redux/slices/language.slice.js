@@ -63,12 +63,13 @@ const languageSlice = createSlice({
       )
       state.lessonData.vocab[vocabIndex] = payload.vocab
     },
+    clear: () => initialState,
   },
 })
 
 export const { action } = languageSlice
 export const {
-  setField, addUnit, addLesson, addVocab, updateVocab,
+  setField, addUnit, addLesson, addVocab, updateVocab, clear,
 } = languageSlice.actions
 
 export default languageSlice.reducer

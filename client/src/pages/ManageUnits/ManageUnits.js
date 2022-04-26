@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import { updateUnits } from 'api'
 import _ from 'lodash'
+import { INDICATOR_TYPES } from 'utils/constants'
 
 const ManageUnits = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -32,7 +33,7 @@ const ManageUnits = ({ navigation }) => {
         body: `${item.num_lessons} ${
           item.num_vocab === 1 ? 'Lesson' : 'Lessons'
         }`,
-        isComplete: false, // TODO: remove hard-coded value
+        indicatorType: INDICATOR_TYPES.NONE, // TODO: remove hard-coded value
         _order: item._order,
       }
 

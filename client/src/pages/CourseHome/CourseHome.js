@@ -56,7 +56,7 @@ const CourseHome = ({ navigation }) => {
           body: `${item.num_lessons} ${
             item.num_lessons === 1 ? 'Lesson' : 'Lessons'
           }`,
-          indicatorType: INDICATOR_TYPES.INCOMPLETE,
+          indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
         }
         formattedUnitData.push(formattedItem)

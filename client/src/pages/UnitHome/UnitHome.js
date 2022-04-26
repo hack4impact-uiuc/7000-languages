@@ -57,7 +57,7 @@ const UnitHome = ({ navigation }) => {
           body: `${item.num_vocab} Vocab ${
             item.num_vocab === 1 ? 'Item' : 'Items'
           }`,
-          indicatorType: INDICATOR_TYPES.INCOMPLETE,
+          indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
         }
         formattedLessonData.push(formattedItem)
