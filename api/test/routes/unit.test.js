@@ -15,6 +15,11 @@ const {
   PUT_UNIT_DUPLICATE_ORDER,
   PUT_UNIT_EXTRA_FIELDS,
   PUT_UNIT_EXTRA_FIELDS_EXPECTED,
+  POST_SIMPLE_UNIT,
+  POST_SIMPLE_UNIT_EXPECTED,
+  POST_MISSING_REQ_UNIT,
+  POST_EXTRA_FIELD_UNIT,
+  POST_INVALID_COURSE_UNIT,
 } = require('../mock-data/unit-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
@@ -67,6 +72,55 @@ describe('GET /language/unit/ ', () => {
     );
 
     expect(response.status).toBeGreaterThanOrEqual(400);
+  });
+});
+
+// This block tests the PUT /unit/ endpoint.
+describe('POST /language/unit/ ', () => {
+  /* 
+    We have to make sure we connect to a MongoDB mock db before the test 
+    and close the connection at the end.
+  */
+  afterAll(async () => await db.closeDatabase());
+  afterEach(async () => await db.resetDatabase());
+  beforeAll(async () => {
+    await db.connect();
+  });
+
+  test('API should post a simple unit', async () => {
+    const response = await withAuthentication(
+      request(app).post('/language/unit').send(POST_SIMPLE_UNIT),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully created a new unit');
+    expect(result).toEqual(POST_SIMPLE_UNIT_EXPECTED);
+  });
+
+  test('Missing required field should fail', async () => {
+    const response = await withAuthentication(
+      request(app).post('/language/unit').send(POST_MISSING_REQ_UNIT),
+    );
+    expect(response.status).toBeGreaterThanOrEqual(400);
+  });
+
+  test('Invalid course id should fail', async () => {
+    const response = await withAuthentication(
+      request(app).post('/language/unit').send(POST_INVALID_COURSE_UNIT),
+    );
+    expect(response.status).toBe(400);
+  });
+
+  test('Additional field should still post', async () => {
+    const response = await withAuthentication(
+      request(app).post('/language/unit').send(POST_EXTRA_FIELD_UNIT),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully created a new unit');
+    expect(result).toEqual(POST_SIMPLE_UNIT_EXPECTED);
   });
 });
 
