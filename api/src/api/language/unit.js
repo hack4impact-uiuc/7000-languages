@@ -64,8 +64,6 @@ router.post(
 
     await newUnit.save();
     let newResult = newUnit.toJSON();
-    newResult = _.omit(newResult, ['_course_id']);
-    newResult = _.omit(newResult, ['_id']);
 
     return sendResponse(res, 200, 'Successfully created a new unit', newResult);
   }),

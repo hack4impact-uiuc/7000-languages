@@ -16,7 +16,6 @@ const {
   PUT_UNIT_EXTRA_FIELDS,
   PUT_UNIT_EXTRA_FIELDS_EXPECTED,
   POST_SIMPLE_UNIT,
-  POST_SIMPLE_UNIT_EXPECTED,
   POST_MISSING_REQ_UNIT,
   POST_EXTRA_FIELD_UNIT,
   POST_INVALID_COURSE_UNIT,
@@ -92,10 +91,10 @@ describe('POST /language/unit/ ', () => {
       request(app).post('/language/unit').send(POST_SIMPLE_UNIT),
     );
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '__v');
+    const result = omitDeep(response.body.result, '__v', '_id');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new unit');
-    expect(result).toEqual(POST_SIMPLE_UNIT_EXPECTED);
+    expect(result).toEqual(POST_SIMPLE_UNIT);
   });
 
   test('Missing required field should fail', async () => {
@@ -117,10 +116,10 @@ describe('POST /language/unit/ ', () => {
       request(app).post('/language/unit').send(POST_EXTRA_FIELD_UNIT),
     );
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '__v');
+    const result = omitDeep(response.body.result, '__v', '_id');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new unit');
-    expect(result).toEqual(POST_SIMPLE_UNIT_EXPECTED);
+    expect(result).toEqual(POST_SIMPLE_UNIT);
   });
 });
 
