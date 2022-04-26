@@ -13,6 +13,7 @@
     "style": "yarn format && yarn lint"
   },
   "dependencies": {
+    "aws-sdk": "^2.1116.0",
     "cors": "^2.8.5",
     "debug": "~4.3.3",
     "dotenv": "^16.0.0",

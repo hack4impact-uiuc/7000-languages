@@ -3,11 +3,7 @@ import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import Drawer from 'components/Drawer'
 import { colors } from 'theme'
-import {
-  Input,
-  Text,
-  TextArea,
-} from 'native-base'
+import { Input, Text, TextArea } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
 
 const styles = StyleSheet.create({
@@ -41,9 +37,7 @@ const CreateUnit = ({ navigation }) => {
 
   const body = (
     <>
-      <View
-        style={styles.container}
-      >
+      <View style={styles.container}>
         <View style={styles.textRow}>
           <Foundation name="lightbulb" size={24} color={colors.blue.dark} />
           <Text
@@ -57,7 +51,8 @@ const CreateUnit = ({ navigation }) => {
           </Text>
         </View>
         <Text color={colors.blue.dark} fontSize="md">
-          When creating a unit, think about how it will be used. More text here explaining what they should look for when making a unit.
+          When creating a unit, think about how it will be used. More text here
+          explaining what they should look for when making a unit.
         </Text>
       </View>
 

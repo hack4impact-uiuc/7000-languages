@@ -284,7 +284,7 @@ const ManageView = ({
           </View>
           <Text
             fontFamily="body"
-            fontWeight="regular"
+            fontWeight="normal"
             fontSize="md"
             color="gray.medium"
           >
@@ -319,7 +319,7 @@ const ManageView = ({
           </View>
           <Text
             fontFamily="body"
-            fontWeight="regular"
+            fontWeight="normal"
             fontSize="md"
             color="gray.medium"
           >

@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { NO_COURSE_ID } from 'utils/constants'
 import HomeBaseCase from 'components/HomeBaseCase'
-import { Text } from 'native-base'
 import { setCurrentCourse } from 'slices/language.slice'
 import { useDispatch } from 'react-redux'
+import CourseHome from 'pages/CourseHome'
 
 const Home = ({ navigation, courseId }) => {
   const dispatch = useDispatch()
@@ -23,7 +23,7 @@ const Home = ({ navigation, courseId }) => {
   }
 
   // TODO: add logic for rendering course page
-  return <Text>{courseId}</Text>
+  return <CourseHome navigation={navigation} />
 }
 Home.propTypes = {
   navigation: PropTypes.shape({

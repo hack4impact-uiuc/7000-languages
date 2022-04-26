@@ -5,6 +5,9 @@ const { sendResponse } = require('../../utils/response');
 const { models } = require('../../models/index.js');
 const { requireAuthentication } = require('../../middleware/authentication');
 const {
+  requireLanguageAuthorization,
+} = require('../../middleware/authorization');
+const {
   ERR_MISSING_OR_INVALID_DATA,
   SUCCESS_POSTING_VOCAB_DATA,
   NOT_FOUND_INDEX,
@@ -17,6 +20,7 @@ const { getVocabIndexByID, checkIds } = require('../../utils/languageHelper');
 router.patch(
   '/',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const { lesson_id, vocab_id, vocab_update } = req.body;
 
@@ -64,6 +68,7 @@ router.patch(
 router.post(
   '/',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const { lesson_id, vocab } = req.body;
     if (!lesson_id || !vocab) {
@@ -88,7 +93,6 @@ router.post(
 
       return sendResponse(res, 200, SUCCESS_POSTING_VOCAB_DATA, vocab);
     } catch (error) {
-      console.error('POST /vocab/: ', error.message);
       return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
     }
   }),

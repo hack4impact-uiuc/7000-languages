@@ -97,7 +97,7 @@ describe('GET /lesson/ ', () => {
     );
     const message = response.body.message;
     expect(response.status).toBe(400);
-    expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
+    expect(message).toEqual('Invalid ObjectID');
   });
 
   test('Error getting vocab - lesson does not exist', async () => {
@@ -148,8 +148,10 @@ describe('POST /lesson/ ', () => {
       request(app).post(`/language/lesson`).send(POST_LESSON_MISSING_COURSE_ID),
     );
     const message = response.body.message;
-    expect(response.status).toBe(400);
-    expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
+    expect(response.status).toBe(403);
+    expect(message).toEqual(
+      'Authentication failed. Please log out and try again.',
+    );
   });
 
   test('Error creating lesson - invalid course id', async () => {
@@ -157,8 +159,8 @@ describe('POST /lesson/ ', () => {
       request(app).post(`/language/lesson`).send(POST_LESSON_INVALID_COURSE_ID),
     );
     const message = response.body.message;
-    expect(response.status).toBe(400);
-    expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
+    expect(response.status).toBe(404);
+    expect(message).toEqual('Course does not exist');
   });
 
   test('Error creating lesson - invalid unit id', async () => {

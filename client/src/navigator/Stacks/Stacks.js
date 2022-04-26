@@ -3,14 +3,18 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { colors } from 'theme'
 import Home from 'pages/Home'
 import Landing from 'pages/Landing'
+import VocabDrawer from 'pages/VocabDrawer'
 import CreateLesson from 'pages/CreateLesson'
 import CreateUnit from 'pages/CreateUnit'
 import ManageUnits from 'pages/ManageUnits'
 import Apply from 'pages/Apply'
 import { NO_COURSE_ID } from 'utils/constants'
 import PropTypes from 'prop-types'
-import DrawerButton from './DrawerButton'
+import UnitHome from 'pages/UnitHome'
+import LessonHome from 'pages/LessonHome'
+import ManageLessons from 'pages/ManageLessons'
 import BackButton from './BackButton'
+import DrawerButton from './DrawerButton'
 
 // ------------------------------------
 // Constants
@@ -76,13 +80,13 @@ export const AuthNavigator = () => (
 
 export const ModalNavigator = () => (
   <ModalStack.Navigator
-    initialRouteName="CreateUnit"
+    initialRouteName="VocabDrawer"
     screenOptions={modalNavigationProps}
   >
+    <ModalStack.Screen name="VocabDrawer" component={VocabDrawer} />
     <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
     <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
   </ModalStack.Navigator>
-
 )
 
 export const HomeNavigator = ({ courseId }) => (
@@ -97,6 +101,23 @@ export const HomeNavigator = ({ courseId }) => (
       options={({ navigation }) => ({
         title: 'Home',
         headerLeft: () => <DrawerButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <Stack.Screen
+      name="UnitHome"
+      component={UnitHome}
+      options={({ navigation }) => ({
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <Stack.Screen
+      name="LessonHome"
+      component={LessonHome} // change
+      options={({ navigation }) => ({
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
       })}
     />
 
@@ -121,6 +142,17 @@ export const HomeNavigator = ({ courseId }) => (
         ...manageNavigationProps,
         title: 'Manage Units',
         headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <Stack.Screen
+      name="ManageLessons"
+      component={ManageLessons}
+      options={({ navigation }) => ({
+        ...manageNavigationProps,
+        title: 'Manage Lessons',
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
       })}
     />
   </Stack.Navigator>

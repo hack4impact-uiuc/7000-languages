@@ -7,24 +7,42 @@ const theme = extendTheme({
   components: {
     Input: {
       baseStyle: {
-        size: '20',
-        selectionColor: 'blue.medium',
-        borderColor: 'coolGray.800',
+        backgroundColor: 'gray.medium_light',
+        borderColor: 'gray.medium_light',
+        fontFamily: 'GT_Haptik_regular',
+        selectionColor: 'black',
+        _focus: {
+          borderColor: 'blue.medium',
+          _hover: { borderColor: 'primary.600' },
+        },
+        my: 2,
       },
-      defaultProps: { size: 'sm' },
+      defaultProps: { size: 'xl' },
     },
-
+    TextArea: {
+      baseStyle: {
+        backgroundColor: 'gray.medium_light',
+        borderColor: 'gray.medium_light',
+        fontFamily: 'GT_Haptik_regular',
+        selectionColor: 'black',
+        _focus: {
+          borderColor: 'blue.medium',
+          _hover: { borderColor: 'primary.600' },
+        },
+        my: 2,
+      },
+      defaultProps: { size: 'xl' },
+    },
     Text: {
       baseStyle: {
         fontFamily: 'body',
-        fontWeight: 'regular',
+        fontWeight: 'normal',
         fontSize: 'xl',
       },
     },
     Button: {
-      // Can simply pass default props to change default behaviour of components.
       baseStyle: {
-        borderRadius: 12,
+        borderRadius: 8,
       },
       variants: {
         primary: {
@@ -57,16 +75,17 @@ const theme = extendTheme({
             fontFamily: 'GT_Haptik_bold',
           },
         },
-        tertiary: {
-          bg: 'gray.medium:alpha.00',
-          w: '90%',
+        image_picker: {
+          bg: 'red.light',
+          w: '100%',
           my: 2,
-          px: 20,
-          py: 4,
-          borderColor: 'white.dark',
+          borderStyle: 'dashed',
           borderWidth: 2,
+          borderRadius: 1,
+          borderColor: 'red.dark',
           _text: {
-            color: 'white.dark',
+            fontSize: 20,
+            color: 'red.dark',
             fontFamily: 'GT_Haptik_bold',
           },
         },
@@ -107,6 +126,17 @@ const theme = extendTheme({
           borderColor: 'white.dark',
           borderRadius: 70,
           my: 3,
+          _text: {
+            color: 'red.dark',
+            fontFamily: 'GT_Haptik_bold',
+          },
+        },
+        manage: {
+          bg: 'red.light',
+          borderRadius: 10,
+          minW: 100,
+          my: 3,
+          mx: 5,
           _text: {
             color: 'red.dark',
             fontFamily: 'GT_Haptik_bold',
