@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import ManageView from 'components/ManageView'
 
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap } from 'hooks'
 import { useSelector, useDispatch } from 'react-redux'
-import { setField } from 'slices/language.slice'
+import { setField, updateNumUnits } from 'slices/language.slice'
 import { updateUnits } from 'api'
+import _ from 'lodash'
+import { INDICATOR_TYPES } from 'utils/constants'
 
 const ManageUnits = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -15,6 +17,9 @@ const ManageUnits = ({ navigation }) => {
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
 
+  /**
+   * Filers all of the units into selected and unselected lists
+   */
   useEffect(() => {
     let selectedList = []
     let unselectedList = []
@@ -28,16 +33,18 @@ const ManageUnits = ({ navigation }) => {
         body: `${item.num_lessons} ${
           item.num_vocab === 1 ? 'Lesson' : 'Lessons'
         }`,
-        isComplete: true,
+        indicatorType: INDICATOR_TYPES.NONE, // TODO: remove hard-coded value
+        _order: item._order,
       }
 
       if (item.selected) {
         selectedList.push(formattedItem)
       } else {
-        selectedList.push(formattedItem)
+        unselectedList.push(formattedItem)
       }
     }
 
+    // Units have order, so we must sort them before they are saved to local state
     selectedList = selectedList.sort((a, b) => a._order - b._order)
     unselectedList = unselectedList.sort((a, b) => a._order - b._order)
 
@@ -45,13 +52,40 @@ const ManageUnits = ({ navigation }) => {
     setUnselected(unselectedList)
   }, [allUnits])
 
+  /**
+   * Calls API in order to update unit data
+   * @param {*} selectedData List of Unit objects that are marked as selected
+   * @param {*} unselectedData List of unit objects that are marked as unselected
+   */
   const saveChanges = async (selectedData, unselectedData) => {
     errorWrap(
       async () => {
-        const updates = selectedData.concat(unselectedData)
-        const { result } = await updateUnits(currentCourseId, updates)
+        /* We need to iterate through allUnits, and update the selected and _order fields */
+        const updatedAllUnits = _.cloneDeep(allUnits)
 
-        dispatch(setField({ key: 'allUnits', value: result }))
+        for (let i = 0; i < selectedData.length; i += 1) {
+          const updatedIdx = updatedAllUnits.findIndex(
+            (element) => element._id === selectedData[i]._id,
+          )
+          updatedAllUnits[updatedIdx].selected = true
+          updatedAllUnits[updatedIdx]._order = i
+        }
+
+        for (let i = 0; i < unselectedData.length; i += 1) {
+          const updatedIdx = updatedAllUnits.findIndex(
+            (element) => element._id === unselectedData[i]._id,
+          )
+          updatedAllUnits[updatedIdx].selected = false
+          updatedAllUnits[updatedIdx]._order = i
+        }
+
+        // Makes API request
+        await updateUnits(currentCourseId, updatedAllUnits)
+
+        // Updates Redux store
+        dispatch(setField({ key: 'allUnits', value: updatedAllUnits }))
+        // In the Redux store, updates the num_units field for the course that these units belong to
+        dispatch(updateNumUnits({ numSelected: selectedData.length }))
       },
       () => {
         // on success, go back
@@ -60,12 +94,16 @@ const ManageUnits = ({ navigation }) => {
     )
   }
 
+  /**
+   * Navigates to the Create Unit modal
+   */
   const add = () => {
-    navigation.navigate('Modal', { to: 'CreateUnit' })
+    navigation.navigate('Modal', { screen: 'CreateUnit' })
   }
 
   return (
     <ManageView
+      navigation={navigation}
       selectedTitleText="Selected Units"
       unselectedTitleText="Unselected Units"
       selectedBodyText="These units will be available to your students. Drag them around to reorder them."

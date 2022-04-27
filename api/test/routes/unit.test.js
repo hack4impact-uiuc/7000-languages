@@ -19,6 +19,7 @@ const {
   POST_MISSING_REQ_UNIT,
   POST_EXTRA_FIELD_UNIT,
   POST_INVALID_COURSE_UNIT,
+  POST_EXPECTED_UNIT,
 } = require('../mock-data/unit-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
@@ -94,7 +95,7 @@ describe('POST /language/unit/ ', () => {
     const result = omitDeep(response.body.result, '__v', '_id');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new unit');
-    expect(result).toEqual(POST_SIMPLE_UNIT);
+    expect(result).toEqual(POST_EXPECTED_UNIT);
   });
 
   test('Missing required field should fail', async () => {
@@ -108,7 +109,7 @@ describe('POST /language/unit/ ', () => {
     const response = await withAuthentication(
       request(app).post('/language/unit').send(POST_INVALID_COURSE_UNIT),
     );
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(404);
   });
 
   test('Additional field should still post', async () => {
@@ -119,7 +120,7 @@ describe('POST /language/unit/ ', () => {
     const result = omitDeep(response.body.result, '__v', '_id');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new unit');
-    expect(result).toEqual(POST_SIMPLE_UNIT);
+    expect(result).toEqual(POST_EXPECTED_UNIT);
   });
 });
 

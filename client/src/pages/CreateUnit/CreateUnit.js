@@ -9,7 +9,7 @@ import { Foundation } from '@expo/vector-icons'
 import { useSelector, useDispatch } from 'react-redux'
 import { addUnit } from 'slices/language.slice'
 import { createUnit } from 'api'
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap } from 'hooks'
 
 const styles = StyleSheet.create({
   container: {
@@ -36,15 +36,20 @@ const CreateUnit = ({ navigation }) => {
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
 
+  /**
+   * Posts a new unit to the API and saves the new unit in state
+   */
   const success = async () => {
     errorWrap(
       async () => {
         const newLesson = {
           name,
           description: purpose,
+          course_id: currentCourseId,
+          selected: true,
         }
 
-        const { result } = await createUnit(currentCourseId, newLesson)
+        const { result } = await createUnit(newLesson)
         dispatch(addUnit({ unit: result }))
       },
       () => {
@@ -60,9 +65,9 @@ const CreateUnit = ({ navigation }) => {
         <View style={styles.textRow}>
           <Foundation name="lightbulb" size={24} color={colors.blue.dark} />
           <Text
-            style={{
-              fontFamily: 'GT_Haptik_bold',
-            }}
+            fontFamily="heading"
+            fontWeight="regular"
+            fontStyle="normal"
             color={colors.blue.dark}
           >
             {' '}
@@ -77,8 +82,7 @@ const CreateUnit = ({ navigation }) => {
 
       <Text>Give your unit a name</Text>
       <Input
-        size="lg"
-        variant="filled"
+        size="xl"
         placeholder=""
         returnKeyType="done"
         onChangeText={(text) => setName(text)}
@@ -87,9 +91,8 @@ const CreateUnit = ({ navigation }) => {
       <Text>What is the purpose of this unit?</Text>
 
       <TextArea
-        size="2xl"
+        size="xl"
         h={40}
-        variant="filled"
         placeholder=""
         keyboardType="default"
         returnKeyType="done"

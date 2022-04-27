@@ -4,14 +4,16 @@ import { Pressable, View } from 'react-native'
 import { colors } from 'theme'
 import { Text } from 'native-base'
 import { logout } from 'slices/auth.slice'
+import { clear } from 'slices/language.slice'
 import { useDispatch } from 'react-redux'
-import { removeUserIDToken } from '../../utils/auth'
+import { removeUserIDToken } from 'utils/auth'
 
 const DrawerLogoutButton = () => {
   const dispatch = useDispatch()
   const logoutUser = async () => {
     await removeUserIDToken()
     dispatch(logout())
+    dispatch(clear())
   }
 
   return (
@@ -32,10 +34,12 @@ const DrawerLogoutButton = () => {
           <Entypo name="align-left" size={25} color={colors.red.dark} />
           <Text
             style={{
-              fontFamily: 'GT_Haptik_bold',
               fontSize: 20,
               marginLeft: 5,
             }}
+            fontFamily="heading"
+            fontWeight="regular"
+            fontStyle="normal"
             color="red.dark"
           >
             Log out

@@ -19,7 +19,7 @@ const Indicator = ({ indicatorType }) => {
               color={colors.green.medium}
             />
           )}
-          fontSize="10"
+          fontSize={10}
         />
       )
     case INDICATOR_TYPES.INCOMPLETE:
@@ -30,7 +30,7 @@ const Indicator = ({ indicatorType }) => {
           rightIcon={
             <Ionicons name="warning" size={12} color={colors.orange.medium} />
           }
-          fontSize="10"
+          fontSize={10}
         />
       )
     case INDICATOR_TYPES.NONE:

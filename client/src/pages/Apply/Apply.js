@@ -13,7 +13,7 @@ import {
   FormControl,
   TextArea,
 } from 'native-base'
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap } from 'hooks'
 import { createCourse } from 'api'
 import { getAllUserCourses } from 'utils/languageHelper'
 import { useDispatch } from 'react-redux'

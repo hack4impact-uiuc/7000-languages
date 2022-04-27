@@ -81,7 +81,7 @@ describe('GET /language/course/ ', () => {
 
 // This block tests the POST /user/ endpoint.
 describe('POST /language/course/ ', () => {
-  /* 
+  /*
     We have to make sure we connect to a MongoDB mock db before the test
     and close the connection at the end.
   */
@@ -239,8 +239,6 @@ describe('PATCH /language/course/ ', () => {
   });
 
   test('Patch request specifies invalid course id', async () => {
-    const original = PATCH_ORIGINAL_COURSE;
-
     const body = PATCH_UPDATE_APPROVAL;
     const response = await withAuthentication(
       request(app).patch('/language/course/12345').send(body),
@@ -252,8 +250,6 @@ describe('PATCH /language/course/ ', () => {
   });
 
   test('Patch request specifies nonexistent course', async () => {
-    const original = PATCH_ORIGINAL_COURSE;
-
     const body = PATCH_UPDATE_APPROVAL;
     const response = await withAuthentication(
       request(app)

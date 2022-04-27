@@ -509,33 +509,39 @@ module.exports.PUT_UNIT_EXTRA_FIELDS_EXPECTED = [
 ];
 
 module.exports.POST_SIMPLE_UNIT = {
-  _course_id: '62391a30487d5ae343c82311',
+  course_id: '62391a30487d5ae343c82311',
   name: 'verbs',
-  _order: 0,
   selected: true,
   description: 'simple unit',
 };
 
-module.exports.POST_MISSING_REQ_UNIT = {
+module.exports.POST_EXPECTED_UNIT = {
   _course_id: '62391a30487d5ae343c82311',
-  _order: 0,
+  _order: 10,
+  name: 'verbs',
+  selected: true,
+  description: 'simple unit',
+  num_lessons: 0,
+};
+
+module.exports.POST_MISSING_REQ_UNIT = {
+  course_id: '62391a30487d5ae343c82311',
   selected: true,
   description: 'simple unit',
 };
 
 module.exports.POST_EXTRA_FIELD_UNIT = {
-  _course_id: '62391a30487d5ae343c82311',
+  course_id: '62391a30487d5ae343c82311',
   name: 'verbs',
-  _order: 0,
   selected: true,
   description: 'simple unit',
   hi: 'hi',
+  num_lessons: 0,
 };
 
 module.exports.POST_INVALID_COURSE_UNIT = {
-  _course_id: '62391a30487d5ae343c82123',
+  course_id: '62391a30487d5ae343c82123',
   name: 'verbs',
-  _order: 0,
   selected: true,
   description: 'invalid',
 };

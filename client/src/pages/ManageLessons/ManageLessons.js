@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import ManageView from 'components/ManageView'
 
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap } from 'hooks'
 import { useSelector, useDispatch } from 'react-redux'
-import { setField } from 'slices/language.slice'
+import { setField, updateNumLessons } from 'slices/language.slice'
 import { updateLessons } from 'api'
+import _ from 'lodash'
+import { INDICATOR_TYPES } from 'utils/constants'
 
 const ManageLessons = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -15,6 +17,9 @@ const ManageLessons = ({ navigation }) => {
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
 
+  /**
+   * Filers all of the lessons into selected and unselected lists
+   */
   useEffect(() => {
     let selectedList = []
     let unselectedList = []
@@ -28,16 +33,18 @@ const ManageLessons = ({ navigation }) => {
         body: `${item.num_vocab} Vocab ${
           item.num_vocab === 1 ? 'Item' : 'Items'
         }`,
-        isComplete: true,
+        indicatorType: INDICATOR_TYPES.NONE, // TODO: remove hard-coded value
+        _order: item._order,
       }
 
       if (item.selected) {
         selectedList.push(formattedItem)
       } else {
-        selectedList.push(formattedItem)
+        unselectedList.push(formattedItem)
       }
     }
 
+    // Lessons have order, so we must sort them before they are saved to local state
     selectedList = selectedList.sort((a, b) => a._order - b._order)
     unselectedList = unselectedList.sort((a, b) => a._order - b._order)
 
@@ -45,13 +52,39 @@ const ManageLessons = ({ navigation }) => {
     setUnselected(unselectedList)
   }, [allLessons])
 
+  /**
+   * Calls API in order to update lesson data
+   * @param {*} selectedData List of Unit objects that are marked as selected
+   * @param {*} unselectedData List of unit objects that are marked as unselected
+   */
   const saveChanges = async (selectedData, unselectedData) => {
     errorWrap(
       async () => {
-        const updates = selectedData.concat(unselectedData)
-        const { result } = await updateLessons(currentCourseId, updates)
+        /* We need to iterate through allLessons, and update the selected and _order fields */
+        const updatedAllLessons = _.cloneDeep(allLessons)
 
-        dispatch(setField({ key: 'allLessons', value: result }))
+        for (let i = 0; i < selectedData.length; i += 1) {
+          const updatedIdx = updatedAllLessons.findIndex(
+            (element) => element._id === selectedData[i]._id,
+          )
+          updatedAllLessons[updatedIdx].selected = true
+          updatedAllLessons[updatedIdx]._order = i
+        }
+
+        for (let i = 0; i < unselectedData.length; i += 1) {
+          const updatedIdx = updatedAllLessons.findIndex(
+            (element) => element._id === unselectedData[i]._id,
+          )
+          updatedAllLessons[updatedIdx].selected = false
+          updatedAllLessons[updatedIdx]._order = i
+        }
+
+        // Makes API request
+        await updateLessons(currentCourseId, updatedAllLessons)
+        // Updates Redux store
+        dispatch(setField({ key: 'allLessons', value: updatedAllLessons }))
+        // In the Redux store, updates the num_lessons field for the unit that these lessons belong to
+        dispatch(updateNumLessons({ numSelected: selectedData.length }))
       },
       () => {
         // on success, go back
@@ -60,12 +93,16 @@ const ManageLessons = ({ navigation }) => {
     )
   }
 
+  /**
+   * Navigates to the Create Lesson modal
+   */
   const add = () => {
-    navigation.navigate('Modal', { to: 'CreateLesson' })
+    navigation.navigate('Modal', { screen: 'CreateLesson' })
   }
 
   return (
     <ManageView
+      navigation={navigation}
       selectedTitleText="Selected Lessons"
       unselectedTitleText="Unselected Lessons"
       selectedBodyText="These lessons will be available to your students. Drag them around to reorder them."

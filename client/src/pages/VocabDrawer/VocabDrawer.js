@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from 'react-redux' // import at the top of t
 import { addVocab, updateVocab } from 'slices/language.slice'
 
 import { createVocabItem, updateVocabItem } from 'api'
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap } from 'hooks'
 
 const expoImageSettings = {
   mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -57,11 +57,11 @@ const WordDrawer = ({ navigation }) => {
   const dispatch = useDispatch()
 
   const {
-    currentCourseID,
+    currentCourseId,
     currentLessonId,
     currentVocabId,
     courseDetails,
-    allLessons,
+    lessonData,
   } = useSelector((state) => state.language)
 
   const [originalLanguage] = useState(courseDetails.translated_language)
@@ -76,18 +76,19 @@ const WordDrawer = ({ navigation }) => {
   const [listeningSound, setListeningSound] = useState(null) // the data for the recording when the user is listening to it
 
   useEffect(() => {
-    const index = allLessons?.vocab?.findIndex(
+    const index = lessonData.vocab.findIndex(
       (element) => element._id === currentVocabId,
     )
 
-    if (index && index >= 0) {
-      const vocabItem = allLessons.vocab[index]
+    if (index >= 0) {
+      const vocabItem = lessonData.vocab[index]
+      console.log(vocabItem)
       setOriginalText(vocabItem.original)
       setTranslatedText(vocabItem.translation)
       setAdditionalInformation(vocabItem.notes)
       // TODO: call GET 'audio" and GET 'image'
     }
-  }, [currentVocabId, allLessons])
+  }, [currentVocabId, lessonData])
 
   /*
     Allows audio to be recorded and played back in silent mode
@@ -97,10 +98,16 @@ const WordDrawer = ({ navigation }) => {
     Audio.setAudioModeAsync({ playsInSilentModeIOS: true })
   })
 
+  /**
+   * Closes the modal
+   */
   const close = () => {
     navigation.goBack()
   }
 
+  /**
+   * Either updates the vocab item or creates a new vocab item
+   */
   const success = async () => {
     errorWrap(
       async () => {
@@ -111,26 +118,27 @@ const WordDrawer = ({ navigation }) => {
           audio: '',
           notes: additionalInformation,
         }
-        // TODO: call POST 'audio' and POST 'image'
-
         if (currentVocabId === '') {
           // Need to create a new vocab item
           const { result } = await createVocabItem(
-            currentCourseID,
+            currentCourseId,
             currentLessonId,
             vocabItem,
           )
           dispatch(addVocab({ vocab: result }))
         } else {
           // update vocab item
-          const { result } = await updateVocabItem(
-            currentCourseID,
+          await updateVocabItem(
+            currentCourseId,
             currentLessonId,
             currentVocabId,
             vocabItem,
           )
-          dispatch(updateVocab({ vocab: result }))
+          dispatch(
+            updateVocab({ vocab: { ...vocabItem, _id: currentVocabId } }),
+          )
         }
+        // TODO: call POST 'audio' and POST 'image'
       },
       () => {
         close() // on success, close the modal
@@ -367,7 +375,7 @@ const WordDrawer = ({ navigation }) => {
   return (
     <Drawer
       titleText={currentVocabId !== '' ? 'Edit Vocab Item' : 'Add a Vocab Item'}
-      successText="Add Item"
+      successText={currentVocabId !== '' ? 'Save Changes' : 'Add Item'}
       successCallback={success}
       closeCallback={close}
       body={body}

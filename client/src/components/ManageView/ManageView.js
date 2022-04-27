@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Text, Divider } from 'native-base'
 import {
-  StyleSheet, View, ScrollView, Dimensions,
+  StyleSheet, View, ScrollView, Dimensions, Alert,
 } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
@@ -14,7 +14,6 @@ import {
   DRAGGABLE_LIST_COMPONENT_DELAY,
   DRAGGABLE_LIST_CARD_WIDTH_FACTOR,
   DRAGGABLE_LIST_CARD_HEIGHT,
-  INDICATOR_TYPES,
 } from 'utils/constants'
 import { moveFromList } from 'utils/manageHelper'
 
@@ -64,6 +63,7 @@ let childrenWidth = width + DRAGGABLE_LIST_CARD_WIDTH_FACTOR
 const childrenHeight = DRAGGABLE_LIST_CARD_HEIGHT
 
 const ManageView = ({
+  navigation,
   selectedTitleText,
   unselectedTitleText,
   selectedBodyText,
@@ -78,6 +78,42 @@ const ManageView = ({
   const [selectedData, setSelectedData] = useState(initialSelectedData)
   const [unselectedData, setUnselectedData] = useState(initialUnselectedData)
   const [shouldShowButtons, setShouldShowButtons] = useState(false)
+
+  // Updates the data shown in the draggable list component whenever the props update
+  useEffect(() => {
+    setSelectedData(initialSelectedData)
+    setUnselectedData(initialUnselectedData)
+  }, [initialSelectedData, initialUnselectedData])
+
+  /* Prompts the user to confirm action of leaving the page when they have unsaved changes */
+  React.useEffect(
+    () => navigation.addListener('beforeRemove', (e) => {
+      if (!shouldShowButtons) {
+        // If we don't have unsaved changes, then we don't need to do anything
+        return
+      }
+
+      // Prevent default behavior of leaving the screen
+      e.preventDefault()
+
+      // Prompt the user before leaving the screen
+      Alert.alert(
+        'Discard changes?',
+        'You have unsaved changes. Are you sure to discard them and leave the screen?',
+        [
+          { text: "Don't leave", style: 'cancel', onPress: () => {} },
+          {
+            text: 'Discard',
+            style: 'destructive',
+            // If the user confirmed, then we dispatch the action we blocked earlier
+            // This will continue the action that had triggered the removal of the screen
+            onPress: () => navigation.dispatch(e.data.action),
+          },
+        ],
+      )
+    }),
+    [navigation, shouldShowButtons],
+  )
 
   /**
    * The useRef hook is used to increase performance and user experience when using this component.
@@ -173,9 +209,7 @@ const ManageView = ({
       )}
       rightIcon={<Feather name="menu" size={25} color={colors.gray.medium} />}
       volumeIconCallback={playAudio}
-      indicatorType={
-        item.isComplete ? INDICATOR_TYPES.COMPLETE : INDICATOR_TYPES.INCOMPLETE
-      }
+      indicatorType={item.indicatorType}
       width={childrenWidth}
       height={childrenHeight}
     />
@@ -201,9 +235,7 @@ const ManageView = ({
         />
       )}
       volumeIconCallback={playAudio}
-      indicatorType={
-        item.isComplete ? INDICATOR_TYPES.COMPLETE : INDICATOR_TYPES.INCOMPLETE
-      }
+      indicatorType={item.indicatorType}
       width={childrenWidth}
       height={childrenHeight}
     />
@@ -223,6 +255,7 @@ const ManageView = ({
    */
   const saveData = () => {
     const data = getData()
+    setShouldShowButtons(false)
     saveCallback(data.selected, data.unselected)
   }
 
@@ -345,6 +378,10 @@ ManageView.propTypes = {
   initialSelectedData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   initialUnselectedData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   playAudio: PropTypes.func,
+  navigation: PropTypes.shape({
+    addListener: PropTypes.func,
+    dispatch: PropTypes.func,
+  }),
 }
 
 ManageView.defaultProps = {
@@ -358,6 +395,7 @@ ManageView.defaultProps = {
   initialSelectedData: [],
   initialUnselectedData: [],
   playAudio: () => {},
+  navigation: { addListener: () => null, dispatch: () => null },
 }
 
 export default ManageView

@@ -9,7 +9,7 @@ const {
 const mongoose = require('mongoose');
 const {
   updateDocumentsInTransaction,
-  checkIds,
+  getNumUnitsInCourse,
 } = require('../../utils/languageHelper');
 const { models } = require('../../models/index.js');
 const _ = require('lodash');
@@ -44,26 +44,33 @@ router.get(
 router.post(
   '/',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const unitData = req.body;
 
-    const course_id = unitData._course_id;
-    const isValid = await checkIds({ course_id });
-
-    if (!isValid) {
-      return sendResponse(res, 400, 'Invalid course id');
+    if (unitData.name === '' || unitData.description === '') {
+      return sendResponse(
+        res,
+        400,
+        'You are missing a unit name and/or description. Please try again.',
+      );
     }
 
+    const course_id = unitData.course_id;
+
+    const order = await getNumUnitsInCourse(course_id);
+
     const newUnit = new models.Unit({
-      _course_id: unitData._course_id,
+      _course_id: course_id,
       name: unitData.name,
-      _order: unitData._order,
+      _order: order,
       selected: unitData.selected,
       description: unitData.description,
     });
 
     await newUnit.save();
     let newResult = newUnit.toJSON();
+    newResult.num_lessons = 0;
 
     return sendResponse(res, 200, 'Successfully created a new unit', newResult);
   }),

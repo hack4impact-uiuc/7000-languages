@@ -41,6 +41,10 @@ const requireLanguageAuthorization = async (req, res, next) => {
     }
     next();
   } catch (error) {
+    console.error(
+      'requireLanguageAuthorization(): error caught: ',
+      error.message,
+    );
     return sendResponse(res, 403, ERR_AUTH_FAILED);
   }
 };

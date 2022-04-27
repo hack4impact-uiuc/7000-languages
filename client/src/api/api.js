@@ -1,5 +1,7 @@
 import instance from './axios-config'
 
+/* User Endpoints */
+
 export const createUser = async (userData) => {
   const requestString = '/user'
   const res = await instance.post(requestString, userData)
@@ -15,6 +17,8 @@ export const getUser = async () => {
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
+
+/* Course Endpoints */
 
 export const createCourse = async (applicationData) => {
   const requestString = '/language/course'
@@ -32,22 +36,19 @@ export const getCourse = async (courseID) => {
   return res.data
 }
 
-// TODO: update this
-export const createUnit = async (courseID, unit) => {
-  const body = {
-    course_id: courseID,
-    unit,
-  }
-  const requestString = '/language/course'
-  const res = await instance.post(requestString, body)
+/* Unit Endpoints */
+
+export const getUnit = async (courseID, unitID) => {
+  const requestString = `/language/unit?course_id=${courseID}&unit_id=${unitID}`
+  const res = await instance.get(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
 
-export const getUnit = async (courseID, unitID) => {
-  const requestString = `/language/course?course_id=${courseID}&unit_id=${unitID}`
-  const res = await instance.get(requestString)
+export const createUnit = async (unit) => {
+  const requestString = '/language/unit'
+  const res = await instance.post(requestString, unit)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
@@ -58,12 +59,14 @@ export const updateUnits = async (courseID, updates) => {
     course_id: courseID,
     updates,
   }
-  const requestString = '/language/course'
+  const requestString = '/language/unit'
   const res = await instance.put(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
+
+/* Lesson Endpoints */
 
 export const getLesson = async (courseID, lessonID) => {
   const requestString = `/language/lesson?course_id=${courseID}&lesson_id=${lessonID}`
@@ -97,6 +100,8 @@ export const createLesson = async (courseID, unitID, lesson) => {
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
+
+/* Vocab Item Endpoints */
 
 export const createVocabItem = async (courseID, lessonID, vocab) => {
   const body = {

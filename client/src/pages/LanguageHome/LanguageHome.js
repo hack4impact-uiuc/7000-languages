@@ -47,13 +47,14 @@ const LanguageHome = ({
 }) => {
   switch (isLessonHome) {
     case true:
+      // Generates the Lesson Home Page
       return (
         <>
           <View style={styles.top}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               color="white.dark:alpha.40"
               fontSize="xl"
               lineHeight={20}
@@ -65,9 +66,9 @@ const LanguageHome = ({
           </View>
           <View style={styles.manageBar}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               fontSize={23}
               paddingTop={3}
               paddingLeft={5}
@@ -103,7 +104,7 @@ const LanguageHome = ({
                   bodyText={element.body}
                   imageUri={element.imageUri}
                   showVolumeIcon={element.audio}
-                  volumeIconCallback={{}}
+                  volumeIconCallback={() => null}
                   width={width * 0.97}
                   height={75}
                   rightIcon={(
@@ -121,13 +122,14 @@ const LanguageHome = ({
         </>
       )
     default:
+      // Generates the Course or Unit Home page
       return (
         <>
           <View style={styles.top}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               color="white.dark"
               fontSize={35}
               paddingLeft={5}
@@ -137,9 +139,9 @@ const LanguageHome = ({
               {languageName}
             </Text>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               color="white.dark:alpha.40"
               fontSize="xl"
               lineHeight={20}
@@ -153,9 +155,9 @@ const LanguageHome = ({
           </View>
           <View style={styles.manageBar}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               fontSize={23}
               paddingTop={3}
               paddingLeft={5}
@@ -190,7 +192,7 @@ const LanguageHome = ({
                   leftIcon={<NumberBox number={index + 1} />}
                   titleText={element.name}
                   bodyText={element.body}
-                  width="97%"
+                  width={width * 0.97}
                   height={75}
                   indicatorType={element.indicatorType}
                   rightIcon={(

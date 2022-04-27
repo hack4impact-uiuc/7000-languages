@@ -1,84 +1,68 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import LanguageHome from 'pages/LanguageHome'
+import { useSelector, useDispatch } from 'react-redux'
+import { setField } from 'slices/language.slice'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
-const CourseHome = ({ navigation }) => {
-  const data = [
-    {
-      _id: 'abcdef',
-      title: 'Unit 1',
-      lessons: '1 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'aenasdas',
-      title: 'Unit 2',
-      lessons: '2 Lessons',
-      indicatorType: INDICATOR_TYPES.INCOMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 3',
-      lessons: '3 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 4',
-      lessons: '4 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 5',
-      lessons: '5 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 6',
-      lessons: '6 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 7',
-      lessons: '7 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 8',
-      lessons: '8 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'asdnemsa',
-      title: 'Unit 9',
-      lessons: '9 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-    {
-      _id: 'mehjasjd',
-      title: 'Unit 10',
-      lessons: '10 Lessons',
-      indicatorType: INDICATOR_TYPES.COMPLETE,
-    },
-  ]
+const CourseHome = ({ navigation, courseDescription, courseName }) => {
+  const { allUnits } = useSelector((state) => state.language)
 
+  const dispatch = useDispatch()
+
+  const [data, setData] = useState([])
+
+  /**
+   * Updates the units presented in a list on this page
+   */
+  useEffect(() => {
+    let formattedUnitData = []
+
+    for (let i = 0; i < allUnits.length; i += 1) {
+      const item = allUnits[i]
+
+      // filters out unselected items
+      if (item.selected) {
+        const formattedItem = {
+          _id: item._id,
+          name: item.name,
+          body: `${item.num_lessons} ${
+            item.num_lessons === 1 ? 'Lesson' : 'Lessons'
+          }`,
+          indicatorType: INDICATOR_TYPES.NONE,
+          _order: item._order,
+        }
+        formattedUnitData.push(formattedItem)
+      }
+    }
+
+    // Units have order, so we must sort them before presenting to the user
+    formattedUnitData = formattedUnitData.sort((a, b) => a._order - b._order)
+
+    setData(formattedUnitData)
+  }, [allUnits])
+
+  /**
+   * Navigates to the Manage Units Page
+   */
   const navigateToManage = () => {
     navigation.navigate('ManageUnits')
   }
 
-  const goToNextPage = () => {
+  /**
+   * Navigates to the Unit Page
+   * @param {Object} element Unit that was selected on this page
+   */
+  const goToNextPage = (element) => {
+    const currentUnitId = element._id
+    dispatch(setField({ key: 'currentUnitId', value: currentUnitId })) // make sure to save the selected unit in state
     navigation.navigate('UnitHome')
   }
 
   return (
     <LanguageHome
-      languageName="Spanish"
-      languageDescription="Spanish is a wonderful language that prides itself in its world reach and rich, diverse cultures."
+      languageName={courseName}
+      languageDescription={courseDescription}
       valueName="Units"
       buttonText="Manage Units"
       rightIconName="pencil"
@@ -93,11 +77,20 @@ CourseHome.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     goBack: PropTypes.func,
+    setOptions: PropTypes.func,
   }),
+  courseDescription: PropTypes.string,
+  courseName: PropTypes.string,
 }
 
 CourseHome.defaultProps = {
-  navigation: { navigate: () => null, goBack: () => null },
+  navigation: {
+    navigate: () => null,
+    goBack: () => null,
+    setOptions: () => null,
+  },
+  courseDescription: '',
+  courseName: '',
 }
 
 export default CourseHome

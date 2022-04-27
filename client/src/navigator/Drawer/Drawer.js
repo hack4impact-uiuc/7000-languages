@@ -11,7 +11,7 @@ import { colors, images } from 'theme'
 import { View, Pressable, StyleSheet } from 'react-native'
 import OwnershipButton from 'components/OwnershipButton'
 import DrawerLogoutButton from 'components/DrawerLogoutButton'
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap, useTrackPromise } from 'hooks'
 import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
 import { setField } from 'slices/language.slice'
@@ -25,12 +25,10 @@ const tabStyles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    fontFamily: 'GT_Haptik_bold',
     fontSize: 20,
     flex: 3,
   },
   units: {
-    fontFamily: 'GT_Haptik_regular',
     fontSize: 20,
     color: '#A4A4A4',
   },
@@ -80,7 +78,6 @@ const drawerStyles = StyleSheet.create({
   },
   userName: {
     paddingLeft: 10,
-    fontFamily: 'GT_Haptik_bold',
     fontSize: 20,
   },
   userEmail: {
@@ -118,7 +115,14 @@ const generateTabs = (tabData) => tabData.map((element, index) => (
       drawerLabel: () => (
         <View style={tabStyles.container}>
           <View>
-            <Text style={tabStyles.title}>{element.name}</Text>
+            <Text
+              style={tabStyles.title}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
+            >
+              {element.name}
+            </Text>
             <Text style={tabStyles.units}>
               {generateUnitLabel(element.num_units)}
             </Text>
@@ -166,9 +170,9 @@ const DrawerMenuContainer = (props) => {
                 Do you know an indigenous language that you would like to share
                 with the world?
                 <Text
-                  style={{
-                    fontFamily: 'GT_Haptik_bold',
-                  }}
+                  fontFamily="heading"
+                  fontWeight="regular"
+                  fontStyle="normal"
                 >
                   {' '}
                   Become a contributor.
@@ -197,7 +201,14 @@ const DrawerMenuContainer = (props) => {
           borderRadius={100}
         />
         <View style={drawerStyles.userInfoContainer}>
-          <Text style={drawerStyles.userName}>{props.name}</Text>
+          <Text
+            style={drawerStyles.userName}
+            fontFamily="heading"
+            fontWeight="regular"
+            fontStyle="normal"
+          >
+            {props.name}
+          </Text>
           <Text style={drawerStyles.userEmail}>{props.email}</Text>
         </View>
       </View>
@@ -214,6 +225,8 @@ const DrawerNavigator = () => {
   const [userName, setName] = useState('Loading...')
   const [profileUrl, setProfileUrl] = useState('')
   const errorWrap = useErrorWrap()
+  const trackPromise = useTrackPromise()
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -221,7 +234,9 @@ const DrawerNavigator = () => {
       await errorWrap(async () => {
         const {
           picture, name, email, courses,
-        } = await getAllUserCourses()
+        } = await trackPromise(
+          getAllUserCourses(),
+        )
 
         // Set personal info
         setProfileUrl(picture)
