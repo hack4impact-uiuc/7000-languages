@@ -13,8 +13,6 @@ import PropTypes from 'prop-types'
 import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
-import { useDispatch } from 'react-redux'
-import { resetField } from 'slices/language.slice'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -88,110 +86,76 @@ export const ModalNavigator = () => (
   </ModalStack.Navigator>
 )
 
-export const HomeNavigator = ({ courseId }) => {
-  const dispatch = useDispatch()
+export const HomeNavigator = ({ courseId }) => (
+  <Stack.Navigator
+    initialRouteName="Home"
+    headerMode="screen"
+    screenOptions={navigationProps}
+  >
+    <Stack.Screen
+      name={courseId}
+      children={(props) => <Home {...props} courseId={courseId} />}
+      options={({ navigation }) => ({
+        title: 'Home',
+        headerLeft: () => <DrawerButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <Stack.Screen
+      name="UnitHome"
+      component={UnitHome}
+      options={({ navigation }) => ({
+        title: '',
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <Stack.Screen
+      name="LessonHome"
+      component={LessonHome}
+      options={({ navigation }) => ({
+        title: '',
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
 
-  /**
-   * When going back from the Lesson Page to the Unit Page,
-   * we need to clear the data presented on the Lesson Page
-   * since it may be different the next time the user visits the Lesson Page.
-   */
-  const clearLesson = () => {
-    dispatch(resetField({ key: 'lessonData' }))
-  }
-
-  /**
-   * When going back from the Unit Page to the Course Page,
-   * we need to clear the data presented on the Unit Page
-   * since it may be different the next time the user visits the Unit Page.
-   */
-  const clearAllLessons = () => {
-    dispatch(resetField({ key: 'allLessons' }))
-  }
-
-  return (
-    <Stack.Navigator
-      initialRouteName="Home"
-      headerMode="screen"
-      screenOptions={navigationProps}
-    >
-      <Stack.Screen
-        name={courseId}
-        children={(props) => <Home {...props} courseId={courseId} />}
-        options={({ navigation }) => ({
-          title: 'Home',
-          headerLeft: () => <DrawerButton navigation={navigation} />,
-          cardStyle: { backgroundColor: 'white' },
-        })}
-      />
-      <Stack.Screen
-        name="UnitHome"
-        component={UnitHome}
-        options={({ navigation }) => ({
-          title: '',
-          headerLeft: () => (
-            <BackButton
-              navigation={navigation}
-              color="white"
-              onPress={clearAllLessons}
-            />
-          ),
-          cardStyle: { backgroundColor: 'white' },
-        })}
-      />
-      <Stack.Screen
-        name="LessonHome"
-        component={LessonHome}
-        options={({ navigation }) => ({
-          title: '',
-          headerLeft: () => (
-            <BackButton
-              navigation={navigation}
-              color="white"
-              onPress={clearLesson}
-            />
-          ),
-          cardStyle: { backgroundColor: 'white' },
-        })}
-      />
-
-      <Stack.Screen
-        name="Apply"
-        component={Apply}
-        options={({ navigation }) => ({
-          title: 'Become a Contributor',
-          headerStyle: { backgroundColor: colors.white.light },
-          headerTitleStyle: {
-            fontSize: 18,
-            fontFamily: 'GT_Haptik_bold',
-            color: 'black',
-          },
-          headerLeft: () => <BackButton navigation={navigation} />,
-        })}
-      />
-      <Stack.Screen
-        name="ManageUnits"
-        component={ManageUnits}
-        options={({ navigation }) => ({
-          ...manageNavigationProps,
-          title: 'Manage Units',
-          headerLeft: () => <BackButton navigation={navigation} />,
-          cardStyle: { backgroundColor: 'white' },
-        })}
-      />
-      <Stack.Screen
-        name="ManageLessons"
-        component={ManageLessons}
-        options={({ navigation }) => ({
-          ...manageNavigationProps,
-          title: 'Manage Lessons',
-          headerLeft: () => <BackButton navigation={navigation} />,
-          cardStyle: { backgroundColor: 'white' },
-        })}
-      />
-    </Stack.Navigator>
-  )
-}
+    <Stack.Screen
+      name="Apply"
+      component={Apply}
+      options={({ navigation }) => ({
+        title: 'Become a Contributor',
+        headerStyle: { backgroundColor: colors.white.light },
+        headerTitleStyle: {
+          fontSize: 18,
+          fontFamily: 'GT_Haptik_bold',
+          color: 'black',
+        },
+        headerLeft: () => <BackButton navigation={navigation} />,
+      })}
+    />
+    <Stack.Screen
+      name="ManageUnits"
+      component={ManageUnits}
+      options={({ navigation }) => ({
+        ...manageNavigationProps,
+        title: 'Manage Units',
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <Stack.Screen
+      name="ManageLessons"
+      component={ManageLessons}
+      options={({ navigation }) => ({
+        ...manageNavigationProps,
+        title: 'Manage Lessons',
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+  </Stack.Navigator>
+)
 
 HomeNavigator.propTypes = {
   courseId: PropTypes.string,

@@ -3,7 +3,7 @@ import LanguageHome from 'pages/LanguageHome'
 import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setField } from 'slices/language.slice'
+import { setField, resetField } from 'slices/language.slice'
 import { getLesson } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 
@@ -17,6 +17,21 @@ const LessonHome = ({ navigation }) => {
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
+
+  /**
+   * When going back from the Lesson Page to the Unit Page,
+   * we need to clear the data presented on the Lesson Page
+   * since it may be different the next time the user visits the Lesson Page.
+   *
+   * Source: https://reactnavigation.org/docs/preventing-going-back/
+   */
+  React.useEffect(
+    () => navigation.addListener('beforeRemove', (e) => {
+      dispatch(resetField({ key: 'lessonData' }))
+      navigation.dispatch(e.data.action)
+    }),
+    [navigation],
+  )
 
   /**
    * Gets the data for the lesson being presented, including the vocab items in the lesson
@@ -105,6 +120,8 @@ LessonHome.propTypes = {
     navigate: PropTypes.func,
     goBack: PropTypes.func,
     setOptions: PropTypes.func,
+    addListener: PropTypes.func,
+    dispatch: PropTypes.func,
   }),
 }
 
@@ -113,6 +130,8 @@ LessonHome.defaultProps = {
     navigate: () => null,
     goBack: () => null,
     setOptions: () => null,
+    addListener: () => null,
+    dispatch: () => null,
   },
 }
 

@@ -4,7 +4,7 @@ import ManageView from 'components/ManageView'
 
 import { useErrorWrap } from 'hooks'
 import { useSelector, useDispatch } from 'react-redux'
-import { setField } from 'slices/language.slice'
+import { setField, updateNumUnits } from 'slices/language.slice'
 import { updateUnits } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
@@ -79,9 +79,13 @@ const ManageUnits = ({ navigation }) => {
           updatedAllUnits[updatedIdx]._order = i
         }
 
+        // Makes API request
         await updateUnits(currentCourseId, updatedAllUnits)
 
+        // Updates Redux store
         dispatch(setField({ key: 'allUnits', value: updatedAllUnits }))
+        // In the Redux store, updates the num_units field for the course that these units belong to
+        dispatch(updateNumUnits({ numSelected: selectedData.length }))
       },
       () => {
         // on success, go back
@@ -99,6 +103,7 @@ const ManageUnits = ({ navigation }) => {
 
   return (
     <ManageView
+      navigation={navigation}
       selectedTitleText="Selected Units"
       unselectedTitleText="Unselected Units"
       selectedBodyText="These units will be available to your students. Drag them around to reorder them."

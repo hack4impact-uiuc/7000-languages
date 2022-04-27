@@ -81,7 +81,7 @@ router.get(
     let units = await models.Unit.find({ _course_id: req.params.id });
     for (var i = 0; i < units.length; i++) {
       const numLessons = await models.Lesson.countDocuments({
-        _unit_id: { $eq: units[i]._id },
+        _unit_id: { $eq: units[i]._id }, selected: { $eq: true }
       });
       units[i] = units[i].toJSON();
       units[i].num_lessons = numLessons;

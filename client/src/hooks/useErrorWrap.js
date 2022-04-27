@@ -1,4 +1,6 @@
 import { Alert } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { setLoading } from 'slices/app.slice'
 import { ERROR_ALERT_TITLE } from '../utils/constants'
 
 /**
@@ -12,6 +14,8 @@ const defaultSuccessCallback = () => {}
 const defaultErrorCallback = () => {}
 
 const useErrorWrap = () => {
+  const dispatch = useDispatch()
+
   const errorWrapper = async (
     func,
     successCallback = defaultSuccessCallback,
@@ -21,6 +25,7 @@ const useErrorWrap = () => {
       if (func) await func()
       successCallback()
     } catch (error) {
+      dispatch(setLoading({ isLoading: false }))
       console.error('useErrorWrap(): error caught: ', error.message)
       Alert.alert(ERROR_ALERT_TITLE, error.message, [
         { text: 'OK', onPress: () => errorCallback() },

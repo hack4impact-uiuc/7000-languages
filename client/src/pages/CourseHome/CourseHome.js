@@ -3,42 +3,14 @@ import PropTypes from 'prop-types'
 import LanguageHome from 'pages/LanguageHome'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
-import { getCourse } from 'api'
-import { useErrorWrap, useTrackPromise } from 'hooks'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
-const CourseHome = ({ navigation }) => {
-  const { currentCourseId, allUnits } = useSelector((state) => state.language)
+const CourseHome = ({ navigation, courseDescription, courseName }) => {
+  const { allUnits } = useSelector((state) => state.language)
 
-  const errorWrap = useErrorWrap()
-  const trackPromise = useTrackPromise()
   const dispatch = useDispatch()
 
   const [data, setData] = useState([])
-  const [courseDescription, setCourseDescription] = useState('')
-  const [courseName, setCourseName] = useState('')
-
-  /**
-   * Gets course data from the API and updates the title and description of the page
-   * */
-  useEffect(() => {
-    const getCourseData = async () => {
-      errorWrap(async () => {
-        const { result } = await trackPromise(getCourse(currentCourseId))
-        const { course, units } = result
-
-        setCourseDescription(course.details.description)
-        setCourseName(course.details.name)
-
-        navigation.setOptions({
-          title: 'Course Home',
-        })
-        dispatch(setField({ key: 'courseDetails', value: course.details }))
-        dispatch(setField({ key: 'allUnits', value: units }))
-      })
-    }
-    getCourseData()
-  }, [currentCourseId])
 
   /**
    * Updates the units presented in a list on this page
@@ -107,6 +79,8 @@ CourseHome.propTypes = {
     goBack: PropTypes.func,
     setOptions: PropTypes.func,
   }),
+  courseDescription: PropTypes.string,
+  courseName: PropTypes.string,
 }
 
 CourseHome.defaultProps = {
@@ -115,6 +89,8 @@ CourseHome.defaultProps = {
     goBack: () => null,
     setOptions: () => null,
   },
+  courseDescription: '',
+  courseName: '',
 }
 
 export default CourseHome
