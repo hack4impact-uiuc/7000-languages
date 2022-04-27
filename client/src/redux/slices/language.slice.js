@@ -64,12 +64,32 @@ const languageSlice = createSlice({
       state.lessonData.vocab[vocabIndex] = payload.vocab
     },
     clear: () => initialState,
+    resetField: (state, { payload }) => {
+      state[payload.key] = initialState[payload.key]
+    },
+    clearCourseData: (state) => {
+      state.currentCourseId = initialState.currentCourseId
+      state.courseDetails = initialState.courseDetails
+      state.allUnits = initialState.allUnits
+      state.currentUnitId = initialState.currentUnitId
+      state.allLessons = initialState.allLessons
+      state.currentLessonId = initialState.currentLessonId
+      state.lessonData = initialState.lessonData
+      state.currentVocabId = initialState.currentVocabId
+    },
   },
 })
 
 export const { action } = languageSlice
 export const {
-  setField, addUnit, addLesson, addVocab, updateVocab, clear,
+  setField,
+  addUnit,
+  addLesson,
+  addVocab,
+  updateVocab,
+  clear,
+  resetField,
+  clearCourseData,
 } = languageSlice.actions
 
 export default languageSlice.reducer

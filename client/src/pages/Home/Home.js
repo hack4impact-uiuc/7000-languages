@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { NO_COURSE_ID } from 'utils/constants'
 import HomeBaseCase from 'components/HomeBaseCase'
-import { setField } from 'slices/language.slice'
+import { setField, clearCourseData } from 'slices/language.slice'
 import { useDispatch, useSelector } from 'react-redux'
 import CourseHome from 'pages/CourseHome'
 
@@ -12,6 +12,12 @@ const Home = ({ navigation, courseId }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
+      // Since we are switching courses, we need to clear all of the existing course data
+      // saved in state
+      dispatch(clearCourseData())
+
+      console.log('in here')
+
       // do something
       dispatch(setField({ key: 'currentCourseId', value: courseId }))
     })

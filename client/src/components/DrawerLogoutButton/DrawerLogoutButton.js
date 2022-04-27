@@ -6,7 +6,7 @@ import { Text } from 'native-base'
 import { logout } from 'slices/auth.slice'
 import { clear } from 'slices/language.slice'
 import { useDispatch } from 'react-redux'
-import { removeUserIDToken } from '../../utils/auth'
+import { removeUserIDToken } from 'utils/auth'
 
 const DrawerLogoutButton = () => {
   const dispatch = useDispatch()
