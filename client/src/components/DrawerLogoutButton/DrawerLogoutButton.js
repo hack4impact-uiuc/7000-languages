@@ -34,10 +34,12 @@ const DrawerLogoutButton = () => {
           <Entypo name="align-left" size={25} color={colors.red.dark} />
           <Text
             style={{
-              fontFamily: 'GT_Haptik_bold',
               fontSize: 20,
               marginLeft: 5,
             }}
+            fontFamily="heading"
+            fontWeight="regular"
+            fontStyle="normal"
             color="red.dark"
           >
             Log out

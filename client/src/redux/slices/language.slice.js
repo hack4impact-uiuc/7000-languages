@@ -33,7 +33,7 @@ const initialState = {
   currentUnitId: '',
   allLessons: [],
   currentLessonId: '',
-  lessonData: {},
+  lessonData: { vocab: [] },
   currentVocabId: '',
 }
 

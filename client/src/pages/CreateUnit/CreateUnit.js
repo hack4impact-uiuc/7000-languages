@@ -9,7 +9,7 @@ import { Foundation } from '@expo/vector-icons'
 import { useSelector, useDispatch } from 'react-redux'
 import { addUnit } from 'slices/language.slice'
 import { createUnit } from 'api'
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap } from 'hooks'
 
 const styles = StyleSheet.create({
   container: {

@@ -52,9 +52,9 @@ const LanguageHome = ({
         <>
           <View style={styles.top}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               color="white.dark:alpha.40"
               fontSize="xl"
               lineHeight={20}
@@ -66,9 +66,9 @@ const LanguageHome = ({
           </View>
           <View style={styles.manageBar}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               fontSize={23}
               paddingTop={3}
               paddingLeft={5}
@@ -104,7 +104,7 @@ const LanguageHome = ({
                   bodyText={element.body}
                   imageUri={element.imageUri}
                   showVolumeIcon={element.audio}
-                  volumeIconCallback={{}}
+                  volumeIconCallback={() => null}
                   width={width * 0.97}
                   height={75}
                   rightIcon={(
@@ -127,9 +127,9 @@ const LanguageHome = ({
         <>
           <View style={styles.top}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               color="white.dark"
               fontSize={35}
               paddingLeft={5}
@@ -139,9 +139,9 @@ const LanguageHome = ({
               {languageName}
             </Text>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               color="white.dark:alpha.40"
               fontSize="xl"
               lineHeight={20}
@@ -155,9 +155,9 @@ const LanguageHome = ({
           </View>
           <View style={styles.manageBar}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               fontSize={23}
               paddingTop={3}
               paddingLeft={5}

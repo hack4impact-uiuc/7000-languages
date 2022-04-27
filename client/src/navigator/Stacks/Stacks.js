@@ -105,14 +105,16 @@ export const HomeNavigator = ({ courseId }) => (
       name="UnitHome"
       component={UnitHome}
       options={({ navigation }) => ({
+        title: '',
         headerLeft: () => <BackButton navigation={navigation} color="white" />,
         cardStyle: { backgroundColor: 'white' },
       })}
     />
     <Stack.Screen
       name="LessonHome"
-      component={LessonHome} // change
+      component={LessonHome}
       options={({ navigation }) => ({
+        title: '',
         headerLeft: () => <BackButton navigation={navigation} color="white" />,
         cardStyle: { backgroundColor: 'white' },
       })}

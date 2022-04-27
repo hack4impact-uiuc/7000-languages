@@ -6,7 +6,7 @@ import { Input, Text, TextArea } from 'native-base'
 import { useSelector, useDispatch } from 'react-redux'
 import { addLesson } from 'slices/language.slice'
 import { createLesson } from 'api'
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap } from 'hooks'
 
 const CreateLesson = ({ navigation }) => {
   const errorWrap = useErrorWrap()

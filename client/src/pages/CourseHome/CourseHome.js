@@ -4,13 +4,14 @@ import LanguageHome from 'pages/LanguageHome'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import { getCourse } from 'api'
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap, useTrackPromise } from 'hooks'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const CourseHome = ({ navigation }) => {
   const { currentCourseId, allUnits } = useSelector((state) => state.language)
 
   const errorWrap = useErrorWrap()
+  const trackPromise = useTrackPromise()
   const dispatch = useDispatch()
 
   const [data, setData] = useState([])
@@ -23,7 +24,7 @@ const CourseHome = ({ navigation }) => {
   useEffect(() => {
     const getCourseData = async () => {
       errorWrap(async () => {
-        const { result } = await getCourse(currentCourseId)
+        const { result } = await trackPromise(getCourse(currentCourseId))
         const { course, units } = result
 
         setCourseDescription(course.details.description)

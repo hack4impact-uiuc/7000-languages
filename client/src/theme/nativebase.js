@@ -55,7 +55,7 @@ const theme = extendTheme({
           _text: {
             fontSize: '2xl',
             color: 'white.dark',
-            fontFamily: 'GT_Haptik_bold',
+            fontFamily: 'heading',
           },
         },
         primary_short: {
@@ -63,7 +63,7 @@ const theme = extendTheme({
           w: '67%',
           _text: {
             color: 'white.dark',
-            fontFamily: 'GT_Haptik_bold',
+            fontFamily: 'heading',
           },
         },
         secondary: {
@@ -73,7 +73,7 @@ const theme = extendTheme({
           py: 4,
           _text: {
             color: 'red.dark',
-            fontFamily: 'GT_Haptik_bold',
+            fontFamily: 'heading',
           },
         },
         image_picker: {
@@ -87,7 +87,7 @@ const theme = extendTheme({
           _text: {
             fontSize: 20,
             color: 'red.dark',
-            fontFamily: 'GT_Haptik_bold',
+            fontFamily: 'heading',
           },
         },
         small: {
@@ -98,7 +98,7 @@ const theme = extendTheme({
           py: 4,
           _text: {
             color: 'red.dark',
-            fontFamily: 'GT_Haptik_bold',
+            fontFamily: 'heading',
           },
         },
         complete: {
@@ -109,7 +109,7 @@ const theme = extendTheme({
           _text: {
             py: 0,
             color: 'green.medium',
-            fontFamily: 'GT_Haptik_bold',
+            fontFamily: 'heading',
           },
         },
         incomplete: {
@@ -119,7 +119,7 @@ const theme = extendTheme({
           py: 10,
           _text: {
             color: 'orange.medium',
-            fontFamily: 'GT_Haptik_bold',
+            fontFamily: 'heading',
           },
         },
         contributor: {
@@ -129,7 +129,7 @@ const theme = extendTheme({
           my: 3,
           _text: {
             color: 'red.dark',
-            fontFamily: 'GT_Haptik_bold',
+            fontFamily: 'heading',
           },
         },
         manage: {
@@ -140,14 +140,14 @@ const theme = extendTheme({
           mx: 5,
           _text: {
             color: 'red.dark',
-            fontFamily: 'GT_Haptik_bold',
+            fontFamily: 'heading',
           },
         },
       },
     },
   },
   fontConfig: {
-    GT_Haptik: {
+    GT_Haptik_font: {
       regular: {
         // weight
         normal: 'GT_Haptik_regular', // style
@@ -155,7 +155,7 @@ const theme = extendTheme({
         rotalic: 'GT_Haptik_rotalic',
       },
     },
-    GT_Haptik_bold: {
+    GT_Haptik_bold_font: {
       regular: {
         normal: 'GT_Haptik_bold',
         italic: 'GT_Haptik_bold_italic',
@@ -164,9 +164,9 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    heading: 'GT_Haptik_bold',
-    body: 'GT_Haptik',
-    mono: 'GT_Haptik',
+    heading: 'GT_Haptik_bold_font',
+    body: 'GT_Haptik_font',
+    mono: 'GT_Haptik_font',
   },
 })
 

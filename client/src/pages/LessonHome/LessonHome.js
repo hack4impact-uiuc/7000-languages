@@ -5,10 +5,11 @@ import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import { getLesson } from 'api'
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap, useTrackPromise } from 'hooks'
 
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
+  const trackPromise = useTrackPromise()
   const dispatch = useDispatch()
   const { currentCourseId, currentLessonId, lessonData } = useSelector(
     (state) => state.language,
@@ -23,7 +24,9 @@ const LessonHome = ({ navigation }) => {
   useEffect(() => {
     const getLessonData = async () => {
       errorWrap(async () => {
-        const { result } = await getLesson(currentCourseId, currentLessonId)
+        const { result } = await trackPromise(
+          getLesson(currentCourseId, currentLessonId),
+        )
 
         setLessonDescription(result.description)
         navigation.setOptions({
@@ -40,24 +43,28 @@ const LessonHome = ({ navigation }) => {
    * Updates the formatted vocab data that will be presented on this page
    */
   useEffect(() => {
-    let formattedVocabData = []
+    if (lessonData?.vocab) {
+      let formattedVocabData = []
 
-    for (let i = 0; i < lessonData.vocab.length; i += 1) {
-      const item = lessonData.vocab[i]
+      for (let i = 0; i < lessonData.vocab.length; i += 1) {
+        const item = lessonData.vocab[i]
 
-      const formattedItem = {
-        _id: item._id,
-        name: item.original,
-        body: item.translation,
-        audio: item.audio !== '',
-        _order: item._order,
+        const formattedItem = {
+          _id: item._id,
+          name: item.original,
+          body: item.translation,
+          audio: item.audio !== '',
+          _order: item._order,
+        }
+        formattedVocabData.push(formattedItem)
       }
-      formattedVocabData.push(formattedItem)
+
+      formattedVocabData = formattedVocabData.sort(
+        (a, b) => a._order - b._order,
+      )
+
+      setData(formattedVocabData)
     }
-
-    formattedVocabData = formattedVocabData.sort((a, b) => a._order - b._order)
-
-    setData(formattedVocabData)
   }, [lessonData])
 
   /**

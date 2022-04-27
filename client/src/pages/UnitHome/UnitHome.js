@@ -5,12 +5,16 @@ import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import { getUnit } from 'api'
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap, useTrackPromise } from 'hooks'
+
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const UnitHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
+  const trackPromise = useTrackPromise()
+
   const dispatch = useDispatch()
+
   const { currentCourseId, currentUnitId, allLessons } = useSelector(
     (state) => state.language,
   )
@@ -24,7 +28,9 @@ const UnitHome = ({ navigation }) => {
   useEffect(() => {
     const getLessonData = async () => {
       errorWrap(async () => {
-        const { result } = await getUnit(currentCourseId, currentUnitId)
+        const { result } = await trackPromise(
+          getUnit(currentCourseId, currentUnitId),
+        )
         const { unit, lessons } = result
 
         setUnitDescription(unit.description)

@@ -8,8 +8,8 @@ import { imageAssets } from 'theme/images'
 import { fontAssets } from 'theme/fonts'
 import { NativeBaseProvider } from 'native-base'
 import { nativebase } from 'theme'
-import Navigator from './navigator'
 import store from './redux/store'
+import AppContent from './AppContent'
 
 const App = () => {
   const [didLoad, setDidLoad] = useState(false)
@@ -27,7 +27,7 @@ const App = () => {
   return didLoad ? (
     <Provider store={store}>
       <NativeBaseProvider theme={nativebase}>
-        <Navigator />
+        <AppContent />
       </NativeBaseProvider>
     </Provider>
   ) : (
