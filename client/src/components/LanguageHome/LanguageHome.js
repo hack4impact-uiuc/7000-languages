@@ -9,6 +9,7 @@ import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { downloadAudioFile } from 'api'
 import { useSelector } from 'react-redux'
+import { Audio } from 'expo-av'
 
 const { width } = Dimensions.get('window')
 
@@ -49,13 +50,20 @@ const LanguageHome = ({
 }) => {
   const { currentCourseId, currentUnitId, currentLessonId } = useSelector((state) => state.language)
 
-  const getAudio =  async (vocab_id) => {
+  const getAudio = async (vocab_id) => {
     // courseId,
     // unitId,
     // lessonId,
     // vocabId,
     const uri = await downloadAudioFile(currentCourseId, currentUnitId, currentLessonId, vocab_id);
     console.log(uri);
+
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+    })
+    const { sound } = await Audio.Sound.createAsync({ uri: uri })
+    await sound.playAsync();
+
   }
 
   switch (isLessonHome) {
@@ -248,8 +256,8 @@ LanguageHome.defaultProps = {
   valueName: '',
   buttonText: '',
   rightIconName: '',
-  buttonCallback: () => {},
-  nextPageCallback: () => {},
+  buttonCallback: () => { },
+  nextPageCallback: () => { },
   data: [],
 }
 
