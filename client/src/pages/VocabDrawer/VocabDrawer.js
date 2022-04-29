@@ -15,7 +15,8 @@ import RecordAudioView from 'components/RecordAudioView'
 import { useSelector, useDispatch } from 'react-redux' // import at the top of the file
 import { addVocab, updateVocab } from 'slices/language.slice'
 
-import { createVocabItem, updateVocabItem } from 'api'
+import { createVocabItem, updateVocabItem, uploadAudioFile } from 'api'
+
 import { useErrorWrap } from 'hooks'
 
 const expoImageSettings = {
@@ -58,6 +59,7 @@ const WordDrawer = ({ navigation }) => {
 
   const {
     currentCourseId,
+    currentUnitId,
     currentLessonId,
     currentVocabId,
     courseDetails,
@@ -70,8 +72,8 @@ const WordDrawer = ({ navigation }) => {
   const [originalText, setOriginalText] = useState('')
   const [translatedText, setTranslatedText] = useState('')
   const [additionalInformation, setAdditionalInformation] = useState('')
-  const [image, setImage] = useState(null)
-  const [audioRecording, setAudioRecording] = useState(null) // keeps track of the audio recording
+  const [image, setImage] = useState(null) // stores image uri
+  const [audioRecording, setAudioRecording] = useState(null) // stores audio recording uri
   const [recordingStage, setRecordingState] = useState(RECORDING.INCOMPLETE) // which recording stage the user is at
   const [listeningSound, setListeningSound] = useState(null) // the data for the recording when the user is listening to it
 
@@ -82,7 +84,6 @@ const WordDrawer = ({ navigation }) => {
 
     if (index >= 0) {
       const vocabItem = lessonData.vocab[index]
-      console.log(vocabItem)
       setOriginalText(vocabItem.original)
       setTranslatedText(vocabItem.translation)
       setAdditionalInformation(vocabItem.notes)
@@ -118,27 +119,57 @@ const WordDrawer = ({ navigation }) => {
           audio: '',
           notes: additionalInformation,
         }
+
+        let updatedVocabItem = null
+
         if (currentVocabId === '') {
           // Need to create a new vocab item
-          const { result } = await createVocabItem(
+          const vocabItemResponse = await createVocabItem(
             currentCourseId,
             currentLessonId,
             vocabItem,
           )
-          dispatch(addVocab({ vocab: result }))
+
+          updatedVocabItem = vocabItemResponse.result
+
+          // Push audio recording
+          if (audioRecording && recordingStage === RECORDING.COMPLETE) {
+            const audioResponse = await uploadAudioFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              currentVocabId,
+              audioRecording,
+            )
+            updatedVocabItem = audioResponse.result
+          }
+          // Update vocab item in Redux store
+          dispatch(addVocab({ vocab: updatedVocabItem }))
         } else {
-          // update vocab item
-          await updateVocabItem(
+          // Updated vocab item text
+          const vocabItemResponse = await updateVocabItem(
             currentCourseId,
             currentLessonId,
             currentVocabId,
             vocabItem,
           )
-          dispatch(
-            updateVocab({ vocab: { ...vocabItem, _id: currentVocabId } }),
-          )
+          updatedVocabItem = vocabItemResponse.result
+
+          // Push audio recording
+          if (audioRecording && recordingStage === RECORDING.COMPLETE) {
+            const audioResponse = await uploadAudioFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              currentVocabId,
+              audioRecording,
+            )
+
+            updatedVocabItem = audioResponse.result
+          }
+          // Update vocab item in Redux store
+          dispatch(updateVocab({ vocab: updatedVocabItem }))
         }
-        // TODO: call POST 'audio' and POST 'image'
       },
       () => {
         close() // on success, close the modal

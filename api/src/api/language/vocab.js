@@ -58,7 +58,7 @@ router.patch(
     }
 
     await lesson.save();
-    return sendResponse(res, 200, 'Successfully updated vocab item', lesson);
+    return sendResponse(res, 200, 'Successfully updated vocab item', vocabData);
   }),
 );
 

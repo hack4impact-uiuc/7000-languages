@@ -1,4 +1,11 @@
-import instance from './axios-config'
+import * as FileSystem from 'expo-file-system'
+import instance, { BASE_URL } from './axios-config'
+
+let cachedJWTToken = null
+
+export const setAuthToken = (token) => {
+  cachedJWTToken = token
+}
 
 /* User Endpoints */
 
@@ -133,4 +140,36 @@ export const updateVocabItem = async (
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
+}
+
+/* Audio Endpoints */
+export const uploadAudioFile = async (
+  courseId,
+  unitId,
+  lessonId,
+  vocabId,
+  uri,
+) => {
+  const res = await FileSystem.uploadAsync(
+    `${BASE_URL}/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`,
+    uri,
+    {
+      headers: {
+        Authorization: `Bearer ${cachedJWTToken}`,
+      },
+      httpMethod: 'POST',
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      fieldName: 'file',
+      parameters: {
+        test: 'test',
+      },
+    },
+  )
+
+  const body = JSON.parse(res.body)
+
+  if (!body.success || body.success === 'false') {
+    throw new Error(body.message)
+  }
+  return body
 }

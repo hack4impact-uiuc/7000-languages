@@ -7,43 +7,69 @@ const { requireAuthentication } = require('../../middleware/authentication');
 const { uploadFile } = require('../../utils/aws/s3');
 const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
 const { checkIds } = require('../../utils/languageHelper');
+const fs = require('fs');
+const {
+  requireLanguageAuthorization,
+} = require('../../middleware/authorization');
 
 router.post(
-  '/',
+  'language/image/:course_id/:unit_id/:lesson_id/:word_id',
+  requireAuthentication,
+  requireLanguageAuthorization,
   requireAuthentication,
   errorWrap(async (req, res) => {
-    const { lesson_id, vocab_id, course_id, unit_id } = req.body;
+    const { lesson_id, vocab_id, course_id, unit_id } = req.params;
 
     if (!lesson_id || !vocab_id || !course_id || !unit_id) {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
+
+    if (!req.files || !req.files.file) {
+      return sendResponse(res, 400, 'Missing image file, please try again.');
+    }
+
     const isValid = await checkIds({ lesson_id, course_id, unit_id, vocab_id });
 
     if (!isValid) {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
-    const file = req.files.uploadedFile;
-    await uploadFile(
-      file.data,
-      `${req.id}/${req.stepKey}/${req.fieldKey}/${req.fileName}`,
-    );
-    
     let lesson = await models.Lesson.findById(lesson_id);
-    lesson = lesson.toJSON();
-    const found = lesson.vocab.findIndex((vocabItem) => vocabItem._id === vocab_id);
 
-    lesson.vocab[
-      found
-    ].image = `${req.id}/${req.stepKey}/${req.fieldKey}/${req.fileName}`;
+    if (lesson) {
+      const found = lesson.vocab.findIndex(
+        (element) => element._id.toString() === vocab_id,
+      );
 
-    await lesson.save();
+      if (found >= 0) {
+        // Read in the audio file
+        const filePath = req.files.file.file;
+        const fileContent = fs.readFileSync(filePath);
 
-    return sendResponse(
-      res,
-      200,
-      'Success posting vocab image file Path',
-      lesson,
-    );
+        // Upload file to S3
+        await uploadFile(
+          fileContent,
+          `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.jpeg`,
+        );
+
+        // Upadte path to audio file in MongoDB
+        lesson.vocab[
+          found
+        ].image = `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.jpeg`;
+
+        await lesson.save();
+
+        return sendResponse(
+          res,
+          200,
+          'Success uploading the image file.',
+          lesson.vocab[found],
+        );
+      }
+
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
   }),
 );
