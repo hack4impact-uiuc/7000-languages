@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { errorWrap } = require('../../middleware');
 const { sendResponse } = require('../../utils/response');
+const { models } = require('../../models/index.js');
 const { uploadFile, downloadFile } = require('../../utils/aws/s3.js');
 const { requireAuthentication } = require('../../middleware/authentication');
 const {
@@ -90,4 +91,3 @@ router.post(
 );
 
 module.exports = router;
-
