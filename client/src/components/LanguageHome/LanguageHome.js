@@ -7,6 +7,8 @@ import StyledButton from 'components/StyledButton'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
+import { downloadAudioFile } from 'api'
+import { useSelector } from 'react-redux'
 
 const { width } = Dimensions.get('window')
 
@@ -45,6 +47,17 @@ const LanguageHome = ({
   nextPageCallback,
   data,
 }) => {
+  const { currentCourseId, currentUnitId, currentLessonId } = useSelector((state) => state.language)
+
+  const getAudio =  async (vocab_id) => {
+    // courseId,
+    // unitId,
+    // lessonId,
+    // vocabId,
+    const uri = await downloadAudioFile(currentCourseId, currentUnitId, currentLessonId, vocab_id);
+    console.log(uri);
+  }
+
   switch (isLessonHome) {
     case true:
       // Generates the Lesson Home Page
@@ -104,7 +117,7 @@ const LanguageHome = ({
                   bodyText={element.body}
                   imageUri={element.imageUri}
                   showVolumeIcon={element.audio}
-                  volumeIconCallback={() => null}
+                  volumeIconCallback={() => getAudio(element._id)}
                   width={width * 0.97}
                   height={75}
                   rightIcon={(

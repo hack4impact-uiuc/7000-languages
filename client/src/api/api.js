@@ -160,9 +160,6 @@ export const uploadAudioFile = async (
       httpMethod: 'POST',
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
       fieldName: 'file',
-      parameters: {
-        test: 'test',
-      },
     },
   )
 
@@ -173,3 +170,33 @@ export const uploadAudioFile = async (
   }
   return body
 }
+
+/* Audio Endpoints */
+export const downloadAudioFile = async (
+  courseId,
+  unitId,
+  lessonId,
+  vocabId,
+) => {
+  await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + `${courseId}/${unitId}/${lessonId}/${vocabId}`)
+  const downloadResumable = FileSystem.createDownloadResumable(
+    `${BASE_URL}/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`,
+    FileSystem.documentDirectory + `${courseId}/${unitId}/${lessonId}/${vocabId}/audio.mp3`,
+    {
+      headers: {
+        Authorization: `Bearer ${cachedJWTToken}`,
+      },
+      httpMethod: 'GET',
+      downloadType: FileSystem.FileSystemUploadType.MULTIPART,
+    },
+  );
+  try {
+    const { uri } = await downloadResumable.downloadAsync();
+    console.log('Finished downloading to ', uri);
+    return uri;
+  } catch (e) {
+    console.error(e);
+  }
+  return null;
+}
+
