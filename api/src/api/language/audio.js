@@ -27,7 +27,7 @@ router.get(
 
     // Open a stream from the S3 bucket
     const s3Stream = downloadFile(
-      `files/${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio.m4a`,
+      `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio.m4a`,
     ).createReadStream();
 
     // Setup callbacks for stream error and stream close

@@ -128,7 +128,9 @@ module.exports.checkIds = async ({
       }
     }
   }
-  if (vocab_id === null) { return true; }
+  if (vocab_id === null) {
+    return true;
+  }
   let lesson = await models.Lesson.findById(lesson_id);
   if (lesson) {
     const matchId = (vocabItem) => vocabItem._id.toString() === vocab_id;
