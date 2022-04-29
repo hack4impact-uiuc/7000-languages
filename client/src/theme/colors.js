@@ -22,8 +22,9 @@ const colors = {
   },
   gray: {
     light: '#EFEFEF', // 100 opacity
-    medium_light: '#F5F5F5', // 300 opacity
+    medium_light: '#F4F4F4', // 300 opacity
     medium: '#A4A4A4', // 500 opacity
+    medium_dark: '#F2F2F2',
     dark: '#060606', // 800 opacity
   },
   white: {
@@ -31,6 +32,7 @@ const colors = {
     dark: '#FFFFFF',
   },
   black: '#000000',
+  textBlue: '#7291FF',
 }
 
 export default colors

@@ -17,12 +17,16 @@ const theme = extendTheme({
         },
         my: 2,
       },
-      defaultProps: { size: 'xl' },
+      defaultProps: {
+        size: 'xl',
+        backgroundColor: 'gray.medium_light',
+        borderWidth: 1,
+        borderColor: 'gray.medium_dark',
+      },
     },
     TextArea: {
       baseStyle: {
         backgroundColor: 'gray.medium_light',
-        borderColor: 'gray.medium_light',
         fontFamily: 'GT_Haptik_regular',
         selectionColor: 'black',
         _focus: {
@@ -31,7 +35,12 @@ const theme = extendTheme({
         },
         my: 2,
       },
-      defaultProps: { size: 'xl' },
+      defaultProps: {
+        size: 'xl',
+        backgroundColor: 'gray.medium_light',
+        borderWidth: 1,
+        borderColor: 'gray.medium_dark',
+      },
     },
     Text: {
       baseStyle: {
