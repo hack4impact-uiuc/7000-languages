@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginLeft: 7,
   },
   inputHeight: {
-    height: '50px',
+    height: 50,
   },
   termsText: {
     width: '100%',
