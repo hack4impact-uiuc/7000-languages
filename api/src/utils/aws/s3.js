@@ -17,7 +17,7 @@ const getS3 = () => {
   return s3;
 };
 
-module.exports.uploadFile = async (content, remoteFileName) => {
+ module.exports.uploadFile = async (content, remoteFileName) => {
   const params = {
     Body: content,
     Bucket: S3_BUCKET_NAME,
@@ -27,3 +27,5 @@ module.exports.uploadFile = async (content, remoteFileName) => {
   const s3 = getS3();
   await s3.putObject(params).promise();
 };
+
+ 

@@ -33,6 +33,7 @@ const initialState = {
   currentUnitId: '',
   allLessons: [],
   currentLessonId: '',
+  lessonData: { vocab: [] },
   currentVocabId: '',
 }
 
@@ -44,16 +45,85 @@ const languageSlice = createSlice({
   name: 'language',
   initialState,
   reducers: {
-    updateAllCourses: (state, { payload }) => {
-      state.allCourses = payload.allCourses
+    setField: (state, { payload }) => {
+      state[payload.key] = payload.value
     },
-    setCurrentCourse: (state, { payload }) => {
-      state.currentCourseId = payload.currentCourseId
+    addUnit: (state, { payload }) => {
+      // Pushes new unit to the list containing all units
+      state.allUnits.push(payload.unit)
+
+      // The num_units field stores the total number of selected units,
+      // and since we increased this number by 1, we need to update num_units
+      const courseIdx = state.allCourses.findIndex(
+        (element) => element._id === state.currentCourseId,
+      )
+      state.allCourses[courseIdx].num_units += 1
+    },
+    addLesson: (state, { payload }) => {
+      state.allLessons.push(payload.lesson)
+      const unitIdx = state.allUnits.findIndex(
+        (element) => element._id === state.currentUnitId,
+      )
+      // The num_lessons field stores the total number of selected lessons,
+      // and since we increased this number by 1, we need to update num_lessons
+      state.allUnits[unitIdx].num_lessons += 1
+    },
+    addVocab: (state, { payload }) => {
+      state.lessonData.vocab.push(payload.vocab)
+      const lessonIdx = state.allLessons.findIndex(
+        (element) => element._id === state.currentLessonId,
+      )
+      // The num_lessons field stores the total number of selected lessons,
+      // and since we increased this number by 1, we need to update num_lessons
+      state.allLessons[lessonIdx].num_vocab += 1
+    },
+    updateVocab: (state, { payload }) => {
+      const vocabIndex = state.lessonData.vocab.findIndex(
+        (element) => element._id === state.currentVocabId,
+      )
+      state.lessonData.vocab[vocabIndex] = payload.vocab
+    },
+    clear: () => initialState,
+    resetField: (state, { payload }) => {
+      state[payload.key] = initialState[payload.key]
+    },
+    clearCourseData: (state) => {
+      state.currentCourseId = initialState.currentCourseId
+      state.courseDetails = initialState.courseDetails
+      state.allUnits = initialState.allUnits
+      state.currentUnitId = initialState.currentUnitId
+      state.allLessons = initialState.allLessons
+      state.currentLessonId = initialState.currentLessonId
+      state.lessonData = initialState.lessonData
+      state.currentVocabId = initialState.currentVocabId
+    },
+    updateNumLessons: (state, { payload }) => {
+      const unitIdx = state.allUnits.findIndex(
+        (element) => element._id === state.currentUnitId,
+      )
+      state.allUnits[unitIdx].num_lessons = payload.numSelected
+    },
+    updateNumUnits: (state, { payload }) => {
+      const courseIdx = state.allCourses.findIndex(
+        (element) => element._id === state.currentCourseId,
+      )
+      state.allCourses[courseIdx].num_units = payload.numSelected
     },
   },
 })
 
 export const { action } = languageSlice
-export const { updateAllCourses, setCurrentCourse } = languageSlice.actions
+export const {
+  setField,
+  addUnit,
+  addLesson,
+  addVocab,
+  updateVocab,
+  clear,
+  resetField,
+  clearCourseData,
+  updateNumLessons,
+  updateNumUnits,
+} = languageSlice.actions
 
 export default languageSlice.reducer

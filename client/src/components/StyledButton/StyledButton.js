@@ -30,7 +30,7 @@ StyledButton.propTypes = {
   onPress: PropTypes.func,
   leftIcon: PropTypes.element,
   rightIcon: PropTypes.element,
-  fontSize: PropTypes.string,
+  fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   style: ViewPropTypes.style,
 }
 

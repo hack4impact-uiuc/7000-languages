@@ -6,6 +6,11 @@ import { colors } from 'theme'
 import { Input, Text, TextArea } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { addUnit } from 'slices/language.slice'
+import { createUnit } from 'api'
+import { useErrorWrap } from 'hooks'
+
 const styles = StyleSheet.create({
   container: {
     borderRadius: 2,
@@ -24,15 +29,34 @@ const CreateUnit = ({ navigation }) => {
     navigation.goBack()
   }
 
+  const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
+  const { currentCourseId } = useSelector((state) => state.language)
+
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
 
-  const success = () => {
-    const newUnit = {
-      name,
-      purpose,
-    }
-    console.log(newUnit, 'success!')
+  /**
+   * Posts a new unit to the API and saves the new unit in state
+   */
+  const success = async () => {
+    errorWrap(
+      async () => {
+        const newLesson = {
+          name,
+          description: purpose,
+          course_id: currentCourseId,
+          selected: true,
+        }
+
+        const { result } = await createUnit(newLesson)
+        dispatch(addUnit({ unit: result }))
+      },
+      () => {
+        // on success, close the modal
+        close()
+      },
+    )
   }
 
   const body = (
@@ -41,9 +65,9 @@ const CreateUnit = ({ navigation }) => {
         <View style={styles.textRow}>
           <Foundation name="lightbulb" size={24} color={colors.blue.dark} />
           <Text
-            style={{
-              fontFamily: 'GT_Haptik_bold',
-            }}
+            fontFamily="heading"
+            fontWeight="regular"
+            fontStyle="normal"
             color={colors.blue.dark}
           >
             {' '}
@@ -58,8 +82,7 @@ const CreateUnit = ({ navigation }) => {
 
       <Text>Give your unit a name</Text>
       <Input
-        size="lg"
-        variant="filled"
+        size="xl"
         placeholder=""
         returnKeyType="done"
         onChangeText={(text) => setName(text)}
@@ -68,9 +91,8 @@ const CreateUnit = ({ navigation }) => {
       <Text>What is the purpose of this unit?</Text>
 
       <TextArea
-        size="2xl"
+        size="xl"
         h={40}
-        variant="filled"
         placeholder=""
         keyboardType="default"
         returnKeyType="done"
