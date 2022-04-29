@@ -5,7 +5,7 @@ const {
   S3_REGION,
   ACCESS_KEY_ID,
   SECRET_ACCESS_KEY,
-} = require('./awsExports');
+} = require('./exports');
 
 const getS3 = () => {
   const s3 = new AWS.S3({
@@ -17,7 +17,7 @@ const getS3 = () => {
   return s3;
 };
 
- module.exports.uploadFile = async (content, remoteFileName) => {
+module.exports.uploadFile = async (content, remoteFileName) => {
   const params = {
     Body: content,
     Bucket: S3_BUCKET_NAME,
@@ -27,5 +27,3 @@ const getS3 = () => {
   const s3 = getS3();
   await s3.putObject(params).promise();
 };
-
- 

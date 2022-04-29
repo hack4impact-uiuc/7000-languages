@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import LanguageHome from 'pages/LanguageHome'
+import LanguageHome from 'components/LanguageHome'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import { INDICATOR_TYPES } from '../../utils/constants'
