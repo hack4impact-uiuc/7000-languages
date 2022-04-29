@@ -7,44 +7,63 @@ const { requireAuthentication } = require('../../middleware/authentication');
 const { uploadFile } = require('../../utils/aws/s3');
 const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
 const { checkIds } = require('../../utils/languageHelper');
+const {
+  requireLanguageAuthorization,
+} = require('../../middleware/authorization');
+const fs = require('fs');
 
 router.post(
-  '/',
+  '/:course_id/:unit_id/:lesson_id/:vocab_id',
   requireAuthentication,
+  requireLanguageAuthorization,
   errorWrap(async (req, res) => {
-    const { lesson_id, vocab_id, course_id, unit_id } = req.body;
+    const { lesson_id, vocab_id, course_id, unit_id } = req.params;
 
     if (!lesson_id || !vocab_id || !course_id || !unit_id) {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
+
+    if (!req.files || !req.files.file) {
+      return sendResponse(res, 400, 'Missing audio file, please try again.');
+    }
+
+    // Check if the course, unit, and lesson ids are valid
     const isValid = await checkIds({ lesson_id, course_id, unit_id });
 
     if (!isValid) {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
-    let lesson = await models.Lesson.findOne({ _id: lesson_id }); // find a lesson
+    // Check if vocab item exists
+    let lesson = await models.Lesson.findById(lesson_id); // find a lesson
     if (lesson) {
-      const vocab = lesson.vocab;
-      const found = vocab.findIndex((element) => element._id === vocab_id);
+      const found = lesson.vocab.findIndex(
+        (element) => element._id.toString() === vocab_id,
+      );
+
       if (found >= 0) {
-        const file = req.files.uploadedFile;
+        // Read in the audio file
+        const filePath = req.files.file.file;
+        const fileContent = fs.readFileSync(filePath);
+
+        // Upload file to S3
         await uploadFile(
-          file.data,
-          `${req.id}/${req.stepKey}/${req.fieldKey}/${req.fileName}`,
+          fileContent,
+          `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio`,
         );
 
+        // Upadte path to audio file in MongoDB
         lesson.vocab[
           found
-        ].audio = `${req.id}/${req.stepKey}/${req.fieldKey}/${req.fileName}`;
+        ].audio = `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio`;
 
         await lesson.save();
 
         return sendResponse(
           res,
           200,
-          'Success posting vocab audio file path',
-          lesson,
+          'Success uploading the audio file.',
+          lesson.vocab[found],
         );
       }
 

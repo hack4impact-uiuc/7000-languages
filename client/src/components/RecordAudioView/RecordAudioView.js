@@ -289,7 +289,7 @@ const RecordAudioView = ({
             leftIcon={(
               <FontAwesome
                 name="microphone"
-                size={35}
+                size={25}
                 color={colors.red.dark}
               />
             )}
