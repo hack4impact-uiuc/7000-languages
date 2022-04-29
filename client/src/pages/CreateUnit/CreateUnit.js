@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 2,
     borderWidth: 0.5,
-    padding: 5,
+    padding: 8,
+    marginBottom: 10,
     backgroundColor: colors.blue.light,
     borderColor: colors.blue.light,
   },
@@ -61,10 +62,19 @@ const CreateUnit = ({ navigation }) => {
 
   const body = (
     <>
+    <View
+    style={{
+      width: '97%',
+      marginHorizontal: '1%',
+      justifyContent: 'center',
+    }}
+    >
       <View style={styles.container}>
         <View style={styles.textRow}>
-          <Foundation name="lightbulb" size={24} color={colors.blue.dark} />
+          <Foundation name="lightbulb" size={20} color={colors.blue.dark} />
           <Text
+            fontSize="md"
+            paddingBottom={2}
             fontFamily="heading"
             fontWeight="regular"
             fontStyle="normal"
@@ -80,7 +90,9 @@ const CreateUnit = ({ navigation }) => {
         </Text>
       </View>
 
-      <Text>Give your unit a name</Text>
+      <Text
+      fontSize='md'
+      >Give your unit a name</Text>
       <Input
         size="xl"
         placeholder=""
@@ -88,7 +100,10 @@ const CreateUnit = ({ navigation }) => {
         onChangeText={(text) => setName(text)}
       />
 
-      <Text>What is the purpose of this unit?</Text>
+      <Text
+      paddingTop={2}
+      fontSize='md'
+      >What is the purpose of this unit?</Text>
 
       <TextArea
         size="xl"
@@ -99,6 +114,7 @@ const CreateUnit = ({ navigation }) => {
         blurOnSubmit
         onChangeText={(text) => setPurpose(text)}
       />
+      </View>
     </>
   )
 
