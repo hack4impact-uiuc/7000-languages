@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import LanguageHome from 'pages/LanguageHome'
+import LanguageHome from 'components/LanguageHome'
 import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
