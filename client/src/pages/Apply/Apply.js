@@ -66,6 +66,7 @@ const Apply = ({ navigation }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [language, setLanguage] = useState('')
+  const [description, setDescription] = useState('')
   const [otherNames, setOtherNames] = useState('')
   const [isoCode, setIsoCode] = useState('')
   const [glottoCode, setGlottoCode] = useState('')
@@ -117,7 +118,7 @@ const Apply = ({ navigation }) => {
         admin_email: email,
         name: language,
         alternative_name: otherNames,
-        description: '',
+        description: description,
         iso: isoCode,
         glotto: glottoCode,
         population,
@@ -283,7 +284,6 @@ const Apply = ({ navigation }) => {
                   color="gray.medium"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
                 >
                   Provide a 1-2 sentence description of your language and/or
                   culture. This will be shown to learners in this course.
@@ -297,7 +297,7 @@ const Apply = ({ navigation }) => {
                     keyboardType="default"
                     returnKeyType="done"
                     blurOnSubmit
-                    onChangeText={(text) => setOtherNames(text)}
+                    onChangeText={(text) => setDescription(text)}
                   />
                 </View>
               </FormControl>
@@ -317,7 +317,7 @@ const Apply = ({ navigation }) => {
                     size="xl"
                     style={styles.inputHeight}
                     returnKeyType="done"
-                    onChangeText={(text) => setIsoCode(text)}
+                    onChangeText={(text) => setOtherNames(text)}
                   />
                 </View>
               </FormControl>
