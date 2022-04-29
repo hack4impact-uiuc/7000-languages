@@ -181,7 +181,7 @@ export const downloadAudioFile = async (
   // await FileSystem.makeDirectoryAsync(`${FileSystem.documentDirectory}${courseId}/${unitId}/${lessonId}/${vocabId}`)
   const downloadResumable = FileSystem.createDownloadResumable(
     `${BASE_URL}/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`,
-    `${FileSystem.documentDirectory}${vocabId}.mp3`,
+    `${FileSystem.documentDirectory}${vocabId}.m4a`,
     {
       headers: {
         Authorization: `Bearer ${cachedJWTToken}`,
