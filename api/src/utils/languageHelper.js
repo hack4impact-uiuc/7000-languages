@@ -128,6 +128,9 @@ module.exports.checkIds = async ({
       }
     }
   }
+  if (vocab_id === null) {
+    return true;
+  }
   let lesson = await models.Lesson.findById(lesson_id);
   if (lesson) {
     lesson = lesson.toJSON();
