@@ -3,20 +3,52 @@ import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
 import { Input, Text, TextArea } from 'native-base'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { addLesson } from 'slices/language.slice'
+import { createLesson } from 'api'
+import { useErrorWrap } from 'hooks'
+
 const CreateLesson = ({ navigation }) => {
+  const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
+  const { currentCourseId, currentUnitId } = useSelector(
+    (state) => state.language,
+  )
+  const [name, setName] = useState('') // the name of the lesson
+  const [purpose, setPurpose] = useState('') // the purpose/description of the lesson
+
+  // Closes the modal
   const close = () => {
     navigation.goBack()
   }
 
-  const [name, setName] = useState('')
-  const [purpose, setPurpose] = useState('')
+  // Posts the new lesson to the API and updates the state
+  const success = async () => {
+    errorWrap(
+      async () => {
+        const newLesson = {
+          name,
+          description: purpose,
+          selected: true,
+        }
 
-  const success = () => {
-    const newLesson = {
-      name,
-      purpose,
-    }
-    console.log(newLesson, 'success')
+        const { result } = await createLesson(
+          currentCourseId,
+          currentUnitId,
+          newLesson,
+        )
+
+        // All new lessons have 0 vocab items, and we must set this since this information
+        // will be presented on the app
+        result.num_vocab = 0
+
+        dispatch(addLesson({ lesson: result }))
+      },
+      () => {
+        // on success, close the modal
+        close()
+      },
+    )
   }
 
   const body = (
@@ -24,7 +56,6 @@ const CreateLesson = ({ navigation }) => {
       <Text>Give your lesson a name</Text>
       <Input
         size="lg"
-        variant="filled"
         placeholder=""
         returnKeyType="done"
         onChangeText={(text) => setName(text)}
@@ -33,9 +64,8 @@ const CreateLesson = ({ navigation }) => {
       <Text>What are the goals of this lesson?</Text>
 
       <TextArea
-        size="2xl"
+        size="xl"
         h={40}
-        variant="filled"
         placeholder=""
         keyboardType="default"
         returnKeyType="done"

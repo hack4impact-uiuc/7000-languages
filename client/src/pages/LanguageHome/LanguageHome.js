@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
 })
 
 const LanguageHome = ({
-  navigation,
   isLessonHome,
   languageName,
   languageDescription,
@@ -42,19 +41,20 @@ const LanguageHome = ({
   valueName,
   buttonText,
   rightIconName,
-  toNavigate,
-  toNext,
+  buttonCallback,
+  nextPageCallback,
   data,
 }) => {
   switch (isLessonHome) {
     case true:
+      // Generates the Lesson Home Page
       return (
         <>
           <View style={styles.top}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               color="white.dark:alpha.40"
               fontSize="xl"
               lineHeight={20}
@@ -66,9 +66,9 @@ const LanguageHome = ({
           </View>
           <View style={styles.manageBar}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               fontSize={23}
               paddingTop={3}
               paddingLeft={5}
@@ -86,7 +86,7 @@ const LanguageHome = ({
                   size={20}
                 />
               )}
-              onPress={() => navigation.navigate('')}
+              onPress={buttonCallback}
             />
           </View>
 
@@ -99,12 +99,12 @@ const LanguageHome = ({
             >
               {data.map((element) => (
                 <StyledCard
-                  key={`${element.title}${element.lessons}`}
-                  titleText={element.title}
-                  bodyText={element.lessons}
+                  key={`${element.name}${element.body}`}
+                  titleText={element.name}
+                  bodyText={element.body}
                   imageUri={element.imageUri}
                   showVolumeIcon={element.audio}
-                  volumeIconCallback={{}}
+                  volumeIconCallback={() => null}
                   width={width * 0.97}
                   height={75}
                   rightIcon={(
@@ -112,7 +112,7 @@ const LanguageHome = ({
                       name="pencil"
                       color="black"
                       size={20}
-                      onPress={() => navigation.navigate('')}
+                      onPress={() => nextPageCallback(element)}
                     />
                   )}
                 />
@@ -122,13 +122,14 @@ const LanguageHome = ({
         </>
       )
     default:
+      // Generates the Course or Unit Home page
       return (
         <>
           <View style={styles.top}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               color="white.dark"
               fontSize={35}
               paddingLeft={5}
@@ -138,9 +139,9 @@ const LanguageHome = ({
               {languageName}
             </Text>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               color="white.dark:alpha.40"
               fontSize="xl"
               lineHeight={20}
@@ -154,9 +155,9 @@ const LanguageHome = ({
           </View>
           <View style={styles.manageBar}>
             <Text
-              style={{
-                fontFamily: 'GT_Haptik_bold',
-              }}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
               fontSize={23}
               paddingTop={3}
               paddingLeft={5}
@@ -174,7 +175,7 @@ const LanguageHome = ({
                   size={20}
                 />
               )}
-              onPress={() => navigation.navigate(toNavigate)}
+              onPress={buttonCallback}
             />
           </View>
 
@@ -187,11 +188,11 @@ const LanguageHome = ({
             >
               {data.map((element, index) => (
                 <StyledCard
-                  key={`${element.title}${element.lessons}`}
+                  key={`${element.name}${element.body}`}
                   leftIcon={<NumberBox number={index + 1} />}
-                  titleText={element.title}
-                  bodyText={element.lessons}
-                  width="97%"
+                  titleText={element.name}
+                  bodyText={element.body}
+                  width={width * 0.97}
                   height={75}
                   indicatorType={element.indicatorType}
                   rightIcon={(
@@ -199,7 +200,7 @@ const LanguageHome = ({
                       name="pencil"
                       color="black"
                       size={20}
-                      onPress={() => navigation.navigate(toNext)}
+                      onPress={() => nextPageCallback(element)}
                     />
                   )}
                 />
@@ -220,13 +221,9 @@ LanguageHome.propTypes = {
   valueName: PropTypes.string,
   buttonText: PropTypes.string,
   rightIconName: PropTypes.string,
-  toNavigate: PropTypes.string,
-  toNext: PropTypes.string,
+  buttonCallback: PropTypes.func,
+  nextPageCallback: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func,
-    goBack: PropTypes.func,
-  }),
 }
 
 // Page Default Fields
@@ -238,10 +235,9 @@ LanguageHome.defaultProps = {
   valueName: '',
   buttonText: '',
   rightIconName: '',
-  toNavigate: '',
-  toNext: '',
+  buttonCallback: () => {},
+  nextPageCallback: () => {},
   data: [],
-  navigation: { navigate: () => null, goBack: () => null },
 }
 
 export default LanguageHome

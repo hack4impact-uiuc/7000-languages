@@ -6,6 +6,7 @@ import {
 import logger from 'redux-logger'
 import authReducer from './slices/auth.slice'
 import languageReducer from './slices/language.slice'
+import appReducer from './slices/app.slice'
 import saveAuthToken from './middleware/auth.middleware'
 
 /*
@@ -21,6 +22,7 @@ import saveAuthToken from './middleware/auth.middleware'
 const rootReducer = combineReducers({
   auth: authReducer,
   language: languageReducer,
+  app: appReducer,
   // add more reducers
 })
 

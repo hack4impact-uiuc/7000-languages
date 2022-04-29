@@ -19,17 +19,15 @@ const HomeBaseCase = ({ navigation }) => (
   <View style={styles.root}>
     <StatusBar barStyle="light-content" />
     <Text
-      style={{
-        fontFamily: 'GT_Haptik_bold',
-      }}
-      fontWeight="normal"
+      fontFamily="heading"
+      fontWeight="regular"
+      fontStyle="normal"
       color="gray.medium"
       fontSize="xl"
     >
       Uh, Oh!
     </Text>
     <Text
-      fontWeight="normal"
       color="gray.medium"
       fontSize="xl"
       textAlign="center"
@@ -62,7 +60,6 @@ any courses yet!`}
       />
     </View>
     <Text
-      fontWeight="normal"
       color="gray.medium"
       fontSize="xl"
       textAlign="center"
@@ -71,20 +68,14 @@ any courses yet!`}
     >
       Our mission is to help communities teach, learn, and sustain their
       endangered languages.
-      <Text
-        style={{
-          fontFamily: 'GT_Haptik_bold',
-        }}
-      >
+      <Text fontFamily="heading" fontWeight="regular" fontStyle="normal">
         {' '}
         We’d love to support your revitalization efforts.
       </Text>
     </Text>
     <Text
-      style={{
-        fontFamily: 'GT_Haptik_bold',
-      }}
-      fontWeight="normal"
+      fontFamily="heading"
+      fontWeight="regular"
       fontStyle="normal"
       paddingTop="8%"
       paddingBottom="10%"

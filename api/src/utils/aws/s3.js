@@ -35,3 +35,16 @@ module.exports.downloadFile = (objectKey) => {
   return object;
 };
 
+
+ module.exports.uploadFile = async (content, remoteFileName) => {
+  const params = {
+    Body: content,
+    Bucket: S3_BUCKET_NAME,
+    Key: remoteFileName,
+  };
+
+  const s3 = getS3();
+  await s3.putObject(params).promise();
+};
+
+ 

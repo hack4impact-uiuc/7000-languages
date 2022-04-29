@@ -36,10 +36,11 @@ const DrawerMenu = ({ navigation }) => (
     <View style={styles.root}>
       <Text
         style={{
-          fontFamily: 'GT_Haptik_bold',
           paddingBottom: 10,
         }}
+        fontFamily="heading"
         fontWeight="regular"
+        fontStyle="normal"
         color="black"
         fontSize="25px"
       >

@@ -9,26 +9,35 @@ const styles = StyleSheet.create({
   },
 })
 
-const BackButton = ({ navigation, color }) => (
-  <FontIcon.Button
-    name="arrow-left"
-    color={color}
-    size={25}
-    backgroundColor="transparent"
-    onPress={navigation.goBack}
-    style={styles.button}
-  />
-)
+const BackButton = ({ navigation, color, onPress }) => {
+  const goBack = () => {
+    onPress()
+    navigation.goBack()
+  }
+
+  return (
+    <FontIcon.Button
+      name="arrow-left"
+      color={color}
+      size={25}
+      backgroundColor="transparent"
+      onPress={goBack}
+      style={styles.button}
+    />
+  )
+}
 
 BackButton.propTypes = {
   navigation: PropTypes.shape({
     goBack: PropTypes.func,
   }),
   color: PropTypes.string,
+  onPress: PropTypes.func,
 }
 
 BackButton.defaultProps = {
   navigation: { goBack: () => null },
+  onPress: () => null,
   color: 'black',
 }
 

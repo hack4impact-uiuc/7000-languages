@@ -8,7 +8,7 @@ import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-google-app-auth'
 import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
 import { saveUserIDToken } from 'utils/auth'
 import { createUser } from 'api'
@@ -110,9 +110,8 @@ const Landing = () => {
         <Text
           fontWeight="regular"
           color="white.dark"
-          style={{
-            fontFamily: 'GT_Haptik_bold',
-          }}
+          fontFamily="heading"
+          fontStyle="normal"
           fontSize="3xl"
         >
           {quote}

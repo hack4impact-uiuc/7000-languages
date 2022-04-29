@@ -1,40 +1,89 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { NO_COURSE_ID } from 'utils/constants'
 import HomeBaseCase from 'components/HomeBaseCase'
-import { setCurrentCourse } from 'slices/language.slice'
-import { useDispatch } from 'react-redux'
+import { setField, clearCourseData } from 'slices/language.slice'
+import { useDispatch, useSelector } from 'react-redux'
 import CourseHome from 'pages/CourseHome'
+import { getCourse } from 'api'
+import { useErrorWrap, useTrackPromise } from 'hooks'
 
 const Home = ({ navigation, courseId }) => {
   const dispatch = useDispatch()
 
+  const errorWrap = useErrorWrap()
+  const trackPromise = useTrackPromise()
+
+  const { currentCourseId } = useSelector((state) => state.language)
+
+  const [courseDescription, setCourseDescription] = useState('')
+  const [courseName, setCourseName] = useState('')
+
+  // Handles logic with fetching the intitial data required to render the Course Home Page
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      // do something
-      dispatch(setCurrentCourse({ currentCourseId: courseId }))
+    // Gets the course data from the API
+    const getCourseData = async (id) => {
+      errorWrap(async () => {
+        const { result } = await trackPromise(getCourse(id))
+        const { course, units } = result
+
+        setCourseDescription(course.details.description)
+        setCourseName(course.details.name)
+
+        // Sets the title of the page
+        navigation.setOptions({
+          title: 'Course Home',
+        })
+        dispatch(setField({ key: 'courseDetails', value: course.details }))
+        dispatch(setField({ key: 'allUnits', value: units }))
+      })
+    }
+
+    // When the Home Page is presented for a specific course, we need to fetch its course data
+    const unsubscribe = navigation.addListener('focus', async () => {
+      // Only fetch data if we were on a previous course page before, and this page isn't for the default Home Base Case page
+      if (!(courseId === NO_COURSE_ID || currentCourseId === NO_COURSE_ID)) {
+        if (courseId !== currentCourseId) {
+          dispatch(clearCourseData()) // Since we are switching courses, we need to clear all of the existing course data saved in state
+          dispatch(setField({ key: 'currentCourseId', value: courseId }))
+
+          await getCourseData(courseId)
+        }
+      }
     })
 
     return unsubscribe
-  }, [navigation])
+  }, [navigation, currentCourseId, courseId, setField])
 
-  if (courseId === NO_COURSE_ID) {
+  if (courseId === NO_COURSE_ID || currentCourseId === NO_COURSE_ID) {
     return <HomeBaseCase navigation={navigation} />
   }
 
   // TODO: add logic for rendering course page
-  return <CourseHome navigation={navigation} />
+  return (
+    <CourseHome
+      navigation={navigation}
+      courseId={courseId}
+      courseName={courseName}
+      courseDescription={courseDescription}
+    />
+  )
 }
 Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     addListener: PropTypes.func,
+    setOptions: PropTypes.func,
   }),
   courseId: PropTypes.string,
 }
 
 Home.defaultProps = {
-  navigation: { navigate: () => null, addListener: () => null },
+  navigation: {
+    navigate: () => null,
+    addListener: () => null,
+    setOptions: () => null,
+  },
   courseId: NO_COURSE_ID,
 }
 export default Home

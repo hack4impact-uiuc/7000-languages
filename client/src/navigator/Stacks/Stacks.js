@@ -79,12 +79,9 @@ export const AuthNavigator = () => (
 )
 
 export const ModalNavigator = () => (
-  <ModalStack.Navigator
-    initialRouteName="VocabDrawer"
-    screenOptions={modalNavigationProps}
-  >
-    <ModalStack.Screen name="VocabDrawer" component={VocabDrawer} />
+  <ModalStack.Navigator screenOptions={modalNavigationProps}>
     <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
+    <ModalStack.Screen name="VocabDrawer" component={VocabDrawer} />
     <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
   </ModalStack.Navigator>
 )
@@ -108,14 +105,16 @@ export const HomeNavigator = ({ courseId }) => (
       name="UnitHome"
       component={UnitHome}
       options={({ navigation }) => ({
+        title: '',
         headerLeft: () => <BackButton navigation={navigation} color="white" />,
         cardStyle: { backgroundColor: 'white' },
       })}
     />
     <Stack.Screen
       name="LessonHome"
-      component={LessonHome} // change
+      component={LessonHome}
       options={({ navigation }) => ({
+        title: '',
         headerLeft: () => <BackButton navigation={navigation} color="white" />,
         cardStyle: { backgroundColor: 'white' },
       })}
