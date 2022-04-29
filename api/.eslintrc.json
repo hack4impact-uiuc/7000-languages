@@ -6,6 +6,7 @@
   },
   "rules": {
     "require-await": "off",
-    "no-magic-numbers": "off"
+    "no-magic-numbers": "off",
+    "@hack4impact-uiuc/no-redundant-functions": "off"
   }
 }
