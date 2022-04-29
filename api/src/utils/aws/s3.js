@@ -17,12 +17,6 @@ const getS3 = () => {
   return s3;
 };
 
-// S3 Credential Object created with access id and secret key
-// const S3_CREDENTIALS = {
-//     accessKeyId: ACCESS_KEY_ID,
-//     secretAccessKey: SECRET_ACCESS_KEY,
-// };
-
 /**
  * Downloads file from the S3 bucket
  * @param objectKey The key as defined in S3 console. Usually is just the full path of the file.
@@ -41,4 +35,3 @@ module.exports.downloadFile = (objectKey) => {
   return object;
 };
 
-// module.exports.downloadFile;

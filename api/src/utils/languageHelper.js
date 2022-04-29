@@ -129,7 +129,6 @@ module.exports.checkIds = async ({
     }
   }
   let lesson = await models.Lesson.findById(lesson_id);
-  lesson = lesson.toJSON();
   if (lesson) {
     lesson = lesson.toJSON();
     const matchId = (vocabItem) => vocabItem._id === vocab_id;

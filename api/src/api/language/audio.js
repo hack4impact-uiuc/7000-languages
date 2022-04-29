@@ -11,7 +11,6 @@ const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
 const { checkIds } = require('../../utils/languageHelper');
 
 router.get(
-  // '/:id/files/:stepKey/:fieldKey/:fileName',
   '/:course_id/:unit_id/:lesson_id/:vocab_id/',
   requireAuthentication,
   requireLanguageAuthorization,
