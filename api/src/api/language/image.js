@@ -4,13 +4,45 @@ const { errorWrap } = require('../../middleware');
 const { models } = require('../../models/index.js');
 const { sendResponse } = require('../../utils/response');
 const { requireAuthentication } = require('../../middleware/authentication');
-const { uploadFile } = require('../../utils/aws/s3');
+const { uploadFile, downloadFile } = require('../../utils/aws/s3');
 const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
 const { checkIds } = require('../../utils/languageHelper');
 const fs = require('fs');
 const {
   requireLanguageAuthorization,
 } = require('../../middleware/authorization');
+
+router.get(
+  '/:course_id/:unit_id/:lesson_id/:vocab_id/',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const { course_id, unit_id, lesson_id, vocab_id } = req.params;
+
+    const isValid = await checkIds({ course_id, unit_id, lesson_id, vocab_id });
+
+    if (!isValid) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    // Open a stream from the S3 bucket
+    const s3Stream = downloadFile(
+      `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.jpeg`,
+    ).createReadStream();
+
+    // Setup callbacks for stream error and stream close
+    s3Stream
+      .on('error', (err) => {
+        res.json(`S3 Error:${err}`);
+      })
+      .on('close', () => {
+        res.end();
+      });
+
+    // Pipe the stream to the client
+    s3Stream.pipe(res);
+  }),
+);
 
 router.post(
   'language/image/:course_id/:unit_id/:lesson_id/:word_id',
