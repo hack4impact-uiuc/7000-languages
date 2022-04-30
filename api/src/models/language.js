@@ -14,6 +14,7 @@ const CourseDetails = new mongoose.Schema({
   population: { type: String, required: false, default: '' },
   location: { type: String, required: false, default: '' },
   link: { type: String, required: false, default: '' },
+  shouldFollowUp: { type: Boolean, required: false, default: false },
 });
 
 const Course = new mongoose.Schema({

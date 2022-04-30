@@ -81,6 +81,7 @@ const Apply = ({ navigation }) => {
   const [location, setLocation] = useState('')
   const [population, setPopulation] = useState('')
   const [acceptTerms, setAcceptTerms] = useState(false)
+  const [shouldFollowUp, setShouldFollowUp] = useState(false)
   const [link, setLink] = useState(false)
   const errorWrap = useErrorWrap()
   const [errors, setErrors] = useState({})
@@ -103,7 +104,6 @@ const Apply = ({ navigation }) => {
       validateErrors.acceptTerms = 'Terms are required'
     }
     setErrors(validateErrors)
-
     return Object.keys(validateErrors).length === 0
   }
 
@@ -129,6 +129,7 @@ const Apply = ({ navigation }) => {
         population,
         location,
         link,
+        shouldFollowUp,
       },
     }
 
@@ -394,9 +395,9 @@ const Apply = ({ navigation }) => {
           </View>
 
           <View style={styles.checkboxes}>
-            <FormControl is Required isInvalid={'acceptTerms' in errors}>
+            <FormControl is Required isInvalid={'shouldFollowUp' in errors}>
               <Checkbox
-                value="accepted"
+                value="yes"
                 colorScheme="danger"
                 onChange={setAcceptTerms}
               >
@@ -422,6 +423,27 @@ const Apply = ({ navigation }) => {
                 </View>
               </Checkbox>
             </FormControl>
+          </View>
+          <View style={styles.checkboxes}>
+            <Checkbox
+              value="true"
+              colorScheme="danger"
+              onChange={setShouldFollowUp}
+            >
+              <View style={styles.termsText}>
+                <Text
+                  fontFamily="body"
+                  fontWeight="regular"
+                  color="black"
+                  fontStyle="normal"
+                  fontSize="md"
+                >
+                  {
+                    '\nI would like a team member from 7000 Languages to follow up with you about\ncreating additional resources for my\nlanguage.'
+                  }
+                </Text>
+              </View>
+            </Checkbox>
           </View>
           <View style={styles.submitForm}>
             <StyledButton

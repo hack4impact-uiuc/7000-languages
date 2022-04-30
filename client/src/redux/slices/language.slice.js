@@ -28,6 +28,7 @@ const initialState = {
     population: '',
     location: '',
     link: '',
+    shouldFollowUp: false,
   },
   allUnits: [],
   currentUnitId: '',
