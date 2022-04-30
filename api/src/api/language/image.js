@@ -74,6 +74,13 @@ router.post(
       );
 
       if (found >= 0) {
+        // Determines file type
+        const nameSplit = req.files.file.filename.split('.');
+        let fileType = 'm4a';
+        if (nameSplit.length === 2) {
+          fileType = nameSplit[1];
+        }
+
         // Read in the audio file
         const filePath = req.files.file.file;
         const fileContent = fs.readFileSync(filePath);
@@ -81,13 +88,13 @@ router.post(
         // Upload file to S3
         await uploadFile(
           fileContent,
-          `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.jpeg`,
+          `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.${fileType}`,
         );
 
         // Upadte path to audio file in MongoDB
         lesson.vocab[
           found
-        ].image = `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.jpeg`;
+        ].image = `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.${fileType}`;
 
         await lesson.save();
 

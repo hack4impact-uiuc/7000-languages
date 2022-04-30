@@ -47,13 +47,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const WordDrawer = ({ navigation }) => {
-  /* TODO:
-    1. replace original and translated useState with useSelector (Redux) code
-    2. Check if there is a selected vocab in Redux. If so, populate the drawer with the vocab item data. Also add some
-    marker in state that indicates whether we are using this WordDrawer to add a new vocab item or edit an existing vocab item.
-  */
-
+const VocabDrawer = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
 
@@ -87,7 +81,7 @@ const WordDrawer = ({ navigation }) => {
       setOriginalText(vocabItem.original)
       setTranslatedText(vocabItem.translation)
       setAdditionalInformation(vocabItem.notes)
-      // TODO: call GET 'audio" and GET 'image'
+      // TODO: call GET 'audio" and GET 'image' if the audio recording hasn't already been fetched
     }
   }, [currentVocabId, lessonData])
 
@@ -138,7 +132,7 @@ const WordDrawer = ({ navigation }) => {
               currentCourseId,
               currentUnitId,
               currentLessonId,
-              currentVocabId,
+              updatedVocabItem._id,
               audioRecording,
             )
             updatedVocabItem = audioResponse.result
@@ -414,15 +408,15 @@ const WordDrawer = ({ navigation }) => {
   )
 }
 
-WordDrawer.propTypes = {
+VocabDrawer.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     goBack: PropTypes.func,
   }),
 }
 
-WordDrawer.defaultProps = {
+VocabDrawer.defaultProps = {
   navigation: { navigate: () => null, goBack: () => null },
 }
 
-export default WordDrawer
+export default VocabDrawer

@@ -27,7 +27,7 @@ router.get(
 
     // Open a stream from the S3 bucket
     const s3Stream = downloadFile(
-      `files/${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio`,
+      `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio.m4a`,
     ).createReadStream();
 
     // Setup callbacks for stream error and stream close
@@ -74,20 +74,27 @@ router.post(
       );
 
       if (found >= 0) {
-        // Read in the audio file
+        // Determines file type
+        const nameSplit = req.files.file.filename.split('.');
+        let fileType = 'm4a';
+        if (nameSplit.length === 2) {
+          fileType = nameSplit[1];
+        }
+
+        // Reads in the audio file
         const filePath = req.files.file.file;
         const fileContent = fs.readFileSync(filePath);
 
         // Upload file to S3
         await uploadFile(
           fileContent,
-          `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio`,
+          `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio.${fileType}`,
         );
 
         // Upadte path to audio file in MongoDB
         lesson.vocab[
           found
-        ].audio = `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio`;
+        ].audio = `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio.${fileType}`;
 
         await lesson.save();
 

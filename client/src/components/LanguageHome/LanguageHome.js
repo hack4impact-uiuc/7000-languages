@@ -9,6 +9,8 @@ import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { downloadAudioFile } from 'api'
 import { useSelector } from 'react-redux'
+import { Audio } from 'expo-av'
+import { useErrorWrap, useTrackPromise } from 'hooks'
 
 const { width } = Dimensions.get('window')
 
@@ -47,15 +49,42 @@ const LanguageHome = ({
   nextPageCallback,
   data,
 }) => {
-  const { currentCourseId, currentUnitId, currentLessonId } = useSelector((state) => state.language)
+  const errorWrap = useErrorWrap()
+  const trackPromise = useTrackPromise()
+  const { currentCourseId, currentUnitId, currentLessonId } = useSelector(
+    (state) => state.language,
+  )
 
-  const getAudio =  async (vocab_id) => {
-    // courseId,
-    // unitId,
-    // lessonId,
-    // vocabId,
-    const uri = await downloadAudioFile(currentCourseId, currentUnitId, currentLessonId, vocab_id);
-    console.log(uri);
+  const getAudio = async (vocabId) => {
+    await errorWrap(async () => {
+      // TODO: Add if statement checking if uri is already in redux. If it is, then don't download audio file
+      // TODO: don't hard-code fileType; instead, refer to audio path in Redux for the file type
+
+      const fileType = 'm4a'
+
+      // Downloads audio file and gets Filesystem uri
+      const uri = await trackPromise(
+        downloadAudioFile(
+          currentCourseId,
+          currentUnitId,
+          currentLessonId,
+          vocabId,
+          fileType,
+        ),
+      )
+
+      if (uri) {
+        // TODO: save uri in Redux
+
+        // Plays audio recording
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: false,
+          playsInSilentModeIOS: true,
+        })
+        const { sound } = await Audio.Sound.createAsync({ uri })
+        await sound.playAsync()
+      }
+    })
   }
 
   switch (isLessonHome) {
