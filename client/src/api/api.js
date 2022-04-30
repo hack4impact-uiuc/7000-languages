@@ -174,25 +174,6 @@ export const uploadAudioFile = async (
   return body
 }
 
-export const updateVocabItem = async (
-  courseID,
-  lessonID,
-  vocabID,
-  vocabUpdate,
-) => {
-  const body = {
-    course_id: courseID,
-    lesson_id: lessonID,
-    vocab_id: vocabID,
-    vocab_update: vocabUpdate,
-  }
-  const requestString = '/language/vocab'
-  const res = await instance.patch(requestString, body)
-
-  if (!res?.data?.success) throw new Error(res?.data?.message)
-  return res.data
-}
-
 /* Audio Endpoints */
 export const uploadImageFile = async (
   courseId,
@@ -224,4 +205,3 @@ export const uploadImageFile = async (
   }
   return body
 }
-

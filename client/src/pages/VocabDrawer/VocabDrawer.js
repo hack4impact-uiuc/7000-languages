@@ -15,7 +15,12 @@ import RecordAudioView from 'components/RecordAudioView'
 import { useSelector, useDispatch } from 'react-redux' // import at the top of the file
 import { addVocab, updateVocab } from 'slices/language.slice'
 
-import { createVocabItem, updateVocabItem, uploadAudioFile, uploadImageFile } from 'api'
+import {
+  createVocabItem,
+  updateVocabItem,
+  uploadAudioFile,
+  uploadImageFile,
+} from 'api'
 
 import { useErrorWrap } from 'hooks'
 
@@ -181,8 +186,6 @@ const WordDrawer = ({ navigation }) => {
           // Update vocab item in Redux store
           dispatch(updateVocab({ vocab: updatedVocabItem }))
         }
-
-        
       },
       () => {
         close() // on success, close the modal
