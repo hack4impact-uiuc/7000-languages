@@ -105,3 +105,5 @@ router.post(
     return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
   }),
 );
+
+module.exports = router;
