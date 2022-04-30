@@ -173,3 +173,55 @@ export const uploadAudioFile = async (
   }
   return body
 }
+
+export const updateVocabItem = async (
+  courseID,
+  lessonID,
+  vocabID,
+  vocabUpdate,
+) => {
+  const body = {
+    course_id: courseID,
+    lesson_id: lessonID,
+    vocab_id: vocabID,
+    vocab_update: vocabUpdate,
+  }
+  const requestString = '/language/vocab'
+  const res = await instance.patch(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+/* Audio Endpoints */
+export const uploadImageFile = async (
+  courseId,
+  unitId,
+  lessonId,
+  vocabId,
+  uri,
+) => {
+  const res = await FileSystem.uploadAsync(
+    `${BASE_URL}/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`,
+    uri,
+    {
+      headers: {
+        Authorization: `Bearer ${cachedJWTToken}`,
+      },
+      httpMethod: 'POST',
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      fieldName: 'file',
+      parameters: {
+        test: 'test',
+      },
+    },
+  )
+
+  const body = JSON.parse(res.body)
+
+  if (!body.success || body.success === 'false') {
+    throw new Error(body.message)
+  }
+  return body
+}
+
