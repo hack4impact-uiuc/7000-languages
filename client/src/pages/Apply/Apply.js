@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   checkboxes: {
-    width: '100%',
+    marginTop: 10,
+    width: '98%',
   },
   inputHeight: {
     height: 50,
@@ -118,7 +119,7 @@ const Apply = ({ navigation }) => {
         admin_email: email,
         name: language,
         alternative_name: otherNames,
-        description: description,
+        description,
         iso: isoCode,
         glotto: glottoCode,
         population,
@@ -442,7 +443,6 @@ const Apply = ({ navigation }) => {
                   />
                 </View>
               </FormControl>
-
               <View style={styles.checkboxes}>
                 <FormControl is Required isInvalid={'acceptTerms' in errors}>
                   <Checkbox
@@ -470,6 +470,35 @@ const Apply = ({ navigation }) => {
                         >
                           Terms and Conditions
                         </Text>
+                      </Text>
+                    </View>
+                  </Checkbox>
+                </FormControl>
+              </View>
+
+              <View style={styles.checkboxes}>
+                <FormControl is Required isInvalid={'acceptTerms' in errors}>
+                  <Checkbox
+                    value="accepted"
+                    colorScheme="danger"
+                    onChange={setAcceptTerms}
+                  >
+                    {'acceptTerms' in errors ? (
+                      <FormControl.ErrorMessage>
+                        Required.
+                      </FormControl.ErrorMessage>
+                    ) : null}
+                    <View>
+                      <Text
+                        fontFamily="body"
+                        fontWeight="regular"
+                        color="black"
+                        fontStyle="normal"
+                        fontSize="md"
+                      >
+                        I would like a team member from 7000 Languages to follow
+                        up with me about creating additional resources for my
+                        language.
                       </Text>
                     </View>
                   </Checkbox>

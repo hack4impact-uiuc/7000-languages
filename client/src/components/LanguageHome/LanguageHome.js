@@ -100,8 +100,8 @@ const LanguageHome = ({
               {data.map((element) => (
                 <StyledCard
                   key={`${element.name}${element.body}`}
-                  titleText={element.name}
-                  bodyText={element.body}
+                  titleText={element.body}
+                  bodyText={element.name}
                   imageUri={element.imageUri}
                   showVolumeIcon={element.audio}
                   volumeIconCallback={() => null}
