@@ -91,7 +91,12 @@ router.post(
       lessonData.vocab.push(vocab);
       await lessonData.save();
 
-      return sendResponse(res, 200, SUCCESS_POSTING_VOCAB_DATA, vocab);
+      return sendResponse(
+        res,
+        200,
+        SUCCESS_POSTING_VOCAB_DATA,
+        lessonData.vocab[lessonData.vocab.length - 1],
+      );
     } catch (error) {
       return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
     }

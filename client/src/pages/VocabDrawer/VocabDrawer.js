@@ -15,9 +15,14 @@ import RecordAudioView from 'components/RecordAudioView'
 import { useSelector, useDispatch } from 'react-redux' // import at the top of the file
 import { addVocab, updateVocab } from 'slices/language.slice'
 
-import { createVocabItem, updateVocabItem, uploadAudioFile } from 'api'
+import {
+  createVocabItem,
+  updateVocabItem,
+  uploadAudioFile,
+  downloadAudioFile,
+} from 'api'
 
-import { useErrorWrap } from 'hooks'
+import { useErrorWrap, useTrackPromise } from 'hooks'
 
 const expoImageSettings = {
   mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -47,15 +52,10 @@ const styles = StyleSheet.create({
   },
 })
 
-const WordDrawer = ({ navigation }) => {
-  /* TODO:
-    1. replace original and translated useState with useSelector (Redux) code
-    2. Check if there is a selected vocab in Redux. If so, populate the drawer with the vocab item data. Also add some
-    marker in state that indicates whether we are using this WordDrawer to add a new vocab item or edit an existing vocab item.
-  */
-
+const VocabDrawer = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
+  const trackPromise = useTrackPromise()
 
   const {
     currentCourseId,
@@ -78,17 +78,51 @@ const WordDrawer = ({ navigation }) => {
   const [listeningSound, setListeningSound] = useState(null) // the data for the recording when the user is listening to it
 
   useEffect(() => {
-    const index = lessonData.vocab.findIndex(
-      (element) => element._id === currentVocabId,
-    )
+    const setData = async () => {
+      const index = lessonData.vocab.findIndex(
+        (element) => element._id === currentVocabId,
+      )
 
-    if (index >= 0) {
-      const vocabItem = lessonData.vocab[index]
-      setOriginalText(vocabItem.original)
-      setTranslatedText(vocabItem.translation)
-      setAdditionalInformation(vocabItem.notes)
-      // TODO: call GET 'audio" and GET 'image'
+      if (index >= 0) {
+        const vocabItem = lessonData.vocab[index]
+        setOriginalText(vocabItem.original)
+        setTranslatedText(vocabItem.translation)
+        setAdditionalInformation(vocabItem.notes)
+        // TODO: call GET 'image'
+
+        // Check if the audio has already been fetched
+        if (vocabItem.audioURI) {
+          setAudioRecording(vocabItem.audioURI)
+        } else if (vocabItem.audio !== '') {
+          const filePath = vocabItem.audio
+          const splitPath = filePath.split('.')
+
+          // Get the file type from the vocabItem's audio field
+          let fileType = 'm4a'
+
+          if (splitPath.length === 2) {
+            // eslint-disable-next-line prefer-destructuring
+            fileType = splitPath[1]
+          }
+
+          // Downloads audio file and gets Filesystem uri
+          const uri = await trackPromise(
+            downloadAudioFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              currentVocabId,
+              fileType,
+            ),
+          )
+
+          setAudioRecording(uri)
+          setRecordingState(RECORDING.COMPLETE)
+        }
+      }
     }
+
+    setData()
   }, [currentVocabId, lessonData])
 
   /*
@@ -112,17 +146,16 @@ const WordDrawer = ({ navigation }) => {
   const success = async () => {
     errorWrap(
       async () => {
-        const vocabItem = {
-          original: originalText,
-          translation: translatedText,
-          image: '',
-          audio: '',
-          notes: additionalInformation,
-        }
-
         let updatedVocabItem = null
-
         if (currentVocabId === '') {
+          const vocabItem = {
+            original: originalText,
+            translation: translatedText,
+            image: '',
+            audio: '',
+            notes: additionalInformation,
+          }
+
           // Need to create a new vocab item
           const vocabItemResponse = await createVocabItem(
             currentCourseId,
@@ -138,7 +171,7 @@ const WordDrawer = ({ navigation }) => {
               currentCourseId,
               currentUnitId,
               currentLessonId,
-              currentVocabId,
+              updatedVocabItem._id,
               audioRecording,
             )
             updatedVocabItem = audioResponse.result
@@ -146,6 +179,12 @@ const WordDrawer = ({ navigation }) => {
           // Update vocab item in Redux store
           dispatch(addVocab({ vocab: updatedVocabItem }))
         } else {
+          const vocabItem = {
+            original: originalText,
+            translation: translatedText,
+            notes: additionalInformation,
+          }
+
           // Updated vocab item text
           const vocabItemResponse = await updateVocabItem(
             currentCourseId,
@@ -414,15 +453,15 @@ const WordDrawer = ({ navigation }) => {
   )
 }
 
-WordDrawer.propTypes = {
+VocabDrawer.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     goBack: PropTypes.func,
   }),
 }
 
-WordDrawer.defaultProps = {
+VocabDrawer.defaultProps = {
   navigation: { navigate: () => null, goBack: () => null },
 }
 
-export default WordDrawer
+export default VocabDrawer

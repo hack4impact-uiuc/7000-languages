@@ -160,9 +160,6 @@ export const uploadAudioFile = async (
       httpMethod: 'POST',
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
       fieldName: 'file',
-      parameters: {
-        test: 'test',
-      },
     },
   )
 
@@ -172,4 +169,31 @@ export const uploadAudioFile = async (
     throw new Error(body.message)
   }
   return body
+}
+
+/* Audio Endpoints */
+export const downloadAudioFile = async (
+  courseId,
+  unitId,
+  lessonId,
+  vocabId,
+  fileType,
+) => {
+  const downloadResumable = FileSystem.createDownloadResumable(
+    `${BASE_URL}/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`,
+    `${FileSystem.documentDirectory}${vocabId}.${fileType}`,
+    {
+      headers: {
+        Authorization: `Bearer ${cachedJWTToken}`,
+      },
+      httpMethod: 'GET',
+      downloadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
+    },
+  )
+  try {
+    const { uri } = await downloadResumable.downloadAsync()
+    return uri
+  } catch (e) {
+    throw new Error(e.message)
+  }
 }

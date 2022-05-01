@@ -25,22 +25,42 @@ router.get(
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
-    // Open a stream from the S3 bucket
-    const s3Stream = downloadFile(
-      `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.jpeg`,
-    ).createReadStream();
+    // Get the image file path from AWS
+    let lesson = await models.Lesson.findById(lesson_id); // find a lesson
+    if (lesson) {
+      const found = lesson.vocab.findIndex(
+        (element) => element._id.toString() === vocab_id,
+      );
 
-    // Setup callbacks for stream error and stream close
-    s3Stream
-      .on('error', (err) => {
-        res.json(`S3 Error:${err}`);
-      })
-      .on('close', () => {
-        res.end();
-      });
+      if (found >= 0) {
+        const vocabItem = lesson.vocab[found];
 
-    // Pipe the stream to the client
-    s3Stream.pipe(res);
+        let fileType = 'jpeg';
+        const splitImagePath = vocabItem.image.split('.');
+
+        if (splitImagePath.length === 2) {
+          fileType = [1];
+        }
+
+        // Open a stream from the S3 bucket
+        const s3Stream = downloadFile(
+          `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.${fileType}`,
+        ).createReadStream();
+
+        // Setup callbacks for stream error and stream close
+        s3Stream
+          .on('error', (err) => {
+            res.json(`S3 Error:${err}`);
+          })
+          .on('close', () => {
+            res.end();
+          });
+
+        // Pipe the stream to the client
+        s3Stream.pipe(res);
+      }
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
   }),
 );
 
@@ -74,20 +94,27 @@ router.post(
       );
 
       if (found >= 0) {
-        // Read in the audio file
+        // Determines file type
+        const nameSplit = req.files.file.filename.split('.');
+        let fileType = 'm4a';
+        if (nameSplit.length === 2) {
+          fileType = nameSplit[1];
+        }
+
+        // Read in the image file
         const filePath = req.files.file.file;
         const fileContent = fs.readFileSync(filePath);
 
         // Upload file to S3
         await uploadFile(
           fileContent,
-          `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.jpeg`,
+          `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.${fileType}`,
         );
 
-        // Upadte path to audio file in MongoDB
+        // Upadte path to image file in MongoDB
         lesson.vocab[
           found
-        ].image = `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.jpeg`;
+        ].image = `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.${fileType}`;
 
         await lesson.save();
 
