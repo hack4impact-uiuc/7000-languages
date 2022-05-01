@@ -110,9 +110,9 @@ const languageSlice = createSlice({
       state.allCourses[courseIdx].num_units = payload.numSelected
     },
     pushAudioURI: (state, { payload }) => {
-      const {vocab_id, uri} = payload;
+      const { vocabId, uri } = payload
       const vocabIndex = state.lessonData.vocab.findIndex(
-        (element) => element._id === vocab_id,
+        (element) => element._id === vocabId,
       )
       state.lessonData.vocab[vocabIndex].audioURI = uri
     },

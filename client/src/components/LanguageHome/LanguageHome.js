@@ -8,9 +8,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { downloadAudioFile } from 'api'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Audio } from 'expo-av'
 import { useErrorWrap, useTrackPromise } from 'hooks'
+import { pushAudioURI } from 'slices/language.slice'
 
 const { width } = Dimensions.get('window')
 
@@ -51,31 +52,52 @@ const LanguageHome = ({
 }) => {
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
-  const { currentCourseId, currentUnitId, currentLessonId } = useSelector(
-    (state) => state.language,
-  )
+  const dispatch = useDispatch()
+  const {
+    currentCourseId, currentUnitId, currentLessonId, lessonData,
+  } = useSelector((state) => state.language)
 
   const getAudio = async (vocabId) => {
     await errorWrap(async () => {
-      // TODO: Add if statement checking if uri is already in redux. If it is, then don't download audio file
-      // TODO: don't hard-code fileType; instead, refer to audio path in Redux for the file type
-
-      const fileType = 'm4a'
-
-      // Downloads audio file and gets Filesystem uri
-      const uri = await trackPromise(
-        downloadAudioFile(
-          currentCourseId,
-          currentUnitId,
-          currentLessonId,
-          vocabId,
-          fileType,
-        ),
+      const vocabIndex = lessonData.vocab.findIndex(
+        (element) => element._id === vocabId,
       )
 
-      if (uri) {
-        // TODO: save uri in Redux
+      const vocabItem = lessonData.vocab[vocabIndex]
 
+      let uri = null
+
+      // Check if the audio has already been fetched
+      if (vocabItem.audioURI) {
+        uri = vocabItem.audioURI
+      } else {
+        const filePath = vocabItem.audio
+        const splitPath = filePath.split('.')
+
+        // Get the file type from the vocabItem's audio field
+        let fileType = 'm4a'
+
+        if (splitPath.length === 2) {
+          // eslint-disable-next-line prefer-destructuring
+          fileType = splitPath[1]
+        }
+
+        // Downloads audio file and gets Filesystem uri
+        uri = await trackPromise(
+          downloadAudioFile(
+            currentCourseId,
+            currentUnitId,
+            currentLessonId,
+            vocabId,
+            fileType,
+          ),
+        )
+
+        // Add to redux
+        dispatch(pushAudioURI({ vocabId, uri }))
+      }
+
+      if (uri) {
         // Plays audio recording
         await Audio.setAudioModeAsync({
           allowsRecordingIOS: false,
