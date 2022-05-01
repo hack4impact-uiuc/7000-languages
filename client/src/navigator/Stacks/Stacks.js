@@ -132,6 +132,7 @@ export const HomeNavigator = ({ courseId }) => (
           color: 'black',
         },
         headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
       })}
     />
     <Stack.Screen

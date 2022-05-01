@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 2,
     borderWidth: 0.5,
-    padding: 5,
+    padding: 8,
+    marginBottom: 10,
     backgroundColor: colors.blue.light,
     borderColor: colors.blue.light,
   },
@@ -61,44 +62,56 @@ const CreateUnit = ({ navigation }) => {
 
   const body = (
     <>
-      <View style={styles.container}>
-        <View style={styles.textRow}>
-          <Foundation name="lightbulb" size={24} color={colors.blue.dark} />
-          <Text
-            fontFamily="heading"
-            fontWeight="regular"
-            fontStyle="normal"
-            color={colors.blue.dark}
-          >
-            {' '}
-            Suggestion{' '}
+      <View
+        style={{
+          width: '97%',
+          marginHorizontal: '1%',
+          justifyContent: 'center',
+        }}
+      >
+        <View style={styles.container}>
+          <View style={styles.textRow}>
+            <Foundation name="lightbulb" size={20} color={colors.blue.dark} />
+            <Text
+              fontSize="md"
+              paddingBottom={2}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
+              color={colors.blue.dark}
+            >
+              {' '}
+              Suggestion{' '}
+            </Text>
+          </View>
+          <Text color={colors.blue.dark} fontSize="md">
+            When creating a unit, think about how it will be used. More text
+            here explaining what they should look for when making a unit.
           </Text>
         </View>
-        <Text color={colors.blue.dark} fontSize="md">
-          When creating a unit, think about how it will be used. More text here
-          explaining what they should look for when making a unit.
+
+        <Text fontSize="md">Give your unit a name</Text>
+        <Input
+          size="xl"
+          placeholder=""
+          returnKeyType="done"
+          onChangeText={(text) => setName(text)}
+        />
+
+        <Text paddingTop={2} fontSize="md">
+          What is the purpose of this unit?
         </Text>
+
+        <TextArea
+          size="xl"
+          h={40}
+          placeholder=""
+          keyboardType="default"
+          returnKeyType="done"
+          blurOnSubmit
+          onChangeText={(text) => setPurpose(text)}
+        />
       </View>
-
-      <Text>Give your unit a name</Text>
-      <Input
-        size="xl"
-        placeholder=""
-        returnKeyType="done"
-        onChangeText={(text) => setName(text)}
-      />
-
-      <Text>What is the purpose of this unit?</Text>
-
-      <TextArea
-        size="xl"
-        h={40}
-        placeholder=""
-        keyboardType="default"
-        returnKeyType="done"
-        blurOnSubmit
-        onChangeText={(text) => setPurpose(text)}
-      />
     </>
   )
 

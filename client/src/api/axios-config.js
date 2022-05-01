@@ -27,7 +27,8 @@ const addAuthHeader = async (config) => {
   const updatedConfig = config
 
   // Add JWT Token to header
-  if (cachedJWTToken) updatedConfig.headers.Authorization = `Bearer ${cachedJWTToken}`
+  if (cachedJWTToken)
+    updatedConfig.headers.Authorization = `Bearer ${cachedJWTToken}`
 
   return updatedConfig
 }

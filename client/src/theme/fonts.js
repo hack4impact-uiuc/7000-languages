@@ -12,6 +12,9 @@ export const fontAssets = [
     GT_Haptik_bold: require('../../assets/fonts/GT-Haptik-Bold.ttf'),
   },
   {
+    GT_Haptik_bold_font: require('../../assets/fonts/GT-Haptik-Bold.ttf'),
+  },
+  {
     GT_Haptik_bold_italic: require('../../assets/fonts/GT-Haptik-Bold-Oblique.ttf'),
   },
   {

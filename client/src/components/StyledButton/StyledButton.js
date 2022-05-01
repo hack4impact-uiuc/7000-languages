@@ -11,6 +11,7 @@ const StyledButton = ({
   rightIcon,
   fontSize,
   style,
+  isDisabled,
 }) => (
   <Button
     onPress={onPress}
@@ -19,6 +20,7 @@ const StyledButton = ({
     leftIcon={leftIcon}
     endIcon={rightIcon}
     style={style}
+    isDisabled={isDisabled}
   >
     {title}
   </Button>
@@ -32,6 +34,7 @@ StyledButton.propTypes = {
   rightIcon: PropTypes.element,
   fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   style: ViewPropTypes.style,
+  isDisabled: PropTypes.bool,
 }
 
 StyledButton.defaultProps = {
@@ -42,6 +45,7 @@ StyledButton.defaultProps = {
   onPress: () => {},
   fontSize: 'lg',
   style: {},
+  isDisabled: false,
 }
 
 export default StyledButton
