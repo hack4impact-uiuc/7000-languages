@@ -167,14 +167,13 @@ const DrawerMenuContainer = (props) => {
                 fontSize="sm"
                 textAlign="left"
               >
-                Do you know an indigenous language that you would like to share
-                with the world?
+                
+                {`Do you know an indigenous language that you would like to share with the world?\n`}
                 <Text
                   fontFamily="heading"
                   fontWeight="regular"
                   fontStyle="normal"
                 >
-                  {' '}
                   Become a contributor.
                 </Text>
               </Text>
