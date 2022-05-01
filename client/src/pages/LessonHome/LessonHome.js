@@ -4,16 +4,16 @@ import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
-import { getLesson } from 'api'
+import { getLesson, downloadImageFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
   const dispatch = useDispatch()
-  const { currentCourseId, currentLessonId, lessonData } = useSelector(
-    (state) => state.language,
-  )
+  const {
+    currentCourseId, currentLessonId, currentUnitId, lessonData,
+  } = useSelector((state) => state.language)
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
@@ -26,11 +26,10 @@ const LessonHome = ({ navigation }) => {
    * Source: https://reactnavigation.org/docs/preventing-going-back/
    */
   React.useEffect(
-    () =>
-      navigation.addListener('beforeRemove', (e) => {
-        dispatch(resetField({ key: 'lessonData' }))
-        navigation.dispatch(e.data.action)
-      }),
+    () => navigation.addListener('beforeRemove', (e) => {
+      dispatch(resetField({ key: 'lessonData' }))
+      navigation.dispatch(e.data.action)
+    }),
     [navigation],
   )
 
@@ -59,28 +58,63 @@ const LessonHome = ({ navigation }) => {
    * Updates the formatted vocab data that will be presented on this page
    */
   useEffect(() => {
-    if (lessonData?.vocab) {
-      let formattedVocabData = []
+    const getData = async () => {
+      if (lessonData?.vocab) {
+        let formattedVocabData = []
 
-      for (let i = 0; i < lessonData.vocab.length; i += 1) {
-        const item = lessonData.vocab[i]
+        for (let i = 0; i < lessonData.vocab.length; i += 1) {
+          const item = lessonData.vocab[i]
 
-        const formattedItem = {
-          _id: item._id,
-          name: item.original,
-          body: item.translation,
-          audio: item.audio !== '',
-          _order: item._order,
+          const formattedItem = {
+            _id: item._id,
+            name: item.original,
+            body: item.translation,
+            audio: item.audio !== '',
+            _order: item._order,
+            imageURI: '',
+            image: item.image,
+          }
+
+          if (item.imageURI) {
+            formattedItem.imageURI = item.imageURI
+          } else if (item.image !== '') {
+            const filePath = item.image
+            const splitPath = filePath.split('.')
+
+            // Get the file type from the vocabItem's audio field
+            let fileType = 'jpg'
+
+            if (splitPath.length === 2) {
+              // eslint-disable-next-line prefer-destructuring
+              fileType = splitPath[1]
+            }
+
+            // Need to fetch image uri
+            // eslint-disable-next-line no-await-in-loop
+            const uri = await trackPromise(
+              downloadImageFile(
+                currentCourseId,
+                currentUnitId,
+                currentLessonId,
+                item._id,
+                fileType,
+              ),
+            )
+
+            formattedItem.imageURI = uri
+          }
+
+          formattedVocabData.push(formattedItem)
         }
-        formattedVocabData.push(formattedItem)
+
+        formattedVocabData = formattedVocabData.sort(
+          (a, b) => a._order - b._order,
+        )
+
+        setData(formattedVocabData)
       }
-
-      formattedVocabData = formattedVocabData.sort(
-        (a, b) => a._order - b._order,
-      )
-
-      setData(formattedVocabData)
     }
+    getData()
   }, [lessonData])
 
   /**

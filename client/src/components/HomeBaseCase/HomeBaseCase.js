@@ -25,7 +25,7 @@ const HomeBaseCase = ({ navigation }) => (
       color="gray.medium"
       fontSize="xl"
     >
-      Welcome, Estrella.
+      Welcome!
     </Text>
     <Text
       color="gray.medium"
@@ -34,7 +34,7 @@ const HomeBaseCase = ({ navigation }) => (
       paddingBottom="10px"
     >
       {`Looks like you aren't a learner in
-any courses yet!`}
+any courses yet.`}
     </Text>
     <StyledButton
       title="Search Courses"

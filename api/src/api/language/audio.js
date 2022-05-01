@@ -58,7 +58,10 @@ router.get(
 
         // Pipe the stream to the client
         s3Stream.pipe(res);
+      } else {
+        return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
       }
+    } else {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
   }),

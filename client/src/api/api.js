@@ -181,7 +181,62 @@ export const downloadAudioFile = async (
 ) => {
   const downloadResumable = FileSystem.createDownloadResumable(
     `${BASE_URL}/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`,
-    `${FileSystem.documentDirectory}${vocabId}.${fileType}`,
+    `${FileSystem.documentDirectory}${vocabId}-audio.${fileType}`,
+    {
+      headers: {
+        Authorization: `Bearer ${cachedJWTToken}`,
+      },
+      httpMethod: 'GET',
+      downloadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
+    },
+  )
+  try {
+    const { uri } = await downloadResumable.downloadAsync()
+    return uri
+  } catch (e) {
+    throw new Error(e.message)
+  }
+}
+
+/* Image Endpoints */
+export const uploadImageFile = async (
+  courseId,
+  unitId,
+  lessonId,
+  vocabId,
+  uri,
+) => {
+  const res = await FileSystem.uploadAsync(
+    `${BASE_URL}/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`,
+    uri,
+    {
+      headers: {
+        Authorization: `Bearer ${cachedJWTToken}`,
+      },
+      httpMethod: 'POST',
+      uploadType: FileSystem.FileSystemUploadType.MULTIPART,
+      fieldName: 'file',
+    },
+  )
+
+  const body = JSON.parse(res.body)
+
+  if (!body.success || body.success === 'false') {
+    throw new Error(body.message)
+  }
+  return body
+}
+
+export const downloadImageFile = async (
+  courseId,
+  unitId,
+  lessonId,
+  vocabId,
+  fileType,
+) => {
+  const downloadResumable = FileSystem.createDownloadResumable(
+    `${BASE_URL}/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`,
+    `${FileSystem.documentDirectory}${vocabId}-image.${fileType}`,
     {
       headers: {
         Authorization: `Bearer ${cachedJWTToken}`,
