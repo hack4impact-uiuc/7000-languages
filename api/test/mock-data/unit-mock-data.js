@@ -570,6 +570,8 @@ module.exports.PATCH_UNIT_ORDER = {
 module.exports.PATCH_UNIT_NONEXISTENT_FIELD = {
   course_id: '62391a30487d5ae343c82311',
   hello: 'hi',
+};
+
 module.exports.POST_SIMPLE_UNIT = {
   course_id: '62391a30487d5ae343c82311',
   name: 'verbs',
