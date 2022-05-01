@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.gray.light,
+    backgroundColor: colors.white.dark,
   },
 })
 const HomeBaseCase = ({ navigation }) => (
@@ -25,7 +25,7 @@ const HomeBaseCase = ({ navigation }) => (
       color="gray.medium"
       fontSize="xl"
     >
-      Uh, Oh!
+      Welcome!
     </Text>
     <Text
       color="gray.medium"
@@ -33,8 +33,8 @@ const HomeBaseCase = ({ navigation }) => (
       textAlign="center"
       paddingBottom="10px"
     >
-      {`Looks like you aren't a student in
-any courses yet!`}
+      {`Looks like you aren't a learner in
+any courses yet.`}
     </Text>
     <StyledButton
       title="Search Courses"

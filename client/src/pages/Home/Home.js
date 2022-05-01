@@ -59,7 +59,6 @@ const Home = ({ navigation, courseId }) => {
     return <HomeBaseCase navigation={navigation} />
   }
 
-  // TODO: add logic for rendering course page
   return (
     <CourseHome
       navigation={navigation}

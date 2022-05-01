@@ -133,6 +133,9 @@ module.exports.POST_FIRST_VOCAB_ITEM_EXPECTED = {
   _order: 15,
   original: 'Hello',
   translation: 'Hola',
+  audio: '',
+  image: '',
+  notes: '',
 };
 
 module.exports.POST_SECOND_VOCAB_ITEM = {
@@ -148,6 +151,9 @@ module.exports.POST_SECOND_VOCAB_ITEM_EXPECTED = {
   _order: 16,
   original: 'Morning',
   translation: 'Manana',
+  audio: '',
+  image: '',
+  notes: '',
 };
 
 module.exports.POST_DETAILED_VOCAB_ITEM = {

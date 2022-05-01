@@ -26,10 +26,11 @@ const LessonHome = ({ navigation }) => {
    * Source: https://reactnavigation.org/docs/preventing-going-back/
    */
   React.useEffect(
-    () => navigation.addListener('beforeRemove', (e) => {
-      dispatch(resetField({ key: 'lessonData' }))
-      navigation.dispatch(e.data.action)
-    }),
+    () =>
+      navigation.addListener('beforeRemove', (e) => {
+        dispatch(resetField({ key: 'lessonData' }))
+        navigation.dispatch(e.data.action)
+      }),
     [navigation],
   )
 
