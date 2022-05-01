@@ -13,11 +13,11 @@ import {
   FormControl,
   TextArea,
 } from 'native-base'
-import useErrorWrap from 'hooks/useErrorWrap'
+import { useErrorWrap } from 'hooks'
 import { createCourse } from 'api'
 import { getAllUserCourses } from 'utils/languageHelper'
 import { useDispatch } from 'react-redux'
-import { updateAllCourses } from 'slices/language.slice'
+import { setField } from 'slices/language.slice'
 
 const styles = StyleSheet.create({
   root: {
@@ -144,7 +144,7 @@ const Apply = ({ navigation }) => {
 
         if (courses.length > 0) {
           // On success, update the drawer tab
-          dispatch(updateAllCourses({ allCourses: courses }))
+          dispatch(setField({ key: 'allCourses', value: courses }))
           // Navigate to newly created course
           navigation.navigate(courseId)
         }

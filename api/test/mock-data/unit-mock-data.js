@@ -570,4 +570,40 @@ module.exports.PATCH_UNIT_ORDER = {
 module.exports.PATCH_UNIT_NONEXISTENT_FIELD = {
   course_id: '62391a30487d5ae343c82311',
   hello: 'hi',
+module.exports.POST_SIMPLE_UNIT = {
+  course_id: '62391a30487d5ae343c82311',
+  name: 'verbs',
+  selected: true,
+  description: 'simple unit',
+};
+
+module.exports.POST_EXPECTED_UNIT = {
+  _course_id: '62391a30487d5ae343c82311',
+  _order: 10,
+  name: 'verbs',
+  selected: true,
+  description: 'simple unit',
+  num_lessons: 0,
+};
+
+module.exports.POST_MISSING_REQ_UNIT = {
+  course_id: '62391a30487d5ae343c82311',
+  selected: true,
+  description: 'simple unit',
+};
+
+module.exports.POST_EXTRA_FIELD_UNIT = {
+  course_id: '62391a30487d5ae343c82311',
+  name: 'verbs',
+  selected: true,
+  description: 'simple unit',
+  hi: 'hi',
+  num_lessons: 0,
+};
+
+module.exports.POST_INVALID_COURSE_UNIT = {
+  course_id: '62391a30487d5ae343c82123',
+  name: 'verbs',
+  selected: true,
+  description: 'invalid',
 };
