@@ -7,7 +7,10 @@ const {
   requireLanguageAuthorization,
 } = require('../../middleware/authorization');
 const mongoose = require('mongoose');
-const { updateDocumentsInTransaction } = require('../../utils/languageHelper');
+const {
+  updateDocumentsInTransaction,
+  patchDocument,
+} = require('../../utils/languageHelper');
 const { models } = require('../../models/index.js');
 const _ = require('lodash');
 
@@ -36,7 +39,7 @@ router.get(
       lessons: lessons,
     };
     return sendResponse(res, 200, 'Successfully fetched course', returnedData);
-                                                                                                           }),
+  }),
 );
 
 router.patch(
@@ -44,15 +47,22 @@ router.patch(
   requireAuthentication,
   requireLanguageAuthorization,
   errorWrap(async (req, res) => {
-    const updates = req.body;
+    let updates = req.body;
+    if ('course_id' in updates) {
+      updates = _.omit(updates, ['course_id']);
+    }
+    if ('order' in updates) {
+      updates = _.omit(updates, ['order']);
+    }
 
     const unit_id = req.params.id;
 
-    const unit = await models.Unit.findById(unit_id);
+    let unit = await models.Unit.findById(unit_id);
 
     patchDocument(unit, updates);
 
     await unit.save();
+
     return sendResponse(res, 200, 'Successfully updated unit', unit);
   }),
 );

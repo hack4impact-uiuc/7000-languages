@@ -507,3 +507,67 @@ module.exports.PUT_UNIT_EXTRA_FIELDS_EXPECTED = [
       'Vel aperiam minima magnam hic pariatur. Rem neque culpa. Quae sit in. Magni enim illum architecto et labore quo ut accusamus.',
   },
 ];
+
+module.exports.PATCH_UNIT_NAME_EXPECTED = {
+  _id: '62391a30487d5ae343c82312',
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'Patched!',
+  _order: 0,
+  selected: true,
+  description:
+    'Omnis quam pariatur quasi id aperiam reprehenderit. Accusantium sint sunt nihil id eveniet alias aut fuga ut. Quae amet qui vel doloremque doloremque. Est doloribus qui ea enim voluptas nemo voluptatibus qui. Labore sed explicabo tenetur repellendus odio odit quas. Aperiam accusantium et.',
+};
+
+module.exports.PATCH_UNIT_NAME = {
+  course_id: '62391a30487d5ae343c82311',
+  name: 'Patched!',
+};
+
+module.exports.PATCH_UNIT_SELECTED_EXPECTED = {
+  _id: '62391a30487d5ae343c82312',
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'ratione',
+  _order: 0,
+  selected: false,
+  description:
+    'Omnis quam pariatur quasi id aperiam reprehenderit. Accusantium sint sunt nihil id eveniet alias aut fuga ut. Quae amet qui vel doloremque doloremque. Est doloribus qui ea enim voluptas nemo voluptatibus qui. Labore sed explicabo tenetur repellendus odio odit quas. Aperiam accusantium et.',
+};
+
+module.exports.PATCH_UNIT_SELECTED = {
+  course_id: '62391a30487d5ae343c82311',
+  selected: false,
+};
+
+module.exports.PATCH_UNIT_DESCRIPTION_EXPECTED = {
+  _id: '62391a30487d5ae343c82312',
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'ratione',
+  _order: 0,
+  selected: true,
+  description: 'Patched!',
+};
+
+module.exports.PATCH_UNIT_DESCRIPTION = {
+  course_id: '62391a30487d5ae343c82311',
+  description: 'Patched!',
+};
+
+module.exports.PATCH_UNIT_NO_CHANGE_EXPECTED = {
+  _id: '62391a30487d5ae343c82312',
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'ratione',
+  _order: 0,
+  selected: true,
+  description:
+    'Omnis quam pariatur quasi id aperiam reprehenderit. Accusantium sint sunt nihil id eveniet alias aut fuga ut. Quae amet qui vel doloremque doloremque. Est doloribus qui ea enim voluptas nemo voluptatibus qui. Labore sed explicabo tenetur repellendus odio odit quas. Aperiam accusantium et.',
+};
+
+module.exports.PATCH_UNIT_ORDER = {
+  course_id: '62391a30487d5ae343c82311',
+  order: 1,
+};
+
+module.exports.PATCH_UNIT_NONEXISTENT_FIELD = {
+  course_id: '62391a30487d5ae343c82311',
+  hello: 'hi',
+};
