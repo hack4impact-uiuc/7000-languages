@@ -46,7 +46,7 @@ const StyledCard = ({
   bodyText,
   leftIcon,
   rightIcon,
-  imageUri,
+  imageURI,
   indicatorType,
   showVolumeIcon,
   volumeIconCallback,
@@ -60,29 +60,28 @@ const StyledCard = ({
     <Box style={styles.rightIcon}>{rightIcon}</Box>
   ) : null
 
-  const indicator =
-    indicatorType !== INDICATOR_TYPES.NONE ? (
-      <Box style={styles.indicator}>
-        <Indicator indicatorType={indicatorType} />
-      </Box>
-    ) : null
+  const indicator = indicatorType !== INDICATOR_TYPES.NONE ? (
+    <Box style={styles.indicator}>
+      <Indicator indicatorType={indicatorType} />
+    </Box>
+  ) : null
 
-  const generateRightImage =
-    imageUri === '' ? (
-      indicator
-    ) : (
-      <Box style={styles.indicator}>
-        <Image
-          source={{
-            uri: imageUri,
-          }}
-          alt="Alternate Text"
-          size="md"
-          resizeMode="contain"
-          borderRadius={5}
-        />
-      </Box>
-    )
+  const generateRightImage = imageURI === '' ? (
+    indicator
+  ) : (
+    <Box style={styles.indicator}>
+      <Image
+        source={{
+          uri: imageURI,
+        }}
+        alt="Alternate Text"
+        size="lg"
+        resizeMode="cover"
+        borderRadius={10}
+      />
+    </Box>
+  )
+
   const generateVolumeIcon = showVolumeIcon ? (
     <Box style={styles.soundIcon}>
       <FontAwesome
@@ -136,7 +135,7 @@ StyledCard.propTypes = {
   leftIcon: PropTypes.element,
   rightIcon: PropTypes.element,
   indicatorType: PropTypes.number,
-  imageUri: PropTypes.string,
+  imageURI: PropTypes.string,
   showVolumeIcon: PropTypes.bool,
   volumeIconCallback: PropTypes.func,
   width: PropTypes.number,
@@ -149,7 +148,7 @@ StyledCard.defaultProps = {
   leftIcon: null,
   rightIcon: null,
   indicatorType: INDICATOR_TYPES.NONE,
-  imageUri: '',
+  imageURI: '',
   showVolumeIcon: false,
   volumeIconCallback: () => {},
   width: 100,

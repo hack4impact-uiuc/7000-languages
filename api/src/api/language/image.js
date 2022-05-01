@@ -35,11 +35,11 @@ router.get(
       if (found >= 0) {
         const vocabItem = lesson.vocab[found];
 
-        let fileType = 'jpeg';
+        let fileType = 'jpg';
         const splitImagePath = vocabItem.image.split('.');
 
         if (splitImagePath.length === 2) {
-          fileType = [1];
+          fileType = splitImagePath[1];
         }
 
         // Open a stream from the S3 bucket
@@ -58,17 +58,19 @@ router.get(
 
         // Pipe the stream to the client
         s3Stream.pipe(res);
+      } else {
+        return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
       }
+    } else {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
   }),
 );
 
 router.post(
-  'language/image/:course_id/:unit_id/:lesson_id/:word_id',
+  '/:course_id/:unit_id/:lesson_id/:vocab_id',
   requireAuthentication,
   requireLanguageAuthorization,
-  requireAuthentication,
   errorWrap(async (req, res) => {
     const { lesson_id, vocab_id, course_id, unit_id } = req.params;
 
@@ -96,7 +98,7 @@ router.post(
       if (found >= 0) {
         // Determines file type
         const nameSplit = req.files.file.filename.split('.');
-        let fileType = 'm4a';
+        let fileType = 'jpg';
         if (nameSplit.length === 2) {
           fileType = nameSplit[1];
         }

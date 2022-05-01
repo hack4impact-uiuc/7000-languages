@@ -181,7 +181,7 @@ export const downloadAudioFile = async (
 ) => {
   const downloadResumable = FileSystem.createDownloadResumable(
     `${BASE_URL}/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`,
-    `${FileSystem.documentDirectory}${vocabId}.${fileType}`,
+    `${FileSystem.documentDirectory}${vocabId}-audio.${fileType}`,
     {
       headers: {
         Authorization: `Bearer ${cachedJWTToken}`,
@@ -236,7 +236,7 @@ export const downloadImageFile = async (
 ) => {
   const downloadResumable = FileSystem.createDownloadResumable(
     `${BASE_URL}/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`,
-    `${FileSystem.documentDirectory}${vocabId}.${fileType}`,
+    `${FileSystem.documentDirectory}${vocabId}-image.${fileType}`,
     {
       headers: {
         Authorization: `Bearer ${cachedJWTToken}`,

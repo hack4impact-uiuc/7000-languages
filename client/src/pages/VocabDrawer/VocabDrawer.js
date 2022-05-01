@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
-import { View, Input, Text, TextArea } from 'native-base'
+import {
+  View, Input, Text, TextArea,
+} from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Entypo } from '@expo/vector-icons'
 import { colors } from 'theme'
@@ -19,6 +21,7 @@ import {
   uploadAudioFile,
   uploadImageFile,
   downloadAudioFile,
+  downloadImageFile,
 } from 'api'
 
 import { useErrorWrap, useTrackPromise } from 'hooks'
@@ -87,7 +90,6 @@ const VocabDrawer = ({ navigation }) => {
         setOriginalText(vocabItem.original)
         setTranslatedText(vocabItem.translation)
         setAdditionalInformation(vocabItem.notes)
-        // TODO: call GET 'image'
 
         // Check if the audio has already been fetched
         if (vocabItem.audioURI) {
@@ -117,6 +119,35 @@ const VocabDrawer = ({ navigation }) => {
 
           setAudioRecording(uri)
           setRecordingState(RECORDING.COMPLETE)
+        }
+
+        // Check if the audio has already been fetched
+        if (vocabItem.imageURI) {
+          setImage(vocabItem.imageURI)
+        } else if (vocabItem.image !== '') {
+          const filePath = vocabItem.image
+          const splitPath = filePath.split('.')
+
+          // Get the file type from the vocabItem's audio field
+          let fileType = 'jpg'
+
+          if (splitPath.length === 2) {
+            // eslint-disable-next-line prefer-destructuring
+            fileType = splitPath[1]
+          }
+
+          // Downloads audio file and gets Filesystem uri
+          const uri = await trackPromise(
+            downloadImageFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              currentVocabId,
+              fileType,
+            ),
+          )
+
+          setImage(uri)
         }
       }
     }
@@ -166,23 +197,27 @@ const VocabDrawer = ({ navigation }) => {
 
           // Push audio recording
           if (audioRecording && recordingStage === RECORDING.COMPLETE) {
-            const audioResponse = await uploadAudioFile(
-              currentCourseId,
-              currentUnitId,
-              currentLessonId,
-              updatedVocabItem._id,
-              audioRecording,
+            const audioResponse = await trackPromise(
+              uploadAudioFile(
+                currentCourseId,
+                currentUnitId,
+                currentLessonId,
+                updatedVocabItem._id,
+                audioRecording,
+              ),
             )
             updatedVocabItem = audioResponse.result
           }
 
           if (image) {
-            const imageResponse = await uploadImageFile(
-              currentCourseId,
-              currentUnitId,
-              currentLessonId,
-              currentVocabId,
-              image,
+            const imageResponse = await trackPromise(
+              uploadImageFile(
+                currentCourseId,
+                currentUnitId,
+                currentLessonId,
+                updatedVocabItem._id,
+                image,
+              ),
             )
             updatedVocabItem = imageResponse.result
           }
@@ -207,24 +242,28 @@ const VocabDrawer = ({ navigation }) => {
 
           // Push audio recording
           if (audioRecording && recordingStage === RECORDING.COMPLETE) {
-            const audioResponse = await uploadAudioFile(
-              currentCourseId,
-              currentUnitId,
-              currentLessonId,
-              currentVocabId,
-              audioRecording,
+            const audioResponse = await trackPromise(
+              uploadAudioFile(
+                currentCourseId,
+                currentUnitId,
+                currentLessonId,
+                currentVocabId,
+                audioRecording,
+              ),
             )
 
             updatedVocabItem = audioResponse.result
           }
 
           if (image) {
-            const imageResponse = await uploadImageFile(
-              currentCourseId,
-              currentUnitId,
-              currentLessonId,
-              currentVocabId,
-              image,
+            const imageResponse = await trackPromise(
+              uploadImageFile(
+                currentCourseId,
+                currentUnitId,
+                currentLessonId,
+                currentVocabId,
+                image,
+              ),
             )
 
             updatedVocabItem = imageResponse.result
@@ -245,8 +284,9 @@ const VocabDrawer = ({ navigation }) => {
 
   /* Requests audio and camera permissions */
   useEffect(() => {
-    ; (async () => {
+    (async () => {
       await Audio.requestPermissionsAsync()
+      await ImagePicker.requestCameraPermissionsAsync()
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
@@ -256,12 +296,11 @@ const VocabDrawer = ({ navigation }) => {
 
   /* Always unload the Sound after using it to prevent memory leaks. */
   React.useEffect(
-    () =>
-      listeningSound
-        ? () => {
-          listeningSound.unloadAsync()
-        }
-        : undefined,
+    () => (listeningSound
+      ? () => {
+        listeningSound.unloadAsync()
+      }
+      : undefined),
     [listeningSound],
   )
 

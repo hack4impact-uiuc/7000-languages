@@ -116,6 +116,13 @@ const languageSlice = createSlice({
       )
       state.lessonData.vocab[vocabIndex].audioURI = uri
     },
+    pushImageURI: (state, { payload }) => {
+      const { vocabId, uri } = payload
+      const vocabIndex = state.lessonData.vocab.findIndex(
+        (element) => element._id === vocabId,
+      )
+      state.lessonData.vocab[vocabIndex].imageURI = uri
+    },
   },
 })
 
@@ -132,6 +139,7 @@ export const {
   updateNumLessons,
   updateNumUnits,
   pushAudioURI,
+  pushImageURI,
 } = languageSlice.actions
 
 export default languageSlice.reducer
