@@ -46,8 +46,7 @@ const buildServerCodeTask = (cb) => {
 
 const copyNodeJSCodeTask = () => {
     log('Building and copying server code into the directory');
-    src('build/bundle.js')
-        .pipe(rename('index.js'))
+    src('build/index.js')
         .pipe(dest(`${paths.server_source_dest}`));
 
     return src(['package.json', 'src/config/.npmrc']).pipe(
