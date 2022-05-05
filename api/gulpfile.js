@@ -7,6 +7,7 @@ const zip = require('gulp-zip');
 const rename = require('gulp-rename');
 const log = require('fancy-log');
 
+const NODE_ENV = 'production';
 const paths = {
     prod_build: 'prod-build',
     zipped_file_name: 'full-application.zip',
@@ -49,14 +50,13 @@ const copyNodeJSCodeTask = () => {
     src('build/index.js')
         .pipe(dest(`${paths.server_source_dest}`));
 
-    return src(['package.json', 'src/config/.npmrc']).pipe(
+    return src(['package.json', `${NODE_ENV}.env`]).pipe(
         dest(`${paths.prod_build}`),
     );
 }
 
-const addEngineToPackage = () => exec(
-    `yarn json -I -f ${paths.prod_build}/package.json -e "this.engines = { 'node': '16.0.0' }"`,
-);
+const addEngineToPackage = () => exec(`yarn json -I -f ${paths.prod_build}/package.json -e "this.engines = { 'node': '16.0.0' }"`)
+const updatePackage = () => exec(`yarn json -I -f ${paths.prod_build}/package.json -e "this.scripts.start = 'NODE_ENV=production node -r dotenv/config ./dist/src/index.js'"`)
 
 const zippingTask = () => {
     log('Zipping the code ');
@@ -71,5 +71,6 @@ exports.default = series(
     buildServerCodeTask,
     copyNodeJSCodeTask,
     addEngineToPackage,
+    updatePackage,
     zippingTask,
 );
