@@ -1,5 +1,5 @@
 {
-  "name": "mern-template-api",
+  "name": "7000-languages-api",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
@@ -60,8 +60,5 @@
     "testEnvironment": "node",
     "verbose": true,
     "testTimeout": 60000
-  },
-  "engines": {
-    "node": "16.0.0"
   }
 }
