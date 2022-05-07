@@ -9,6 +9,7 @@ const {
 const mongoose = require('mongoose');
 const {
   updateDocumentsInTransaction,
+  patchDocument,
   getNumUnitsInCourse,
 } = require('../../utils/languageHelper');
 const { models } = require('../../models/index.js');
@@ -41,6 +42,31 @@ router.get(
   }),
 );
 
+router.patch(
+  '/:id',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    let updates = req.body;
+    if ('_course_id' in updates) {
+      updates = _.omit(updates, ['_course_id']);
+    }
+    if ('_order' in updates) {
+      updates = _.omit(updates, ['_order']);
+    }
+
+    const unit_id = req.params.id;
+
+    let unit = await models.Unit.findById(unit_id);
+
+    patchDocument(unit, updates);
+
+    await unit.save();
+
+    return sendResponse(res, 200, 'Successfully updated unit', unit);
+  }),
+);
+
 router.post(
   '/',
   requireAuthentication,
@@ -56,7 +82,7 @@ router.post(
       );
     }
 
-    const course_id = unitData.course_id;
+    const course_id = unitData._course_id;
 
     const order = await getNumUnitsInCourse(course_id);
 

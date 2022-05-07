@@ -15,6 +15,15 @@ const {
   PUT_UNIT_DUPLICATE_ORDER,
   PUT_UNIT_EXTRA_FIELDS,
   PUT_UNIT_EXTRA_FIELDS_EXPECTED,
+  PATCH_UNIT_NAME_EXPECTED,
+  PATCH_UNIT_NAME,
+  PATCH_UNIT_SELECTED_EXPECTED,
+  PATCH_UNIT_SELECTED,
+  PATCH_UNIT_DESCRIPTION_EXPECTED,
+  PATCH_UNIT_DESCRIPTION,
+  PATCH_UNIT_NO_CHANGE_EXPECTED,
+  PATCH_UNIT_ORDER,
+  PATCH_UNIT_NONEXISTENT_FIELD,
   POST_SIMPLE_UNIT,
   POST_MISSING_REQ_UNIT,
   POST_EXTRA_FIELD_UNIT,
@@ -75,10 +84,85 @@ describe('GET /language/unit/ ', () => {
   });
 });
 
+// This block tests the PATCH /unit/ endpoint.
+describe('PATCH /unit/ ', () => {
+  afterAll(async () => await db.closeDatabase());
+  afterEach(async () => await db.resetDatabase());
+
+  beforeAll(async () => {
+    await db.connect();
+  });
+
+  test('Patch should update name', async () => {
+    const response = await withAuthentication(
+      request(app)
+        .patch(`/language/unit/62391a30487d5ae343c82312`)
+        .send(PATCH_UNIT_NAME),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v', 'vocab');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully updated unit');
+    expect(result).toEqual(PATCH_UNIT_NAME_EXPECTED);
+  });
+
+  test('Patch should update selection', async () => {
+    const response = await withAuthentication(
+      request(app)
+        .patch(`/language/unit/62391a30487d5ae343c82312`)
+        .send(PATCH_UNIT_SELECTED),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v', 'vocab');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully updated unit');
+    expect(result).toEqual(PATCH_UNIT_SELECTED_EXPECTED);
+  });
+
+  test('Patch should update description', async () => {
+    const response = await withAuthentication(
+      request(app)
+        .patch(`/language/unit/62391a30487d5ae343c82312`)
+        .send(PATCH_UNIT_DESCRIPTION),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v', 'vocab');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully updated unit');
+    expect(result).toEqual(PATCH_UNIT_DESCRIPTION_EXPECTED);
+  });
+
+  test('Patch should do nothing for order updates', async () => {
+    const response = await withAuthentication(
+      request(app)
+        .patch(`/language/unit/62391a30487d5ae343c82312`)
+        .send(PATCH_UNIT_ORDER),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v', 'vocab');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully updated unit');
+    expect(result).toEqual(PATCH_UNIT_NO_CHANGE_EXPECTED);
+  });
+
+  test('Patch should do nothing for nonexistent field', async () => {
+    const response = await withAuthentication(
+      request(app)
+        .patch(`/language/unit/62391a30487d5ae343c82312`)
+        .send(PATCH_UNIT_NONEXISTENT_FIELD),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v', 'vocab');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully updated unit');
+    expect(result).toEqual(PATCH_UNIT_NO_CHANGE_EXPECTED);
+  });
+});
+
 // This block tests the PUT /unit/ endpoint.
 describe('POST /language/unit/ ', () => {
-  /* 
-    We have to make sure we connect to a MongoDB mock db before the test 
+  /*
+    We have to make sure we connect to a MongoDB mock db before the test
     and close the connection at the end.
   */
   afterAll(async () => await db.closeDatabase());

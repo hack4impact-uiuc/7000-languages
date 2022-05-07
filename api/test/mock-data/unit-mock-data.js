@@ -508,8 +508,72 @@ module.exports.PUT_UNIT_EXTRA_FIELDS_EXPECTED = [
   },
 ];
 
+module.exports.PATCH_UNIT_NAME_EXPECTED = {
+  _id: '62391a30487d5ae343c82312',
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'Patched!',
+  _order: 0,
+  selected: true,
+  description:
+    'Omnis quam pariatur quasi id aperiam reprehenderit. Accusantium sint sunt nihil id eveniet alias aut fuga ut. Quae amet qui vel doloremque doloremque. Est doloribus qui ea enim voluptas nemo voluptatibus qui. Labore sed explicabo tenetur repellendus odio odit quas. Aperiam accusantium et.',
+};
+
+module.exports.PATCH_UNIT_NAME = {
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'Patched!',
+};
+
+module.exports.PATCH_UNIT_SELECTED_EXPECTED = {
+  _id: '62391a30487d5ae343c82312',
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'ratione',
+  _order: 0,
+  selected: false,
+  description:
+    'Omnis quam pariatur quasi id aperiam reprehenderit. Accusantium sint sunt nihil id eveniet alias aut fuga ut. Quae amet qui vel doloremque doloremque. Est doloribus qui ea enim voluptas nemo voluptatibus qui. Labore sed explicabo tenetur repellendus odio odit quas. Aperiam accusantium et.',
+};
+
+module.exports.PATCH_UNIT_SELECTED = {
+  _course_id: '62391a30487d5ae343c82311',
+  selected: false,
+};
+
+module.exports.PATCH_UNIT_DESCRIPTION_EXPECTED = {
+  _id: '62391a30487d5ae343c82312',
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'ratione',
+  _order: 0,
+  selected: true,
+  description: 'Patched!',
+};
+
+module.exports.PATCH_UNIT_DESCRIPTION = {
+  _course_id: '62391a30487d5ae343c82311',
+  description: 'Patched!',
+};
+
+module.exports.PATCH_UNIT_NO_CHANGE_EXPECTED = {
+  _id: '62391a30487d5ae343c82312',
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'ratione',
+  _order: 0,
+  selected: true,
+  description:
+    'Omnis quam pariatur quasi id aperiam reprehenderit. Accusantium sint sunt nihil id eveniet alias aut fuga ut. Quae amet qui vel doloremque doloremque. Est doloribus qui ea enim voluptas nemo voluptatibus qui. Labore sed explicabo tenetur repellendus odio odit quas. Aperiam accusantium et.',
+};
+
+module.exports.PATCH_UNIT_ORDER = {
+  _course_id: '62391a30487d5ae343c82311',
+  order: 1,
+};
+
+module.exports.PATCH_UNIT_NONEXISTENT_FIELD = {
+  _course_id: '62391a30487d5ae343c82311',
+  hello: 'hi',
+};
+
 module.exports.POST_SIMPLE_UNIT = {
-  course_id: '62391a30487d5ae343c82311',
+  _course_id: '62391a30487d5ae343c82311',
   name: 'verbs',
   selected: true,
   description: 'simple unit',
@@ -525,13 +589,13 @@ module.exports.POST_EXPECTED_UNIT = {
 };
 
 module.exports.POST_MISSING_REQ_UNIT = {
-  course_id: '62391a30487d5ae343c82311',
+  _course_id: '62391a30487d5ae343c82311',
   selected: true,
   description: 'simple unit',
 };
 
 module.exports.POST_EXTRA_FIELD_UNIT = {
-  course_id: '62391a30487d5ae343c82311',
+  _course_id: '62391a30487d5ae343c82311',
   name: 'verbs',
   selected: true,
   description: 'simple unit',
@@ -540,7 +604,7 @@ module.exports.POST_EXTRA_FIELD_UNIT = {
 };
 
 module.exports.POST_INVALID_COURSE_UNIT = {
-  course_id: '62391a30487d5ae343c82123',
+  _course_id: '62391a30487d5ae343c82123',
   name: 'verbs',
   selected: true,
   description: 'invalid',
