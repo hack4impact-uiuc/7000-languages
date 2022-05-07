@@ -48,11 +48,11 @@ router.patch(
   requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     let updates = req.body;
-    if ('course_id' in updates) {
-      updates = _.omit(updates, ['course_id']);
+    if ('_course_id' in updates) {
+      updates = _.omit(updates, ['_course_id']);
     }
-    if ('order' in updates) {
-      updates = _.omit(updates, ['order']);
+    if ('_order' in updates) {
+      updates = _.omit(updates, ['_order']);
     }
 
     const unit_id = req.params.id;
@@ -82,7 +82,7 @@ router.post(
       );
     }
 
-    const course_id = unitData.course_id;
+    const course_id = unitData._course_id;
 
     const order = await getNumUnitsInCourse(course_id);
 

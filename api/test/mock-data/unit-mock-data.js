@@ -519,7 +519,7 @@ module.exports.PATCH_UNIT_NAME_EXPECTED = {
 };
 
 module.exports.PATCH_UNIT_NAME = {
-  course_id: '62391a30487d5ae343c82311',
+  _course_id: '62391a30487d5ae343c82311',
   name: 'Patched!',
 };
 
@@ -534,7 +534,7 @@ module.exports.PATCH_UNIT_SELECTED_EXPECTED = {
 };
 
 module.exports.PATCH_UNIT_SELECTED = {
-  course_id: '62391a30487d5ae343c82311',
+  _course_id: '62391a30487d5ae343c82311',
   selected: false,
 };
 
@@ -548,7 +548,7 @@ module.exports.PATCH_UNIT_DESCRIPTION_EXPECTED = {
 };
 
 module.exports.PATCH_UNIT_DESCRIPTION = {
-  course_id: '62391a30487d5ae343c82311',
+  _course_id: '62391a30487d5ae343c82311',
   description: 'Patched!',
 };
 
@@ -563,17 +563,17 @@ module.exports.PATCH_UNIT_NO_CHANGE_EXPECTED = {
 };
 
 module.exports.PATCH_UNIT_ORDER = {
-  course_id: '62391a30487d5ae343c82311',
+  _course_id: '62391a30487d5ae343c82311',
   order: 1,
 };
 
 module.exports.PATCH_UNIT_NONEXISTENT_FIELD = {
-  course_id: '62391a30487d5ae343c82311',
+  _course_id: '62391a30487d5ae343c82311',
   hello: 'hi',
 };
 
 module.exports.POST_SIMPLE_UNIT = {
-  course_id: '62391a30487d5ae343c82311',
+  _course_id: '62391a30487d5ae343c82311',
   name: 'verbs',
   selected: true,
   description: 'simple unit',
@@ -589,13 +589,13 @@ module.exports.POST_EXPECTED_UNIT = {
 };
 
 module.exports.POST_MISSING_REQ_UNIT = {
-  course_id: '62391a30487d5ae343c82311',
+  _course_id: '62391a30487d5ae343c82311',
   selected: true,
   description: 'simple unit',
 };
 
 module.exports.POST_EXTRA_FIELD_UNIT = {
-  course_id: '62391a30487d5ae343c82311',
+  _course_id: '62391a30487d5ae343c82311',
   name: 'verbs',
   selected: true,
   description: 'simple unit',
@@ -604,7 +604,7 @@ module.exports.POST_EXTRA_FIELD_UNIT = {
 };
 
 module.exports.POST_INVALID_COURSE_UNIT = {
-  course_id: '62391a30487d5ae343c82123',
+  _course_id: '62391a30487d5ae343c82123',
   name: 'verbs',
   selected: true,
   description: 'invalid',
