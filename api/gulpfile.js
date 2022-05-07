@@ -1,3 +1,8 @@
+/**
+ * This is one method for generating a zipped verion of the application, which can then be uploaded
+ * to AWS Elastic Beanstalk. However, this is currently not being used. Instead, the API is deployed
+ * through the AWS and EB CLI.
+ */
 const fs = require('fs');
 const { exec } = require('child_process');
 
