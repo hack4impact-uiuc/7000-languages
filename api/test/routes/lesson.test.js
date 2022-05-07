@@ -148,7 +148,7 @@ describe('POST /lesson/ ', () => {
       request(app).post(`/language/lesson`).send(POST_LESSON_MISSING_COURSE_ID),
     );
     const message = response.body.message;
-    expect(response.status).toBe(403);
+    expect(response.status).toBe(400);
     expect(message).toEqual(
       'Authentication failed. Please log out and try again.',
     );
