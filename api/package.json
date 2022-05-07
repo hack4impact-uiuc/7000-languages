@@ -48,7 +48,6 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^6.0.0-alpha.7",
-    "@hack4impact-uiuc/eslint-plugin": "^2.0.10",
     "eslint": "^7.32.0",
     "faker": "5.5.3",
     "jest": "^27.5.1",
@@ -61,5 +60,8 @@
     "testEnvironment": "node",
     "verbose": true,
     "testTimeout": 60000
+  },
+  "engines": {
+    "node": "16.0.0"
   }
 }

@@ -50,7 +50,7 @@ const copyNodeJSCodeTask = () => {
     src('build/index.js')
         .pipe(dest(`${paths.server_source_dest}`));
 
-    return src(['package.json', `${NODE_ENV}.env`]).pipe(
+    return src(['package.json', `${NODE_ENV}.env`, `Procfile`]).pipe(
         dest(`${paths.prod_build}`),
     );
 }
