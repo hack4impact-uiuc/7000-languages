@@ -1,6 +1,7 @@
 {
   "expo": {
-    "name": "7000-languages",
+    "name": "7000 Languages",
+    "owner": "ashayp22",
     "slug": "7000-languages",
     "privacy": "public",
     "platforms": ["ios", "android"],

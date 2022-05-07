@@ -1,11 +1,12 @@
 {
-  "name": "mern-template-api",
+  "name": "7000-languages-api",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "start": "if-env NODE_ENV=production ?? npm run start:prod || npm run start:dev",
     "start:prod": "NODE_ENV=production node -r dotenv/config ./bin/www",
     "start:dev": "NODE_ENV=development nodemon -r dotenv/config ./bin/www",
+    "build": "NODE_ENV=production webpack ./bin/www",
     "lint": "eslint --fix src",
     "format": "prettier --write \"./**/*.{js,jsx,json,md}\"",
     "format:check": "prettier -- \"./**/*.{js,jsx,json,md}\"",
