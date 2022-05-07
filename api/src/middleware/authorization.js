@@ -3,7 +3,17 @@ const { sendResponse } = require('../utils/response');
 const { models } = require('../models/index.js');
 
 const requireLanguageAuthorization = async (req, res, next) => {
-  var current_language = req.body._course_id || req.body.course_id || req.query.course_id || req.params.id || req.params.course_id;
+  var current_language =
+    req.body._course_id ||
+    req.body.course_id ||
+    req.query.course_id ||
+    req.params.id ||
+    req.params.course_id;
+
+  if (!current_language) {
+    return sendResponse(res, 403, ERR_AUTH_FAILED);
+  }
+
   var ObjectId = require('mongoose').Types.ObjectId;
   if (!ObjectId.isValid(current_language)) {
     return sendResponse(res, 400, 'Invalid ObjectID');
