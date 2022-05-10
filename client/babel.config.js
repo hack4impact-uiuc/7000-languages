@@ -11,13 +11,14 @@ module.exports = (api) => {
             pages: './src/pages',
             theme: './src/theme',
             utils: './src/utils',
-            slices: './src/slices',
-            api: './src/api/api'
+            slices: './src/redux/slices',
+            api: './src/api/api',
+            hooks: './src/hooks',
+            utils: './src/utils'
           },
         },
       ],
-      'react-native-reanimated/plugin',
+      'react-native-reanimated/plugin'
     ],
-
   }
 }

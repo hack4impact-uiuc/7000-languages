@@ -1,60 +1,69 @@
 import React from 'react'
 import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
-
-// stack navigators
-import { HomeNavigator, ProfileNavigator } from '../Stacks'
+import { AntDesign } from '@expo/vector-icons'
+import PropTypes from 'prop-types'
+import { HomeNavigator } from '../Stacks'
+import { NO_COURSE_ID } from '../../utils/constants'
 
 const Tab = createBottomTabNavigator()
 
-const TabNavigator = () => (
+/*
+  This file contains the a tab navigator, which is responsible for the tabs at the bottom of the app
+  that allow us to switch between views. This tab navigator presents the home screen, profile screen, language screens,
+  and anything else that an authenticated user would need access to.
+
+  More reading: https://reactnavigation.org/docs/tab-based-navigation
+*/
+
+const TabNavigator = (navigationData) => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
       // eslint-disable-next-line react/prop-types
       tabBarIcon: ({ focused }) => {
         switch (route.name) {
-          case 'Home':
+          case 'Units':
             return (
-              <FontIcon
-                name="home"
-                color={focused ? colors.darkRed : colors.gray}
+              <AntDesign
+                name="appstore1"
+                color={focused ? colors.red.dark : colors.gray.dark}
                 size={20}
                 solid
               />
             )
-          case 'Profile':
-            return (
-              <FontIcon
-                name="user"
-                color={focused ? colors.darkRed : colors.gray}
-                size={20}
-                solid
-              />
-            )
+
           default:
             return <View />
         }
       },
     })}
     tabBarOptions={{
-      activeTintColor: colors.darkRed,
-      inactiveTintColor: colors.gray,
-      style: {
-        // backgroundColor: 'white',
-        // borderTopColor: 'gray',
-        // borderTopWidth: 1,
-        // paddingBottom: 5,
-        // paddingTop: 5,
-      },
+      activeTintColor: colors.red.dark,
+      inactiveTintColor: colors.gray.dark,
     }}
-    initialRouteName="Home"
+    initialRouteName="Units"
     swipeEnabled={false}
   >
-    <Tab.Screen name="Home" component={HomeNavigator} />
-    <Tab.Screen name="Profile" component={ProfileNavigator} />
+    <Tab.Screen
+      name="Units"
+      children={(props) => (
+        <HomeNavigator {...props} courseId={navigationData.route.name} />
+      )}
+    />
   </Tab.Navigator>
 )
+
+TabNavigator.propTypes = {
+  navigationData: PropTypes.shape({
+    route: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+  }),
+}
+
+TabNavigator.defaultProps = {
+  navigationData: { route: { name: NO_COURSE_ID } },
+}
 
 export default TabNavigator

@@ -1,65 +1,88 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {
-  StyleSheet, Text, View, StatusBar,
-} from 'react-native'
-import Button from 'components/Button'
-import { colors } from 'theme'
-import { getSampleHome } from 'api'
-import { Box } from "native-base";
+import { NO_COURSE_ID } from 'utils/constants'
+import HomeBaseCase from 'components/HomeBaseCase'
+import { setField, clearCourseData } from 'slices/language.slice'
+import { useDispatch, useSelector } from 'react-redux'
+import CourseHome from 'pages/CourseHome'
+import { getCourse } from 'api'
+import { useErrorWrap, useTrackPromise } from 'hooks'
 
-const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.lightGray,
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-    fontFamily: 'GT_Haptik_oblique',
-  },
-})
+const Home = ({ navigation, courseId }) => {
+  const dispatch = useDispatch()
 
-const Home = ({ navigation }) => {
-  const [text, setText] = useState('Loading data...')
+  const errorWrap = useErrorWrap()
+  const trackPromise = useTrackPromise()
 
+  const { currentCourseId } = useSelector((state) => state.language)
+
+  const [courseDescription, setCourseDescription] = useState('')
+  const [courseName, setCourseName] = useState('')
+
+  // Handles logic with fetching the intitial data required to render the Course Home Page
   useEffect(() => {
-    const getData = async () => {
-      const sampleHome = await getSampleHome()
-      setText(sampleHome.result.text)
+    // Gets the course data from the API
+    const getCourseData = async (id) => {
+      errorWrap(async () => {
+        const { result } = await trackPromise(getCourse(id))
+        const { course, units } = result
+
+        setCourseDescription(course.details.description)
+        setCourseName(course.details.name)
+
+        // Sets the title of the page
+        navigation.setOptions({
+          title: 'Course Home',
+        })
+        dispatch(setField({ key: 'courseDetails', value: course.details }))
+        dispatch(setField({ key: 'allUnits', value: units }))
+      })
     }
-    getData()
-  }, [setText])
+
+    // When the Home Page is presented for a specific course, we need to fetch its course data
+    const unsubscribe = navigation.addListener('focus', async () => {
+      // Only fetch data if we were on a previous course page before, and this page isn't for the default Home Base Case page
+      if (!(courseId === NO_COURSE_ID || currentCourseId === NO_COURSE_ID)) {
+        if (courseId !== currentCourseId) {
+          dispatch(clearCourseData()) // Since we are switching courses, we need to clear all of the existing course data saved in state
+          dispatch(setField({ key: 'currentCourseId', value: courseId }))
+
+          await getCourseData(courseId)
+        }
+      }
+    })
+
+    return unsubscribe
+  }, [navigation, currentCourseId, courseId, setField])
+
+  if (courseId === NO_COURSE_ID || currentCourseId === NO_COURSE_ID) {
+    return <HomeBaseCase navigation={navigation} />
+  }
 
   return (
-    <View style={styles.root}>
-      <StatusBar barStyle="light-content" />
-      <Text style={styles.title}>Home</Text>
-      <Text>{text}</Text>
-      <Button
-        title="Go to Details"
-        color="white"
-        backgroundColor={colors.gold}
-        onPress={() => {
-          navigation.navigate('Details', { from: 'Home' })
-        }}
-      />
-      <Box>Hello world</Box>
-    </View>
+    <CourseHome
+      navigation={navigation}
+      courseId={courseId}
+      courseName={courseName}
+      courseDescription={courseDescription}
+    />
   )
 }
-
 Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    addListener: PropTypes.func,
+    setOptions: PropTypes.func,
   }),
+  courseId: PropTypes.string,
 }
 
 Home.defaultProps = {
-  navigation: { navigate: () => null },
+  navigation: {
+    navigate: () => null,
+    addListener: () => null,
+    setOptions: () => null,
+  },
+  courseId: NO_COURSE_ID,
 }
-
 export default Home

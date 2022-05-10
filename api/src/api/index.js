@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => res.json('API working!'));
+router.get('/', (req, res) =>
+  res.json(`API Working, running ${process.env.NODE_ENV}`),
+);
 // Put all routes here
-router.use('/home', require('./home'));
+router.use('/user', require('./user'));
+router.use('/language', require('./language'));
 
 module.exports = router;

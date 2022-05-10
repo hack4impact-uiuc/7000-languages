@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {
   StyleSheet, Text, View, StatusBar,
 } from 'react-native'
-import Button from 'components/Button'
+import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 
 const styles = StyleSheet.create({
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.gray.light,
   },
   title: {
     fontSize: 24,
@@ -21,15 +21,15 @@ const styles = StyleSheet.create({
 })
 
 const Details = ({ route, navigation }) => {
-  const from = route?.params?.from
+  const { from } = route.params
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
       <Text style={styles.title}>{`Details (from ${from})`}</Text>
-      <Button
+
+      <StyledButton
         title="Go Back"
-        color="white"
-        backgroundColor={colors.gold}
+        variant="secondary"
         onPress={navigation.goBack}
       />
     </View>

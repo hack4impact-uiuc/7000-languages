@@ -10,7 +10,7 @@ Also, make sure you have [yarn](https://classic.yarnpkg.com/lang/en/docs/install
 
 Next, install the [expo-cli](https://docs.expo.dev) with the following command:
 ```bash
-npm install --global expo-cli
+yarn global add expo-cli
 ```
 
 To install all of the required node packages, run:
@@ -18,6 +18,15 @@ To install all of the required node packages, run:
 ```bash
 yarn install
 ```
+
+Then, set the necessary environment variables by creating a `.env` file in the `client` folder. Populate the file with the following:
+```
+API_PORT=3000
+IOS_CLIENT_ID=
+ANDROID_CLIENT_ID=
+```
+
+You can obtain `IOS_CLIENT_ID` and `ANDROID_CLIENT_ID` by creating [Google OAuth credentials](https://console.cloud.google.com/apis/credentials?pli=1).
 
 Finally, run:
 

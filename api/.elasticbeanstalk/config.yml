@@ -1,0 +1,19 @@
+branch-defaults:
+  default:
+    environment: 7000-languages-api-env
+environment-defaults:
+  7000languagesapi-env:
+    branch: null
+    repository: null
+global:
+  application_name: 7000-languages-api
+  default_ec2_keyname: null
+  default_platform: Node.js 16 running on 64bit Amazon Linux 2
+  default_region: us-east-1
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: 7000-languages-admin
+  sc: null
+  workspace_type: Application

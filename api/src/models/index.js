@@ -1,9 +1,23 @@
-const { Home } = require('./Home');
+const { User } = require('./user');
+const {
+  Course,
+  CourseDetails,
+  Unit,
+  Lesson,
+  Vocab,
+  isUniqueOrder,
+} = require('./language');
 
 const models = {
-  Home,
+  User,
+  Course,
+  CourseDetails,
+  Unit,
+  Lesson,
+  Vocab,
 };
 
 module.exports = {
   models,
+  isUniqueOrder,
 };

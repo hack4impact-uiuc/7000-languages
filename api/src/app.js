@@ -5,9 +5,11 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const apiRoutes = require('./api');
-const { errorHandler } = require('./middleware');
+const { errorHandler, errorWrap } = require('./middleware');
 const { initDB } = require('./utils/mongo-setup');
 const { ENV_TEST } = require('./utils/constants');
+// const fileUpload = require('express-fileupload');
+const bb = require('express-busboy');
 
 const app = express();
 
@@ -16,11 +18,18 @@ app.use(cors());
 
 app.use(logger('dev'));
 
-app.use(bodyParser.json({ limit: '2.1mb' }));
-app.use(bodyParser.urlencoded({ limit: '2.1mb', extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// app.use(fileUpload());
+bb.extend(app, {
+  upload: true,
+});
 
 // Mongo setup
-if (process.env.NODE_ENV !== ENV_TEST) {initDB();}
+if (process.env.NODE_ENV !== ENV_TEST) {
+  initDB();
+}
 
 // Routes
 app.use('/', apiRoutes);
@@ -30,6 +39,6 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.use(errorHandler);
+app.use(errorHandler, errorWrap);
 
 module.exports = app;
