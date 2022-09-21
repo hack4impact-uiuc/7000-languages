@@ -40,7 +40,7 @@ Finally, run:
 yarn start
 ```
 
-This will create a server on [http://localhost:9000](http://localhost:9000).
+This will create a server on [http://localhost:3000](http://localhost:3000).
 
 ## Run
 
