@@ -67,8 +67,6 @@ router.post(
   errorWrap(async (req, res) => {
     const { course_id, unit_id, lesson } = req.body;
 
-    console.log('asdfasdfasd');
-
     if (lesson.name === '' || lesson.description === '') {
       return sendResponse(res, 400,
         'You are missing a lesson name and/or description. Please try again.');
