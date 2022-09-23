@@ -37,6 +37,9 @@ const CreateUnit = ({ navigation }) => {
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
 
+
+  const areAllFilled = name !== '' && purpose !== ''
+
   /**
    * Posts a new unit to the API and saves the new unit in state
    */
@@ -121,6 +124,7 @@ const CreateUnit = ({ navigation }) => {
       successText="Create Unit"
       successCallback={success}
       closeCallback={close}
+      isDisabled={!areAllFilled}
       body={body}
     />
   )

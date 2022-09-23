@@ -38,6 +38,7 @@ const Drawer = ({
   titleText,
   closeCallback,
   successCallback,
+  isDisabled,
   successText,
   body,
 }) => (
@@ -58,6 +59,7 @@ const Drawer = ({
     <StyledButton
       title={successText}
       onPress={successCallback}
+      isDisabled={isDisabled}
       variant="primary"
     />
   </KeyboardAvoidingView>
