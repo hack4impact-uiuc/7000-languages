@@ -9,6 +9,11 @@ import { createLesson } from 'api'
 import { useErrorWrap } from 'hooks'
 
 const CreateLesson = ({ navigation }) => {
+  // Closes the modal
+  const close = () => {
+    navigation.goBack()
+  }
+  
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
   const { currentCourseId, currentUnitId } = useSelector(
@@ -17,10 +22,6 @@ const CreateLesson = ({ navigation }) => {
   const [name, setName] = useState('') // the name of the lesson
   const [purpose, setPurpose] = useState('') // the purpose/description of the lesson
 
-  // Closes the modal
-  const close = () => {
-    navigation.goBack()
-  }
 
   // Posts the new lesson to the API and updates the state
   const success = async () => {
