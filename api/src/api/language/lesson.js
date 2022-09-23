@@ -68,8 +68,11 @@ router.post(
     const { course_id, unit_id, lesson } = req.body;
 
     if (lesson.name === '' || lesson.description === '') {
-      return sendResponse(res, 400,
-        'You are missing a lesson name and/or description. Please try again.');
+      return sendResponse(
+        res,
+        400,
+        'You are missing a lesson name and/or description. Please try again.',
+      );
     }
 
     // Checks if any required data is missing

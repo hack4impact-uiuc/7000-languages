@@ -13,7 +13,7 @@ const CreateLesson = ({ navigation }) => {
   const close = () => {
     navigation.goBack()
   }
-  
+
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
   const { currentCourseId, currentUnitId } = useSelector(
@@ -21,7 +21,6 @@ const CreateLesson = ({ navigation }) => {
   )
   const [name, setName] = useState('') // the name of the lesson
   const [purpose, setPurpose] = useState('') // the purpose/description of the lesson
-
 
   // Posts the new lesson to the API and updates the state
   const success = async () => {
