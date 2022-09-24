@@ -13,6 +13,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   loggedIn: false,
   idToken: '',
+  refreshToken: '',
 }
 
 // ------------------------------------
@@ -26,10 +27,12 @@ const authSlice = createSlice({
     authenticate: (state, { payload }) => {
       state.loggedIn = payload.loggedIn
       state.idToken = payload.idToken
+      state.refreshToken = payload.refreshToken
     },
     logout: (state) => {
       state.loggedIn = initialState.loggedIn
       state.idToken = initialState.idToken
+      state.refreshToken = initialState.refreshToken
     },
   },
 })

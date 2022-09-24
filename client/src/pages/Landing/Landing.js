@@ -10,7 +10,7 @@ import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
-import { saveUserIDToken } from 'utils/auth'
+import { saveUserIDToken, saveUserRefreshToken } from 'utils/auth'
 import { createUser } from 'api'
 import Logo from '../../../assets/images/landing-logo.svg'
 
@@ -61,24 +61,25 @@ const Landing = () => {
   const [quote] = useState(
     '"To speak a language is \n to take on a world, a\n culture."\n',
   )
-
+    
   const loginUser = async () => {
     await errorWrap(async () => {
-      const { idToken } = await Google.logInAsync({
+      const { idToken, refreshToken } = await Google.logInAsync({
         iosClientId: Constants.manifest.extra.iosClientId,
         androidClientId: Constants.manifest.extra.androidClientId,
       })
-
-      if (idToken !== undefined) {
+      if (idToken !== undefined && refreshToken !== undefined ) {
+        console.log('HERE');
         const userData = {
           idToken,
         }
         // call API
         await createUser(userData)
-        // Save to Async Storage
+        // Save to Secure Store
         await saveUserIDToken(idToken)
+        await saveUserRefreshToken(refreshToken)
         // Update Redux Store
-        dispatch(authenticate({ loggedIn: true, idToken }))
+        dispatch(authenticate({ loggedIn: true, idToken, refreshToken }))
       }
     })
   }
