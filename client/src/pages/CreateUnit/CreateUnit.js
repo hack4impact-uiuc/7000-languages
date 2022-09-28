@@ -46,14 +46,14 @@ const CreateUnit = ({ navigation }) => {
   const success = async () => {
     errorWrap(
       async () => {
-        const newLesson = {
+        const newUnit = {
           name,
           description: purpose,
           course_id: currentCourseId,
           selected: true,
         }
 
-        const { result } = await createUnit(newLesson)
+        const { result } = await createUnit(newUnit)
         dispatch(addUnit({ unit: result }))
       },
       () => {
