@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Constants from 'expo-constants'
-import { loadUserIDToken, refreshIDToken } from '../utils/auth'
+import { refreshIDToken } from '../utils/auth'
 
 const API_URL = Constants.manifest.extra.apiURL
 const API_PORT = Constants.manifest.extra.apiDevelopmentPort
@@ -25,7 +25,7 @@ export const setToken = (token) => {
  */
 const addAuthHeader = async (config) => {
   const updatedConfig = config
-  
+
   // Add JWT Token to header
   if (cachedJWTToken) updatedConfig.headers.Authorization = `Bearer ${cachedJWTToken}`
 
