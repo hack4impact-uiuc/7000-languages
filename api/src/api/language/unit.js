@@ -82,7 +82,7 @@ router.post(
       );
     }
 
-    const course_id = unitData.course_id;
+    const course_id = unitData._course_id;
 
     const order = await getNumUnitsInCourse(course_id);
 
