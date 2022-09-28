@@ -10,10 +10,9 @@ import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
-import { saveUserIDToken, saveUserRefreshToken } from 'utils/auth'
+import { saveUserIDToken, saveUserRefreshToken, saveUserClientId } from 'utils/auth'
 import { createUser } from 'api'
 import Logo from '../../../assets/images/landing-logo.svg'
-import { saveUserClientId } from '../../utils/auth'
 
 const styles = StyleSheet.create({
   root: {
@@ -62,7 +61,7 @@ const Landing = () => {
   const [quote] = useState(
     '"To speak a language is \n to take on a world, a\n culture."\n',
   )
-    
+
   const loginUser = async () => {
     await errorWrap(async () => {
       const config = {
@@ -72,7 +71,7 @@ const Landing = () => {
       const { idToken, refreshToken } = await Google.logInAsync(config)
       const guid = Google.getPlatformGUID(config)
       const clientId = `${guid}.apps.googleusercontent.com`
-      if (idToken !== undefined && refreshToken !== undefined ) {
+      if (idToken !== undefined && refreshToken !== undefined) {
         const userData = {
           idToken,
         }

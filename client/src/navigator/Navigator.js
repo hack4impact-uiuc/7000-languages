@@ -19,7 +19,7 @@ const Navigator = () => {
   useEffect(() => {
     const loadAuthFromPersistentStorage = async () => {
       const idToken = await loadUserIDToken()
-      const refreshToken = await loadUserRefreshToken();
+      const refreshToken = await loadUserRefreshToken()
       if (idToken != null) {
         dispatch(authenticate({ loggedIn: true, idToken, refreshToken }))
       } else {

@@ -1,6 +1,6 @@
-import { SECURE_STORAGE_ID_TOKEN_KEY, SECURE_STORAGE_REFRESH_TOKEN_KEY, SECURE_STORAGE_CLIENT_ID_KEY } from './constants'
 import * as SecureStore from 'expo-secure-store'
 import axios from 'axios'
+import { SECURE_STORAGE_ID_TOKEN_KEY, SECURE_STORAGE_REFRESH_TOKEN_KEY, SECURE_STORAGE_CLIENT_ID_KEY } from './constants'
 
 /**
  * Obtains a user's Google ID Token from SecureStore
@@ -34,7 +34,7 @@ export const loadUserRefreshToken = async () => {
  * Obtains a user's Google Client ID from SecureStore
  * @returns {String} The user client id saved in SecureStore
  */
- export const loadUserClientId = async () => {
+export const loadUserClientId = async () => {
   try {
     const clientId = await SecureStore.getItemAsync(SECURE_STORAGE_CLIENT_ID_KEY)
     return clientId
@@ -51,7 +51,7 @@ export const loadUserRefreshToken = async () => {
  */
 export const saveUserIDToken = async (value) => {
   try {
-    await SecureStore.setItemAsync(SECURE_STORAGE_ID_TOKEN_KEY, value);
+    await SecureStore.setItemAsync(SECURE_STORAGE_ID_TOKEN_KEY, value)
     return true
   } catch (e) {
     console.error('saveUserIDToken(): ', e.message)
@@ -64,9 +64,9 @@ export const saveUserIDToken = async (value) => {
  * @param {String} value The users Google Refresh Token
  * @returns {Boolean} true if the operation was successful
  */
- export const saveUserRefreshToken = async (value) => {
+export const saveUserRefreshToken = async (value) => {
   try {
-    await SecureStore.setItemAsync(SECURE_STORAGE_REFRESH_TOKEN_KEY, value);
+    await SecureStore.setItemAsync(SECURE_STORAGE_REFRESH_TOKEN_KEY, value)
     return true
   } catch (e) {
     console.error('saveUserRefreshToken(): ', e.message)
@@ -79,16 +79,15 @@ export const saveUserIDToken = async (value) => {
  * @param {String} value The users Google Client Id
  * @returns {Boolean} true if the operation was successful
  */
- export const saveUserClientId = async (value) => {
+export const saveUserClientId = async (value) => {
   try {
-    await SecureStore.setItemAsync(SECURE_STORAGE_CLIENT_ID_KEY, value);
+    await SecureStore.setItemAsync(SECURE_STORAGE_CLIENT_ID_KEY, value)
     return true
   } catch (e) {
     console.error('saveUserClientId(): ', e.message)
     return false
   }
 }
-
 
 /**
  * Removes a user's Google ID Token from SecureStore
@@ -108,7 +107,7 @@ export const removeUserIDToken = async () => {
  * Removes a user's Google Refresh Token from SecureStore
  * @returns {Boolean} true if the operation was successful
  */
- export const removeUserRefreshToken = async () => {
+export const removeUserRefreshToken = async () => {
   try {
     await SecureStore.deleteItemAsync(SECURE_STORAGE_REFRESH_TOKEN_KEY)
     return true
@@ -122,7 +121,7 @@ export const removeUserIDToken = async () => {
  * Removes a user's Google Client Id from SecureStore
  * @returns {Boolean} true if the operation was successful
  */
- export const removeUserClientId = async () => {
+export const removeUserClientId = async () => {
   try {
     await SecureStore.deleteItemAsync(SECURE_STORAGE_CLIENT_ID_KEY)
     return true
@@ -132,29 +131,27 @@ export const removeUserIDToken = async () => {
   }
 }
 
-
-
 /**
  * Refreshes the ID token for user using refreshToken from SecureStore
  * @returns {String} new IdToken if refresh is successful
  */
 export const refreshIDToken = async () => {
   try {
-    const refreshToken = await loadUserRefreshToken();
-    const clientId = await loadUserClientId();
+    const refreshToken = await loadUserRefreshToken()
+    const clientId = await loadUserClientId()
     return axios.post('https://www.googleapis.com/oauth2/v4/token', {
-      grant_type : 'refresh_token',
-      refresh_token : refreshToken,
-      clientId: clientId,
-    }).then(({data: {id_token}}) => {
-      saveUserIDToken(id_token)
-      return Promise.resolve(id_token);
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      clientId,
+    }).then(({ data: { id_token: idToken } }) => {
+      saveUserIDToken(idToken)
+      return Promise.resolve(idToken)
     }).catch((reason) => {
-      console.error('rejected reauth');
-      console.log(reason);
-    });
+      console.error('rejected reauth')
+      console.log(reason)
+    })
   } catch (e) {
     console.error('refreshIDToken(): ', e.message)
-    return Promise.resolve(null);
+    return Promise.resolve(null)
   }
 }

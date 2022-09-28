@@ -14,12 +14,6 @@ const instance = axios.create({
   validateStatus: () => true,
 })
 
-let cachedJWTToken = null
-
-export const setToken = (token) => {
-  cachedJWTToken = token
-}
-
 /**
  * Appends an authorization header to the request
  */
@@ -33,23 +27,23 @@ const addAuthHeader = async (config) => {
 }
 
 const authReferesh = async (response) => {
-  const status = response ? response.status : null;
+  const status = response ? response.status : null
   if (status === 401) {
-    return refreshIDToken().then(newToken => {
-      if(newToken) {
-        response.config.headers['Authorization'] = `Bearer ${newToken}`;
-        response.config.baseURL = undefined;
-        return instance.request(response.config);
-      } else {
-        console.log('Token refresh non successful');
+    return refreshIDToken().then((newToken) => {
+      if (newToken) {
+        response.config.headers.Authorization = `Bearer ${newToken}`
+        response.config.baseURL = undefined
+        return instance.request(response.config)
       }
+      console.log('Token refresh non successful')
+      return response
     })
   }
 
-  return response;
-} 
+  return response
+}
 
 instance.interceptors.request.use(addAuthHeader)
-instance.interceptors.response.use(authReferesh, (error) => error);
+instance.interceptors.response.use(authReferesh, (error) => error)
 
 export default instance
