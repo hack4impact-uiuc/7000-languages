@@ -13,6 +13,7 @@ import { AntDesign } from '@expo/vector-icons'
 import { saveUserIDToken, saveUserRefreshToken } from 'utils/auth'
 import { createUser } from 'api'
 import Logo from '../../../assets/images/landing-logo.svg'
+import { saveUserClientId } from '../../utils/auth'
 
 const styles = StyleSheet.create({
   root: {
@@ -64,12 +65,14 @@ const Landing = () => {
     
   const loginUser = async () => {
     await errorWrap(async () => {
-      const { idToken, refreshToken } = await Google.logInAsync({
+      const config = {
         iosClientId: Constants.manifest.extra.iosClientId,
         androidClientId: Constants.manifest.extra.androidClientId,
-      })
+      }
+      const { idToken, refreshToken } = await Google.logInAsync(config)
+      const guid = Google.getPlatformGUID(config)
+      const clientId = `${guid}.apps.googleusercontent.com`
       if (idToken !== undefined && refreshToken !== undefined ) {
-        console.log('HERE');
         const userData = {
           idToken,
         }
@@ -78,6 +81,7 @@ const Landing = () => {
         // Save to Secure Store
         await saveUserIDToken(idToken)
         await saveUserRefreshToken(refreshToken)
+        await saveUserClientId(clientId)
         // Update Redux Store
         dispatch(authenticate({ loggedIn: true, idToken, refreshToken }))
       }
