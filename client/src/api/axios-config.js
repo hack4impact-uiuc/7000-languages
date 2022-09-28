@@ -14,12 +14,17 @@ const instance = axios.create({
   validateStatus: () => true,
 })
 
+let cachedJWTToken = null
+
+export const setToken = (token) => {
+  cachedJWTToken = token
+}
+
 /**
  * Appends an authorization header to the request
  */
 const addAuthHeader = async (config) => {
   const updatedConfig = config
-  const cachedJWTToken = await loadUserIDToken()
   // Add JWT Token to header
   if (cachedJWTToken) updatedConfig.headers.Authorization = `Bearer ${cachedJWTToken}`
 
@@ -33,6 +38,7 @@ const authReferesh = async (response) => {
       if (newToken) {
         response.config.headers.Authorization = `Bearer ${newToken}`
         response.config.baseURL = undefined
+        setToken(newToken)
         return instance.request(response.config)
       }
       console.log('Token refresh non successful')
