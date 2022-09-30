@@ -49,7 +49,7 @@ const CreateUnit = ({ navigation }) => {
         const newUnit = {
           name,
           description: purpose,
-          course_id: currentCourseId,
+          _course_id: currentCourseId,
           selected: true,
         }
 
