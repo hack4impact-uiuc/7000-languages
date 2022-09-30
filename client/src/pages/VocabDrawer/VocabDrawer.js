@@ -462,7 +462,9 @@ const VocabDrawer = ({ navigation }) => {
     <>
       <Text color="gray.medium">A vocab item can be a word or phrase.</Text>
       {generateImageContainer()}
-      <Text>{`${translatedLanguage}*`}</Text>
+      <Text>{`${translatedLanguage}`}
+        <Text bold color={colors.red.dark}>{' *'}</Text>
+      </Text>
       <Input
         placeholder=""
         returnKeyType="done"
