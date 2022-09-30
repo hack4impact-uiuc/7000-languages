@@ -8,12 +8,7 @@ import StyledButton from 'components/StyledButton'
 import { Entypo } from '@expo/vector-icons'
 import { colors } from 'theme'
 import * as ImagePicker from 'expo-image-picker'
-import {
-  StyleSheet,
-  Alert,
-  ImageBackground,
-  TouchableOpacity,
-} from 'react-native'
+import { StyleSheet, Alert, ImageBackground } from 'react-native'
 import { Audio } from 'expo-av'
 import { RECORDING } from 'utils/constants'
 import RecordAudioView from 'components/RecordAudioView'

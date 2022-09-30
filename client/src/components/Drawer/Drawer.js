@@ -40,7 +40,6 @@ const Drawer = ({
   successCallback,
   successText,
   body,
-  isDisabled,
 }) => (
   <KeyboardAvoidingView
     KeyboardAvoidingView
