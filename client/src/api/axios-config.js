@@ -17,11 +17,11 @@ const instance = axios.create({
 /**
  * Appends an authorization header to the request
  * @param {AxiosRequestConfig<any>} config
- * @returns {Promise<AxiosRequestConfig<any>>} updated config
+ * @returns {AxiosRequestConfig<any>} updated config
  */
 const addAuthHeader = async (config) => {
   const updatedConfig = config
-  loadUserIDToken().then((idToken) => {
+  await loadUserIDToken().then((idToken) => {
     if (idToken) {
       updatedConfig.headers.Authorization = `Bearer ${idToken}`
     }
