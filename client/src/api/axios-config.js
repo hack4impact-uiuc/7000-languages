@@ -42,7 +42,6 @@ const authReferesh = async (response) => {
         setToken(newToken)
         return instance.request(response.config)
       }
-      console.log('Token refresh non successful')
       return response
     })
   }

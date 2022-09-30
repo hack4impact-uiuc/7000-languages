@@ -4,7 +4,7 @@ export default ({ config }) => {
   return {
     ...config,
     extra: {
-      //apiURL: 'http://7000-languages-api-env.us-east-1.elasticbeanstalk.com',
+      apiURL: 'http://7000-languages-api-env.us-east-1.elasticbeanstalk.com',
       apiDevelopmentPort: 3000,
       iosClientId:
         '558041423211-ch1sug9t75hsu99suqf7h4tce4k49r6a.apps.googleusercontent.com',
