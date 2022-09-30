@@ -31,8 +31,12 @@ const addAuthHeader = async (config) => {
 
   return updatedConfig
 }
-
-const authReferesh = async (response) => {
+/**
+ * 
+ * @param {AxiosResponse<any, any>} response 
+ * @returns {Promise<AxiosResponse<any, any>>} retried response if auth was expired or original response otherwise
+ */
+const authRefresh = async (response) => {
   const status = response ? response.status : null
   if (status === 401) {
     return refreshIDToken().then((newToken) => {
@@ -50,6 +54,6 @@ const authReferesh = async (response) => {
 }
 
 instance.interceptors.request.use(addAuthHeader)
-instance.interceptors.response.use(authReferesh, (error) => error)
+instance.interceptors.response.use(authRefresh, (error) => error)
 
 export default instance

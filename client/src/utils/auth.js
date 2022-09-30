@@ -2,6 +2,9 @@ import * as SecureStore from 'expo-secure-store'
 import axios from 'axios'
 import { SECURE_STORAGE_ID_TOKEN_KEY, SECURE_STORAGE_REFRESH_TOKEN_KEY, SECURE_STORAGE_CLIENT_ID_KEY } from './constants'
 
+
+const GOOGLE_OAUTH_TOKEN_URL = 'https://www.googleapis.com/oauth2/v4/token';
+
 /**
  * Obtains a user's Google ID Token from SecureStore
  * @returns {String} The user token saved in SecureStore
@@ -139,7 +142,7 @@ export const refreshIDToken = async () => {
   try {
     const refreshToken = await loadUserRefreshToken()
     const clientId = await loadUserClientId()
-    return axios.post('https://www.googleapis.com/oauth2/v4/token', {
+    return axios.post(GOOGLE_OAUTH_TOKEN_URL, {
       grant_type: 'refresh_token',
       refresh_token: refreshToken,
       clientId,
