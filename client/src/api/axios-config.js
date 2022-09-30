@@ -32,8 +32,8 @@ const addAuthHeader = async (config) => {
   return updatedConfig
 }
 /**
- * 
- * @param {AxiosResponse<any, any>} response 
+ *
+ * @param {AxiosResponse<any, any>} response
  * @returns {Promise<AxiosResponse<any, any>>} retried response if auth was expired or original response otherwise
  */
 const authRefresh = async (response) => {

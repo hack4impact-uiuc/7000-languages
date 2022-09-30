@@ -2,8 +2,7 @@ import * as SecureStore from 'expo-secure-store'
 import axios from 'axios'
 import { SECURE_STORAGE_ID_TOKEN_KEY, SECURE_STORAGE_REFRESH_TOKEN_KEY, SECURE_STORAGE_CLIENT_ID_KEY } from './constants'
 
-
-const GOOGLE_OAUTH_TOKEN_URL = 'https://www.googleapis.com/oauth2/v4/token';
+const GOOGLE_OAUTH_TOKEN_URL = 'https://www.googleapis.com/oauth2/v4/token'
 
 /**
  * Obtains a user's Google ID Token from SecureStore
