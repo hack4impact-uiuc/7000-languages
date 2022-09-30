@@ -443,18 +443,15 @@ const Apply = ({ navigation }) => {
                   />
                 </View>
               </FormControl>
+              
               <View style={styles.checkboxes}>
-                <FormControl is Required isInvalid={'acceptTerms' in errors}>
+                
                   <Checkbox
                     value="accepted"
                     colorScheme="danger"
                     onChange={setAcceptTerms}
                   >
-                    {'acceptTerms' in errors ? (
-                      <FormControl.ErrorMessage>
-                        Required.
-                      </FormControl.ErrorMessage>
-                    ) : null}
+                    
                     <View>
                       <Text
                         fontFamily="body"
@@ -473,21 +470,15 @@ const Apply = ({ navigation }) => {
                       </Text>
                     </View>
                   </Checkbox>
-                </FormControl>
+               
               </View>
 
               <View style={styles.checkboxes}>
-                <FormControl is Required isInvalid={'acceptTerms' in errors}>
                   <Checkbox
                     value="accepted"
-                    colorScheme="danger"
+                    colorScheme="danger" 
                     onChange={setAcceptTerms}
                   >
-                    {'acceptTerms' in errors ? (
-                      <FormControl.ErrorMessage>
-                        Required.
-                      </FormControl.ErrorMessage>
-                    ) : null}
                     <View>
                       <Text
                         fontFamily="body"
@@ -502,7 +493,7 @@ const Apply = ({ navigation }) => {
                       </Text>
                     </View>
                   </Checkbox>
-                </FormControl>
+                
               </View>
             </View>
           </ScrollView>
@@ -513,7 +504,6 @@ const Apply = ({ navigation }) => {
           title="Submit"
           variant="primary"
           onPress={onSubmit}
-          isDisabled={!areAllFilled}
         />
 
         <Text
