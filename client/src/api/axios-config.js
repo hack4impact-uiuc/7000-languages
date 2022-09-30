@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Constants from 'expo-constants'
-import { refreshIDToken } from '../utils/auth'
+import { loadUserIDToken, refreshIDToken } from '../utils/auth'
 
 const API_URL = Constants.manifest.extra.apiURL
 const API_PORT = Constants.manifest.extra.apiDevelopmentPort
@@ -14,22 +14,19 @@ const instance = axios.create({
   validateStatus: () => true,
 })
 
-let cachedJWTToken = null
-
-export const setToken = (token) => {
-  cachedJWTToken = token
-}
-
 /**
  * Appends an authorization header to the request
+ * @param {AxiosRequestConfig<any>} config
+ * @returns {Promise<AxiosRequestConfig<any>>} updated config
  */
 const addAuthHeader = async (config) => {
   const updatedConfig = config
-
-  // Add JWT Token to header
-  if (cachedJWTToken) updatedConfig.headers.Authorization = `Bearer ${cachedJWTToken}`
-
-  return updatedConfig
+  loadUserIDToken().then((idToken) => {
+    if (idToken) {
+      updatedConfig.headers.Authorization = `Bearer ${idToken}`
+    }
+    return updatedConfig
+  })
 }
 /**
  *
@@ -43,7 +40,6 @@ const authRefresh = async (response) => {
       if (newToken) {
         response.config.headers.Authorization = `Bearer ${newToken}`
         response.config.baseURL = undefined
-        setToken(newToken)
         return instance.request(response.config)
       }
       return response

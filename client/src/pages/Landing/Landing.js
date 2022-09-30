@@ -82,7 +82,7 @@ const Landing = () => {
         await saveUserRefreshToken(refreshToken)
         await saveUserClientId(clientId)
         // Update Redux Store
-        dispatch(authenticate({ loggedIn: true, idToken }))
+        dispatch(authenticate({ loggedIn: true }))
       }
     })
   }
