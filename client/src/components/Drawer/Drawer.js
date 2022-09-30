@@ -70,6 +70,7 @@ Drawer.propTypes = {
   successText: PropTypes.string,
   closeCallback: PropTypes.func,
   successCallback: PropTypes.func,
+  isDisabled: PropTypes.bool,
   body: PropTypes.element,
 }
 
@@ -78,6 +79,7 @@ Drawer.defaultProps = {
   successText: '',
   closeCallback: () => null,
   successCallback: () => null,
+  isDisabled: false,
   body: null,
 }
 
