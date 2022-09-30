@@ -505,12 +505,15 @@ const VocabDrawer = ({ navigation }) => {
     </>
   )
 
+
+  const areAllFilled = originalText !== '' && translatedText !== '';
   return (
     <Drawer
       titleText={currentVocabId !== '' ? 'Edit Vocab Item' : 'Add a Vocab Item'}
       successText={currentVocabId !== '' ? 'Save Changes' : 'Add Item'}
       successCallback={success}
       closeCallback={close}
+      isDisabled={!areAllFilled}
       body={body}
     />
   )
