@@ -4,12 +4,12 @@ export default ({ config }) => {
   return {
     ...config,
     extra: {
-      apiURL: 'http://7000-languages-api-env.us-east-1.elasticbeanstalk.com',
+      // apiURL: 'http://7000-languages-api-env.us-east-1.elasticbeanstalk.com',
       apiDevelopmentPort: 3000,
       iosClientId:
-        '558041423211-6pi044evlevj0elng4cr9knggsvl6t4c.apps.googleusercontent.com',
+        '558041423211-ch1sug9t75hsu99suqf7h4tce4k49r6a.apps.googleusercontent.com',
       androidClientId:
-        '558041423211-rm0a53ibbaga8e7d7aj4rgknt6qflk6v.apps.googleusercontent.com',
+        '558041423211-4aiqgrad83mti5jndej3cpt20rqlqrip.apps.googleusercontent.com',
     },
   }
 }

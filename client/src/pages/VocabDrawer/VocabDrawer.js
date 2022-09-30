@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
-import {
-  View, Input, Text, TextArea,
-} from 'native-base'
+import { View, Input, Text, TextArea } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Entypo } from '@expo/vector-icons'
 import { colors } from 'theme'
@@ -53,6 +51,20 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 })
+
+/* This callback is triggered in the success 
+  callback for the Add Vocab Drawer element.
+  It reenables gestures for that element. */
+const callback = () => {
+  this.setState({ gestureEnabled: true })
+}
+
+/* This callback is triggered upon pressing
+  for the Add Vocab Drawer element.
+  It disables gestures for that element. */
+handlePress = () => {
+  this.setState({ gestureEnabled: false })
+}
 
 const VocabDrawer = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -274,6 +286,7 @@ const VocabDrawer = ({ navigation }) => {
       },
       () => {
         close() // on success, close the modal
+        callback()
       },
     )
   }
@@ -284,7 +297,7 @@ const VocabDrawer = ({ navigation }) => {
 
   /* Requests audio and camera permissions */
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       await Audio.requestPermissionsAsync()
       await ImagePicker.requestCameraPermissionsAsync()
       await Audio.setAudioModeAsync({
@@ -296,11 +309,12 @@ const VocabDrawer = ({ navigation }) => {
 
   /* Always unload the Sound after using it to prevent memory leaks. */
   React.useEffect(
-    () => (listeningSound
-      ? () => {
-        listeningSound.unloadAsync()
-      }
-      : undefined),
+    () =>
+      listeningSound
+        ? () => {
+            listeningSound.unloadAsync()
+          }
+        : undefined,
     [listeningSound],
   )
 
@@ -512,6 +526,8 @@ const VocabDrawer = ({ navigation }) => {
       successCallback={success}
       closeCallback={close}
       body={body}
+      // onPress={() => this.setState({ gestureEnabled: false })}
+      onPress={handlePress}
     />
   )
 }
