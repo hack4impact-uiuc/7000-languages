@@ -21,6 +21,7 @@ const BackButton = ({ navigation, color, onPress }) => {
       color={color}
       size={25}
       backgroundColor="transparent"
+      underlayColor={"#00000020"}
       onPress={goBack}
       style={styles.button}
     />

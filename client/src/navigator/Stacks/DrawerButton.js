@@ -14,6 +14,9 @@ const DrawerButton = ({ navigation }) => (
     name="bars"
     color="white"
     backgroundColor="transparent"
+    size={25}
+    activeOpacity={true}
+    underlayColor={"#00000020"}
     onPress={() => {
       navigation.openDrawer()
     }}
