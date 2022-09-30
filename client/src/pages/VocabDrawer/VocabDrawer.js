@@ -6,7 +6,12 @@ import StyledButton from 'components/StyledButton'
 import { Entypo } from '@expo/vector-icons'
 import { colors } from 'theme'
 import * as ImagePicker from 'expo-image-picker'
-import { StyleSheet, Alert, ImageBackground } from 'react-native'
+import {
+  StyleSheet,
+  Alert,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native'
 import { Audio } from 'expo-av'
 import { RECORDING } from 'utils/constants'
 import RecordAudioView from 'components/RecordAudioView'
@@ -51,20 +56,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 })
-
-/* This callback is triggered in the success 
-  callback for the Add Vocab Drawer element.
-  It reenables gestures for that element. */
-const callback = () => {
-  this.setState({ gestureEnabled: true })
-}
-
-/* This callback is triggered upon pressing
-  for the Add Vocab Drawer element.
-  It disables gestures for that element. */
-handlePress = () => {
-  this.setState({ gestureEnabled: false })
-}
 
 const VocabDrawer = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -182,113 +173,118 @@ const VocabDrawer = ({ navigation }) => {
     navigation.goBack()
   }
 
+  const [isDisabled, setIsDisabled] = useState(false)
+
   /**
    * Either updates the vocab item or creates a new vocab item
    */
   const success = async () => {
-    errorWrap(
-      async () => {
-        let updatedVocabItem = null
-        if (currentVocabId === '') {
-          const vocabItem = {
-            original: originalText,
-            translation: translatedText,
-            image: '',
-            audio: '',
-            notes: additionalInformation,
-          }
+    if (!isDisabled) {
+      setIsDisabled(true)
+      errorWrap(
+        async () => {
+          let updatedVocabItem = null
+          if (currentVocabId === '') {
+            const vocabItem = {
+              original: originalText,
+              translation: translatedText,
+              image: '',
+              audio: '',
+              notes: additionalInformation,
+            }
 
-          // Need to create a new vocab item
-          const vocabItemResponse = await createVocabItem(
-            currentCourseId,
-            currentLessonId,
-            vocabItem,
-          )
-
-          updatedVocabItem = vocabItemResponse.result
-
-          // Push audio recording
-          if (audioRecording && recordingStage === RECORDING.COMPLETE) {
-            const audioResponse = await trackPromise(
-              uploadAudioFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                updatedVocabItem._id,
-                audioRecording,
-              ),
-            )
-            updatedVocabItem = audioResponse.result
-          }
-
-          if (image) {
-            const imageResponse = await trackPromise(
-              uploadImageFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                updatedVocabItem._id,
-                image,
-              ),
-            )
-            updatedVocabItem = imageResponse.result
-          }
-
-          // Update vocab item in Redux store
-          dispatch(addVocab({ vocab: updatedVocabItem }))
-        } else {
-          const vocabItem = {
-            original: originalText,
-            translation: translatedText,
-            notes: additionalInformation,
-          }
-
-          // Updated vocab item text
-          const vocabItemResponse = await updateVocabItem(
-            currentCourseId,
-            currentLessonId,
-            currentVocabId,
-            vocabItem,
-          )
-          updatedVocabItem = vocabItemResponse.result
-
-          // Push audio recording
-          if (audioRecording && recordingStage === RECORDING.COMPLETE) {
-            const audioResponse = await trackPromise(
-              uploadAudioFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                currentVocabId,
-                audioRecording,
-              ),
+            // Need to create a new vocab item
+            const vocabItemResponse = await createVocabItem(
+              currentCourseId,
+              currentLessonId,
+              vocabItem,
             )
 
-            updatedVocabItem = audioResponse.result
-          }
+            updatedVocabItem = vocabItemResponse.result
 
-          if (image) {
-            const imageResponse = await trackPromise(
-              uploadImageFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                currentVocabId,
-                image,
-              ),
+            // Push audio recording
+            if (audioRecording && recordingStage === RECORDING.COMPLETE) {
+              const audioResponse = await trackPromise(
+                uploadAudioFile(
+                  currentCourseId,
+                  currentUnitId,
+                  currentLessonId,
+                  updatedVocabItem._id,
+                  audioRecording,
+                ),
+              )
+              updatedVocabItem = audioResponse.result
+            }
+
+            if (image) {
+              const imageResponse = await trackPromise(
+                uploadImageFile(
+                  currentCourseId,
+                  currentUnitId,
+                  currentLessonId,
+                  updatedVocabItem._id,
+                  image,
+                ),
+              )
+              updatedVocabItem = imageResponse.result
+            }
+
+            // Update vocab item in Redux store
+            dispatch(addVocab({ vocab: updatedVocabItem }))
+          } else {
+            const vocabItem = {
+              original: originalText,
+              translation: translatedText,
+              notes: additionalInformation,
+            }
+
+            // Updated vocab item text
+            const vocabItemResponse = await updateVocabItem(
+              currentCourseId,
+              currentLessonId,
+              currentVocabId,
+              vocabItem,
             )
+            updatedVocabItem = vocabItemResponse.result
 
-            updatedVocabItem = imageResponse.result
+            // Push audio recording
+            if (audioRecording && recordingStage === RECORDING.COMPLETE) {
+              const audioResponse = await trackPromise(
+                uploadAudioFile(
+                  currentCourseId,
+                  currentUnitId,
+                  currentLessonId,
+                  currentVocabId,
+                  audioRecording,
+                ),
+              )
+
+              updatedVocabItem = audioResponse.result
+            }
+
+            if (image) {
+              const imageResponse = await trackPromise(
+                uploadImageFile(
+                  currentCourseId,
+                  currentUnitId,
+                  currentLessonId,
+                  currentVocabId,
+                  image,
+                ),
+              )
+
+              updatedVocabItem = imageResponse.result
+            }
+            // Update vocab item in Redux store
+            dispatch(updateVocab({ vocab: updatedVocabItem }))
           }
-          // Update vocab item in Redux store
-          dispatch(updateVocab({ vocab: updatedVocabItem }))
-        }
-      },
-      () => {
-        close() // on success, close the modal
-        callback()
-      },
-    )
+        },
+        () => {
+          close() // on success, close the modal
+          setIsDisabled(false)
+        },
+      )
+    }
   }
 
   /**
@@ -526,8 +522,6 @@ const VocabDrawer = ({ navigation }) => {
       successCallback={success}
       closeCallback={close}
       body={body}
-      // onPress={() => this.setState({ gestureEnabled: false })}
-      onPress={handlePress}
     />
   )
 }

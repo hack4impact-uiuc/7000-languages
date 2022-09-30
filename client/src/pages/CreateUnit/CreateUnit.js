@@ -46,7 +46,7 @@ const CreateUnit = ({ navigation }) => {
         const newLesson = {
           name,
           description: purpose,
-          course_id: currentCourseId,
+          _course_id: currentCourseId,
           selected: true,
         }
 
@@ -56,6 +56,7 @@ const CreateUnit = ({ navigation }) => {
       () => {
         // on success, close the modal
         close()
+        // this.callback.bind(this)
       },
     )
   }
