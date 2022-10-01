@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addLesson } from 'slices/language.slice'
 import { createLesson } from 'api'
 import { useErrorWrap } from 'hooks'
+import RequiredField from 'components/RequiredField'
 
 const CreateLesson = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -55,7 +56,7 @@ const CreateLesson = ({ navigation }) => {
 
   const body = (
     <>
-      <Text>Give your lesson a name</Text>
+      <RequiredField title = "Give your lesson a name"></RequiredField>
       <Input
         size="lg"
         placeholder=""
@@ -63,8 +64,7 @@ const CreateLesson = ({ navigation }) => {
         onChangeText={(text) => setName(text)}
       />
 
-      <Text>What are the goals of this lesson?</Text>
-
+      <RequiredField title = "What are the goals of this lesson?"></RequiredField>
       <TextArea
         size="xl"
         h={40}

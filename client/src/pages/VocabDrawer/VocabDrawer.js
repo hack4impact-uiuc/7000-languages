@@ -25,6 +25,7 @@ import {
 } from 'api'
 
 import { useErrorWrap, useTrackPromise } from 'hooks'
+import RequiredField  from 'components/RequiredField'
 
 const expoImageSettings = {
   mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -462,9 +463,7 @@ const VocabDrawer = ({ navigation }) => {
     <>
       <Text color="gray.medium">A vocab item can be a word or phrase.</Text>
       {generateImageContainer()}
-      <Text>{`${translatedLanguage}`}
-        <Text bold color={colors.red.dark}>{' *'}</Text>
-      </Text>
+      <RequiredField title = {translatedLanguage}></RequiredField>
       <Input
         placeholder=""
         returnKeyType="done"
@@ -480,7 +479,7 @@ const VocabDrawer = ({ navigation }) => {
         discardRecording={clearRecording}
         stopPlayingRecording={stopPlayingRecording}
       />
-      <Text>{`${originalLanguage}*`}</Text>
+      <RequiredField title = {originalLanguage}></RequiredField>
       <Input
         placeholder=""
         returnKeyType="done"

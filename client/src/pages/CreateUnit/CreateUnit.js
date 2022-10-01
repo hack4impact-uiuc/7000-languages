@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addUnit } from 'slices/language.slice'
 import { createUnit } from 'api'
 import { useErrorWrap } from 'hooks'
+import RequiredField from 'components/RequiredField'
 
 const styles = StyleSheet.create({
   container: {
@@ -93,7 +94,7 @@ const CreateUnit = ({ navigation }) => {
           </Text>
         </View>
 
-        <Text fontSize="md">Give your unit a name</Text>
+        <RequiredField title = "Give your unit a name"></RequiredField>
         <Input
           size="xl"
           placeholder=""
@@ -101,9 +102,7 @@ const CreateUnit = ({ navigation }) => {
           onChangeText={(text) => setName(text)}
         />
 
-        <Text paddingTop={2} fontSize="md">
-          What is the purpose of this unit?
-        </Text>
+        <RequiredField title = "What is the purpose of this unit?"></RequiredField>
 
         <TextArea
           size="xl"
