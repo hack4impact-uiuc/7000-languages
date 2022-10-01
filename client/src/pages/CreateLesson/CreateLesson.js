@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
-import { Input, Text, TextArea } from 'native-base'
+import { Input, TextArea } from 'native-base'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { addLesson } from 'slices/language.slice'
@@ -18,7 +18,7 @@ const CreateLesson = ({ navigation }) => {
   const [name, setName] = useState('') // the name of the lesson
   const [purpose, setPurpose] = useState('') // the purpose/description of the lesson
 
-  const areAllFilled = name !== '' && purpose !== '';
+  const areAllFilled = name !== '' && purpose !== ''
 
   // Closes the modal
   const close = () => {
@@ -56,7 +56,7 @@ const CreateLesson = ({ navigation }) => {
 
   const body = (
     <>
-      <RequiredField title = "Give your lesson a name"></RequiredField>
+      <RequiredField title="Give your lesson a name" />
       <Input
         size="lg"
         placeholder=""
@@ -64,7 +64,7 @@ const CreateLesson = ({ navigation }) => {
         onChangeText={(text) => setName(text)}
       />
 
-      <RequiredField title = "What are the goals of this lesson?"></RequiredField>
+      <RequiredField title="What are the goals of this lesson?" />
       <TextArea
         size="xl"
         h={40}

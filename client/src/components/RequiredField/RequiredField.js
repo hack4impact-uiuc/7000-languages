@@ -4,15 +4,18 @@ import { Text } from 'native-base'
 import { colors } from 'theme'
 
 const RequiredField = ({ title }) => (
-    <Text>{title}
-        <Text bold color={colors.red.dark}>{' *'}</Text>
+  <Text>
+    {title}
+    <Text bold color={colors.red.dark}>
+      {' *'}
     </Text>
+  </Text>
 )
 RequiredField.propTypes = {
-    title: PropTypes.string
+  title: PropTypes.string,
 }
 RequiredField.defaultProps = {
-    title: 'This field is required'
+  title: 'This field is required',
 }
 
 export default RequiredField

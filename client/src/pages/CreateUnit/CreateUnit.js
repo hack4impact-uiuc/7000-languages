@@ -38,7 +38,6 @@ const CreateUnit = ({ navigation }) => {
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
 
-
   const areAllFilled = name !== '' && purpose !== ''
 
   /**
@@ -94,7 +93,7 @@ const CreateUnit = ({ navigation }) => {
           </Text>
         </View>
 
-        <RequiredField title = "Give your unit a name"></RequiredField>
+        <RequiredField title="Give your unit a name" />
         <Input
           size="xl"
           placeholder=""
@@ -102,7 +101,7 @@ const CreateUnit = ({ navigation }) => {
           onChangeText={(text) => setName(text)}
         />
 
-        <RequiredField title = "What is the purpose of this unit?"></RequiredField>
+        <RequiredField title="What is the purpose of this unit?" />
 
         <TextArea
           size="xl"
