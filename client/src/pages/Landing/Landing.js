@@ -10,7 +10,11 @@ import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
-import { saveUserIDToken, saveUserRefreshToken, saveUserClientId } from 'utils/auth'
+import {
+  saveUserIDToken,
+  saveUserRefreshToken,
+  saveUserClientId,
+} from 'utils/auth'
 import { createUser } from 'api'
 import Logo from '../../../assets/images/landing-logo.svg'
 
