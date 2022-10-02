@@ -1,6 +1,10 @@
 import * as SecureStore from 'expo-secure-store'
 import axios from 'axios'
-import { SECURE_STORAGE_ID_TOKEN_KEY, SECURE_STORAGE_REFRESH_TOKEN_KEY, SECURE_STORAGE_CLIENT_ID_KEY } from './constants'
+import {
+  SECURE_STORAGE_ID_TOKEN_KEY,
+  SECURE_STORAGE_REFRESH_TOKEN_KEY,
+  SECURE_STORAGE_CLIENT_ID_KEY,
+} from './constants'
 
 const GOOGLE_OAUTH_TOKEN_URL = 'https://www.googleapis.com/oauth2/v4/token'
 
@@ -10,7 +14,9 @@ const GOOGLE_OAUTH_TOKEN_URL = 'https://www.googleapis.com/oauth2/v4/token'
  */
 export const loadUserIDToken = async () => {
   try {
-    const userToken = await SecureStore.getItemAsync(SECURE_STORAGE_ID_TOKEN_KEY)
+    const userToken = await SecureStore.getItemAsync(
+      SECURE_STORAGE_ID_TOKEN_KEY,
+    )
     return userToken
   } catch (e) {
     console.error('loadUserIDToken(): ', e.message)
@@ -24,7 +30,9 @@ export const loadUserIDToken = async () => {
  */
 export const loadUserRefreshToken = async () => {
   try {
-    const userToken = await SecureStore.getItemAsync(SECURE_STORAGE_REFRESH_TOKEN_KEY)
+    const userToken = await SecureStore.getItemAsync(
+      SECURE_STORAGE_REFRESH_TOKEN_KEY,
+    )
     return userToken
   } catch (e) {
     console.error('loadUserRefreshToken(): ', e.message)
@@ -38,7 +46,9 @@ export const loadUserRefreshToken = async () => {
  */
 export const loadUserClientId = async () => {
   try {
-    const clientId = await SecureStore.getItemAsync(SECURE_STORAGE_CLIENT_ID_KEY)
+    const clientId = await SecureStore.getItemAsync(
+      SECURE_STORAGE_CLIENT_ID_KEY,
+    )
     return clientId
   } catch (e) {
     console.error('loadUserClientId(): ', e.message)
@@ -141,17 +151,20 @@ export const refreshIDToken = async () => {
   try {
     const refreshToken = await loadUserRefreshToken()
     const clientId = await loadUserClientId()
-    return axios.post(GOOGLE_OAUTH_TOKEN_URL, {
-      grant_type: 'refresh_token',
-      refresh_token: refreshToken,
-      clientId,
-    }).then(({ data: { id_token: idToken } }) => {
-      saveUserIDToken(idToken)
-      return Promise.resolve(idToken)
-    }).catch((reason) => {
-      console.error('rejected reauth, reason: ', reason)
-      return Promise.resolve(null)
-    })
+    return axios
+      .post(GOOGLE_OAUTH_TOKEN_URL, {
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+        clientId,
+      })
+      .then(({ data: { id_token: idToken } }) => {
+        saveUserIDToken(idToken)
+        return Promise.resolve(idToken)
+      })
+      .catch((reason) => {
+        console.error('rejected reauth, reason: ', reason)
+        return Promise.resolve(null)
+      })
   } catch (e) {
     console.error('refreshIDToken(): ', e.message)
     return Promise.resolve(null)

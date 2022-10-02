@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {
-  StyleSheet, View, Linking, Alert,
-} from 'react-native'
+import { StyleSheet, View, Linking, Alert } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import {
   Text,
@@ -101,7 +99,8 @@ const Apply = ({ navigation }) => {
   }
 
   // Confirms validation of course for pressing 'Submit'
-  const areAllFilled = name !== '' && email !== '' && language !== '' && acceptTerms
+  const areAllFilled =
+    name !== '' && email !== '' && language !== '' && acceptTerms
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -339,7 +338,9 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
+                  onPress={() =>
+                    Linking.openURL('https://www.iso.org/obp/ui/#search')
+                  }
                 >
                   You can find the ISO code here
                 </Text>
@@ -369,7 +370,9 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() => Linking.openURL('https://glottolog.org/glottolog')}
+                  onPress={() =>
+                    Linking.openURL('https://glottolog.org/glottolog')
+                  }
                 >
                   You can find the Glotto code here
                 </Text>
@@ -466,7 +469,9 @@ const Apply = ({ navigation }) => {
                         I agree to the{' '}
                         <Text
                           fontFamily="heading"
-                          onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                          onPress={() =>
+                            Linking.openURL('https://www.7000.org/about-3-1')
+                          }
                         >
                           Terms and Conditions
                         </Text>
