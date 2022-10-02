@@ -149,8 +149,8 @@ export const refreshIDToken = async () => {
       saveUserIDToken(idToken)
       return Promise.resolve(idToken)
     }).catch((reason) => {
-      console.error('rejected reauth')
-      console.log(reason)
+      console.error('rejected reauth, reason: ', reason)
+      return Promise.resolve(null)
     })
   } catch (e) {
     console.error('refreshIDToken(): ', e.message)

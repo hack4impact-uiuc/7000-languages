@@ -1,6 +1,8 @@
 import axios from 'axios'
 import Constants from 'expo-constants'
+import store from '../redux/store'
 import { loadUserIDToken, refreshIDToken } from '../utils/auth'
+import { logout } from 'slices/auth.slice'
 
 const API_URL = Constants.manifest.extra.apiURL
 const API_PORT = Constants.manifest.extra.apiDevelopmentPort
@@ -17,15 +19,14 @@ const instance = axios.create({
 /**
  * Appends an authorization header to the request
  * @param {AxiosRequestConfig<any>} config
- * @returns {AxiosRequestConfig<any>} updated config
+ * @returns {Promise<AxiosRequestConfig<any>>} updated config
  */
 const addAuthHeader = async (config) => {
-  const updatedConfig = config
-  await loadUserIDToken().then((idToken) => {
+  return loadUserIDToken().then((idToken) => {
     if (idToken) {
-      updatedConfig.headers.Authorization = `Bearer ${idToken}`
+      config.headers.Authorization = `Bearer ${idToken}`
     }
-    return updatedConfig
+    return Promise.resolve(config)
   })
 }
 /**
@@ -37,12 +38,16 @@ const authRefresh = async (response) => {
   const status = response ? response.status : null
   if (status === 401) {
     return refreshIDToken().then((newToken) => {
-      if (newToken) {
+      if (newToken != null) {
         response.config.headers.Authorization = `Bearer ${newToken}`
         response.config.baseURL = undefined
         return instance.request(response.config)
+      } else {
+        // Unable to retrieve new idToken -> Prompt log in again
+        store.dispatch(logout())
+        return response
       }
-      return response
+      
     })
   }
 
