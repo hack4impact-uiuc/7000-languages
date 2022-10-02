@@ -1,8 +1,8 @@
 import axios from 'axios'
 import Constants from 'expo-constants'
+import { logout } from 'slices/auth.slice'
 import store from '../redux/store'
 import { loadUserIDToken, refreshIDToken } from '../utils/auth'
-import { logout } from 'slices/auth.slice'
 
 const API_URL = Constants.manifest.extra.apiURL
 const API_PORT = Constants.manifest.extra.apiDevelopmentPort
@@ -23,14 +23,14 @@ const instance = axios.create({
  * @param {AxiosRequestConfig<any>} config
  * @returns {Promise<AxiosRequestConfig<any>>} updated config
  */
-const addAuthHeader = async (config) => {
-  return loadUserIDToken().then((idToken) => {
+const addAuthHeader = async (config) =>
+  loadUserIDToken().then((idToken) => {
+    const updateConfig = config
     if (idToken) {
-      config.headers.Authorization = `Bearer ${idToken}`
+      updateConfig.headers.Authorization = `Bearer ${idToken}`
     }
-    return Promise.resolve(config)
+    return Promise.resolve(updateConfig)
   })
-}
 /**
  *
  * @param {AxiosResponse<any, any>} response
@@ -44,11 +44,10 @@ const authRefresh = async (response) => {
         response.config.headers.Authorization = `Bearer ${newToken}`
         response.config.baseURL = undefined
         return instance.request(response.config)
-      } else {
-        // Unable to retrieve new idToken -> Prompt log in again
-        store.dispatch(logout())
-        return response
       }
+      // Unable to retrieve new idToken -> Prompt log in again
+      store.dispatch(logout())
+      return response
     })
   }
 
@@ -56,6 +55,6 @@ const authRefresh = async (response) => {
 }
 
 instance.interceptors.request.use(addAuthHeader)
-instance.interceptors.response.use(authRefresh, (error) => error)
+instance.interceptors.response.use(authRefresh)
 
 export default instance
