@@ -2,9 +2,7 @@ import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticate } from 'slices/auth.slice'
-import {
-  loadUserIDToken
-} from 'utils/auth'
+import { loadUserIDToken } from 'utils/auth'
 import { createStackNavigator } from '@react-navigation/stack'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator, ModalNavigator } from './Stacks'
