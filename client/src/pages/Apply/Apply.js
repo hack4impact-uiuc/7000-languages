@@ -74,6 +74,7 @@ const Apply = ({ navigation }) => {
   const [location, setLocation] = useState('')
   const [population, setPopulation] = useState('')
   const [acceptTerms, setAcceptTerms] = useState(false)
+  const [followUp, setFollowUp] = useState(false)
   const [link, setLink] = useState(false)
   const errorWrap = useErrorWrap()
   const [errors, setErrors] = useState({})
@@ -95,13 +96,16 @@ const Apply = ({ navigation }) => {
     if (acceptTerms === false) {
       validateErrors.acceptTerms = 'Terms are required'
     }
+    if (followUp === false) {
+      validateErrors.followUp = 'Follow up is required'
+    }
     setErrors(validateErrors)
 
     return Object.keys(validateErrors).length === 0
   }
 
   // Confirms validation of course for pressing 'Submit'
-  const areAllFilled = name !== '' && email !== '' && language !== '' && acceptTerms
+  const areAllFilled = (name !== '' && email !== '' && language !== '' && acceptTerms ) || (name !== '' && email !== '' && language !== '' && followUp)
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -212,11 +216,6 @@ const Apply = ({ navigation }) => {
                     returnKeyType="done"
                     onChangeText={(text) => setName(text)}
                   />
-                  {'name' in errors ? (
-                    <FormControl.ErrorMessage>
-                      Required.
-                    </FormControl.ErrorMessage>
-                  ) : null}
                 </View>
               </FormControl>
 
@@ -237,11 +236,6 @@ const Apply = ({ navigation }) => {
                     returnKeyType="done"
                     onChangeText={(text) => setEmail(text)}
                   />
-                  {'email' in errors ? (
-                    <FormControl.ErrorMessage>
-                      Required.
-                    </FormControl.ErrorMessage>
-                  ) : null}
                 </View>
               </FormControl>
 
@@ -262,11 +256,6 @@ const Apply = ({ navigation }) => {
                     returnKeyType="done"
                     onChangeText={(text) => setLanguage(text)}
                   />
-                  {'Language' in errors ? (
-                    <FormControl.ErrorMessage>
-                      Required.
-                    </FormControl.ErrorMessage>
-                  ) : null}
                 </View>
               </FormControl>
               <FormControl>
@@ -445,7 +434,7 @@ const Apply = ({ navigation }) => {
               </FormControl>
               
               <View style={styles.checkboxes}>
-                
+                <FormControl is Required isInvalid={'acceptTerms' in errors}>
                   <Checkbox
                     value="accepted"
                     colorScheme="danger"
@@ -470,14 +459,15 @@ const Apply = ({ navigation }) => {
                       </Text>
                     </View>
                   </Checkbox>
-               
+                  </FormControl>
               </View>
 
               <View style={styles.checkboxes}>
+                <FormControl is Required isInvalid={'followUp' in errors}>
                   <Checkbox
                     value="accepted"
                     colorScheme="danger" 
-                    onChange={setAcceptTerms}
+                    onChange={setFollowUp}
                   >
                     <View>
                       <Text
@@ -493,7 +483,7 @@ const Apply = ({ navigation }) => {
                       </Text>
                     </View>
                   </Checkbox>
-                
+                </FormControl>
               </View>
             </View>
           </ScrollView>
@@ -504,6 +494,7 @@ const Apply = ({ navigation }) => {
           title="Submit"
           variant="primary"
           onPress={onSubmit}
+          isDisabled={!areAllFilled}
         />
 
         <Text
