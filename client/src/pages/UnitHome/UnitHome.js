@@ -10,7 +10,7 @@ import { useErrorWrap, useTrackPromise } from 'hooks'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const UnitHome = ({ navigation }) => {
-  const errorWrap = useErrorWrap()
+  const errorWrap = useErrorWrap() 
   const trackPromise = useTrackPromise()
 
   const dispatch = useDispatch()
@@ -115,7 +115,7 @@ const UnitHome = ({ navigation }) => {
       languageDescription={unitDescription}
       valueName="Lessons"
       buttonText="Manage Lessons"
-      rightIconName="plus-circle"
+      rightIconName="pencil"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
       data={data}
