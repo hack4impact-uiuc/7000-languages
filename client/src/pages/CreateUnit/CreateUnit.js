@@ -38,6 +38,8 @@ const CreateUnit = ({ navigation }) => {
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
 
+  // check if all fields are filled
+  // otherwise, disable the submit button
   const areAllFilled = name !== '' && purpose !== ''
 
   /**
