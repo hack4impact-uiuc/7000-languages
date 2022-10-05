@@ -33,6 +33,10 @@ const CreateLesson = ({ navigation }) => {
   const [name, setName] = useState('') // the name of the lesson
   const [purpose, setPurpose] = useState('') // the purpose/description of the lesson
 
+  // checks if all fields are filled
+  // otherwise, the submit button is disabled
+  const areRequiredFieldsFilled = name !== '' && purpose !== '';
+
   // Closes the modal
   const close = () => {
     navigation.goBack()
@@ -118,6 +122,7 @@ const CreateLesson = ({ navigation }) => {
       successText="Create Lesson"
       successCallback={success}
       closeCallback={close}
+      isDisabled={!areRequiredFieldsFilled}
       body={body}
     />
   )
