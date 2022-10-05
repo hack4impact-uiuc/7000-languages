@@ -55,6 +55,6 @@ const authRefresh = async (response) => {
 }
 
 instance.interceptors.request.use(addAuthHeader)
-instance.interceptors.response.use(authRefresh, (error) => error)
+instance.interceptors.response.use(authRefresh)
 
 export default instance
