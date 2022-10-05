@@ -105,7 +105,7 @@ const Apply = ({ navigation }) => {
   }
 
   // Confirms validation of course for pressing 'Submit'
-  const areAllFilled = (name !== '' && email !== '' && language !== '' && acceptTerms ) || (name !== '' && email !== '' && language !== '' && followUp)
+  const areRequiredFieldsFilled = name !== '' && email !== '' && language !== '' && acceptTerms
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -432,7 +432,7 @@ const Apply = ({ navigation }) => {
                   />
                 </View>
               </FormControl>
-              
+
               <View style={styles.checkboxes}>
                 <FormControl is Required isInvalid={'acceptTerms' in errors}>
                   <Checkbox
@@ -440,7 +440,6 @@ const Apply = ({ navigation }) => {
                     colorScheme="danger"
                     onChange={setAcceptTerms}
                   >
-                    
                     <View>
                       <Text
                         fontFamily="body"
@@ -459,14 +458,14 @@ const Apply = ({ navigation }) => {
                       </Text>
                     </View>
                   </Checkbox>
-                  </FormControl>
+                </FormControl>
               </View>
 
               <View style={styles.checkboxes}>
                 <FormControl is Required isInvalid={'followUp' in errors}>
                   <Checkbox
                     value="accepted"
-                    colorScheme="danger" 
+                    colorScheme="danger"
                     onChange={setFollowUp}
                   >
                     <View>
@@ -494,7 +493,7 @@ const Apply = ({ navigation }) => {
           title="Submit"
           variant="primary"
           onPress={onSubmit}
-          isDisabled={!areAllFilled}
+          isDisabled={!areRequiredFieldsFilled}
         />
 
         <Text
