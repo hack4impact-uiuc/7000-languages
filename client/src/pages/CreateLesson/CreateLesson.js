@@ -19,7 +19,7 @@ const CreateLesson = ({ navigation }) => {
 
   // checks if all fields are filled
   // otherwise, the submit button is disabled
-  const areAllFilled = name !== '' && purpose !== '';
+  const areRequiredFieldsFilled = name !== '' && purpose !== '';
 
   // Closes the modal
   const close = () => {
@@ -85,7 +85,7 @@ const CreateLesson = ({ navigation }) => {
       successText="Create Lesson"
       successCallback={success}
       closeCallback={close}
-      isDisabled={!areAllFilled}
+      isDisabled={!areRequiredFieldsFilled}
       body={body}
     />
   )

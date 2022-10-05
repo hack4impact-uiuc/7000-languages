@@ -39,7 +39,7 @@ const CreateUnit = ({ navigation }) => {
 
   // checks if all fields are filled
   // otherwise, the submit button is disabled
-  const areAllFilled = name !== '' && purpose !== ''
+  const areRequiredFieldsFilled = name !== '' && purpose !== ''
 
   /**
    * Posts a new unit to the API and saves the new unit in state
@@ -125,7 +125,7 @@ const CreateUnit = ({ navigation }) => {
       successText="Create Unit"
       successCallback={success}
       closeCallback={close}
-      isDisabled={!areAllFilled}
+      isDisabled={!areRequiredFieldsFilled}
       body={body}
     />
   )
