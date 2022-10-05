@@ -101,7 +101,7 @@ const Apply = ({ navigation }) => {
   }
 
   // Confirms validation of course for pressing 'Submit'
-  const areAllFilled = name !== '' && email !== '' && language !== '' && acceptTerms
+  // const areAllFilled = name !== '' && email !== '' && language !== '' && acceptTerms
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -443,68 +443,60 @@ const Apply = ({ navigation }) => {
                   />
                 </View>
               </FormControl>
-              
+
               <View style={styles.checkboxes}>
-                
-                  <Checkbox
-                    value="accepted"
-                    colorScheme="danger"
-                    onChange={setAcceptTerms}
-                  >
-                    
-                    <View>
+                <Checkbox
+                  value="accepted"
+                  colorScheme="danger"
+                  onChange={setAcceptTerms}
+                >
+                  <View>
+                    <Text
+                      fontFamily="body"
+                      fontWeight="regular"
+                      color="black"
+                      fontStyle="normal"
+                      fontSize="md"
+                    >
+                      I agree to the{' '}
                       <Text
-                        fontFamily="body"
-                        fontWeight="regular"
-                        color="black"
-                        fontStyle="normal"
-                        fontSize="md"
+                        fontFamily="heading"
+                        onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
                       >
-                        I agree to the{' '}
-                        <Text
-                          fontFamily="heading"
-                          onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
-                        >
-                          Terms and Conditions
-                        </Text>
+                        Terms and Conditions
                       </Text>
-                    </View>
-                  </Checkbox>
-               
+                    </Text>
+                  </View>
+                </Checkbox>
               </View>
 
               <View style={styles.checkboxes}>
-                  <Checkbox
-                    value="accepted"
-                    colorScheme="danger" 
-                    onChange={setAcceptTerms}
-                  >
-                    <View>
-                      <Text
-                        fontFamily="body"
-                        fontWeight="regular"
-                        color="black"
-                        fontStyle="normal"
-                        fontSize="md"
-                      >
-                        I would like a team member from 7000 Languages to follow
-                        up with me about creating additional resources for my
-                        language.
-                      </Text>
-                    </View>
-                  </Checkbox>
-                
+                <Checkbox
+                  value="accepted"
+                  colorScheme="danger"
+                  onChange={setAcceptTerms}
+                >
+                  <View>
+                    <Text
+                      fontFamily="body"
+                      fontWeight="regular"
+                      color="black"
+                      fontStyle="normal"
+                      fontSize="md"
+                    >
+                      I would like a team member from 7000 Languages to follow
+                      up with me about creating additional resources for my
+                      language.
+                    </Text>
+                  </View>
+                </Checkbox>
               </View>
             </View>
           </ScrollView>
         </View>
       </View>
       <Box style={styles.termsText}>
-        <StyledButton
-          title="Submit"
-          variant="primary"
-          onPress={onSubmit}
-        />
+        <StyledButton title="Submit" variant="primary" onPress={onSubmit} />
 
         <Text
           fontFamily="body"
