@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
-import { Input, Text, TextArea } from 'native-base'
+import { Input, TextArea } from 'native-base'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { addLesson } from 'slices/language.slice'
 import { createLesson } from 'api'
 import { useErrorWrap } from 'hooks'
+import RequiredField from 'components/RequiredField'
 
 const CreateLesson = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -57,7 +58,7 @@ const CreateLesson = ({ navigation }) => {
 
   const body = (
     <>
-      <Text>Give your lesson a name</Text>
+      <RequiredField title="Give your lesson a name" />
       <Input
         size="lg"
         placeholder=""
@@ -65,8 +66,7 @@ const CreateLesson = ({ navigation }) => {
         onChangeText={(text) => setName(text)}
       />
 
-      <Text>What are the goals of this lesson?</Text>
-
+      <RequiredField title="What are the goals of this lesson?" />
       <TextArea
         size="xl"
         h={40}
