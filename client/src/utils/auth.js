@@ -162,8 +162,7 @@ export const refreshIDToken = async () => {
         return Promise.resolve(idToken)
       })
       .catch((reason) => {
-        console.error('rejected reauth')
-        console.log(reason)
+        console.error('rejected request for refresh auth with reason: ', reason)
       })
   } catch (e) {
     console.error('refreshIDToken(): ', e.message)
