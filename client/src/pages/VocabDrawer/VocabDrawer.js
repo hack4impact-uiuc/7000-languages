@@ -505,7 +505,8 @@ const VocabDrawer = ({ navigation }) => {
     </>
   )
 
-
+  // requires the user to fill out all the fields for the vocab item
+  // otherwise, the button will be disabled
   const areAllFilled = originalText !== '' && translatedText !== '';
   return (
     <Drawer
