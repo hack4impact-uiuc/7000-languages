@@ -163,6 +163,7 @@ export const refreshIDToken = async () => {
       })
       .catch((reason) => {
         console.error('rejected request for refresh auth with reason: ', reason)
+        return Promise.resolve(null)
       })
   } catch (e) {
     console.error('refreshIDToken(): ', e.message)
