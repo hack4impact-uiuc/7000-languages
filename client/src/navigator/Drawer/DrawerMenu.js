@@ -53,7 +53,7 @@ const DrawerMenu = ({ navigation }) => (
         size={25}
         color={colors.gray.dark}
         backgroundColor={"transparent"}
-        underlayColor={"#00000020"}
+        underlayColor={colors.gray.semi_transparent}
         onPress={() => {
           navigation.dispatch(DrawerActions.closeDrawer())
         }}

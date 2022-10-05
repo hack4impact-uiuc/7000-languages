@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet } from 'react-native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
+import { colors } from 'theme'
 
 const styles = StyleSheet.create({
   button: {
@@ -15,8 +16,7 @@ const DrawerButton = ({ navigation }) => (
     color="white"
     backgroundColor="transparent"
     size={25}
-    activeOpacity={true}
-    underlayColor={"#00000020"}
+    underlayColor={colors.gray.semi_transparent}
     onPress={() => {
       navigation.openDrawer()
     }}
