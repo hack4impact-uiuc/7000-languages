@@ -1,13 +1,29 @@
 import React, { useState } from 'react'
+import { StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
 import { Input, Text, TextArea } from 'native-base'
-
+import { colors } from 'theme'
 import { useSelector, useDispatch } from 'react-redux'
 import { addLesson } from 'slices/language.slice'
 import { createLesson } from 'api'
 import { useErrorWrap } from 'hooks'
+import { Foundation } from '@expo/vector-icons'
 
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 2,
+    borderWidth: 0.5,
+    padding: 8,
+    marginBottom: 10,
+    backgroundColor: colors.blue.light,
+    borderColor: colors.blue.light,
+  },
+  textRow: {
+    flexDirection: 'row',
+  },
+})
 const CreateLesson = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
@@ -53,7 +69,28 @@ const CreateLesson = ({ navigation }) => {
 
   const body = (
     <>
-      <Text>Give your lesson a name</Text>
+            <View style={styles.container}>
+          <View style={styles.textRow}>
+            <Foundation name="lightbulb" size={20} color={colors.blue.dark} />
+            <Text
+              fontSize="md"
+              paddingBottom={2}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
+              color={colors.blue.dark}
+            >
+              {' '}
+              Suggestion{' '}
+            </Text>
+          </View>
+          <Text color={colors.blue.dark} fontSize="md">
+            When creating a unit, think about how it will be used. More text
+            here explaining what they should look for when making a unit.
+          </Text>
+        </View>
+
+      <Text fontSize="md" >Give your lesson a name</Text>
       <Input
         size="lg"
         placeholder=""
@@ -61,7 +98,7 @@ const CreateLesson = ({ navigation }) => {
         onChangeText={(text) => setName(text)}
       />
 
-      <Text>What are the goals of this lesson?</Text>
+      <Text fontSize="md" >What are the goals of this lesson?</Text>
 
       <TextArea
         size="xl"
