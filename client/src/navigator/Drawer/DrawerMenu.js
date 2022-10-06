@@ -52,7 +52,7 @@ const DrawerMenu = ({ navigation }) => (
         name="times"
         size={25}
         color={colors.gray.dark}
-        backgroundColor={"transparent"}
+        backgroundColor="transparent"
         underlayColor={colors.gray.semi_transparent}
         onPress={() => {
           navigation.dispatch(DrawerActions.closeDrawer())
