@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
-import { Input, TextArea } from 'native-base'
-
+import { Input, TextArea, Text } from 'native-base'
+import { Foundation } from '@expo/vector-icons'
+import { colors } from 'theme'
 import { useSelector, useDispatch } from 'react-redux'
 import { addLesson } from 'slices/language.slice'
 import { createLesson } from 'api'
@@ -72,9 +73,28 @@ const CreateLesson = ({ navigation }) => {
 
   const body = (
     <>
+            <View style={styles.container}>
+          <View style={styles.textRow}>
+            <Foundation name="lightbulb" size={20} color={colors.blue.dark} />
+            <Text
+              fontSize="md"
+              paddingBottom={2}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
+              color={colors.blue.dark}
+            >
+              {' '}
+              Suggestion{' '}
+            </Text>
+          </View>
+          <Text color={colors.blue.dark} fontSize="md">
+          When creating a lesson, think about which vocab items will be associated with the lesson and how it will be used.
+          </Text>
+        </View>
       <RequiredField title="Give your lesson a name" />
       <Input
-        size="lg"
+        size="xl"
         placeholder=""
         returnKeyType="done"
         onChangeText={(text) => setName(text)}
