@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet } from 'react-native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
+import { colors } from 'theme'
 
 const styles = StyleSheet.create({
   button: {
@@ -21,6 +22,7 @@ const BackButton = ({ navigation, color, onPress }) => {
       color={color}
       size={25}
       backgroundColor="transparent"
+      underlayColor={colors.gray.semi_transparent}
       onPress={goBack}
       style={styles.button}
     />
