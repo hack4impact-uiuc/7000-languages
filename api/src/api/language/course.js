@@ -9,10 +9,12 @@ const {
 } = require('../../middleware/authorization');
 const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
-const { getNumLessonsInUnit, getNumUnitsInCourse, patchDocument } = require('../../utils/languageHelper');
 const {
-  exampleData
-} = require('../../utils/example-data.js');
+  getNumLessonsInUnit,
+  getNumUnitsInCourse,
+  patchDocument,
+} = require('../../utils/languageHelper');
+const { exampleData } = require('../../utils/example-data.js');
 
 /**
  * Does a patch update a single course in the database, meaning
@@ -37,8 +39,8 @@ router.patch(
 );
 
 /**
- * Uploads example units, lessons, and vocab items for any new course that is created. 
- * @param {course_id} course_id of the new course that was just created 
+ * Uploads example units, lessons, and vocab items for any new course that is created.
+ * @param {course_id} course_id of the new course that was just created
  */
 async function populateExampleData(course_id) {
   for (const unit of exampleData.units) {
@@ -50,7 +52,7 @@ async function populateExampleData(course_id) {
     unitData['_course_id'] = course_id;
     unitData['_order'] = order;
 
-    // Create and save new unit 
+    // Create and save new unit
     const newUnit = new models.Unit(unitData);
     await newUnit.save();
     const unit_id = newUnit._id;
@@ -79,7 +81,7 @@ async function populateExampleData(course_id) {
         vocab._order = currentLesson.vocab.length;
         vocab._lesson_id = lesson_id;
 
-        // Append vocab item to lesson list 
+        // Append vocab item to lesson list
         currentLesson.vocab.push(vocab);
         await currentLesson.save();
       }
@@ -108,14 +110,14 @@ router.post(
     await newCourse.save();
     let newResult = newCourse.toJSON();
     newResult = _.omit(newResult, ['admin_id']);
-    
-    // Load and save the example units/lessons/vocab items for the course
-    populateExampleData(newCourse._id);
 
     await models.User.updateOne(
       { _id: user._id },
       { $push: { adminLanguages: newCourse._id } },
     );
+
+    // Load and save the example units/lessons/vocab items for the course
+    populateExampleData(newCourse._id);
 
     return sendResponse(
       res,

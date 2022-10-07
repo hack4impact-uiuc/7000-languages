@@ -4,15 +4,15 @@ module.exports.exampleData = {
       unitData: {
         name: 'Language Learning Phrases',
         selected: true,
-        description: 'Useful phrases that are a good introduction to the language.',
+        description:
+          'Useful phrases that are a good introduction to the language.',
       },
       lessons: [
         {
           lessonData: {
             name: 'Helpful Phrases',
             selected: true,
-            description:
-              'Helpful phrases description.',
+            description: 'Helpful phrases description.',
           },
           vocab: [
             {
@@ -21,32 +21,27 @@ module.exports.exampleData = {
             },
             {
               original: 'What is this called?',
-              translation: 'The translated version of that'
+              translation: 'The translated version of that',
             },
-          ]
+          ],
         },
         {
           lessonData: {
             name: 'The Basics - Colors',
             selected: true,
-            description:
-              'Colors description.',
+            description: 'Colors description.',
           },
-          vocab: [
-          ]
+          vocab: [],
         },
         {
           lessonData: {
             name: 'The Basics - Numbers',
             selected: true,
-            description:
-              'Numbers description.',
+            description: 'Numbers description.',
           },
-          vocab: [
-
-          ]
-        }
-      ]
-    }
+          vocab: [],
+        },
+      ],
+    },
   ],
 };
