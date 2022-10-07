@@ -18,6 +18,7 @@ import { createCourse } from 'api'
 import { getAllUserCourses } from 'utils/languageHelper'
 import { useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
+import RequiredField from 'components/RequiredField'
 
 const styles = StyleSheet.create({
   root: {
@@ -196,15 +197,7 @@ const Apply = ({ navigation }) => {
 
             <View style={styles.root}>
               <FormControl is Required isInvalid={'name' in errors}>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Your Name*
-                </Text>
+                <RequiredField title="Your Name" fontSize="md" />
                 <View style={styles.input}>
                   <Input
                     size="2xl"
@@ -221,15 +214,7 @@ const Apply = ({ navigation }) => {
               </FormControl>
 
               <FormControl isRequired isInvalid={'email' in errors}>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Email*
-                </Text>
+                <RequiredField title="Email" fontSize="md" />
                 <View style={styles.input}>
                   <Input
                     size="xl"
@@ -246,15 +231,7 @@ const Apply = ({ navigation }) => {
               </FormControl>
 
               <FormControl isRequired isInvalid={'Language' in errors}>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Name of Language*
-                </Text>
+                <RequiredField title="Name of Language" fontSize="md" />
                 <View style={styles.input}>
                   <Input
                     size="xl"
