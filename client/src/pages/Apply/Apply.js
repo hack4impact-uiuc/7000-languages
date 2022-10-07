@@ -18,6 +18,7 @@ import { createCourse } from 'api'
 import { getAllUserCourses } from 'utils/languageHelper'
 import { useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
+import RequiredField from 'components/RequiredField'
 
 const styles = StyleSheet.create({
   root: {
@@ -50,14 +51,14 @@ const styles = StyleSheet.create({
   },
   checkboxes: {
     marginTop: 10,
-    width: '98%',
+    width: '95%',
   },
   inputHeight: {
     height: 50,
   },
   termsText: {
     paddingVertical: 10,
-    width: '100%',
+    width: '99%',
     alignItems: 'center',
   },
 })
@@ -77,32 +78,7 @@ const Apply = ({ navigation }) => {
   const [followUp, setFollowUp] = useState(false)
   const [link, setLink] = useState(false)
   const errorWrap = useErrorWrap()
-  const [errors, setErrors] = useState({})
   const dispatch = useDispatch()
-
-  // Validates the course application form
-  const validate = () => {
-    const validateErrors = {}
-
-    if (name === '') {
-      validateErrors.name = 'Name is required'
-    }
-    if (email === '') {
-      validateErrors.email = 'Email is required'
-    }
-    if (language === '') {
-      validateErrors.Language = 'Language is required'
-    }
-    if (acceptTerms === false) {
-      validateErrors.acceptTerms = 'Terms are required'
-    }
-    if (followUp === false) {
-      validateErrors.followUp = 'Follow up is required'
-    }
-    setErrors(validateErrors)
-
-    return Object.keys(validateErrors).length === 0
-  }
 
   // Confirms validation of course for pressing 'Submit'
   const areRequiredFieldsFilled = name !== '' && email !== '' && language !== '' && acceptTerms
@@ -126,6 +102,7 @@ const Apply = ({ navigation }) => {
         description,
         iso: isoCode,
         glotto: glottoCode,
+        followUp,
         population,
         location,
         link,
@@ -156,7 +133,7 @@ const Apply = ({ navigation }) => {
   }
 
   const onSubmit = async () => {
-    if (validate() === true) {
+    if (areRequiredFieldsFilled === true) {
       await applyCourse()
     }
   }
@@ -199,16 +176,8 @@ const Apply = ({ navigation }) => {
             </View>
 
             <View style={styles.root}>
-              <FormControl is Required isInvalid={'name' in errors}>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Your Name*
-                </Text>
+              <FormControl>
+                <RequiredField title="Your Name" fontSize="md" />
                 <View style={styles.input}>
                   <Input
                     size="2xl"
@@ -219,16 +188,8 @@ const Apply = ({ navigation }) => {
                 </View>
               </FormControl>
 
-              <FormControl isRequired isInvalid={'email' in errors}>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Email*
-                </Text>
+              <FormControl>
+                <RequiredField title="Email" fontSize="md" />
                 <View style={styles.input}>
                   <Input
                     size="xl"
@@ -239,16 +200,8 @@ const Apply = ({ navigation }) => {
                 </View>
               </FormControl>
 
-              <FormControl isRequired isInvalid={'Language' in errors}>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Name of Language*
-                </Text>
+              <FormControl>
+                <RequiredField title="Name of Language" fontSize="md" />
                 <View style={styles.input}>
                   <Input
                     size="xl"
@@ -434,55 +387,51 @@ const Apply = ({ navigation }) => {
               </FormControl>
 
               <View style={styles.checkboxes}>
-                <FormControl is Required isInvalid={'acceptTerms' in errors}>
-                  <Checkbox
-                    value="accepted"
-                    colorScheme="danger"
-                    onChange={setAcceptTerms}
-                  >
-                    <View>
+                <Checkbox
+                  value="accepted"
+                  colorScheme="danger"
+                  onChange={setAcceptTerms}
+                >
+                  <View>
+                    <Text
+                      fontFamily="body"
+                      fontWeight="regular"
+                      color="black"
+                      fontStyle="normal"
+                      fontSize="md"
+                    >
+                      I agree to the{' '}
                       <Text
-                        fontFamily="body"
-                        fontWeight="regular"
-                        color="black"
-                        fontStyle="normal"
-                        fontSize="md"
+                        fontFamily="heading"
+                        onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
                       >
-                        I agree to the{' '}
-                        <Text
-                          fontFamily="heading"
-                          onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
-                        >
-                          Terms and Conditions
-                        </Text>
+                        Terms and Conditions
                       </Text>
-                    </View>
-                  </Checkbox>
-                </FormControl>
+                    </Text>
+                  </View>
+                </Checkbox>
               </View>
 
               <View style={styles.checkboxes}>
-                <FormControl is Required isInvalid={'followUp' in errors}>
-                  <Checkbox
-                    value="accepted"
-                    colorScheme="danger"
-                    onChange={setFollowUp}
-                  >
-                    <View>
-                      <Text
-                        fontFamily="body"
-                        fontWeight="regular"
-                        color="black"
-                        fontStyle="normal"
-                        fontSize="md"
-                      >
-                        I would like a team member from 7000 Languages to follow
-                        up with me about creating additional resources for my
-                        language.
-                      </Text>
-                    </View>
-                  </Checkbox>
-                </FormControl>
+                <Checkbox
+                  value="accepted"
+                  colorScheme="danger"
+                  onChange={setFollowUp}
+                >
+                  <View>
+                    <Text
+                      fontFamily="body"
+                      fontWeight="regular"
+                      color="black"
+                      fontStyle="normal"
+                      fontSize="md"
+                    >
+                      I would like a team member from 7000 Languages to follow
+                      up with me about creating additional resources for my
+                      language.
+                    </Text>
+                  </View>
+                </Checkbox>
               </View>
             </View>
           </ScrollView>
