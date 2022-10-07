@@ -20,6 +20,7 @@ const {
   PATCH_UPDATE_INVALID_FIELD,
   PATCH_UPDATE_NON_BOOLEAN_APPROVAL,
 } = require('../mock-data/course-mock-data');
+const { POST_BERBER_COURSE, POST_BERBER_COURSE_EXPECTED } = require('../mock-data/non-latin-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
 const _ = require('lodash');
@@ -139,6 +140,19 @@ describe('POST /language/course/ ', () => {
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new course');
     expect(result).toEqual(POST_COURSE_ADDITIONAL_FIELDS_EXPECTED);
+  });
+
+  test('Fields with berber text should create course', async () => {
+    const body = POST_BERBER_COURSE;
+
+    const response = await withAuthentication(
+      request(app).post('/language/course/').send(body),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '_id', '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully created a new course');
+    expect(result).toEqual(POST_BERBER_COURSE_EXPECTED);
   });
 });
 
