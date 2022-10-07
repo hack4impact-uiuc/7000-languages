@@ -8,9 +8,8 @@ const API_URL = Constants.manifest.extra.apiURL
 const API_PORT = Constants.manifest.extra.apiDevelopmentPort
 
 // Source: https://stackoverflow.com/questions/47417766/calling-locally-hosted-server-from-expo-app/70964774
-export const BASE_URL =
-  API_URL ||
-  `http://${Constants.manifest.debuggerHost.split(':').shift()}:${API_PORT}`
+export const BASE_URL = API_URL
+  || `http://${Constants.manifest.debuggerHost.split(':').shift()}:${API_PORT}`
 
 // The configured axios instance to be exported
 const instance = axios.create({
@@ -23,14 +22,13 @@ const instance = axios.create({
  * @param {AxiosRequestConfig<any>} config
  * @returns {Promise<AxiosRequestConfig<any>>} updated config
  */
-const addAuthHeader = async (config) =>
-  loadUserIDToken().then((idToken) => {
-    const updateConfig = config
-    if (idToken) {
-      updateConfig.headers.Authorization = `Bearer ${idToken}`
-    }
-    return Promise.resolve(updateConfig)
-  })
+const addAuthHeader = async (config) => loadUserIDToken().then((idToken) => {
+  const updateConfig = config
+  if (idToken) {
+    updateConfig.headers.Authorization = `Bearer ${idToken}`
+  }
+  return Promise.resolve(updateConfig)
+})
 /**
  *
  * @param {AxiosResponse<any, any>} response

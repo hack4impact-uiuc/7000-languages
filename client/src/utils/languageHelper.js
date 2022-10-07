@@ -20,10 +20,10 @@ export const getAllUserCourses = async () => {
 
   // Build list of courses that they belong to
   if (
-    adminLanguages.length +
-      collaboratorLanguages.length +
-      learnerLanguages.length >
-    0
+    adminLanguages.length
+      + collaboratorLanguages.length
+      + learnerLanguages.length
+    > 0
   ) {
     for (let i = 0; i < adminLanguages.length; i += 1) {
       allCourses.push({ ...adminLanguages[i], isContributor: true })
