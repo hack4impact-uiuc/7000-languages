@@ -21,7 +21,7 @@ const colors = {
     dark: '#C0D152', // 500 opacity
   },
   gray: {
-    semi_transparent: '#00000020', // [TODO: put opacity here]
+    semi_transparent: '#00000020', 
     light: '#EFEFEF', // 100 opacity
     medium_light: '#F4F4F4', // 300 opacity
     medium: '#A4A4A4', // 500 opacity
