@@ -73,16 +73,16 @@ async function populateExampleData(course_id) {
       await newLesson.save();
       const lesson_id = newLesson._id;
 
-      for (const vocab of lesson['vocab']) {
+      for (const vocabItem of lesson['vocab']) {
         // Refetch the current lesson
         const currentLesson = await models.Lesson.findById(lesson_id);
 
         // Set additional variables and ID for vocab item
-        vocab._order = currentLesson.vocab.length;
-        vocab._lesson_id = lesson_id;
+        vocabItem._order = currentLesson.vocab.length;
+        vocabItem._lesson_id = lesson_id;
 
         // Append vocab item to lesson list
-        currentLesson.vocab.push(vocab);
+        currentLesson.vocab.push(vocabItem);
         await currentLesson.save();
       }
     }
