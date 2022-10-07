@@ -14,7 +14,7 @@ const styles = {
   },
   head: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-around',
   },
   main: {
     flex: 1,
@@ -47,12 +47,13 @@ const DrawerMenu = ({ navigation }) => (
         My Courses
       </Text>
     </View>
-    <View style={styles.head}>
+    <View>
       <FontIcon.Button
         name="times"
-        size={20}
+        size={25}
         color={colors.gray.dark}
-        backgroundColor="white"
+        backgroundColor="transparent"
+        underlayColor={colors.gray.semi_transparent}
         onPress={() => {
           navigation.dispatch(DrawerActions.closeDrawer())
         }}

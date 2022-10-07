@@ -20,7 +20,7 @@ const CreateLesson = ({ navigation }) => {
 
   // checks if all fields are filled
   // otherwise, the submit button is disabled
-  const areRequiredFieldsFilled = name !== '' && purpose !== '';
+  const areRequiredFieldsFilled = name !== '' && purpose !== ''
 
   // Closes the modal
   const close = () => {
