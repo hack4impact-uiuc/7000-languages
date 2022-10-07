@@ -9,7 +9,7 @@ const {
 } = require('../../middleware/authorization');
 const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
-const { checkIds, getNumLessonsInUnit, getNumUnitsInCourse, patchDocument } = require('../../utils/languageHelper');
+const { getNumLessonsInUnit, getNumUnitsInCourse, patchDocument } = require('../../utils/languageHelper');
 const {
   exampleData
 } = require('../../utils/example-data.js');
