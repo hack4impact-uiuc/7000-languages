@@ -506,7 +506,7 @@ const VocabDrawer = ({ navigation }) => {
 
   // requires the user to fill out all the fields for the vocab item
   // otherwise, the button will be disabled
-  const areRequiredFieldsFilled = originalText !== '' && translatedText !== ''
+  const areRequiredFieldsFilled = originalText !== '' && translatedText !== '';
   return (
     <Drawer
       titleText={currentVocabId !== '' ? 'Edit Vocab Item' : 'Add a Vocab Item'}

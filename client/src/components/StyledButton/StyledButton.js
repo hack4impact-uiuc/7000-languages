@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'native-base'
 import { ViewPropTypes } from 'react-native'
@@ -13,6 +13,10 @@ const StyledButton = ({
   style,
   isDisabled,
 }) => (
+  // useEffect(() => {
+  //   console.log(isDisabled);
+  // },[]),
+
   <Button
     onPress={onPress}
     variant={variant}

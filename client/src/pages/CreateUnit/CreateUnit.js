@@ -40,6 +40,7 @@ const CreateUnit = ({ navigation }) => {
   // checks if all fields are filled
   // otherwise, the submit button is disabled
   const areRequiredFieldsFilled = name !== '' && purpose !== ''
+  console.log("Here: " + areRequiredFieldsFilled);
 
   /**
    * Posts a new unit to the API and saves the new unit in state

@@ -45,11 +45,14 @@ const Drawer = ({
   const[isDisabledState, setDisabledState] = useState(isDisabled); //variable to stop track duplicate items
   useEffect(() => {
     setDisabledState(isDisabled);
-  },[]);
+    console.log(isDisabled);
+  },[isDisabled]);
   const onPress = () => {
-    setDisabledState(true);
-    successCallback();
-    setDisabledState(false);
+    if(!isDisabledState){
+      setDisabledState(true);
+      successCallback();
+      setDisabledState(false);
+    }
   }
   return(<KeyboardAvoidingView
 
