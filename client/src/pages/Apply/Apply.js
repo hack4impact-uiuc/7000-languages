@@ -50,14 +50,14 @@ const styles = StyleSheet.create({
   },
   checkboxes: {
     marginTop: 10,
-    width: '98%',
+    width: '95%',
   },
   inputHeight: {
     height: 50,
   },
   termsText: {
     paddingVertical: 10,
-    width: '100%',
+    width: '99%',
     alignItems: 'center',
   },
 })
