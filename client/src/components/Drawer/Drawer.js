@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Text } from 'native-base'
 import {
@@ -41,8 +41,18 @@ const Drawer = ({
   isDisabled,
   successText,
   body,
-}) => (
-  <KeyboardAvoidingView
+}) => {
+  const[isDisabledState, setDisabledState] = useState(isDisabled); //variable to stop track duplicate items
+  useEffect(() => {
+    setDisabledState(isDisabled);
+  },[]);
+  const onPress = () => {
+    setDisabledState(true);
+    successCallback();
+    setDisabledState(false);
+  }
+  return(<KeyboardAvoidingView
+
     KeyboardAvoidingView
     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     style={styles.root}
@@ -58,12 +68,12 @@ const Drawer = ({
     </View>
     <StyledButton
       title={successText}
-      onPress={successCallback}
-      isDisabled={isDisabled}
+      onPress={onPress}
+      isDisabled={isDisabledState}
       variant="primary"
     />
   </KeyboardAvoidingView>
-)
+)}
 // Button object fields
 Drawer.propTypes = {
   titleText: PropTypes.string,
@@ -84,3 +94,4 @@ Drawer.defaultProps = {
 }
 
 export default Drawer
+
