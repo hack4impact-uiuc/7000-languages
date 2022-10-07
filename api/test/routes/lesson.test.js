@@ -40,6 +40,10 @@ const {
   POST_LESSON_EXTRA_DATA,
   POST_LESSON_EXTRA_DATA_EXPECTED,
 } = require('../mock-data/lesson-mock-data');
+const {
+  POST_BERBER_LESSON,
+  POST_BERBER_LESSON_EXPECTED,
+} = require('../mock-data/non-latin-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
 const _ = require('lodash');
@@ -179,6 +183,18 @@ describe('POST /lesson/ ', () => {
         .send(POST_LESSON_MISSING_REQUIRED_LESSON_DATA),
     );
     expect(response.status).toBe(500);
+  });
+
+  test('Success creating lesson w/ berber characters', async () => {
+    const response = await withAuthentication(
+      request(app).post(`/language/lesson`).send(POST_BERBER_LESSON),
+    );
+
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '_id', '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual(SUCCESS_POSTING_LESSON_DATA);
+    expect(result).toEqual(POST_BERBER_LESSON_EXPECTED);
   });
 });
 

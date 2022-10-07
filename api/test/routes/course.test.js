@@ -20,7 +20,10 @@ const {
   PATCH_UPDATE_INVALID_FIELD,
   PATCH_UPDATE_NON_BOOLEAN_APPROVAL,
 } = require('../mock-data/course-mock-data');
-const { POST_BERBER_COURSE, POST_BERBER_COURSE_EXPECTED } = require('../mock-data/non-latin-mock-data');
+const {
+  POST_BERBER_COURSE,
+  POST_BERBER_COURSE_EXPECTED,
+} = require('../mock-data/non-latin-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
 const _ = require('lodash');
