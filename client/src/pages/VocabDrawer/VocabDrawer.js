@@ -23,6 +23,7 @@ import {
 } from 'api'
 
 import { useErrorWrap, useTrackPromise } from 'hooks'
+import RequiredField from 'components/RequiredField'
 
 const expoImageSettings = {
   mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -461,7 +462,7 @@ const VocabDrawer = ({ navigation }) => {
     <>
       <Text color="gray.medium">A vocab item can be a word or phrase.</Text>
       {generateImageContainer()}
-      <Text>{`${translatedLanguage}*`}</Text>
+      <RequiredField title={translatedLanguage} />
       <Input
         placeholder=""
         returnKeyType="done"
@@ -477,7 +478,7 @@ const VocabDrawer = ({ navigation }) => {
         discardRecording={clearRecording}
         stopPlayingRecording={stopPlayingRecording}
       />
-      <Text>{`${originalLanguage}*`}</Text>
+      <RequiredField title={originalLanguage} />
       <Input
         placeholder=""
         returnKeyType="done"
@@ -504,12 +505,16 @@ const VocabDrawer = ({ navigation }) => {
     </>
   )
 
+  // requires the user to fill out all the fields for the vocab item
+  // otherwise, the button will be disabled
+  const areRequiredFieldsFilled = originalText !== '' && translatedText !== '';
   return (
     <Drawer
       titleText={currentVocabId !== '' ? 'Edit Vocab Item' : 'Add a Vocab Item'}
       successText={currentVocabId !== '' ? 'Save Changes' : 'Add Item'}
       successCallback={success}
       closeCallback={close}
+      isDisabled={!areRequiredFieldsFilled}
       body={body}
     />
   )
