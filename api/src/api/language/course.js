@@ -11,7 +11,7 @@ const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
 const { getNumUnitsInCourse, patchDocument } = require('../../utils/languageHelper');
 const {
-  POST_SIMPLE_UNIT
+  exampleData
 } = require('../../utils/example-data.js');
 
 /**
@@ -37,53 +37,55 @@ router.patch(
 );
 
 async function generateDefaultUnits(course_id) {
-  const temp = POST_SIMPLE_UNIT;
-  temp['_course_id'] = course_id;
-  console.log('the fucking course id' + course_id);
+  for (const element of exampleData.units) {
+    const temp = element;
+    temp['_course_id'] = course_id;
+    console.log('the fucking course id' + course_id);
 
-  // errorWrap(async (req, res) => {
-  const unitData = temp;//req.body;
-  console.log('fuck me');
+    // errorWrap(async (req, res) => {
+    const unitData = temp;//req.body;
+    console.log('fuck me');
 
-  // if (unitData.name === '' || unitData.description === '') {
-  //   return sendResponse(
-  //     res,
-  //     400,
-  //     'You are missing a unit name and/or description. Please try again.',
-  //   );
-  // }
+    // if (unitData.name === '' || unitData.description === '') {
+    //   return sendResponse(
+    //     res,
+    //     400,
+    //     'You are missing a unit name and/or description. Please try again.',
+    //   );
+    // }
 
-  // const course_id = unitData._course_id;
+    // const course_id = unitData._course_id;
 
-  const order = await getNumUnitsInCourse(course_id);
+    const order = await getNumUnitsInCourse(course_id);
 
-  const newUnit = new models.Unit({
-    _course_id: course_id,
-    name: unitData.name,
-    _order: order,
-    selected: unitData.selected,
-    description: unitData.description,
-  });
+    const newUnit = new models.Unit({
+      _course_id: course_id,
+      name: unitData.name,
+      _order: order,
+      selected: unitData.selected,
+      description: unitData.description,
+    });
 
-  await newUnit.save();
-  let newResult = newUnit.toJSON();
-  newResult.num_lessons = 0;
+    await newUnit.save();
+    let newResult = newUnit.toJSON();
+    newResult.num_lessons = 0;
 
-  console.log(newResult);
+    console.log(newResult);
 
-  // return sendResponse(res, 200, 'Successfully created a new unit', newResult);
-  // })
+    // return sendResponse(res, 200, 'Successfully created a new unit', newResult);
+    // })
 
-  // const response = await withAuthentication(
-  //   request(app).post('/language/unit').send(temp)
-  // );
+    // const response = await withAuthentication(
+    //   request(app).post('/language/unit').send(temp)
+    // );
 
 
-  // const message = response.body.message;
-  // const result = omitDeep(response.body.result, '__v', '_id');
-  // expect(response.status).toBe(200);
-  // expect(message).toEqual('Successfully created a new unit');
-  // expect(result).toEqual(POST_EXPECTED_UNIT);
+    // const message = response.body.message;
+    // const result = omitDeep(response.body.result, '__v', '_id');
+    // expect(response.status).toBe(200);
+    // expect(message).toEqual('Successfully created a new unit');
+    // expect(result).toEqual(POST_EXPECTED_UNIT);
+  }
   return
 }
 
