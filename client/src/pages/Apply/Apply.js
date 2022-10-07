@@ -51,14 +51,14 @@ const styles = StyleSheet.create({
   },
   checkboxes: {
     marginTop: 10,
-    width: '98%',
+    width: '95%',
   },
   inputHeight: {
     height: 50,
   },
   termsText: {
     paddingVertical: 10,
-    width: '100%',
+    width: '99%',
     alignItems: 'center',
   },
 })
@@ -102,7 +102,7 @@ const Apply = ({ navigation }) => {
   }
 
   // Confirms validation of course for pressing 'Submit'
-  const areAllFilled = name !== '' && email !== '' && language !== '' && acceptTerms
+  // const areAllFilled = name !== '' && email !== '' && language !== '' && acceptTerms
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -420,78 +420,60 @@ const Apply = ({ navigation }) => {
                   />
                 </View>
               </FormControl>
+
               <View style={styles.checkboxes}>
-                <FormControl is Required isInvalid={'acceptTerms' in errors}>
-                  <Checkbox
-                    value="accepted"
-                    colorScheme="danger"
-                    onChange={setAcceptTerms}
-                  >
-                    {'acceptTerms' in errors ? (
-                      <FormControl.ErrorMessage>
-                        Required.
-                      </FormControl.ErrorMessage>
-                    ) : null}
-                    <View>
+                <Checkbox
+                  value="accepted"
+                  colorScheme="danger"
+                  onChange={setAcceptTerms}
+                >
+                  <View>
+                    <Text
+                      fontFamily="body"
+                      fontWeight="regular"
+                      color="black"
+                      fontStyle="normal"
+                      fontSize="md"
+                    >
+                      I agree to the{' '}
                       <Text
-                        fontFamily="body"
-                        fontWeight="regular"
-                        color="black"
-                        fontStyle="normal"
-                        fontSize="md"
+                        fontFamily="heading"
+                        onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
                       >
-                        I agree to the{' '}
-                        <Text
-                          fontFamily="heading"
-                          onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
-                        >
-                          Terms and Conditions
-                        </Text>
+                        Terms and Conditions
                       </Text>
-                    </View>
-                  </Checkbox>
-                </FormControl>
+                    </Text>
+                  </View>
+                </Checkbox>
               </View>
 
               <View style={styles.checkboxes}>
-                <FormControl is Required isInvalid={'acceptTerms' in errors}>
-                  <Checkbox
-                    value="accepted"
-                    colorScheme="danger"
-                    onChange={setAcceptTerms}
-                  >
-                    {'acceptTerms' in errors ? (
-                      <FormControl.ErrorMessage>
-                        Required.
-                      </FormControl.ErrorMessage>
-                    ) : null}
-                    <View>
-                      <Text
-                        fontFamily="body"
-                        fontWeight="regular"
-                        color="black"
-                        fontStyle="normal"
-                        fontSize="md"
-                      >
-                        I would like a team member from 7000 Languages to follow
-                        up with me about creating additional resources for my
-                        language.
-                      </Text>
-                    </View>
-                  </Checkbox>
-                </FormControl>
+                <Checkbox
+                  value="accepted"
+                  colorScheme="danger"
+                  onChange={setAcceptTerms}
+                >
+                  <View>
+                    <Text
+                      fontFamily="body"
+                      fontWeight="regular"
+                      color="black"
+                      fontStyle="normal"
+                      fontSize="md"
+                    >
+                      I would like a team member from 7000 Languages to follow
+                      up with me about creating additional resources for my
+                      language.
+                    </Text>
+                  </View>
+                </Checkbox>
               </View>
             </View>
           </ScrollView>
         </View>
       </View>
       <Box style={styles.termsText}>
-        <StyledButton
-          title="Submit"
-          variant="primary"
-          onPress={onSubmit}
-          isDisabled={!areAllFilled}
-        />
+        <StyledButton title="Submit" variant="primary" onPress={onSubmit} />
 
         <Text
           fontFamily="body"
