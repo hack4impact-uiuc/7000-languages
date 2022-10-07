@@ -10,19 +10,13 @@ import { NativeBaseProvider } from 'native-base'
 import { nativebase } from 'theme'
 import store from './redux/store'
 import AppContent from './AppContent'
-import { saveUserIDToken, saveUserRefreshToken } from './utils/auth'
 
 const App = () => {
   const [didLoad, setDidLoad] = useState(false)
 
   // assets preloading
   const handleLoadAssets = async () => {
-    await Promise.all([
-      ...imageAssets,
-      ...fontAssets,
-      saveUserRefreshToken('garbage'),
-      saveUserIDToken('garbage'),
-    ])
+    await Promise.all([...imageAssets, ...fontAssets])
     setDidLoad(true)
   }
 
