@@ -39,7 +39,7 @@ const authRefresh = async (response) => {
   const status = response ? response.status : null
   if (status === 401) {
     return refreshIDToken().then((newToken) => {
-      if (newToken != null) {
+      if (newToken) {
         response.config.headers.Authorization = `Bearer ${newToken}`
         response.config.baseURL = undefined
         return instance.request(response.config)
