@@ -35,7 +35,7 @@ const CreateLesson = ({ navigation }) => {
 
   // checks if all fields are filled
   // otherwise, the submit button is disabled
-  const areRequiredFieldsFilled = name !== '' && purpose !== '';
+  const areRequiredFieldsFilled = name !== '' && purpose !== ''
 
   // Closes the modal
   const close = () => {
@@ -73,25 +73,26 @@ const CreateLesson = ({ navigation }) => {
 
   const body = (
     <>
-            <View style={styles.container}>
-          <View style={styles.textRow}>
-            <Foundation name="lightbulb" size={20} color={colors.blue.dark} />
-            <Text
-              fontSize="md"
-              paddingBottom={2}
-              fontFamily="heading"
-              fontWeight="regular"
-              fontStyle="normal"
-              color={colors.blue.dark}
-            >
-              {' '}
-              Suggestion{' '}
-            </Text>
-          </View>
-          <Text color={colors.blue.dark} fontSize="md">
-          When creating a lesson, think about which vocab items will be associated with the lesson and how it will be used.
+      <View style={styles.container}>
+        <View style={styles.textRow}>
+          <Foundation name="lightbulb" size={20} color={colors.blue.dark} />
+          <Text
+            fontSize="md"
+            paddingBottom={2}
+            fontFamily="heading"
+            fontWeight="regular"
+            fontStyle="normal"
+            color={colors.blue.dark}
+          >
+            {' '}
+            Suggestion{' '}
           </Text>
         </View>
+        <Text color={colors.blue.dark} fontSize="md">
+          When creating a lesson, think about which vocab items will be
+          associated with the lesson and how it will be used.
+        </Text>
+      </View>
       <RequiredField title="Give your lesson a name" />
       <Input
         size="xl"
