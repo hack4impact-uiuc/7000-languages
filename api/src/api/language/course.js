@@ -9,7 +9,7 @@ const {
 } = require('../../middleware/authorization');
 const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
-const { getNumUnitsInCourse, patchDocument } = require('../../utils/languageHelper');
+const { checkIds, getNumLessonsInUnit, getNumUnitsInCourse, patchDocument } = require('../../utils/languageHelper');
 const {
   exampleData
 } = require('../../utils/example-data.js');
@@ -36,57 +36,55 @@ router.patch(
   }),
 );
 
-async function generateDefaultUnits(course_id) {
-  for (const element of exampleData.units) {
-    const temp = element;
-    temp['_course_id'] = course_id;
-    console.log('the fucking course id' + course_id);
+/**
+ * Uploads example units, lessons, and vocab items for any new course that is created. 
+ * @param {course_id} course_id of the new course that was just created 
+ */
+async function populateExampleData(course_id) {
+  for (const unit of exampleData.units) {
+    // Get data for the unit from exampleData
+    const unitData = unit['unitData'];
 
-    // errorWrap(async (req, res) => {
-    const unitData = temp;//req.body;
-    console.log('fuck me');
-
-    // if (unitData.name === '' || unitData.description === '') {
-    //   return sendResponse(
-    //     res,
-    //     400,
-    //     'You are missing a unit name and/or description. Please try again.',
-    //   );
-    // }
-
-    // const course_id = unitData._course_id;
-
+    // Update example unit data with IDs and order
     const order = await getNumUnitsInCourse(course_id);
+    unitData['_course_id'] = course_id;
+    unitData['_order'] = order;
 
-    const newUnit = new models.Unit({
-      _course_id: course_id,
-      name: unitData.name,
-      _order: order,
-      selected: unitData.selected,
-      description: unitData.description,
-    });
-
+    // Create and save new unit 
+    const newUnit = new models.Unit(unitData);
     await newUnit.save();
-    let newResult = newUnit.toJSON();
-    newResult.num_lessons = 0;
+    const unit_id = newUnit._id;
 
-    console.log(newResult);
+    for (const lesson of unit['lessons']) {
+      // Get data for the lesson
+      const lessonData = lesson['lessonData'];
 
-    // return sendResponse(res, 200, 'Successfully created a new unit', newResult);
-    // })
+      // Set additional IDs and variables for the lesson
+      const numLessons = await getNumLessonsInUnit(course_id, unit_id);
+      lessonData._order = numLessons;
+      lessonData.vocab = [];
+      lessonData._course_id = course_id;
+      lessonData._unit_id = unit_id;
 
-    // const response = await withAuthentication(
-    //   request(app).post('/language/unit').send(temp)
-    // );
+      // Create and save new lesson
+      const newLesson = new models.Lesson(lessonData);
+      await newLesson.save();
+      const lesson_id = newLesson._id;
 
+      for (const vocab of lesson['vocab']) {
+        // Refetch the current lesson
+        const currentLesson = await models.Lesson.findById(lesson_id);
 
-    // const message = response.body.message;
-    // const result = omitDeep(response.body.result, '__v', '_id');
-    // expect(response.status).toBe(200);
-    // expect(message).toEqual('Successfully created a new unit');
-    // expect(result).toEqual(POST_EXPECTED_UNIT);
+        // Set additional variables and ID for vocab item
+        vocab._order = currentLesson.vocab.length;
+        vocab._lesson_id = lesson_id;
+
+        // Append vocab item to lesson list 
+        currentLesson.vocab.push(vocab);
+        await currentLesson.save();
+      }
+    }
   }
-  return
 }
 
 /**
@@ -107,26 +105,12 @@ router.post(
       details: courseData.details,
     });
 
-    // const temp = POST_SIMPLE_UNIT;
-    // temp['name'] = 'asdf';
-    // console.log(temp);
-    // console.log('ADMINID: ' + user.authID);
-
-    // const newCourse2 = new models.Course(
-    //   POST_SIMPLE_UNIT
-    //   // how can i input the POST_SIMPLE_UNIT data without unwrapping every element
-    // );
-    // newCourse2
-    // await newCourse2.save();
-    // let newResult = newCourse2.toJSON();
-
-    newCourse.details.description = 'bruh';
-
-    generateDefaultUnits(newCourse._id);
-
     await newCourse.save();
     let newResult = newCourse.toJSON();
     newResult = _.omit(newResult, ['admin_id']);
+    
+    // Load and save the example units/lessons/vocab items for the course
+    populateExampleData(newCourse._id);
 
     await models.User.updateOne(
       { _id: user._id },
