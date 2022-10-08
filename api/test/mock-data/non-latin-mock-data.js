@@ -130,7 +130,7 @@ module.exports.PATCH_BERBER_COURSE_EXPECTED = {
     name: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
     alternative_name: 'ⵜⵎⵣⵗⵜ',
     description:
-      'ⵒⵤⴰⵣⴻⵔⵜⵢⵓⵉⵄⵃⵯⵇⵙⴷⴼⴳⵀⵊⴽⵍⵎⵑⵡⵅⵛⵖⴱⵏⴶⵥⵗⵕⵟⵂⵌⵘⵝⵞⵠⵈⵚⴹⴵⴳⵯⵁⵋⴽⵯⴸⴺⴾⵆⴿⴴⴲⵐ is an updatated description',
+      'ⵒⵤⴰⵣⴻⵔⵜⵢⵓⵉⵄⵃⵯⵇⵙⴷⴼⴳⵀⵊⴽⵍⵎⵑⵡⵅⵛⵖⴱⵏⴶⵥⵗⵕⵟⵂⵌⵘⵝⵞⵠⵈⵚⴹⴵⴳⵯⵁⵋⴽⵯⴸⴺⴾⵆⴿⴴⴲⵐ is an updated description',
     iso: '',
     glotto: '',
     translated_language: 'Français',
