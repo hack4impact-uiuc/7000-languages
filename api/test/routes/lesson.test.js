@@ -43,6 +43,8 @@ const {
 const {
   POST_BERBER_LESSON,
   POST_BERBER_LESSON_EXPECTED,
+  PATCH_BERBER_LESSON_DESCRIPTION,
+  PATCH_BERBER_LESSON_DESCRIPTION_EXPECTED,
 } = require('../mock-data/non-latin-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
@@ -293,6 +295,21 @@ describe('PATCH /lesson/ ', () => {
     const message = response.body.message;
     expect(response.status).toBe(400);
     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
+  });
+
+  test('Patch request should update description w/ Berber characters', async () => {
+    const response = await withAuthentication(
+      request(app)
+        .patch(`/language/lesson`)
+        .send(PATCH_BERBER_LESSON_DESCRIPTION),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual(SUCCESS_PATCHING_LESSON_DATA);
+    expect(result.description).toEqual(
+      PATCH_BERBER_LESSON_DESCRIPTION_EXPECTED.description,
+    );
   });
 });
 

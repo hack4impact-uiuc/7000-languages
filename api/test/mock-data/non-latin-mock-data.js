@@ -102,3 +102,72 @@ module.exports.POST_BERBER_DETAILED_VOCAB_ITEM = {
       'ⵒⵤⴰⵣⴻⵔⵜⵢⵓⵉⵄⵃⵯⵇⵙⴷⴼⴳⵀⵊⴽⵍⵎⵑⵡⵅⵛⵖⴱⵏⴶⵥⵗⵕⵟⵂⵌⵘⵝⵞⵠⵈⵚⴹⴵⴳⵯⵁⵋⴽⵯⴸⴺⴾⵆⴿⴴⴲⵐ is a set of all the characters',
   },
 };
+
+module.exports.PATCH_BERBER_COURSE = {
+  approved: true,
+  details: {
+    admin_name: 'Jamie Rollison',
+    admin_email: 'email@123.com',
+    name: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
+    alternative_name: 'ⵜⵎⵣⵗⵜ',
+    description:
+      'ⵒⵤⴰⵣⴻⵔⵜⵢⵓⵉⵄⵃⵯⵇⵙⴷⴼⴳⵀⵊⴽⵍⵎⵑⵡⵅⵛⵖⴱⵏⴶⵥⵗⵕⵟⵂⵌⵘⵝⵞⵠⵈⵚⴹⴵⴳⵯⵁⵋⴽⵯⴸⴺⴾⵆⴿⴴⴲⵐ is an updated description',
+    iso: '',
+    glotto: '',
+    translated_language: 'Français',
+    population: '',
+    location: 'Algeria',
+    link: '',
+  },
+};
+
+module.exports.PATCH_BERBER_COURSE_EXPECTED = {
+  approved: true,
+  admin_id: 'ba32cb26-2020-4fbc-b77d-34ea6b0790a6',
+  details: {
+    admin_name: 'Jamie Rollison',
+    admin_email: 'email@123.com',
+    name: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
+    alternative_name: 'ⵜⵎⵣⵗⵜ',
+    description:
+      'ⵒⵤⴰⵣⴻⵔⵜⵢⵓⵉⵄⵃⵯⵇⵙⴷⴼⴳⵀⵊⴽⵍⵎⵑⵡⵅⵛⵖⴱⵏⴶⵥⵗⵕⵟⵂⵌⵘⵝⵞⵠⵈⵚⴹⴵⴳⵯⵁⵋⴽⵯⴸⴺⴾⵆⴿⴴⴲⵐ is an updatated description',
+    iso: '',
+    glotto: '',
+    translated_language: 'Français',
+    population: '',
+    location: 'Algeria',
+    link: '',
+  },
+};
+
+module.exports.PATCH_BERBER_UNIT = {
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'ⴶⵥⵗⵕⵟⵂⵌⵘⵝⵞⵠⵈⵚⴹ!',
+};
+
+module.exports.PATCH_BERBER_UNIT_EXPECTED = {
+  _course_id: '62391a30487d5ae343c82311',
+  _order: 10,
+  name: 'ⴶⵥⵗⵕⵟⵂⵌⵘⵝⵞⵠⵈⵚⴹ!',
+  selected: true,
+  description:
+    'ⵒⵤⴰⵣⴻ ⵔⵜⵢⵓⵉⵄⵃⵯⵇⵙⴷⴼⴳⵀⵊⴽⵍ ⵎⵑⵡⵅⵛⵖⴱⵏⴶⵥⵗⵕⵟⵂⵌⵘⵝ ⵞⵠⵈⵚⴹⴵⴳⵯⵁⵋⴽⵯⴸ ⴺⴾⵆⴿⴴⴲⵐ',
+  num_lessons: 0,
+};
+
+module.exports.PATCH_BERBER_LESSON_DESCRIPTION = {
+  lesson_id: '62391a30487d5ae343c8231c',
+  course_id: '62391a30487d5ae343c82311',
+  unit_id: '62391a30487d5ae343c82312',
+  updates: {
+    description: 'ⵞⵠⵈⵚⴹⴵⴳⵯⵁ',
+  },
+};
+
+module.exports.PATCH_BERBER_LESSON_DESCRIPTION_EXPECTED = {
+  // we'll just check the description
+  lesson_id: '62391a30487d5ae343c8231c',
+  course_id: '62391a30487d5ae343c82311',
+  unit_id: '62391a30487d5ae343c82312',
+  description: 'ⵞⵠⵈⵚⴹⴵⴳⵯⵁ',
+};

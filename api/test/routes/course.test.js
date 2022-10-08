@@ -23,6 +23,8 @@ const {
 const {
   POST_BERBER_COURSE,
   POST_BERBER_COURSE_EXPECTED,
+  PATCH_BERBER_COURSE,
+  PATCH_BERBER_COURSE_EXPECTED,
 } = require('../mock-data/non-latin-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
@@ -277,5 +279,20 @@ describe('PATCH /language/course/ ', () => {
 
     expect(response.status).toBe(404);
     expect(message).toEqual('Course does not exist');
+  });
+
+  test('Patch request should work w/ Berber characters', async () => {
+    const body = PATCH_BERBER_COURSE;
+    const response = await withAuthentication(
+      request(app)
+        .patch('/language/course/62391a30487d5ae343c82311')
+        .send(body),
+    );
+
+    const result = _.omit(response.body.result, ['_id', '__v']);
+    delete result['details']['_id'];
+
+    expect(result).toEqual(PATCH_BERBER_COURSE_EXPECTED);
+    expect(response.status).toBe(200);
   });
 });
