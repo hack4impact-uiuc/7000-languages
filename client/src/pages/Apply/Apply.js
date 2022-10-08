@@ -16,6 +16,7 @@ import { createCourse } from 'api'
 import { getAllUserCourses } from 'utils/languageHelper'
 import { useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
+import RequiredField from 'components/RequiredField'
 
 const styles = StyleSheet.create({
   root: {
@@ -48,14 +49,14 @@ const styles = StyleSheet.create({
   },
   checkboxes: {
     marginTop: 10,
-    width: '98%',
+    width: '95%',
   },
   inputHeight: {
     height: 50,
   },
   termsText: {
     paddingVertical: 10,
-    width: '100%',
+    width: '99%',
     alignItems: 'center',
   },
 })
@@ -195,15 +196,7 @@ const Apply = ({ navigation }) => {
 
             <View style={styles.root}>
               <FormControl is Required isInvalid={'name' in errors}>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Your Name*
-                </Text>
+                <RequiredField title="Your Name" fontSize="md" />
                 <View style={styles.input}>
                   <Input
                     size="2xl"
@@ -220,15 +213,7 @@ const Apply = ({ navigation }) => {
               </FormControl>
 
               <FormControl isRequired isInvalid={'email' in errors}>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Email*
-                </Text>
+                <RequiredField title="Email" fontSize="md" />
                 <View style={styles.input}>
                   <Input
                     size="xl"
@@ -245,15 +230,7 @@ const Apply = ({ navigation }) => {
               </FormControl>
 
               <FormControl isRequired isInvalid={'Language' in errors}>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Name of Language*
-                </Text>
+                <RequiredField title="Name of Language" fontSize="md" />
                 <View style={styles.input}>
                   <Input
                     size="xl"
@@ -446,25 +423,25 @@ const Apply = ({ navigation }) => {
                   />
                 </View>
               </FormControl>
+
               <View style={styles.checkboxes}>
-                <FormControl is Required isInvalid={'acceptTerms' in errors}>
-                  <Checkbox
-                    value="accepted"
-                    colorScheme="danger"
-                    onChange={setAcceptTerms}
-                  >
-                    {'acceptTerms' in errors ? (
-                      <FormControl.ErrorMessage>
-                        Required.
-                      </FormControl.ErrorMessage>
-                    ) : null}
-                    <View>
+                <Checkbox
+                  value="accepted"
+                  colorScheme="danger"
+                  onChange={setAcceptTerms}
+                >
+                  <View>
+                    <Text
+                      fontFamily="body"
+                      fontWeight="regular"
+                      color="black"
+                      fontStyle="normal"
+                      fontSize="md"
+                    >
+                      I agree to the{' '}
                       <Text
-                        fontFamily="body"
-                        fontWeight="regular"
-                        color="black"
-                        fontStyle="normal"
-                        fontSize="md"
+                        fontFamily="heading"
+                        onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
                       >
                         I agree to the{' '}
                         <Text
@@ -476,50 +453,38 @@ const Apply = ({ navigation }) => {
                           Terms and Conditions
                         </Text>
                       </Text>
-                    </View>
-                  </Checkbox>
-                </FormControl>
+                    </Text>
+                  </View>
+                </Checkbox>
               </View>
 
               <View style={styles.checkboxes}>
-                <FormControl is Required isInvalid={'acceptTerms' in errors}>
-                  <Checkbox
-                    value="accepted"
-                    colorScheme="danger"
-                    onChange={setAcceptTerms}
-                  >
-                    {'acceptTerms' in errors ? (
-                      <FormControl.ErrorMessage>
-                        Required.
-                      </FormControl.ErrorMessage>
-                    ) : null}
-                    <View>
-                      <Text
-                        fontFamily="body"
-                        fontWeight="regular"
-                        color="black"
-                        fontStyle="normal"
-                        fontSize="md"
-                      >
-                        I would like a team member from 7000 Languages to follow
-                        up with me about creating additional resources for my
-                        language.
-                      </Text>
-                    </View>
-                  </Checkbox>
-                </FormControl>
+                <Checkbox
+                  value="accepted"
+                  colorScheme="danger"
+                  onChange={setAcceptTerms}
+                >
+                  <View>
+                    <Text
+                      fontFamily="body"
+                      fontWeight="regular"
+                      color="black"
+                      fontStyle="normal"
+                      fontSize="md"
+                    >
+                      I would like a team member from 7000 Languages to follow
+                      up with me about creating additional resources for my
+                      language.
+                    </Text>
+                  </View>
+                </Checkbox>
               </View>
             </View>
           </ScrollView>
         </View>
       </View>
       <Box style={styles.termsText}>
-        <StyledButton
-          title="Submit"
-          variant="primary"
-          onPress={onSubmit}
-          isDisabled={!areAllFilled}
-        />
+        <StyledButton title="Submit" variant="primary" onPress={onSubmit} />
 
         <Text
           fontFamily="body"

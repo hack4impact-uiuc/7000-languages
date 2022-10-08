@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   Platform,
+  Alert,
 } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
@@ -43,15 +44,15 @@ const Drawer = ({
   body,
 }) => {
   const[isDisabledState, setDisabledState] = useState(isDisabled); //variable to stop track duplicate items
+
   useEffect(() => {
     setDisabledState(isDisabled);
-    console.log(isDisabled);
   },[isDisabled]);
+  
   const onPress = () => {
-    if(!isDisabledState){
+    if(!isDisabledState) {
       setDisabledState(true);
       successCallback();
-      setDisabledState(false);
     }
   }
   return(<KeyboardAvoidingView

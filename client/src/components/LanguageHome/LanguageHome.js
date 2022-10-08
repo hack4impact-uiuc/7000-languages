@@ -169,7 +169,7 @@ const LanguageHome = ({
           >
             {renderData.map((element) => (
               <StyledCard
-                key={`${element.name}${element.body}`}
+                key={element._id}
                 titleText={element.body}
                 bodyText={element.name}
                 imageURI={element.imageURI}
@@ -259,7 +259,7 @@ const LanguageHome = ({
         >
           {renderData.map((element, index) => (
             <StyledCard
-              key={`${element.name}${element.body}`}
+              key={element._id}
               leftIcon={<NumberBox number={index + 1} />}
               titleText={element.name}
               bodyText={element.body}

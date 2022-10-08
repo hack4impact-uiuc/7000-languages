@@ -13,10 +13,6 @@ const StyledButton = ({
   style,
   isDisabled,
 }) => (
-  // useEffect(() => {
-  //   console.log(isDisabled);
-  // },[]),
-
   <Button
     onPress={onPress}
     variant={variant}
