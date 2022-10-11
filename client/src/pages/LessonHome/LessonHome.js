@@ -91,17 +91,17 @@ const LessonHome = ({ navigation }) => {
 
             // Need to fetch image uri
             // eslint-disable-next-line no-await-in-loop
-            const uri = await trackPromise(
+            const uri = await
               downloadImageFile(
                 currentCourseId,
                 currentUnitId,
                 currentLessonId,
                 item._id,
                 fileType,
-              ),
-            )
+              )
 
-            formattedItem.imageURI = uri
+              formattedItem.imageURI = uri
+              //Promise.resolve(uri).then((value) => {formattedItem.imageURI = value;});
           }
 
           formattedVocabData.push(formattedItem)
