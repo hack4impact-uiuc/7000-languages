@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, Linking, Alert } from 'react-native'
+import {
+  StyleSheet, View, Linking, Alert,
+} from 'react-native'
 import StyledButton from 'components/StyledButton'
 import {
   Text,
@@ -17,7 +19,6 @@ import { getAllUserCourses } from 'utils/languageHelper'
 import { useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import RequiredField from 'components/RequiredField'
-import { findLastValidBreakpoint } from 'native-base/lib/typescript/theme/tools'
 
 const styles = StyleSheet.create({
   root: {
@@ -101,8 +102,7 @@ const Apply = ({ navigation }) => {
   }
 
   // Confirms validation of course for pressing 'Submit'
-  const areAllFilled =
-    name !== '' && email !== '' && language !== '' && acceptTerms
+  // const areAllFilled = name !== '' && email !== '' && language !== '' && acceptTerms
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -151,24 +151,21 @@ const Apply = ({ navigation }) => {
       },
     )
   }
+  const [isDisabled, setDisabled] = useState(false) // used to disable success button
+  // sets the initial state of isDisabled state to the isDisabled param
+
+  useEffect(() => setDisabled(isDisabled), [isDisabled]) // always listening to when isDisabled is changed
 
   const onSubmit = async () => {
-    if(!isDisabled) {
-      setDisabled(true);
+    if (!isDisabled) {
+      setDisabled(true)
       if (validate() === true) {
         await applyCourse()
       }
-  ``}
+    }
   }
 
-  const[isDisabled, setDisabled] = useState(false); //used to disable success button
-
-  useEffect(() => { //sets the initial state of isDisabled state to the isDisabled param
-    setDisabledState(isDisabled);
-  },[isDisabled]);
-  
   return (
-
     <>
       <View
         style={{
@@ -326,9 +323,7 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() =>
-                    Linking.openURL('https://www.iso.org/obp/ui/#search')
-                  }
+                  onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
                 >
                   You can find the ISO code here
                 </Text>
@@ -358,9 +353,7 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() =>
-                    Linking.openURL('https://glottolog.org/glottolog')
-                  }
+                  onPress={() => Linking.openURL('https://glottolog.org/glottolog')}
                 >
                   You can find the Glotto code here
                 </Text>
@@ -457,9 +450,7 @@ const Apply = ({ navigation }) => {
                         I agree to the{' '}
                         <Text
                           fontFamily="heading"
-                          onPress={() =>
-                            Linking.openURL('https://www.7000.org/about-3-1')
-                          }
+                          onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
                         >
                           Terms and Conditions
                         </Text>
