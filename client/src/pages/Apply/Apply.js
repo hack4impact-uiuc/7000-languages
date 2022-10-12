@@ -17,6 +17,7 @@ import { getAllUserCourses } from 'utils/languageHelper'
 import { useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import RequiredField from 'components/RequiredField'
+import { findLastValidBreakpoint } from 'native-base/lib/typescript/theme/tools'
 
 const styles = StyleSheet.create({
   root: {
@@ -152,12 +153,22 @@ const Apply = ({ navigation }) => {
   }
 
   const onSubmit = async () => {
-    if (validate() === true) {
-      await applyCourse()
-    }
+    if(!isDisabled) {
+      setDisabled(true);
+      if (validate() === true) {
+        await applyCourse()
+      }
+  ``}
   }
 
+  const[isDisabled, setDisabled] = useState(false); //used to disable success button
+
+  useEffect(() => { //sets the initial state of isDisabled state to the isDisabled param
+    setDisabledState(isDisabled);
+  },[isDisabled]);
+  
   return (
+
     <>
       <View
         style={{

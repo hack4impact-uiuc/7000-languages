@@ -43,9 +43,9 @@ const Drawer = ({
   successText,
   body,
 }) => {
-  const[isDisabledState, setDisabledState] = useState(isDisabled); //variable to stop track duplicate items
+  const[isDisabledState, setDisabledState] = useState(isDisabled); //used to disable success button
 
-  useEffect(() => {
+  useEffect(() => { //sets the initial state of isDisabled state to the isDisabled param
     setDisabledState(isDisabled);
   },[isDisabled]);
   
