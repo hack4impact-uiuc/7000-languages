@@ -171,7 +171,7 @@ const Apply = ({ navigation }) => {
             </View>
 
             <View style={styles.root}>
-              <FormControl>
+              
                 <RequiredField title="Your Name" fontSize="md" />
                 <View style={styles.input}>
                   <Input
@@ -181,9 +181,8 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setName(text)}
                   />
                 </View>
-              </FormControl>
 
-              <FormControl>
+              
                 <RequiredField title="Email" fontSize="md" />
                 <View style={styles.input}>
                   <Input
@@ -193,9 +192,8 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setEmail(text)}
                   />
                 </View>
-              </FormControl>
 
-              <FormControl>
+              
                 <RequiredField title="Name of Language" fontSize="md" />
                 <View style={styles.input}>
                   <Input
@@ -205,8 +203,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setLanguage(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+              
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -238,9 +235,8 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setDescription(text)}
                   />
                 </View>
-              </FormControl>
 
-              <FormControl>
+              
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -258,8 +254,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setOtherNames(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+              
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -288,8 +283,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setIsoCode(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+              
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -318,8 +312,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setGlottoCode(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+              
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -341,8 +334,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setLocation(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+              
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -360,8 +352,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setPopulation(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+              
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -379,7 +370,6 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setLink(text)}
                   />
                 </View>
-              </FormControl>
 
               <View style={styles.checkboxes}>
                 <Checkbox
