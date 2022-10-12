@@ -132,11 +132,6 @@ const Apply = ({ navigation }) => {
     )
   }
 
-  const onSubmit = async () => {
-    if (areRequiredFieldsFilled === true) {
-      await applyCourse()
-    }
-  }
 
   return (
     <>
