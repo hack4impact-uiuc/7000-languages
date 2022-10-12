@@ -46,7 +46,9 @@ const authRefresh = async (response) => {
       }
       // Unable to retrieve new idToken -> Prompt log in again
       store.dispatch(logout())
-      response.data.message = LOGOUT_MESSAGE
+      if (typeof response.data === 'object') {
+        response.data.message = LOGOUT_MESSAGE
+      }
       return response
     })
   }
