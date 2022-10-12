@@ -40,7 +40,7 @@ const CreateLesson = ({ navigation }) => {
         const { result } = await createLesson(
           currentCourseId,
           currentUnitId,
-          newLesson,
+          newLesson, 
         )
 
         // All new lessons have 0 vocab items, and we must set this since this information
