@@ -20,35 +20,28 @@ import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: colors.red.dark,
-  },
-  button: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 60,
-  },
-  logo: {
-    position: 'absolute',
-    left: 20,
-    top: 20
-  },
-  quote: {
-    position: 'absolute',
-    left: 40,
-    bottom: 200,
-  },
-
-  quote2: {
-    position: 'absolute',
-    left: 5,
-    bottom: 1,
+    width: '100%',
+    height: '100%'
   },
   backgroundImage: {
     width: '100%',
+    height: '100%',
+    position: 'absolute'
+  },
+  loginButton: {
+    position: 'absolute',
+    bottom: '5%'
+  },
+  logo: {
+    position: 'absolute',
+    left: '5%',
+  },
+  quoteSection: {
+    position: 'absolute',
+    padding: '5%',
+    top: '50%'
   },
 })
 
@@ -63,7 +56,7 @@ const Landing = () => {
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
   const [quote] = useState(
-    '"To speak a language is \n to take on a world, a\n culture."\n',
+    '"To speak a language is to take on a world, a culture."',
   )
 
   const loginUser = async () => {
@@ -95,26 +88,13 @@ const Landing = () => {
     <View style={styles.root}>
       <Image
         source={images.background_landing}
+        alt="Language names background image"
         style={styles.backgroundImage}
-        alt="description of image"
       />
-      <View style={styles.button}>
-        <StyledButton
-          title="Continue with Google"
-          leftIcon={
-            <AntDesign name="google" size={24} color={colors.red.dark} />
-          }
-          variant="secondary"
-          onPress={loginUser}
-          style={{ paddingRight: 60 }}
-        />
-      </View>
 
-      <View style={styles.logo}>
-        <Logo height={160} width={160} />
-      </View>
+      <Logo height={160} width={160} style={styles.logo} />
 
-      <View style={styles.quote}>
+      <View style={styles.quoteSection}>
         <Text
           fontWeight="regular"
           color="white.dark"
@@ -126,14 +106,23 @@ const Landing = () => {
         </Text>
 
         <Text
-          style={styles.quote2}
           fontWeight="regular"
           color="white.dark"
           fontSize="2xl"
         >
-          - Frantz Fanon
+          Frantz Fanon
         </Text>
       </View>
+
+      <StyledButton
+        title="Continue with Google"
+        leftIcon={
+          <AntDesign name="google" size={24} color={colors.red.dark} />
+        }
+        variant="secondary"
+        onPress={loginUser}
+        style={styles.loginButton}
+      />
     </View>
   )
 }
