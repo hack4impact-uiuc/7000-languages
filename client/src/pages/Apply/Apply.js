@@ -1,18 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import {
-  StyleSheet, View, Linking, Alert,
-} from 'react-native'
+import { StyleSheet, View, Linking, Alert } from 'react-native'
 import StyledButton from 'components/StyledButton'
-import {
-  Text,
-  ScrollView,
-  Input,
-  Checkbox,
-  FormControl,
-  TextArea,
-  Box,
-} from 'native-base'
+import { Text, ScrollView, Input, Checkbox, TextArea, Box } from 'native-base'
 import { useErrorWrap } from 'hooks'
 import { createCourse } from 'api'
 import { getAllUserCourses } from 'utils/languageHelper'
@@ -81,7 +71,8 @@ const Apply = ({ navigation }) => {
   const dispatch = useDispatch()
 
   // Confirms validation of course for pressing 'Submit'
-  const areRequiredFieldsFilled = name !== '' && email !== '' && language !== '' && acceptTerms
+  const areRequiredFieldsFilled =
+    name !== '' && email !== '' && language !== '' && acceptTerms
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -132,6 +123,9 @@ const Apply = ({ navigation }) => {
     )
   }
 
+  const onSubmit = async () => {
+    await applyCourse()
+  }
 
   return (
     <>
@@ -171,205 +165,205 @@ const Apply = ({ navigation }) => {
             </View>
 
             <View style={styles.root}>
-              
-                <RequiredField title="Your Name" fontSize="md" />
-                <View style={styles.input}>
-                  <Input
-                    size="2xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setName(text)}
-                  />
-                </View>
+              <RequiredField title="Your Name" fontSize="md" />
+              <View style={styles.input}>
+                <Input
+                  size="2xl"
+                  style={styles.inputHeight}
+                  returnKeyType="done"
+                  onChangeText={(text) => setName(text)}
+                />
+              </View>
 
-              
-                <RequiredField title="Email" fontSize="md" />
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setEmail(text)}
-                  />
-                </View>
+              <RequiredField title="Email" fontSize="md" />
+              <View style={styles.input}>
+                <Input
+                  size="xl"
+                  style={styles.inputHeight}
+                  returnKeyType="done"
+                  onChangeText={(text) => setEmail(text)}
+                />
+              </View>
 
-              
-                <RequiredField title="Name of Language" fontSize="md" />
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setLanguage(text)}
-                  />
-                </View>
-              
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Language Description
-                </Text>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="gray.medium"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Provide a 1-2 sentence description of your language and/or
-                  culture. This will be shown to learners in this course.
-                </Text>
-                <View style={styles.input}>
-                  <TextArea
-                    size="2xl"
-                    h={40}
-                    variant="filled"
-                    placeholder=""
-                    keyboardType="default"
-                    returnKeyType="done"
-                    blurOnSubmit
-                    onChangeText={(text) => setDescription(text)}
-                  />
-                </View>
+              <RequiredField title="Name of Language" fontSize="md" />
+              <View style={styles.input}>
+                <Input
+                  size="xl"
+                  style={styles.inputHeight}
+                  returnKeyType="done"
+                  onChangeText={(text) => setLanguage(text)}
+                />
+              </View>
 
-              
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Any alternative names?
-                </Text>
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setOtherNames(text)}
-                  />
-                </View>
-              
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  ISO Code
-                </Text>
-                <Text
-                  underline
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="textBlue"
-                  fontStyle="normal"
-                  fontSize="md"
-                  onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
-                >
-                  You can find the ISO code here
-                </Text>
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setIsoCode(text)}
-                  />
-                </View>
-              
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Glotto Code
-                </Text>
-                <Text
-                  underline
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="textBlue"
-                  fontStyle="normal"
-                  fontSize="md"
-                  onPress={() => Linking.openURL('https://glottolog.org/glottolog')}
-                >
-                  You can find the Glotto code here
-                </Text>
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setGlottoCode(text)}
-                  />
-                </View>
-              
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Where is this language spoken?
-                </Text>
-                <View style={styles.input}>
-                  <TextArea
-                    size="2xl"
-                    h={40}
-                    variant="filled"
-                    placeholder=""
-                    keyboardType="default"
-                    returnKeyType="done"
-                    blurOnSubmit
-                    onChangeText={(text) => setLocation(text)}
-                  />
-                </View>
-              
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Approximately how many people speak this language?
-                </Text>
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setPopulation(text)}
-                  />
-                </View>
-              
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  Link to additional information about this language.
-                </Text>
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setLink(text)}
-                  />
-                </View>
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                Language Description
+              </Text>
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="gray.medium"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                Provide a 1-2 sentence description of your language and/or
+                culture. This will be shown to learners in this course.
+              </Text>
+              <View style={styles.input}>
+                <TextArea
+                  size="2xl"
+                  h={40}
+                  variant="filled"
+                  placeholder=""
+                  keyboardType="default"
+                  returnKeyType="done"
+                  blurOnSubmit
+                  onChangeText={(text) => setDescription(text)}
+                />
+              </View>
+
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                Any alternative names?
+              </Text>
+              <View style={styles.input}>
+                <Input
+                  size="xl"
+                  style={styles.inputHeight}
+                  returnKeyType="done"
+                  onChangeText={(text) => setOtherNames(text)}
+                />
+              </View>
+
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                ISO Code
+              </Text>
+              <Text
+                underline
+                fontFamily="body"
+                fontWeight="regular"
+                color="textBlue"
+                fontStyle="normal"
+                fontSize="md"
+                onPress={() =>
+                  Linking.openURL('https://www.iso.org/obp/ui/#search')
+                }
+              >
+                You can find the ISO code here
+              </Text>
+              <View style={styles.input}>
+                <Input
+                  size="xl"
+                  style={styles.inputHeight}
+                  returnKeyType="done"
+                  onChangeText={(text) => setIsoCode(text)}
+                />
+              </View>
+
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                Glotto Code
+              </Text>
+              <Text
+                underline
+                fontFamily="body"
+                fontWeight="regular"
+                color="textBlue"
+                fontStyle="normal"
+                fontSize="md"
+                onPress={() =>
+                  Linking.openURL('https://glottolog.org/glottolog')
+                }
+              >
+                You can find the Glotto code here
+              </Text>
+              <View style={styles.input}>
+                <Input
+                  size="xl"
+                  style={styles.inputHeight}
+                  returnKeyType="done"
+                  onChangeText={(text) => setGlottoCode(text)}
+                />
+              </View>
+
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                Where is this language spoken?
+              </Text>
+              <View style={styles.input}>
+                <TextArea
+                  size="2xl"
+                  h={40}
+                  variant="filled"
+                  placeholder=""
+                  keyboardType="default"
+                  returnKeyType="done"
+                  blurOnSubmit
+                  onChangeText={(text) => setLocation(text)}
+                />
+              </View>
+
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                Approximately how many people speak this language?
+              </Text>
+              <View style={styles.input}>
+                <Input
+                  size="xl"
+                  style={styles.inputHeight}
+                  returnKeyType="done"
+                  onChangeText={(text) => setPopulation(text)}
+                />
+              </View>
+
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                Link to additional information about this language.
+              </Text>
+              <View style={styles.input}>
+                <Input
+                  size="xl"
+                  style={styles.inputHeight}
+                  returnKeyType="done"
+                  onChangeText={(text) => setLink(text)}
+                />
+              </View>
 
               <View style={styles.checkboxes}>
                 <Checkbox
@@ -388,7 +382,9 @@ const Apply = ({ navigation }) => {
                       I agree to the{' '}
                       <Text
                         fontFamily="heading"
-                        onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                        onPress={() =>
+                          Linking.openURL('https://www.7000.org/about-3-1')
+                        }
                       >
                         Terms and Conditions
                       </Text>
@@ -402,7 +398,7 @@ const Apply = ({ navigation }) => {
                   value="accepted"
                   colorScheme="danger"
                   onChange={setFollowUp}
-                > 
+                >
                   <View>
                     <Text
                       fontFamily="body"
