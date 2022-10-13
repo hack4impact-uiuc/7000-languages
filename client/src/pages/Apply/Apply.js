@@ -402,7 +402,7 @@ const Apply = ({ navigation }) => {
                   value="accepted"
                   colorScheme="danger"
                   onChange={setFollowUp}
-                >
+                > 
                   <View>
                     <Text
                       fontFamily="body"

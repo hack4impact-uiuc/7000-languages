@@ -12,6 +12,7 @@ const CourseDetails = new mongoose.Schema({
   glotto: { type: String, required: false, default: '' },
   translated_language: { type: String, required: false, default: 'English' },
   population: { type: String, required: false, default: '' },
+  followUp: { type: Boolean, required: false, default: false },
   location: { type: String, required: false, default: '' },
   link: { type: String, required: false, default: '' },
 });
