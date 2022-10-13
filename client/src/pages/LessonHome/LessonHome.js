@@ -17,6 +17,7 @@ const LessonHome = ({ navigation }) => {
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
+  const [lessonName, setLessonName] = useState('')
 
   /**
    * When going back from the Lesson Page to the Unit Page,
@@ -44,6 +45,7 @@ const LessonHome = ({ navigation }) => {
         )
 
         setLessonDescription(result.description)
+        setLessonName(result.name)
         navigation.setOptions({
           title: result.name,
         })
@@ -137,10 +139,19 @@ const LessonHome = ({ navigation }) => {
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
+    /**
+   * Navigates to the update unit page
+   */
+     const navigateToUpdate = () => {
+      navigation.navigate('UpdateLesson')
+    }
+
   return (
     <LanguageHome
       isLessonHome
+      lessonName={lessonName}
       lessonDescription={lessonDescription}
+      nextUpdate={navigateToUpdate}
       valueName="Lessons"
       rightIconName="plus-circle"
       buttonCallback={navigateTo}

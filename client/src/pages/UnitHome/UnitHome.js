@@ -21,6 +21,7 @@ const UnitHome = ({ navigation }) => {
 
   const [data, setData] = useState([])
   const [unitDescription, setUnitDescription] = useState('')
+  const [unitName, setUnitName] = useState('')
 
   /**
    * When going back from the Unit Page to the Course Page,
@@ -49,6 +50,7 @@ const UnitHome = ({ navigation }) => {
         const { unit, lessons } = result
 
         setUnitDescription(unit.description)
+        setUnitName(unit.name)
 
         // Sets the title of the page
         navigation.setOptions({
@@ -101,6 +103,13 @@ const UnitHome = ({ navigation }) => {
   }
 
   /**
+   * Navigates to the update unit page
+   */
+  const navigateToUpdate = () => {
+    navigation.navigate('UpdateUnit')
+  }
+
+  /**
    * Navigates to the Lesson Home page for a selected lesson
    * @param {Object} element The Lesson that was selected
    */
@@ -112,7 +121,9 @@ const UnitHome = ({ navigation }) => {
 
   return (
     <LanguageHome
+      languageName={unitName}
       languageDescription={unitDescription}
+      nextUpdate={navigateToUpdate}
       valueName="Lessons"
       buttonText="Manage Lessons"
       rightIconName="pencil"

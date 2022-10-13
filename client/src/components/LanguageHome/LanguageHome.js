@@ -4,7 +4,7 @@ import { colors } from 'theme'
 import PropTypes from 'prop-types'
 import { ScrollView, Text } from 'native-base'
 import StyledButton from 'components/StyledButton'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { downloadAudioFile } from 'api'
@@ -31,6 +31,11 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
+  edit: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   manageBar: {
     display: 'flex',
     flexDirection: 'row',
@@ -42,7 +47,9 @@ const LanguageHome = ({
   isLessonHome,
   languageName,
   languageDescription,
+  lessonName,
   lessonDescription,
+  nextUpdate,
   valueName,
   buttonText,
   rightIconName,
@@ -117,11 +124,35 @@ const LanguageHome = ({
   }
 
   // Generates the Lesson Home Page
-
   if (isLessonHome) {
     return (
       <>
         <View style={styles.top}>
+          <View style={styles.edit}>
+          <Text
+          fontFamily="heading"
+          fontWeight="regular"
+          fontStyle="normal"
+          color="white.dark"
+          fontSize={35}
+          paddingLeft={5}
+          paddingTop={5}
+          
+          >
+          {lessonName} 
+          </Text>
+          <Ionicons
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            marginRight: 20,
+            marginTop: 30,
+            
+          }}
+          name="ios-pencil" size={24} color={colors.white.dark} onPress={nextUpdate}>
+          </Ionicons>
+          </View>
           <Text
             fontFamily="heading"
             fontWeight="regular"
@@ -129,7 +160,9 @@ const LanguageHome = ({
             color="white.dark:alpha.40"
             fontSize="xl"
             lineHeight={20}
-            padding={5}
+            paddingBottom={5}
+            paddingX={5}
+            paddingTop={2}
             adjustsFontSizeToFit
           >
             {lessonDescription}
@@ -198,6 +231,7 @@ const LanguageHome = ({
   return (
     <>
       <View style={styles.top}>
+        <View style={styles.edit}>
         <Text
           fontFamily="heading"
           fontWeight="regular"
@@ -210,6 +244,18 @@ const LanguageHome = ({
         >
           {languageName}
         </Text>
+        <Ionicons
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            marginRight: 20,
+            marginTop: 30,
+            
+          }}
+          name="ios-pencil" size={24} color={colors.white.dark} onPress={nextUpdate}>
+          </Ionicons>
+        </View>
         <Text
           fontFamily="heading"
           fontWeight="regular"
@@ -224,6 +270,7 @@ const LanguageHome = ({
         >
           {languageDescription}
         </Text>
+        
       </View>
       <View style={styles.manageBar}>
         <Text
@@ -289,6 +336,7 @@ LanguageHome.propTypes = {
   languageName: PropTypes.string,
   languageDescription: PropTypes.string,
   lessonDescription: PropTypes.string,
+  nextUpdate: PropTypes.func,
   valueName: PropTypes.string,
   buttonText: PropTypes.string,
   rightIconName: PropTypes.string,
@@ -303,6 +351,7 @@ LanguageHome.defaultProps = {
   languageName: '',
   languageDescription: '',
   lessonDescription: 'You currently have not set a description.',
+  nextUpdate: () => {},
   valueName: '',
   buttonText: '',
   rightIconName: '',

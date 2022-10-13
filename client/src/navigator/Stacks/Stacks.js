@@ -13,6 +13,8 @@ import PropTypes from 'prop-types'
 import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
+import UpdateLesson from 'pages/UpdateLesson'
+import UpdateUnit from 'pages/UpdateUnit'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -155,6 +157,26 @@ export const HomeNavigator = ({ courseId }) => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
+    <Stack.Screen
+      name="UpdateUnit"
+      component={UpdateUnit}
+      options={({ navigation }) => ({
+      ...manageNavigationProps,
+      title: 'Update Unit',
+      headerLeft: () => <BackButton navigation={navigation} />,
+      cardStyle: { backgroundColor: 'white' },
+    })}
+      />
+    <Stack.Screen
+      name="UpdateLesson"
+      component={UpdateLesson}
+      options={({ navigation }) => ({
+      ...manageNavigationProps,
+      title: 'Update Lesson',
+      headerLeft: () => <BackButton navigation={navigation} />,
+      cardStyle: { backgroundColor: 'white' },
+    })}
+      />
   </Stack.Navigator>
 )
 
