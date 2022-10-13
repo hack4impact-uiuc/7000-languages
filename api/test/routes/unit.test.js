@@ -30,6 +30,12 @@ const {
   POST_INVALID_COURSE_UNIT,
   POST_EXPECTED_UNIT,
 } = require('../mock-data/unit-mock-data');
+const {
+  POST_BERBER_UNIT,
+  POST_BERBER_UNIT_EXPECTED,
+  PATCH_BERBER_UNIT,
+  PATCH_BERBER_UNIT_EXPECTED,
+} = require('../mock-data/non-latin-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
 
@@ -157,9 +163,22 @@ describe('PATCH /unit/ ', () => {
     expect(message).toEqual('Successfully updated unit');
     expect(result).toEqual(PATCH_UNIT_NO_CHANGE_EXPECTED);
   });
+
+  test('Patch should update name with Berber characters', async () => {
+    const response = await withAuthentication(
+      request(app)
+        .patch(`/language/unit/62391a30487d5ae343c82312`)
+        .send(PATCH_BERBER_UNIT),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v', 'vocab');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully updated unit');
+    expect(result.name).toEqual(PATCH_BERBER_UNIT_EXPECTED.name);
+  });
 });
 
-// This block tests the PUT /unit/ endpoint.
+// This block tests the POST /unit/ endpoint.
 describe('POST /language/unit/ ', () => {
   /*
     We have to make sure we connect to a MongoDB mock db before the test
@@ -205,6 +224,17 @@ describe('POST /language/unit/ ', () => {
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new unit');
     expect(result).toEqual(POST_EXPECTED_UNIT);
+  });
+
+  test('Field with Berber characters should still post', async () => {
+    const response = await withAuthentication(
+      request(app).post('/language/unit').send(POST_BERBER_UNIT),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v', '_id');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully created a new unit');
+    expect(result).toEqual(POST_BERBER_UNIT_EXPECTED);
   });
 });
 
