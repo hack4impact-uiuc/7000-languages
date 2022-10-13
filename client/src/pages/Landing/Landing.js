@@ -23,16 +23,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.red.dark,
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   backgroundImage: {
     width: '100%',
     height: '100%',
-    position: 'absolute'
+    position: 'absolute',
   },
   loginButton: {
     position: 'absolute',
-    bottom: '5%'
+    bottom: '5%',
   },
   logo: {
     position: 'absolute',
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   quoteSection: {
     position: 'absolute',
     padding: '5%',
-    top: '50%'
+    top: '50%',
   },
 })
 
@@ -105,20 +105,14 @@ const Landing = () => {
           {quote}
         </Text>
 
-        <Text
-          fontWeight="regular"
-          color="white.dark"
-          fontSize="2xl"
-        >
+        <Text fontWeight="regular" color="white.dark" fontSize="2xl">
           Frantz Fanon
         </Text>
       </View>
 
       <StyledButton
         title="Continue with Google"
-        leftIcon={
-          <AntDesign name="google" size={24} color={colors.red.dark} />
-        }
+        leftIcon={<AntDesign name="google" size={24} color={colors.red.dark} />}
         variant="secondary"
         onPress={loginUser}
         style={styles.loginButton}
