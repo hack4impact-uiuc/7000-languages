@@ -187,7 +187,7 @@ describe('POST /lesson/ ', () => {
     expect(response.status).toBe(500);
   });
 
-  test('Success creating lesson w/ berber characters', async () => {
+  test('Success creating lesson with berber characters', async () => {
     const response = await withAuthentication(
       request(app).post(`/language/lesson`).send(POST_BERBER_LESSON),
     );
@@ -297,7 +297,7 @@ describe('PATCH /lesson/ ', () => {
     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
   });
 
-  test('Patch request should update description w/ Berber characters', async () => {
+  test('Patch request should update description with Berber characters', async () => {
     const response = await withAuthentication(
       request(app)
         .patch(`/language/lesson`)

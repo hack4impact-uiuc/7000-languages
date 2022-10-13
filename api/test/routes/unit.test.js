@@ -164,7 +164,7 @@ describe('PATCH /unit/ ', () => {
     expect(result).toEqual(PATCH_UNIT_NO_CHANGE_EXPECTED);
   });
 
-  test('Patch should update name w/ Berber characters', async () => {
+  test('Patch should update name with Berber characters', async () => {
     const response = await withAuthentication(
       request(app)
         .patch(`/language/unit/62391a30487d5ae343c82312`)
@@ -226,7 +226,7 @@ describe('POST /language/unit/ ', () => {
     expect(result).toEqual(POST_EXPECTED_UNIT);
   });
 
-  test('Field w/ Berber characters should still post', async () => {
+  test('Field with Berber characters should still post', async () => {
     const response = await withAuthentication(
       request(app).post('/language/unit').send(POST_BERBER_UNIT),
     );

@@ -281,7 +281,7 @@ describe('PATCH /language/course/ ', () => {
     expect(message).toEqual('Course does not exist');
   });
 
-  test('Patch request should work w/ Berber characters', async () => {
+  test('Patch request should work with Berber characters', async () => {
     const body = PATCH_BERBER_COURSE;
     const response = await withAuthentication(
       request(app)
