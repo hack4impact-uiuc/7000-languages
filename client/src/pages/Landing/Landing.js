@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
@@ -30,18 +30,18 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'absolute',
   },
-  loginButton: {
-    position: 'absolute',
-    bottom: '5%',
-  },
   logo: {
     position: 'absolute',
     left: '5%',
   },
   quoteSection: {
     position: 'absolute',
-    padding: '5%',
     top: '50%',
+    padding: '10%'
+  },
+  loginButton: {
+    position: 'absolute',
+    bottom: '5%',
   },
 })
 
@@ -84,6 +84,8 @@ const Landing = () => {
     })
   }
 
+  const window = useWindowDimensions();
+
   return (
     <View style={styles.root}>
       <Image
@@ -100,22 +102,23 @@ const Landing = () => {
           color="white.dark"
           fontFamily="heading"
           fontStyle="normal"
-          fontSize="3xl"
+          fontSize={`${window.height}` / 30}
         >
           {quote}
         </Text>
 
         <Text fontWeight="regular" color="white.dark" fontSize="2xl">
-          Frantz Fanon
+          {' - '}Frantz Fanon
         </Text>
       </View>
 
       <StyledButton
-        title="Continue with Google"
-        leftIcon={<AntDesign name="google" size={24} color={colors.red.dark} />}
+        title="  Continue with Google"
+        leftIcon={<AntDesign name="google" size={`${window.height}` / 25} color={colors.red.dark} />}
         variant="secondary"
         onPress={loginUser}
         style={styles.loginButton}
+        fontSize={`${window.height}` / 40}
       />
     </View>
   )
