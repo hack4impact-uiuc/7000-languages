@@ -1,11 +1,6 @@
 import * as FileSystem from 'expo-file-system'
+import loadUserIDToken from 'utils/auth'
 import instance, { BASE_URL } from './axios-config'
-
-let cachedJWTToken = null
-
-export const setAuthToken = (token) => {
-  cachedJWTToken = token
-}
 
 /* User Endpoints */
 
@@ -150,12 +145,13 @@ export const uploadAudioFile = async (
   vocabId,
   uri,
 ) => {
+  const idToken = await loadUserIDToken()
   const res = await FileSystem.uploadAsync(
     `${BASE_URL}/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`,
     uri,
     {
       headers: {
-        Authorization: `Bearer ${cachedJWTToken}`,
+        Authorization: `Bearer ${idToken}`,
       },
       httpMethod: 'POST',
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
@@ -179,12 +175,13 @@ export const downloadAudioFile = async (
   vocabId,
   fileType,
 ) => {
+  const idToken = await loadUserIDToken()
   const downloadResumable = FileSystem.createDownloadResumable(
     `${BASE_URL}/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`,
     `${FileSystem.documentDirectory}${vocabId}-audio.${fileType}`,
     {
       headers: {
-        Authorization: `Bearer ${cachedJWTToken}`,
+        Authorization: `Bearer ${idToken}`,
       },
       httpMethod: 'GET',
       downloadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
@@ -221,12 +218,13 @@ export const uploadImageFile = async (
   vocabId,
   uri,
 ) => {
+  const idToken = await loadUserIDToken()
   const res = await FileSystem.uploadAsync(
     `${BASE_URL}/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`,
     uri,
     {
       headers: {
-        Authorization: `Bearer ${cachedJWTToken}`,
+        Authorization: `Bearer ${idToken}`,
       },
       httpMethod: 'POST',
       uploadType: FileSystem.FileSystemUploadType.MULTIPART,
@@ -249,12 +247,13 @@ export const downloadImageFile = async (
   vocabId,
   fileType,
 ) => {
+  const idToken = await loadUserIDToken()
   const downloadResumable = FileSystem.createDownloadResumable(
     `${BASE_URL}/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`,
     `${FileSystem.documentDirectory}${vocabId}-image.${fileType}`,
     {
       headers: {
-        Authorization: `Bearer ${cachedJWTToken}`,
+        Authorization: `Bearer ${idToken}`,
       },
       httpMethod: 'GET',
       downloadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
