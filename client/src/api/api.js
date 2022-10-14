@@ -1,5 +1,5 @@
 import * as FileSystem from 'expo-file-system'
-import loadUserIDToken from 'utils/auth'
+import { loadUserIDToken } from 'utils/auth'
 import instance, { BASE_URL } from './axios-config'
 
 /* User Endpoints */
