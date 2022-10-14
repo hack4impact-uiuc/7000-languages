@@ -140,10 +140,10 @@ const LessonHome = ({ navigation }) => {
   }
 
     /**
-   * Navigates to the update unit page
+   * Navigates to the update unit modal
    */
      const navigateToUpdate = () => {
-      navigation.navigate('UpdateLesson')
+      navigation.navigate('Modal', { screen: 'UpdateLesson' })
     }
 
   return (

@@ -85,6 +85,10 @@ export const ModalNavigator = () => (
     <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
     <ModalStack.Screen name="VocabDrawer" component={VocabDrawer} />
     <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
+    <ModalStack.Screen name="UpdateUnit" component={UpdateUnit} />
+    <ModalStack.Screen name="UpdateLesson" component={UpdateLesson} />
+    
+
   </ModalStack.Navigator>
 )
 
@@ -157,12 +161,12 @@ export const HomeNavigator = ({ courseId }) => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
-    <Stack.Screen
+   <Stack.Screen
       name="UpdateUnit"
       component={UpdateUnit}
       options={({ navigation }) => ({
       ...manageNavigationProps,
-      title: 'Update Unit',
+      title: 'Update',
       headerLeft: () => <BackButton navigation={navigation} />,
       cardStyle: { backgroundColor: 'white' },
     })}

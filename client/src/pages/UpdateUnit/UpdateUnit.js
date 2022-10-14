@@ -90,12 +90,12 @@ const UpdateUnit = ({ navigation }) => {
             </Text>
           </View>
           <Text color={colors.blue.dark} fontSize="md">
-            When creating a unit, think about how it will be used. More text
+            When updating a unit, think about how it will be used. More text
             here explaining what they should look for when making a unit.
           </Text>
         </View>
 
-        <RequiredField title="Change your unit name" />
+        <RequiredField title="Change your unit name" fontSize={17}/>
         <Input
           size="xl"
           placeholder=""
@@ -103,7 +103,7 @@ const UpdateUnit = ({ navigation }) => {
           onChangeText={(text) => setName(text)}
         />
 
-        <RequiredField title="What is the purpose of this unit?" />
+        <RequiredField title="What is the purpose of this unit?" fontSize={17}/>
         <TextArea
           size="xl"
           h={40}

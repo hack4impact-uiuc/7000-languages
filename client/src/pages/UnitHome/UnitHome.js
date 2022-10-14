@@ -106,7 +106,7 @@ const UnitHome = ({ navigation }) => {
    * Navigates to the update unit page
    */
   const navigateToUpdate = () => {
-    navigation.navigate('UpdateUnit')
+    navigation.navigate('Modal', { screen: 'UpdateUnit' })
   }
 
   /**

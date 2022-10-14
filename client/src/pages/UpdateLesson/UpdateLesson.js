@@ -1,52 +1,59 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { StyleSheet, View } from 'react-native'
 import Drawer from 'components/Drawer'
-import { Input, TextArea } from 'native-base'
+import { colors } from 'theme'
+import { Input, Text, TextArea } from 'native-base'
+import { Foundation } from '@expo/vector-icons'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { addLesson } from 'slices/language.slice'
-import { updateLesson } from 'api' //create update lesson
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
 
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 2,
+    borderWidth: 0.5,
+    padding: 8,
+    marginBottom: 10,
+    backgroundColor: colors.blue.light,
+    borderColor: colors.blue.light,
+  },
+  textRow: {
+    flexDirection: 'row',
+  },
+})
+
 const UpdateLesson = ({ navigation }) => {
+  const close = () => {
+    navigation.goBack()
+  }
+
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
-  const { currentCourseId, currentUnitId } = useSelector(
-    (state) => state.language,
-  )
-  const [name, setName] = useState('') // the name of the lesson
-  const [purpose, setPurpose] = useState('') // the purpose/description of the lesson
+  const { currentCourseId } = useSelector((state) => state.language)
+
+  const [name, setName] = useState('')
+  const [purpose, setPurpose] = useState('')
 
   // checks if all fields are filled
   // otherwise, the submit button is disabled
   const areRequiredFieldsFilled = name !== '' && purpose !== ''
 
-  // Closes the modal
-  const close = () => {
-    navigation.goBack()
-  }
-
-  // Posts the new lesson to the API and updates the state
+  /**
+   * Posts a new unit to the API and saves the new unit in state
+   */
   const success = async () => {
     errorWrap(
       async () => {
         const newLesson = {
           name,
           description: purpose,
+          _course_id: currentCourseId,
           selected: true,
         }
 
-        const { result } = await updateLesson(
-          currentCourseId,
-          currentUnitId,
-          newLesson, 
-        )
-
-        // All new lessons have 0 vocab items, and we must set this since this information
-        // will be presented on the app
-        result.num_vocab = 0
-
+        const { result } = await updateLesson(newLesson)
         dispatch(addLesson({ lesson: result }))
       },
       () => {
@@ -58,24 +65,53 @@ const UpdateLesson = ({ navigation }) => {
 
   const body = (
     <>
-      <RequiredField title="Change your lesson name" />
-      <Input
-        size="lg"
-        placeholder=""
-        returnKeyType="done"
-        onChangeText={(text) => setName(text)}
-      />
+      <View
+        style={{
+          width: '97%',
+          marginHorizontal: '1%',
+          justifyContent: 'center',
+        }}
+      >
+        <View style={styles.container}>
+          <View style={styles.textRow}>
+            <Foundation name="lightbulb" size={20} color={colors.blue.dark} />
+            <Text
+              fontSize="md"
+              paddingBottom={2}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
+              color={colors.blue.dark}
+            >
+              {' '}
+              Suggestion{' '}
+            </Text>
+          </View>
+          <Text color={colors.blue.dark} fontSize="md">
+            When updating a lesson, think about how it will be used. More text
+            here explaining what they should look for when making a lesson.
+          </Text>
+        </View>
 
-      <RequiredField title="What are the goals of this lesson?" />
-      <TextArea
-        size="xl"
-        h={40}
-        placeholder=""
-        keyboardType="default"
-        returnKeyType="done"
-        blurOnSubmit
-        onChangeText={(text) => setPurpose(text)}
-      />
+        <RequiredField title="Change your lesson name" fontSize={17}/>
+        <Input
+          size="xl"
+          placeholder=""
+          returnKeyType="done"
+          onChangeText={(text) => setName(text)}
+        />
+
+        <RequiredField title="What is the purpose of this lesson?" fontSize={17} />
+        <TextArea
+          size="xl"
+          h={40}
+          placeholder=""
+          keyboardType="default"
+          returnKeyType="done"
+          blurOnSubmit
+          onChangeText={(text) => setPurpose(text)}
+        />
+      </View>
     </>
   )
 
