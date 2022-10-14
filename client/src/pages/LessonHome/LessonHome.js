@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
 import { getLesson, downloadImageFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
+import _, { clone } from 'lodash'
 
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -58,8 +59,10 @@ const LessonHome = ({ navigation }) => {
    * Updates the formatted vocab data that will be presented on this page
    */
   useEffect(() => {
+    console.log("useEffect called")
     const getData = async () => {
       if (lessonData?.vocab) {
+        console.log("here!")
         let formattedVocabData = []
 
         for (let i = 0; i < lessonData.vocab.length; i += 1) {
@@ -91,15 +94,28 @@ const LessonHome = ({ navigation }) => {
 
             // Need to fetch image uri
             // eslint-disable-next-line no-await-in-loop
-            const uri = trackPromise(
+            //[TODO]: Add backend trackpromise()
+            console.log('uri set')
+            const uri =
               downloadImageFile(
                 currentCourseId,
                 currentUnitId,
                 currentLessonId,
                 item._id,
                 fileType,
-              ),).then((value) => {
-                formattedItem.imageURI = value;
+              ).then((value) => {
+                //formattedItem.imageURI = value;
+                if(formattedItem.imageURI)
+                {
+                  console.log('true!')
+                  return value;
+                }
+                const cloneVocabData = _.cloneDeep(formattedVocabData);
+                console.log('testlog!')
+                cloneVocabData.find((element) => element._id === formattedItem._id).imageURI = value;
+                formattedVocabData = cloneVocabData
+                setData(cloneVocabData);
+                //console.log(formattedVocabData);
                 return value;
               });
               
@@ -114,6 +130,7 @@ const LessonHome = ({ navigation }) => {
         )
 
         setData(formattedVocabData)
+        
       }
     }
     getData()
