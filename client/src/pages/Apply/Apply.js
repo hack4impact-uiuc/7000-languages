@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
   StyleSheet, View, Linking, Alert,
@@ -151,10 +151,17 @@ const Apply = ({ navigation }) => {
       },
     )
   }
+  const [isDisabled, setDisabled] = useState(false) // used to disable success button
+  // sets the initial state of isDisabled state to the isDisabled param
+
+  useEffect(() => setDisabled(isDisabled), [isDisabled]) // always listening to when isDisabled is changed
 
   const onSubmit = async () => {
-    if (validate() === true) {
-      await applyCourse()
+    if (!isDisabled) {
+      setDisabled(true)
+      if (validate() === true) {
+        await applyCourse()
+      }
     }
   }
 
@@ -440,7 +447,13 @@ const Apply = ({ navigation }) => {
                         fontFamily="heading"
                         onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
                       >
-                        Terms and Conditions
+                        I agree to the{' '}
+                        <Text
+                          fontFamily="heading"
+                          onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                        >
+                          Terms and Conditions
+                        </Text>
                       </Text>
                     </Text>
                   </View>
