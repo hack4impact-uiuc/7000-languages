@@ -1,5 +1,6 @@
 const { models, isUniqueOrder } = require('../models');
 const { NOT_FOUND_INDEX } = require('../utils/constants');
+const { exampleData } = require('./example-data.js');
 const mongoose = require('mongoose');
 
 /**
@@ -7,13 +8,15 @@ const mongoose = require('mongoose');
  * @param {String} courseId
  * @returns Number
  */
-module.exports.getNumUnitsInCourse = async (courseId) => {
+async function getNumUnitsInCourse(courseId) {
   if (!courseId) {
     return null;
   }
   const numUnits = await models.Unit.countDocuments({ _course_id: courseId });
   return numUnits;
-};
+}
+
+module.exports.getNumUnitsInCourse = getNumUnitsInCourse;
 
 /**
  * Determines the number of lessons in a unit
@@ -21,7 +24,7 @@ module.exports.getNumUnitsInCourse = async (courseId) => {
  * @param {String} unitId
  * @returns Number
  */
-module.exports.getNumLessonsInUnit = async (courseId, unitId) => {
+async function getNumLessonsInUnit(courseId, unitId) {
   if (!courseId || !unitId) {
     return null;
   }
@@ -30,7 +33,9 @@ module.exports.getNumLessonsInUnit = async (courseId, unitId) => {
     _unit_id: unitId,
   });
   return numUnits;
-};
+}
+
+module.exports.getNumLessonsInUnit = getNumLessonsInUnit;
 
 /**
  * Gets the index of a vocab item in a lesson
@@ -110,12 +115,12 @@ const updateDocumentInTransaction = async (model, document, session) => {
   The methods below determine if a list of ids for a course, unit, and/or lesson is valid, meaning that all of the ids
   are valid ObjectIds and a document exists in the appropriate collection for each _id. 
 */
-module.exports.checkIds = async ({
+async function checkIds({
   course_id = null,
   unit_id = null,
   lesson_id = null,
   vocab_id = null,
-}) => {
+}) {
   var allModels = [models.Course, models.Unit, models.Lesson];
   let ids = [course_id, unit_id, lesson_id];
 
@@ -141,7 +146,9 @@ module.exports.checkIds = async ({
   }
 
   return true;
-};
+}
+
+module.exports.checkIds = checkIds;
 
 const isValidId = async (model, id) => {
   if (mongoose.isValidObjectId(id)) {
@@ -163,3 +170,66 @@ const patchDocument = (document, updates) => {
   }
 };
 module.exports.patchDocument = patchDocument;
+
+/**
+ * Uploads example units, lessons, and vocab items for any new course that is created.
+ * @param {course_id} course_id of the new course that was just created
+ */
+module.exports.populateExampleData = async (course_id) => {
+  for (const unit of exampleData.units) {
+    // Get data for the unit from exampleData
+    const unitData = unit['unitData'];
+
+    // Update example unit data with IDs and order
+    const order = await this.getNumUnitsInCourse(course_id);
+    unitData['_course_id'] = course_id;
+    unitData['_order'] = order;
+
+    // Create and save new unit
+    const newUnit = new models.Unit(unitData);
+    await newUnit.save();
+    const unit_id = newUnit._id;
+
+    for (const lesson of unit['lessons']) {
+      // Get data for the lesson
+      const lessonData = lesson['lessonData'];
+
+      // Set additional IDs and variables for the lesson
+      const numLessons = await getNumLessonsInUnit(course_id, unit_id);
+      lessonData._order = numLessons;
+      lessonData.vocab = [];
+      lessonData._course_id = course_id;
+      lessonData._unit_id = unit_id;
+
+      // Create and save new lesson
+      const newLesson = new models.Lesson(lessonData);
+      await newLesson.save();
+      const lesson_id = newLesson._id;
+
+      for (const vocabItem of lesson['vocab']) {
+        // Refetch the current lesson
+        const isValid = await checkIds({ lesson_id });
+
+        if (!isValid) {
+          return;
+        }
+
+        const currentLesson = await models.Lesson.findById(lesson_id);
+
+        try {
+          if (currentLesson) {
+            // Set additional variables and ID for vocab item
+            vocabItem._order = currentLesson.vocab.length;
+            vocabItem._lesson_id = lesson_id;
+
+            // Append vocab item to lesson list
+            currentLesson.vocab.push(vocabItem);
+            await currentLesson.save();
+          }
+        } catch (error) {
+          return;
+        }
+      }
+    }
+  }
+};

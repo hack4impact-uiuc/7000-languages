@@ -16,12 +16,12 @@ module.exports.exampleData = {
           },
           vocab: [
             {
-              original: 'How do you say ____?',
-              translation: 'Hola',
+              original: 'How do you say hello?',
+              translation: 'Translation of hello',
             },
             {
-              original: 'What is this called?',
-              translation: 'The translated version of that',
+              original: 'How do you say goodnight?',
+              translation: 'Translation of goodnight',
             },
           ],
         },
@@ -29,7 +29,7 @@ module.exports.exampleData = {
           lessonData: {
             name: 'The Basics - Colors',
             selected: true,
-            description: 'Colors description.',
+            description: 'Learn how to say a variety of colors.',
           },
           vocab: [],
         },
@@ -37,7 +37,7 @@ module.exports.exampleData = {
           lessonData: {
             name: 'The Basics - Numbers',
             selected: true,
-            description: 'Numbers description.',
+            description: 'Learn the basic numbers of the language.',
           },
           vocab: [],
         },
