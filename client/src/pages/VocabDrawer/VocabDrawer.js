@@ -22,6 +22,8 @@ import {
   uploadImageFile,
   downloadAudioFile,
   downloadImageFile,
+  deleteAudioFile,
+  deleteImageFile,
 } from 'api'
 
 import { useErrorWrap, useTrackPromise } from 'hooks'
@@ -117,6 +119,8 @@ const VocabDrawer = ({ navigation }) => {
               fileType,
             ),
           )
+          console.log('HERE');
+          console.log(uri);
 
           setAudioRecording(uri)
           setRecordingState(RECORDING.COMPLETE)
@@ -377,7 +381,7 @@ const VocabDrawer = ({ navigation }) => {
       },
       {
         text: 'Remove Image',
-        onPress: () => setImage(null),
+        onPress: () => clearImage,
       },
       {
         text: 'Cancel',
@@ -414,8 +418,43 @@ const VocabDrawer = ({ navigation }) => {
   }
 
   const clearRecording = () => {
-    setAudioRecording(null)
-    setRecordingState(RECORDING.INCOMPLETE)
+    if(audioRecording !== null) {
+      const splitPath = audioRecording.split('.')
+      const fileType = splitPath.length == 2 ? splitPath[1] : 'm4a'
+      setAudioRecording(null)
+      setRecordingState(RECORDING.INCOMPLETE)
+      trackPromise(
+        deleteAudioFile(
+          currentCourseId,
+          currentUnitId,
+          currentLessonId,
+          currentVocabId,
+          fileType,
+        )
+      ).then(response => {
+        console.log(response)
+      })
+    }
+    
+  }
+
+  const clearImage = async () => {
+    if(image !== null) {
+      const splitPath = image.split('.')
+      const fileType = splitPath.length == 2 ? splitPath[1] : 'jpg'
+      setImage(null)
+      trackPromise(
+        deleteImageFile(
+          currentCourseId,
+          currentUnitId,
+          currentLessonId,
+          currentVocabId,
+          fileType,
+        )
+      ).then(response => {
+        console.log(response)
+      })
+    }
   }
 
   /*
