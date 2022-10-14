@@ -1,5 +1,5 @@
 import * as FileSystem from 'expo-file-system'
-import loadUserIDToken from 'utils/auth'
+import { loadUserIDToken } from 'utils/auth'
 import instance, { BASE_URL } from './axios-config'
 
 /* User Endpoints */
@@ -232,7 +232,9 @@ export const downloadImageFile = async (
   vocabId,
   fileType,
 ) => {
+  console.log('here')
   const idToken = await loadUserIDToken()
+  console.log(idToken)
   const downloadResumable = FileSystem.createDownloadResumable(
     `${BASE_URL}/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`,
     `${FileSystem.documentDirectory}${vocabId}-image.${fileType}`,
