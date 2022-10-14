@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   logo: {
     position: 'absolute',
     left: 20,
-    top: 20
+    top: 20,
   },
   quote: {
     position: 'absolute',

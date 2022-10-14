@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import LanguageHome from 'components/LanguageHome'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
-import { INDICATOR_TYPES } from '../../utils/constants'
 // imports to test localization
-import * as Localization from 'expo-localization'
+// import * as Localization from 'expo-localization'
 import { I18n } from 'i18n-js'
+import { INDICATOR_TYPES } from '../../utils/constants'
 
 // Set the key-value pairs for the different languages you want to support.
 const translations = {
@@ -33,7 +33,7 @@ const i18n = new I18n(translations)
 // When a value is missing from a language it'll fallback to another language with the key present.
 i18n.enableFallback = true
 // To see the fallback mechanism uncomment line below to force app to use Japanese language.
-i18n.locale = 'fr'
+i18n.locale = 'en'
 
 const CourseHome = ({ navigation, courseDescription, courseName }) => {
   const { allUnits } = useSelector((state) => state.language)
