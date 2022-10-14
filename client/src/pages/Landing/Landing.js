@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   quoteSection: {
     position: 'absolute',
     top: '50%',
-    padding: '10%'
+    padding: '10%',
   },
   loginButton: {
     position: 'absolute',
@@ -84,7 +84,7 @@ const Landing = () => {
     })
   }
 
-  const window = useWindowDimensions();
+  const window = useWindowDimensions()
 
   return (
     <View style={styles.root}>
@@ -114,7 +114,13 @@ const Landing = () => {
 
       <StyledButton
         title="  Continue with Google"
-        leftIcon={<AntDesign name="google" size={`${window.height}` / 25} color={colors.red.dark} />}
+        leftIcon={(
+          <AntDesign
+            name="google"
+            size={`${window.height}` / 25}
+            color={colors.red.dark}
+          />
+        )}
         variant="secondary"
         onPress={loginUser}
         style={styles.loginButton}
