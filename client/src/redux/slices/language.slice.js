@@ -83,6 +83,18 @@ const languageSlice = createSlice({
       )
       state.lessonData.vocab[vocabIndex] = payload.vocab
     },
+    updateLesson: (state, { payload }) => {
+      const lessonIndex = state.allLessons.findIndex(
+        (element) => element._id === state.currentLessonId,
+      )
+      state.allLessons[lessonIndex] = payload.lesson
+    },
+    updateUnit: (state, { payload }) => {
+      const unitIndex = state.allUnits.findIndex(
+        (element) => element._id === state.currentUnitId,
+      )
+      state.allUnits[unitIndex] = payload.unit
+    },
     clear: () => initialState,
     resetField: (state, { payload }) => {
       state[payload.key] = initialState[payload.key]
@@ -133,6 +145,8 @@ export const {
   addLesson,
   addVocab,
   updateVocab,
+  updateLesson,
+  updateUnit,
   clear,
   resetField,
   clearCourseData,
