@@ -5,7 +5,7 @@ import Drawer from 'components/Drawer'
 import { colors } from 'theme'
 import { Input, Text, TextArea } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
-
+import { updateLesson } from 'slices/language.slice'
 import { useSelector, useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
@@ -54,7 +54,7 @@ const UpdateLesson = ({ navigation }) => {
         }
 
         const { result } = await updateLesson(newLesson)
-        dispatch(addLesson({ lesson: result }))
+        dispatch(updateLesson({ lesson: result }))
       },
       () => {
         // on success, close the modal
@@ -117,10 +117,8 @@ const UpdateLesson = ({ navigation }) => {
 
   return (
     <Drawer
-      titleText={currentVocabId !== '' ? 'Edit Lesson' : 'Add a Lesson'}
-      successText={currentVocabId !== '' ? 'Save Changes' : 'Add Lesson'}
-      //titleText="Edit Lesson"
-      //successText="Confirm Edit"
+      titleText="Edit Lesson"
+      successText="Confirm Edit"
       successCallback={success}
       closeCallback={close}
       isDisabled={!areRequiredFieldsFilled}
