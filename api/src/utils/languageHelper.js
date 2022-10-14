@@ -171,12 +171,56 @@ const patchDocument = (document, updates) => {
 };
 module.exports.patchDocument = patchDocument;
 
+async function populateLessons(course_id, unit_id, lessons) {
+  for (const lesson of lessons) {
+    // Get data for the lesson
+    const lessonData = lesson['lessonData'];
+
+    // Set additional IDs and variables for the lesson
+    const numLessons = await getNumLessonsInUnit(course_id, unit_id);
+    lessonData._order = numLessons;
+    lessonData.vocab = [];
+    lessonData._course_id = course_id;
+    lessonData._unit_id = unit_id;
+
+    // Create and save new lesson
+    const newLesson = new models.Lesson(lessonData);
+    await newLesson.save();
+    const lesson_id = newLesson._id;
+
+    for (const vocabItem of lesson['vocab']) {
+      // Refetch the current lesson
+      const vocabItemIsValid = await checkIds({ lesson_id });
+
+      if (!vocabItemIsValid) {
+        return;
+      }
+
+      const currentLesson = await models.Lesson.findById(lesson_id);
+
+      try {
+        if (currentLesson) {
+          // Set additional variables and ID for vocab item
+          vocabItem._order = currentLesson.vocab.length;
+          vocabItem._lesson_id = lesson_id;
+
+          // Append vocab item to lesson list
+          currentLesson.vocab.push(vocabItem);
+          await currentLesson.save();
+        }
+      } catch (error) {
+        return;
+      }
+    }
+  }
+}
+
 /**
  * Uploads example units, lessons, and vocab items for any new course that is created.
  * @param {course_id} course_id of the new course that was just created
  */
 module.exports.populateExampleData = async (course_id) => {
-  for (const unit of exampleData.units) {
+  for (const unit of exampleData) {
     // Get data for the unit from exampleData
     const unitData = unit['unitData'];
 
@@ -185,51 +229,17 @@ module.exports.populateExampleData = async (course_id) => {
     unitData['_course_id'] = course_id;
     unitData['_order'] = order;
 
+    const courseIdIsValid = await checkIds({ course_id });
+
+    if (!courseIdIsValid) {
+      return;
+    }
+
     // Create and save new unit
     const newUnit = new models.Unit(unitData);
     await newUnit.save();
     const unit_id = newUnit._id;
 
-    for (const lesson of unit['lessons']) {
-      // Get data for the lesson
-      const lessonData = lesson['lessonData'];
-
-      // Set additional IDs and variables for the lesson
-      const numLessons = await getNumLessonsInUnit(course_id, unit_id);
-      lessonData._order = numLessons;
-      lessonData.vocab = [];
-      lessonData._course_id = course_id;
-      lessonData._unit_id = unit_id;
-
-      // Create and save new lesson
-      const newLesson = new models.Lesson(lessonData);
-      await newLesson.save();
-      const lesson_id = newLesson._id;
-
-      for (const vocabItem of lesson['vocab']) {
-        // Refetch the current lesson
-        const isValid = await checkIds({ lesson_id });
-
-        if (!isValid) {
-          return;
-        }
-
-        const currentLesson = await models.Lesson.findById(lesson_id);
-
-        try {
-          if (currentLesson) {
-            // Set additional variables and ID for vocab item
-            vocabItem._order = currentLesson.vocab.length;
-            vocabItem._lesson_id = lesson_id;
-
-            // Append vocab item to lesson list
-            currentLesson.vocab.push(vocabItem);
-            await currentLesson.save();
-          }
-        } catch (error) {
-          return;
-        }
-      }
-    }
+    populateLessons(course_id, unit_id, unit['lessons']);
   }
 };
