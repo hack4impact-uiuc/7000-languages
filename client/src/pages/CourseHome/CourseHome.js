@@ -4,6 +4,36 @@ import LanguageHome from 'components/LanguageHome'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import { INDICATOR_TYPES } from '../../utils/constants'
+// imports to test localization
+import * as Localization from 'expo-localization'
+import { I18n } from 'i18n-js'
+
+// Set the key-value pairs for the different languages you want to support.
+const translations = {
+  en: {
+    welcome: 'Welcome!',
+    units: 'Units',
+    manageUnits: 'Manage Units',
+    lesson: 'Lesson',
+    lessons: 'Lessons',
+  },
+  fr: {
+    welcome: 'Bonjour!',
+    units: 'Unités',
+    manageUnits: 'Gérer les Unités',
+    lesson: 'Leçon',
+    lessons: 'Cours',
+  },
+}
+const i18n = new I18n(translations)
+
+// Set the locale once at the beginning of your app.
+// i18n.locale = Localization.locale
+
+// When a value is missing from a language it'll fallback to another language with the key present.
+i18n.enableFallback = true
+// To see the fallback mechanism uncomment line below to force app to use Japanese language.
+i18n.locale = 'fr'
 
 const CourseHome = ({ navigation, courseDescription, courseName }) => {
   const { allUnits } = useSelector((state) => state.language)
@@ -27,7 +57,9 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
           _id: item._id,
           name: item.name,
           body: `${item.num_lessons} ${
-            item.num_lessons === 1 ? 'Lesson' : 'Lessons'
+            item.num_lessons === 1
+              ? `${i18n.t('lesson')}`
+              : `${i18n.t('lessons')}`
           }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
@@ -63,8 +95,8 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     <LanguageHome
       languageName={courseName}
       languageDescription={courseDescription}
-      valueName="Units"
-      buttonText="Manage Units"
+      valueName={i18n.t('units')}
+      buttonText={i18n.t('manageUnits')}
       rightIconName="pencil"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
