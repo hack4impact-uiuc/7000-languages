@@ -95,7 +95,7 @@ const UpdateUnit = ({ navigation }) => {
           </Text>
         </View>
 
-        <RequiredField title="Change your unit name" fontSize={17}/>
+        <RequiredField title="Change your unit name" fontSize={'md'}/>
         <Input
           size="xl"
           placeholder=""
@@ -103,7 +103,7 @@ const UpdateUnit = ({ navigation }) => {
           onChangeText={(text) => setName(text)}
         />
 
-        <RequiredField title="What is the purpose of this unit?" fontSize={17}/>
+        <RequiredField title="What is the purpose of this unit?" fontSize={'md'}/>
         <TextArea
           size="xl"
           h={40}

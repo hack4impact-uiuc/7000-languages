@@ -93,7 +93,7 @@ const UpdateLesson = ({ navigation }) => {
           </Text>
         </View>
 
-        <RequiredField title="Change your lesson name" fontSize={17}/>
+        <RequiredField title="Change your lesson name" fontSize={'md'}/>
         <Input
           size="xl"
           placeholder=""
@@ -101,7 +101,7 @@ const UpdateLesson = ({ navigation }) => {
           onChangeText={(text) => setName(text)}
         />
 
-        <RequiredField title="What is the purpose of this lesson?" fontSize={17} />
+        <RequiredField title="What is the purpose of this lesson?" fontSize={'md'} />
         <TextArea
           size="xl"
           h={40}
@@ -117,8 +117,10 @@ const UpdateLesson = ({ navigation }) => {
 
   return (
     <Drawer
-      titleText="Edit Lesson"
-      successText="Confirm Edit"
+      titleText={currentVocabId !== '' ? 'Edit Lesson' : 'Add a Lesson'}
+      successText={currentVocabId !== '' ? 'Save Changes' : 'Add Lesson'}
+      //titleText="Edit Lesson"
+      //successText="Confirm Edit"
       successCallback={success}
       closeCallback={close}
       isDisabled={!areRequiredFieldsFilled}
