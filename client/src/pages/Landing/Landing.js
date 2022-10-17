@@ -90,7 +90,7 @@ const Landing = () => {
     <View style={styles.root}>
       <Image
         source={images.background_landing}
-        alt="Language names background image"
+        alt="7000 Languages red background with names of endangered languages"
         style={styles.backgroundImage}
       />
 
