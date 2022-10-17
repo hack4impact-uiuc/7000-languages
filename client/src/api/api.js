@@ -196,12 +196,7 @@ export const downloadAudioFile = async (
 }
 
 /* Audio Endpoints */
-export const deleteAudioFile = async (
-  courseId,
-  unitId,
-  lessonId,
-  vocabId,
-) => {
+export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
   const requestString = `/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
 
@@ -267,12 +262,7 @@ export const downloadImageFile = async (
 }
 
 /* Image Endpoints */
-export const deleteImageFile = async (
-  courseId,
-  unitId,
-  lessonId,
-  vocabId,
-) => {
+export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
   const requestString = `/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
 

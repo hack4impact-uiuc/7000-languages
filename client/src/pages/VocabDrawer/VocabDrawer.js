@@ -119,8 +119,8 @@ const VocabDrawer = ({ navigation }) => {
               fileType,
             ),
           )
-          console.log('HERE');
-          console.log(uri);
+          console.log('HERE')
+          console.log(uri)
 
           setAudioRecording(uri)
           setRecordingState(RECORDING.COMPLETE)
@@ -310,7 +310,7 @@ const VocabDrawer = ({ navigation }) => {
   )
 
   const clearRecording = () => {
-    if(audioRecording !== null) {
+    if (audioRecording !== null) {
       const splitPath = audioRecording.split('.')
       const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
       setAudioRecording(null)
@@ -322,16 +322,15 @@ const VocabDrawer = ({ navigation }) => {
           currentLessonId,
           currentVocabId,
           fileType,
-        )
-      ).then(response => {
+        ),
+      ).then((response) => {
         console.log(response)
       })
     }
-    
   }
 
   const clearImage = async () => {
-    if(image !== null) {
+    if (image !== null) {
       const splitPath = image.split('.')
       const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
       setImage(null)
@@ -343,12 +342,14 @@ const VocabDrawer = ({ navigation }) => {
           currentLessonId,
           currentVocabId,
           fileType,
-        )
-      ).then(response => {
-        console.log(response)
-      }).catch((reason) => {
-        console.error(`clearImage rejected: ${reason}`)
-      })
+        ),
+      )
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((reason) => {
+          console.error(`clearImage rejected: ${reason}`)
+        })
     }
   }
 
