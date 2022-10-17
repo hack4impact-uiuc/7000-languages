@@ -309,6 +309,49 @@ const VocabDrawer = ({ navigation }) => {
     [listeningSound],
   )
 
+  const clearRecording = () => {
+    if(audioRecording !== null) {
+      const splitPath = audioRecording.split('.')
+      const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
+      setAudioRecording(null)
+      setRecordingState(RECORDING.INCOMPLETE)
+      trackPromise(
+        deleteAudioFile(
+          currentCourseId,
+          currentUnitId,
+          currentLessonId,
+          currentVocabId,
+          fileType,
+        )
+      ).then(response => {
+        console.log(response)
+      })
+    }
+    
+  }
+
+  const clearImage = async () => {
+    if(image !== null) {
+      const splitPath = image.split('.')
+      const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
+      setImage(null)
+      console.log('HIT')
+      trackPromise(
+        deleteImageFile(
+          currentCourseId,
+          currentUnitId,
+          currentLessonId,
+          currentVocabId,
+          fileType,
+        )
+      ).then(response => {
+        console.log(response)
+      }).catch((reason) => {
+        console.error(`clearImage rejected: ${reason}`)
+      })
+    }
+  }
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync(expoImageSettings)
@@ -414,49 +457,6 @@ const VocabDrawer = ({ navigation }) => {
   const stopPlayingRecording = async () => {
     if (listeningSound) {
       await listeningSound.unloadAsync()
-    }
-  }
-
-  const clearRecording = () => {
-    if(audioRecording !== null) {
-      const splitPath = audioRecording.split('.')
-      const fileType = splitPath.length == 2 ? splitPath[1] : 'm4a'
-      setAudioRecording(null)
-      setRecordingState(RECORDING.INCOMPLETE)
-      trackPromise(
-        deleteAudioFile(
-          currentCourseId,
-          currentUnitId,
-          currentLessonId,
-          currentVocabId,
-          fileType,
-        )
-      ).then(response => {
-        console.log(response)
-      })
-    }
-    
-  }
-
-  const clearImage = async () => {
-    if(image !== null) {
-      const splitPath = image.split('.')
-      const fileType = splitPath.length == 2 ? splitPath[1] : 'jpg'
-      setImage(null)
-      console.log('HIT')
-      trackPromise(
-        deleteImageFile(
-          currentCourseId,
-          currentUnitId,
-          currentLessonId,
-          currentVocabId,
-          fileType,
-        )
-      ).then(response => {
-        console.log(response)
-      }).catch((reason) => {
-        console.error(`clearImage rejected: ${reason}`)
-      })
     }
   }
 
