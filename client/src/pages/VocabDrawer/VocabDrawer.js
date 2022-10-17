@@ -381,7 +381,7 @@ const VocabDrawer = ({ navigation }) => {
       },
       {
         text: 'Remove Image',
-        onPress: () => clearImage,
+        onPress: () => clearImage(),
       },
       {
         text: 'Cancel',
@@ -443,6 +443,7 @@ const VocabDrawer = ({ navigation }) => {
       const splitPath = image.split('.')
       const fileType = splitPath.length == 2 ? splitPath[1] : 'jpg'
       setImage(null)
+      console.log('HIT')
       trackPromise(
         deleteImageFile(
           currentCourseId,
@@ -453,6 +454,8 @@ const VocabDrawer = ({ navigation }) => {
         )
       ).then(response => {
         console.log(response)
+      }).catch((reason) => {
+        console.error(`clearImage rejected: ${reason}`)
       })
     }
   }

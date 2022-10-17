@@ -201,9 +201,8 @@ export const deleteAudioFile = async (
   unitId,
   lessonId,
   vocabId,
-  fileType,
 ) => {
-  const requestString = `/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}/audio.${fileType}`
+  const requestString = `/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
@@ -273,9 +272,8 @@ export const deleteImageFile = async (
   unitId,
   lessonId,
   vocabId,
-  fileType,
 ) => {
-  const requestString = `/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}/image.${fileType}`
+  const requestString = `/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
