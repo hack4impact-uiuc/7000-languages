@@ -9,7 +9,11 @@ const {
 } = require('../../middleware/authorization');
 const _ = require('lodash');
 const { ERR_NO_COURSE_DETAILS } = require('../../utils/constants');
-const { patchDocument } = require('../../utils/languageHelper');
+const {
+  patchDocument,
+  populateExampleData,
+} = require('../../utils/languageHelper');
+
 /**
  * Does a patch update a single course in the database, meaning
  * it makes changes to parts of the course specified in the request.
@@ -58,6 +62,9 @@ router.post(
       { _id: user._id },
       { $push: { adminLanguages: newCourse._id } },
     );
+
+    // Load and save the example units/lessons/vocab items for the course
+    populateExampleData(newCourse._id);
 
     return sendResponse(
       res,
