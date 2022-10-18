@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
-import { getLesson, downloadImageFile } from 'api'
+import { pushImageURI } from 'slices/language.slice'
+import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import _, { clone } from 'lodash'
 
@@ -59,19 +60,19 @@ const LessonHome = ({ navigation }) => {
    * Updates the formatted vocab data that will be presented on this page
    */
   useEffect(() => {
-    console.log("useEffect called")
     const getData = async () => {
       if (lessonData?.vocab) {
-        console.log("here!")
         let formattedVocabData = []
 
         for (let i = 0; i < lessonData.vocab.length; i += 1) {
           const item = lessonData.vocab[i]
 
+          //This is where we will check cache once cache is created
           const formattedItem = {
             _id: item._id,
             name: item.original,
             body: item.translation,
+            audioURI: '',
             audio: item.audio !== '',
             _order: item._order,
             imageURI: '',
@@ -84,7 +85,7 @@ const LessonHome = ({ navigation }) => {
             const filePath = item.image
             const splitPath = filePath.split('.')
 
-            // Get the file type from the vocabItem's audio field
+            // Get the file type from the vocabItem's image field
             let fileType = 'jpg'
 
             if (splitPath.length === 2) {
@@ -94,32 +95,51 @@ const LessonHome = ({ navigation }) => {
 
             // Need to fetch image uri
             // eslint-disable-next-line no-await-in-loop
-            //[TODO]: Add backend trackpromise()
-            console.log('uri set')
-            const uri =
-              downloadImageFile(
+            //[TODO]: Add backend trackPromise()
+            downloadImageFile(
                 currentCourseId,
                 currentUnitId,
                 currentLessonId,
                 item._id,
                 fileType,
               ).then((value) => {
-                //formattedItem.imageURI = value;
-                if(formattedItem.imageURI)
-                {
-                  console.log('true!')
-                  return value;
-                }
                 const cloneVocabData = _.cloneDeep(formattedVocabData);
-                console.log('testlog!')
                 cloneVocabData.find((element) => element._id === formattedItem._id).imageURI = value;
                 formattedVocabData = cloneVocabData
-                setData(cloneVocabData);
-                //console.log(formattedVocabData);
+                setData(formattedVocabData);
                 return value;
               });
-              
-              //Promise.resolve(uri).then((value) => {formattedItem.imageURI = value;});
+          }
+
+          if (item.audioURI) {
+            formattedItem.audioURI = item.audioURI
+          } else if (item.audio !== '') {
+            const filePath = item.audio
+            const splitPath = filePath.split('.')
+    
+            // Get the file type from the vocabItem's audio field
+            let fileType = 'm4a'
+    
+            if (splitPath.length === 2) {
+              // eslint-disable-next-line prefer-destructuring
+              fileType = splitPath[1]
+            }
+    
+            // Downloads audio file and gets Filesystem uri
+            //[TODO]: Add backend trackPromise()
+            downloadAudioFile(
+                currentCourseId,
+                currentUnitId,
+                currentLessonId,
+                item._id,
+                fileType,
+              ).then((value) => {
+                const cloneVocabData = _.cloneDeep(formattedVocabData);
+                cloneVocabData.find((element) => element._id === formattedItem._id).audioURI = value;
+                formattedVocabData = cloneVocabData
+                setData(formattedVocabData);
+                return value;
+              });
           }
 
           formattedVocabData.push(formattedItem)
@@ -130,7 +150,6 @@ const LessonHome = ({ navigation }) => {
         )
 
         setData(formattedVocabData)
-        
       }
     }
     getData()

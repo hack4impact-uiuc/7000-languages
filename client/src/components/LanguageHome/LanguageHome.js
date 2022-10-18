@@ -64,45 +64,8 @@ const LanguageHome = ({
     currentCourseId, currentUnitId, currentLessonId, lessonData,
   } = useSelector((state) => state.language)
 
-  const getAudio = async (vocabId) => {
+  const playAudio = async (uri) => {
     await errorWrap(async () => {
-      const vocabIndex = lessonData.vocab.findIndex(
-        (element) => element._id === vocabId,
-      )
-
-      const vocabItem = lessonData.vocab[vocabIndex]
-
-      let uri = null
-
-      // Check if the audio has already been fetched
-      if (vocabItem.audioURI) {
-        uri = vocabItem.audioURI
-      } else {
-        const filePath = vocabItem.audio
-        const splitPath = filePath.split('.')
-
-        // Get the file type from the vocabItem's audio field
-        let fileType = 'm4a'
-
-        if (splitPath.length === 2) {
-          // eslint-disable-next-line prefer-destructuring
-          fileType = splitPath[1]
-        }
-
-        // Downloads audio file and gets Filesystem uri
-        uri = await trackPromise(
-          downloadAudioFile(
-            currentCourseId,
-            currentUnitId,
-            currentLessonId,
-            vocabId,
-            fileType,
-          ),
-        )
-
-        // Add to redux
-        dispatch(pushAudioURI({ vocabId, uri }))
-      }
 
       if (uri) {
         // Plays audio recording
@@ -175,7 +138,7 @@ const LanguageHome = ({
                 bodyText={element.name}
                 imageURI={element.imageURI}
                 showVolumeIcon={element.audio}
-                volumeIconCallback={() => getAudio(element._id)}
+                volumeIconCallback={() => playAudio(element.audioURI)}
                 width={width * 0.97}
                 height={element.imageURI === '' ? 75 : 100}
                 rightIcon={(
