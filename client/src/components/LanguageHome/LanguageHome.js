@@ -7,11 +7,8 @@ import StyledButton from 'components/StyledButton'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
-import { downloadAudioFile } from 'api'
-import { useDispatch, useSelector } from 'react-redux'
 import { Audio } from 'expo-av'
-import { useErrorWrap, useTrackPromise } from 'hooks'
-import { pushAudioURI } from 'slices/language.slice'
+import { useErrorWrap } from 'hooks'
 
 const { width } = Dimensions.get('window')
 
@@ -51,8 +48,6 @@ const LanguageHome = ({
   data,
 }) => {
   const errorWrap = useErrorWrap()
-  const trackPromise = useTrackPromise()
-  const dispatch = useDispatch()
 
   const [renderData, setRenderData] = useState(data)
 
@@ -60,13 +55,8 @@ const LanguageHome = ({
     setRenderData(data)
   }, [data])
 
-  const {
-    currentCourseId, currentUnitId, currentLessonId, lessonData,
-  } = useSelector((state) => state.language)
-
   const playAudio = async (uri) => {
     await errorWrap(async () => {
-
       if (uri) {
         // Plays audio recording
         await Audio.setAudioModeAsync({

@@ -4,9 +4,10 @@ import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
-import { pushImageURI } from 'slices/language.slice'
 import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
+
+// eslint-disable-next-line no-unused-vars
 import _, { clone } from 'lodash'
 
 const LessonHome = ({ navigation }) => {
@@ -67,7 +68,7 @@ const LessonHome = ({ navigation }) => {
         for (let i = 0; i < lessonData.vocab.length; i += 1) {
           const item = lessonData.vocab[i]
 
-          //This is where we will check cache once cache is created
+          // This is where we will check cache once cache is created
           const formattedItem = {
             _id: item._id,
             name: item.original,
@@ -94,21 +95,24 @@ const LessonHome = ({ navigation }) => {
             }
 
             // Need to fetch image uri
-            // eslint-disable-next-line no-await-in-loop
-            //[TODO]: Add backend trackPromise()
+            /* eslint-disable no-loop-func */
+            // [TODO]: Add backend trackPromise()
             downloadImageFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                item._id,
-                fileType,
-              ).then((value) => {
-                const cloneVocabData = _.cloneDeep(formattedVocabData);
-                cloneVocabData.find((element) => element._id === formattedItem._id).imageURI = value;
-                formattedVocabData = cloneVocabData
-                setData(formattedVocabData);
-                return value;
-              });
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              item._id,
+              fileType,
+            ).then((value) => {
+              const cloneVocabData = _.cloneDeep(formattedVocabData)
+              cloneVocabData.find(
+                (element) => element._id === formattedItem._id,
+              ).imageURI = value
+              formattedVocabData = cloneVocabData
+              setData(formattedVocabData)
+              return value
+            })
+            /* eslint-enable no-loop-func */
           }
 
           if (item.audioURI) {
@@ -116,30 +120,34 @@ const LessonHome = ({ navigation }) => {
           } else if (item.audio !== '') {
             const filePath = item.audio
             const splitPath = filePath.split('.')
-    
+
             // Get the file type from the vocabItem's audio field
             let fileType = 'm4a'
-    
+
             if (splitPath.length === 2) {
               // eslint-disable-next-line prefer-destructuring
               fileType = splitPath[1]
             }
-    
+
             // Downloads audio file and gets Filesystem uri
-            //[TODO]: Add backend trackPromise()
+            /* eslint-disable no-loop-func */
+            // [TODO]: Add backend trackPromise()
             downloadAudioFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                item._id,
-                fileType,
-              ).then((value) => {
-                const cloneVocabData = _.cloneDeep(formattedVocabData);
-                cloneVocabData.find((element) => element._id === formattedItem._id).audioURI = value;
-                formattedVocabData = cloneVocabData
-                setData(formattedVocabData);
-                return value;
-              });
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              item._id,
+              fileType,
+            ).then((value) => {
+              const cloneVocabData = _.cloneDeep(formattedVocabData)
+              cloneVocabData.find(
+                (element) => element._id === formattedItem._id,
+              ).audioURI = value
+              formattedVocabData = cloneVocabData
+              setData(formattedVocabData)
+              return value
+            })
+            /* eslint-enable no-loop-func */
           }
 
           formattedVocabData.push(formattedItem)
