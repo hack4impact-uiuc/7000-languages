@@ -8,13 +8,13 @@ const mongoose = require('mongoose');
  * @param {String} courseId
  * @returns Number
  */
-async function getNumUnitsInCourse(courseId) {
+const getNumUnitsInCourse = async (courseId) => {
   if (!courseId) {
     return null;
   }
   const numUnits = await models.Unit.countDocuments({ _course_id: courseId });
   return numUnits;
-}
+};
 
 module.exports.getNumUnitsInCourse = getNumUnitsInCourse;
 
@@ -24,7 +24,7 @@ module.exports.getNumUnitsInCourse = getNumUnitsInCourse;
  * @param {String} unitId
  * @returns Number
  */
-async function getNumLessonsInUnit(courseId, unitId) {
+const getNumLessonsInUnit = async (courseId, unitId) => {
   if (!courseId || !unitId) {
     return null;
   }
@@ -33,7 +33,7 @@ async function getNumLessonsInUnit(courseId, unitId) {
     _unit_id: unitId,
   });
   return numUnits;
-}
+};
 
 module.exports.getNumLessonsInUnit = getNumLessonsInUnit;
 
@@ -115,12 +115,12 @@ const updateDocumentInTransaction = async (model, document, session) => {
   The methods below determine if a list of ids for a course, unit, and/or lesson is valid, meaning that all of the ids
   are valid ObjectIds and a document exists in the appropriate collection for each _id. 
 */
-async function checkIds({
+const checkIds = async ({
   course_id = null,
   unit_id = null,
   lesson_id = null,
   vocab_id = null,
-}) {
+}) => {
   var allModels = [models.Course, models.Unit, models.Lesson];
   let ids = [course_id, unit_id, lesson_id];
 
@@ -146,7 +146,7 @@ async function checkIds({
   }
 
   return true;
-}
+};
 
 module.exports.checkIds = checkIds;
 
@@ -171,7 +171,7 @@ const patchDocument = (document, updates) => {
 };
 module.exports.patchDocument = patchDocument;
 
-async function populateLessons(course_id, unit_id, lessons) {
+const populateLessons = async (course_id, unit_id, lessons) => {
   for (const lesson of lessons) {
     // Get data for the lesson
     const lessonData = lesson['lessonData'];
@@ -213,13 +213,13 @@ async function populateLessons(course_id, unit_id, lessons) {
       }
     }
   }
-}
+};
 
 /**
  * Uploads example units, lessons, and vocab items for any new course that is created.
  * @param {course_id} course_id of the new course that was just created
  */
-module.exports.populateExampleData = async (course_id) => {
+const populateExampleData = async (course_id) => {
   for (const unit of exampleData) {
     // Get data for the unit from exampleData
     const unitData = unit['unitData'];
@@ -243,3 +243,5 @@ module.exports.populateExampleData = async (course_id) => {
     populateLessons(course_id, unit_id, unit['lessons']);
   }
 };
+
+module.exports.populateExampleData = populateExampleData;
