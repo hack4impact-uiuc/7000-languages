@@ -4,7 +4,7 @@ import { colors } from 'theme'
 import PropTypes from 'prop-types'
 import { ScrollView, Text } from 'native-base'
 import StyledButton from 'components/StyledButton'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { downloadAudioFile } from 'api'
@@ -44,10 +44,12 @@ const LanguageHome = ({
   languageDescription,
   lessonDescription,
   valueName,
-  buttonText,
-  rightIconName,
+  manageButtonText,
+  addButtonText,
+  manageIconName,
   buttonCallback,
   nextPageCallback,
+  addCallback,
   data,
 }) => {
   const errorWrap = useErrorWrap()
@@ -237,12 +239,12 @@ const LanguageHome = ({
           {renderData.length} {valueName}
         </Text>
         <StyledButton
-          title={buttonText}
+          title={manageButtonText}
           variant="manage"
           fontSize={15}
           rightIcon={(
             <MaterialCommunityIcons
-              name={rightIconName}
+              name={manageIconName}
               color={colors.red.dark}
               size={20}
             />
@@ -279,6 +281,19 @@ const LanguageHome = ({
           ))}
         </View>
       </ScrollView>
+
+      <View style={{ position: 'absolute', bottom: '5%', right: '5%' }}>
+        <StyledButton
+          title={addButtonText}
+          variant="small"
+          fontSize="20"
+          leftIcon={
+            <AntDesign name="pluscircle" size={20} color={colors.red.dark} />
+          }
+          shadow
+          onPress={addCallback}
+        />
+      </View>
     </>
   )
 }
@@ -290,10 +305,12 @@ LanguageHome.propTypes = {
   languageDescription: PropTypes.string,
   lessonDescription: PropTypes.string,
   valueName: PropTypes.string,
-  buttonText: PropTypes.string,
-  rightIconName: PropTypes.string,
+  manageButtonText: PropTypes.string,
+  addButtonText: PropTypes.string,
+  manageIconName: PropTypes.string,
   buttonCallback: PropTypes.func,
   nextPageCallback: PropTypes.func,
+  addCallback: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
 }
 
@@ -304,10 +321,12 @@ LanguageHome.defaultProps = {
   languageDescription: '',
   lessonDescription: 'You currently have not set a description.',
   valueName: '',
-  buttonText: '',
-  rightIconName: '',
+  manageButtonText: '',
+  addButtonText: '',
+  manageIconName: '',
   buttonCallback: () => {},
   nextPageCallback: () => {},
+  addCallback: () => {},
   data: [],
 }
 

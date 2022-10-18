@@ -110,14 +110,23 @@ const UnitHome = ({ navigation }) => {
     navigation.navigate('LessonHome')
   }
 
+  /**
+   * Navigates to the Add Lesson Page
+   */
+  const navigateToAdd = () => {
+    navigation.navigate('Modal', { screen: 'CreateLesson' })
+  }
+
   return (
     <LanguageHome
       languageDescription={unitDescription}
       valueName="Lessons"
-      buttonText="Manage Lessons"
-      rightIconName="pencil"
+      manageButtonText="Manage Lessons"
+      addButtonText="Add Lesson"
+      manageIconName="cog"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
+      addCallback={navigateToAdd}
       data={data}
     />
   )
