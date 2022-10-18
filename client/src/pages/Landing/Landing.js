@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
@@ -20,35 +20,28 @@ import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
-    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: colors.red.dark,
-  },
-  button: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 60,
-  },
-  logo: {
-    position: 'absolute',
-    left: 20,
-    top: 20
-  },
-  quote: {
-    position: 'absolute',
-    left: 40,
-    bottom: 200,
-  },
-
-  quote2: {
-    position: 'absolute',
-    left: 5,
-    bottom: 1,
+    width: '100%',
+    height: '100%',
   },
   backgroundImage: {
     width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  logo: {
+    position: 'absolute',
+    left: '5%',
+  },
+  quoteSection: {
+    position: 'absolute',
+    top: '50%',
+    padding: '10%',
+  },
+  loginButton: {
+    position: 'absolute',
+    bottom: '5%',
   },
 })
 
@@ -63,7 +56,7 @@ const Landing = () => {
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
   const [quote] = useState(
-    '"To speak a language is \n to take on a world, a\n culture."\n',
+    '"To speak a language is to take on a world, a culture."',
   )
 
   const loginUser = async () => {
@@ -91,49 +84,48 @@ const Landing = () => {
     })
   }
 
+  const window = useWindowDimensions()
+
   return (
     <View style={styles.root}>
       <Image
         source={images.background_landing}
+        alt="7000 Languages red background with names of endangered languages"
         style={styles.backgroundImage}
-        alt="description of image"
       />
-      <View style={styles.button}>
-        <StyledButton
-          title="Continue with Google"
-          leftIcon={
-            <AntDesign name="google" size={24} color={colors.red.dark} />
-          }
-          variant="secondary"
-          onPress={loginUser}
-          style={{ paddingRight: 60 }}
-        />
-      </View>
 
-      <View style={styles.logo}>
-        <Logo height={160} width={160} />
-      </View>
+      <Logo height={160} width={160} style={styles.logo} />
 
-      <View style={styles.quote}>
+      <View style={styles.quoteSection}>
         <Text
           fontWeight="regular"
           color="white.dark"
           fontFamily="heading"
           fontStyle="normal"
-          fontSize="3xl"
+          fontSize={`${window.height}` / 30}
         >
           {quote}
         </Text>
 
-        <Text
-          style={styles.quote2}
-          fontWeight="regular"
-          color="white.dark"
-          fontSize="2xl"
-        >
-          - Frantz Fanon
+        <Text fontWeight="regular" color="white.dark" fontSize="2xl">
+          {' - '}Frantz Fanon
         </Text>
       </View>
+
+      <StyledButton
+        title="  Continue with Google"
+        leftIcon={(
+          <AntDesign
+            name="google"
+            size={`${window.height}` / 25}
+            color={colors.red.dark}
+          />
+        )}
+        variant="secondary"
+        onPress={loginUser}
+        style={styles.loginButton}
+        fontSize={`${window.height}` / 40}
+      />
     </View>
   )
 }
