@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   logo: {
     position: 'absolute',
     left: 20,
-    bottom: 720,
+    top: 20
   },
   quote: {
     position: 'absolute',
@@ -86,7 +86,7 @@ const Landing = () => {
         await saveUserRefreshToken(refreshToken)
         await saveUserClientId(clientId)
         // Update Redux Store
-        dispatch(authenticate({ loggedIn: true, idToken }))
+        dispatch(authenticate({ loggedIn: true }))
       }
     })
   }
