@@ -199,9 +199,12 @@ export const downloadAudioFile = async (
 export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
   const requestString = `/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
+  const body = JSON.parse(res.body)
 
-  if (!res?.data?.success) throw new Error(res?.data?.message)
-  return res.data
+  if (!body.success || body.success === 'false') {
+    throw new Error(body.message)
+  }
+  return body
 }
 
 /* Image Endpoints */
@@ -266,6 +269,10 @@ export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
   const requestString = `/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
 
-  if (!res?.data?.success) throw new Error(res?.data?.message)
-  return res.data
+  const body = JSON.parse(res.body)
+
+  if (!body.success || body.success === 'false') {
+    throw new Error(body.message)
+  }
+  return body
 }

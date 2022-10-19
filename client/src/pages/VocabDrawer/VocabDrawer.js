@@ -82,6 +82,9 @@ const VocabDrawer = ({ navigation }) => {
   const [recordingStage, setRecordingState] = useState(RECORDING.INCOMPLETE) // which recording stage the user is at
   const [listeningSound, setListeningSound] = useState(null) // the data for the recording when the user is listening to it
 
+  const [deleteAudioUri, setDeleteAudioUri] = useState('');
+  const [deleteImageUri, setDeleteImageUri] = useState('');
+
   useEffect(() => {
     const setData = async () => {
       const index = lessonData.vocab.findIndex(
@@ -119,8 +122,6 @@ const VocabDrawer = ({ navigation }) => {
               fileType,
             ),
           )
-          console.log('HERE')
-          console.log(uri)
 
           setAudioRecording(uri)
           setRecordingState(RECORDING.COMPLETE)
@@ -140,7 +141,7 @@ const VocabDrawer = ({ navigation }) => {
             // eslint-disable-next-line prefer-destructuring
             fileType = splitPath[1]
           }
-
+          console.log('not skipped');
           // Downloads audio file and gets Filesystem uri
           const uri = await trackPromise(
             downloadImageFile(
@@ -182,6 +183,17 @@ const VocabDrawer = ({ navigation }) => {
     errorWrap(
       async () => {
         let updatedVocabItem = null
+        let promises = [];
+        if (deleteAudioUri !== '') {
+          promises.push(clearRecording(deleteAudioUri));
+        }
+        if (deleteImageUri !== '') {
+          promises.push(clearImage(deleteImageUri));
+        }
+        if (promises.length) {
+          await trackPromise(Promise.all(promises));
+        }
+
         if (currentVocabId === '') {
           const vocabItem = {
             original: originalText,
@@ -215,6 +227,7 @@ const VocabDrawer = ({ navigation }) => {
           }
 
           if (image) {
+            console.log('WEHERE2');
             const imageResponse = await trackPromise(
               uploadImageFile(
                 currentCourseId,
@@ -261,6 +274,7 @@ const VocabDrawer = ({ navigation }) => {
           }
 
           if (image) {
+            console.log('WEHERE');
             const imageResponse = await trackPromise(
               uploadImageFile(
                 currentCourseId,
@@ -309,47 +323,36 @@ const VocabDrawer = ({ navigation }) => {
     [listeningSound],
   )
 
-  const clearRecording = () => {
-    if (audioRecording !== null) {
-      const splitPath = audioRecording.split('.')
+  const clearRecording = async (path) => {
+    if (path !== null) {
+      const splitPath = path.split('.')
       const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
-      setAudioRecording(null)
       setRecordingState(RECORDING.INCOMPLETE)
-      trackPromise(
-        deleteAudioFile(
-          currentCourseId,
-          currentUnitId,
-          currentLessonId,
-          currentVocabId,
-          fileType,
-        ),
-      ).then((response) => {
-        console.log(response)
+      deleteAudioFile(
+        currentCourseId,
+        currentUnitId,
+        currentLessonId,
+        currentVocabId,
+        fileType,
+      ).then((audioResponse) => {
+        dispatch(updateVocab({ vocab: audioResponse.result }))
       })
     }
   }
 
-  const clearImage = async () => {
-    if (image !== null) {
-      const splitPath = image.split('.')
+  const clearImage = async (path) => {
+    if (path !== null) {
+      const splitPath = path.split('.')
       const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
-      setImage(null)
-      console.log('HIT')
-      trackPromise(
-        deleteImageFile(
-          currentCourseId,
-          currentUnitId,
-          currentLessonId,
-          currentVocabId,
-          fileType,
-        ),
-      )
-        .then((response) => {
-          console.log(response)
-        })
-        .catch((reason) => {
-          console.error(`clearImage rejected: ${reason}`)
-        })
+      deleteImageFile(
+        currentCourseId,
+        currentUnitId,
+        currentLessonId,
+        currentVocabId,
+        fileType,
+      ).then((imageResponse) => {
+        dispatch(updateVocab({ vocab: imageResponse.result }))
+      })
     }
   }
 
@@ -425,7 +428,7 @@ const VocabDrawer = ({ navigation }) => {
       },
       {
         text: 'Remove Image',
-        onPress: () => clearImage(),
+        onPress: () => {setDeleteImageUri(image); setImage(null)},
       },
       {
         text: 'Cancel',
@@ -519,7 +522,7 @@ const VocabDrawer = ({ navigation }) => {
         stopRecording={stopRecording}
         playRecording={playRecording}
         confirmRecording={confirmRecording}
-        discardRecording={clearRecording}
+        discardRecording={() => {setDeleteAudioUri(audioRecording); setAudioRecording(null); setRecordingState(RECORDING.INCOMPLETE)}}
         stopPlayingRecording={stopPlayingRecording}
       />
       <RequiredField title={originalLanguage} />
