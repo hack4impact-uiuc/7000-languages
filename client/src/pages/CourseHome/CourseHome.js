@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import LanguageHome from 'components/LanguageHome'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
+import { INDICATOR_TYPES } from '../../utils/constants'
+import i18n from 'utils/LanguageData'
 
 const CourseHome = ({ navigation, courseDescription, courseName }) => {
   const { allUnits } = useSelector((state) => state.language)
@@ -27,8 +29,8 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
           name: item.name,
           body: `${item.num_lessons} ${
             item.num_lessons === 1
-              ? `${i18n.t('lesson')}`
-              : `${i18n.t('lessons')}`
+              ? `${i18n.t('dict.lessonSingle')}`
+              : `${i18n.t('dict.lessonPlural')}`
           }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
@@ -64,8 +66,8 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     <LanguageHome
       languageName={courseName}
       languageDescription={courseDescription}
-      valueName={i18n.t('units')}
-      buttonText={i18n.t('manageUnits')}
+      valueName={i18n.t('dict.unitPlural')}
+      buttonText={i18n.t('actions.manageUnits')}
       rightIconName="pencil"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}

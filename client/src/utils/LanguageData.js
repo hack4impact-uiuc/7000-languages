@@ -1,7 +1,7 @@
 // imports to test localization
 // import * as Localization from 'expo-localization'
 import { I18n } from 'i18n-js'
-import { translations } from './translations'
+import translations from './language-data'
 
 const i18n = new I18n(translations)
 
@@ -12,3 +12,5 @@ const i18n = new I18n(translations)
 i18n.enableFallback = true
 // To see the fallback mechanism uncomment line below to force app to use Japanese language.
 i18n.locale = 'en'
+
+export default i18n

@@ -11,6 +11,7 @@ import {
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import FontIcon from 'react-native-vector-icons/Feather'
+import i18n from 'utils/LanguageData'
 
 const styles = StyleSheet.create({
   root: {

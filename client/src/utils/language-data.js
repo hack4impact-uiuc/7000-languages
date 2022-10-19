@@ -64,7 +64,7 @@ const translations = {
       ourMission:
         'Our mission is to help communities teach, learn, and sustain their endangered languages.',
       supportRevitalization:
-        'We’d love to support your revitalization efforts.',
+        "We'd love to support your revitalization efforts.",
       setDescriptionPrompt: 'You currently have not set a description.',
       unsavedChangesPrompt:
         'You have unsaved changes. Are you sure to discard them and leave the screen?',
@@ -122,3 +122,5 @@ const translations = {
   },
   fr: {},
 }
+
+export default translations
