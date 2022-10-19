@@ -52,6 +52,9 @@ const styles = StyleSheet.create({
   checkboxes: {
     marginTop: 10,
     width: '95%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
   inputHeight: {
     height: 50,
@@ -447,59 +450,55 @@ const Apply = ({ navigation }) => {
                         fontFamily="heading"
                         onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
                       >
-                        I agree to the{' '}
-                        <Text
-                          fontFamily="heading"
-                          onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
-                        >
-                          Terms and Conditions
-                        </Text>
+                        Terms and Conditions
                       </Text>
                     </Text>
                   </View>
                 </Checkbox>
               </View>
 
+              {/* Weird styling to accomodate native-base checkbox text centering */}
               <View style={styles.checkboxes}>
                 <Checkbox
+                  style={{ display: 'flex', alignSelf: 'flex-end' }}
                   value="accepted"
                   colorScheme="danger"
                   onChange={setAcceptTerms}
+                  aria-label="asdf"
+                />
+                <Text
+                  fontFamily="body"
+                  fontWeight="regular"
+                  color="black"
+                  fontStyle="normal"
+                  fontSize="md"
+                  style={{ paddingLeft: 8, top: -3 }}
                 >
-                  <View>
-                    <Text
-                      fontFamily="body"
-                      fontWeight="regular"
-                      color="black"
-                      fontStyle="normal"
-                      fontSize="md"
-                    >
-                      I would like a team member from 7000 Languages to follow
-                      up with me about creating additional resources for my
-                      language.
-                    </Text>
-                  </View>
-                </Checkbox>
+                  I would like a team member from 7000 Languages to follow up
+                  with me about creating additional resources for my language.
+                </Text>
               </View>
             </View>
+            <Box style={styles.termsText}>
+              <StyledButton
+                title="Submit"
+                variant="primary"
+                onPress={onSubmit}
+              />
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="gray.medium"
+                fontStyle="normal"
+                fontSize="sm"
+              >
+                By selecting this button, you confirm you have permission from
+                the community/speakers to create language learning materials.
+              </Text>
+            </Box>
           </ScrollView>
         </View>
       </View>
-      <Box style={styles.termsText}>
-        <StyledButton title="Submit" variant="primary" onPress={onSubmit} />
-
-        <Text
-          fontFamily="body"
-          fontWeight="regular"
-          color="gray.medium"
-          fontStyle="normal"
-          fontSize="sm"
-          textAlign="center"
-        >
-          By selecting this button, you have permission from the
-          community/speakers to create language learning materials.
-        </Text>
-      </Box>
     </>
   )
 }
