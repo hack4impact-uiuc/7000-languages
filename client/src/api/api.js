@@ -67,7 +67,7 @@ export const updateUnits = async (courseID, updates) => {
     updates,
   }
   const requestString = '/language/unit'
-  const res = await instance.put(requestString, body)
+  const res = await instance.patch(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
@@ -78,6 +78,19 @@ export const updateUnits = async (courseID, updates) => {
 export const getLesson = async (courseID, lessonID) => {
   const requestString = `/language/lesson?course_id=${courseID}&lesson_id=${lessonID}`
   const res = await instance.get(requestString)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+export const updateSingleLesson = async (lessonID, courseID, updates) => {
+  const body = {
+    course_id: courseID,
+    lesson_id: lessonID,
+    updates,
+  }
+  const requestString = '/language/lesson'
+  const res = await instance.patch(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data

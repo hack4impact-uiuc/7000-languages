@@ -16,8 +16,8 @@ const LessonHome = ({ navigation }) => {
   } = useSelector((state) => state.language)
 
   const [data, setData] = useState([])
-  const [lessonDescription, setLessonDescription] = useState('')
-  const [lessonName, setLessonName] = useState('')
+  // const [lessonDescription, setLessonDescription] = useState('')
+  // const [lessonName, setLessonName] = useState('')
 
   /**
    * When going back from the Lesson Page to the Unit Page,
@@ -44,8 +44,8 @@ const LessonHome = ({ navigation }) => {
           getLesson(currentCourseId, currentLessonId),
         )
 
-        setLessonDescription(result.description)
-        setLessonName(result.name)
+        // setLessonDescription(result.description)
+        // setLessonName(result.name)
         navigation.setOptions({
           title: result.name,
         })
@@ -149,8 +149,8 @@ const LessonHome = ({ navigation }) => {
   return (
     <LanguageHome
       isLessonHome
-      lessonName={lessonName}
-      lessonDescription={lessonDescription}
+      lessonName={lessonData.name}
+      lessonDescription={lessonData.description}
       nextUpdate={navigateToUpdate}
       valueName="Lessons"
       rightIconName="plus-circle"

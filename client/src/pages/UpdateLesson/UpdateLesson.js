@@ -5,7 +5,8 @@ import Drawer from 'components/Drawer'
 import { colors } from 'theme'
 import { Input, Text, TextArea } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
-import { updateLesson } from 'slices/language.slice'
+import { patchLesson } from 'slices/language.slice'
+import { updateSingleLesson } from 'api'
 import { useSelector, useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
@@ -31,10 +32,10 @@ const UpdateLesson = ({ navigation }) => {
 
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
-  const { currentCourseId } = useSelector((state) => state.language)
-
-  const [name, setName] = useState('')
-  const [purpose, setPurpose] = useState('')
+  const { currentLessonId, currentCourseId } = useSelector((state) => state.language)
+  
+  const [name, setName] = useState(''); 
+  const [purpose, setPurpose] = useState('');
 
   // checks if all fields are filled
   // otherwise, the submit button is disabled
@@ -46,15 +47,19 @@ const UpdateLesson = ({ navigation }) => {
   const success = async () => {
     errorWrap(
       async () => {
-        const newLesson = {
-          name,
-          description: purpose,
-          _course_id: currentCourseId,
-          selected: true,
+        let updatedLessonItem = null;
+        const updates = {
+            name: name,
+            description: purpose,
+          
         }
 
-        const { result } = await updateLesson(newLesson)
-        dispatch(updateLesson({ lesson: result }))
+        const lessonItemResponse = await updateSingleLesson(currentLessonId, currentCourseId, updates)  
+        updatedLessonItem = lessonItemResponse.result;
+        console.log(updatedLessonItem);
+       
+        // Update lesson in Redux store
+        dispatch(patchLesson({ lesson: updatedLessonItem }));
       },
       () => {
         // on success, close the modal
