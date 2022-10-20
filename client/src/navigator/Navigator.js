@@ -20,7 +20,7 @@ const Navigator = () => {
     const loadAuthFromPersistentStorage = async () => {
       const idToken = await loadUserIDToken()
       if (idToken != null) {
-        dispatch(authenticate({ loggedIn: true, idToken }))
+        dispatch(authenticate({ loggedIn: true }))
       } else {
         dispatch(authenticate({ loggedIn: false }))
       }

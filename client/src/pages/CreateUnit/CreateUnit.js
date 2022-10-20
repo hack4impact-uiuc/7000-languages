@@ -90,8 +90,7 @@ const CreateUnit = ({ navigation }) => {
             </Text>
           </View>
           <Text color={colors.blue.dark} fontSize="md">
-            When creating a unit, think about how it will be used. More text
-            here explaining what they should look for when making a unit.
+            When creating a unit, think about how it will be used.
           </Text>
         </View>
 

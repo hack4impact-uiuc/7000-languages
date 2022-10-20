@@ -32,7 +32,7 @@ const Home = ({ navigation, courseId }) => {
 
         // Sets the title of the page
         navigation.setOptions({
-          title: 'Course Home',
+          title: 'Course',
         })
         dispatch(setField({ key: 'courseDetails', value: course.details }))
         dispatch(setField({ key: 'allUnits', value: units }))

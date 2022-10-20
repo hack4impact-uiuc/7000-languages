@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import {
   StyleSheet, View, Linking, Alert,
@@ -151,10 +151,17 @@ const Apply = ({ navigation }) => {
       },
     )
   }
+  const [isDisabled, setDisabled] = useState(false) // used to disable success button
+  // sets the initial state of isDisabled state to the isDisabled param
+
+  useEffect(() => setDisabled(isDisabled), [isDisabled]) // always listening to when isDisabled is changed
 
   const onSubmit = async () => {
-    if (validate() === true) {
-      await applyCourse()
+    if (!isDisabled) {
+      setDisabled(true)
+      if (validate() === true) {
+        await applyCourse()
+      }
     }
   }
 
@@ -470,8 +477,8 @@ const Apply = ({ navigation }) => {
               </View>
             </View>
           </ScrollView>
-        </View>
-      </View>
+        </View >
+      </View >
       <Box style={styles.termsText}>
         <StyledButton title="Submit" variant="primary" onPress={onSubmit} />
 

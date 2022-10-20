@@ -47,7 +47,7 @@ const LessonHome = ({ navigation }) => {
         setLessonDescription(result.description)
         setLessonName(result.name)
         navigation.setOptions({
-          title: result.name,
+          title: "Lesson",
         })
         dispatch(setField({ key: 'lessonData', value: result }))
       })

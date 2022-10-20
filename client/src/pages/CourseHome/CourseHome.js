@@ -6,11 +6,13 @@ import { setField } from 'slices/language.slice'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const CourseHome = ({ navigation, courseDescription, courseName }) => {
-  const { allUnits } = useSelector((state) => state.language)
+  const { allUnits, courseDetails } = useSelector((state) => state.language)
 
   const dispatch = useDispatch()
 
   const [data, setData] = useState([])
+  const [name, setName] = useState(courseName);
+  const [description, setDescription] = useState(courseDescription);
 
   /**
    * Updates the units presented in a list on this page
@@ -26,9 +28,8 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
         const formattedItem = {
           _id: item._id,
           name: item.name,
-          body: `${item.num_lessons} ${
-            item.num_lessons === 1 ? 'Lesson' : 'Lessons'
-          }`,
+          body: `${item.num_lessons} ${item.num_lessons === 1 ? 'Lesson' : 'Lessons'
+            }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
         }
@@ -41,6 +42,16 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
 
     setData(formattedUnitData)
   }, [allUnits])
+
+  useEffect(() => {
+    setName(courseDetails.name);
+    setDescription(courseDetails.description);
+  }, [courseDetails])
+
+  useEffect(() => {
+    setName(courseName);
+    setDescription(courseDescription);
+  }, [courseName, courseDescription])
 
   /**
    * Navigates to the Manage Units Page
@@ -59,12 +70,20 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     navigation.navigate('UnitHome')
   }
 
+  /**
+* Navigates to the update unit modal
+*/
+  const navigateToUpdate = () => {
+    navigation.navigate('Modal', { screen: 'UpdateCourse' })
+  }
+
   return (
     <LanguageHome
-      languageName={courseName}
-      languageDescription={courseDescription}
+      languageName={name}
+      languageDescription={description}
       valueName="Units"
       buttonText="Manage Units"
+      nextUpdate={navigateToUpdate}
       rightIconName="pencil"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}

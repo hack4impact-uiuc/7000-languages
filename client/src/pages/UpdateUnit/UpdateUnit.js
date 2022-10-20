@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import Drawer from 'components/Drawer'
@@ -7,8 +7,8 @@ import { Input, Text, TextArea } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { addUnit } from 'slices/language.slice'
-import { updateUnit } from 'api' //create updateunit
+import { patchSelectedUnit } from 'slices/language.slice'
+import { updateUnit } from 'api'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
 
@@ -33,14 +33,24 @@ const UpdateUnit = ({ navigation }) => {
 
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
-  const { currentCourseId } = useSelector((state) => state.language)
+  const { currentCourseId, currentUnitId, allUnits } = useSelector((state) => state.language)
 
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
 
   // checks if all fields are filled
   // otherwise, the submit button is disabled
-  const areRequiredFieldsFilled = name !== '' && purpose !== ''
+  const areRequiredFieldsFilled = name !== '' && purpose !== '';
+
+  useEffect(() => {
+    const unitIndex = allUnits.findIndex(
+      (element) => element._id === currentUnitId,
+    )
+    const unitData = allUnits[unitIndex];
+
+    setName(unitData.name);
+    setPurpose(unitData.description);
+  }, [currentUnitId, allUnits]);
 
   /**
    * Posts a new unit to the API and saves the new unit in state
@@ -55,8 +65,9 @@ const UpdateUnit = ({ navigation }) => {
           selected: true,
         }
 
-        const { result } = await updateUnit(newUnit)
-        dispatch(addUnit({ unit: result }))
+        const { result } = await updateUnit(currentUnitId, newUnit);
+
+        dispatch(patchSelectedUnit({ unit: result }));
       },
       () => {
         // on success, close the modal
@@ -90,20 +101,20 @@ const UpdateUnit = ({ navigation }) => {
             </Text>
           </View>
           <Text color={colors.blue.dark} fontSize="md">
-            When updating a unit, think about how it will be used. More text
-            here explaining what they should look for when making a unit.
+            When updating a unit, think about how it will be used.
           </Text>
         </View>
 
-        <RequiredField title="Change your unit name" fontSize={'md'}/>
+        <RequiredField title="Change your unit name" fontSize={'md'} />
         <Input
           size="xl"
           placeholder=""
           returnKeyType="done"
+          value={name}
           onChangeText={(text) => setName(text)}
         />
 
-        <RequiredField title="What is the purpose of this unit?" fontSize={'md'}/>
+        <RequiredField title="What is the purpose of this unit?" fontSize={'md'} />
         <TextArea
           size="xl"
           h={40}
@@ -111,6 +122,7 @@ const UpdateUnit = ({ navigation }) => {
           keyboardType="default"
           returnKeyType="done"
           blurOnSubmit
+          value={purpose}
           onChangeText={(text) => setPurpose(text)}
         />
       </View>

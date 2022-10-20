@@ -102,8 +102,7 @@ const UpdateLesson = ({ navigation }) => {
             </Text>
           </View>
           <Text color={colors.blue.dark} fontSize="md">
-            When updating a lesson, think about how it will be used. More text
-            here explaining what they should look for when making a lesson.
+            When updating a lesson, think about how it will be used.
           </Text>
         </View>
 

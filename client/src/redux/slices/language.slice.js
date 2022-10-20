@@ -84,11 +84,12 @@ const languageSlice = createSlice({
       state.lessonData.vocab[vocabIndex] = payload.vocab
     },
     patchSelectedLesson: (state, { payload }) => {
+      /* Patches the fields for a selected lesson. This is called after submitting on <UpdateLesson/>. */
+
       // Update the data in allLessons
       const lessonIndex = state.allLessons.findIndex(
         (element) => element._id === state.currentLessonId,
       )
-      console.log(state.allLessons[lessonIndex]);
 
       for (var key in payload.lesson) {
         if (key in state.allLessons[lessonIndex] && typeof state.allLessons[lessonIndex][key] === typeof payload.lesson[key]) {
@@ -102,11 +103,19 @@ const languageSlice = createSlice({
         }
       }
     },
-    updateUnit: (state, { payload }) => {
+    patchSelectedUnit: (state, { payload }) => {
+      /* Patches the fields for a selected unit. This is called after submitting on <UpdateUnit/>. */
+
+      // Update the data in allUnits
       const unitIndex = state.allUnits.findIndex(
         (element) => element._id === state.currentUnitId,
       )
-      state.allUnits[unitIndex] = payload.unit
+
+      for (var key in payload.unit) {
+        if (key in state.allUnits[unitIndex] && typeof state.allUnits[unitIndex][key] === typeof payload.unit[key]) {
+          state.allUnits[unitIndex][key] = payload.unit[key];
+        }
+      }
     },
     clear: () => initialState,
     resetField: (state, { payload }) => {
@@ -159,7 +168,7 @@ export const {
   addVocab,
   updateVocab,
   patchSelectedLesson,
-  updateUnit,
+  patchSelectedUnit,
   clear,
   resetField,
   clearCourseData,

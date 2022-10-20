@@ -15,7 +15,7 @@ const UnitHome = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const { currentCourseId, currentUnitId, allLessons } = useSelector(
+  const { currentCourseId, currentUnitId, allLessons, allUnits } = useSelector(
     (state) => state.language,
   )
 
@@ -42,26 +42,34 @@ const UnitHome = ({ navigation }) => {
    * Gets the data for the unit being presented, including the lessons in the unit
    */
   useEffect(() => {
-    const getLessonData = async () => {
+    const getUnitData = async () => {
       errorWrap(async () => {
         const { result } = await trackPromise(
           getUnit(currentCourseId, currentUnitId),
         )
-        const { unit, lessons } = result
-
-        setUnitDescription(unit.description)
-        setUnitName(unit.name)
-
-        // Sets the title of the page
-        navigation.setOptions({
-          title: unit.name,
-        })
+        const { lessons } = result
 
         dispatch(setField({ key: 'allLessons', value: lessons }))
       })
     }
-    getLessonData()
-  }, [currentCourseId])
+    getUnitData()
+  }, [currentCourseId, currentUnitId])
+
+  useEffect(() => {
+    const unitIndex = allUnits.findIndex(
+      (element) => element._id === currentUnitId,
+    )
+    const unitData = allUnits[unitIndex];
+
+    setUnitDescription(unitData.description)
+    setUnitName(unitData.name)
+
+    // Sets the title of the page
+    navigation.setOptions({
+      title: "Unit",
+    })
+
+  }, [allUnits, currentUnitId]);
 
   /**
    * Formats the lesson data in order to be presented on this page
@@ -77,9 +85,8 @@ const UnitHome = ({ navigation }) => {
         const formattedItem = {
           _id: item._id,
           name: item.name,
-          body: `${item.num_vocab} Vocab ${
-            item.num_vocab === 1 ? 'Item' : 'Items'
-          }`,
+          body: `${item.num_vocab} Vocab ${item.num_vocab === 1 ? 'Item' : 'Items'
+            }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
         }

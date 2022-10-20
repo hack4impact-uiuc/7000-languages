@@ -17,6 +17,7 @@ import UpdateLesson from 'pages/UpdateLesson'
 import UpdateUnit from 'pages/UpdateUnit'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
+import UpdateCourse from 'pages/UpdateCourse'
 
 // ------------------------------------
 // Constants
@@ -87,14 +88,13 @@ export const ModalNavigator = () => (
     <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
     <ModalStack.Screen name="UpdateUnit" component={UpdateUnit} />
     <ModalStack.Screen name="UpdateLesson" component={UpdateLesson} />
-    
-
+    <ModalStack.Screen name="UpdateCourse" component={UpdateCourse} />
   </ModalStack.Navigator>
 )
 
 export const HomeNavigator = ({ courseId }) => (
   <Stack.Navigator
-    initialRouteName="Home"
+    initialRouteName="Course"
     headerMode="screen"
     screenOptions={navigationProps}
   >
@@ -102,7 +102,7 @@ export const HomeNavigator = ({ courseId }) => (
       name={courseId}
       children={(props) => <Home {...props} courseId={courseId} />}
       options={({ navigation }) => ({
-        title: 'Home',
+        title: 'Course',
         headerLeft: () => <DrawerButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}
@@ -161,26 +161,26 @@ export const HomeNavigator = ({ courseId }) => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
-   <Stack.Screen
+    <Stack.Screen
       name="UpdateUnit"
       component={UpdateUnit}
       options={({ navigation }) => ({
-      ...manageNavigationProps,
-      title: 'Update',
-      headerLeft: () => <BackButton navigation={navigation} />,
-      cardStyle: { backgroundColor: 'white' },
-    })}
-      />
+        ...manageNavigationProps,
+        title: 'Update',
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
     <Stack.Screen
       name="UpdateLesson"
       component={UpdateLesson}
       options={({ navigation }) => ({
-      ...manageNavigationProps,
-      title: 'Update Lesson',
-      headerLeft: () => <BackButton navigation={navigation} />,
-      cardStyle: { backgroundColor: 'white' },
-    })}
-      />
+        ...manageNavigationProps,
+        title: 'Update Lesson',
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
   </Stack.Navigator>
 )
 
