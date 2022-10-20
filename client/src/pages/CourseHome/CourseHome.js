@@ -59,15 +59,24 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     navigation.navigate('UnitHome')
   }
 
+  /**
+   * Navigates to the Add Unit Page
+   */
+  const navigateToAdd = () => {
+    navigation.navigate('Modal', { screen: 'CreateUnit' })
+  }
+
   return (
     <LanguageHome
       languageName={courseName}
       languageDescription={courseDescription}
       valueName="Units"
-      buttonText="Manage Units"
-      rightIconName="pencil"
+      manageButtonText="Manage Units"
+      addButtonText="Add Unit"
+      manageIconName="cog"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
+      addCallback={navigateToAdd}
       data={data}
     />
   )
