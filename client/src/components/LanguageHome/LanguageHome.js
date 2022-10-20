@@ -61,8 +61,9 @@ const LanguageHome = ({
     setRenderData(data)
   }, [data])
 
-  const { currentCourseId, currentUnitId, currentLessonId, lessonData } =
-    useSelector((state) => state.language)
+  const {
+    currentCourseId, currentUnitId, currentLessonId, lessonData,
+  } = useSelector((state) => state.language)
 
   const getAudio = async (vocabId) => {
     await errorWrap(async () => {
@@ -150,13 +151,13 @@ const LanguageHome = ({
             title="Add New"
             variant="manage"
             fontSize={15}
-            rightIcon={
+            rightIcon={(
               <MaterialCommunityIcons
                 name="plus-circle"
                 color={colors.red.dark}
                 size={20}
               />
-            }
+            )}
             onPress={buttonCallback}
           />
         </View>
@@ -178,14 +179,14 @@ const LanguageHome = ({
                 volumeIconCallback={() => getAudio(element._id)}
                 width={width * 0.97}
                 height={element.imageURI === '' ? 75 : 100}
-                rightIcon={
+                rightIcon={(
                   <MaterialCommunityIcons
                     name="pencil"
                     color="black"
                     size={20}
                     onPress={() => nextPageCallback(element)}
                   />
-                }
+                )}
               />
             ))}
           </View>
@@ -240,13 +241,13 @@ const LanguageHome = ({
           title={buttonText}
           variant="manage"
           fontSize={15}
-          rightIcon={
+          rightIcon={(
             <MaterialCommunityIcons
               name={rightIconName}
               color={colors.red.dark}
               size={20}
             />
-          }
+          )}
           onPress={buttonCallback}
         />
       </View>
@@ -267,14 +268,14 @@ const LanguageHome = ({
               width={width * 0.97}
               height={75}
               indicatorType={element.indicatorType}
-              rightIcon={
+              rightIcon={(
                 <MaterialCommunityIcons
                   name="pencil"
                   color="black"
                   size={20}
                   onPress={() => nextPageCallback(element)}
                 />
-              }
+              )}
             />
           ))}
         </View>

@@ -7,6 +7,7 @@ import { setField, resetField } from 'slices/language.slice'
 import { getUnit } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 
+import i18n from 'utils/LanguageData'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const UnitHome = ({ navigation }) => {
@@ -30,11 +31,10 @@ const UnitHome = ({ navigation }) => {
    * Source: https://reactnavigation.org/docs/preventing-going-back
    */
   React.useEffect(
-    () =>
-      navigation.addListener('beforeRemove', (e) => {
-        dispatch(resetField({ key: 'allLessons' }))
-        navigation.dispatch(e.data.action)
-      }),
+    () => navigation.addListener('beforeRemove', (e) => {
+      dispatch(resetField({ key: 'allLessons' }))
+      navigation.dispatch(e.data.action)
+    }),
     [navigation],
   )
 

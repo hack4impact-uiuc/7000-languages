@@ -8,6 +8,7 @@ import { setField, updateNumLessons } from 'slices/language.slice'
 import { updateLessons } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
+import i18n from 'utils/LanguageData'
 
 const ManageLessons = ({ navigation }) => {
   const errorWrap = useErrorWrap()

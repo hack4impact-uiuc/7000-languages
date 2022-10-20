@@ -1,8 +1,8 @@
 import { Alert } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { setLoading } from 'slices/app.slice'
-import { ERROR_ALERT_TITLE } from '../utils/constants'
 import i18n from 'utils/LanguageData'
+import { ERROR_ALERT_TITLE } from '../utils/constants'
 
 /**
  * Custom hook that creates an error wrapper. If an error is thrown in the
