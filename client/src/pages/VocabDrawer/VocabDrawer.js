@@ -82,8 +82,8 @@ const VocabDrawer = ({ navigation }) => {
   const [recordingStage, setRecordingState] = useState(RECORDING.INCOMPLETE) // which recording stage the user is at
   const [listeningSound, setListeningSound] = useState(null) // the data for the recording when the user is listening to it
 
-  const [deleteAudioUri, setDeleteAudioUri] = useState('');
-  const [deleteImageUri, setDeleteImageUri] = useState('');
+  const [deleteAudioUri, setDeleteAudioUri] = useState('')
+  const [deleteImageUri, setDeleteImageUri] = useState('')
 
   useEffect(() => {
     const setData = async () => {
@@ -141,7 +141,6 @@ const VocabDrawer = ({ navigation }) => {
             // eslint-disable-next-line prefer-destructuring
             fileType = splitPath[1]
           }
-          console.log('not skipped');
           // Downloads audio file and gets Filesystem uri
           const uri = await trackPromise(
             downloadImageFile(
@@ -169,6 +168,39 @@ const VocabDrawer = ({ navigation }) => {
     Audio.setAudioModeAsync({ playsInSilentModeIOS: true })
   })
 
+  const clearRecording = async (path) => {
+    if (path !== null) {
+      const splitPath = path.split('.')
+      const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
+      setRecordingState(RECORDING.INCOMPLETE)
+      deleteAudioFile(
+        currentCourseId,
+        currentUnitId,
+        currentLessonId,
+        currentVocabId,
+        fileType,
+      ).then((audioResponse) => {
+        dispatch(updateVocab({ vocab: audioResponse.result }))
+      })
+    }
+  }
+
+  const clearImage = async (path) => {
+    if (path !== null) {
+      const splitPath = path.split('.')
+      const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
+      deleteImageFile(
+        currentCourseId,
+        currentUnitId,
+        currentLessonId,
+        currentVocabId,
+        fileType,
+      ).then((imageResponse) => {
+        dispatch(updateVocab({ vocab: imageResponse.result }))
+      })
+    }
+  }
+
   /**
    * Closes the modal
    */
@@ -183,15 +215,15 @@ const VocabDrawer = ({ navigation }) => {
     errorWrap(
       async () => {
         let updatedVocabItem = null
-        let promises = [];
+        const promises = []
         if (deleteAudioUri !== '') {
-          promises.push(clearRecording(deleteAudioUri));
+          promises.push(clearRecording(deleteAudioUri))
         }
         if (deleteImageUri !== '') {
-          promises.push(clearImage(deleteImageUri));
+          promises.push(clearImage(deleteImageUri))
         }
         if (promises.length) {
-          await trackPromise(Promise.all(promises));
+          await trackPromise(Promise.all(promises))
         }
 
         if (currentVocabId === '') {
@@ -227,7 +259,6 @@ const VocabDrawer = ({ navigation }) => {
           }
 
           if (image) {
-            console.log('WEHERE2');
             const imageResponse = await trackPromise(
               uploadImageFile(
                 currentCourseId,
@@ -274,7 +305,6 @@ const VocabDrawer = ({ navigation }) => {
           }
 
           if (image) {
-            console.log('WEHERE');
             const imageResponse = await trackPromise(
               uploadImageFile(
                 currentCourseId,
@@ -322,39 +352,6 @@ const VocabDrawer = ({ navigation }) => {
       : undefined),
     [listeningSound],
   )
-
-  const clearRecording = async (path) => {
-    if (path !== null) {
-      const splitPath = path.split('.')
-      const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
-      setRecordingState(RECORDING.INCOMPLETE)
-      deleteAudioFile(
-        currentCourseId,
-        currentUnitId,
-        currentLessonId,
-        currentVocabId,
-        fileType,
-      ).then((audioResponse) => {
-        dispatch(updateVocab({ vocab: audioResponse.result }))
-      })
-    }
-  }
-
-  const clearImage = async (path) => {
-    if (path !== null) {
-      const splitPath = path.split('.')
-      const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
-      deleteImageFile(
-        currentCourseId,
-        currentUnitId,
-        currentLessonId,
-        currentVocabId,
-        fileType,
-      ).then((imageResponse) => {
-        dispatch(updateVocab({ vocab: imageResponse.result }))
-      })
-    }
-  }
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -428,7 +425,10 @@ const VocabDrawer = ({ navigation }) => {
       },
       {
         text: 'Remove Image',
-        onPress: () => {setDeleteImageUri(image); setImage(null)},
+        onPress: () => {
+          setDeleteImageUri(image)
+          setImage(null)
+        },
       },
       {
         text: 'Cancel',
@@ -522,7 +522,11 @@ const VocabDrawer = ({ navigation }) => {
         stopRecording={stopRecording}
         playRecording={playRecording}
         confirmRecording={confirmRecording}
-        discardRecording={() => {setDeleteAudioUri(audioRecording); setAudioRecording(null); setRecordingState(RECORDING.INCOMPLETE)}}
+        discardRecording={() => {
+          setDeleteAudioUri(audioRecording)
+          setAudioRecording(null)
+          setRecordingState(RECORDING.INCOMPLETE)
+        }}
         stopPlayingRecording={stopPlayingRecording}
       />
       <RequiredField title={originalLanguage} />
