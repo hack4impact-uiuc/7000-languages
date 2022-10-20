@@ -94,13 +94,6 @@ const ManageUnits = ({ navigation }) => {
     )
   }
 
-  /**
-   * Navigates to the Create Unit modal
-   */
-  const add = () => {
-    navigation.navigate('Modal', { screen: 'CreateUnit' })
-  }
-
   return (
     <ManageView
       navigation={navigation}
@@ -108,9 +101,7 @@ const ManageUnits = ({ navigation }) => {
       unselectedTitleText="Unselected Units"
       selectedBodyText="These units will be available to your students. Drag them around to reorder them."
       unselectedBodyText="These units are not included in your course. You can still continue to edit them."
-      addText="Create Unit"
       saveCallback={saveChanges}
-      addCallback={add}
       initialSelectedData={selected}
       initialUnselectedData={unselected}
     />
