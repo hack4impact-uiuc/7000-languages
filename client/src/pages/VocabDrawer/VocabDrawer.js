@@ -371,6 +371,11 @@ const VocabDrawer = ({ navigation }) => {
     }
   }
 
+  const deleteImage = () => {
+    setDeleteImageUri(image)
+    setImage(null)
+  }
+
   const startRecording = async () => {
     try {
       setRecordingState(RECORDING.IN_PROGRESS)
@@ -426,8 +431,7 @@ const VocabDrawer = ({ navigation }) => {
       {
         text: 'Remove Image',
         onPress: () => {
-          setDeleteImageUri(image)
-          setImage(null)
+          deleteImage()
         },
       },
       {
@@ -462,6 +466,12 @@ const VocabDrawer = ({ navigation }) => {
     if (listeningSound) {
       await listeningSound.unloadAsync()
     }
+  }
+
+  const discardRecording = () => {
+    setDeleteAudioUri(audioRecording)
+    setAudioRecording(null)
+    setRecordingState(RECORDING.INCOMPLETE)
   }
 
   /*
@@ -522,11 +532,7 @@ const VocabDrawer = ({ navigation }) => {
         stopRecording={stopRecording}
         playRecording={playRecording}
         confirmRecording={confirmRecording}
-        discardRecording={() => {
-          setDeleteAudioUri(audioRecording)
-          setAudioRecording(null)
-          setRecordingState(RECORDING.INCOMPLETE)
-        }}
+        discardRecording={discardRecording}
         stopPlayingRecording={stopPlayingRecording}
       />
       <RequiredField title={originalLanguage} />
