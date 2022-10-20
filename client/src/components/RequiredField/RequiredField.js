@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Text } from 'native-base'
 import { colors } from 'theme'
+import i18n from 'utils/LanguageData'
 
 const RequiredField = ({ title, fontSize }) => (
   <Text fontSize={fontSize}>
@@ -16,7 +17,7 @@ RequiredField.propTypes = {
   fontSize: PropTypes.string,
 }
 RequiredField.defaultProps = {
-  title: 'This field is required',
+  title: `${i18n.t('dialogue.requiredField')}`,
   fontSize: 'xl',
 }
 

@@ -30,10 +30,11 @@ const UnitHome = ({ navigation }) => {
    * Source: https://reactnavigation.org/docs/preventing-going-back
    */
   React.useEffect(
-    () => navigation.addListener('beforeRemove', (e) => {
-      dispatch(resetField({ key: 'allLessons' }))
-      navigation.dispatch(e.data.action)
-    }),
+    () =>
+      navigation.addListener('beforeRemove', (e) => {
+        dispatch(resetField({ key: 'allLessons' }))
+        navigation.dispatch(e.data.action)
+      }),
     [navigation],
   )
 
@@ -75,8 +76,10 @@ const UnitHome = ({ navigation }) => {
         const formattedItem = {
           _id: item._id,
           name: item.name,
-          body: `${item.num_vocab} Vocab ${
-            item.num_vocab === 1 ? 'Item' : 'Items'
+          body: `${item.num_vocab} ${i18n.t('dict.vocab')} ${
+            item.num_vocab === 1
+              ? `${i18n.t('dict.itemSingle')}`
+              : `${i18n.t('dict.itemPlural')}`
           }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
@@ -113,8 +116,8 @@ const UnitHome = ({ navigation }) => {
   return (
     <LanguageHome
       languageDescription={unitDescription}
-      valueName="Lessons"
-      buttonText="Manage Lessons"
+      valueName={i18n.t('dict.lessonPlural')}
+      buttonText={i18n.t('action.manageLessons')}
       rightIconName="pencil"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}

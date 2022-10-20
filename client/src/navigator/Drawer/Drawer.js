@@ -18,6 +18,7 @@ import { setField } from 'slices/language.slice'
 import { useDispatch, useSelector } from 'react-redux'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
+import i18n from 'utils/LanguageData'
 
 const tabStyles = StyleSheet.create({
   container: {
@@ -96,9 +97,9 @@ const generateUnitLabel = (numUnits) => {
     return numUnits
   }
   if (parseInt(numUnits, 10) === 1) {
-    return '1 Unit'
+    return `${i18n.t('dict.unitSingle')}`
   }
-  return `${numUnits} Units`
+  return `${numUnits} ${i18n.t('dict.unitPlural')}`
 }
 
 /**
@@ -106,40 +107,41 @@ const generateUnitLabel = (numUnits) => {
  * @param {Array} data Array of Course Data to use for each tab bar
  * @returns
  */
-const generateTabs = (tabData) => tabData.map((element, index) => (
-  <Drawer.Screen
-    key={element._id}
-    name={element._id}
-    component={TabNavigator}
-    options={() => ({
-      drawerLabel: () => (
-        <View style={tabStyles.container}>
-          <View>
-            <Text
-              style={tabStyles.title}
-              fontFamily="heading"
-              fontWeight="regular"
-              fontStyle="normal"
-            >
-              {element.name}
-            </Text>
-            <Text style={tabStyles.units}>
-              {generateUnitLabel(element.num_units)}
-            </Text>
+const generateTabs = (tabData) =>
+  tabData.map((element, index) => (
+    <Drawer.Screen
+      key={element._id}
+      name={element._id}
+      component={TabNavigator}
+      options={() => ({
+        drawerLabel: () => (
+          <View style={tabStyles.container}>
+            <View>
+              <Text
+                style={tabStyles.title}
+                fontFamily="heading"
+                fontWeight="regular"
+                fontStyle="normal"
+              >
+                {element.name}
+              </Text>
+              <Text style={tabStyles.units}>
+                {generateUnitLabel(element.num_units)}
+              </Text>
+            </View>
+            {element.isContributor ? <OwnershipButton isContributor /> : null}
           </View>
-          {element.isContributor ? <OwnershipButton isContributor /> : null}
-        </View>
-      ),
-      drawerIcon: () => (
-        <FontAwesome
-          name="square"
-          size={45}
-          color={tabColors[index % tabColors.length]}
-        />
-      ),
-    })}
-  />
-))
+        ),
+        drawerIcon: () => (
+          <FontAwesome
+            name="square"
+            size={45}
+            color={tabColors[index % tabColors.length]}
+          />
+        ),
+      })}
+    />
+  ))
 
 const DrawerMenuContainer = (props) => {
   const { state, ...rest } = props
@@ -167,21 +169,21 @@ const DrawerMenuContainer = (props) => {
                 fontSize="sm"
                 textAlign="left"
               >
-                {
-                  'Do you know an indigenous language that you would like to share with the world?\n'
-                }
+                {i18n.t('dialogue.indigenousLanguagesPrompt')}
                 <Text
                   fontFamily="heading"
                   fontWeight="regular"
                   fontStyle="normal"
                 >
-                  Become a contributor.
+                  {i18n.t('actions.becomeContributor')}
                 </Text>
               </Text>
               <StyledButton
-                title="Apply Now"
+                title={i18n.t('actions.applyNow')}
                 fontSize="sm"
-                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+                onPress={() =>
+                  props.navigation.navigate('Apply', { from: 'HomeBaseCase' })
+                }
               />
             </Pressable>
           </View>
@@ -222,7 +224,7 @@ const DrawerNavigator = () => {
   const { allCourses } = useSelector((state) => state.language)
 
   const [userEmail, setEmail] = useState('')
-  const [userName, setName] = useState('Loading...')
+  const [userName, setName] = useState(`${i18n.t('dialogue.loading')}`)
   const [profileUrl, setProfileUrl] = useState('')
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
@@ -232,9 +234,7 @@ const DrawerNavigator = () => {
   useEffect(() => {
     const getUserData = async () => {
       await errorWrap(async () => {
-        const {
-          picture, name, email, courses,
-        } = await trackPromise(
+        const { picture, name, email, courses } = await trackPromise(
           getAllUserCourses(),
         )
 

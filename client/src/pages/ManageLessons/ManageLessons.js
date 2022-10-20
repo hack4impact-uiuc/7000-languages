@@ -30,8 +30,10 @@ const ManageLessons = ({ navigation }) => {
       const formattedItem = {
         _id: item._id,
         title: item.name,
-        body: `${item.num_vocab} Vocab ${
-          item.num_vocab === 1 ? 'Item' : 'Items'
+        body: `${item.num_vocab} ${i18n.t('dict.vocab')} ${
+          item.num_vocab === 1
+            ? `${i18n.t('dict.itemSingle')}`
+            : `${i18n.t('dict.itemPlural')}`
         }`,
         indicatorType: INDICATOR_TYPES.NONE, // TODO: remove hard-coded value
         _order: item._order,
@@ -103,11 +105,11 @@ const ManageLessons = ({ navigation }) => {
   return (
     <ManageView
       navigation={navigation}
-      selectedTitleText="Selected Lessons"
-      unselectedTitleText="Unselected Lessons"
-      selectedBodyText="These lessons will be available to your students. Drag them around to reorder them."
-      unselectedBodyText="These lessons are not included in your course. You can still continue to edit them."
-      addText="Create Lessons"
+      selectedTitleText={i18n.t('dict.selectedLessons')}
+      unselectedTitleText={i18n.t('dict.unselectedLessons')}
+      selectedBodyText={i18n.t('dialogue.selectedLessonsPrompt')}
+      unselectedBodyText={i18n.t('dialogue.unselectedLessonsPrompt')}
+      addText={i18n.t('action.createLessonPlural')}
       saveCallback={saveChanges}
       addCallback={add}
       initialSelectedData={selected}

@@ -6,6 +6,7 @@ import { colors } from 'theme'
 import { RECORDING } from 'utils/constants'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { View, Text } from 'native-base'
+import i18n from 'utils/LanguageData'
 
 const styles = StyleSheet.create({
   incompleteView: {
@@ -197,7 +198,7 @@ const RecordAudioView = ({
             fontSize="xl"
             style={styles.recordAudioText}
           >
-            Record Audio
+            {i18n.t('actions.recordAudio')}
           </Text>
         </TouchableOpacity>
       )
@@ -286,13 +287,13 @@ const RecordAudioView = ({
           <StyledButton
             title="Re-record"
             variant="small"
-            leftIcon={(
+            leftIcon={
               <FontAwesome
                 name="microphone"
                 size={25}
                 color={colors.red.dark}
               />
-            )}
+            }
             onPress={rerecord}
           />
         </View>

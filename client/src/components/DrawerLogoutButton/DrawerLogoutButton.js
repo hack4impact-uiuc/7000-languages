@@ -11,6 +11,7 @@ import {
   removeUserClientId,
   removeUserRefreshToken,
 } from 'utils/auth'
+import i18n from 'utils/LanguageData'
 
 const DrawerLogoutButton = () => {
   const dispatch = useDispatch()
@@ -48,7 +49,7 @@ const DrawerLogoutButton = () => {
             fontStyle="normal"
             color="red.dark"
           >
-            Log out
+            {i18n.t('actions.logOut')}
           </Text>
         </View>
       </Pressable>

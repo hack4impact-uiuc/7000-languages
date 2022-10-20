@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {
-  StyleSheet, View, Linking, Alert,
-} from 'react-native'
+import { StyleSheet, View, Linking, Alert } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import {
   Text,
@@ -19,6 +17,7 @@ import { getAllUserCourses } from 'utils/languageHelper'
 import { useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import RequiredField from 'components/RequiredField'
+import i18n from 'utils/LanguageData'
 
 const styles = StyleSheet.create({
   root: {
@@ -85,16 +84,16 @@ const Apply = ({ navigation }) => {
     const validateErrors = {}
 
     if (name === '') {
-      validateErrors.name = 'Name is required'
+      validateErrors.name = `${i18n.t('dialogue.nameRequired')}`
     }
     if (email === '') {
-      validateErrors.email = 'Email is required'
+      validateErrors.email = `${i18n.t('dialogue.emailRequired')}`
     }
     if (language === '') {
-      validateErrors.Language = 'Language is required'
+      validateErrors.Language = `${i18n.t('dialogue.languageRequired')}`
     }
     if (acceptTerms === false) {
-      validateErrors.acceptTerms = 'Terms are required'
+      validateErrors.acceptTerms = `${i18n.t('dialogue.termsRequired')}`
     }
     setErrors(validateErrors)
 
@@ -107,9 +106,14 @@ const Apply = ({ navigation }) => {
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
     Alert.alert(
-      'Success!',
-      'You have succesfully submitted your application!',
-      [{ text: 'OK', onPress: () => navigation.goBack() }],
+      `${i18n.t('dict.success')}`,
+      `${i18n.t('dialogue.applicationSuccess')}`,
+      [
+        {
+          text: `${i18n.t('dict.ok')}`,
+          onPress: () => navigation.goBack(),
+        },
+      ],
     )
   }
 
@@ -183,7 +187,7 @@ const Apply = ({ navigation }) => {
                 fontStyle="normal"
                 fontSize="sm"
               >
-                Thanks for your interest in contributing a language.
+                {i18n.t('dialogue.contributorThanks')}
               </Text>
             </View>
 
@@ -195,10 +199,7 @@ const Apply = ({ navigation }) => {
                 fontStyle="normal"
                 fontSize="sm"
               >
-                We hope this app will support your language revitalization
-                efforts. We have a few questions for you and we will get back to
-                you in 1 - 2 weeks. If approved, your course will appear on your
-                home page.
+                {i18n.t('dialogue.applicationFeedback')}
               </Text>
             </View>
 
@@ -214,7 +215,7 @@ const Apply = ({ navigation }) => {
                   />
                   {'name' in errors ? (
                     <FormControl.ErrorMessage>
-                      Required.
+                      {i18n.t('dict.required')}
                     </FormControl.ErrorMessage>
                   ) : null}
                 </View>
@@ -231,7 +232,7 @@ const Apply = ({ navigation }) => {
                   />
                   {'email' in errors ? (
                     <FormControl.ErrorMessage>
-                      Required.
+                      {i18n.t('dict.required')}
                     </FormControl.ErrorMessage>
                   ) : null}
                 </View>
@@ -248,7 +249,7 @@ const Apply = ({ navigation }) => {
                   />
                   {'Language' in errors ? (
                     <FormControl.ErrorMessage>
-                      Required.
+                      {i18n.t('dict.required')}
                     </FormControl.ErrorMessage>
                   ) : null}
                 </View>
@@ -261,7 +262,7 @@ const Apply = ({ navigation }) => {
                   fontStyle="normal"
                   fontSize="md"
                 >
-                  Language Description
+                  {i18n.t('dict.languageDescription')}
                 </Text>
                 <Text
                   fontFamily="body"
@@ -270,8 +271,7 @@ const Apply = ({ navigation }) => {
                   fontStyle="normal"
                   fontSize="md"
                 >
-                  Provide a 1-2 sentence description of your language and/or
-                  culture. This will be shown to learners in this course.
+                  {i18n.t('dialogue.languageDescriptionPrompt')}
                 </Text>
                 <View style={styles.input}>
                   <TextArea
@@ -295,7 +295,7 @@ const Apply = ({ navigation }) => {
                   fontStyle="normal"
                   fontSize="md"
                 >
-                  Any alternative names?
+                  {i18n.t('dialogue.alternativeNamesPrompt')}
                 </Text>
                 <View style={styles.input}>
                   <Input
@@ -314,7 +314,7 @@ const Apply = ({ navigation }) => {
                   fontStyle="normal"
                   fontSize="md"
                 >
-                  ISO Code
+                  {i18n.t('dict.ISOCode')}
                 </Text>
                 <Text
                   underline
@@ -323,9 +323,11 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
+                  onPress={() =>
+                    Linking.openURL('https://www.iso.org/obp/ui/#search')
+                  }
                 >
-                  You can find the ISO code here
+                  {i18n.t('dialogue.ISOCodePrompt')}
                 </Text>
                 <View style={styles.input}>
                   <Input
@@ -344,7 +346,7 @@ const Apply = ({ navigation }) => {
                   fontStyle="normal"
                   fontSize="md"
                 >
-                  Glotto Code
+                  {i18n.t('dict.glottoCode')}
                 </Text>
                 <Text
                   underline
@@ -353,9 +355,11 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() => Linking.openURL('https://glottolog.org/glottolog')}
+                  onPress={() =>
+                    Linking.openURL('https://glottolog.org/glottolog')
+                  }
                 >
-                  You can find the Glotto code here
+                  {i18n.t('dialogue.glottoCodePrompt')}
                 </Text>
                 <View style={styles.input}>
                   <Input
@@ -374,7 +378,7 @@ const Apply = ({ navigation }) => {
                   fontStyle="normal"
                   fontSize="md"
                 >
-                  Where is this language spoken?
+                  {i18n.t('dialogue.languageOriginPrompt')}
                 </Text>
                 <View style={styles.input}>
                   <TextArea
@@ -397,7 +401,7 @@ const Apply = ({ navigation }) => {
                   fontStyle="normal"
                   fontSize="md"
                 >
-                  Approximately how many people speak this language?
+                  {i18n.t('dialogue.languagePopulationPrompt')}
                 </Text>
                 <View style={styles.input}>
                   <Input
@@ -416,7 +420,7 @@ const Apply = ({ navigation }) => {
                   fontStyle="normal"
                   fontSize="md"
                 >
-                  Link to additional information about this language.
+                  {i18n.t('dialogue.languageLinkPrompt')}
                 </Text>
                 <View style={styles.input}>
                   <Input
@@ -442,17 +446,21 @@ const Apply = ({ navigation }) => {
                       fontStyle="normal"
                       fontSize="md"
                     >
-                      I agree to the{' '}
+                      {i18n.t('dialogue.agree')}
                       <Text
                         fontFamily="heading"
-                        onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                        onPress={() =>
+                          Linking.openURL('https://www.7000.org/about-3-1')
+                        }
                       >
-                        I agree to the{' '}
+                        {i18n.t('dialogue.agree')}
                         <Text
                           fontFamily="heading"
-                          onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                          onPress={() =>
+                            Linking.openURL('https://www.7000.org/about-3-1')
+                          }
                         >
-                          Terms and Conditions
+                          {i18n.t('dict.termsAndConditions')}
                         </Text>
                       </Text>
                     </Text>
@@ -474,9 +482,7 @@ const Apply = ({ navigation }) => {
                       fontStyle="normal"
                       fontSize="md"
                     >
-                      I would like a team member from 7000 Languages to follow
-                      up with me about creating additional resources for my
-                      language.
+                      {i18n.t('dialogue.resourcesFollowUp')}
                     </Text>
                   </View>
                 </Checkbox>
@@ -496,8 +502,7 @@ const Apply = ({ navigation }) => {
           fontSize="sm"
           textAlign="center"
         >
-          By selecting this button, you have permission from the
-          community/speakers to create language learning materials.
+          {i18n.t('dialogue.languageUsePermission')}
         </Text>
       </Box>
     </>

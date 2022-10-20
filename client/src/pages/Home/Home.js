@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import CourseHome from 'pages/CourseHome'
 import { getCourse } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
+import i18n from 'utils/LanguageData'
 
 const Home = ({ navigation, courseId }) => {
   const dispatch = useDispatch()
@@ -32,7 +33,7 @@ const Home = ({ navigation, courseId }) => {
 
         // Sets the title of the page
         navigation.setOptions({
-          title: 'Course Home',
+          title: `${i18n.t('dict.courseHome')}`,
         })
         dispatch(setField({ key: 'courseDetails', value: course.details }))
         dispatch(setField({ key: 'allUnits', value: units }))

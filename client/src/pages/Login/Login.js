@@ -32,10 +32,10 @@ const Login = () => {
         fontStyle="italic"
         fontSize="6xl"
       >
-        Login
+        {i18n.t('dict.login')}
       </Text>
       <Button
-        title="Login to app"
+        title={i18n.t('actions.loginToApp')}
         color="white"
         backgroundColor={colors.orange.dark}
         onPress={loginUser}

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
-import {
-  View, Input, Text, TextArea,
-} from 'native-base'
+import { View, Input, Text, TextArea } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Entypo } from '@expo/vector-icons'
 import { colors } from 'theme'
@@ -285,7 +283,7 @@ const VocabDrawer = ({ navigation }) => {
 
   /* Requests audio and camera permissions */
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       await Audio.requestPermissionsAsync()
       await ImagePicker.requestCameraPermissionsAsync()
       await Audio.setAudioModeAsync({
@@ -297,11 +295,12 @@ const VocabDrawer = ({ navigation }) => {
 
   /* Always unload the Sound after using it to prevent memory leaks. */
   React.useEffect(
-    () => (listeningSound
-      ? () => {
-        listeningSound.unloadAsync()
-      }
-      : undefined),
+    () =>
+      listeningSound
+        ? () => {
+            listeningSound.unloadAsync()
+          }
+        : undefined,
     [listeningSound],
   )
 
@@ -341,46 +340,46 @@ const VocabDrawer = ({ navigation }) => {
 
   /* Selecting an image using Expo */
   const selectImage = async () => {
-    Alert.alert('Capture a New Image', '', [
+    Alert.alert(`${i18n.t('actions.captureNewImage')}`, '', [
       {
-        text: 'Select from Picture Library',
+        text: `${i18n.t('actions.selectPictureLibrary')}`,
         onPress: () => {
           pickImage()
         },
       },
       {
-        text: 'Take with Camera',
+        text: `${i18n.t('actions.takeWithCamera')}`,
         onPress: () => {
           takeImage()
         },
       },
       {
-        text: 'Cancel',
+        text: `${i18n.t('dict.cancel')}`,
         style: 'cancel',
       },
     ])
   }
 
   const selectImageWithRemove = async () => {
-    Alert.alert('Update Image', '', [
+    Alert.alert(`${i18n.t('actions.updateImage')}`, '', [
       {
-        text: 'Select from Picture Library',
+        text: `${i18n.t('actions.selectPictureLibrary')}`,
         onPress: () => {
           pickImage()
         },
       },
       {
-        text: 'Take with Camera',
+        text: `${i18n.t('actions.takeWithCamera')}`,
         onPress: () => {
           takeImage()
         },
       },
       {
-        text: 'Remove Image',
+        text: `${i18n.t('actions.removeImage')}`,
         onPress: () => setImage(null),
       },
       {
-        text: 'Cancel',
+        text: `${i18n.t('dict.cancel')}`,
         style: 'cancel',
       },
     ])
@@ -451,7 +450,7 @@ const VocabDrawer = ({ navigation }) => {
     return (
       <StyledButton
         leftIcon={<Entypo name="image" size={24} color={colors.red.dark} />}
-        title="Add Image"
+        title={i18n.t('actions.addImage')}
         variant="image_picker"
         onPress={selectImage}
         style={{ height: 100 }}
@@ -461,7 +460,9 @@ const VocabDrawer = ({ navigation }) => {
 
   const body = (
     <>
-      <Text color="gray.medium">A vocab item can be a word or phrase.</Text>
+      <Text color="gray.medium">
+        {i18n.t('dialogue.itemDescriptionPrompt')}
+      </Text>
       {generateImageContainer()}
       <RequiredField title={translatedLanguage} />
       <Input
@@ -486,7 +487,7 @@ const VocabDrawer = ({ navigation }) => {
         value={originalText}
         onChangeText={(val) => setOriginalText(val)}
       />
-      <Text>Additional Information</Text>
+      <Text>{i18n.t('dict.moreInfo')}</Text>
       <TextArea
         size="2xl"
         h={40}
@@ -499,9 +500,7 @@ const VocabDrawer = ({ navigation }) => {
         onChangeText={(val) => setAdditionalInformation(val)}
       />
       <Text fontSize="sm" color="gray.medium">
-        Use this space to give additional information about the vocab item, such
-        as grammatical and cultural information, usage, or additional
-        translations/meanings.
+        {i18n.t('dialogue.moreInfoPrompt')}
       </Text>
     </>
   )
@@ -511,8 +510,16 @@ const VocabDrawer = ({ navigation }) => {
   const areRequiredFieldsFilled = originalText !== '' && translatedText !== ''
   return (
     <Drawer
-      titleText={currentVocabId !== '' ? 'Edit Vocab Item' : 'Add a Vocab Item'}
-      successText={currentVocabId !== '' ? 'Save Changes' : 'Add Item'}
+      titleText={
+        currentVocabId !== ''
+          ? `${i18n.t('actions.editVocabItem')}`
+          : `${i18n.t('actions.addVocabItem')}`
+      }
+      successText={
+        currentVocabId !== ''
+          ? `${i18n.t('actions.saveChanges')}`
+          : `${i18n.t('actions.addVocabItem')}`
+      }
       successCallback={success}
       closeCallback={close}
       isDisabled={!areRequiredFieldsFilled}

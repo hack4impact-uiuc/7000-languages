@@ -2,6 +2,7 @@ import { Alert } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { setLoading } from 'slices/app.slice'
 import { ERROR_ALERT_TITLE } from '../utils/constants'
+import i18n from 'utils/LanguageData'
 
 /**
  * Custom hook that creates an error wrapper. If an error is thrown in the
@@ -26,9 +27,12 @@ const useErrorWrap = () => {
       successCallback()
     } catch (error) {
       dispatch(setLoading({ isLoading: false }))
-      console.error('useErrorWrap(): error caught: ', error.message)
+      console.error(`${i18n.t('dialogue.errorCaught')} `, error.message)
       Alert.alert(ERROR_ALERT_TITLE, error.message, [
-        { text: 'OK', onPress: () => errorCallback() },
+        {
+          text: `${i18n.t('dict.ok')} `,
+          onPress: () => errorCallback(),
+        },
       ])
     }
   }
