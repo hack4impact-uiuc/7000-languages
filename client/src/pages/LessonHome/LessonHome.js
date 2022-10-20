@@ -16,8 +16,8 @@ const LessonHome = ({ navigation }) => {
   } = useSelector((state) => state.language)
 
   const [data, setData] = useState([])
-  // const [lessonDescription, setLessonDescription] = useState('')
-  // const [lessonName, setLessonName] = useState('')
+  const [lessonDescription, setLessonDescription] = useState('')
+  const [lessonName, setLessonName] = useState('')
 
   /**
    * When going back from the Lesson Page to the Unit Page,
@@ -26,7 +26,7 @@ const LessonHome = ({ navigation }) => {
    *
    * Source: https://reactnavigation.org/docs/preventing-going-back/
    */
-  React.useEffect(
+  useEffect(
     () => navigation.addListener('beforeRemove', (e) => {
       dispatch(resetField({ key: 'lessonData' }))
       navigation.dispatch(e.data.action)
@@ -44,8 +44,8 @@ const LessonHome = ({ navigation }) => {
           getLesson(currentCourseId, currentLessonId),
         )
 
-        // setLessonDescription(result.description)
-        // setLessonName(result.name)
+        setLessonDescription(result.description)
+        setLessonName(result.name)
         navigation.setOptions({
           title: result.name,
         })
@@ -57,7 +57,7 @@ const LessonHome = ({ navigation }) => {
   }, [currentCourseId, currentLessonId, navigation])
 
   /**
-   * Updates the formatted vocab data that will be presented on this page
+   * Updates the lesson name, lesson description, and formatted vocab data that will be presented on this page
    */
   useEffect(() => {
     const getData = async () => {
@@ -116,7 +116,9 @@ const LessonHome = ({ navigation }) => {
         setData(formattedVocabData)
       }
     }
-    getData()
+    setLessonName(lessonData.name);
+    setLessonDescription(lessonData.description);
+    getData();
   }, [lessonData])
 
   /**
@@ -139,18 +141,18 @@ const LessonHome = ({ navigation }) => {
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
-    /**
-   * Navigates to the update unit modal
-   */
-     const navigateToUpdate = () => {
-      navigation.navigate('Modal', { screen: 'UpdateLesson' })
-    }
+  /**
+ * Navigates to the update unit modal
+ */
+  const navigateToUpdate = () => {
+    navigation.navigate('Modal', { screen: 'UpdateLesson' })
+  }
 
   return (
     <LanguageHome
       isLessonHome
-      lessonName={lessonData.name}
-      lessonDescription={lessonData.description}
+      lessonName={lessonName}
+      lessonDescription={lessonDescription}
       nextUpdate={navigateToUpdate}
       valueName="Lessons"
       rightIconName="plus-circle"

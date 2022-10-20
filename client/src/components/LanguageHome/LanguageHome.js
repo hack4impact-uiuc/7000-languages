@@ -129,29 +129,29 @@ const LanguageHome = ({
       <>
         <View style={styles.top}>
           <View style={styles.edit}>
-          <Text
-          fontFamily="heading"
-          fontWeight="regular"
-          fontStyle="normal"
-          color="white.dark"
-          fontSize={35}
-          paddingLeft={5}
-          paddingTop={5}
-          
-          >
-          {lessonName} 
-          </Text>
-          <Ionicons
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            marginRight: 20,
-            marginTop: 30,
-            
-          }}
-          name="ios-pencil" size={24} color={colors.white.dark} onPress={nextUpdate}>
-          </Ionicons>
+            <Text
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
+              color="white.dark"
+              fontSize={35}
+              paddingLeft={5}
+              paddingTop={5}
+
+            >
+              {lessonName}
+            </Text>
+            <Ionicons
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                marginRight: 20,
+                marginTop: 30,
+
+              }}
+              name="ios-pencil" size={24} color={colors.white.dark} onPress={nextUpdate}>
+            </Ionicons>
           </View>
           <Text
             fontFamily="heading"
@@ -232,28 +232,28 @@ const LanguageHome = ({
     <>
       <View style={styles.top}>
         <View style={styles.edit}>
-        <Text
-          fontFamily="heading"
-          fontWeight="regular"
-          fontStyle="normal"
-          color="white.dark"
-          fontSize={35}
-          paddingLeft={5}
-          paddingTop={5}
-          paddingBottom={1}
-        >
-          {languageName}
-        </Text>
-        <Ionicons
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            marginRight: 20,
-            marginTop: 30,
-            
-          }}
-          name="ios-pencil" size={24} color={colors.white.dark} onPress={nextUpdate}>
+          <Text
+            fontFamily="heading"
+            fontWeight="regular"
+            fontStyle="normal"
+            color="white.dark"
+            fontSize={35}
+            paddingLeft={5}
+            paddingTop={5}
+            paddingBottom={1}
+          >
+            {languageName}
+          </Text>
+          <Ionicons
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              marginRight: 20,
+              marginTop: 30,
+
+            }}
+            name="ios-pencil" size={24} color={colors.white.dark} onPress={nextUpdate}>
           </Ionicons>
         </View>
         <Text
@@ -270,7 +270,7 @@ const LanguageHome = ({
         >
           {languageDescription}
         </Text>
-        
+
       </View>
       <View style={styles.manageBar}>
         <Text
@@ -350,13 +350,13 @@ LanguageHome.defaultProps = {
   isLessonHome: false,
   languageName: '',
   languageDescription: '',
-  lessonDescription: 'You currently have not set a description.',
-  nextUpdate: () => {},
+  lessonDescription: '',
+  nextUpdate: () => { },
   valueName: '',
   buttonText: '',
   rightIconName: '',
-  buttonCallback: () => {},
-  nextPageCallback: () => {},
+  buttonCallback: () => { },
+  nextPageCallback: () => { },
   data: [],
 }
 

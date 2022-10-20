@@ -83,26 +83,22 @@ const languageSlice = createSlice({
       )
       state.lessonData.vocab[vocabIndex] = payload.vocab
     },
-    updateLesson: (state, { payload }) => {
+    patchSelectedLesson: (state, { payload }) => {
+      // Update the data in allLessons
       const lessonIndex = state.allLessons.findIndex(
         (element) => element._id === state.currentLessonId,
       )
-      state.allLessons[lessonIndex] = payload.lesson
-    },
-    patchLesson: (state, { payload }) => {
-      const lessonIndex = state.allLessons.findIndex(
-        (element) => element._id === state.currentLessonId,
-      )
-      state.allLessons[lessonIndex] = payload.lesson
-
-      console.log(payload.lesson);
-
       console.log(state.allLessons[lessonIndex]);
 
       for (var key in payload.lesson) {
         if (key in state.allLessons[lessonIndex] && typeof state.allLessons[lessonIndex][key] === typeof payload.lesson[key]) {
           state.allLessons[lessonIndex][key] = payload.lesson[key];
-          console.log("Updating: " + key);
+        }
+      }
+      // Update the data in lessonData
+      for (var key in payload.lesson) {
+        if (key in state.lessonData && typeof state.lessonData[key] === typeof payload.lesson[key]) {
+          state.lessonData[key] = payload.lesson[key];
         }
       }
     },
@@ -162,8 +158,7 @@ export const {
   addLesson,
   addVocab,
   updateVocab,
-  updateLesson,
-  patchLesson,
+  patchSelectedLesson,
   updateUnit,
   clear,
   resetField,
