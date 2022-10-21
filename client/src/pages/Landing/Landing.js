@@ -16,8 +16,8 @@ import {
   saveUserClientId,
 } from 'utils/auth'
 import { createUser } from 'api'
-import Logo from '../../../assets/images/landing-logo.svg'
 import i18n from 'utils/LanguageData'
+import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
   root: {
@@ -113,13 +113,13 @@ const Landing = () => {
 
       <StyledButton
         title={i18n.t('actions.continueGoogle')}
-        leftIcon={
+        leftIcon={(
           <AntDesign
             name="google"
             size={`${window.height}` / 25}
             color={colors.red.dark}
           />
-        }
+        )}
         variant="secondary"
         onPress={loginUser}
         style={styles.loginButton}
