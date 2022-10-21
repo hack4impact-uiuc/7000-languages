@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import LanguageHome from 'components/LanguageHome'
 import PropTypes from 'prop-types'
 
@@ -69,14 +70,17 @@ const LessonHome = ({ navigation }) => {
           const item = lessonData.vocab[i]
 
           // This is where we will check cache once cache is created
+          const imageUri = await AsyncStorage.getItem(`${item._id}/image`)
+          const audioUri = await AsyncStorage.getItem(`${item._id}/audio`)
+          
           const formattedItem = {
             _id: item._id,
             name: item.original,
             body: item.translation,
-            audioURI: '',
+            audioURI: audioUri === null ? '' : audioUri,
             audio: item.audio !== '',
             _order: item._order,
-            imageURI: '',
+            imageURI: imageUri === null ? '' : imageUri,
             image: item.image,
           }
 

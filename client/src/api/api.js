@@ -1,5 +1,6 @@
 import * as FileSystem from 'expo-file-system'
 import { loadUserIDToken } from 'utils/auth'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import instance, { BASE_URL } from './axios-config'
 
 /* User Endpoints */
@@ -189,6 +190,7 @@ export const downloadAudioFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
+    await AsyncStorage.setItem(`${vocabId}/audio`, uri)
     return uri
   } catch (e) {
     throw new Error(e.message)
@@ -246,6 +248,22 @@ export const downloadImageFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
+    try {
+      await AsyncStorage.setItem(`${vocabId}/image`, uri)
+
+      const jsonLRU = await AsyncStorage.getItem('imageLRU')
+      const imageLRU = jsonLRU != null ? JSON.parse(jsonLRU) : []
+      const URI_index = imageLRU.indexOf(uri);
+      if(URI_index < 0) {
+        imageLRU.splice(0, 0, uri)
+      }
+      else{
+        
+      }
+
+    } catch (e) {
+      // saving error
+    }
     return uri
   } catch (e) {
     throw new Error(e.message)
