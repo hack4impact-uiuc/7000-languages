@@ -456,28 +456,6 @@ const Apply = ({ navigation }) => {
                   </View>
                 </Checkbox>
               </View>
-
-              {/* Weird styling to accomodate native-base checkbox text centering */}
-              <View style={styles.checkboxes}>
-                <Checkbox
-                  style={{ display: 'flex', alignSelf: 'flex-end' }}
-                  value="accepted"
-                  colorScheme="danger"
-                  onChange={setAcceptTerms}
-                  aria-label="asdf"
-                />
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                  style={{ paddingLeft: 8, top: -3 }}
-                >
-                  I would like a team member from 7000 Languages to follow up
-                  with me about creating additional resources for my language.
-                </Text>
-              </View>
             </View>
             <Box style={styles.termsText}>
               <Text
