@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   soundIcon: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#dddddd',
+    backgroundColor: '#DEE5E9',
     height: 40,
     width: 40,
     borderRadius: 20,
