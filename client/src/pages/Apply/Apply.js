@@ -415,15 +415,7 @@ const Apply = ({ navigation }) => {
                           Linking.openURL('https://www.7000.org/about-3-1')
                         }
                       >
-                        I agree to the{' '}
-                        <Text
-                          fontFamily="heading"
-                          onPress={() =>
-                            Linking.openURL('https://www.7000.org/about-3-1')
-                          }
-                        >
-                          Terms and Conditions
-                        </Text>
+                        Terms and Conditions
                       </Text>
                     </Text>
                   </View>
