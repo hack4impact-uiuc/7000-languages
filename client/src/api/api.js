@@ -195,6 +195,18 @@ export const downloadAudioFile = async (
   }
 }
 
+/* Audio Endpoints */
+export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
+  const requestString = `/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`
+  const res = await instance.delete(requestString)
+  const body = JSON.parse(res.body)
+
+  if (!body.success || body.success === 'false') {
+    throw new Error(body.message)
+  }
+  return body
+}
+
 /* Image Endpoints */
 export const uploadImageFile = async (
   courseId,
@@ -250,4 +262,17 @@ export const downloadImageFile = async (
   } catch (e) {
     throw new Error(e.message)
   }
+}
+
+/* Image Endpoints */
+export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
+  const requestString = `/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`
+  const res = await instance.delete(requestString)
+
+  const body = JSON.parse(res.body)
+
+  if (!body.success || body.success === 'false') {
+    throw new Error(body.message)
+  }
+  return body
 }
