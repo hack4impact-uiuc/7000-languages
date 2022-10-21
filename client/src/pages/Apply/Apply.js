@@ -480,11 +480,6 @@ const Apply = ({ navigation }) => {
               </View>
             </View>
             <Box style={styles.termsText}>
-              <StyledButton
-                title="Submit"
-                variant="primary"
-                onPress={onSubmit}
-              />
               <Text
                 fontFamily="body"
                 fontWeight="regular"
@@ -495,6 +490,11 @@ const Apply = ({ navigation }) => {
                 By selecting this button, you confirm you have permission from
                 the community/speakers to create language learning materials.
               </Text>
+              <StyledButton
+                title="Submit"
+                variant="primary"
+                onPress={onSubmit}
+              />
             </Box>
           </ScrollView>
         </View>
