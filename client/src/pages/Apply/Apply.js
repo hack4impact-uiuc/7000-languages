@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {
-  StyleSheet, View, Linking, Alert,
-} from 'react-native'
+import { StyleSheet, View, Linking, Alert } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import {
   Text,
   ScrollView,
   Input,
   Checkbox,
-  FormControl,
   TextArea,
   Box,
+  FormControl,
 } from 'native-base'
 import { useErrorWrap } from 'hooks'
 import { createCourse } from 'api'
@@ -80,32 +78,11 @@ const Apply = ({ navigation }) => {
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [link, setLink] = useState(false)
   const errorWrap = useErrorWrap()
-  const [errors, setErrors] = useState({})
   const dispatch = useDispatch()
 
-  // Validates the course application form
-  const validate = () => {
-    const validateErrors = {}
-
-    if (name === '') {
-      validateErrors.name = 'Name is required'
-    }
-    if (email === '') {
-      validateErrors.email = 'Email is required'
-    }
-    if (language === '') {
-      validateErrors.Language = 'Language is required'
-    }
-    if (acceptTerms === false) {
-      validateErrors.acceptTerms = 'Terms are required'
-    }
-    setErrors(validateErrors)
-
-    return Object.keys(validateErrors).length === 0
-  }
-
   // Confirms validation of course for pressing 'Submit'
-  // const areAllFilled = name !== '' && email !== '' && language !== '' && acceptTerms
+  const areRequiredFieldsFilled =
+    name !== '' && email !== '' && language !== '' && acceptTerms
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -162,7 +139,7 @@ const Apply = ({ navigation }) => {
   const onSubmit = async () => {
     if (!isDisabled) {
       setDisabled(true)
-      if (validate() === true) {
+      if (areRequiredFieldsFilled) {
         await applyCourse()
       }
     }
@@ -206,7 +183,7 @@ const Apply = ({ navigation }) => {
             </View>
 
             <View style={styles.root}>
-              <FormControl is Required isInvalid={'name' in errors}>
+              <FormControl>
                 <RequiredField title="Your Name" fontSize="md" />
                 <View style={styles.input}>
                   <Input
@@ -215,16 +192,11 @@ const Apply = ({ navigation }) => {
                     returnKeyType="done"
                     onChangeText={(text) => setName(text)}
                   />
-                  {'name' in errors ? (
-                    <FormControl.ErrorMessage>
-                      Required.
-                    </FormControl.ErrorMessage>
-                  ) : null}
                 </View>
               </FormControl>
-
-              <FormControl isRequired isInvalid={'email' in errors}>
+              <FormControl>
                 <RequiredField title="Email" fontSize="md" />
+
                 <View style={styles.input}>
                   <Input
                     size="xl"
@@ -232,15 +204,10 @@ const Apply = ({ navigation }) => {
                     returnKeyType="done"
                     onChangeText={(text) => setEmail(text)}
                   />
-                  {'email' in errors ? (
-                    <FormControl.ErrorMessage>
-                      Required.
-                    </FormControl.ErrorMessage>
-                  ) : null}
                 </View>
               </FormControl>
 
-              <FormControl isRequired isInvalid={'Language' in errors}>
+              <FormControl>
                 <RequiredField title="Name of Language" fontSize="md" />
                 <View style={styles.input}>
                   <Input
@@ -249,11 +216,6 @@ const Apply = ({ navigation }) => {
                     returnKeyType="done"
                     onChangeText={(text) => setLanguage(text)}
                   />
-                  {'Language' in errors ? (
-                    <FormControl.ErrorMessage>
-                      Required.
-                    </FormControl.ErrorMessage>
-                  ) : null}
                 </View>
               </FormControl>
               <FormControl>
@@ -276,6 +238,9 @@ const Apply = ({ navigation }) => {
                   Provide a 1-2 sentence description of your language and/or
                   culture. This will be shown to learners in this course.
                 </Text>
+              </FormControl>
+
+              <FormControl>
                 <View style={styles.input}>
                   <TextArea
                     size="2xl"
@@ -300,6 +265,7 @@ const Apply = ({ navigation }) => {
                 >
                   Any alternative names?
                 </Text>
+
                 <View style={styles.input}>
                   <Input
                     size="xl"
@@ -309,6 +275,7 @@ const Apply = ({ navigation }) => {
                   />
                 </View>
               </FormControl>
+
               <FormControl>
                 <Text
                   fontFamily="body"
@@ -326,7 +293,9 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
+                  onPress={() =>
+                    Linking.openURL('https://www.iso.org/obp/ui/#search')
+                  }
                 >
                   You can find the ISO code here
                 </Text>
@@ -338,8 +307,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setIsoCode(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -356,7 +324,9 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() => Linking.openURL('https://glottolog.org/glottolog')}
+                  onPress={() =>
+                    Linking.openURL('https://glottolog.org/glottolog')
+                  }
                 >
                   You can find the Glotto code here
                 </Text>
@@ -368,8 +338,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setGlottoCode(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -391,8 +360,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setLocation(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -410,8 +378,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setPopulation(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -430,7 +397,6 @@ const Apply = ({ navigation }) => {
                   />
                 </View>
               </FormControl>
-
               <View style={styles.checkboxes}>
                 <Checkbox
                   value="accepted"
@@ -448,7 +414,9 @@ const Apply = ({ navigation }) => {
                       I agree to the{' '}
                       <Text
                         fontFamily="heading"
-                        onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                        onPress={() =>
+                          Linking.openURL('https://www.7000.org/about-3-1')
+                        }
                       >
                         Terms and Conditions
                       </Text>
