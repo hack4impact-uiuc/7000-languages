@@ -84,11 +84,11 @@ const LessonHome = ({ navigation }) => {
             image: item.image,
           }
 
-          if (item.imageURI) {
-            formattedItem.imageURI = item.imageURI
-          } else if (item.image !== '') {
-            const filePath = item.image
-            const splitPath = filePath.split('.')
+            if (item.imageURI) {
+              formattedItem.imageURI = item.imageURI
+            } else if (item.image !== '') {
+              const filePath = item.image
+              const splitPath = filePath.split('.')
 
             // Get the file type from the vocabItem's image field
             const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'

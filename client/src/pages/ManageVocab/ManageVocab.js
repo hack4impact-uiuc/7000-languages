@@ -15,7 +15,7 @@ const ManageVocab = ({ navigation }) => {
   const { lessonData, currentCourseId, currentLessonId } = useSelector(
     (state) => state.language,
   )
-  //   const allVocab = lessonData.vocab
+  //   const allVocab = lessonData.vocabs
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
 
