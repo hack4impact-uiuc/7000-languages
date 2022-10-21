@@ -65,46 +65,49 @@ const LessonHome = ({ navigation }) => {
         for (let i = 0; i < lessonData.vocab.length; i += 1) {
           const item = lessonData.vocab[i]
 
-          const formattedItem = {
-            _id: item._id,
-            name: item.original,
-            body: item.translation,
-            audio: item.audio !== '',
-            _order: item._order,
-            imageURI: '',
-            image: item.image,
-          }
+          if (item.selected) {
+            const formattedItem = {
+              _id: item._id,
+              name: item.original,
+              body: item.translation,
+              audio: item.audio !== '',
+              _order: item._order,
+              imageURI: '',
+              image: item.image,
+            }
+            
 
-          if (item.imageURI) {
-            formattedItem.imageURI = item.imageURI
-          } else if (item.image !== '') {
-            const filePath = item.image
-            const splitPath = filePath.split('.')
+            if (item.imageURI) {
+              formattedItem.imageURI = item.imageURI
+            } else if (item.image !== '') {
+              const filePath = item.image
+              const splitPath = filePath.split('.')
 
-            // Get the file type from the vocabItem's audio field
-            let fileType = 'jpg'
+              // Get the file type from the vocabItem's audio field
+              let fileType = 'jpg'
 
-            if (splitPath.length === 2) {
-              // eslint-disable-next-line prefer-destructuring
-              fileType = splitPath[1]
+              if (splitPath.length === 2) {
+                // eslint-disable-next-line prefer-destructuring
+                fileType = splitPath[1]
+              }
+
+              // Need to fetch image uri
+              // eslint-disable-next-line no-await-in-loop
+              const uri = await trackPromise(
+                downloadImageFile(
+                  currentCourseId,
+                  currentUnitId,
+                  currentLessonId,
+                  item._id,
+                  fileType,
+                ),
+              )
+
+              formattedItem.imageURI = uri
             }
 
-            // Need to fetch image uri
-            // eslint-disable-next-line no-await-in-loop
-            const uri = await trackPromise(
-              downloadImageFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                item._id,
-                fileType,
-              ),
-            )
-
-            formattedItem.imageURI = uri
+            formattedVocabData.push(formattedItem)
           }
-
-          formattedVocabData.push(formattedItem)
         }
 
         formattedVocabData = formattedVocabData.sort(

@@ -14,7 +14,6 @@ const ManageVocab = ({ navigation }) => {
   const dispatch = useDispatch()
   const { lessonData, currentCourseId, currentLessonId } = useSelector((state) => state.language)
   const allVocab = lessonData.vocab
-  console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + JSON.stringify(allVocab))
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
 
@@ -80,7 +79,7 @@ const ManageVocab = ({ navigation }) => {
         // Makes API request
         await updateVocabItems(currentCourseId, currentLessonId, updatedAllVocab)
         // Updates Redux store
-        dispatch(setField({ key: 'lessonData', value: updatedAllVocab }))
+        dispatch(setField({ key: 'lessonData.vocab', value: updatedAllVocab }))
       },
       () => {
         // on success, go back
