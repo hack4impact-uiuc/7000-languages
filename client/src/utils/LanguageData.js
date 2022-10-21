@@ -10,7 +10,7 @@ const i18n = new I18n(translations)
 
 // When a value is missing from a language it'll fallback to another language with the key present.
 i18n.enableFallback = true
-// To see the fallback mechanism uncomment line below to force app to use Japanese language.
+// To see the fallback mechanism uncomment line below to force app to use French language.
 i18n.locale = 'fr'
 
 export default i18n
