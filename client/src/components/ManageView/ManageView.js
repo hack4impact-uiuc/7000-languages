@@ -66,9 +66,7 @@ const ManageView = ({
   unselectedTitleText,
   selectedBodyText,
   unselectedBodyText,
-  addText,
   saveCallback,
-  addCallback,
   initialSelectedData,
   initialUnselectedData,
   playAudio,
@@ -303,19 +301,6 @@ const ManageView = ({
             <Text fontFamily="heading" fontWeight="regular" fontSize="xl">
               {selectedTitleText}
             </Text>
-            <StyledButton
-              title={addText}
-              variant="small"
-              fontSize="md"
-              rightIcon={
-                <AntDesign
-                  name="pluscircle"
-                  size={18}
-                  color={colors.red.dark}
-                />
-              }
-              onPress={addCallback}
-            />
           </View>
           <Text
             fontFamily="body"
@@ -374,9 +359,7 @@ ManageView.propTypes = {
   unselectedTitleText: PropTypes.string,
   selectedBodyText: PropTypes.string,
   unselectedBodyText: PropTypes.string,
-  addText: PropTypes.string,
   saveCallback: PropTypes.func,
-  addCallback: PropTypes.func,
   initialSelectedData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   initialUnselectedData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   playAudio: PropTypes.func,
@@ -391,9 +374,7 @@ ManageView.defaultProps = {
   unselectedTitleText: '',
   selectedBodyText: '',
   unselectedBodyText: '',
-  addText: '',
   saveCallback: () => {},
-  addCallback: () => {},
   initialSelectedData: [],
   initialUnselectedData: [],
   playAudio: () => {},

@@ -142,7 +142,7 @@ const LessonHome = ({ navigation }) => {
       isLessonHome
       lessonDescription={lessonDescription}
       valueName="Lessons"
-      rightIconName="plus-circle"
+      manageIconName="plus-circle"
       buttonCallback={navigateTo}
       nextPageCallback={goToNextPage}
       data={data}
