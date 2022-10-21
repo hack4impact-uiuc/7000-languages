@@ -128,16 +128,7 @@ const Apply = ({ navigation }) => {
   useEffect(() => setDisabled(isDisabled), [isDisabled]) // always listening to when isDisabled is changed
 
   const onSubmit = async () => {
-<<<<<<< HEAD
     await applyCourse()
-=======
-    if (!isDisabled) {
-      setDisabled(true)
-      if (validate() === true) {
-        await applyCourse()
-      }
-    }
->>>>>>> dev
   }
 
   return (
@@ -402,7 +393,9 @@ const Apply = ({ navigation }) => {
                         I agree to the{' '}
                         <Text
                           fontFamily="heading"
-                          onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                          onPress={() =>
+                            Linking.openURL('https://www.7000.org/about-3-1')
+                          }
                         >
                           Terms and Conditions
                         </Text>
