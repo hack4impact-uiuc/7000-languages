@@ -16,34 +16,13 @@ import {
   saveUserClientId,
 } from 'utils/auth'
 import { createUser } from 'api'
-import i18n from 'utils/LanguageData'
 import Logo from '../../../assets/images/landing-logo.svg'
+import i18n from 'utils/LanguageData'
 
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
     backgroundColor: colors.red.dark,
-  },
-  button: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    marginBottom: 60,
-  },
-  logo: {
-    position: 'absolute',
-    left: 20,
-    top: 20,
-  },
-  quote: {
-    position: 'absolute',
-    left: 40,
-    bottom: 200,
-  },
-
-  quote2: {
-    position: 'absolute',
-    left: 5,
-    bottom: 1,
     width: '100%',
     height: '100%',
   },
@@ -51,6 +30,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     position: 'absolute',
+  },
+  logo: {
+    position: 'absolute',
+    left: '5%',
   },
   quoteSection: {
     position: 'absolute',
@@ -130,13 +113,13 @@ const Landing = () => {
 
       <StyledButton
         title={i18n.t('actions.continueGoogle')}
-        leftIcon={(
+        leftIcon={
           <AntDesign
             name="google"
             size={`${window.height}` / 25}
             color={colors.red.dark}
           />
-        )}
+        }
         variant="secondary"
         onPress={loginUser}
         style={styles.loginButton}

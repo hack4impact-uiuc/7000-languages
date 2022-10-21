@@ -110,7 +110,7 @@ const ManageLessons = ({ navigation }) => {
       unselectedTitleText={i18n.t('dict.unselectedLessons')}
       selectedBodyText={i18n.t('dialogue.selectedLessonsPrompt')}
       unselectedBodyText={i18n.t('dialogue.unselectedLessonsPrompt')}
-      addText={i18n.t('action.createLessonPlural')}
+      addText={i18n.t('actions.createLessonPlural')}
       saveCallback={saveChanges}
       addCallback={add}
       initialSelectedData={selected}

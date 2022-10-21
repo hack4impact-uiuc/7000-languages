@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {
-  StyleSheet, View, Linking, Alert,
-} from 'react-native'
+import { StyleSheet, View, Linking, Alert } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import {
   Text,
@@ -207,7 +205,7 @@ const Apply = ({ navigation }) => {
 
             <View style={styles.root}>
               <FormControl is Required isInvalid={'name' in errors}>
-                <RequiredField title="Your Name" fontSize="md" />
+                <RequiredField title={i18n.t('dict.yourName')} fontSize="md" />
                 <View style={styles.input}>
                   <Input
                     size="2xl"
@@ -224,7 +222,7 @@ const Apply = ({ navigation }) => {
               </FormControl>
 
               <FormControl isRequired isInvalid={'email' in errors}>
-                <RequiredField title="Email" fontSize="md" />
+                <RequiredField title={i18n.t('dict.email')} fontSize="md" />
                 <View style={styles.input}>
                   <Input
                     size="xl"
@@ -241,7 +239,10 @@ const Apply = ({ navigation }) => {
               </FormControl>
 
               <FormControl isRequired isInvalid={'Language' in errors}>
-                <RequiredField title="Name of Language" fontSize="md" />
+                <RequiredField
+                  title={i18n.t('dict.languageName')}
+                  fontSize="md"
+                />
                 <View style={styles.input}>
                   <Input
                     size="xl"
@@ -325,7 +326,9 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
+                  onPress={() =>
+                    Linking.openURL('https://www.iso.org/obp/ui/#search')
+                  }
                 >
                   {i18n.t('dialogue.ISOCodePrompt')}
                 </Text>
@@ -355,7 +358,9 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() => Linking.openURL('https://glottolog.org/glottolog')}
+                  onPress={() =>
+                    Linking.openURL('https://glottolog.org/glottolog')
+                  }
                 >
                   {i18n.t('dialogue.glottoCodePrompt')}
                 </Text>
@@ -447,12 +452,16 @@ const Apply = ({ navigation }) => {
                       {i18n.t('dialogue.agree')}
                       <Text
                         fontFamily="heading"
-                        onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                        onPress={() =>
+                          Linking.openURL('https://www.7000.org/about-3-1')
+                        }
                       >
                         {i18n.t('dialogue.agree')}
                         <Text
                           fontFamily="heading"
-                          onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                          onPress={() =>
+                            Linking.openURL('https://www.7000.org/about-3-1')
+                          }
                         >
                           {i18n.t('dict.termsAndConditions')}
                         </Text>
@@ -486,7 +495,11 @@ const Apply = ({ navigation }) => {
         </View>
       </View>
       <Box style={styles.termsText}>
-        <StyledButton title="Submit" variant="primary" onPress={onSubmit} />
+        <StyledButton
+          title={i18n.t('dict.submit')}
+          variant="primary"
+          onPress={onSubmit}
+        />
 
         <Text
           fontFamily="body"
