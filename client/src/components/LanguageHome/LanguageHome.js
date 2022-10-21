@@ -4,7 +4,7 @@ import { colors } from 'theme'
 import PropTypes from 'prop-types'
 import { ScrollView, Text } from 'native-base'
 import StyledButton from 'components/StyledButton'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { Audio } from 'expo-av'
@@ -41,10 +41,12 @@ const LanguageHome = ({
   languageDescription,
   lessonDescription,
   valueName,
-  buttonText,
-  rightIconName,
+  manageButtonText,
+  addButtonText,
+  manageIconName,
   buttonCallback,
   nextPageCallback,
+  addCallback,
   data,
 }) => {
   const errorWrap = useErrorWrap()
@@ -103,13 +105,13 @@ const LanguageHome = ({
             title="Add New"
             variant="manage"
             fontSize={15}
-            rightIcon={(
+            rightIcon={
               <MaterialCommunityIcons
                 name="plus-circle"
                 color={colors.red.dark}
                 size={20}
               />
-            )}
+            }
             onPress={buttonCallback}
           />
         </View>
@@ -131,14 +133,14 @@ const LanguageHome = ({
                 volumeIconCallback={() => playAudio(element.audioURI)}
                 width={width * 0.97}
                 height={element.imageURI === '' ? 75 : 100}
-                rightIcon={(
+                rightIcon={
                   <MaterialCommunityIcons
                     name="pencil"
                     color="black"
                     size={20}
                     onPress={() => nextPageCallback(element)}
                   />
-                )}
+                }
               />
             ))}
           </View>
@@ -190,16 +192,16 @@ const LanguageHome = ({
           {renderData.length} {valueName}
         </Text>
         <StyledButton
-          title={buttonText}
+          title={manageButtonText}
           variant="manage"
           fontSize={15}
-          rightIcon={(
+          rightIcon={
             <MaterialCommunityIcons
-              name={rightIconName}
+              name={manageIconName}
               color={colors.red.dark}
               size={20}
             />
-          )}
+          }
           onPress={buttonCallback}
         />
       </View>
@@ -220,18 +222,31 @@ const LanguageHome = ({
               width={width * 0.97}
               height={75}
               indicatorType={element.indicatorType}
-              rightIcon={(
+              rightIcon={
                 <MaterialCommunityIcons
                   name="pencil"
                   color="black"
                   size={20}
                   onPress={() => nextPageCallback(element)}
                 />
-              )}
+              }
             />
           ))}
         </View>
       </ScrollView>
+
+      <View style={{ position: 'absolute', bottom: '5%', right: '5%' }}>
+        <StyledButton
+          title={addButtonText}
+          variant="small"
+          fontSize="20"
+          leftIcon={
+            <AntDesign name="pluscircle" size={20} color={colors.red.dark} />
+          }
+          shadow
+          onPress={addCallback}
+        />
+      </View>
     </>
   )
 }
@@ -243,10 +258,12 @@ LanguageHome.propTypes = {
   languageDescription: PropTypes.string,
   lessonDescription: PropTypes.string,
   valueName: PropTypes.string,
-  buttonText: PropTypes.string,
-  rightIconName: PropTypes.string,
+  manageButtonText: PropTypes.string,
+  addButtonText: PropTypes.string,
+  manageIconName: PropTypes.string,
   buttonCallback: PropTypes.func,
   nextPageCallback: PropTypes.func,
+  addCallback: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
 }
 
@@ -257,10 +274,12 @@ LanguageHome.defaultProps = {
   languageDescription: '',
   lessonDescription: 'You currently have not set a description.',
   valueName: '',
-  buttonText: '',
-  rightIconName: '',
+  manageButtonText: '',
+  addButtonText: '',
+  manageIconName: '',
   buttonCallback: () => {},
   nextPageCallback: () => {},
+  addCallback: () => {},
   data: [],
 }
 

@@ -45,3 +45,13 @@ module.exports.uploadFile = async (content, remoteFileName) => {
   const s3 = getS3();
   await s3.putObject(params).promise();
 };
+
+module.exports.deleteFile = async (objectKey) => {
+  const params = {
+    Bucket: S3_BUCKET_NAME,
+    Key: objectKey,
+  };
+
+  const s3 = getS3();
+  await s3.deleteObject(params).promise();
+};

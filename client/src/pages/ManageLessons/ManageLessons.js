@@ -93,13 +93,6 @@ const ManageLessons = ({ navigation }) => {
     )
   }
 
-  /**
-   * Navigates to the Create Lesson modal
-   */
-  const add = () => {
-    navigation.navigate('Modal', { screen: 'CreateLesson' })
-  }
-
   return (
     <ManageView
       navigation={navigation}
@@ -107,9 +100,7 @@ const ManageLessons = ({ navigation }) => {
       unselectedTitleText="Unselected Lessons"
       selectedBodyText="These lessons will be available to your students. Drag them around to reorder them."
       unselectedBodyText="These lessons are not included in your course. You can still continue to edit them."
-      addText="Create Lessons"
       saveCallback={saveChanges}
-      addCallback={add}
       initialSelectedData={selected}
       initialUnselectedData={unselected}
     />
