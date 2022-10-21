@@ -103,4 +103,51 @@ router.post(
   }),
 );
 
+/**
+ * Updates the fields for multiple vocab items
+ */
+ router.put(
+  '/',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const { lesson_id, vocab_updates } = req.body;
+    if (!lesson_id || !vocab_updates) {
+      return sendResponse(res, 400, "this data is missing or invalid");
+    }
+
+    // Checks if the ids are valid
+    const isValid = await checkIds({ lesson_id });
+
+    if (!isValid) {
+      return sendResponse(res, 400, "the data is fucked");
+    }
+
+    /* Get the lesson data from MongoDB */
+    let lesson = await models.Lesson.findById(lesson_id);
+
+    for (let i = 0; i < vocab_updates.length; i++) {
+      /* Obtain the index of the vocab item that we want to update */
+      const vocabIndex = getVocabIndexByID(vocab_updates[i]._id, lesson);
+
+      if (vocabIndex === NOT_FOUND_INDEX) {
+        return sendResponse(res, 404, 'Vocab item not found');
+      }
+
+      /* Using the index, apply changes to the lesson data */
+      let vocabData = lesson.vocab[vocabIndex];
+
+      for (var key in vocab_updates[i]) {
+        if (
+          key in vocabData &&
+          typeof vocabData[key] === typeof vocab_updates[i][key]
+        ) {
+          vocabData[key] = vocab_updates[i][key];
+        }
+      }
+    }
+    await lesson.save();
+    return sendResponse(res, 200, 'Successfully updated vocab items', vocab_updates);
+  }),
+);
 module.exports = router;

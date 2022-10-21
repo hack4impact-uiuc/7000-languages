@@ -122,8 +122,10 @@ const LessonHome = ({ navigation }) => {
    */
   const navigateTo = () => {
     // Since we aren't editing a vocab item, we need to clear the current vocab id
-    dispatch(setField({ key: 'currentVocabId', value: '' }))
-    navigation.navigate('Modal', { screen: 'VocabDrawer' })
+    // dispatch(setField({ key: 'currentVocabId', value: '' }))
+    // navigation.navigate('Modal', { screen: 'VocabDrawer' })
+
+    navigation.navigate('ManageVocab')
   }
 
   /**
@@ -139,10 +141,10 @@ const LessonHome = ({ navigation }) => {
 
   return (
     <LanguageHome
-      isLessonHome
       lessonDescription={lessonDescription}
-      valueName="Lessons"
-      rightIconName="plus-circle"
+      valueName="Vocab Items"
+      rightIconName="pencil"
+      buttonText="Manage Vocab"
       buttonCallback={navigateTo}
       nextPageCallback={goToNextPage}
       data={data}
