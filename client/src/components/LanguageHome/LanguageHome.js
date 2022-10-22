@@ -7,11 +7,8 @@ import StyledButton from 'components/StyledButton'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
-import { downloadAudioFile } from 'api'
-import { useDispatch, useSelector } from 'react-redux'
 import { Audio } from 'expo-av'
-import { useErrorWrap, useTrackPromise } from 'hooks'
-import { pushAudioURI } from 'slices/language.slice'
+import { useErrorWrap } from 'hooks'
 import i18n from 'utils/i18n'
 
 const { width } = Dimensions.get('window')
@@ -54,8 +51,6 @@ const LanguageHome = ({
   data,
 }) => {
   const errorWrap = useErrorWrap()
-  const trackPromise = useTrackPromise()
-  const dispatch = useDispatch()
 
   const [renderData, setRenderData] = useState(data)
 
@@ -63,50 +58,8 @@ const LanguageHome = ({
     setRenderData(data)
   }, [data])
 
-  const {
-    currentCourseId, currentUnitId, currentLessonId, lessonData,
-  } = useSelector((state) => state.language)
-
-  const getAudio = async (vocabId) => {
+  const playAudio = async (uri) => {
     await errorWrap(async () => {
-      const vocabIndex = lessonData.vocab.findIndex(
-        (element) => element._id === vocabId,
-      )
-
-      const vocabItem = lessonData.vocab[vocabIndex]
-
-      let uri = null
-
-      // Check if the audio has already been fetched
-      if (vocabItem.audioURI) {
-        uri = vocabItem.audioURI
-      } else {
-        const filePath = vocabItem.audio
-        const splitPath = filePath.split('.')
-
-        // Get the file type from the vocabItem's audio field
-        let fileType = 'm4a'
-
-        if (splitPath.length === 2) {
-          // eslint-disable-next-line prefer-destructuring
-          fileType = splitPath[1]
-        }
-
-        // Downloads audio file and gets Filesystem uri
-        uri = await trackPromise(
-          downloadAudioFile(
-            currentCourseId,
-            currentUnitId,
-            currentLessonId,
-            vocabId,
-            fileType,
-          ),
-        )
-
-        // Add to redux
-        dispatch(pushAudioURI({ vocabId, uri }))
-      }
-
       if (uri) {
         // Plays audio recording
         await Audio.setAudioModeAsync({
@@ -178,7 +131,7 @@ const LanguageHome = ({
                 bodyText={element.name}
                 imageURI={element.imageURI}
                 showVolumeIcon={element.audio}
-                volumeIconCallback={() => getAudio(element._id)}
+                volumeIconCallback={() => playAudio(element.audioURI)}
                 width={width * 0.97}
                 height={element.imageURI === '' ? 75 : 100}
                 rightIcon={(

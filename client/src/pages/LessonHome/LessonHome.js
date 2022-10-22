@@ -4,9 +4,12 @@ import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
-import { getLesson, downloadImageFile } from 'api'
+import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import i18n from 'utils/i18n'
+
+// eslint-disable-next-line no-unused-vars
+import _, { clone } from 'lodash'
 
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -61,15 +64,12 @@ const LessonHome = ({ navigation }) => {
   useEffect(() => {
     const getData = async () => {
       if (lessonData?.vocab) {
-        let formattedVocabData = []
-
-        for (let i = 0; i < lessonData.vocab.length; i += 1) {
-          const item = lessonData.vocab[i]
-
+        const formattedVocabData = lessonData.vocab.map((item) => {
           const formattedItem = {
             _id: item._id,
             name: item.original,
             body: item.translation,
+            audioURI: '',
             audio: item.audio !== '',
             _order: item._order,
             imageURI: '',
@@ -82,37 +82,66 @@ const LessonHome = ({ navigation }) => {
             const filePath = item.image
             const splitPath = filePath.split('.')
 
-            // Get the file type from the vocabItem's audio field
-            let fileType = 'jpg'
-
-            if (splitPath.length === 2) {
-              // eslint-disable-next-line prefer-destructuring
-              fileType = splitPath[1]
-            }
+            // Get the file type from the vocabItem's image field
+            const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
 
             // Need to fetch image uri
-            // eslint-disable-next-line no-await-in-loop
-            const uri = await trackPromise(
-              downloadImageFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                item._id,
-                fileType,
-              ),
-            )
-
-            formattedItem.imageURI = uri
+            // [TODO]: Add backend trackPromise()
+            downloadImageFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              item._id,
+              fileType,
+            ).then((value) => {
+              const updatedData = formattedVocabData.map((element) => {
+                if (element._id === formattedItem._id) {
+                  return { ...element, imageURI: value }
+                }
+                return element
+              })
+              setData(updatedData)
+              return value
+            })
           }
 
-          formattedVocabData.push(formattedItem)
-        }
+          if (item.audioURI) {
+            formattedItem.audioURI = item.audioURI
+          } else if (item.audio !== '') {
+            const filePath = item.audio
+            const splitPath = filePath.split('.')
 
-        formattedVocabData = formattedVocabData.sort(
+            // Get the file type from the vocabItem's audio field
+            const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
+
+            // Downloads audio file and gets Filesystem uri
+            // [TODO]: Add backend trackPromise()
+            downloadAudioFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              item._id,
+              fileType,
+            ).then((value) => {
+              const updatedData = formattedVocabData.map((element) => {
+                if (element._id === formattedItem._id) {
+                  return { ...element, audioURI: value }
+                }
+                return element
+              })
+              setData(updatedData)
+              return value
+            })
+          }
+
+          return formattedItem
+        })
+
+        const sortedData = formattedVocabData.sort(
           (a, b) => a._order - b._order,
         )
 
-        setData(formattedVocabData)
+        setData(sortedData)
       }
     }
     getData()
