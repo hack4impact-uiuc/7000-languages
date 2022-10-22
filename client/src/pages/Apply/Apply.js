@@ -50,6 +50,9 @@ const styles = StyleSheet.create({
   checkboxes: {
     marginTop: 10,
     width: '95%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
   inputHeight: {
     height: 50,
@@ -422,29 +425,26 @@ const Apply = ({ navigation }) => {
                 </Checkbox>
               </View>
             </View>
+            <Box style={styles.termsText}>
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="gray.medium"
+                fontStyle="normal"
+                fontSize="sm"
+              >
+                By selecting this button, you confirm you have permission from
+                the community/speakers to create language learning materials.
+              </Text>
+              <StyledButton
+                title="Submit"
+                variant="primary"
+                onPress={onSubmit}
+              />
+            </Box>
           </ScrollView>
         </View>
       </View>
-      <Box style={styles.termsText}>
-        <StyledButton
-          title="Submit"
-          variant="primary"
-          onPress={onSubmit}
-          isDisabled={!areRequiredFieldsFilled}
-        />
-
-        <Text
-          fontFamily="body"
-          fontWeight="regular"
-          color="gray.medium"
-          fontStyle="normal"
-          fontSize="sm"
-          textAlign="center"
-        >
-          By selecting this button, you have permission from the
-          community/speakers to create language learning materials.
-        </Text>
-      </Box>
     </>
   )
 }
