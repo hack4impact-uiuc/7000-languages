@@ -16,7 +16,7 @@ import {
   saveUserClientId,
 } from 'utils/auth'
 import { createUser } from 'api'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import CourseHome from 'pages/CourseHome'
 import { getCourse } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 
 const Home = ({ navigation, courseId }) => {
   const dispatch = useDispatch()

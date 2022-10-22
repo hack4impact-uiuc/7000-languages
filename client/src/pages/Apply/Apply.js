@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, Linking, Alert } from 'react-native'
+import {
+  StyleSheet, View, Linking, Alert,
+} from 'react-native'
 import StyledButton from 'components/StyledButton'
 import {
-  Text,
-  ScrollView,
-  Input,
-  Checkbox,
-  TextArea,
-  Box,
-  FormControl,
+  Text, ScrollView, Input, Checkbox, TextArea, Box,
 } from 'native-base'
 import { useErrorWrap } from 'hooks'
 import { createCourse } from 'api'
@@ -17,11 +13,10 @@ import { getAllUserCourses } from 'utils/languageHelper'
 import { useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import RequiredField from 'components/RequiredField'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
-  root: {
-    alignItems: 'center',
+  formBody: {
     justifyContent: 'center',
     color: 'black',
   },
@@ -58,10 +53,13 @@ const styles = StyleSheet.create({
   inputHeight: {
     height: 50,
   },
-  termsText: {
+  submitButton: {
     paddingVertical: 10,
     width: '99%',
     alignItems: 'center',
+  },
+  disclaimerView: {
+    marginTop: 10,
   },
 })
 
@@ -77,13 +75,18 @@ const Apply = ({ navigation }) => {
   const [location, setLocation] = useState('')
   const [population, setPopulation] = useState('')
   const [acceptTerms, setAcceptTerms] = useState(false)
+  const [teachingLanguage, setTeachingLanguage] = useState('')
+
   const [link, setLink] = useState(false)
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
 
   // Confirms validation of course for pressing 'Submit'
-  const areRequiredFieldsFilled =
-    name !== '' && email !== '' && language !== '' && acceptTerms
+  const areRequiredFieldsFilled = name !== ''
+    && email !== ''
+    && language !== ''
+    && acceptTerms
+    && teachingLanguage !== ''
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -109,6 +112,7 @@ const Apply = ({ navigation }) => {
         description,
         iso: isoCode,
         glotto: glottoCode,
+        translated_language: teachingLanguage,
         population,
         location,
         link,
@@ -185,274 +189,238 @@ const Apply = ({ navigation }) => {
               </Text>
             </View>
 
-            <View style={styles.root}>
-              <FormControl>
-                <RequiredField title={i18n.t('dict.yourName')} fontSize="md" />
-                <View style={styles.input}>
-                  <Input
-                    size="2xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setName(text)}
-                  />
-                </View>
-              </FormControl>
+            <View style={styles.formBody}>
+              <RequiredField title={i18n.t('dict.yourName')} fontSize="md" />
+              <Input
+                size="2xl"
+                style={styles.inputHeight}
+                returnKeyType="done"
+                onChangeText={(text) => setName(text)}
+              />
+              <RequiredField title={i18n.t('dict.email')} fontSize="md" />
+              <Input
+                size="xl"
+                style={styles.inputHeight}
+                returnKeyType="done"
+                onChangeText={(text) => setEmail(text)}
+              />
+              <RequiredField
+                title={i18n.t('dict.languageName')}
+                fontSize="md"
+              />
+              <Input
+                size="xl"
+                style={styles.inputHeight}
+                returnKeyType="done"
+                onChangeText={(text) => setLanguage(text)}
+              />
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                {i18n.t('dialogue.alternativeNamesPrompt')}
+              </Text>
 
-              <FormControl>
-                <RequiredField title={i18n.t('dict.email')} fontSize="md" />
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setEmail(text)}
-                  />
-                </View>
-              </FormControl>
+              <Input
+                size="xl"
+                style={styles.inputHeight}
+                returnKeyType="done"
+                onChangeText={(text) => setOtherNames(text)}
+              />
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                {i18n.t('dict.languageDescription')}
+              </Text>
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="gray.medium"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                {i18n.t('dialogue.languageDescriptionPrompt')}
+              </Text>
+              <TextArea
+                size="2xl"
+                h={40}
+                variant="filled"
+                placeholder=""
+                keyboardType="default"
+                returnKeyType="done"
+                blurOnSubmit
+                onChangeText={(text) => setDescription(text)}
+              />
+              <RequiredField
+                title={i18n.t('dict.teachingLanguage')}
+                fontSize="md"
+              />
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="gray.medium"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                {i18n.t('dialogue.teachingLanguagePrompt')}
+              </Text>
+              <Input
+                size="xl"
+                style={styles.inputHeight}
+                returnKeyType="done"
+                onChangeText={(text) => setTeachingLanguage(text)}
+              />
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                {i18n.t('dict.ISOCode')}
+              </Text>
+              <Text
+                underline
+                fontFamily="body"
+                fontWeight="regular"
+                color="textBlue"
+                fontStyle="normal"
+                fontSize="md"
+                onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
+              >
+                {i18n.t('dialogue.ISOCodePrompt')}
+              </Text>
+              <Input
+                size="xl"
+                style={styles.inputHeight}
+                returnKeyType="done"
+                onChangeText={(text) => setIsoCode(text)}
+              />
 
-              <FormControl isRequired isInvalid={'Language' in errors}>
-                <RequiredField
-                  title={i18n.t('dict.languageName')}
-                  fontSize="md"
-                />
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setLanguage(text)}
-                  />
-                </View>
-              </FormControl>
-              <FormControl>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  {i18n.t('dict.languageDescription')}
-                </Text>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="gray.medium"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  {i18n.t('dialogue.languageDescriptionPrompt')}
-                </Text>
-              </FormControl>
-
-              <FormControl>
-                <View style={styles.input}>
-                  <TextArea
-                    size="2xl"
-                    h={40}
-                    variant="filled"
-                    placeholder=""
-                    keyboardType="default"
-                    returnKeyType="done"
-                    blurOnSubmit
-                    onChangeText={(text) => setDescription(text)}
-                  />
-                </View>
-              </FormControl>
-
-              <FormControl>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  {i18n.t('dialogue.alternativeNamesPrompt')}
-                </Text>
-
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setOtherNames(text)}
-                  />
-                </View>
-              </FormControl>
-
-              <FormControl>
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  {i18n.t('dict.ISOCode')}
-                </Text>
-                <Text
-                  underline
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="textBlue"
-                  fontStyle="normal"
-                  fontSize="md"
-                  onPress={() =>
-                    Linking.openURL('https://www.iso.org/obp/ui/#search')
-                  }
-                >
-                  {i18n.t('dialogue.ISOCodePrompt')}
-                </Text>
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setIsoCode(text)}
-                  />
-                </View>
-
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  {i18n.t('dict.glottoCode')}
-                </Text>
-                <Text
-                  underline
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="textBlue"
-                  fontStyle="normal"
-                  fontSize="md"
-                  onPress={() =>
-                    Linking.openURL('https://glottolog.org/glottolog')
-                  }
-                >
-                  {i18n.t('dialogue.glottoCodePrompt')}
-                </Text>
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setGlottoCode(text)}
-                  />
-                </View>
-
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  {i18n.t('dialogue.languageOriginPrompt')}
-                </Text>
-                <View style={styles.input}>
-                  <TextArea
-                    size="2xl"
-                    h={40}
-                    variant="filled"
-                    placeholder=""
-                    keyboardType="default"
-                    returnKeyType="done"
-                    blurOnSubmit
-                    onChangeText={(text) => setLocation(text)}
-                  />
-                </View>
-
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  {i18n.t('dialogue.languagePopulationPrompt')}
-                </Text>
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setPopulation(text)}
-                  />
-                </View>
-
-                <Text
-                  fontFamily="body"
-                  fontWeight="regular"
-                  color="black"
-                  fontStyle="normal"
-                  fontSize="md"
-                >
-                  {i18n.t('dialogue.languageLinkPrompt')}
-                </Text>
-                <View style={styles.input}>
-                  <Input
-                    size="xl"
-                    style={styles.inputHeight}
-                    returnKeyType="done"
-                    onChangeText={(text) => setLink(text)}
-                  />
-                </View>
-              </FormControl>
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                {i18n.t('dict.glottoCode')}
+              </Text>
+              <Text
+                underline
+                fontFamily="body"
+                fontWeight="regular"
+                color="textBlue"
+                fontStyle="normal"
+                fontSize="md"
+                onPress={() => Linking.openURL('https://glottolog.org/glottolog')}
+              >
+                {i18n.t('dialogue.glottoCodePrompt')}
+              </Text>
+              <Input
+                size="xl"
+                style={styles.inputHeight}
+                returnKeyType="done"
+                onChangeText={(text) => setGlottoCode(text)}
+              />
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                {i18n.t('dialogue.languageOriginPrompt')}
+              </Text>
+              <TextArea
+                size="2xl"
+                h={40}
+                variant="filled"
+                placeholder=""
+                keyboardType="default"
+                returnKeyType="done"
+                blurOnSubmit
+                onChangeText={(text) => setLocation(text)}
+              />
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                {i18n.t('dialogue.languagePopulationPrompt')}
+              </Text>
+              <Input
+                size="xl"
+                style={styles.inputHeight}
+                returnKeyType="done"
+                onChangeText={(text) => setPopulation(text)}
+              />
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="black"
+                fontStyle="normal"
+                fontSize="md"
+              >
+                {i18n.t('dialogue.languageLinkPrompt')}
+              </Text>
+              <Input
+                size="xl"
+                style={styles.inputHeight}
+                returnKeyType="done"
+                onChangeText={(text) => setLink(text)}
+              />
               <View style={styles.checkboxes}>
                 <Checkbox
                   value="accepted"
                   colorScheme="danger"
                   onChange={setAcceptTerms}
                 >
-                  <View>
+                  <Text
+                    fontFamily="body"
+                    fontWeight="regular"
+                    color="black"
+                    fontStyle="normal"
+                    fontSize="md"
+                  >
+                    {`${i18n.t('dialogue.agree')} `}
                     <Text
-                      fontFamily="body"
-                      fontWeight="regular"
-                      color="black"
-                      fontStyle="normal"
-                      fontSize="md"
+                      fontFamily="heading"
+                      onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
                     >
-                      {i18n.t('dialogue.agree')}
-                      <Text
-                        fontFamily="heading"
-                        onPress={() =>
-                          Linking.openURL('https://www.7000.org/about-3-1')
-                        }
-                      >
-                        {i18n.t('dialogue.agree')}
-                        <Text
-                          fontFamily="heading"
-                          onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
-                        >
-                          {i18n.t('dict.termsAndConditions')}
-                        </Text>
-                      </Text>
+                      {i18n.t('dict.termsAndConditions')}
                     </Text>
-                  </View>
+                  </Text>
                 </Checkbox>
               </View>
             </View>
-            <Box style={styles.termsText}>
-              <StyledButton
-                title={i18n.t('dict.submit')}
-                variant="primary"
-                onPress={onSubmit}
-              />
-
+            <View style={styles.disclaimerView}>
               <Text
                 fontFamily="body"
                 fontWeight="regular"
                 color="gray.medium"
                 fontStyle="normal"
                 fontSize="sm"
-                textAlign="center"
               >
                 {i18n.t('dialogue.languageUsePermission')}
               </Text>
+            </View>
+            <Box style={styles.submitButton}>
+              <StyledButton
+                title={i18n.t('dict.submit')}
+                variant="primary"
+                onPress={onSubmit}
+                isDisabled={!areRequiredFieldsFilled}
+              />
             </Box>
           </ScrollView>
         </View>

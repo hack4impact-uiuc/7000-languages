@@ -11,7 +11,7 @@ import { addUnit } from 'slices/language.slice'
 import { createUnit } from 'api'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   container: {

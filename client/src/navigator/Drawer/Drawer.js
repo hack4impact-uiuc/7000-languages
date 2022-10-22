@@ -16,7 +16,7 @@ import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
 import { setField } from 'slices/language.slice'
 import { useDispatch, useSelector } from 'react-redux'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
 
@@ -107,41 +107,40 @@ const generateUnitLabel = (numUnits) => {
  * @param {Array} data Array of Course Data to use for each tab bar
  * @returns
  */
-const generateTabs = (tabData) =>
-  tabData.map((element, index) => (
-    <Drawer.Screen
-      key={element._id}
-      name={element._id}
-      component={TabNavigator}
-      options={() => ({
-        drawerLabel: () => (
-          <View style={tabStyles.container}>
-            <View>
-              <Text
-                style={tabStyles.title}
-                fontFamily="heading"
-                fontWeight="regular"
-                fontStyle="normal"
-              >
-                {element.name}
-              </Text>
-              <Text style={tabStyles.units}>
-                {generateUnitLabel(element.num_units)}
-              </Text>
-            </View>
-            {element.isContributor ? <OwnershipButton isContributor /> : null}
+const generateTabs = (tabData) => tabData.map((element, index) => (
+  <Drawer.Screen
+    key={element._id}
+    name={element._id}
+    component={TabNavigator}
+    options={() => ({
+      drawerLabel: () => (
+        <View style={tabStyles.container}>
+          <View>
+            <Text
+              style={tabStyles.title}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
+            >
+              {element.name}
+            </Text>
+            <Text style={tabStyles.units}>
+              {generateUnitLabel(element.num_units)}
+            </Text>
           </View>
-        ),
-        drawerIcon: () => (
-          <FontAwesome
-            name="square"
-            size={45}
-            color={tabColors[index % tabColors.length]}
-          />
-        ),
-      })}
-    />
-  ))
+          {element.isContributor ? <OwnershipButton isContributor /> : null}
+        </View>
+      ),
+      drawerIcon: () => (
+        <FontAwesome
+          name="square"
+          size={45}
+          color={tabColors[index % tabColors.length]}
+        />
+      ),
+    })}
+  />
+))
 
 const DrawerMenuContainer = (props) => {
   const { state, ...rest } = props
@@ -169,7 +168,7 @@ const DrawerMenuContainer = (props) => {
                 fontSize="sm"
                 textAlign="left"
               >
-                {i18n.t('dialogue.indigenousLanguagePrompt')}
+                {`${i18n.t('dialogue.indigenousLanguagePrompt')} `}
                 <Text
                   fontFamily="heading"
                   fontWeight="regular"
@@ -181,9 +180,7 @@ const DrawerMenuContainer = (props) => {
               <StyledButton
                 title={i18n.t('actions.applyNow')}
                 fontSize="sm"
-                onPress={() =>
-                  props.navigation.navigate('Apply', { from: 'HomeBaseCase' })
-                }
+                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
               />
             </Pressable>
           </View>
@@ -234,7 +231,9 @@ const DrawerNavigator = () => {
   useEffect(() => {
     const getUserData = async () => {
       await errorWrap(async () => {
-        const { picture, name, email, courses } = await trackPromise(
+        const {
+          picture, name, email, courses,
+        } = await trackPromise(
           getAllUserCourses(),
         )
 

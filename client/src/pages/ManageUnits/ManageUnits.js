@@ -8,7 +8,7 @@ import { setField, updateNumUnits } from 'slices/language.slice'
 import { updateUnits } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 
 const ManageUnits = ({ navigation }) => {
   const errorWrap = useErrorWrap()

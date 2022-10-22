@@ -5,7 +5,7 @@ import { colors } from 'theme'
 import { Text } from 'native-base'
 import { useDispatch } from 'react-redux'
 import { authenticate } from 'slices/auth.slice'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   root: {

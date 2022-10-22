@@ -1,7 +1,7 @@
 import { Alert } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { setLoading } from 'slices/app.slice'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 import { ERROR_ALERT_TITLE } from '../utils/constants'
 
 /**

@@ -5,7 +5,7 @@ import { Text } from 'native-base'
 import { DrawerActions } from '@react-navigation/native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 
 const styles = {
   root: {

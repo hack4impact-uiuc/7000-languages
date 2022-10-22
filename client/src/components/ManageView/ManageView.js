@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Text, Divider } from 'native-base'
-import { StyleSheet, View, ScrollView, Dimensions, Alert } from 'react-native'
+import {
+  StyleSheet, View, ScrollView, Dimensions, Alert,
+} from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import StyledCard from 'components/StyledCard'
@@ -14,7 +16,7 @@ import {
   DRAGGABLE_LIST_CARD_HEIGHT,
 } from 'utils/constants'
 import { moveFromList } from 'utils/manageHelper'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   root: {
@@ -84,15 +86,14 @@ const ManageView = ({
 
   /* Prompts the user to confirm action of leaving the page when they have unsaved changes */
   React.useEffect(
-    () =>
-      navigation.addListener('beforeRemove', (e) => {
-        if (!shouldShowButtons) {
-          // If we don't have unsaved changes, then we don't need to do anything
-          return
-        }
+    () => navigation.addListener('beforeRemove', (e) => {
+      if (!shouldShowButtons) {
+        // If we don't have unsaved changes, then we don't need to do anything
+        return
+      }
 
-        // Prevent default behavior of leaving the screen
-        e.preventDefault()
+      // Prevent default behavior of leaving the screen
+      e.preventDefault()
 
       // Prompt the user before leaving the screen
       Alert.alert(
@@ -201,14 +202,14 @@ const ManageView = ({
       key={index}
       titleText={item.title}
       bodyText={item.body}
-      leftIcon={
+      leftIcon={(
         <AntDesign
           name="minuscircle"
           size={25}
           color={colors.red.dark}
           onPress={() => moveToUnselected(index)}
         />
-      }
+      )}
       rightIcon={<Feather name="menu" size={25} color={colors.gray.medium} />}
       volumeIconCallback={playAudio}
       indicatorType={item.indicatorType}
@@ -228,14 +229,14 @@ const ManageView = ({
       key={index}
       titleText={item.title}
       bodyText={item.body}
-      leftIcon={
+      leftIcon={(
         <AntDesign
           name="pluscircle"
           size={25}
           color={colors.green.medium}
           onPress={() => moveToSelected(index)}
         />
-      }
+      )}
       volumeIconCallback={playAudio}
       indicatorType={item.indicatorType}
       width={childrenWidth}
@@ -247,10 +248,9 @@ const ManageView = ({
    * Enables/disables scroll of the Scroll View. Used to disable scroll when using the draggable list component.
    * Source: https://stackoverflow.com/questions/67259797/react-native-scrollview-prevent-allow-scrolling-on-scroll-start-event
    */
-  const updateScroll = (isScrollEnabaled) =>
-    scrollViewRef.current?.setNativeProps({
-      scrollEnabled: isScrollEnabaled,
-    })
+  const updateScroll = (isScrollEnabaled) => scrollViewRef.current?.setNativeProps({
+    scrollEnabled: isScrollEnabaled,
+  })
 
   /**
    * Fetches the data saved to the state of the draggable list components and passes it up to the parent component
@@ -265,9 +265,7 @@ const ManageView = ({
   /**
    * Creates an row of unselected item components
    */
-  const generateUnselectedUnits = unselectedData.map((data, index) =>
-    renderUnselectedItems(data, index),
-  )
+  const generateUnselectedUnits = unselectedData.map((data, index) => renderUnselectedItems(data, index))
 
   /**
    * Generates the button for saving the data changes made with this component

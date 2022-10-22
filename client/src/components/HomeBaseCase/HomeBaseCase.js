@@ -5,7 +5,7 @@ import { Text } from 'native-base'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import PropTypes from 'prop-types'
 import { AntDesign } from '@expo/vector-icons'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   root: {

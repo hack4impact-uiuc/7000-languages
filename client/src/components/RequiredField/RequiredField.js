@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Text } from 'native-base'
 import { colors } from 'theme'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 
 const RequiredField = ({ title, fontSize }) => (
   <Text fontSize={fontSize}>

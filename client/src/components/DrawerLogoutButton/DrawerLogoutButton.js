@@ -11,7 +11,7 @@ import {
   removeUserClientId,
   removeUserRefreshToken,
 } from 'utils/auth'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 
 const DrawerLogoutButton = () => {
   const dispatch = useDispatch()

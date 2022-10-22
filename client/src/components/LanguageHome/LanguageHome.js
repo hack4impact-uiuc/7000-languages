@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Audio } from 'expo-av'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import { pushAudioURI } from 'slices/language.slice'
-import i18n from 'utils/LanguageData'
+import i18n from 'utils/i18n'
 
 const { width } = Dimensions.get('window')
 
@@ -63,8 +63,9 @@ const LanguageHome = ({
     setRenderData(data)
   }, [data])
 
-  const { currentCourseId, currentUnitId, currentLessonId, lessonData } =
-    useSelector((state) => state.language)
+  const {
+    currentCourseId, currentUnitId, currentLessonId, lessonData,
+  } = useSelector((state) => state.language)
 
   const getAudio = async (vocabId) => {
     await errorWrap(async () => {
@@ -152,13 +153,13 @@ const LanguageHome = ({
             title={i18n.t('actions.addNew')}
             variant="manage"
             fontSize={15}
-            rightIcon={
+            rightIcon={(
               <MaterialCommunityIcons
                 name="plus-circle"
                 color={colors.red.dark}
                 size={20}
               />
-            }
+            )}
             onPress={buttonCallback}
           />
         </View>
@@ -180,14 +181,14 @@ const LanguageHome = ({
                 volumeIconCallback={() => getAudio(element._id)}
                 width={width * 0.97}
                 height={element.imageURI === '' ? 75 : 100}
-                rightIcon={
+                rightIcon={(
                   <MaterialCommunityIcons
                     name="pencil"
                     color="black"
                     size={20}
                     onPress={() => nextPageCallback(element)}
                   />
-                }
+                )}
               />
             ))}
           </View>
@@ -242,13 +243,13 @@ const LanguageHome = ({
           title={manageButtonText}
           variant="manage"
           fontSize={15}
-          rightIcon={
+          rightIcon={(
             <MaterialCommunityIcons
               name={manageIconName}
               color={colors.red.dark}
               size={20}
             />
-          }
+          )}
           onPress={buttonCallback}
         />
       </View>
@@ -269,14 +270,14 @@ const LanguageHome = ({
               width={width * 0.97}
               height={75}
               indicatorType={element.indicatorType}
-              rightIcon={
+              rightIcon={(
                 <MaterialCommunityIcons
                   name="pencil"
                   color="black"
                   size={20}
                   onPress={() => nextPageCallback(element)}
                 />
-              }
+              )}
             />
           ))}
         </View>
