@@ -8,7 +8,9 @@ import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { Audio } from 'expo-av'
-import { useErrorWrap } from 'hooks'
+import { useErrorWrap, useTrackPromise } from 'hooks'
+import { pushAudioURI } from 'slices/language.slice'
+import i18n from 'utils/i18n'
 
 const { width } = Dimensions.get('window')
 
@@ -99,19 +101,19 @@ const LanguageHome = ({
             paddingTop={3}
             paddingLeft={5}
           >
-            {renderData.length} Vocabulary Items
+            {renderData.length} {i18n.t('dict.vocabItems')}
           </Text>
           <StyledButton
-            title="Add New"
+            title={i18n.t('actions.addNew')}
             variant="manage"
             fontSize={15}
-            rightIcon={
+            rightIcon={(
               <MaterialCommunityIcons
                 name="plus-circle"
                 color={colors.red.dark}
                 size={20}
               />
-            }
+            )}
             onPress={buttonCallback}
           />
         </View>
@@ -133,14 +135,14 @@ const LanguageHome = ({
                 volumeIconCallback={() => playAudio(element.audioURI)}
                 width={width * 0.97}
                 height={element.imageURI === '' ? 75 : 100}
-                rightIcon={
+                rightIcon={(
                   <MaterialCommunityIcons
                     name="pencil"
                     color="black"
                     size={20}
                     onPress={() => nextPageCallback(element)}
                   />
-                }
+                )}
               />
             ))}
           </View>
@@ -195,13 +197,13 @@ const LanguageHome = ({
           title={manageButtonText}
           variant="manage"
           fontSize={15}
-          rightIcon={
+          rightIcon={(
             <MaterialCommunityIcons
               name={manageIconName}
               color={colors.red.dark}
               size={20}
             />
-          }
+          )}
           onPress={buttonCallback}
         />
       </View>
@@ -222,14 +224,14 @@ const LanguageHome = ({
               width={width * 0.97}
               height={75}
               indicatorType={element.indicatorType}
-              rightIcon={
+              rightIcon={(
                 <MaterialCommunityIcons
                   name="pencil"
                   color="black"
                   size={20}
                   onPress={() => nextPageCallback(element)}
                 />
-              }
+              )}
             />
           ))}
         </View>
@@ -272,7 +274,7 @@ LanguageHome.defaultProps = {
   isLessonHome: false,
   languageName: '',
   languageDescription: '',
-  lessonDescription: 'You currently have not set a description.',
+  lessonDescription: `${i18n.t('dialogue.setDescriptionPrompt')}`,
   valueName: '',
   manageButtonText: '',
   addButtonText: '',

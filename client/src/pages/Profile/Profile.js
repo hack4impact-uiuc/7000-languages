@@ -1,8 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, Text, View, StatusBar } from 'react-native'
+import {
+  StyleSheet, Text, View, StatusBar,
+} from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   root: {
@@ -21,9 +24,9 @@ const styles = StyleSheet.create({
 const Profile = ({ navigation }) => (
   <View style={styles.root}>
     <StatusBar barStyle="light-content" />
-    <Text style={styles.title}>Profile</Text>
+    <Text style={styles.title}>{i18n.t('dict.profile')}</Text>
     <StyledButton
-      title="Go to Details"
+      title={i18n.t('actions.goToDetails')}
       variant="primary"
       onPress={() => {
         navigation.navigate('Details', { from: 'Profile' })
