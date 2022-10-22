@@ -102,7 +102,8 @@ const translations = {
       agree: 'I agree to the',
       resourcesFollowUp:
         'I would like a team member from 7000 Languages to follow up with me about creating additional resources for my language.',
-      languageUsePermission: 'By selecting this button, you have permission from the community/speakers to create language learning materials.',
+      languageUsePermission:
+        'By selecting this button, you have permission from the community/speakers to create language learning materials.',
       lessonNamePrompt: 'Give your lesson a name',
       lessonGoalsPrompt: 'What are the goals of this lesson?',
       createLessonDescription:
@@ -230,10 +231,12 @@ const translations = {
       agree: "Je suis d'accord avec le",
       resourcesFollowUp:
         "J'aimerais qu'un membre de l'équipe de 7000 Languages assure un suivi suivi avec moi au sujet de la création de ressources supplémentaires pour ma langue.",
-      languageUsePermission: 'En sélectionnant ce bouton, vous avez la permission de la communauté/les locuteurs de créer du matériel d\'apprentissage linguistique.',
+      languageUsePermission:
+        "En sélectionnant ce bouton, vous avez la permission de la communauté/les locuteurs de créer du matériel d'apprentissage linguistique.",
       lessonNamePrompt: 'Donnez un nom à votre leçon',
       lessonGoalsPrompt: 'Quels sont les objectifs de cette leçon ?',
-      createLessonDescription: 'Lorsque vous créez une leçon, pensez aux éléments de vocabulaire qui seront associés à la leçon et comment ils seront utilisés.',
+      createLessonDescription:
+        'Lorsque vous créez une leçon, pensez aux éléments de vocabulaire qui seront associés à la leçon et comment ils seront utilisés.',
       createUnitDescription:
         "Lorsque vous créez une unité, pensez à la façon dont elle sera utilisée. Plus de texte ici expliquant ce qu'ils doivent rechercher lorsqu'ils créent une unité.",
       unitNamePrompt: 'Donnez un nom à votre unité',

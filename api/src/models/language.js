@@ -10,7 +10,7 @@ const CourseDetails = new mongoose.Schema({
   description: { type: String, required: false, default: '' },
   iso: { type: String, required: false, default: '' },
   glotto: { type: String, required: false, default: '' },
-  translated_language: { type: String, required: false, default: 'English' },
+  translated_language: { type: String, required: true, default: 'English' },
   population: { type: String, required: false, default: '' },
   location: { type: String, required: false, default: '' },
   link: { type: String, required: false, default: '' },

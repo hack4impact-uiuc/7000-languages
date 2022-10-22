@@ -8,8 +8,7 @@ import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { Audio } from 'expo-av'
-import { useErrorWrap, useTrackPromise } from 'hooks'
-import { pushAudioURI } from 'slices/language.slice'
+import { useErrorWrap } from 'hooks'
 import i18n from 'utils/i18n'
 
 const { width } = Dimensions.get('window')
