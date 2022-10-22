@@ -97,13 +97,6 @@ const ManageUnits = ({ navigation }) => {
     )
   }
 
-  /**
-   * Navigates to the Create Unit modal
-   */
-  const add = () => {
-    navigation.navigate('Modal', { screen: 'CreateUnit' })
-  }
-
   return (
     <ManageView
       navigation={navigation}
@@ -111,9 +104,7 @@ const ManageUnits = ({ navigation }) => {
       unselectedTitleText={i18n.t('dict.unselectedUnits')}
       selectedBodyText={i18n.t('dialogue.selectedUnitsPrompt')}
       unselectedBodyText={i18n.t('dialogue.unselectedUnitsPrompt')}
-      addText={i18n.t('actions.createUnitPlural')}
       saveCallback={saveChanges}
-      addCallback={add}
       initialSelectedData={selected}
       initialUnselectedData={unselected}
     />

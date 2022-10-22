@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {
-  StyleSheet, View, Linking, Alert,
-} from 'react-native'
+import { StyleSheet, View, Linking, Alert } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import {
   Text,
   ScrollView,
   Input,
   Checkbox,
-  FormControl,
   TextArea,
   Box,
+  FormControl,
 } from 'native-base'
 import { useErrorWrap } from 'hooks'
 import { createCourse } from 'api'
@@ -53,6 +51,9 @@ const styles = StyleSheet.create({
   checkboxes: {
     marginTop: 10,
     width: '95%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
   inputHeight: {
     height: 50,
@@ -78,32 +79,11 @@ const Apply = ({ navigation }) => {
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [link, setLink] = useState(false)
   const errorWrap = useErrorWrap()
-  const [errors, setErrors] = useState({})
   const dispatch = useDispatch()
 
-  // Validates the course application form
-  const validate = () => {
-    const validateErrors = {}
-
-    if (name === '') {
-      validateErrors.name = `${i18n.t('dialogue.nameRequired')}`
-    }
-    if (email === '') {
-      validateErrors.email = `${i18n.t('dialogue.emailRequired')}`
-    }
-    if (language === '') {
-      validateErrors.Language = `${i18n.t('dialogue.languageRequired')}`
-    }
-    if (acceptTerms === false) {
-      validateErrors.acceptTerms = `${i18n.t('dialogue.termsRequired')}`
-    }
-    setErrors(validateErrors)
-
-    return Object.keys(validateErrors).length === 0
-  }
-
   // Confirms validation of course for pressing 'Submit'
-  // const areAllFilled = name !== '' && email !== '' && language !== '' && acceptTerms
+  const areRequiredFieldsFilled =
+    name !== '' && email !== '' && language !== '' && acceptTerms
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -165,7 +145,7 @@ const Apply = ({ navigation }) => {
   const onSubmit = async () => {
     if (!isDisabled) {
       setDisabled(true)
-      if (validate() === true) {
+      if (areRequiredFieldsFilled) {
         await applyCourse()
       }
     }
@@ -206,7 +186,7 @@ const Apply = ({ navigation }) => {
             </View>
 
             <View style={styles.root}>
-              <FormControl is Required isInvalid={'name' in errors}>
+              <FormControl>
                 <RequiredField title={i18n.t('dict.yourName')} fontSize="md" />
                 <View style={styles.input}>
                   <Input
@@ -215,15 +195,10 @@ const Apply = ({ navigation }) => {
                     returnKeyType="done"
                     onChangeText={(text) => setName(text)}
                   />
-                  {'name' in errors ? (
-                    <FormControl.ErrorMessage>
-                      {i18n.t('dict.required')}
-                    </FormControl.ErrorMessage>
-                  ) : null}
                 </View>
               </FormControl>
 
-              <FormControl isRequired isInvalid={'email' in errors}>
+              <FormControl>
                 <RequiredField title={i18n.t('dict.email')} fontSize="md" />
                 <View style={styles.input}>
                   <Input
@@ -232,11 +207,6 @@ const Apply = ({ navigation }) => {
                     returnKeyType="done"
                     onChangeText={(text) => setEmail(text)}
                   />
-                  {'email' in errors ? (
-                    <FormControl.ErrorMessage>
-                      {i18n.t('dict.required')}
-                    </FormControl.ErrorMessage>
-                  ) : null}
                 </View>
               </FormControl>
 
@@ -252,11 +222,6 @@ const Apply = ({ navigation }) => {
                     returnKeyType="done"
                     onChangeText={(text) => setLanguage(text)}
                   />
-                  {'Language' in errors ? (
-                    <FormControl.ErrorMessage>
-                      {i18n.t('dict.required')}
-                    </FormControl.ErrorMessage>
-                  ) : null}
                 </View>
               </FormControl>
               <FormControl>
@@ -278,6 +243,9 @@ const Apply = ({ navigation }) => {
                 >
                   {i18n.t('dialogue.languageDescriptionPrompt')}
                 </Text>
+              </FormControl>
+
+              <FormControl>
                 <View style={styles.input}>
                   <TextArea
                     size="2xl"
@@ -302,6 +270,7 @@ const Apply = ({ navigation }) => {
                 >
                   {i18n.t('dialogue.alternativeNamesPrompt')}
                 </Text>
+
                 <View style={styles.input}>
                   <Input
                     size="xl"
@@ -311,6 +280,7 @@ const Apply = ({ navigation }) => {
                   />
                 </View>
               </FormControl>
+
               <FormControl>
                 <Text
                   fontFamily="body"
@@ -328,7 +298,9 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
+                  onPress={() =>
+                    Linking.openURL('https://www.iso.org/obp/ui/#search')
+                  }
                 >
                   {i18n.t('dialogue.ISOCodePrompt')}
                 </Text>
@@ -340,8 +312,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setIsoCode(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -358,7 +329,9 @@ const Apply = ({ navigation }) => {
                   color="textBlue"
                   fontStyle="normal"
                   fontSize="md"
-                  onPress={() => Linking.openURL('https://glottolog.org/glottolog')}
+                  onPress={() =>
+                    Linking.openURL('https://glottolog.org/glottolog')
+                  }
                 >
                   {i18n.t('dialogue.glottoCodePrompt')}
                 </Text>
@@ -370,8 +343,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setGlottoCode(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -393,8 +365,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setLocation(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -412,8 +383,7 @@ const Apply = ({ navigation }) => {
                     onChangeText={(text) => setPopulation(text)}
                   />
                 </View>
-              </FormControl>
-              <FormControl>
+
                 <Text
                   fontFamily="body"
                   fontWeight="regular"
@@ -432,7 +402,6 @@ const Apply = ({ navigation }) => {
                   />
                 </View>
               </FormControl>
-
               <View style={styles.checkboxes}>
                 <Checkbox
                   value="accepted"
@@ -450,7 +419,9 @@ const Apply = ({ navigation }) => {
                       {i18n.t('dialogue.agree')}
                       <Text
                         fontFamily="heading"
-                        onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                        onPress={() =>
+                          Linking.openURL('https://www.7000.org/about-3-1')
+                        }
                       >
                         {i18n.t('dialogue.agree')}
                         <Text
@@ -464,48 +435,28 @@ const Apply = ({ navigation }) => {
                   </View>
                 </Checkbox>
               </View>
-
-              <View style={styles.checkboxes}>
-                <Checkbox
-                  value="accepted"
-                  colorScheme="danger"
-                  onChange={setAcceptTerms}
-                >
-                  <View>
-                    <Text
-                      fontFamily="body"
-                      fontWeight="regular"
-                      color="black"
-                      fontStyle="normal"
-                      fontSize="md"
-                    >
-                      {i18n.t('dialogue.resourcesFollowUp')}
-                    </Text>
-                  </View>
-                </Checkbox>
-              </View>
             </View>
+            <Box style={styles.termsText}>
+              <StyledButton
+                title={i18n.t('dict.submit')}
+                variant="primary"
+                onPress={onSubmit}
+              />
+
+              <Text
+                fontFamily="body"
+                fontWeight="regular"
+                color="gray.medium"
+                fontStyle="normal"
+                fontSize="sm"
+                textAlign="center"
+              >
+                {i18n.t('dialogue.languageUsePermission')}
+              </Text>
+            </Box>
           </ScrollView>
         </View>
       </View>
-      <Box style={styles.termsText}>
-        <StyledButton
-          title={i18n.t('dict.submit')}
-          variant="primary"
-          onPress={onSubmit}
-        />
-
-        <Text
-          fontFamily="body"
-          fontWeight="regular"
-          color="gray.medium"
-          fontStyle="normal"
-          fontSize="sm"
-          textAlign="center"
-        >
-          {i18n.t('dialogue.languageUsePermission')}
-        </Text>
-      </Box>
     </>
   )
 }

@@ -287,13 +287,13 @@ const RecordAudioView = ({
           <StyledButton
             title="Re-record"
             variant="small"
-            leftIcon={(
+            leftIcon={
               <FontAwesome
                 name="microphone"
                 size={25}
                 color={colors.red.dark}
               />
-            )}
+            }
             onPress={rerecord}
           />
         </View>

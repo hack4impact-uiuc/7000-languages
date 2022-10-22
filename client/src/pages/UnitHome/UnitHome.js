@@ -31,10 +31,11 @@ const UnitHome = ({ navigation }) => {
    * Source: https://reactnavigation.org/docs/preventing-going-back
    */
   React.useEffect(
-    () => navigation.addListener('beforeRemove', (e) => {
-      dispatch(resetField({ key: 'allLessons' }))
-      navigation.dispatch(e.data.action)
-    }),
+    () =>
+      navigation.addListener('beforeRemove', (e) => {
+        dispatch(resetField({ key: 'allLessons' }))
+        navigation.dispatch(e.data.action)
+      }),
     [navigation],
   )
 
@@ -113,14 +114,22 @@ const UnitHome = ({ navigation }) => {
     navigation.navigate('LessonHome')
   }
 
+  /**
+   * Navigates to the Add Lesson Page
+   */
+  const navigateToAdd = () => {
+    navigation.navigate('Modal', { screen: 'CreateLesson' })
+  }
+
   return (
     <LanguageHome
       languageDescription={unitDescription}
       valueName={i18n.t('dict.lessonPlural')}
-      buttonText={i18n.t('actions.manageLessons')}
-      rightIconName="pencil"
+      manageButtonText={i18n.t('actions.manageLessons')}
+      manageIconName="cog"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
+      addCallback={navigateToAdd}
       data={data}
     />
   )

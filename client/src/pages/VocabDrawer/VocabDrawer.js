@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
-import {
-  View, Input, Text, TextArea,
-} from 'native-base'
+import { View, Input, Text, TextArea } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Entypo } from '@expo/vector-icons'
 import { colors } from 'theme'
@@ -23,6 +21,8 @@ import {
   uploadImageFile,
   downloadAudioFile,
   downloadImageFile,
+  deleteAudioFile,
+  deleteImageFile,
 } from 'api'
 
 import { useErrorWrap, useTrackPromise } from 'hooks'
@@ -81,6 +81,9 @@ const VocabDrawer = ({ navigation }) => {
   const [recordingStage, setRecordingState] = useState(RECORDING.INCOMPLETE) // which recording stage the user is at
   const [listeningSound, setListeningSound] = useState(null) // the data for the recording when the user is listening to it
 
+  const [deleteAudioUri, setDeleteAudioUri] = useState('')
+  const [deleteImageUri, setDeleteImageUri] = useState('')
+
   useEffect(() => {
     const setData = async () => {
       const index = lessonData.vocab.findIndex(
@@ -137,7 +140,6 @@ const VocabDrawer = ({ navigation }) => {
             // eslint-disable-next-line prefer-destructuring
             fileType = splitPath[1]
           }
-
           // Downloads audio file and gets Filesystem uri
           const uri = await trackPromise(
             downloadImageFile(
@@ -165,6 +167,39 @@ const VocabDrawer = ({ navigation }) => {
     Audio.setAudioModeAsync({ playsInSilentModeIOS: true })
   })
 
+  const clearRecording = async (path) => {
+    if (path !== null) {
+      const splitPath = path.split('.')
+      const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
+      setRecordingState(RECORDING.INCOMPLETE)
+      deleteAudioFile(
+        currentCourseId,
+        currentUnitId,
+        currentLessonId,
+        currentVocabId,
+        fileType,
+      ).then((audioResponse) => {
+        dispatch(updateVocab({ vocab: audioResponse.result }))
+      })
+    }
+  }
+
+  const clearImage = async (path) => {
+    if (path !== null) {
+      const splitPath = path.split('.')
+      const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
+      deleteImageFile(
+        currentCourseId,
+        currentUnitId,
+        currentLessonId,
+        currentVocabId,
+        fileType,
+      ).then((imageResponse) => {
+        dispatch(updateVocab({ vocab: imageResponse.result }))
+      })
+    }
+  }
+
   /**
    * Closes the modal
    */
@@ -179,6 +214,17 @@ const VocabDrawer = ({ navigation }) => {
     errorWrap(
       async () => {
         let updatedVocabItem = null
+        const promises = []
+        if (deleteAudioUri !== '') {
+          promises.push(clearRecording(deleteAudioUri))
+        }
+        if (deleteImageUri !== '') {
+          promises.push(clearImage(deleteImageUri))
+        }
+        if (promises.length) {
+          await trackPromise(Promise.all(promises))
+        }
+
         if (currentVocabId === '') {
           const vocabItem = {
             original: originalText,
@@ -286,7 +332,7 @@ const VocabDrawer = ({ navigation }) => {
 
   /* Requests audio and camera permissions */
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       await Audio.requestPermissionsAsync()
       await ImagePicker.requestCameraPermissionsAsync()
       await Audio.setAudioModeAsync({
@@ -298,11 +344,12 @@ const VocabDrawer = ({ navigation }) => {
 
   /* Always unload the Sound after using it to prevent memory leaks. */
   React.useEffect(
-    () => (listeningSound
-      ? () => {
-        listeningSound.unloadAsync()
-      }
-      : undefined),
+    () =>
+      listeningSound
+        ? () => {
+            listeningSound.unloadAsync()
+          }
+        : undefined,
     [listeningSound],
   )
 
@@ -322,6 +369,11 @@ const VocabDrawer = ({ navigation }) => {
     if (!result.cancelled) {
       setImage(result.uri)
     }
+  }
+
+  const deleteImage = () => {
+    setDeleteImageUri(image)
+    setImage(null)
   }
 
   const startRecording = async () => {
@@ -378,7 +430,9 @@ const VocabDrawer = ({ navigation }) => {
       },
       {
         text: `${i18n.t('actions.removeImage')}`,
-        onPress: () => setImage(null),
+        onPress: () => {
+          deleteImage()
+        },
       },
       {
         text: `${i18n.t('dict.cancel')}`,
@@ -414,7 +468,8 @@ const VocabDrawer = ({ navigation }) => {
     }
   }
 
-  const clearRecording = () => {
+  const discardRecording = () => {
+    setDeleteAudioUri(audioRecording)
     setAudioRecording(null)
     setRecordingState(RECORDING.INCOMPLETE)
   }
@@ -479,7 +534,7 @@ const VocabDrawer = ({ navigation }) => {
         stopRecording={stopRecording}
         playRecording={playRecording}
         confirmRecording={confirmRecording}
-        discardRecording={clearRecording}
+        discardRecording={discardRecording}
         stopPlayingRecording={stopPlayingRecording}
       />
       <RequiredField title={originalLanguage} />

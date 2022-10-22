@@ -96,13 +96,6 @@ const ManageLessons = ({ navigation }) => {
     )
   }
 
-  /**
-   * Navigates to the Create Lesson modal
-   */
-  const add = () => {
-    navigation.navigate('Modal', { screen: 'CreateLesson' })
-  }
-
   return (
     <ManageView
       navigation={navigation}
@@ -110,9 +103,7 @@ const ManageLessons = ({ navigation }) => {
       unselectedTitleText={i18n.t('dict.unselectedLessons')}
       selectedBodyText={i18n.t('dialogue.selectedLessonsPrompt')}
       unselectedBodyText={i18n.t('dialogue.unselectedLessonsPrompt')}
-      addText={i18n.t('actions.createLessonPlural')}
       saveCallback={saveChanges}
-      addCallback={add}
       initialSelectedData={selected}
       initialUnselectedData={unselected}
     />
