@@ -73,12 +73,11 @@ const StyledCard = ({
     <Box style={styles.rightIcon}>{rightIcon}</Box>
   ) : null
 
-  const indicator =
-    indicatorType !== INDICATOR_TYPES.NONE ? (
-      <Box style={styles.indicator}>
-        <Indicator indicatorType={indicatorType} />
-      </Box>
-    ) : null
+  const indicator = indicatorType !== INDICATOR_TYPES.NONE ? (
+    <Box style={styles.indicator}>
+      <Indicator indicatorType={indicatorType} />
+    </Box>
+  ) : null
   const generateImage = imageURI === '' ? (
     indicator
   ) : (

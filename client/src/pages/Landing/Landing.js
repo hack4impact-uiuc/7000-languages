@@ -16,6 +16,7 @@ import {
   saveUserClientId,
 } from 'utils/auth'
 import { createUser } from 'api'
+import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
@@ -55,9 +56,7 @@ const Landing = () => {
     */
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
-  const [quote] = useState(
-    '"To speak a language is to take on a world, a culture."',
-  )
+  const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
 
   const loginUser = async () => {
     await errorWrap(async () => {
@@ -113,14 +112,14 @@ const Landing = () => {
       </View>
 
       <StyledButton
-        title="  Continue with Google"
-        leftIcon={
+        title={i18n.t('actions.continueGoogle')}
+        leftIcon={(
           <AntDesign
             name="google"
             size={`${window.height}` / 25}
             color={colors.red.dark}
           />
-        }
+        )}
         variant="secondary"
         onPress={loginUser}
         style={styles.loginButton}
