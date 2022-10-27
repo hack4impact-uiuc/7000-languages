@@ -139,6 +139,16 @@ const theme = extendTheme({
             fontFamily: 'heading',
           },
         },
+        learner: {
+          bg: 'blue.light',
+          borderColor: 'white.dark',
+          borderRadius: 70,
+          my: 3,
+          _text: {
+            color: 'blue.dark',
+            fontFamily: 'heading',
+          },
+        },
         manage: {
           bg: 'red.light',
           borderRadius: 10,

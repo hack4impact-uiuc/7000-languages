@@ -10,6 +10,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import { colors, images } from 'theme'
 import { View, Pressable, StyleSheet } from 'react-native'
 import OwnershipButton from 'components/OwnershipButton'
+import LearnerButton from 'components/LearnerButton'
 import DrawerLogoutButton from 'components/DrawerLogoutButton'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import { getAllUserCourses } from 'utils/languageHelper'
@@ -89,7 +90,7 @@ const drawerStyles = StyleSheet.create({
 
 const Drawer = createDrawerNavigator()
 
-const tabColors = [colors.red.dark]
+const tabColors = [colors.red.dark, colors.blue.dark]
 
 const generateUnitLabel = (numUnits) => {
   // eslint-disable-next-line no-restricted-globals
@@ -107,6 +108,13 @@ const generateUnitLabel = (numUnits) => {
  * @param {Array} data Array of Course Data to use for each tab bar
  * @returns
  */
+
+const ApplyNow= () => (
+  <Drawer.Screen
+  
+  />
+)
+
 const generateContributorTabs = (tabData) => tabData.map((element, index) => (
   <Drawer.Screen
     key={element._id}
@@ -135,7 +143,7 @@ const generateContributorTabs = (tabData) => tabData.map((element, index) => (
         <FontAwesome
           name="square"
           size={45}
-          color={tabColors[index % tabColors.length]}
+          color={tabColors[0]}
         />
       ),
     })}
@@ -144,7 +152,7 @@ const generateContributorTabs = (tabData) => tabData.map((element, index) => (
 const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
   <Drawer.Screen
     key={element._id}
-    name={element._id}
+    name={element._id +"1"}
     component={TabNavigator}
     options={() => ({
       drawerLabel: () => (
@@ -162,14 +170,14 @@ const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
               {generateUnitLabel(element.num_units)}
             </Text>
           </View>
-          {element.isContributor ? <OwnershipButton isContributor /> : null}
+          {element.isContributor ? <LearnerButton isContributor /> : null}
         </View>
       ),
       drawerIcon: () => (
         <FontAwesome
           name="square"
           size={45}
-          color={tabColors[index % tabColors.length]}
+          color={tabColors[1]}
         />
       ),
     })}
@@ -306,6 +314,9 @@ const DrawerNavigator = () => {
       )}
     >
       {(() => generateContributorTabs(allCourses))()}
+      {(() => generateLearnerTabs(allCourses))()}
+
+
     </Drawer.Navigator>
   )
 }
