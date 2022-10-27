@@ -75,7 +75,6 @@ const LessonHome = ({ navigation }) => {
               imageURI: '',
               image: item.image,
             }
-            
 
             if (item.imageURI) {
               formattedItem.imageURI = item.imageURI
@@ -123,11 +122,7 @@ const LessonHome = ({ navigation }) => {
   /**
    * Navigates to the Vocab Drawer for adding a vocab item
    */
-  const navigateTo = () => {
-    // Since we aren't editing a vocab item, we need to clear the current vocab id
-    // dispatch(setField({ key: 'currentVocabId', value: '' }))
-    // navigation.navigate('Modal', { screen: 'VocabDrawer' })
-
+  const navigateToManage = () => {
     navigation.navigate('ManageVocab')
   }
 
@@ -148,7 +143,7 @@ const LessonHome = ({ navigation }) => {
       valueName="Vocab Items"
       rightIconName="pencil"
       buttonText="Manage Vocab"
-      buttonCallback={navigateTo}
+      buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
       data={data}
     />

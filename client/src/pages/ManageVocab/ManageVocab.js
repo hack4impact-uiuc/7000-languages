@@ -4,7 +4,7 @@ import ManageView from 'components/ManageView'
 
 import { useErrorWrap } from 'hooks'
 import { useSelector, useDispatch } from 'react-redux'
-import { setField } from 'slices/language.slice'
+import { updateVocabs, setField, updateNumVocab } from 'slices/language.slice'
 import { updateVocabItems } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
@@ -12,8 +12,10 @@ import { INDICATOR_TYPES } from 'utils/constants'
 const ManageVocab = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
-  const { lessonData, currentCourseId, currentLessonId } = useSelector((state) => state.language)
-  const allVocab = lessonData.vocab
+  const { lessonData, currentCourseId, currentLessonId } = useSelector(
+    (state) => state.language,
+  )
+  //   const allVocab = lessonData.vocab
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
 
@@ -23,8 +25,8 @@ const ManageVocab = ({ navigation }) => {
   useEffect(() => {
     let selectedList = []
     let unselectedList = []
-    for (let i = 0; i < allVocab.length; i += 1) {
-      const item = allVocab[i]
+    for (let i = 0; i < lessonData.vocab.length; i += 1) {
+      const item = lessonData.vocab[i]
 
       const formattedItem = {
         _id: item._id,
@@ -47,7 +49,7 @@ const ManageVocab = ({ navigation }) => {
 
     setSelected(selectedList)
     setUnselected(unselectedList)
-  }, [allVocab])
+  }, [lessonData.vocab])
 
   /**
    * Calls API in order to update vocab data
@@ -58,7 +60,7 @@ const ManageVocab = ({ navigation }) => {
     errorWrap(
       async () => {
         /* We need to iterate through allVocab, and update the selected and _order fields */
-        const updatedAllVocab = _.cloneDeep(allVocab)
+        const updatedAllVocab = _.cloneDeep(lessonData.vocab)
 
         for (let i = 0; i < selectedData.length; i += 1) {
           const updatedIdx = updatedAllVocab.findIndex(
@@ -77,9 +79,15 @@ const ManageVocab = ({ navigation }) => {
         }
 
         // Makes API request
-        await updateVocabItems(currentCourseId, currentLessonId, updatedAllVocab)
+        await updateVocabItems(
+          currentCourseId,
+          currentLessonId,
+          updatedAllVocab,
+        )
         // Updates Redux store
-        dispatch(setField({ key: 'lessonData.vocab', value: updatedAllVocab }))
+        dispatch(updateVocabs({ vocabItems: updatedAllVocab }))
+        // In the Redux store, updates the num_vocab field for the lesson that these vocab items belong to
+        dispatch(updateNumVocab({ numSelected: selectedData.length }))
       },
       () => {
         // on success, go back

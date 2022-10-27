@@ -106,21 +106,21 @@ router.post(
 /**
  * Updates the fields for multiple vocab items
  */
- router.put(
+router.put(
   '/',
   requireAuthentication,
   requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const { lesson_id, vocab_updates } = req.body;
     if (!lesson_id || !vocab_updates) {
-      return sendResponse(res, 400, "this data is missing or invalid");
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
     // Checks if the ids are valid
     const isValid = await checkIds({ lesson_id });
 
     if (!isValid) {
-      return sendResponse(res, 400, "the data is fucked");
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
     /* Get the lesson data from MongoDB */
@@ -147,7 +147,12 @@ router.post(
       }
     }
     await lesson.save();
-    return sendResponse(res, 200, 'Successfully updated vocab items', vocab_updates);
+    return sendResponse(
+      res,
+      200,
+      'Successfully updated vocab items',
+      vocab_updates,
+    );
   }),
 );
 module.exports = router;
