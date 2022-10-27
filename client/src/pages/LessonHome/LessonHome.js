@@ -165,14 +165,22 @@ const LessonHome = ({ navigation }) => {
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
+  const navigateToAdd = () => {
+    // Since we aren't editing a vocab item, we need to clear the current vocab id
+    dispatch(setField({ key: 'currentVocabId', value: '' }))
+    navigation.navigate('Modal', { screen: 'VocabDrawer' })
+  }
+
   return (
     <LanguageHome
       lessonDescription={lessonDescription}
       valueName={i18n.t('dict.lessonsPlural')}
       manageIconName="cog"
-      buttonCallback={navigateTo}
-      nextPageCallback={goToNextPage}
+      addButtonText="Add Vocab Item"
       data={data}
+      buttonCallback={navigateToManage}
+      nextPageCallback={goToNextPage}
+      addCallback={navigateToAdd}
     />
   )
 }
