@@ -107,7 +107,7 @@ const generateUnitLabel = (numUnits) => {
  * @param {Array} data Array of Course Data to use for each tab bar
  * @returns
  */
-const generateTabs = (tabData) => tabData.map((element, index) => (
+const generateContributorTabs = (tabData) => tabData.map((element, index) => (
   <Drawer.Screen
     key={element._id}
     name={element._id}
@@ -141,7 +141,40 @@ const generateTabs = (tabData) => tabData.map((element, index) => (
     })}
   />
 ))
-
+const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
+  <Drawer.Screen
+    key={element._id}
+    name={element._id}
+    component={TabNavigator}
+    options={() => ({
+      drawerLabel: () => (
+        <View style={tabStyles.container}>
+          <View>
+            <Text
+              style={tabStyles.title}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
+            >
+              {element.name}
+            </Text>
+            <Text style={tabStyles.units}>
+              {generateUnitLabel(element.num_units)}
+            </Text>
+          </View>
+          {element.isContributor ? <OwnershipButton isContributor /> : null}
+        </View>
+      ),
+      drawerIcon: () => (
+        <FontAwesome
+          name="square"
+          size={45}
+          color={tabColors[index % tabColors.length]}
+        />
+      ),
+    })}
+  />
+))
 const DrawerMenuContainer = (props) => {
   const { state, ...rest } = props
   const newState = { ...state }
@@ -272,7 +305,7 @@ const DrawerNavigator = () => {
         />
       )}
     >
-      {(() => generateTabs(allCourses))()}
+      {(() => generateContributorTabs(allCourses))()}
     </Drawer.Navigator>
   )
 }
