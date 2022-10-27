@@ -38,8 +38,8 @@ const Vocab = new mongoose.Schema({
   translation: { type: String, required: true },
   image: { type: String, required: false, default: '' },
   audio: { type: String, required: false, default: '' },
-  notes: { type: String, required: false, default: '' },
   selected: { type: Boolean, required: true, default: false },
+  notes: { type: String, required: false, default: '' },
 });
 
 Vocab.index({ _order: 1 });
