@@ -26,6 +26,7 @@ module.exports.PATCH_VOCAB_ITEM_EXPECTED = {
   translation: 'This is a translation',
   image: ';1BU*FsGAg',
   audio: '_jQ`dG/6"r',
+  selected: false,
   notes: 'New test',
 };
 
@@ -36,6 +37,7 @@ module.exports.PATCH_VOCAB_ITEM_EXPECTED = {
   translation: 'et',
   image: 'f>AOAZ2,d{',
   audio: '<]N}3}!ai*',
+  selected: false,
   notes:
     'Deleniti quidem corporis eius. Accusamus est sed enim. Doloribus voluptas perspiciatis. Consequuntur et necessitatibus occaecati aspernatur debitis doloremque quos necessitatibus.',
 }),
@@ -60,6 +62,7 @@ module.exports.PATCH_VOCAB_ITEM_EXTRA_FIELDS_EXPECTED = {
   translation: 'This is a translation',
   image: 'new aws image link',
   audio: 'new aws audio link',
+  selected: false,
   notes:
     'Unde optio modi. Reiciendis dolorem atque. Et hic quia et qui error et sint libero et. Sapiente eum voluptatem beatae consequatur ut rerum similique. Eligendi qui aut velit. Voluptatem quisquam ipsa quas.',
 };
@@ -116,6 +119,7 @@ module.exports.PATCH_VOCAB_ITEM_INVALID_VOCAB_EXPECTED = {
   translation: 'provident',
   image: ';1BU*FsGAg',
   audio: '_jQ`dG/6"r',
+  selected: false,
   notes:
     'Illum repudiandae autem impedit omnis quaerat impedit ab. Harum sit quo autem expedita. Deleniti fugiat nulla. Et ipsam temporibus sit architecto. Atque ut mollitia dolorem.',
 };
@@ -135,6 +139,7 @@ module.exports.POST_FIRST_VOCAB_ITEM_EXPECTED = {
   translation: 'Hola',
   audio: '',
   image: '',
+  selected: false,
   notes: '',
 };
 
@@ -153,6 +158,7 @@ module.exports.POST_SECOND_VOCAB_ITEM_EXPECTED = {
   translation: 'Manana',
   audio: '',
   image: '',
+  selected: false,
   notes: '',
 };
 
@@ -164,6 +170,7 @@ module.exports.POST_DETAILED_VOCAB_ITEM = {
     translation: 'Hola',
     audio: 'some AWS Link',
     image: 'some AWS Link',
+    selected: false,
     notes:
       'Minus illo maiores ut laborum vitae soluta eaque est. Numquam atque nostrum rem in aspernatur debitis. Quis aut omnis optio nisi non consequatur autem quod quisquam. Sunt laboriosam quae sapiente ea doloremque.',
   },
@@ -175,6 +182,7 @@ module.exports.POST_DETAILED_VOCAB_ITEM_EXPECTED = {
   translation: 'Hola',
   audio: 'some AWS Link',
   image: 'some AWS Link',
+  selected: false,
   notes:
     'Minus illo maiores ut laborum vitae soluta eaque est. Numquam atque nostrum rem in aspernatur debitis. Quis aut omnis optio nisi non consequatur autem quod quisquam. Sunt laboriosam quae sapiente ea doloremque.',
 };
