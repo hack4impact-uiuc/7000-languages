@@ -6,6 +6,7 @@ import { colors } from 'theme'
 import { RECORDING } from 'utils/constants'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { View, Text } from 'native-base'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   incompleteView: {
@@ -197,7 +198,7 @@ const RecordAudioView = ({
             fontSize="xl"
             style={styles.recordAudioText}
           >
-            Record Audio
+            {i18n.t('actions.recordAudio')}
           </Text>
         </TouchableOpacity>
       )
