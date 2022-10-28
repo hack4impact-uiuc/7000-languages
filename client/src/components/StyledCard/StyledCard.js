@@ -65,7 +65,7 @@ const StyledCard = ({
   volumeIconCallback,
   width,
   height,
-  isPressed
+  isPressed,
 }) => {
   const generateLeftIcon = leftIcon ? (
     <Box style={styles.leftIcon}>{leftIcon}</Box>
@@ -152,6 +152,7 @@ StyledCard.propTypes = {
   volumeIconCallback: PropTypes.func,
   width: PropTypes.number,
   height: PropTypes.number,
+  isPressed: PropTypes.bool,
 }
 
 StyledCard.defaultProps = {
@@ -162,9 +163,10 @@ StyledCard.defaultProps = {
   indicatorType: INDICATOR_TYPES.NONE,
   imageURI: '',
   showVolumeIcon: false,
-  volumeIconCallback: () => { },
+  volumeIconCallback: () => {},
   width: 100,
   height: 70,
+  isPressed: false,
 }
 
 export default StyledCard
