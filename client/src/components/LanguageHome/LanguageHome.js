@@ -41,7 +41,8 @@ const LanguageHome = ({
   languageName,
   languageDescription,
   lessonDescription,
-  valueName,
+  singularItemText,
+  pluralItemText,
   manageButtonText,
   addButtonText,
   manageIconName,
@@ -72,6 +73,8 @@ const LanguageHome = ({
     })
   }
 
+  const itemTitle = renderData.length === 1 ? singularItemText : pluralItemText
+
   // Generates the Lesson Home Page
 
   if (isLessonHome) {
@@ -100,7 +103,7 @@ const LanguageHome = ({
             paddingTop={3}
             paddingLeft={5}
           >
-            {renderData.length} {i18n.t('dict.vocabItems')}
+            {`${renderData.length} ${itemTitle}`}
           </Text>
           <StyledButton
             title={i18n.t('actions.addNew')}
@@ -190,7 +193,7 @@ const LanguageHome = ({
           paddingTop={3}
           paddingLeft={5}
         >
-          {renderData.length} {valueName}
+          {`${renderData.length} ${itemTitle}`}
         </Text>
         <StyledButton
           title={manageButtonText}
@@ -258,7 +261,8 @@ LanguageHome.propTypes = {
   languageName: PropTypes.string,
   languageDescription: PropTypes.string,
   lessonDescription: PropTypes.string,
-  valueName: PropTypes.string,
+  singularItemText: PropTypes.string,
+  pluralItemText: PropTypes.string,
   manageButtonText: PropTypes.string,
   addButtonText: PropTypes.string,
   manageIconName: PropTypes.string,
@@ -274,7 +278,8 @@ LanguageHome.defaultProps = {
   languageName: '',
   languageDescription: '',
   lessonDescription: `${i18n.t('dialogue.setDescriptionPrompt')}`,
-  valueName: '',
+  singularItemText: '',
+  pluralItemText: '',
   manageButtonText: '',
   addButtonText: '',
   manageIconName: '',

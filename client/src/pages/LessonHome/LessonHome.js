@@ -171,7 +171,8 @@ const LessonHome = ({ navigation }) => {
     <LanguageHome
       isLessonHome
       lessonDescription={lessonDescription}
-      valueName={i18n.t('dict.lessonsPlural')}
+      singularItemText={i18n.t('dict.vocabItemSingle')}
+      pluralItemText={i18n.t('dict.vocabItemPlural')}
       manageIconName="cog"
       buttonCallback={navigateTo}
       nextPageCallback={goToNextPage}
