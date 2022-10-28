@@ -32,24 +32,26 @@ const UpdateUnit = ({ navigation }) => {
 
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
-  const { currentCourseId, currentUnitId, allUnits } = useSelector((state) => state.language)
+  const { currentCourseId, currentUnitId, allUnits } = useSelector(
+    (state) => state.language,
+  )
 
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
 
   // checks if all fields are filled
   // otherwise, the submit button is disabled
-  const areRequiredFieldsFilled = name !== '' && purpose !== '';
+  const areRequiredFieldsFilled = name !== '' && purpose !== ''
 
   useEffect(() => {
     const unitIndex = allUnits.findIndex(
       (element) => element._id === currentUnitId,
     )
-    const unitData = allUnits[unitIndex];
+    const unitData = allUnits[unitIndex]
 
-    setName(unitData.name);
-    setPurpose(unitData.description);
-  }, [currentUnitId, allUnits]);
+    setName(unitData.name)
+    setPurpose(unitData.description)
+  }, [currentUnitId, allUnits])
 
   /**
    * Posts a new unit to the API and saves the new unit in state
@@ -64,9 +66,9 @@ const UpdateUnit = ({ navigation }) => {
           selected: true,
         }
 
-        const { result } = await updateUnit(currentUnitId, newUnit);
+        const { result } = await updateUnit(currentUnitId, newUnit)
 
-        dispatch(patchSelectedUnit({ unit: result }));
+        dispatch(patchSelectedUnit({ unit: result }))
       },
       () => {
         // on success, close the modal
@@ -104,7 +106,7 @@ const UpdateUnit = ({ navigation }) => {
           </Text>
         </View>
 
-        <RequiredField title="Change your unit name" fontSize={'md'} />
+        <RequiredField title="Change your unit name" fontSize="md" />
         <Input
           size="xl"
           placeholder=""
@@ -113,7 +115,10 @@ const UpdateUnit = ({ navigation }) => {
           onChangeText={(text) => setName(text)}
         />
 
-        <RequiredField title="What is the purpose of this unit?" fontSize={'md'} />
+        <RequiredField
+          title="What is the purpose of this unit?"
+          fontSize="md"
+        />
         <TextArea
           size="xl"
           h={40}

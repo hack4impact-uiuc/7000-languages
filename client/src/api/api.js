@@ -35,13 +35,12 @@ export const updateCourse = async (courseID, updates) => {
     course_id: courseID,
     updates,
   }
-  const requestString = '/language/course'
-  const res = await instance.put(requestString, body)
+  const requestString = `/language/course/${courseID}`
+  const res = await instance.patch(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
-
 
 export const getCourse = async (courseID) => {
   const requestString = `/language/course/${courseID}`
@@ -70,9 +69,9 @@ export const createUnit = async (unit) => {
 }
 
 export const updateUnit = async (unitId, updates) => {
-  const body = updates;
+  const body = updates
 
-  const requestString = `/language/unit/${unitId}`;
+  const requestString = `/language/unit/${unitId}`
   const res = await instance.patch(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)

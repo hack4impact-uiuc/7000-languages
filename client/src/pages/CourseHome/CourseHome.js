@@ -11,8 +11,8 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
   const dispatch = useDispatch()
 
   const [data, setData] = useState([])
-  const [name, setName] = useState(courseName);
-  const [description, setDescription] = useState(courseDescription);
+  const [name, setName] = useState(courseName)
+  const [description, setDescription] = useState(courseDescription)
 
   /**
    * Updates the units presented in a list on this page
@@ -28,8 +28,9 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
         const formattedItem = {
           _id: item._id,
           name: item.name,
-          body: `${item.num_lessons} ${item.num_lessons === 1 ? 'Lesson' : 'Lessons'
-            }`,
+          body: `${item.num_lessons} ${
+            item.num_lessons === 1 ? 'Lesson' : 'Lessons'
+          }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
         }
@@ -44,13 +45,13 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
   }, [allUnits])
 
   useEffect(() => {
-    setName(courseDetails.name);
-    setDescription(courseDetails.description);
+    setName(courseDetails.name)
+    setDescription(courseDetails.description)
   }, [courseDetails])
 
   useEffect(() => {
-    setName(courseName);
-    setDescription(courseDescription);
+    setName(courseName)
+    setDescription(courseDescription)
   }, [courseName, courseDescription])
 
   /**
@@ -71,8 +72,8 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
   }
 
   /**
-* Navigates to the update unit modal
-*/
+   * Navigates to the update unit modal
+   */
   const navigateToUpdate = () => {
     navigation.navigate('Modal', { screen: 'UpdateCourse' })
   }

@@ -15,7 +15,9 @@ const UnitHome = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const { currentCourseId, currentUnitId, allLessons, allUnits } = useSelector(
+  const {
+    currentCourseId, currentUnitId, allLessons, allUnits,
+  } = useSelector(
     (state) => state.language,
   )
 
@@ -59,17 +61,16 @@ const UnitHome = ({ navigation }) => {
     const unitIndex = allUnits.findIndex(
       (element) => element._id === currentUnitId,
     )
-    const unitData = allUnits[unitIndex];
+    const unitData = allUnits[unitIndex]
 
     setUnitDescription(unitData.description)
     setUnitName(unitData.name)
 
     // Sets the title of the page
     navigation.setOptions({
-      title: "Unit",
+      title: 'Unit',
     })
-
-  }, [allUnits, currentUnitId]);
+  }, [allUnits, currentUnitId])
 
   /**
    * Formats the lesson data in order to be presented on this page
@@ -85,8 +86,9 @@ const UnitHome = ({ navigation }) => {
         const formattedItem = {
           _id: item._id,
           name: item.name,
-          body: `${item.num_vocab} Vocab ${item.num_vocab === 1 ? 'Item' : 'Items'
-            }`,
+          body: `${item.num_vocab} Vocab ${
+            item.num_vocab === 1 ? 'Item' : 'Items'
+          }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
         }

@@ -92,14 +92,21 @@ const languageSlice = createSlice({
       )
 
       for (var key in payload.lesson) {
-        if (key in state.allLessons[lessonIndex] && typeof state.allLessons[lessonIndex][key] === typeof payload.lesson[key]) {
-          state.allLessons[lessonIndex][key] = payload.lesson[key];
+        if (
+          key in state.allLessons[lessonIndex]
+          && typeof state.allLessons[lessonIndex][key]
+            === typeof payload.lesson[key]
+        ) {
+          state.allLessons[lessonIndex][key] = payload.lesson[key]
         }
       }
       // Update the data in lessonData
       for (var key in payload.lesson) {
-        if (key in state.lessonData && typeof state.lessonData[key] === typeof payload.lesson[key]) {
-          state.lessonData[key] = payload.lesson[key];
+        if (
+          key in state.lessonData
+          && typeof state.lessonData[key] === typeof payload.lesson[key]
+        ) {
+          state.lessonData[key] = payload.lesson[key]
         }
       }
     },
@@ -111,17 +118,24 @@ const languageSlice = createSlice({
       )
 
       for (var key in payload.course) {
-        if (key in state.allCourses[courseIndex] && typeof state.allCourses[courseIndex][key] === typeof payload.course[key]) {
-          state.allCourses[courseIndex][key] = payload.course[key];
+        if (
+          key in state.allCourses[courseIndex]
+          && typeof state.allCourses[courseIndex][key]
+            === typeof payload.course[key]
+        ) {
+          state.allCourses[courseIndex][key] = payload.course[key]
         }
       }
-    // Update the data in courseDetails
-    for (var key in payload.course) {
-      if (key in state.courseDetails && typeof state.courseDetails[key] === typeof payload.course[key]) {
-        state.courseDetails[key] = payload.course[key];
+      // Update the data in courseDetails
+      for (var key in payload.course) {
+        if (
+          key in state.courseDetails
+          && typeof state.courseDetails[key] === typeof payload.course[key]
+        ) {
+          state.courseDetails[key] = payload.course[key]
+        }
       }
-    }
-  },
+    },
 
     patchSelectedUnit: (state, { payload }) => {
       /* Patches the fields for a selected unit. This is called after submitting on <UpdateUnit/>. */
@@ -131,9 +145,12 @@ const languageSlice = createSlice({
         (element) => element._id === state.currentUnitId,
       )
 
-      for (var key in payload.unit) {
-        if (key in state.allUnits[unitIndex] && typeof state.allUnits[unitIndex][key] === typeof payload.unit[key]) {
-          state.allUnits[unitIndex][key] = payload.unit[key];
+      for (const key in payload.unit) {
+        if (
+          key in state.allUnits[unitIndex]
+          && typeof state.allUnits[unitIndex][key] === typeof payload.unit[key]
+        ) {
+          state.allUnits[unitIndex][key] = payload.unit[key]
         }
       }
     },
@@ -189,6 +206,7 @@ export const {
   updateVocab,
   patchSelectedLesson,
   patchSelectedUnit,
+  patchSelectedCourse,
   clear,
   resetField,
   clearCourseData,

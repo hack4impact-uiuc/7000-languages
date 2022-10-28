@@ -3,7 +3,7 @@ import {
   combineReducers,
   getDefaultMiddleware,
 } from '@reduxjs/toolkit'
-import logger from 'redux-logger'
+// import logger from 'redux-logger'
 import authReducer from './slices/auth.slice'
 import languageReducer from './slices/language.slice'
 import appReducer from './slices/app.slice'

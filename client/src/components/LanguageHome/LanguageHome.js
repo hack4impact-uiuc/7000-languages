@@ -137,7 +137,6 @@ const LanguageHome = ({
               fontSize={35}
               paddingLeft={5}
               paddingTop={5}
-
             >
               {lessonName}
             </Text>
@@ -148,10 +147,12 @@ const LanguageHome = ({
                 justifyContent: 'center',
                 marginRight: 20,
                 marginTop: 30,
-
               }}
-              name="ios-pencil" size={24} color={colors.white.dark} onPress={nextUpdate}>
-            </Ionicons>
+              name="ios-pencil"
+              size={24}
+              color={colors.white.dark}
+              onPress={nextUpdate}
+            />
           </View>
           <Text
             fontFamily="heading"
@@ -251,10 +252,12 @@ const LanguageHome = ({
               justifyContent: 'center',
               marginRight: 20,
               marginTop: 30,
-
             }}
-            name="ios-pencil" size={24} color={colors.white.dark} onPress={nextUpdate}>
-          </Ionicons>
+            name="ios-pencil"
+            size={24}
+            color={colors.white.dark}
+            onPress={nextUpdate}
+          />
         </View>
         <Text
           fontFamily="heading"
@@ -270,7 +273,6 @@ const LanguageHome = ({
         >
           {languageDescription}
         </Text>
-
       </View>
       <View style={styles.manageBar}>
         <Text
@@ -351,12 +353,12 @@ LanguageHome.defaultProps = {
   languageName: '',
   languageDescription: '',
   lessonDescription: '',
-  nextUpdate: () => { },
+  nextUpdate: () => {},
   valueName: '',
   buttonText: '',
   rightIconName: '',
-  buttonCallback: () => { },
-  nextPageCallback: () => { },
+  buttonCallback: () => {},
+  nextPageCallback: () => {},
   data: [],
 }
 

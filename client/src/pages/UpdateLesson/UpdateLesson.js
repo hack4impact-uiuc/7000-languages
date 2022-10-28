@@ -32,24 +32,26 @@ const UpdateLesson = ({ navigation }) => {
 
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
-  const { currentLessonId, currentCourseId, allLessons } = useSelector((state) => state.language)
+  const { currentLessonId, currentCourseId, allLessons } = useSelector(
+    (state) => state.language,
+  )
 
-  const [name, setName] = useState('');
-  const [purpose, setPurpose] = useState('');
+  const [name, setName] = useState('')
+  const [purpose, setPurpose] = useState('')
 
   // checks if all fields are filled
   // otherwise, the submit button is disabled
-  const areRequiredFieldsFilled = name !== '' && purpose !== '';
+  const areRequiredFieldsFilled = name !== '' && purpose !== ''
 
   useEffect(() => {
     const lessonIndex = allLessons.findIndex(
       (element) => element._id === currentLessonId,
     )
-    const lessonData = allLessons[lessonIndex];
+    const lessonData = allLessons[lessonIndex]
 
-    setName(lessonData.name);
-    setPurpose(lessonData.description);
-  }, [currentLessonId, allLessons]);
+    setName(lessonData.name)
+    setPurpose(lessonData.description)
+  }, [currentLessonId, allLessons])
 
   /**
    * Posts a new unit to the API and saves the new unit in state
@@ -57,18 +59,21 @@ const UpdateLesson = ({ navigation }) => {
   const success = async () => {
     errorWrap(
       async () => {
-        let updatedLessonItem = null;
+        let updatedLessonItem = null
         const updates = {
-          name: name,
+          name,
           description: purpose,
-
         }
 
-        const lessonItemResponse = await updateSingleLesson(currentLessonId, currentCourseId, updates)
-        updatedLessonItem = lessonItemResponse.result;
+        const lessonItemResponse = await updateSingleLesson(
+          currentLessonId,
+          currentCourseId,
+          updates,
+        )
+        updatedLessonItem = lessonItemResponse.result
 
         // Update lesson in Redux store
-        dispatch(patchSelectedLesson({ lesson: updatedLessonItem }));
+        dispatch(patchSelectedLesson({ lesson: updatedLessonItem }))
       },
       () => {
         // on success, close the modal
@@ -106,7 +111,7 @@ const UpdateLesson = ({ navigation }) => {
           </Text>
         </View>
 
-        <RequiredField title="Change your lesson name" fontSize={'md'} />
+        <RequiredField title="Change your lesson name" fontSize="md" />
         <Input
           size="xl"
           placeholder=""
@@ -115,7 +120,10 @@ const UpdateLesson = ({ navigation }) => {
           onChangeText={(text) => setName(text)}
         />
 
-        <RequiredField title="What is the purpose of this lesson?" fontSize={'md'} />
+        <RequiredField
+          title="What is the purpose of this lesson?"
+          fontSize="md"
+        />
         <TextArea
           size="xl"
           h={40}

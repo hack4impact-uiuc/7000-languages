@@ -15,9 +15,9 @@ import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
 import UpdateLesson from 'pages/UpdateLesson'
 import UpdateUnit from 'pages/UpdateUnit'
+import UpdateCourse from 'pages/UpdateCourse'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
-import UpdateCourse from 'pages/UpdateCourse'
 
 // ------------------------------------
 // Constants

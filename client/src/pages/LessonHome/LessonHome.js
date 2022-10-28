@@ -47,7 +47,7 @@ const LessonHome = ({ navigation }) => {
         setLessonDescription(result.description)
         setLessonName(result.name)
         navigation.setOptions({
-          title: "Lesson",
+          title: 'Lesson',
         })
         dispatch(setField({ key: 'lessonData', value: result }))
       })
@@ -116,9 +116,9 @@ const LessonHome = ({ navigation }) => {
         setData(formattedVocabData)
       }
     }
-    setLessonName(lessonData.name);
-    setLessonDescription(lessonData.description);
-    getData();
+    setLessonName(lessonData.name)
+    setLessonDescription(lessonData.description)
+    getData()
   }, [lessonData])
 
   /**
@@ -142,8 +142,8 @@ const LessonHome = ({ navigation }) => {
   }
 
   /**
- * Navigates to the update unit modal
- */
+   * Navigates to the update unit modal
+   */
   const navigateToUpdate = () => {
     navigation.navigate('Modal', { screen: 'UpdateLesson' })
   }

@@ -477,8 +477,8 @@ const Apply = ({ navigation }) => {
               </View>
             </View>
           </ScrollView>
-        </View >
-      </View >
+        </View>
+      </View>
       <Box style={styles.termsText}>
         <StyledButton title="Submit" variant="primary" onPress={onSubmit} />
 
