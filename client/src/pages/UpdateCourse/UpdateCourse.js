@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import Drawer from 'components/Drawer'
 import { colors } from 'theme'
 import { Input, Text, TextArea } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
-import { patchSelectedLesson } from 'slices/language.slice'
-import { updateSingleLesson } from 'api'
+import { patchSelectedCourse } from 'slices/language.slice'
+import { updateCourse } from 'api'
 import { useSelector, useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
@@ -47,18 +47,18 @@ const UpdateCourse = ({ navigation }) => {
     const success = async () => {
         errorWrap(
             async () => {
-                let updatedLessonItem = null;
+                let updatedCourseItem = null;
                 const updates = {
                     name: name,
                     description: purpose,
 
                 }
 
-                const lessonItemResponse = await updateSingleLesson(currentLessonId, currentCourseId, updates)
-                updatedLessonItem = lessonItemResponse.result;
+                const courseItemResponse = await updateCourse(currentCourseId, updates)
+                updatedCourseItem = courseItemResponse.result;
 
                 // Update lesson in Redux store
-                dispatch(patchSelectedLesson({ lesson: updatedLessonItem }));
+                dispatch(patchSelectedCourse({ lesson: updatedCourseItem }));
             },
             () => {
                 // on success, close the modal

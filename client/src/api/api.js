@@ -30,6 +30,19 @@ export const createCourse = async (applicationData) => {
   return res.data
 }
 
+export const updateCourse = async (courseID, updates) => {
+  const body = {
+    course_id: courseID,
+    updates,
+  }
+  const requestString = '/language/lesson'
+  const res = await instance.put(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+
 export const getCourse = async (courseID) => {
   const requestString = `/language/course/${courseID}`
   const res = await instance.get(requestString)
