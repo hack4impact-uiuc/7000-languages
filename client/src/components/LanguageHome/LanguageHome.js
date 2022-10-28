@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native'
 import { colors } from 'theme'
 import PropTypes from 'prop-types'
-import { ScrollView, Text } from 'native-base'
+import { ScrollView, Text, Pressable } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
@@ -215,23 +215,34 @@ const LanguageHome = ({
           }}
         >
           {renderData.map((element, index) => (
-            <StyledCard
-              key={element._id}
-              leftIcon={<NumberBox number={index + 1} />}
-              titleText={element.name}
-              bodyText={element.body}
-              width={width * 0.97}
-              height={75}
-              indicatorType={element.indicatorType}
-              rightIcon={(
-                <MaterialCommunityIcons
-                  name="pencil"
-                  color="black"
-                  size={20}
-                  onPress={() => nextPageCallback(element)}
-                />
-              )}
-            />
+            <Pressable onPress={() => nextPageCallback(element)} key={element._id}
+            >
+              {({
+                isHovered,
+                isFocused,
+                isPressed
+              }) => {
+                return (
+                  <StyledCard
+                    key={element._id}
+                    leftIcon={<NumberBox number={index + 1} />}
+                    titleText={element.name}
+                    bodyText={element.body}
+                    width={width * 0.97}
+                    height={75}
+                    indicatorType={element.indicatorType}
+                    rightIcon={(
+                      <MaterialCommunityIcons
+                        name="chevron-right"
+                        color="black"
+                        size={40}
+                      />
+                    )}
+                    isPressed={isPressed}
+                  />
+                );
+              }}
+            </Pressable>
           ))}
         </View>
       </ScrollView>
@@ -278,9 +289,9 @@ LanguageHome.defaultProps = {
   manageButtonText: '',
   addButtonText: '',
   manageIconName: '',
-  buttonCallback: () => {},
-  nextPageCallback: () => {},
-  addCallback: () => {},
+  buttonCallback: () => { },
+  nextPageCallback: () => { },
+  addCallback: () => { },
   data: [],
 }
 
