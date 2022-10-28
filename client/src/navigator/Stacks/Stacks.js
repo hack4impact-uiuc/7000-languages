@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { colors } from 'theme'
 import Home from 'pages/Home'
 import Landing from 'pages/Landing'
+import SelectLanguage from 'pages/SelectLanguage'
 import VocabDrawer from 'pages/VocabDrawer'
 import CreateLesson from 'pages/CreateLesson'
 import CreateUnit from 'pages/CreateUnit'
@@ -62,17 +63,17 @@ More reading: https://reactnavigation.org/docs/stack-navigator/
 
 export const AuthNavigator = () => (
   <AuthStack.Navigator
-    initialRouteName="Landing"
+    initialRouteName="SelectLanguage"
     headerMode="screen"
     screenOptions={{
       headerShown: false,
     }}
   >
     <AuthStack.Screen
-      name="Landing"
-      component={Landing}
+      name="SelectLanguage"
+      component={SelectLanguage}
       options={() => ({
-        title: 'Landing',
+        title: 'SelectLanguage',
       })}
     />
   </AuthStack.Navigator>
