@@ -248,22 +248,7 @@ export const downloadImageFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
-    try {
-      await AsyncStorage.setItem(`${vocabId}/image`, uri)
-
-      const jsonLRU = await AsyncStorage.getItem('imageLRU')
-      const imageLRU = jsonLRU != null ? JSON.parse(jsonLRU) : []
-      const URI_index = imageLRU.indexOf(uri);
-      if(URI_index < 0) {
-        imageLRU.splice(0, 0, uri)
-      }
-      else{
-        
-      }
-
-    } catch (e) {
-      // saving error
-    }
+    await AsyncStorage.setItem(`${vocabId}/image`, uri)
     return uri
   } catch (e) {
     throw new Error(e.message)
