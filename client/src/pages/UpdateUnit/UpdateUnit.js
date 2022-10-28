@@ -5,7 +5,6 @@ import Drawer from 'components/Drawer'
 import { colors } from 'theme'
 import { Input, Text, TextArea } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
-
 import { useSelector, useDispatch } from 'react-redux'
 import { patchSelectedUnit } from 'slices/language.slice'
 import { updateUnit } from 'api'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import Drawer from 'components/Drawer'
@@ -28,11 +28,12 @@ const styles = StyleSheet.create({
 const UpdateCourse = ({ navigation }) => {
     const close = () => {
         navigation.goBack()
+        
     }
 
     const errorWrap = useErrorWrap()
     const dispatch = useDispatch()
-    const { currentLessonId, currentCourseId, allLessons } = useSelector((state) => state.language)
+    const { currentCourseId, allCourses } = useSelector((state) => state.language)
 
     const [name, setName] = useState('');
     const [purpose, setPurpose] = useState('');
@@ -41,24 +42,34 @@ const UpdateCourse = ({ navigation }) => {
     // otherwise, the submit button is disabled
     const areRequiredFieldsFilled = name !== '' && purpose !== '';
 
+    useEffect(() => {
+        const courseIndex = allCourses.findIndex(
+          (element) => element._id === currentCourseId,
+        )
+        const courseDetails = allCourses[courseIndex];
+    
+        setName(courseDetails.name);
+        setPurpose(courseDetails.alternative_name);
+      }, [currentCourseId, allCourses]);
     /**
-     * Posts a new unit to the API and saves the new unit in state
+     * Posts a new course to the API and saves the new course in state
      */
     const success = async () => {
+        
         errorWrap(
             async () => {
                 let updatedCourseItem = null;
                 const updates = {
                     name: name,
-                    description: purpose,
+                    alternative_name: purpose,
 
                 }
-
+                // error here is that the course is not being updated
                 const courseItemResponse = await updateCourse(currentCourseId, updates)
                 updatedCourseItem = courseItemResponse.result;
-
-                // Update lesson in Redux store
+                // Update course in Redux store
                 dispatch(patchSelectedCourse({ lesson: updatedCourseItem }));
+                
             },
             () => {
                 // on success, close the modal
@@ -105,7 +116,14 @@ const UpdateCourse = ({ navigation }) => {
                     onChangeText={(text) => setName(text)}
                 />
 
-                <RequiredField title="Change the alternative name" fontSize={'md'} />
+                <Text 
+                fontFamily="body"
+                  fontWeight="regular"
+                  color="black"
+                  fontStyle={"normal"}
+                  fontSize={"md"}
+                  paddingTop={2}
+                  >Change the alternative name for your course</Text>
                 <TextArea
                     size="xl"
                     h={40}

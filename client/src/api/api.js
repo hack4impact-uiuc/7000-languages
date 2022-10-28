@@ -35,7 +35,7 @@ export const updateCourse = async (courseID, updates) => {
     course_id: courseID,
     updates,
   }
-  const requestString = '/language/lesson'
+  const requestString = '/language/course'
   const res = await instance.put(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
