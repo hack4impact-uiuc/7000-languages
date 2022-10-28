@@ -16,6 +16,7 @@ import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
 import { setField } from 'slices/language.slice'
 import { useDispatch, useSelector } from 'react-redux'
+import i18n from 'utils/i18n'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
 
@@ -96,9 +97,9 @@ const generateUnitLabel = (numUnits) => {
     return numUnits
   }
   if (parseInt(numUnits, 10) === 1) {
-    return '1 Unit'
+    return `${i18n.t('dict.unitSingle')}`
   }
-  return `${numUnits} Units`
+  return `${numUnits} ${i18n.t('dict.unitPlural')}`
 }
 
 /**
@@ -167,19 +168,17 @@ const DrawerMenuContainer = (props) => {
                 fontSize="sm"
                 textAlign="left"
               >
-                {
-                  'Do you know an indigenous language that you would like to share with the world?\n'
-                }
+                {`${i18n.t('dialogue.indigenousLanguagePrompt')} `}
                 <Text
                   fontFamily="heading"
                   fontWeight="regular"
                   fontStyle="normal"
                 >
-                  Become a contributor.
+                  {i18n.t('actions.becomeContributor')}
                 </Text>
               </Text>
               <StyledButton
-                title="Apply Now"
+                title={i18n.t('actions.applyNow')}
                 fontSize="sm"
                 onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
               />
@@ -222,7 +221,7 @@ const DrawerNavigator = () => {
   const { allCourses } = useSelector((state) => state.language)
 
   const [userEmail, setEmail] = useState('')
-  const [userName, setName] = useState('Loading...')
+  const [userName, setName] = useState(`${i18n.t('dialogue.loading')}`)
   const [profileUrl, setProfileUrl] = useState('')
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
