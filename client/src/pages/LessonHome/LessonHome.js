@@ -174,8 +174,9 @@ const LessonHome = ({ navigation }) => {
   return (
     <LanguageHome
       lessonDescription={lessonDescription}
-      valueName={i18n.t('dict.lessonsPlural')}
+      valueName={i18n.t('dict.lessonPlural')}
       manageIconName="cog"
+      manageButtonText={i18n.t('actions.manageVocab')}
       addButtonText="Add Vocab Item"
       data={data}
       buttonCallback={navigateToManage}
