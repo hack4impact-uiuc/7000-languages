@@ -8,12 +8,6 @@ import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import i18n from 'utils/i18n'
 
-// eslint-disable-next-line no-unused-vars
-import _, { clone } from 'lodash'
-
-// eslint-disable-next-line no-unused-vars
-import _, { clone } from 'lodash'
-
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
