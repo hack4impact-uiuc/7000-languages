@@ -9,10 +9,7 @@ import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { Audio } from 'expo-av'
 import { useErrorWrap } from 'hooks'
-<<<<<<< HEAD
-=======
 import i18n from 'utils/i18n'
->>>>>>> dev
 
 const { width } = Dimensions.get('window')
 
