@@ -6,6 +6,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
 import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
+import i18n from 'utils/i18n'
+
+// eslint-disable-next-line no-unused-vars
+import _, { clone } from 'lodash'
 
 // eslint-disable-next-line no-unused-vars
 import _, { clone } from 'lodash'
@@ -170,8 +174,8 @@ const LessonHome = ({ navigation }) => {
     <LanguageHome
       isLessonHome
       lessonDescription={lessonDescription}
-      valueName="Lessons"
-      rightIconName="plus-circle"
+      valueName={i18n.t('dict.lessonsPlural')}
+      manageIconName="cog"
       buttonCallback={navigateTo}
       nextPageCallback={goToNextPage}
       data={data}

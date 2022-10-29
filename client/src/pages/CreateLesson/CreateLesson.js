@@ -10,6 +10,7 @@ import { addLesson } from 'slices/language.slice'
 import { createLesson } from 'api'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   container: {
@@ -84,16 +85,14 @@ const CreateLesson = ({ navigation }) => {
             fontStyle="normal"
             color={colors.blue.dark}
           >
-            {' '}
-            Suggestion{' '}
+            {i18n.t('dict.suggestion')}
           </Text>
         </View>
         <Text color={colors.blue.dark} fontSize="md">
-          When creating a lesson, think about which vocab items will be
-          associated with the lesson and how it will be used.
+          {i18n.t('dialogue.createLessonDescription')}
         </Text>
       </View>
-      <RequiredField title="Give your lesson a name" />
+      <RequiredField title={i18n.t('dialogue.lessonNamePrompt')} />
       <Input
         size="xl"
         placeholder=""
@@ -101,7 +100,7 @@ const CreateLesson = ({ navigation }) => {
         onChangeText={(text) => setName(text)}
       />
 
-      <RequiredField title="What are the goals of this lesson?" />
+      <RequiredField title={i18n.t('dialogue.lessonGoalsPrompt')} />
       <TextArea
         size="xl"
         h={40}
@@ -116,8 +115,8 @@ const CreateLesson = ({ navigation }) => {
 
   return (
     <Drawer
-      titleText="Add Custom Lesson"
-      successText="Create Lesson"
+      titleText={i18n.t('actions.addCustomLesson')}
+      successText={i18n.t('actions.createLessonSingle')}
       successCallback={success}
       closeCallback={close}
       isDisabled={!areRequiredFieldsFilled}
