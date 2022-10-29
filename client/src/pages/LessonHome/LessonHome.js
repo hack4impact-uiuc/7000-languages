@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import LanguageHome from 'components/LanguageHome'
 import PropTypes from 'prop-types'
 
@@ -20,6 +20,15 @@ const LessonHome = ({ navigation }) => {
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
+  const mounted = useRef(false)
+
+  // Fixes the warning that we are setting the state of unmounted components in the call back functions for downloads
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+    }
+  }, [])
 
   /**
    * When going back from the Lesson Page to the Unit Page,
@@ -93,14 +102,10 @@ const LessonHome = ({ navigation }) => {
               item._id,
               fileType,
             ).then((value) => {
-              const updatedData = formattedVocabData.map((element) => {
-                if (element._id === formattedItem._id) {
-                  return { ...element, imageURI: value }
-                }
-                return element
-              })
-              setData(updatedData)
-              return value
+              if (mounted) {
+                formattedItem.imageURI = value
+                setData([...formattedVocabData])
+              }
             })
           }
 
@@ -122,14 +127,10 @@ const LessonHome = ({ navigation }) => {
               item._id,
               fileType,
             ).then((value) => {
-              const updatedData = formattedVocabData.map((element) => {
-                if (element._id === formattedItem._id) {
-                  return { ...element, audioURI: value }
-                }
-                return element
-              })
-              setData(updatedData)
-              return value
+              if (mounted) {
+                formattedItem.audioURI = value
+                setData([...formattedVocabData])
+              }
             })
           }
 
@@ -139,7 +140,6 @@ const LessonHome = ({ navigation }) => {
         const sortedData = formattedVocabData.sort(
           (a, b) => a._order - b._order,
         )
-
         setData(sortedData)
       }
     }
