@@ -69,8 +69,8 @@ const UpdateCourse = ({ navigation }) => {
         }
         */
         const updates = {
-            name,
-            alternative_name: purpose,
+          name,
+          alternative_name: purpose,
         }
         // error here is that the course is not being updated
         const courseItemResponse = await updateCourse(currentCourseId, updates)

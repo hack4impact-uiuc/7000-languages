@@ -19,7 +19,6 @@ const { models } = require('../models/index.js');
  */
 
 const requireAuthentication = async (req, res, next) => {
-  
   try {
     // Validate user using Google Auth ID Token
     const user = await getUserFromRequest(req);

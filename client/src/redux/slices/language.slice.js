@@ -116,14 +116,14 @@ const languageSlice = createSlice({
       const courseIndex = state.allCourses.findIndex(
         (element) => element._id === state.currentCourseId,
       )
-      
+
       for (var key in payload.course) {
         if (
           key in state.allCourses[courseIndex]
           && typeof state.allCourses[courseIndex][key]
             === typeof payload.course[key]
         ) {
-            state.allCourses[courseIndex][key] = payload.course[key]
+          state.allCourses[courseIndex][key] = payload.course[key]
         }
       }
       // Update the data in courseDetails
