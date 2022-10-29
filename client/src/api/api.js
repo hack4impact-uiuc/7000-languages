@@ -31,10 +31,7 @@ export const createCourse = async (applicationData) => {
 }
 
 export const updateCourse = async (courseID, updates) => {
-  const body = {
-    course_id: courseID,
-    updates,
-  }
+  const body = updates
   const requestString = `/language/course/${courseID}`
   const res = await instance.patch(requestString, body)
 
