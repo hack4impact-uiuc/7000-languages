@@ -74,7 +74,9 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
       languageName={courseName}
       languageDescription={courseDescription}
       manageButtonText={i18n.t('actions.manageUnits')}
-      addButtonText="Add Unit"
+      singularItemText={i18n.t('dict.unitSingle')}
+      pluralItemText={i18n.t('dict.unitPlural')}
+      addButtonText={i18n.t('actions.addUnit')}
       manageIconName="cog"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
