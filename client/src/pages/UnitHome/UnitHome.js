@@ -125,6 +125,7 @@ const UnitHome = ({ navigation }) => {
       languageDescription={unitDescription}
       valueName={i18n.t('dict.lessonPlural')}
       manageButtonText={i18n.t('actions.manageLessons')}
+      addButtonText="Add Lesson"
       manageIconName="cog"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}

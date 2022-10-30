@@ -447,10 +447,6 @@ const VocabDrawer = ({ navigation }) => {
     await audioRecording.stopAndUnloadAsync()
     const uri = audioRecording.getURI()
     setAudioRecording(uri)
-    setRecordingState(RECORDING.CONFIRMATION)
-  }
-
-  const confirmRecording = () => {
     setRecordingState(RECORDING.COMPLETE)
   }
 
@@ -521,7 +517,6 @@ const VocabDrawer = ({ navigation }) => {
       <Text color="gray.medium">
         {i18n.t('dialogue.itemDescriptionPrompt')}
       </Text>
-      {generateImageContainer()}
       <RequiredField title={translatedLanguage} />
       <Input
         placeholder=""
@@ -534,7 +529,6 @@ const VocabDrawer = ({ navigation }) => {
         startRecording={startRecording}
         stopRecording={stopRecording}
         playRecording={playRecording}
-        confirmRecording={confirmRecording}
         discardRecording={discardRecording}
         stopPlayingRecording={stopPlayingRecording}
       />
@@ -546,6 +540,9 @@ const VocabDrawer = ({ navigation }) => {
         onChangeText={(val) => setOriginalText(val)}
       />
       <Text>{i18n.t('dict.moreInfo')}</Text>
+      <Text fontSize="sm" color="gray.medium">
+        {i18n.t('dialogue.moreInfoPrompt')}
+      </Text>
       <TextArea
         size="2xl"
         h={40}
@@ -557,9 +554,7 @@ const VocabDrawer = ({ navigation }) => {
         value={additionalInformation}
         onChangeText={(val) => setAdditionalInformation(val)}
       />
-      <Text fontSize="sm" color="gray.medium">
-        {i18n.t('dialogue.moreInfoPrompt')}
-      </Text>
+      {generateImageContainer()}
     </>
   )
 

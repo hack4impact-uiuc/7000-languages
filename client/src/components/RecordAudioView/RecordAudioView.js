@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import StyledButton from 'components/StyledButton'
-import { FontAwesome } from '@expo/vector-icons'
+import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { colors } from 'theme'
 import { RECORDING } from 'utils/constants'
 import { StyleSheet, TouchableOpacity } from 'react-native'
@@ -62,10 +61,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     height: 50,
     borderRadius: 10,
-    paddingHorizontal: 10,
   },
-  completeLeftContainer: {
-    backgroundColor: colors.gray.light,
+  completeRightContainer: {
+    backgroundColor: '#D6D6D6',
     flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -82,7 +80,6 @@ const RecordAudioView = ({
   stopRecording,
   playRecording,
   discardRecording,
-  confirmRecording,
   stopPlayingRecording,
 }) => {
   const [seconds, setSeconds] = useState(0) // keeps track of how long the recording is in seconds
@@ -146,13 +143,6 @@ const RecordAudioView = ({
     stopPlayingRecording()
   }
 
-  const rerecord = () => {
-    reset()
-    setIsActive(true)
-    discardRecording()
-    startRecording()
-  }
-
   /**
    * Cleans up a number to be presented as a part of the timer
    */
@@ -175,7 +165,11 @@ const RecordAudioView = ({
         fontFamily="body"
         fontWeight="regular"
         fontStyle="normal"
-        color={colors.red.dark}
+        color={
+          recordingStage === RECORDING.IN_PROGRESS
+            ? colors.red.dark
+            : colors.gray.dark
+        }
         fontSize="2xl"
         style={styles.recordAudioText}
       >
@@ -206,7 +200,7 @@ const RecordAudioView = ({
       return (
         <View style={styles.inProgressView}>
           {generateTimeText()}
-          <FontAwesome
+          <MaterialCommunityIcons
             name="stop-circle"
             size={35}
             color={colors.red.dark}
@@ -214,88 +208,36 @@ const RecordAudioView = ({
           />
         </View>
       )
-    case RECORDING.CONFIRMATION:
-      return (
-        <View style={styles.confirmationView}>
-          <View style={styles.confirmationLeftContainer}>
-            {generateTimeText()}
-            {!isPlayActive ? (
-              <FontAwesome
-                name="play-circle"
-                size={35}
-                color={colors.black}
-                onPress={play}
-                style={styles.playButton}
-              />
-            ) : (
-              <FontAwesome
-                name="pause-circle"
-                size={35}
-                color={colors.black}
-                onPress={stopPlaying}
-                style={styles.playButton}
-              />
-            )}
-          </View>
-          <View style={styles.rightContainer}>
-            <FontAwesome
-              name="times-circle"
-              size={35}
-              color={colors.red.dark}
-              style={styles.cancelButton}
-              onPress={discardRecording}
-            />
-            <FontAwesome
-              name="check-circle"
-              size={35}
-              color={colors.green.medium}
-              onPress={confirmRecording}
-            />
-          </View>
-        </View>
-      )
     case RECORDING.COMPLETE:
       return (
         <View style={styles.completeView}>
-          <View style={styles.completeLeftContainer}>
+          <MaterialCommunityIcons
+            name="trash-can"
+            color={colors.red.dark}
+            size={35}
+            onPress={discardRecording}
+            style={{ paddingRight: 10 }}
+          />
+          <View style={styles.completeRightContainer}>
             {generateTimeText()}
             <View style={styles.rightContainer}>
-              <FontAwesome
-                name="times-circle"
-                size={35}
-                color={colors.red.dark}
-                style={styles.cancelButton}
-                onPress={discardRecording}
-              />
               {!isPlayActive ? (
-                <FontAwesome
+                <MaterialCommunityIcons
                   name="play-circle"
                   size={35}
-                  color={colors.black}
+                  color={colors.gray.dark}
                   onPress={play}
                 />
               ) : (
-                <FontAwesome
+                <MaterialCommunityIcons
                   name="pause-circle"
                   size={35}
-                  color={colors.black}
+                  color={colors.gray.dark}
                   onPress={stopPlaying}
                 />
               )}
             </View>
           </View>
-          <StyledButton
-            title="Re-record"
-            variant="small"
-            leftIcon={(
-              <FontAwesome
-                name="microphone"
-                size={25}
-                color={colors.red.dark}
-              />
-            )}
-            onPress={rerecord}
-          />
         </View>
       )
     default:
@@ -310,7 +252,6 @@ RecordAudioView.propTypes = {
   stopRecording: PropTypes.func,
   playRecording: PropTypes.func,
   discardRecording: PropTypes.func,
-  confirmRecording: PropTypes.func,
   stopPlayingRecording: PropTypes.func,
 }
 
@@ -320,7 +261,6 @@ RecordAudioView.defaultProps = {
   stopRecording: () => {},
   playRecording: () => {},
   discardRecording: () => {},
-  confirmRecording: () => {},
   stopPlayingRecording: () => {},
 }
 
