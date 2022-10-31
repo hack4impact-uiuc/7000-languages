@@ -14,6 +14,7 @@ import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
 import ManageVocab from 'pages/ManageVocab'
+import CourseSettings from 'pages/CourseSettings'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -166,6 +167,22 @@ export const HomeNavigator = ({ courseId }) => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
+  </Stack.Navigator>
+)
+
+export const SettingsNavigator = () => (
+  <Stack.Navigator
+    initialRouteName="CourseSettings"
+    headerMode="screen"
+    screenOptions={navigationProps}>
+    <Stack.Screen 
+      name="CourseSettings"
+      component={CourseSettings}
+      options={({ navigation }) => ({
+        title: '',
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
+      })} />
   </Stack.Navigator>
 )
 
