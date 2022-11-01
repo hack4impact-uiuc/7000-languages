@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import LanguageHome from 'components/LanguageHome'
 //import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types'
@@ -8,9 +8,6 @@ import { setField, resetField } from 'slices/language.slice'
 import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import i18n from 'utils/i18n'
-
-// eslint-disable-next-line no-unused-vars
-import _, { clone } from 'lodash'
 
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -22,6 +19,15 @@ const LessonHome = ({ navigation }) => {
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
+  const mounted = useRef(false)
+
+  // Fixes the warning that we are setting the state of unmounted components in the call back functions for downloads
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+    }
+  }, [])
 
   /**
    * When going back from the Lesson Page to the Unit Page,
@@ -66,7 +72,6 @@ const LessonHome = ({ navigation }) => {
     const getData = async () => {
       if (lessonData?.vocab) {
         const formattedVocabData = lessonData.vocab.map((item) => {
-
           console.log(item._id);
           //const imageUri = AsyncStorage.getItem(`${item._id}/image`)
           //const audioUri = AsyncStorage.getItem(`${item._id}/audio`)
@@ -100,14 +105,10 @@ const LessonHome = ({ navigation }) => {
               item._id,
               fileType,
             ).then((value) => {
-              const updatedData = formattedVocabData.map((element) => {
-                if (element._id === formattedItem._id) {
-                  return { ...element, imageURI: value }
-                }
-                return element
-              })
-              setData(updatedData)
-              return value
+              if (mounted) {
+                formattedItem.imageURI = value
+                setData([...formattedVocabData])
+              }
             })
           }
 
@@ -129,14 +130,10 @@ const LessonHome = ({ navigation }) => {
               item._id,
               fileType,
             ).then((value) => {
-              const updatedData = formattedVocabData.map((element) => {
-                if (element._id === formattedItem._id) {
-                  return { ...element, audioURI: value }
-                }
-                return element
-              })
-              setData(updatedData)
-              return value
+              if (mounted) {
+                formattedItem.audioURI = value
+                setData([...formattedVocabData])
+              }
             })
           }
 
@@ -146,7 +143,6 @@ const LessonHome = ({ navigation }) => {
         const sortedData = formattedVocabData.sort(
           (a, b) => a._order - b._order,
         )
-
         setData(sortedData)
       }
     }
