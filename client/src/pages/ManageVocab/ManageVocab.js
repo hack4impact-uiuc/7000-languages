@@ -32,7 +32,7 @@ const ManageVocab = ({ navigation }) => {
         _id: item._id,
         title: item.original,
         body: item.translation,
-        indicatorType: INDICATOR_TYPES.NONE, // TODO: remove hard-coded value
+        indicatorType: INDICATOR_TYPES.NONE,
         _order: item._order,
       }
 

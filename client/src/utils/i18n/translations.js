@@ -194,7 +194,7 @@ const translations = {
       editVocabItem: 'Modifier un élément de vocabulaire',
       addVocabItem: 'Ajouter un élément de vocabulaire',
       addNew: 'Ajouter un Nouveau',
-      manageVocab: 'Gérer les éléments de vocabulaire', 
+      manageVocab: 'Gérer les éléments de vocabulaire',
     },
     dialogue: {
       notLearnerPrompt:

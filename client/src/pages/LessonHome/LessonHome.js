@@ -64,7 +64,9 @@ const LessonHome = ({ navigation }) => {
   useEffect(() => {
     const getData = async () => {
       if (lessonData?.vocab) {
-        const formattedVocabData = lessonData.vocab.map((item) => {
+        // only attempt to display selected vocab items
+        const selectedData = lessonData.vocab.filter((item) => item.selected)
+        const formattedVocabData = selectedData.map((item) => {
           const formattedItem = {
             _id: item._id,
             name: item.original,
@@ -133,7 +135,6 @@ const LessonHome = ({ navigation }) => {
               return value
             })
           }
-
           return formattedItem
         })
 
@@ -148,7 +149,7 @@ const LessonHome = ({ navigation }) => {
   }, [lessonData])
 
   /**
-   * Navigates to the Vocab Drawer for adding a vocab item
+   * Navigates to the Manage Vocab Page
    */
   const navigateToManage = () => {
     navigation.navigate('ManageVocab')

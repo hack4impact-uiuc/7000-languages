@@ -12,7 +12,11 @@ const {
   SUCCESS_POSTING_VOCAB_DATA,
   NOT_FOUND_INDEX,
 } = require('../../utils/constants');
-const { getVocabIndexByID, checkIds } = require('../../utils/languageHelper');
+const {
+  getVocabIndexByID,
+  checkIds,
+  patchDocument,
+} = require('../../utils/languageHelper');
 
 /**
  * Updates the fields for a vocab item
@@ -135,16 +139,7 @@ router.put(
       }
 
       /* Using the index, apply changes to the lesson data */
-      let vocabData = lesson.vocab[vocabIndex];
-
-      for (var key in vocab_updates[i]) {
-        if (
-          key in vocabData &&
-          typeof vocabData[key] === typeof vocab_updates[i][key]
-        ) {
-          vocabData[key] = vocab_updates[i][key];
-        }
-      }
+      patchDocument(lesson.vocab[vocabIndex], vocab_updates[i]);
     }
     await lesson.save();
     return sendResponse(
