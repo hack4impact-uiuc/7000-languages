@@ -221,7 +221,7 @@ const DrawerNavigator = () => {
   const { allCourses } = useSelector((state) => state.language)
 
   const [userEmail, setEmail] = useState('')
-  const [userName, setName] = useState(`${i18n.t('dialogue.loading')}`)
+  const [userName, setName] = useState('')
   const [profileUrl, setProfileUrl] = useState('')
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
