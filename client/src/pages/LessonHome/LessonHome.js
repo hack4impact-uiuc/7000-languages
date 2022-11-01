@@ -175,7 +175,8 @@ const LessonHome = ({ navigation }) => {
   return (
     <LanguageHome
       lessonDescription={lessonDescription}
-      valueName={i18n.t('dict.lessonPlural')}
+      singularItemText={i18n.t('dict.vocabItemSingle')}
+      pluralItemText={i18n.t('dict.vocabItemPlural')}
       manageIconName="cog"
       manageButtonText={i18n.t('actions.manageVocab')}
       addButtonText="Add Vocab Item"
