@@ -190,7 +190,8 @@ export const downloadAudioFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
-    await AsyncStorage.setItem(`${vocabId}/audio`, uri)
+    console.log("vocabid: ", vocabId);
+    //await AsyncStorage.setItem(`${vocabId}/audio`, uri)
     return uri
   } catch (e) {
     throw new Error(e.message)
@@ -260,7 +261,7 @@ export const downloadImageFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
-    await AsyncStorage.setItem(`${vocabId}/image`, uri)
+    //await AsyncStorage.setItem(`${vocabId}/image`, uri)
     return uri
   } catch (e) {
     throw new Error(e.message)

@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import LanguageHome from 'components/LanguageHome'
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
-import { getLesson, downloadImageFile, downloadAudioFile, downloadAudioFile } from 'api'
+import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import i18n from 'utils/i18n'
-
-// eslint-disable-next-line no-unused-vars
-import _, { clone } from 'lodash'
 
 // eslint-disable-next-line no-unused-vars
 import _, { clone } from 'lodash'
@@ -69,14 +66,19 @@ const LessonHome = ({ navigation }) => {
     const getData = async () => {
       if (lessonData?.vocab) {
         const formattedVocabData = lessonData.vocab.map((item) => {
+
+          console.log(item._id);
+          //const imageUri = AsyncStorage.getItem(`${item._id}/image`)
+          //const audioUri = AsyncStorage.getItem(`${item._id}/audio`)
+
           const formattedItem = {
             _id: item._id,
             name: item.original,
             body: item.translation,
-            audioURI: '',
+            audioURI: /*audioUri === null ? '' : audioUri,*/ '',
             audio: item.audio !== '',
             _order: item._order,
-            imageURI: imageUri === null ? '' : imageUri,
+            imageURI: /*imageUri === null ? '' : imageUri,*/'',
             image: item.image,
           }
 
@@ -175,7 +177,8 @@ const LessonHome = ({ navigation }) => {
     <LanguageHome
       isLessonHome
       lessonDescription={lessonDescription}
-      valueName={i18n.t('dict.lessonsPlural')}
+      singularItemText={i18n.t('dict.vocabItemSingle')}
+      pluralItemText={i18n.t('dict.vocabItemPlural')}
       manageIconName="cog"
       buttonCallback={navigateTo}
       nextPageCallback={goToNextPage}
