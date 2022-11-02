@@ -206,6 +206,11 @@ export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
+  try {
+    await AsyncStorage.removeItem(`${vocabId}/audio`)
+  } catch (e) {
+    throw new Error(e.message)
+  }
   return body
 }
 
@@ -276,6 +281,11 @@ export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
 
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
+  }
+  try {
+    await AsyncStorage.removeItem(`${vocabId}/image`)
+  } catch (e) {
+    throw new Error(e.message)
   }
   return body
 }
