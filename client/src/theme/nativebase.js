@@ -143,9 +143,10 @@ const theme = extendTheme({
           bg: 'blue.light',
           borderColor: 'white.dark',
           borderRadius: 70,
-          w: "30%",
-          h:"6.5%",
-          mx: 5,
+          //w: "30%",
+          //h:"10%",
+          //mx: 5,
+          my:3,
           _text: {
             color: 'blue.dark',
             fontFamily: 'heading',

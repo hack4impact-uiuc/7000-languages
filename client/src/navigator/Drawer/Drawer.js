@@ -183,6 +183,7 @@ const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
               {generateUnitLabel(element.num_units)}
             </Text>
           </View>
+          {!element.isContributor ? <LearnerButton isContributor /> : null}
         </View>
       ),
       drawerIcon: () => (
@@ -211,7 +212,6 @@ const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
 ))
 const DrawerMenuContainer = (props) => {
   const { state, ...rest } = props
-  console.log(props)
   const newState = { ...state }
   const drawerApply = true
 
@@ -219,14 +219,10 @@ const DrawerMenuContainer = (props) => {
     <>
       <DrawerContentScrollView {...props}>
         <DrawerMenu {...props} />
-        {<LearnerButton isContributor />}
-
         <DrawerItemList state={newState} {...rest} />
 
         {drawerApply ? (
-          
           <View style={drawerStyles.container}>
-            
             <Pressable
               style={drawerStyles.pressable}
               forceInset={{
@@ -277,7 +273,7 @@ const DrawerNavigator = () => {
   const learnerCourses = allCourses.filter(element => {return element.isContributor === false;});
   const contributorCourses = allCourses.filter(element => {return element.isContributor === true;});
   const [userEmail, setEmail] = useState('')
-  const [userName, setName] = useState('')
+  const [userName, setName] = useState(`${i18n.t('dialogue.loading')}`)
   const [profileUrl, setProfileUrl] = useState('')
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
