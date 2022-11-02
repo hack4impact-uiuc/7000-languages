@@ -88,7 +88,7 @@ module.exports.POST_BERBER_VOCAB_ITEM_EXPECTED = {
   audio: '',
   image: '',
   notes: '',
-  selected: false,
+  selected: true,
 };
 
 module.exports.POST_BERBER_DETAILED_VOCAB_ITEM = {
