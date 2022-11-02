@@ -85,7 +85,7 @@ const LessonHome = ({ navigation }) => {
             audio: item.audio !== '',
             _order: item._order,
             imageURI: imageUri === null ? '' : imageUri,
-            image: item.image,
+            image: item.image !== '',
           }
 
           if (item.imageURI) {
@@ -108,7 +108,8 @@ const LessonHome = ({ navigation }) => {
             ).then((value) => {
               if (mounted) {
                 formattedItem.imageURI = value
-                setData(formattedVocabData)
+                //spread to force react to re-render so it thinks formattedVocabData is a new object
+                setData([...formattedVocabData])
               }
             })
           }
@@ -133,7 +134,7 @@ const LessonHome = ({ navigation }) => {
             ).then((value) => {
               if (mounted) {
                 formattedItem.audioURI = value
-                console.log("setdata");
+                //console.log("setdata");
                 setData([...formattedVocabData])
               }
             })

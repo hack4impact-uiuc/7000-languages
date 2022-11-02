@@ -198,6 +198,7 @@ const VocabDrawer = ({ navigation }) => {
         fileType,
       ).then((imageResponse) => {
         dispatch(updateVocab({ vocab: imageResponse.result }))
+        console.log("image deleted!")
       })
     }
   }
