@@ -143,7 +143,9 @@ const theme = extendTheme({
           bg: 'blue.light',
           borderColor: 'white.dark',
           borderRadius: 70,
-          my: 3,
+          w: "30%",
+          h:"6.5%",
+          mx: 5,
           _text: {
             color: 'blue.dark',
             fontFamily: 'heading',
@@ -157,6 +159,18 @@ const theme = extendTheme({
           mx: 5,
           _text: {
             color: 'red.dark',
+            fontFamily: 'heading',
+          },
+        },
+        account_info: {
+          bg: 'gray.300',
+          borderRadius: 10,
+          h: "6.5%",
+          minW: 100,
+          my: 3,
+          mx: 5,
+          _text: {
+            color: 'gray.dark',
             fontFamily: 'heading',
           },
         },

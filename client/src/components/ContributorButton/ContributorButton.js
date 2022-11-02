@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import StyledButton from 'components/StyledButton'
 
-const OwnershipButton = ({ isContributor }) => {
+const ContributorButton = ({ isContributor }) => {
   switch (isContributor) {
     case true:
       return (
@@ -14,12 +14,12 @@ const OwnershipButton = ({ isContributor }) => {
 }
 
 // Button object fields
-OwnershipButton.propTypes = {
+ContributorButton.propTypes = {
   isContributor: PropTypes.bool,
 }
 
-OwnershipButton.defaultProps = {
+ContributorButton.defaultProps = {
   isContributor: false,
 }
 
-export default OwnershipButton
+export default ContributorButton

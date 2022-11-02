@@ -9,9 +9,8 @@ import { Text, Image } from 'native-base'
 import { FontAwesome } from '@expo/vector-icons'
 import { colors, images } from 'theme'
 import { View, Pressable, StyleSheet } from 'react-native'
-import OwnershipButton from 'components/OwnershipButton'
+import ContributorButton from 'components/ContributorButton'
 import LearnerButton from 'components/LearnerButton'
-import DrawerLogoutButton from 'components/DrawerLogoutButton'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
@@ -90,7 +89,7 @@ const drawerStyles = StyleSheet.create({
 
 const Drawer = createDrawerNavigator()
 
-const tabColors = [colors.red.dark, colors.blue.dark]
+const tabColors = [colors.red.light, colors.red.dark, colors.blue.light, colors.blue.dark]
 
 const generateUnitLabel = (numUnits) => {
   // eslint-disable-next-line no-restricted-globals
@@ -136,15 +135,29 @@ const generateContributorTabs = (tabData) => tabData.map((element, index) => (
               {generateUnitLabel(element.num_units)}
             </Text>
           </View>
-          {element.isContributor ? <OwnershipButton isContributor /> : null}
+          {element.isContributor ? <ContributorButton isContributor /> : null}
         </View>
       ),
       drawerIcon: () => (
-        <FontAwesome
-          name="square"
-          size={45}
-          color={tabColors[0]}
-        />
+        <View style={{
+          position:"relative",
+          justifyContent:'center',
+          alignItems:"center",
+        }}>
+          <FontAwesome
+            name="square"
+            size={45}
+            icon = "user"
+            color={tabColors[0]}
+          />
+           <FontAwesome
+            name="globe"
+            size={25}
+            icon = "user"
+            color={tabColors[1]}
+            style={{position: 'absolute'}}
+          />
+          </View>
       ),
     })}
   />
@@ -152,7 +165,7 @@ const generateContributorTabs = (tabData) => tabData.map((element, index) => (
 const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
   <Drawer.Screen
     key={element._id}
-    name={element._id +"1"}
+    name={element._id}
     component={TabNavigator}
     options={() => ({
       drawerLabel: () => (
@@ -170,21 +183,35 @@ const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
               {generateUnitLabel(element.num_units)}
             </Text>
           </View>
-          {element.isContributor ? <LearnerButton isContributor /> : null}
         </View>
       ),
       drawerIcon: () => (
+      <View style={{
+        position:"relative",
+        justifyContent:'center',
+        alignItems:"center",
+      }}>
         <FontAwesome
           name="square"
           size={45}
-          color={tabColors[1]}
+          icon = "user"
+          color={tabColors[2]}
         />
+         <FontAwesome
+          name= "globe"
+          size={25}
+          icon = "user"
+          color={tabColors[3]}
+          style={{position: 'absolute'}}
+        />
+        </View>
       ),
     })}
   />
 ))
 const DrawerMenuContainer = (props) => {
   const { state, ...rest } = props
+  console.log(props)
   const newState = { ...state }
   const drawerApply = true
 
@@ -192,10 +219,14 @@ const DrawerMenuContainer = (props) => {
     <>
       <DrawerContentScrollView {...props}>
         <DrawerMenu {...props} />
+        {<LearnerButton isContributor />}
+
         <DrawerItemList state={newState} {...rest} />
 
         {drawerApply ? (
+          
           <View style={drawerStyles.container}>
+            
             <Pressable
               style={drawerStyles.pressable}
               forceInset={{
@@ -228,39 +259,23 @@ const DrawerMenuContainer = (props) => {
         ) : null}
       </DrawerContentScrollView>
       <View style={drawerStyles.topDivider} />
-      <View style={drawerStyles.bottomContainer}>
-        <Image
-          source={
-            props.profileUrl === ''
-              ? images.default_icon
-              : { uri: props.profileUrl }
-          }
-          alt="Profile Icon"
-          size="sm"
-          resizeMode="contain"
-          borderRadius={100}
-        />
-        <View style={drawerStyles.userInfoContainer}>
-          <Text
-            style={drawerStyles.userName}
-            fontFamily="heading"
-            fontWeight="regular"
-            fontStyle="normal"
-          >
-            {props.name}
-          </Text>
-          <Text style={drawerStyles.userEmail}>{props.email}</Text>
-        </View>
-      </View>
-      <View style={drawerStyles.bottomDivider} />
-      <DrawerLogoutButton />
+ 
+      <StyledButton
+                title={i18n.t('actions.accountInfo')}
+                fontSize="sm"
+                leftIcon =  {<FontAwesome name="user" size={20} color={colors.black} />
+              }
+                variant = "account_info"
+                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+              />
     </>
   )
 }
 
 const DrawerNavigator = () => {
   const { allCourses } = useSelector((state) => state.language)
-
+  const learnerCourses = allCourses.filter(element => {return element.isContributor === false;});
+  const contributorCourses = allCourses.filter(element => {return element.isContributor === true;});
   const [userEmail, setEmail] = useState('')
   const [userName, setName] = useState(`${i18n.t('dialogue.loading')}`)
   const [profileUrl, setProfileUrl] = useState('')
@@ -313,11 +328,12 @@ const DrawerNavigator = () => {
         />
       )}
     >
-      {(() => generateContributorTabs(allCourses))()}
-      {(() => generateLearnerTabs(allCourses))()}
+      {(() => generateLearnerTabs(learnerCourses))()}
+      {(() => generateContributorTabs(contributorCourses))()}
 
 
     </Drawer.Navigator>
+    
   )
 }
 

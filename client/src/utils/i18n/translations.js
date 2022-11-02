@@ -40,6 +40,7 @@ const translations = {
       notLeave: "Don't leave",
       saveChanges: 'Save Changes',
       recordAudio: 'Record Audio',
+      accountInfo: 'Account Info',
       applyNow: 'Apply Now',
       myCourses: 'My Courses',
       required: 'Required.',
