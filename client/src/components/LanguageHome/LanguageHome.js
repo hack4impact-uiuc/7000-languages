@@ -56,6 +56,7 @@ const LanguageHome = ({
 
   useEffect(() => {
     setRenderData(data)
+    //console.log("render data: ", data);
   }, [data])
 
   const playAudio = async (uri) => {

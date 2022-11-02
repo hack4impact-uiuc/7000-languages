@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import LanguageHome from 'components/LanguageHome'
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -71,19 +71,20 @@ const LessonHome = ({ navigation }) => {
   useEffect(() => {
     const getData = async () => {
       if (lessonData?.vocab) {
-        const formattedVocabData = lessonData.vocab.map((item) => {
-          console.log(item._id);
-          //const imageUri = AsyncStorage.getItem(`${item._id}/image`)
-          //const audioUri = AsyncStorage.getItem(`${item._id}/audio`)
+        let formattedVocabData = lessonData.vocab.map(async (item) => {
+          const imageUri = await AsyncStorage.getItem(`${item._id}/image`)
+          console.log("I: ",imageUri)
+          const audioUri = await AsyncStorage.getItem(`${item._id}/audio`)
+          console.log("A: ",audioUri)
 
           const formattedItem = {
             _id: item._id,
             name: item.original,
             body: item.translation,
-            audioURI: /*audioUri === null ? '' : audioUri,*/ '',
+            audioURI: audioUri === null ? '' : audioUri,
             audio: item.audio !== '',
             _order: item._order,
-            imageURI: /*imageUri === null ? '' : imageUri,*/'',
+            imageURI: imageUri === null ? '' : imageUri,
             image: item.image,
           }
 
@@ -107,7 +108,7 @@ const LessonHome = ({ navigation }) => {
             ).then((value) => {
               if (mounted) {
                 formattedItem.imageURI = value
-                setData([...formattedVocabData])
+                setData(formattedVocabData)
               }
             })
           }
@@ -132,6 +133,7 @@ const LessonHome = ({ navigation }) => {
             ).then((value) => {
               if (mounted) {
                 formattedItem.audioURI = value
+                console.log("setdata");
                 setData([...formattedVocabData])
               }
             })
@@ -139,7 +141,7 @@ const LessonHome = ({ navigation }) => {
 
           return formattedItem
         })
-
+        formattedVocabData = await Promise.all(formattedVocabData)
         const sortedData = formattedVocabData.sort(
           (a, b) => a._order - b._order,
         )
