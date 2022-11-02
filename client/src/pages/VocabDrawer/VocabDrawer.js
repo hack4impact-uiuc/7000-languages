@@ -102,17 +102,6 @@ const VocabDrawer = ({ navigation }) => {
         if (vocabItem.audioURI) {
           setAudioRecording(vocabItem.audioURI)
         } else if (vocabItem.audio !== '') {
-          const filePath = vocabItem.audio
-          const splitPath = filePath.split('.')
-
-          // Get the file type from the vocabItem's audio field
-          let fileType = 'm4a'
-
-          if (splitPath.length === 2) {
-            // eslint-disable-next-line prefer-destructuring
-            fileType = splitPath[1]
-          }
-
           // Downloads audio file and gets Filesystem uri
           const uri = await trackPromise(
             downloadAudioFile(
@@ -120,7 +109,6 @@ const VocabDrawer = ({ navigation }) => {
               currentUnitId,
               currentLessonId,
               currentVocabId,
-              fileType,
             ),
           )
 
@@ -132,16 +120,6 @@ const VocabDrawer = ({ navigation }) => {
         if (vocabItem.imageURI) {
           setImage(vocabItem.imageURI)
         } else if (vocabItem.image !== '') {
-          const filePath = vocabItem.image
-          const splitPath = filePath.split('.')
-
-          // Get the file type from the vocabItem's audio field
-          let fileType = 'jpg'
-
-          if (splitPath.length === 2) {
-            // eslint-disable-next-line prefer-destructuring
-            fileType = splitPath[1]
-          }
           // Downloads audio file and gets Filesystem uri
           const uri = await trackPromise(
             downloadImageFile(
@@ -149,7 +127,6 @@ const VocabDrawer = ({ navigation }) => {
               currentUnitId,
               currentLessonId,
               currentVocabId,
-              fileType,
             ),
           )
 

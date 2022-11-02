@@ -199,8 +199,8 @@ export const downloadAudioFile = async (
 export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
   const requestString = `/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
-  const body = JSON.parse(res.body)
 
+  const body = res.data
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
@@ -269,8 +269,7 @@ export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
   const requestString = `/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
 
-  const body = JSON.parse(res.body)
-
+  const body = res.data
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
