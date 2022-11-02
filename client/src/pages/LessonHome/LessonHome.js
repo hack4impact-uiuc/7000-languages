@@ -149,8 +149,10 @@ const LessonHome = ({ navigation }) => {
   /**
    * Navigates to the Manage Vocab Page
    */
-  const navigateToManage = () => {
-    navigation.navigate('ManageVocab')
+  const navigateTo = () => {
+    // Since we aren't editing a vocab item, we need to clear the current vocab id
+    dispatch(setField({ key: 'currentVocabId', value: '' }))
+    navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
   /**
@@ -164,24 +166,16 @@ const LessonHome = ({ navigation }) => {
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
-  const navigateToAdd = () => {
-    // Since we aren't editing a vocab item, we need to clear the current vocab id
-    dispatch(setField({ key: 'currentVocabId', value: '' }))
-    navigation.navigate('Modal', { screen: 'VocabDrawer' })
-  }
-
   return (
     <LanguageHome
+      isLessonHome
       lessonDescription={lessonDescription}
       singularItemText={i18n.t('dict.vocabItemSingle')}
       pluralItemText={i18n.t('dict.vocabItemPlural')}
       manageIconName="cog"
-      manageButtonText={i18n.t('actions.manageVocab')}
-      addButtonText="Add Vocab Item"
-      data={data}
-      buttonCallback={navigateToManage}
+      buttonCallback={navigateTo}
       nextPageCallback={goToNextPage}
-      addCallback={navigateToAdd}
+      data={data}
     />
   )
 }
