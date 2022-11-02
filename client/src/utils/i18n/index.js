@@ -1,17 +1,23 @@
-// imports to test localization
-// import { Localization } from 'expo-localization'
 import { I18n } from 'i18n-js'
 import translations from './translations'
 
 const i18n = new I18n(translations)
 
-// Set the locale once at the beginning of your app.
-// i18n.locale = Localization.locale
-// console.log({ Localization })
+/* This is a function to map the locale to an existing language on our languageData json object. i.e. fr_DZ -> fr */
+const convertLanguage = (locale) => {
+  var to_ret = ''
+  locale.indexOf('fr') >= 0 ? (to_ret = 'fr') : (to_ret = 'en')
+  return to_ret
+}
 
-// When a value is missing from a language it'll fallback to another language with the key present.
+import { NativeModules, Platform } from 'react-native'
+
+const locale =
+  Platform.OS === 'ios'
+    ? NativeModules.SettingsManager.settings.AppleLocale
+    : NativeModules.I18nManager.localeIdentifier
+
 i18n.enableFallback = true
-// To see the fallback mechanism uncomment line below to force app to use French language.
-i18n.locale = 'en'
+i18n.locale = convertLanguage(locale)
 
 export default i18n

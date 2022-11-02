@@ -76,6 +76,13 @@ export const AuthNavigator = () => (
         title: 'SelectLanguage',
       })}
     />
+    <AuthStack.Screen
+      name="Landing"
+      component={Landing}
+      options={() => ({
+        title: 'Landing',
+      })}
+    />
   </AuthStack.Navigator>
 )
 
@@ -136,6 +143,7 @@ export const HomeNavigator = ({ courseId }) => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
+
     <Stack.Screen
       name="ManageUnits"
       component={ManageUnits}

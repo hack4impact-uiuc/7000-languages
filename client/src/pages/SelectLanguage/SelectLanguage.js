@@ -18,6 +18,7 @@ import {
 import { createUser } from 'api'
 import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/landing-logo.svg'
+import PropTypes from 'prop-types'
 
 const styles = StyleSheet.create({
   root: {
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
 
 WebBrowser.maybeCompleteAuthSession()
 
-const SelectLanguage = () => {
+const SelectLanguage = ({ navigation }) => {
   /*
       Sources:
       https://docs.expo.dev/versions/latest/sdk/auth-session/
@@ -105,24 +106,65 @@ const SelectLanguage = () => {
 
       <Logo height={160} width={160} style={styles.logo} />
 
-      <View style={styles.textSection}>
+      <View style={styles.textSection} top="31%" width="97%">
         <Text
           fontWeight="normal"
           color="black"
           fontFamily="body"
           fontStyle="normal"
-          fontSize={`${window.height}` / 40}
+          fontSize={`${window.height}` / 45}
         >
-          Hello! Welcome to 7000 Languages
+          Hello!
         </Text>
         <Text
           fontWeight="normal"
           color="black"
           fontFamily="body"
           fontStyle="normal"
-          fontSize={`${window.height}` / 40}
+          fontSize={`${window.height}` / 45}
         >
-          Bonjour! Bienvenue sur 7000 Langues
+          Welcome to 7000 Languages
+        </Text>
+        <Text
+          fontWeight="bold"
+          color={colors.red.dark}
+          fontFamily="body"
+          fontStyle="normal"
+          fontSize={`${window.height}` / 60}
+          top="18%"
+        >
+          Proceed in English
+        </Text>
+      </View>
+
+      <View style={styles.textSection} top="55%" width="97%">
+        <Text
+          fontWeight="normal"
+          color="black"
+          fontFamily="body"
+          fontStyle="normal"
+          fontSize={`${window.height}` / 45}
+        >
+          Bonjour!
+        </Text>
+        <Text
+          fontWeight="normal"
+          color="black"
+          fontFamily="body"
+          fontStyle="normal"
+          fontSize={`${window.height}` / 45}
+        >
+          Bienvenue sur 7000 Langues
+        </Text>
+        <Text
+          fontWeight="bold"
+          color={colors.red.dark}
+          fontFamily="body"
+          fontStyle="normal"
+          fontSize={`${window.height}` / 60}
+          top="18%"
+        >
+          Procéder en français
         </Text>
       </View>
 
@@ -131,15 +173,29 @@ const SelectLanguage = () => {
         rightIcon={
           <AntDesign
             name="right"
-            size={`${window.height}` / 50}
+            size={`${window.height}` / 45}
             color={colors.white.light}
           />
         }
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
+        onPress={() => {
+          navigation.navigate('Landing', { from: 'SelectLanguage' })
+        }}
       />
     </View>
   )
+}
+
+// Home Base Case Object Fields
+SelectLanguage.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
+}
+
+SelectLanguage.defaultProps = {
+  navigation: { navigate: () => null },
 }
 
 export default SelectLanguage

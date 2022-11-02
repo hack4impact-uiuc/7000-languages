@@ -31,6 +31,7 @@ const translations = {
       yourName: 'Your Name',
       email: 'Email',
       languageName: 'Name of Language',
+      cancel: 'Cancel',
     },
     actions: {
       searchCourses: 'Search Courses',
@@ -61,7 +62,7 @@ const translations = {
       cancel: 'Cancel',
       updateImage: 'Update Image',
       removeImage: 'Remove Image',
-      addImage: 'AddImage',
+      addImage: 'Add Image',
       editVocabItem: 'Edit Vocab Item',
       addVocabItem: 'Add a Vocab Item',
       addNew: 'Add New',
@@ -159,6 +160,7 @@ const translations = {
       email: 'Courriel',
       languageName: 'Nom de la Langue',
       required: 'Requis',
+      cancel: 'annuler',
     },
     actions: {
       searchCourses: 'Recherche de cours',
