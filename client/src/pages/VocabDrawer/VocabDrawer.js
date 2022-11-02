@@ -279,6 +279,7 @@ const VocabDrawer = ({ navigation }) => {
             original: originalText,
             translation: translatedText,
             notes: additionalInformation,
+            selected: true,
           }
 
           // Updated vocab item text

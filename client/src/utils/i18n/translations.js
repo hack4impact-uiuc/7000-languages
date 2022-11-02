@@ -69,6 +69,7 @@ const translations = {
       editVocabItem: 'Edit Vocab Item',
       addVocabItem: 'Add a Vocab Item',
       addNew: 'Add New',
+      manageVocab: 'Manage Vocab',
     },
     dialogue: {
       notLearnerPrompt: "Looks like you aren't a learner in any courses yet.",
@@ -201,6 +202,7 @@ const translations = {
       editVocabItem: 'Modifier un élément de vocabulaire',
       addVocabItem: 'Ajouter un élément de vocabulaire',
       addNew: 'Ajouter un Nouveau',
+      manageVocab: 'Gérer les éléments de vocabulaire',
     },
     dialogue: {
       notLearnerPrompt:
