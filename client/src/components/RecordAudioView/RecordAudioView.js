@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   completeRightContainer: {
-    backgroundColor: '#D6D6D6',
+    backgroundColor: colors.gray.medium_darker,
     flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
