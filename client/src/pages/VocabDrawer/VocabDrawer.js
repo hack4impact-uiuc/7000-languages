@@ -409,7 +409,7 @@ const VocabDrawer = ({ navigation }) => {
         },
       },
       {
-        text: `${i18n.t('dict.cancel')}`,
+        text: `${i18n.t('actions.cancel')}`,
         style: 'cancel',
       },
     ])
@@ -436,7 +436,7 @@ const VocabDrawer = ({ navigation }) => {
         },
       },
       {
-        text: `${i18n.t('dict.cancel')}`,
+        text: `${i18n.t('actions.cancel')}`,
         style: 'cancel',
       },
     ])
