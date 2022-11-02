@@ -126,7 +126,6 @@ const UnitHome = ({ navigation }) => {
       singularItemText={i18n.t('dict.lessonSingle')}
       pluralItemText={i18n.t('dict.lessonPlural')}
       manageButtonText={i18n.t('actions.manageLessons')}
-      addButtonText="Add Lesson"
       manageIconName="cog"
       addButtonText={i18n.t('actions.addLesson')}
       buttonCallback={navigateToManage}
