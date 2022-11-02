@@ -26,9 +26,15 @@ const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 const ModalStack = createStackNavigator()
 
-const navigationProps = {
+const homeNavigationProps = {
   headerTintColor: 'white',
   headerStyle: { backgroundColor: colors.red.dark },
+  headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+}
+
+const settingsNavigationProps = {
+  headerTintColor: 'black',
+  headerStyle: { backgroundColor: 'white' },
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
 }
 
@@ -92,7 +98,7 @@ export const HomeNavigator = ({ courseId }) => (
   <Stack.Navigator
     initialRouteName="Home"
     headerMode="screen"
-    screenOptions={navigationProps}
+    screenOptions={homeNavigationProps}
   >
     <Stack.Screen
       name={courseId}
@@ -174,15 +180,17 @@ export const SettingsNavigator = () => (
   <Stack.Navigator
     initialRouteName="CourseSettings"
     headerMode="screen"
-    screenOptions={navigationProps}>
-    <Stack.Screen 
+    screenOptions={settingsNavigationProps}
+  >
+    <Stack.Screen
       name="CourseSettings"
       component={CourseSettings}
       options={({ navigation }) => ({
-        title: '',
-        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        title: 'Settings',
+        headerLeft: () => <BackButton navigation={navigation} color="black" />,
         cardStyle: { backgroundColor: 'white' },
-      })} />
+      })}
+    />
   </Stack.Navigator>
 )
 

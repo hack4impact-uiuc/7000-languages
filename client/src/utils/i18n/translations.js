@@ -31,6 +31,9 @@ const translations = {
       yourName: 'Your Name',
       email: 'Email',
       languageName: 'Name of Language',
+      public: 'Public',
+      private: 'Private',
+      privacy: 'Privacy',
     },
     actions: {
       searchCourses: 'Search Courses',
@@ -65,7 +68,6 @@ const translations = {
       editVocabItem: 'Edit Vocab Item',
       addVocabItem: 'Add a Vocab Item',
       addNew: 'Add New',
-      manageLessons: 'Manage Lessons',
     },
     dialogue: {
       notLearnerPrompt: "Looks like you aren't a learner in any courses yet.",
@@ -126,6 +128,8 @@ const translations = {
       itemDescriptionPrompt: 'A vocab item can be a word or phrase.',
       moreInfoPrompt:
         'Use this space to give additional information about the vocab item, such as grammatical and cultural information, usage, or additional translations/meanings.',
+      courseSettingsDescription:
+        'Here is the settings for you to manage your own course.',
     },
   },
   fr: {
@@ -160,6 +164,8 @@ const translations = {
       email: 'Courriel',
       languageName: 'Nom de la Langue',
       required: 'Requis',
+      public: 'Public',
+      private: 'Privé',
     },
     actions: {
       searchCourses: 'Recherche de cours',
@@ -194,7 +200,6 @@ const translations = {
       editVocabItem: 'Modifier un élément de vocabulaire',
       addVocabItem: 'Ajouter un élément de vocabulaire',
       addNew: 'Ajouter un Nouveau',
-      manageLessons: 'Gérer les leçons', 
     },
     dialogue: {
       notLearnerPrompt:
@@ -258,6 +263,8 @@ const translations = {
         'Un élément de vocabulaire peut être un mot ou une phrase.',
       moreInfoPrompt:
         "Utilisez cet espace pour donner des informations supplémentaires sur l'élément de vocabulaire, par exemple grammaticale et culturelle, l'usage, ou des traductions/significations traductions/significations supplémentaires.",
+      courseSettingsDescription:
+        'Voici les paramètres qui vous permettront de gérer votre propre cours.',
     },
   },
 }

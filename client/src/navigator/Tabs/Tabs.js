@@ -59,12 +59,7 @@ const TabNavigator = (navigationData) => (
         <HomeNavigator {...props} courseId={navigationData.route.name} />
       )}
     />
-    <Tab.Screen
-      name="Setting"
-      children={(props) => (
-        <SettingsNavigator />
-      )}
-    />
+    <Tab.Screen name="Setting" children={() => <SettingsNavigator />} />
   </Tab.Navigator>
 )
 
