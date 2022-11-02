@@ -277,7 +277,7 @@ const DrawerNavigator = () => {
   const learnerCourses = allCourses.filter(element => {return element.isContributor === false;});
   const contributorCourses = allCourses.filter(element => {return element.isContributor === true;});
   const [userEmail, setEmail] = useState('')
-  const [userName, setName] = useState(`${i18n.t('dialogue.loading')}`)
+  const [userName, setName] = useState('')
   const [profileUrl, setProfileUrl] = useState('')
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
