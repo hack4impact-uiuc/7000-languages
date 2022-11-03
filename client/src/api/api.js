@@ -204,7 +204,7 @@ export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
-  return body.result
+  return body
 }
 
 /* Image Endpoints */
@@ -273,5 +273,5 @@ export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
-  return body.result
+  return body
 }
