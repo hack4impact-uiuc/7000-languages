@@ -76,6 +76,7 @@ const LanguageHome = ({
   // Generates the Lesson Home Page
 
   if (isLessonHome) {
+    //renderData.forEach(element => console.log("It is ", element.imageURI))
     return (
       <>
         <View style={styles.top}>

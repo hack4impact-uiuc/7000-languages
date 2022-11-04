@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import LanguageHome from 'components/LanguageHome'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PropTypes from 'prop-types'
+import * as FileSystem from 'expo-file-system'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
@@ -73,20 +74,29 @@ const LessonHome = ({ navigation }) => {
       if (lessonData?.vocab) {
         let formattedVocabData = lessonData.vocab.map(async (item) => {
           const imageUri = await AsyncStorage.getItem(`${item._id}/image`)
-          console.log("I: ",imageUri)
+          //console.log("keys ", await AsyncStorage.getAllKeys())
+          if(imageUri == null)
+          {
+            item.image = ''
+          }
+          //console.log(imageUri)
           const audioUri = await AsyncStorage.getItem(`${item._id}/audio`)
-          console.log("A: ",audioUri)
+          //console.log("A: ",audioUri)
 
           const formattedItem = {
             _id: item._id,
             name: item.original,
             body: item.translation,
-            audioURI: audioUri === null ? '' : audioUri,
+            audioURI: audioUri == null ? item.audioURI : audioUri,
             audio: item.audio !== '',
             _order: item._order,
-            imageURI: imageUri === null ? '' : imageUri,
+            imageURI: imageUri == null ? item.imageURI : imageUri,
             image: item.image !== '',
           }
+
+          //console.log("Formatted is ", formattedItem.imageURI)
+          //console.log("Item is ", item.imageURI)
+          //console.log(imageUri == null)
 
           if (item.imageURI) {
             formattedItem.imageURI = item.imageURI
@@ -99,6 +109,7 @@ const LessonHome = ({ navigation }) => {
 
             // Need to fetch image uri
             // [TODO]: Add backend trackPromise()
+            console.log("Downloading ", formattedItem.name)
             downloadImageFile(
               currentCourseId,
               currentUnitId,
@@ -108,7 +119,7 @@ const LessonHome = ({ navigation }) => {
             ).then((value) => {
               if (mounted) {
                 formattedItem.imageURI = value
-                //spread to force react to re-render so it thinks formattedVocabData is a new object
+                // spread to force react to re-render so it thinks formattedVocabData is a new object
                 setData([...formattedVocabData])
               }
             })

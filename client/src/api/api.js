@@ -201,13 +201,13 @@ export const downloadAudioFile = async (
 export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
   const requestString = `/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
-  const body = JSON.parse(res.data)
 
+  const body = res.data
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
   try {
-    //await AsyncStorage.removeItem(`${vocabId}/audio`)
+    await AsyncStorage.removeItem(`${vocabId}/audio`)
   } catch (e) {
     throw new Error(e.message)
   }
@@ -265,6 +265,7 @@ export const downloadImageFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
+    //console.log("I downloaded an image!", vocabId, "to ", uri)
     await AsyncStorage.setItem(`${vocabId}/image`, uri)
     return uri
   } catch (e) {
@@ -275,23 +276,18 @@ export const downloadImageFile = async (
 /* Image Endpoints */
 export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
   const requestString = `/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`
+  const res = await instance.delete(requestString)
 
-console.log("got string!")
-
+  const body = res.data
+  if (!body.success || body.success === 'false') {
+    throw new Error(body.message)
+  }
   try {
-    console.log(`${vocabId}/image`, " got id!")
+    //console.log("The item here is ", await AsyncStorage.getItem(`${vocabId}/image`))
     await AsyncStorage.removeItem(`${vocabId}/image`)
-    console.log("Item removed!")
+    //console.log("Item removed!")
   } catch (e) {
     throw new Error(e.message)
   }
-
-  const body = await instance.delete(requestString)
-
-  /*if (!res.success || res.success === 'false') {
-    console.log("haha i'm throwing an error")
-    throw new Error(res.message)
-  }*/
-  
   return body
 }
