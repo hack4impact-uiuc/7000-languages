@@ -36,6 +36,8 @@ const translations = {
       public: 'Public',
       private: 'Private',
       privacy: 'Privacy',
+      deleteCourse: 'Delete Course',
+      securityCode: 'Security Code',
     },
     actions: {
       searchCourses: 'Search Courses',
@@ -173,6 +175,8 @@ const translations = {
       required: 'Requis',
       public: 'Public',
       private: 'Privé',
+      deleteCourse: 'Supprimer le cours',
+      securityCode: 'Code de sécurité',
     },
     actions: {
       searchCourses: 'Recherche de cours',
