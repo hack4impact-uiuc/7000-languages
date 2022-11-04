@@ -20,6 +20,8 @@ import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/landing-logo.svg'
 import PropTypes from 'prop-types'
 
+const [isEnglish, setIsEnglish] = useState(true)
+
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
@@ -107,30 +109,14 @@ const SelectLanguage = ({ navigation }) => {
       <Logo height={160} width={160} style={styles.logo} />
 
       <View style={styles.textSection} top="31%" width="97%">
-        <Text
-          fontWeight="normal"
-          color="black"
-          fontFamily="body"
-          fontStyle="normal"
-          fontSize={`${window.height}` / 45}
-        >
-          Hello!
-        </Text>
-        <Text
-          fontWeight="normal"
-          color="black"
-          fontFamily="body"
-          fontStyle="normal"
-          fontSize={`${window.height}` / 45}
-        >
+        <Text fontSize={`${window.height}` / 45}>Hello!</Text>
+        <Text fontSize={`${window.height}` / 45}>
           Welcome to 7000 Languages
         </Text>
         <Text
-          fontWeight="bold"
           color={colors.red.dark}
-          fontFamily="body"
-          fontStyle="normal"
           fontSize={`${window.height}` / 60}
+          fontWeight={isEnglish ? 'bold' : 'normal'}
           top="18%"
         >
           Proceed in English
@@ -138,30 +124,18 @@ const SelectLanguage = ({ navigation }) => {
       </View>
 
       <View style={styles.textSection} top="55%" width="97%">
+        <Text fontSize={`${window.height}` / 45}>Bonjour!</Text>
         <Text
-          fontWeight="normal"
           color="black"
           fontFamily="body"
-          fontStyle="normal"
-          fontSize={`${window.height}` / 45}
-        >
-          Bonjour!
-        </Text>
-        <Text
-          fontWeight="normal"
-          color="black"
-          fontFamily="body"
-          fontStyle="normal"
           fontSize={`${window.height}` / 45}
         >
           Bienvenue sur 7000 Langues
         </Text>
         <Text
-          fontWeight="bold"
           color={colors.red.dark}
-          fontFamily="body"
-          fontStyle="normal"
           fontSize={`${window.height}` / 60}
+          fontWeight={!isEnglish ? 'bold' : 'normal'}
           top="18%"
         >
           Procéder en français
