@@ -1,25 +1,13 @@
 import React, { useState } from 'react'
-import { StyleSheet, useWindowDimensions, View, Alert } from 'react-native'
+import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
-import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
-import * as Google from 'expo-google-app-auth'
-import { authenticate } from 'slices/auth.slice'
-import { useDispatch } from 'react-redux'
-import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
-import {
-  saveUserIDToken,
-  saveUserRefreshToken,
-  saveUserClientId,
-} from 'utils/auth'
-import { createUser } from 'api'
 import i18n from 'utils/i18n'
-import Logo from '../../../assets/images/landing-logo.svg'
 import PropTypes from 'prop-types'
-import { FontWeight } from 'react-native-svg'
+import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
   root: {
@@ -59,42 +47,6 @@ const styles = StyleSheet.create({
 WebBrowser.maybeCompleteAuthSession()
 
 const SelectLanguage = ({ navigation }) => {
-  /*
-      Sources:
-      https://docs.expo.dev/versions/latest/sdk/auth-session/
-      https://stackoverflow.com/questions/66966772/expo-auth-session-providers-google-google-useauthrequest
-    */
-  const dispatch = useDispatch()
-  const errorWrap = useErrorWrap()
-  const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
-
-  /*
-  const loginUser = async () => {
-    await errorWrap(async () => {
-      const config = {
-        iosClientId: Constants.manifest.extra.iosClientId,
-        androidClientId: Constants.manifest.extra.androidClientId,
-      }
-      const { idToken, refreshToken } = await Google.logInAsync(config)
-      const guid = Google.getPlatformGUID(config)
-      const clientId = `${guid}.apps.googleusercontent.com`
-      if (idToken !== undefined && refreshToken !== undefined) {
-        const userData = {
-          idToken,
-        }
-        // call API
-        await createUser(userData)
-        // Save to Secure Store
-        await saveUserIDToken(idToken)
-        await saveUserRefreshToken(refreshToken)
-        await saveUserClientId(clientId)
-        // Update Redux Store
-        dispatch(authenticate({ loggedIn: true }))
-      }
-    })
-  }
-  */
-
   const window = useWindowDimensions()
 
   const [isEnglish, setIsEnglish] = useState(true)
@@ -159,13 +111,13 @@ const SelectLanguage = ({ navigation }) => {
 
       <StyledButton
         title={isEnglish ? 'Next' : 'Suivant'}
-        rightIcon={
+        rightIcon={(
           <AntDesign
             name="right"
             size={`${window.height}` / 45}
             color={colors.white.light}
           />
-        }
+        )}
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
         onPress={() => {
