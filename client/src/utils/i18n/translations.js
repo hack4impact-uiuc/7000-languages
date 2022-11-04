@@ -38,12 +38,14 @@ const translations = {
       searchCourses: 'Search Courses',
       logOut: 'Log Out',
       becomeContributor: 'Become a contributor.',
+      startLearning: 'Start Learning!',
       manageUnits: 'Manage Units',
       notLeave: "Don't leave",
       saveChanges: 'Save Changes',
       recordAudio: 'Record Audio',
       accountInfo: 'Account Info',
       applyNow: 'Apply Now',
+      searchCourses: 'Search Courses',
       myCourses: 'My Courses',
       required: 'Required.',
       addCustomLesson: 'Add Custom Lesson',
@@ -85,6 +87,8 @@ const translations = {
       errorCaught: 'useErrorWrap(): error caught:',
       indigenousLanguagePrompt:
         'Do you know an indigenous language that you would like to share with the world?',
+      learnIndigenousLanguage:
+        'Do you want to learn about an indigenous language?',
       nameRequired: 'Name is required',
       emailRequired: 'Email is required',
       languageRequired: 'Language is required',

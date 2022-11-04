@@ -67,6 +67,18 @@ const theme = extendTheme({
             fontFamily: 'heading',
           },
         },
+        learner_primary: {
+          bg: 'blue.dark',
+          w: '90%',
+          my: 2,
+          px: 20,
+          py: 4,
+          _text: {
+            fontSize: '2xl',
+            color: 'white.dark',
+            fontFamily: 'heading',
+          },
+        },
         primary_short: {
           bg: 'red.dark',
           w: '67%',
@@ -75,6 +87,7 @@ const theme = extendTheme({
             fontFamily: 'heading',
           },
         },
+
         secondary: {
           bg: 'white.dark',
           w: '90%',

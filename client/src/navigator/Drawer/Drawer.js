@@ -108,11 +108,6 @@ const generateUnitLabel = (numUnits) => {
  * @returns
  */
 
-const ApplyNow= () => (
-  <Drawer.Screen
-  
-  />
-)
 
 const generateContributorTabs = (tabData) => tabData.map((element, index) => (
   <Drawer.Screen
@@ -162,6 +157,7 @@ const generateContributorTabs = (tabData) => tabData.map((element, index) => (
     })}
   />
 ))
+
 const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
   <Drawer.Screen
     key={element._id}
@@ -210,6 +206,94 @@ const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
     })}
   />
 ))
+const Learner= () => (
+  <Drawer.Screen
+  name = {"learner"}
+  component={TabNavigator}
+options={() => ({
+      drawerLabel: () => ((
+          <View style={drawerStyles.container}>
+            <Pressable
+              style={drawerStyles.pressable}
+              forceInset={{
+                top: 'always',
+                horizontal: 'never',
+              }}
+            >
+              <Text
+                fontWeight="regular"
+                color="gray.dark"
+                fontSize="sm"
+                textAlign="left"
+              >
+                {`${i18n.t('dialogue.learnIndigenousLanguage')} `}
+                <Text
+                  fontFamily="heading"
+                  fontWeight="regular"
+                  fontStyle="normal"
+                >
+                  {i18n.t('actions.startLearning')}
+                </Text>
+              </Text>
+              <StyledButton
+                title={i18n.t('actions.searchCourses')}
+                fontSize="sm"
+                variant = "learner_primary"
+                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+              />
+            </Pressable>
+          </View>
+        )
+              ),
+
+    })}
+  />
+)
+
+const ApplyNow= () => (
+  <Drawer.Screen
+    name={"h"}
+    component={TabNavigator}
+    options={() => ({
+      drawerLabel: () => ((
+          <View style={drawerStyles.container}>
+            <Pressable
+              style={drawerStyles.pressable}
+              forceInset={{
+                top: 'always',
+                horizontal: 'never',
+              }}
+            >
+              <Text
+                fontWeight="regular"
+                color="gray.dark"
+                fontSize="sm"
+                textAlign="left"
+              >
+                {`${i18n.t('dialogue.learnIndigenousLanguage')} `}
+                <Text
+                  fontFamily="heading"
+                  fontWeight="regular"
+                  fontStyle="normal"
+                >
+                  {i18n.t('actions.startLearning')}
+                </Text>
+              </Text>
+              <StyledButton
+                title={i18n.t('actions.searchCourses')}
+                fontSize="sm"
+                variant = "learner_primary"
+                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+              />
+            </Pressable>
+          </View>
+        )
+              ),
+
+    })}
+  />
+)
+
 const DrawerMenuContainer = (props) => {
   const { state, ...rest } = props
   const newState = { ...state }
@@ -259,8 +343,7 @@ const DrawerMenuContainer = (props) => {
       <StyledButton
                 title={i18n.t('actions.accountInfo')}
                 fontSize="sm"
-                leftIcon =  {<FontAwesome name="user" size={20} color={colors.black} />
-              }
+                leftIcon =  {<FontAwesome name="user" size={20} color={colors.black} />}
                 variant = "account_info"
                 onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
               />
@@ -324,8 +407,11 @@ const DrawerNavigator = () => {
         />
       )}
     >
+      {/* {(() => Learner())()} */}
       {(() => generateLearnerTabs(learnerCourses))()}
       {(() => generateContributorTabs(contributorCourses))()}
+      {(() => ApplyNow())()}
+
 
 
     </Drawer.Navigator>
