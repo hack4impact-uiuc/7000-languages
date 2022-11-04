@@ -84,11 +84,11 @@ const LessonHome = ({ navigation }) => {
             image: item.image,
           }
 
-            if (item.imageURI) {
-              formattedItem.imageURI = item.imageURI
-            } else if (item.image !== '') {
-              const filePath = item.image
-              const splitPath = filePath.split('.')
+          if (item.imageURI) {
+            formattedItem.imageURI = item.imageURI
+          } else if (item.image !== '') {
+            const filePath = item.image
+            const splitPath = filePath.split('.')
 
             // Get the file type from the vocabItem's image field
             const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
@@ -104,7 +104,7 @@ const LessonHome = ({ navigation }) => {
             ).then((value) => {
               if (mounted) {
                 formattedItem.imageURI = value
-                //spread to force react to re-render so it thinks formattedVocabData is a new object
+                // spread to force react to re-render so it thinks formattedVocabData is a new object
                 setData([...formattedVocabData])
               }
             })
