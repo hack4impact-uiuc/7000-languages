@@ -15,7 +15,7 @@ const ManageVocab = ({ navigation }) => {
   const { lessonData, currentCourseId, currentLessonId } = useSelector(
     (state) => state.language,
   )
-  //   const allVocab = lessonData.vocab
+  //   const allVocab = lessonData.vocabs
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
 
@@ -32,7 +32,7 @@ const ManageVocab = ({ navigation }) => {
         _id: item._id,
         title: item.original,
         body: item.translation,
-        indicatorType: INDICATOR_TYPES.NONE,
+        indicatorType: INDICATOR_TYPES.NONE, // TODO: remove hard-coded value
         _order: item._order,
       }
 

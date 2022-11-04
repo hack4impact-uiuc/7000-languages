@@ -3,12 +3,12 @@ export default ({ config }) => {
   return {
     ...config,
     extra: {
-      // apiURL: 'http://7000-languages-api-env.us-east-1.elasticbeanstalk.com', // Comment out if you want to connect to the local api
+      // apiURL: '', // Comment out if you want to connect to the local api
       apiDevelopmentPort: 3000,
       iosClientId:
-        '558041423211-ch1sug9t75hsu99suqf7h4tce4k49r6a.apps.googleusercontent.com',
+        '1534417123-ghavvlkgsmuc7nmu8o9d28se4e9s9cd1.apps.googleusercontent.com',
       androidClientId:
-        '558041423211-4aiqgrad83mti5jndej3cpt20rqlqrip.apps.googleusercontent.com',
+        '1534417123-gmng6jq2mvii7oa2gibcovt0cqpqk6fn.apps.googleusercontent.com',
     },
   }
 }

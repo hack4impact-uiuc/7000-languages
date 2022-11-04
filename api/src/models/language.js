@@ -40,6 +40,8 @@ const Vocab = new mongoose.Schema({
   audio: { type: String, required: false, default: '' },
   selected: { type: Boolean, required: true, default: true },
   notes: { type: String, required: false, default: '' },
+  selected: { type: Boolean, required: true, default: false },
+  notes: { type: String, required: false, default: '' },
 });
 
 Vocab.index({ _order: 1 });
