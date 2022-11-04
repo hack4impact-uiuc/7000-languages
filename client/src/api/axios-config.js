@@ -38,7 +38,7 @@ const addAuthHeader = async (config) => loadUserIDToken().then((idToken) => {
 const authRefresh = async (response) => {
   const status = response ? response.status : null
   if (status === 401) {
-    return refreshIDToken().then(async (newToken) => {
+    return refreshIDToken().then((newToken) => {
       if (newToken && !response.config.__isRetryRequest) {
         response.config.headers.Authorization = `Bearer ${newToken}`
         response.config.baseURL = undefined
