@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, useWindowDimensions, View } from 'react-native'
+import { StyleSheet, useWindowDimensions, View, Alert } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
@@ -19,8 +19,6 @@ import { createUser } from 'api'
 import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/landing-logo.svg'
 import PropTypes from 'prop-types'
-
-const [isEnglish, setIsEnglish] = useState(true)
 
 const styles = StyleSheet.create({
   root: {
@@ -98,6 +96,20 @@ const SelectLanguage = ({ navigation }) => {
 
   const window = useWindowDimensions()
 
+  const [isEnglish, setIsEnglish] = useState(true)
+
+  const handlePressEnglish = () => {
+    Alert.alert('Translating to English...')
+    i18n.locale = 'en'
+    setIsEnglish(true)
+  }
+
+  const handlePressFrench = () => {
+    Alert.alert('Translating to French...')
+    i18n.locale = 'fr'
+    setIsEnglish(false)
+  }
+
   return (
     <View style={styles.root}>
       <Image
@@ -114,10 +126,11 @@ const SelectLanguage = ({ navigation }) => {
           Welcome to 7000 Languages
         </Text>
         <Text
-          color={colors.red.dark}
+          color={isEnglish ? colors.red.dark : colors.black}
           fontSize={`${window.height}` / 60}
-          fontWeight={isEnglish ? 'bold' : 'normal'}
+          // fontWeight={isEnglish ? 'bold' : 'normal'}
           top="18%"
+          onPress={handlePressEnglish}
         >
           Proceed in English
         </Text>
@@ -133,10 +146,11 @@ const SelectLanguage = ({ navigation }) => {
           Bienvenue sur 7000 Langues
         </Text>
         <Text
-          color={colors.red.dark}
+          color={!isEnglish ? colors.red.dark : colors.black}
           fontSize={`${window.height}` / 60}
-          fontWeight={!isEnglish ? 'bold' : 'normal'}
+          // fontWeight={!isEnglish ? 'bold' : 'normal'}
           top="18%"
+          onPress={handlePressFrench}
         >
           Procéder en français
         </Text>
