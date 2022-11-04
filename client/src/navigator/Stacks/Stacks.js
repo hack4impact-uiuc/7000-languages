@@ -13,6 +13,7 @@ import PropTypes from 'prop-types'
 import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
+import ManageVocab from 'pages/ManageVocab'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -151,6 +152,16 @@ export const HomeNavigator = ({ courseId }) => (
       options={({ navigation }) => ({
         ...manageNavigationProps,
         title: 'Manage Lessons',
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <Stack.Screen
+      name="ManageVocab"
+      component={ManageVocab}
+      options={({ navigation }) => ({
+        ...manageNavigationProps,
+        title: 'Manage Vocab',
         headerLeft: () => <BackButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}

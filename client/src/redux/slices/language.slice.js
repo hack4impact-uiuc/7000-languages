@@ -73,8 +73,8 @@ const languageSlice = createSlice({
       const lessonIdx = state.allLessons.findIndex(
         (element) => element._id === state.currentLessonId,
       )
-      // The num_lessons field stores the total number of selected lessons,
-      // and since we increased this number by 1, we need to update num_lessons
+      // The num_vocab field stores the total number of selected vocab items,
+      // and since we increased this number by 1, we need to update num_vocab
       state.allLessons[lessonIdx].num_vocab += 1
     },
     updateVocab: (state, { payload }) => {
@@ -109,6 +109,15 @@ const languageSlice = createSlice({
       )
       state.allCourses[courseIdx].num_units = payload.numSelected
     },
+    updateNumVocab: (state, { payload }) => {
+      const lessonIdx = state.allLessons.findIndex(
+        (element) => element._id === state.currentLessonId,
+      )
+      state.allLessons[lessonIdx].num_vocab = payload.numSelected
+    },
+    updateVocabs: (state, { payload }) => {
+      state.lessonData.vocab = payload.vocabItems
+    },
     pushAudioURI: (state, { payload }) => {
       const { vocabId, uri } = payload
       const vocabIndex = state.lessonData.vocab.findIndex(
@@ -138,6 +147,8 @@ export const {
   clearCourseData,
   updateNumLessons,
   updateNumUnits,
+  updateVocabs,
+  updateNumVocab,
   pushAudioURI,
   pushImageURI,
 } = languageSlice.actions

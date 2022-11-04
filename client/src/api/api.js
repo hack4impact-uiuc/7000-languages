@@ -119,6 +119,19 @@ export const createVocabItem = async (courseID, lessonID, vocab) => {
   return res.data
 }
 
+export const updateVocabItems = async (courseID, lessonID, updates) => {
+  const body = {
+    course_id: courseID,
+    lesson_id: lessonID,
+    vocab_updates: updates,
+  }
+  const requestString = '/language/vocab'
+  const res = await instance.put(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 export const updateVocabItem = async (
   courseID,
   lessonID,

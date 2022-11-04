@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native'
 import { colors } from 'theme'
 import PropTypes from 'prop-types'
-import { ScrollView, Text } from 'native-base'
+import { ScrollView, Text, Pressable } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
@@ -41,7 +41,8 @@ const LanguageHome = ({
   languageName,
   languageDescription,
   lessonDescription,
-  valueName,
+  singularItemText,
+  pluralItemText,
   manageButtonText,
   addButtonText,
   manageIconName,
@@ -73,6 +74,8 @@ const LanguageHome = ({
     })
   }
 
+  const itemTitle = renderData.length === 1 ? singularItemText : pluralItemText
+
   // Generates the Lesson Home Page
 
   if (isLessonHome) {
@@ -102,7 +105,7 @@ const LanguageHome = ({
             paddingTop={3}
             paddingLeft={5}
           >
-            {renderData.length} {i18n.t('dict.vocabItems')}
+            {`${renderData.length} ${itemTitle}`}
           </Text>
           <StyledButton
             title={i18n.t('actions.addNew')}
@@ -192,7 +195,7 @@ const LanguageHome = ({
           paddingTop={3}
           paddingLeft={5}
         >
-          {renderData.length} {valueName}
+          {`${renderData.length} ${itemTitle}`}
         </Text>
         <StyledButton
           title={manageButtonText}
@@ -217,23 +220,30 @@ const LanguageHome = ({
           }}
         >
           {renderData.map((element, index) => (
-            <StyledCard
+            <Pressable
+              onPress={() => nextPageCallback(element)}
               key={element._id}
-              leftIcon={<NumberBox number={index + 1} />}
-              titleText={element.name}
-              bodyText={element.body}
-              width={width * 0.97}
-              height={75}
-              indicatorType={element.indicatorType}
-              rightIcon={(
-                <MaterialCommunityIcons
-                  name="pencil"
-                  color="black"
-                  size={20}
-                  onPress={() => nextPageCallback(element)}
+            >
+              {({ isPressed }) => (
+                <StyledCard
+                  key={element._id}
+                  leftIcon={<NumberBox number={index + 1} />}
+                  titleText={element.name}
+                  bodyText={element.body}
+                  width={width * 0.97}
+                  height={75}
+                  indicatorType={element.indicatorType}
+                  rightIcon={(
+                    <MaterialCommunityIcons
+                      name="chevron-right"
+                      color="black"
+                      size={40}
+                    />
+                  )}
+                  isPressed={isPressed}
                 />
               )}
-            />
+            </Pressable>
           ))}
         </View>
       </ScrollView>
@@ -260,7 +270,8 @@ LanguageHome.propTypes = {
   languageName: PropTypes.string,
   languageDescription: PropTypes.string,
   lessonDescription: PropTypes.string,
-  valueName: PropTypes.string,
+  singularItemText: PropTypes.string,
+  pluralItemText: PropTypes.string,
   manageButtonText: PropTypes.string,
   addButtonText: PropTypes.string,
   manageIconName: PropTypes.string,
@@ -276,7 +287,8 @@ LanguageHome.defaultProps = {
   languageName: '',
   languageDescription: '',
   lessonDescription: `${i18n.t('dialogue.setDescriptionPrompt')}`,
-  valueName: '',
+  singularItemText: '',
+  pluralItemText: '',
   manageButtonText: '',
   addButtonText: '',
   manageIconName: '',

@@ -174,7 +174,13 @@ router.delete(
         lesson.vocab[found].image = '';
 
         await lesson.save();
-        return sendResponse(res, 200, 'Success deleting the image file.', lesson.vocab[found]);
+
+        return sendResponse(
+          res,
+          200,
+          'Success deleting the image file.',
+          lesson.vocab[found],
+        );
       }
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }

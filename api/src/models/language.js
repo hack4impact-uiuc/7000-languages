@@ -38,6 +38,7 @@ const Vocab = new mongoose.Schema({
   translation: { type: String, required: true },
   image: { type: String, required: false, default: '' },
   audio: { type: String, required: false, default: '' },
+  selected: { type: Boolean, required: true, default: true },
   notes: { type: String, required: false, default: '' },
 });
 

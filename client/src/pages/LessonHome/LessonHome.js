@@ -72,6 +72,7 @@ const LessonHome = ({ navigation }) => {
   useEffect(() => {
     const getData = async () => {
       if (lessonData?.vocab) {
+        const selectedData = lessonData.vocab.filter((item) => item.selected)
         let formattedVocabData = lessonData.vocab.map(async (item) => {
           const imageUri = await AsyncStorage.getItem(`${item._id}/image`)
           //console.log("keys ", await AsyncStorage.getAllKeys())
@@ -119,7 +120,7 @@ const LessonHome = ({ navigation }) => {
             ).then((value) => {
               if (mounted) {
                 formattedItem.imageURI = value
-                // spread to force react to re-render so it thinks formattedVocabData is a new object
+                //spread to force react to re-render so it thinks formattedVocabData is a new object
                 setData([...formattedVocabData])
               }
             })
@@ -150,7 +151,6 @@ const LessonHome = ({ navigation }) => {
               }
             })
           }
-
           return formattedItem
         })
         formattedVocabData = await Promise.all(formattedVocabData)
@@ -164,12 +164,10 @@ const LessonHome = ({ navigation }) => {
   }, [lessonData])
 
   /**
-   * Navigates to the Vocab Drawer for adding a vocab item
+   * Navigates to the Manage Vocab Page
    */
-  const navigateTo = () => {
-    // Since we aren't editing a vocab item, we need to clear the current vocab id
-    dispatch(setField({ key: 'currentVocabId', value: '' }))
-    navigation.navigate('Modal', { screen: 'VocabDrawer' })
+  const navigateToManage = () => {
+    navigation.navigate('ManageVocab')
   }
 
   /**
@@ -183,16 +181,24 @@ const LessonHome = ({ navigation }) => {
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
+  const navigateToAdd = () => {
+    // Since we aren't editing a vocab item, we need to clear the current vocab id
+    dispatch(setField({ key: 'currentVocabId', value: '' }))
+    navigation.navigate('Modal', { screen: 'VocabDrawer' })
+  }
+
   return (
     <LanguageHome
-      isLessonHome
       lessonDescription={lessonDescription}
       singularItemText={i18n.t('dict.vocabItemSingle')}
       pluralItemText={i18n.t('dict.vocabItemPlural')}
       manageIconName="cog"
-      buttonCallback={navigateTo}
-      nextPageCallback={goToNextPage}
+      manageButtonText={i18n.t('actions.manageVocab')}
+      addButtonText="Add Vocab Item"
       data={data}
+      buttonCallback={navigateToManage}
+      nextPageCallback={goToNextPage}
+      addCallback={navigateToAdd}
     />
   )
 }
