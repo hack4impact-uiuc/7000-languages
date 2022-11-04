@@ -36,7 +36,7 @@ const ManageLessons = ({ navigation }) => {
             ? `${i18n.t('dict.itemSingle')}`
             : `${i18n.t('dict.itemPlural')}`
         }`,
-        indicatorType: INDICATOR_TYPES.NONE, // TODO: remove hard-coded value
+        indicatorType: INDICATOR_TYPES.NONE,
         _order: item._order,
       }
 
