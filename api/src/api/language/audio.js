@@ -178,9 +178,6 @@ router.delete(
         lesson.vocab[found].audio = '';
 
         await lesson.save();
-<<<<<<< HEAD
-        return sendResponse(res, 200, 'Success deleting the audio file.', lesson.vocab[found]);
-=======
 
         return sendResponse(
           res,
@@ -188,7 +185,6 @@ router.delete(
           'Success deleting the audio file.',
           lesson.vocab[found],
         );
->>>>>>> dev
       }
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
