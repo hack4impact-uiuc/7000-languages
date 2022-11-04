@@ -38,14 +38,12 @@ const addAuthHeader = async (config) => loadUserIDToken().then((idToken) => {
 const authRefresh = async (response) => {
   const status = response ? response.status : null
   if (status === 401) {
-    return refreshIDToken().then((newToken) => {
-      if (newToken) {
+    return refreshIDToken().then(async (newToken) => {
+      if (newToken && !response.config.__isRetryRequest) {
         response.config.headers.Authorization = `Bearer ${newToken}`
         response.config.baseURL = undefined
-        const retry_res = axios.request(response.config)
-        if (retry_res.status !== 401) {
-          return retry_res
-        }
+        response.config.__isRetryRequest = true
+        return instance.request(response.config)
       }
       // Unable to retrieve new idToken -> Prompt log in again
       store.dispatch(logout())
