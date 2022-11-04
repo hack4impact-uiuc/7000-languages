@@ -7,7 +7,7 @@ import {
 import StyledButton from 'components/StyledButton'
 import { Entypo } from '@expo/vector-icons'
 import { colors } from 'theme'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import * as ImagePicker from 'expo-image-picker'
 import { StyleSheet, Alert, ImageBackground } from 'react-native'
 import { Audio } from 'expo-av'
@@ -107,12 +107,9 @@ const VocabDrawer = ({ navigation }) => {
 
           let uri = ''
           const audioUri = await AsyncStorage.getItem(`${currentVocabId}/audio`)
-          if(audioUri != null)
-          {
+          if (audioUri != null) {
             uri = audioUri
-          }
-          else
-          {
+          } else {
             trackPromise(
               downloadAudioFile(
                 currentCourseId,
@@ -139,12 +136,9 @@ const VocabDrawer = ({ navigation }) => {
 
           let uri = ''
           const imageUri = await AsyncStorage.getItem(`${currentVocabId}/image`)
-          if(imageUri != null)
-          {
+          if (imageUri != null) {
             uri = imageUri
-          }
-          else
-          {
+          } else {
             trackPromise(
               downloadImageFile(
                 currentCourseId,

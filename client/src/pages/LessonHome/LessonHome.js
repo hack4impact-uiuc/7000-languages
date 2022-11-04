@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import LanguageHome from 'components/LanguageHome'
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import PropTypes from 'prop-types'
-import * as FileSystem from 'expo-file-system'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
@@ -73,7 +72,7 @@ const LessonHome = ({ navigation }) => {
     const getData = async () => {
       if (lessonData?.vocab) {
         const selectedData = lessonData.vocab.filter((item) => item.selected)
-        let formattedVocabData = lessonData.vocab.map(async (item) => {
+        let formattedVocabData = selectedData.map(async (item) => {
           const imageUri = await AsyncStorage.getItem(`${item._id}/image`)
           const audioUri = await AsyncStorage.getItem(`${item._id}/audio`)
 
@@ -108,7 +107,7 @@ const LessonHome = ({ navigation }) => {
             ).then((value) => {
               if (mounted) {
                 formattedItem.imageURI = value
-                //spread to force react to re-render so it thinks formattedVocabData is a new object
+                // spread to force react to re-render so it thinks formattedVocabData is a new object
                 setData([...formattedVocabData])
               }
             })
@@ -174,7 +173,7 @@ const LessonHome = ({ navigation }) => {
 
   return (
     <LanguageHome
-      //isLessonHome
+      // isLessonHome
       lessonDescription={lessonDescription}
       singularItemText={i18n.t('dict.vocabItemSingle')}
       pluralItemText={i18n.t('dict.vocabItemPlural')}
