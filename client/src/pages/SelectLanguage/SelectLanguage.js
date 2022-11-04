@@ -19,6 +19,7 @@ import { createUser } from 'api'
 import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/landing-logo.svg'
 import PropTypes from 'prop-types'
+import { FontWeight } from 'react-native-svg'
 
 const styles = StyleSheet.create({
   root: {
@@ -99,13 +100,13 @@ const SelectLanguage = ({ navigation }) => {
   const [isEnglish, setIsEnglish] = useState(true)
 
   const handlePressEnglish = () => {
-    Alert.alert('Translating to English...')
+    // Alert.alert('Translating to English...')
     i18n.locale = 'en'
     setIsEnglish(true)
   }
 
   const handlePressFrench = () => {
-    Alert.alert('Translating to French...')
+    // Alert.alert('Translating to French...')
     i18n.locale = 'fr'
     setIsEnglish(false)
   }
@@ -126,9 +127,9 @@ const SelectLanguage = ({ navigation }) => {
           Welcome to 7000 Languages
         </Text>
         <Text
-          color={isEnglish ? colors.red.dark : colors.black}
+          color={colors.red.dark}
           fontSize={`${window.height}` / 60}
-          // fontWeight={isEnglish ? 'bold' : 'normal'}
+          fontFamily={isEnglish ? 'heading' : 'body'}
           top="18%"
           onPress={handlePressEnglish}
         >
@@ -146,9 +147,9 @@ const SelectLanguage = ({ navigation }) => {
           Bienvenue sur 7000 Langues
         </Text>
         <Text
-          color={!isEnglish ? colors.red.dark : colors.black}
+          color={colors.red.dark}
           fontSize={`${window.height}` / 60}
-          // fontWeight={!isEnglish ? 'bold' : 'normal'}
+          fontFamily={!isEnglish ? 'heading' : 'body'}
           top="18%"
           onPress={handlePressFrench}
         >
@@ -157,7 +158,7 @@ const SelectLanguage = ({ navigation }) => {
       </View>
 
       <StyledButton
-        title="Next"
+        title={isEnglish ? 'Next' : 'Suivant'}
         rightIcon={
           <AntDesign
             name="right"
