@@ -7,6 +7,7 @@ import {
 import StyledButton from 'components/StyledButton'
 import { Entypo } from '@expo/vector-icons'
 import { colors } from 'theme'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker'
 import { StyleSheet, Alert, ImageBackground } from 'react-native'
 import { Audio } from 'expo-av'
@@ -103,14 +104,28 @@ const VocabDrawer = ({ navigation }) => {
           setAudioRecording(vocabItem.audioURI)
         } else if (vocabItem.audio !== '') {
           // Downloads audio file and gets Filesystem uri
-          const uri = await trackPromise(
-            downloadAudioFile(
-              currentCourseId,
-              currentUnitId,
-              currentLessonId,
-              currentVocabId,
-            ),
-          )
+
+          let uri = ''
+          const audioUri = await AsyncStorage.getItem(`${currentVocabId}/audio`)
+          if(audioUri != null)
+          {
+            uri = audioUri
+          }
+          else
+          {
+            trackPromise(
+              downloadAudioFile(
+                currentCourseId,
+                currentUnitId,
+                currentLessonId,
+                currentVocabId,
+              ).then((value) => {
+                uri = value
+                setAudioRecording(uri)
+                setRecordingState(RECORDING.COMPLETE)
+              }),
+            )
+          }
 
           setAudioRecording(uri)
           setRecordingState(RECORDING.COMPLETE)
@@ -120,15 +135,28 @@ const VocabDrawer = ({ navigation }) => {
         if (vocabItem.imageURI) {
           setImage(vocabItem.imageURI)
         } else if (vocabItem.image !== '') {
-          // Downloads audio file and gets Filesystem uri
-          const uri = await trackPromise(
-            downloadImageFile(
-              currentCourseId,
-              currentUnitId,
-              currentLessonId,
-              currentVocabId,
-            ),
-          )
+          // Downloads image file and gets Filesystem uri
+
+          let uri = ''
+          const imageUri = await AsyncStorage.getItem(`${currentVocabId}/image`)
+          if(imageUri != null)
+          {
+            uri = imageUri
+          }
+          else
+          {
+            trackPromise(
+              downloadImageFile(
+                currentCourseId,
+                currentUnitId,
+                currentLessonId,
+                currentVocabId,
+              ).then((value) => {
+                uri = value
+                setImage(uri)
+              }),
+            )
+          }
 
           setImage(uri)
         }
@@ -151,7 +179,7 @@ const VocabDrawer = ({ navigation }) => {
       const splitPath = path.split('.')
       const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
       setRecordingState(RECORDING.INCOMPLETE)
-      deleteAudioFile(
+      await deleteAudioFile(
         currentCourseId,
         currentUnitId,
         currentLessonId,
@@ -167,7 +195,7 @@ const VocabDrawer = ({ navigation }) => {
     if (path !== null) {
       const splitPath = path.split('.')
       const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
-      deleteImageFile(
+      await deleteImageFile(
         currentCourseId,
         currentUnitId,
         currentLessonId,

@@ -278,7 +278,6 @@ export const downloadImageFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
-    //console.log("I downloaded an image!", vocabId, "to ", uri)
     await AsyncStorage.setItem(`${vocabId}/image`, uri)
     return uri
   } catch (e) {
@@ -296,9 +295,7 @@ export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
     throw new Error(body.message)
   }
   try {
-    //console.log("The item here is ", await AsyncStorage.getItem(`${vocabId}/image`))
     await AsyncStorage.removeItem(`${vocabId}/image`)
-    //console.log("Item removed!")
   } catch (e) {
     throw new Error(e.message)
   }

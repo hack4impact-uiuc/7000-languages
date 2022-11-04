@@ -57,7 +57,6 @@ const LanguageHome = ({
 
   useEffect(() => {
     setRenderData(data)
-    //console.log("render data: ", data);
   }, [data])
 
   const playAudio = async (uri) => {
@@ -79,7 +78,6 @@ const LanguageHome = ({
   // Generates the Lesson Home Page
 
   if (isLessonHome) {
-    //renderData.forEach(element => console.log("It is ", element.imageURI))
     return (
       <>
         <View style={styles.top}>

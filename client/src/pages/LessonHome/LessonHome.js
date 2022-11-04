@@ -75,14 +75,7 @@ const LessonHome = ({ navigation }) => {
         const selectedData = lessonData.vocab.filter((item) => item.selected)
         let formattedVocabData = lessonData.vocab.map(async (item) => {
           const imageUri = await AsyncStorage.getItem(`${item._id}/image`)
-          //console.log("keys ", await AsyncStorage.getAllKeys())
-          if(imageUri == null)
-          {
-            item.image = ''
-          }
-          //console.log(imageUri)
           const audioUri = await AsyncStorage.getItem(`${item._id}/audio`)
-          //console.log("A: ",audioUri)
 
           const formattedItem = {
             _id: item._id,
@@ -95,10 +88,6 @@ const LessonHome = ({ navigation }) => {
             image: item.image !== '',
           }
 
-          //console.log("Formatted is ", formattedItem.imageURI)
-          //console.log("Item is ", item.imageURI)
-          //console.log(imageUri == null)
-
           if (item.imageURI) {
             formattedItem.imageURI = item.imageURI
           } else if (item.image !== '') {
@@ -110,7 +99,6 @@ const LessonHome = ({ navigation }) => {
 
             // Need to fetch image uri
             // [TODO]: Add backend trackPromise()
-            console.log("Downloading ", formattedItem.name)
             downloadImageFile(
               currentCourseId,
               currentUnitId,
@@ -126,9 +114,7 @@ const LessonHome = ({ navigation }) => {
             })
           }
 
-          if (item.audioURI) {
-            formattedItem.audioURI = item.audioURI
-          } else if (item.audio !== '') {
+          if (item.audio !== '') {
             const filePath = item.audio
             const splitPath = filePath.split('.')
 
@@ -146,7 +132,6 @@ const LessonHome = ({ navigation }) => {
             ).then((value) => {
               if (mounted) {
                 formattedItem.audioURI = value
-                //console.log("setdata");
                 setData([...formattedVocabData])
               }
             })
@@ -189,6 +174,7 @@ const LessonHome = ({ navigation }) => {
 
   return (
     <LanguageHome
+      //isLessonHome
       lessonDescription={lessonDescription}
       singularItemText={i18n.t('dict.vocabItemSingle')}
       pluralItemText={i18n.t('dict.vocabItemPlural')}
