@@ -48,11 +48,11 @@ const CourseSettings = () => {
           height="35%"
           onValueChange={setVisibility}
         >
-          <Select.Item label={i18n.t('dict.public')} value='public' />
-          <Select.Item label={i18n.t('dict.private')} value='private' />
+          <Select.Item label={i18n.t('dict.public')} value="public" />
+          <Select.Item label={i18n.t('dict.private')} value="private" />
         </Select>
       </View>
-      { visibility == 'private' && 
+      {visibility === 'private' && (
         <View style={styles.body}>
           <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
             {i18n.t('dict.securityCode')}
@@ -67,8 +67,8 @@ const CourseSettings = () => {
             {123456} {/* TODO: get this from the API */}
           </Text>
           <Divider />
-        </View> 
-      }
+        </View>
+      )}
       <StyledButton
         style={styles.delete}
         variant="settings"
