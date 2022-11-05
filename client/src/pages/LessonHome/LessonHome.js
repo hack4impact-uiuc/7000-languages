@@ -104,7 +104,7 @@ const LessonHome = ({ navigation }) => {
             ).then((value) => {
               if (mounted) {
                 formattedItem.imageURI = value
-                //spread to force react to re-render so it thinks formattedVocabData is a new object
+                // spread to force react to re-render so it thinks formattedVocabData is a new object
                 setData([...formattedVocabData])
               }
             })
