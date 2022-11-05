@@ -9,14 +9,13 @@ const styles = StyleSheet.create({
   description: {
     marginTop: 10,
     marginBottom: 20,
-    marginHorizontal: '3%', // i think there's a better way to do this
+    marginHorizontal: '3%',
     width: '95%',
     height: 'auto',
   },
   body: {
     marginHorizontal: '5%',
     width: '90%',
-    height: '40%',
   },
   delete: {
     position: 'absolute',
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
 })
 
 const CourseSettings = () => {
-  const [selected, setSelected] = useState('public') // TODO: get this from the API
+  const [visibility, setVisibility] = useState('public') // TODO: get this from the API
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.description}>
@@ -44,28 +43,32 @@ const CourseSettings = () => {
           {i18n.t('dict.privacy')}
         </Text>
         <Select
-          defaultValue={selected}
+          defaultValue={visibility}
           borderColor="black"
-          height="38%"
-          onValueChange={setSelected}
+          height="35%"
+          onValueChange={setVisibility}
         >
-          <Select.Item label={i18n.t('dict.private')} value="private" />
-          <Select.Item label={i18n.t('dict.public')} value="public" />
+          <Select.Item label={i18n.t('dict.public')} value='public' />
+          <Select.Item label={i18n.t('dict.private')} value='private' />
         </Select>
-        <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
-          {i18n.t('dict.securityCode')}
-        </Text>
-        <Text
-          fontFamily="body"
-          fontWeight="normal"
-          fontSize="2xl"
-          textAlign="right"
-          my="5"
-        >
-          {123456} {/* TODO: get this from the API */}
-        </Text>
-        <Divider />
       </View>
+      { visibility == 'private' && 
+        <View style={styles.body}>
+          <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
+            {i18n.t('dict.securityCode')}
+          </Text>
+          <Text
+            fontFamily="body"
+            fontWeight="normal"
+            fontSize="2xl"
+            textAlign="right"
+            my="5"
+          >
+            {123456} {/* TODO: get this from the API */}
+          </Text>
+          <Divider />
+        </View> 
+      }
       <StyledButton
         style={styles.delete}
         variant="settings"
