@@ -2,9 +2,9 @@
   "expoServerPort": 19000,
   "packagerPort": 19000,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://pm-pr6.ashayp22.client.exp.direct",
+  "packagerNgrokUrl": "https://pm-pr6.ashayp22.client.exp.direct",
+  "ngrokPid": 63991,
   "webpackServerPort": null,
   "devToolsPort": 19002
 }

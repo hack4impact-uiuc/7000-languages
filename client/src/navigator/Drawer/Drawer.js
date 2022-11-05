@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
-  DrawerItemList,
 } from '@react-navigation/drawer'
 import { Text, Image } from 'native-base'
 import { FontAwesome } from '@expo/vector-icons'
@@ -19,6 +18,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import i18n from 'utils/i18n'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
+import _ from 'lodash'
+import CustomDrawerItemList from './CustomDrawerItemList'
 
 const tabStyles = StyleSheet.create({
   container: {
@@ -40,7 +41,7 @@ const drawerStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginVertical: 10,
   },
   pressable: {
     alignItems: 'center',
@@ -130,29 +131,28 @@ const generateContributorTabs = (tabData) => tabData.map((element, index) => (
               {generateUnitLabel(element.num_units)}
             </Text>
           </View>
-          {element.isContributor ? <ContributorButton isContributor /> : null}
         </View>
       ),
       drawerIcon: () => (
         <View style={{
-          position:"relative",
-          justifyContent:'center',
-          alignItems:"center",
+          position: "relative",
+          justifyContent: 'center',
+          alignItems: "center",
         }}>
           <FontAwesome
             name="square"
             size={45}
-            icon = "user"
+            icon="user"
             color={tabColors[0]}
           />
-           <FontAwesome
+          <FontAwesome
             name="globe"
             size={25}
-            icon = "user"
+            icon="user"
             color={tabColors[1]}
-            style={{position: 'absolute'}}
+            style={{ position: 'absolute' }}
           />
-          </View>
+        </View>
       ),
     })}
   />
@@ -179,131 +179,118 @@ const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
               {generateUnitLabel(element.num_units)}
             </Text>
           </View>
-          {!element.isContributor ? <LearnerButton isContributor /> : null}
         </View>
       ),
       drawerIcon: () => (
-      <View style={{
-        position:"relative",
-        justifyContent:'center',
-        alignItems:"center",
-      }}>
-        <FontAwesome
-          name="square"
-          size={45}
-          icon = "user"
-          color={tabColors[2]}
-        />
-         <FontAwesome
-          name= "globe"
-          size={25}
-          icon = "user"
-          color={tabColors[3]}
-          style={{position: 'absolute'}}
-        />
+        <View style={{
+          position: "relative",
+          justifyContent: 'center',
+          alignItems: "center",
+        }}>
+          <FontAwesome
+            name="square"
+            size={45}
+            icon="user"
+            color={tabColors[2]}
+          />
+          <FontAwesome
+            name="globe"
+            size={25}
+            icon="user"
+            color={tabColors[3]}
+            style={{ position: 'absolute' }}
+          />
         </View>
       ),
     })}
   />
 ))
-const Learner= () => (
-  <Drawer.Screen
-  name = {"learner"}
-  component={TabNavigator}
-options={() => ({
-      drawerLabel: () => ((
-          <View style={drawerStyles.container}>
-            <Pressable
-              style={drawerStyles.pressable}
-              forceInset={{
-                top: 'always',
-                horizontal: 'never',
-              }}
-            >
-              <Text
-                fontWeight="regular"
-                color="gray.dark"
-                fontSize="sm"
-                textAlign="left"
-              >
-                {`${i18n.t('dialogue.learnIndigenousLanguage')} `}
-                <Text
-                  fontFamily="heading"
-                  fontWeight="regular"
-                  fontStyle="normal"
-                >
-                  {i18n.t('actions.startLearning')}
-                </Text>
-              </Text>
-              <StyledButton
-                title={i18n.t('actions.searchCourses')}
-                fontSize="sm"
-                variant = "learner_primary"
-                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
-              />
-            </Pressable>
-          </View>
-        )
-              ),
-
-    })}
-  />
-)
-
-const ApplyNow= () => (
-  <Drawer.Screen
-    name={"h"}
-    component={TabNavigator}
-    options={() => ({
-      drawerLabel: () => ((
-          <View style={drawerStyles.container}>
-            <Pressable
-              style={drawerStyles.pressable}
-              forceInset={{
-                top: 'always',
-                horizontal: 'never',
-              }}
-            >
-              <Text
-                fontWeight="regular"
-                color="gray.dark"
-                fontSize="sm"
-                textAlign="left"
-              >
-                {`${i18n.t('dialogue.learnIndigenousLanguage')} `}
-                <Text
-                  fontFamily="heading"
-                  fontWeight="regular"
-                  fontStyle="normal"
-                >
-                  {i18n.t('actions.startLearning')}
-                </Text>
-              </Text>
-              <StyledButton
-                title={i18n.t('actions.searchCourses')}
-                fontSize="sm"
-                variant = "learner_primary"
-                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
-              />
-            </Pressable>
-          </View>
-        )
-              ),
-
-    })}
-  />
-)
 
 const DrawerMenuContainer = (props) => {
-  const { state, ...rest } = props
+  const { state, learnerCourses, contributorCourses, ...rest } = props
   const newState = { ...state }
   const drawerApply = true
+
+  const learnerIds = learnerCourses.map((course) => course._id);
+
+  // const learnerState = _.cloneDeep(newState);
+  // learnerState.routeNames = learnerState.routeNames.filter((routeName) => learnerIds.includes(routeName));
+  // learnerState.routes = learnerState.routes.filter((routeObject) => learnerIds.includes(routeObject.name));
+
+  const contributorIds = contributorCourses.map((course) => course._id);
+
+  // const contributorState = _.cloneDeep(newState);
+  // contributorState.routeNames = contributorState.routeNames.filter((routeName) => contributorIds.includes(routeName));
+  // contributorState.routes = contributorState.routes.filter((routeObject) => contributorIds.includes(routeObject.name));
+  // contributorState.key = "";
+
+  // console.log("Learner state");
+  // contributorState.index = -1;
+  // console.log(learnerState);
+  // console.log("Contributor state");
+  // console.log(contributorState);
+
+  const middle = <>
+
+    <View style={drawerStyles.container}>
+      <Pressable
+        style={drawerStyles.pressable}
+        forceInset={{
+          top: 'always',
+          horizontal: 'never',
+        }}
+      >
+        <Text
+          fontWeight="regular"
+          color="gray.dark"
+          fontSize="sm"
+          textAlign="left"
+        >
+          {`${i18n.t('dialogue.learnIndigenousLanguage')} `}
+          <Text
+            fontFamily="heading"
+            fontWeight="regular"
+            fontStyle="normal"
+          >
+            {i18n.t('actions.startLearning')}
+          </Text>
+        </Text>
+        <StyledButton
+          title={i18n.t('actions.searchCourses')}
+          fontSize="sm"
+          variant="learner_primary"
+          onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+        />
+      </Pressable>
+    </View>
+
+    <StyledButton
+      title={"CONTRIBUTOR"}
+      fontSize={15}
+      variant="contributor"
+      onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+    />
+
+
+  </>
+
 
   return (
     <>
       <DrawerContentScrollView {...props}>
         <DrawerMenu {...props} />
-        <DrawerItemList state={newState} {...rest} />
+
+        <StyledButton
+          title={"LEARNER"}
+          fontSize={15}
+          variant="learner"
+          onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+        />
+
+        <CustomDrawerItemList state={newState} nameA={learnerIds} nameB={contributorIds} middle={middle} {...rest} />
+
+
+        {/* <DrawerItemList state={contributorState} {...rest} /> */}
 
         {drawerApply ? (
           <View style={drawerStyles.container}>
@@ -339,22 +326,22 @@ const DrawerMenuContainer = (props) => {
         ) : null}
       </DrawerContentScrollView>
       <View style={drawerStyles.topDivider} />
- 
+
       <StyledButton
-                title={i18n.t('actions.accountInfo')}
-                fontSize="sm"
-                leftIcon =  {<FontAwesome name="user" size={20} color={colors.black} />}
-                variant = "account_info"
-                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
-              />
+        title={i18n.t('actions.accountInfo')}
+        fontSize="sm"
+        leftIcon={<FontAwesome name="user" size={20} color={colors.black} />}
+        variant="account_info"
+        onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+      />
     </>
   )
 }
 
 const DrawerNavigator = () => {
   const { allCourses } = useSelector((state) => state.language)
-  const learnerCourses = allCourses.filter(element => {return element.isContributor === false;});
-  const contributorCourses = allCourses.filter(element => {return element.isContributor === true;});
+  const learnerCourses = allCourses.filter(element => { return element.isContributor === false; });
+  const contributorCourses = allCourses.filter(element => { return element.isContributor === true; });
   const [userEmail, setEmail] = useState('')
   const [userName, setName] = useState(`${i18n.t('dialogue.loading')}`)
   const [profileUrl, setProfileUrl] = useState('')
@@ -403,19 +390,16 @@ const DrawerNavigator = () => {
           email={userEmail}
           name={userName}
           profileUrl={profileUrl}
+          learnerCourses={learnerCourses}
+          contributorCourses={contributorCourses}
           {...props}
         />
       )}
     >
-      {/* {(() => Learner())()} */}
       {(() => generateLearnerTabs(learnerCourses))()}
       {(() => generateContributorTabs(contributorCourses))()}
-      {(() => ApplyNow())()}
-
-
-
     </Drawer.Navigator>
-    
+
   )
 }
 
