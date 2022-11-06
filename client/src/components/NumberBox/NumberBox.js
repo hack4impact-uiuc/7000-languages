@@ -12,9 +12,9 @@ const NumberBox = ({ number, learner, noMargin }) => (
     py="1"
     ml={noMargin ? 0 : 3}
     _text={{
-      color:learner ?'#04AFB2' :'#DF4E47',
+      color: learner ? '#04AFB2' : '#DF4E47',
       textAlign: 'center',
-      fontFamily: "heading",
+      fontFamily: 'heading',
     }}
   >
     {number}

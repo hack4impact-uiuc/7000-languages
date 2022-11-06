@@ -5,9 +5,7 @@ import StyledButton from 'components/StyledButton'
 const LearnerButton = ({ isContributor }) => {
   switch (isContributor) {
     case true:
-      return (
-        <StyledButton title="LEARNER" variant="learner" fontSize="12" />
-      )
+      return <StyledButton title="LEARNER" variant="learner" fontSize="12" />
     default:
       return null
   }

@@ -17,10 +17,10 @@ import { setField } from 'slices/language.slice'
 import { useDispatch, useSelector } from 'react-redux'
 import NumberBox from 'components/NumberBox'
 import i18n from 'utils/i18n'
+import _ from 'lodash'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
-import _ from 'lodash'
-import CustomDrawerItemList from './CustomDrawerItemList'
+import SplitDrawerItemList from './SplitDrawerItemList'
 
 const tabStyles = StyleSheet.create({
   container: {
@@ -54,7 +54,6 @@ const drawerStyles = StyleSheet.create({
     backgroundColor: '#F9F9F9',
   },
   topDivider: {
-    marginTop: '10%',
     marginBottom: '5%',
     height: 1,
     backgroundColor: '#EFEFEF',
@@ -91,7 +90,12 @@ const drawerStyles = StyleSheet.create({
 
 const Drawer = createDrawerNavigator()
 
-const tabColors = [colors.red.light, colors.red.dark, colors.blue.light, colors.blue.dark]
+const tabColors = [
+  colors.red.light,
+  colors.red.dark,
+  colors.blue.light,
+  colors.blue.dark,
+]
 
 const generateUnitLabel = (numUnits) => {
   // eslint-disable-next-line no-restricted-globals
@@ -109,7 +113,6 @@ const generateUnitLabel = (numUnits) => {
  * @param {Array} data Array of Course Data to use for each tab bar
  * @returns
  */
-
 
 const generateContributorTabs = (tabData) => tabData.map((element, index) => (
   <Drawer.Screen
@@ -135,11 +138,13 @@ const generateContributorTabs = (tabData) => tabData.map((element, index) => (
         </View>
       ),
       drawerIcon: () => (
-        <View style={{
-          position: "relative",
-          justifyContent: 'center',
-          alignItems: "center",
-        }}>
+        <View
+          style={{
+            position: 'relative',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <FontAwesome
             name="square"
             size={45}
@@ -184,10 +189,7 @@ const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
       ),
       drawerIcon: () => (
         <View>
-          <NumberBox number={index + 1}
-            learner={true}
-            noMargin={true}
-          />
+          <NumberBox number={index + 1} learner noMargin />
         </View>
       ),
     })}
@@ -195,73 +197,49 @@ const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
 ))
 
 const DrawerMenuContainer = (props) => {
-  const { state, learnerCourses, contributorCourses, ...rest } = props
+  const {
+    state, firstRouteNames, secondRouteNames, ...rest
+  } = props
   const newState = { ...state }
-  const drawerApply = true
 
-  const learnerIds = learnerCourses.map((course) => course._id);
-
-  // const learnerState = _.cloneDeep(newState);
-  // learnerState.routeNames = learnerState.routeNames.filter((routeName) => learnerIds.includes(routeName));
-  // learnerState.routes = learnerState.routes.filter((routeObject) => learnerIds.includes(routeObject.name));
-
-  const contributorIds = contributorCourses.map((course) => course._id);
-
-  // const contributorState = _.cloneDeep(newState);
-  // contributorState.routeNames = contributorState.routeNames.filter((routeName) => contributorIds.includes(routeName));
-  // contributorState.routes = contributorState.routes.filter((routeObject) => contributorIds.includes(routeObject.name));
-  // contributorState.key = "";
-
-  // console.log("Learner state");
-  // contributorState.index = -1;
-  // console.log(learnerState);
-  // console.log("Contributor state");
-  // console.log(contributorState);
-
-  const middle = <>
-
-    <View style={drawerStyles.container}>
-      <Pressable
-        style={drawerStyles.pressable}
-        forceInset={{
-          top: 'always',
-          horizontal: 'never',
-        }}
-      >
-        <Text
-          fontWeight="regular"
-          color="gray.dark"
-          fontSize="sm"
-          textAlign="left"
+  const middleChildComponent = (
+    <>
+      <View style={drawerStyles.container}>
+        <Pressable
+          style={drawerStyles.pressable}
+          forceInset={{
+            top: 'always',
+            horizontal: 'never',
+          }}
         >
-          {`${i18n.t('dialogue.learnIndigenousLanguage')} `}
           <Text
-            fontFamily="heading"
             fontWeight="regular"
-            fontStyle="normal"
+            color="gray.dark"
+            fontSize="sm"
+            textAlign="left"
           >
-            {i18n.t('actions.startLearning')}
+            {`${i18n.t('dialogue.learnIndigenousLanguage')} `}
+            <Text fontFamily="heading" fontWeight="regular" fontStyle="normal">
+              {i18n.t('actions.startLearning')}
+            </Text>
           </Text>
-        </Text>
-        <StyledButton
-          title={i18n.t('actions.searchCourses')}
-          fontSize="sm"
-          variant="learner_primary"
-          onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
-        />
-      </Pressable>
-    </View>
+          <StyledButton
+            title={i18n.t('actions.searchCourses')}
+            fontSize="sm"
+            variant="learner_primary"
+            onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+          />
+        </Pressable>
+      </View>
 
-    <StyledButton
-      title={"CONTRIBUTOR"}
-      fontSize={15}
-      variant="contributor"
-      onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
-    />
-
-
-  </>
-
+      <StyledButton
+        title="CONTRIBUTOR"
+        fontSize={15}
+        variant="contributor"
+        onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+      />
+    </>
+  )
 
   return (
     <>
@@ -269,52 +247,52 @@ const DrawerMenuContainer = (props) => {
         <DrawerMenu {...props} />
 
         <StyledButton
-          title={"LEARNER"}
+          title="LEARNER"
           fontSize={15}
           variant="learner"
           onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
         />
 
-        <CustomDrawerItemList state={newState} nameA={learnerIds} nameB={contributorIds} middle={middle} {...rest} />
+        <SplitDrawerItemList
+          state={newState}
+          firstRouteNames={firstRouteNames}
+          secondRouteNames={secondRouteNames}
+          middleChildComponent={middleChildComponent}
+          {...rest}
+        />
 
-
-        {/* <DrawerItemList state={contributorState} {...rest} /> */}
-
-        {drawerApply ? (
-          <View style={drawerStyles.container}>
-            <Pressable
-              style={drawerStyles.pressable}
-              forceInset={{
-                top: 'always',
-                horizontal: 'never',
-              }}
+        <View style={drawerStyles.container}>
+          <Pressable
+            style={drawerStyles.pressable}
+            forceInset={{
+              top: 'always',
+              horizontal: 'never',
+            }}
+          >
+            <Text
+              fontWeight="regular"
+              color="gray.dark"
+              fontSize="sm"
+              textAlign="left"
             >
+              {`${i18n.t('dialogue.indigenousLanguagePrompt')} `}
               <Text
+                fontFamily="heading"
                 fontWeight="regular"
-                color="gray.dark"
-                fontSize="sm"
-                textAlign="left"
+                fontStyle="normal"
               >
-                {`${i18n.t('dialogue.indigenousLanguagePrompt')} `}
-                <Text
-                  fontFamily="heading"
-                  fontWeight="regular"
-                  fontStyle="normal"
-                >
-                  {i18n.t('actions.becomeContributor')}
-                </Text>
+                {i18n.t('actions.becomeContributor')}
               </Text>
-              <StyledButton
-                title={i18n.t('actions.applyNow')}
-                fontSize="sm"
-                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
-              />
-            </Pressable>
-          </View>
-        ) : null}
+            </Text>
+            <StyledButton
+              title={i18n.t('actions.applyNow')}
+              fontSize="sm"
+              onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+            />
+          </Pressable>
+        </View>
       </DrawerContentScrollView>
       <View style={drawerStyles.topDivider} />
-
       <StyledButton
         title={i18n.t('actions.accountInfo')}
         fontSize="sm"
@@ -328,8 +306,11 @@ const DrawerMenuContainer = (props) => {
 
 const DrawerNavigator = () => {
   const { allCourses } = useSelector((state) => state.language)
-  const learnerCourses = allCourses.filter(element => { return element.isContributor === false; });
-  const contributorCourses = allCourses.filter(element => { return element.isContributor === true; });
+  const learnerCourses = allCourses.filter((element) => element.isContributor === false)
+  const contributorCourses = allCourses.filter((element) => element.isContributor === true)
+  const learnerIds = learnerCourses.map((course) => course._id)
+  const contributorIds = contributorCourses.map((course) => course._id)
+
   const [userEmail, setEmail] = useState('')
   const [userName, setName] = useState(`${i18n.t('dialogue.loading')}`)
   const [profileUrl, setProfileUrl] = useState('')
@@ -362,7 +343,7 @@ const DrawerNavigator = () => {
 
   return (
     <Drawer.Navigator
-      drawerContentOptions={{
+      screenOptions={{
         activeTintColor: 'black',
         inactiveTintColor: 'black',
         activeBackgroundColor: '#F9F9F9',
@@ -378,16 +359,15 @@ const DrawerNavigator = () => {
           email={userEmail}
           name={userName}
           profileUrl={profileUrl}
-          learnerCourses={learnerCourses}
-          contributorCourses={contributorCourses}
+          firstRouteNames={learnerIds}
+          secondRouteNames={contributorIds}
           {...props}
         />
       )}
     >
       {(() => generateLearnerTabs(learnerCourses))()}
       {(() => generateContributorTabs(contributorCourses))()}
-    </Drawer.Navigator >
-
+    </Drawer.Navigator>
   )
 }
 
