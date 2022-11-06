@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { colors } from 'theme'
 import { AntDesign } from '@expo/vector-icons'
 import PropTypes from 'prop-types'
-import { HomeNavigator } from '../Stacks'
+import { HomeNavigator, SettingsNavigator } from '../Stacks'
 import { NO_COURSE_ID } from '../../utils/constants'
 
 const Tab = createBottomTabNavigator()
@@ -32,7 +32,15 @@ const TabNavigator = (navigationData) => (
                 solid
               />
             )
-
+          case 'Setting':
+            return (
+              <AntDesign
+                name="setting"
+                color={focused ? colors.red.dark : colors.gray.dark}
+                size={25}
+                solid
+              />
+            )
           default:
             return <View />
         }
@@ -51,6 +59,7 @@ const TabNavigator = (navigationData) => (
         <HomeNavigator {...props} courseId={navigationData.route.name} />
       )}
     />
+    <Tab.Screen name="Setting" children={() => <SettingsNavigator />} />
   </Tab.Navigator>
 )
 

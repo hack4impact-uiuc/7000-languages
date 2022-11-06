@@ -294,7 +294,7 @@ const DrawerMenuContainer = (props) => {
         title={i18n.t('actions.accountInfo')}
         fontSize="sm"
         leftIcon={<FontAwesome name="user" size={20} color={colors.black} />}
-        variant="account_info"
+        variant="settings"
         onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
       />
     </>

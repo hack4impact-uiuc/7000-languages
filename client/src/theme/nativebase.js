@@ -179,7 +179,7 @@ const theme = extendTheme({
             fontFamily: 'heading',
           },
         },
-        account_info: {
+        settings: {
           bg: 'gray.300',
           borderRadius: 10,
           h: '6.5%',
