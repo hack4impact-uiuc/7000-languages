@@ -15,6 +15,7 @@ import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
 import { setField } from 'slices/language.slice'
 import { useDispatch, useSelector } from 'react-redux'
+import NumberBox from 'components/NumberBox'
 import i18n from 'utils/i18n'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
@@ -182,23 +183,10 @@ const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
         </View>
       ),
       drawerIcon: () => (
-        <View style={{
-          position: "relative",
-          justifyContent: 'center',
-          alignItems: "center",
-        }}>
-          <FontAwesome
-            name="square"
-            size={45}
-            icon="user"
-            color={tabColors[2]}
-          />
-          <FontAwesome
-            name="globe"
-            size={25}
-            icon="user"
-            color={tabColors[3]}
-            style={{ position: 'absolute' }}
+        <View>
+          <NumberBox number={index + 1}
+            learner={true}
+            noMargin={true}
           />
         </View>
       ),
@@ -398,7 +386,7 @@ const DrawerNavigator = () => {
     >
       {(() => generateLearnerTabs(learnerCourses))()}
       {(() => generateContributorTabs(contributorCourses))()}
-    </Drawer.Navigator>
+    </Drawer.Navigator >
 
   )
 }
