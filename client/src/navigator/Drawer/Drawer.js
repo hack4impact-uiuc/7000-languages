@@ -16,6 +16,7 @@ import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
 import { setField } from 'slices/language.slice'
 import { useDispatch, useSelector } from 'react-redux'
+import NumberBox from 'components/NumberBox'
 import i18n from 'utils/i18n'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
@@ -183,72 +184,16 @@ const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
         </View>
       ),
       drawerIcon: () => (
-      <View style={{
-        position:"relative",
-        justifyContent:'center',
-        alignItems:"center",
-      }}>
-        <FontAwesome
-          name="square"
-          size={45}
-          icon = "user"
-          color={tabColors[2]}
-        />
-         <FontAwesome
-          name= "globe"
-          size={25}
-          icon = "user"
-          color={tabColors[3]}
-          style={{position: 'absolute'}}
-        />
+      <View>
+       <NumberBox number={index + 1} 
+       learner = {true}
+       noMargin = {true}
+       />
         </View>
       ),
     })}
   />
 ))
-const Learner= () => (
-  <Drawer.Screen
-  name = {"learner"}
-  component={TabNavigator}
-options={() => ({
-      drawerLabel: () => ((
-          <View style={drawerStyles.container}>
-            <Pressable
-              style={drawerStyles.pressable}
-              forceInset={{
-                top: 'always',
-                horizontal: 'never',
-              }}
-            >
-              <Text
-                fontWeight="regular"
-                color="gray.dark"
-                fontSize="sm"
-                textAlign="left"
-              >
-                {`${i18n.t('dialogue.learnIndigenousLanguage')} `}
-                <Text
-                  fontFamily="heading"
-                  fontWeight="regular"
-                  fontStyle="normal"
-                >
-                  {i18n.t('actions.startLearning')}
-                </Text>
-              </Text>
-              <StyledButton
-                title={i18n.t('actions.searchCourses')}
-                fontSize="sm"
-                variant = "learner_primary"
-                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
-              />
-            </Pressable>
-          </View>
-        )
-              ),
-
-    })}
-  />
-)
 
 const ApplyNow= () => (
   <Drawer.Screen
@@ -407,11 +352,9 @@ const DrawerNavigator = () => {
         />
       )}
     >
-      {/* {(() => Learner())()} */}
       {(() => generateLearnerTabs(learnerCourses))()}
-      {(() => generateContributorTabs(contributorCourses))()}
       {(() => ApplyNow())()}
-
+      {(() => generateContributorTabs(contributorCourses))()}
 
 
     </Drawer.Navigator>
