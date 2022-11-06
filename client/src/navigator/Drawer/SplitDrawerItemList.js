@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/native'
 import { DrawerItem } from '@react-navigation/drawer'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 /**
  * A custom component that renders the two navigation lists in the drawer, with a
@@ -88,16 +89,16 @@ const SplitDrawerItemList = ({
       drawerAllowFontScaling,
     } = descriptors[route.key].options
 
+    let label = drawerLabel
+
+    if (drawerLabel === undefined) {
+      label = title !== undefined ? title : route.name
+    }
+
     return (
       <DrawerItem
         key={route.key}
-        label={
-          drawerLabel !== undefined
-            ? drawerLabel
-            : title !== undefined
-              ? title
-              : route.name
-        }
+        label={label}
         icon={drawerIcon}
         focused={focused}
         activeTintColor={activeTintColor}
@@ -128,6 +129,31 @@ const SplitDrawerItemList = ({
       {secondRoutesList}
     </>
   )
+}
+
+SplitDrawerItemList.propTypes = {
+  state: PropTypes.shape({
+    index: PropTypes.number,
+    routes: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+    key: PropTypes.string,
+  }),
+  navigation: PropTypes.shape({
+    emit: PropTypes.func,
+    dispatch: PropTypes.func,
+  }),
+  descriptors: PropTypes.arrayOf(PropTypes.string),
+  firstRouteNames: PropTypes.arrayOf(PropTypes.string),
+  secondRouteNames: PropTypes.arrayOf(PropTypes.string),
+  middleChildComponent: PropTypes.elementType,
+}
+
+SplitDrawerItemList.defaultProps = {
+  state: { index: 0, routes: [] },
+  navigation: { emit: () => {}, dispatch: () => {} },
+  descriptors: [],
+  firstRouteNames: [],
+  secondRouteNames: [],
+  middleChildComponent: null,
 }
 
 export default SplitDrawerItemList

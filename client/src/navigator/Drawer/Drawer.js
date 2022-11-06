@@ -4,12 +4,10 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
 } from '@react-navigation/drawer'
-import { Text, Image } from 'native-base'
+import { Text } from 'native-base'
 import { FontAwesome } from '@expo/vector-icons'
-import { colors, images } from 'theme'
+import { colors } from 'theme'
 import { View, Pressable, StyleSheet } from 'react-native'
-import ContributorButton from 'components/ContributorButton'
-import LearnerButton from 'components/LearnerButton'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
@@ -17,7 +15,6 @@ import { setField } from 'slices/language.slice'
 import { useDispatch, useSelector } from 'react-redux'
 import NumberBox from 'components/NumberBox'
 import i18n from 'utils/i18n'
-import _ from 'lodash'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
 import SplitDrawerItemList from './SplitDrawerItemList'
@@ -114,7 +111,7 @@ const generateUnitLabel = (numUnits) => {
  * @returns
  */
 
-const generateContributorTabs = (tabData) => tabData.map((element, index) => (
+const generateContributorTabs = (tabData) => tabData.map((element) => (
   <Drawer.Screen
     key={element._id}
     name={element._id}
@@ -306,8 +303,12 @@ const DrawerMenuContainer = (props) => {
 
 const DrawerNavigator = () => {
   const { allCourses } = useSelector((state) => state.language)
-  const learnerCourses = allCourses.filter((element) => element.isContributor === false)
-  const contributorCourses = allCourses.filter((element) => element.isContributor === true)
+  const learnerCourses = allCourses.filter(
+    (element) => element.isContributor === false,
+  )
+  const contributorCourses = allCourses.filter(
+    (element) => element.isContributor === true,
+  )
   const learnerIds = learnerCourses.map((course) => course._id)
   const contributorIds = contributorCourses.map((course) => course._id)
 

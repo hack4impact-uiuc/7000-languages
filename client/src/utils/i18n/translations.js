@@ -45,7 +45,6 @@ const translations = {
       recordAudio: 'Record Audio',
       accountInfo: 'Account Info',
       applyNow: 'Apply Now',
-      searchCourses: 'Search Courses',
       myCourses: 'My Courses',
       required: 'Required.',
       addCustomLesson: 'Add Custom Lesson',

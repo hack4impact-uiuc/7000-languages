@@ -23,8 +23,8 @@ const NumberBox = ({ number, learner, noMargin }) => (
 
 NumberBox.propTypes = {
   number: PropTypes.number,
-  learner: PropTypes.boolean,
-  noMargin: PropTypes.boolean,
+  learner: PropTypes.bool,
+  noMargin: PropTypes.bool,
 }
 
 NumberBox.defaultProps = {
