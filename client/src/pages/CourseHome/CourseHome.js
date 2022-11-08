@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import LanguageHome from 'components/LanguageHome'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
+import i18n from 'utils/i18n'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const CourseHome = ({ navigation, courseDescription, courseName }) => {
@@ -29,7 +30,9 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
           _id: item._id,
           name: item.name,
           body: `${item.num_lessons} ${
-            item.num_lessons === 1 ? 'Lesson' : 'Lessons'
+            item.num_lessons === 1
+              ? `${i18n.t('dict.lessonSingle')}`
+              : `${i18n.t('dict.lessonPlural')}`
           }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
@@ -72,22 +75,40 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
   }
 
   /**
+<<<<<<< HEAD
    * Navigates to the update unit modal
    */
   const navigateToUpdate = () => {
     navigation.navigate('Modal', { screen: 'UpdateCourse' })
+=======
+   * Navigates to the Add Unit Page
+   */
+  const navigateToAdd = () => {
+    navigation.navigate('Modal', { screen: 'CreateUnit' })
+>>>>>>> dev
   }
 
   return (
     <LanguageHome
+<<<<<<< HEAD
       languageName={name}
       languageDescription={description}
       valueName="Units"
       buttonText="Manage Units"
       nextUpdate={navigateToUpdate}
       rightIconName="pencil"
+=======
+      languageName={courseName}
+      languageDescription={courseDescription}
+      manageButtonText={i18n.t('actions.manageUnits')}
+      singularItemText={i18n.t('dict.unitSingle')}
+      pluralItemText={i18n.t('dict.unitPlural')}
+      addButtonText={i18n.t('actions.addUnit')}
+      manageIconName="cog"
+>>>>>>> dev
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
+      addCallback={navigateToAdd}
       data={data}
     />
   )

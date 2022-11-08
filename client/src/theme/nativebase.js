@@ -101,8 +101,6 @@ const theme = extendTheme({
         },
         small: {
           bg: 'red.light',
-          borderColor: 'white.dark',
-          borderWidth: 2,
           px: 0,
           py: 4,
           _text: {
@@ -149,6 +147,18 @@ const theme = extendTheme({
           mx: 5,
           _text: {
             color: 'red.dark',
+            fontFamily: 'heading',
+          },
+        },
+        settings: {
+          bg: 'gray.300',
+          borderRadius: 10,
+          h: '6.5%',
+          minW: 100,
+          my: 3,
+          mx: 5,
+          _text: {
+            color: 'gray.dark',
             fontFamily: 'heading',
           },
         },

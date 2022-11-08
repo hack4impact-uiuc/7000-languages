@@ -13,9 +13,8 @@ import PropTypes from 'prop-types'
 import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
-import UpdateLesson from 'pages/UpdateLesson'
-import UpdateUnit from 'pages/UpdateUnit'
-import UpdateCourse from 'pages/UpdateCourse'
+import ManageVocab from 'pages/ManageVocab'
+import CourseSettings from 'pages/CourseSettings'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -27,9 +26,15 @@ const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 const ModalStack = createStackNavigator()
 
-const navigationProps = {
+const homeNavigationProps = {
   headerTintColor: 'white',
   headerStyle: { backgroundColor: colors.red.dark },
+  headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+}
+
+const settingsNavigationProps = {
+  headerTintColor: 'black',
+  headerStyle: { backgroundColor: 'white' },
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
 }
 
@@ -96,7 +101,7 @@ export const HomeNavigator = ({ courseId }) => (
   <Stack.Navigator
     initialRouteName="Course"
     headerMode="screen"
-    screenOptions={navigationProps}
+    screenOptions={homeNavigationProps}
   >
     <Stack.Screen
       name={courseId}
@@ -162,22 +167,30 @@ export const HomeNavigator = ({ courseId }) => (
       })}
     />
     <Stack.Screen
-      name="UpdateUnit"
-      component={UpdateUnit}
+      name="ManageVocab"
+      component={ManageVocab}
       options={({ navigation }) => ({
         ...manageNavigationProps,
-        title: 'Update',
+        title: 'Manage Vocab',
         headerLeft: () => <BackButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}
     />
+  </Stack.Navigator>
+)
+
+export const SettingsNavigator = () => (
+  <Stack.Navigator
+    initialRouteName="CourseSettings"
+    headerMode="screen"
+    screenOptions={settingsNavigationProps}
+  >
     <Stack.Screen
-      name="UpdateLesson"
-      component={UpdateLesson}
+      name="CourseSettings"
+      component={CourseSettings}
       options={({ navigation }) => ({
-        ...manageNavigationProps,
-        title: 'Update Lesson',
-        headerLeft: () => <BackButton navigation={navigation} />,
+        title: 'Settings',
+        headerLeft: () => <BackButton navigation={navigation} color="black" />,
         cardStyle: { backgroundColor: 'white' },
       })}
     />
