@@ -316,18 +316,11 @@ LanguageHome.propTypes = {
   languageName: PropTypes.string,
   languageDescription: PropTypes.string,
   lessonDescription: PropTypes.string,
-<<<<<<< HEAD
-  nextUpdate: PropTypes.func,
-  valueName: PropTypes.string,
-  buttonText: PropTypes.string,
-  rightIconName: PropTypes.string,
-=======
   singularItemText: PropTypes.string,
   pluralItemText: PropTypes.string,
   manageButtonText: PropTypes.string,
   addButtonText: PropTypes.string,
   manageIconName: PropTypes.string,
->>>>>>> dev
   buttonCallback: PropTypes.func,
   nextPageCallback: PropTypes.func,
   addCallback: PropTypes.func,
@@ -339,20 +332,12 @@ LanguageHome.defaultProps = {
   isLessonHome: false,
   languageName: '',
   languageDescription: '',
-<<<<<<< HEAD
-  lessonDescription: '',
-  nextUpdate: () => {},
-  valueName: '',
-  buttonText: '',
-  rightIconName: '',
-=======
   lessonDescription: `${i18n.t('dialogue.setDescriptionPrompt')}`,
   singularItemText: '',
   pluralItemText: '',
   manageButtonText: '',
   addButtonText: '',
   manageIconName: '',
->>>>>>> dev
   buttonCallback: () => {},
   nextPageCallback: () => {},
   addCallback: () => {},
