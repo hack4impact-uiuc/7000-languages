@@ -111,7 +111,7 @@ const generateUnitLabel = (numUnits) => {
  * @returns
  */
 
-const generateContributorTabs = (tabData) => tabData.map((element) => (
+const generateCourseTabs = (tabData, contributor) => tabData.map((element, index) => (
   <Drawer.Screen
     key={element._id}
     name={element._id}
@@ -135,6 +135,7 @@ const generateContributorTabs = (tabData) => tabData.map((element) => (
         </View>
       ),
       drawerIcon: () => (
+        contributor ?
         <View
           style={{
             position: 'relative',
@@ -155,36 +156,7 @@ const generateContributorTabs = (tabData) => tabData.map((element) => (
             color={tabColors[1]}
             style={{ position: 'absolute' }}
           />
-        </View>
-      ),
-    })}
-  />
-))
-
-const generateLearnerTabs = (tabData) => tabData.map((element, index) => (
-  <Drawer.Screen
-    key={element._id}
-    name={element._id}
-    component={TabNavigator}
-    options={() => ({
-      drawerLabel: () => (
-        <View style={tabStyles.container}>
-          <View>
-            <Text
-              style={tabStyles.title}
-              fontFamily="heading"
-              fontWeight="regular"
-              fontStyle="normal"
-            >
-              {element.name}
-            </Text>
-            <Text style={tabStyles.units}>
-              {generateUnitLabel(element.num_units)}
-            </Text>
-          </View>
-        </View>
-      ),
-      drawerIcon: () => (
+        </View> :
         <View>
           <NumberBox number={index + 1} learner noMargin />
         </View>
@@ -224,7 +196,6 @@ const DrawerMenuContainer = (props) => {
             title={i18n.t('actions.searchCourses')}
             fontSize="sm"
             variant="learner_primary"
-            onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
           />
         </Pressable>
       </View>
@@ -295,7 +266,6 @@ const DrawerMenuContainer = (props) => {
         fontSize="sm"
         leftIcon={<FontAwesome name="user" size={20} color={colors.black} />}
         variant="settings"
-        onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
       />
     </>
   )
@@ -366,8 +336,8 @@ const DrawerNavigator = () => {
         />
       )}
     >
-      {(() => generateLearnerTabs(learnerCourses))()}
-      {(() => generateContributorTabs(contributorCourses))()}
+      {(() => generateCourseTabs(learnerCourses, false))()}
+      {(() => generateCourseTabs(contributorCourses, true))()}
     </Drawer.Navigator>
   )
 }

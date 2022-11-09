@@ -44,8 +44,6 @@ const SplitDrawerItemList = ({
   const focusedDescriptor = descriptors[focusedRoute.key]
   const focusedOptions = focusedDescriptor.options
 
-  console.log(focusedOptions)
-
   /**
    * Creates a DrawerItem given route data
    * @param route = The route data
