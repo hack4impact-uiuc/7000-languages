@@ -272,7 +272,7 @@ const DrawerMenuContainer = (props) => {
               fontSize="sm"
               textAlign="left"
             >
-              {`${i18n.t('dialogue.indigenousLanguagePrompt')} `}
+              {`${i18n.t('dialogue.shareIndigenousLanguage')} `}
               <Text
                 fontFamily="heading"
                 fontWeight="regular"

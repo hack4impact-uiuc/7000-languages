@@ -90,7 +90,7 @@ const translations = {
       discardChangesPrompt: 'Discard Changes?',
       requiredField: 'This field is required',
       errorCaught: 'useErrorWrap(): error caught:',
-      indigenousLanguagePrompt:
+      shareIndigenousLanguage:
         'Do you know an indigenous language that you would like to share with the world?',
       learnIndigenousLanguage:
         'Do you want to learn about an indigenous language?',
@@ -185,11 +185,13 @@ const translations = {
     actions: {
       searchCourses: 'Recherche de cours',
       logOut: 'Déconnexion',
+      startLearning: 'Commencez à apprendre !',
       becomeContributor: 'Devenir un contributeur.',
       manageUnits: 'Gérer les unités',
       notLeave: 'Ne partez pas.',
       saveChanges: 'Enregistrer les modifications',
       recordAudio: 'Enregistrement audio',
+      accountInfo: 'Informations sur le compte',
       applyNow: 'Postulez maintenant',
       myCourses: 'Mes cours',
       required: 'Le nom est obligatoire.',
@@ -232,8 +234,10 @@ const translations = {
       discardChangesPrompt: 'Changements dans les rejets?',
       requiredField: 'Ce champ est obligatoire',
       errorCaught: 'useErrorWrap() : erreur détectée :',
-      indigenousLanguagePrompt:
+      shareIndigenousLanguage:
         'Connaissez-vous une langue indigène que vous aimeriez partager avec le monde ?',
+      learnIndigenousLanguage:
+        'Voulez-vous apprendre une langue indigène ?',
       nameRequired: 'Le nom est obligatoire',
       emailRequired: "L'adresse électronique est obligatoire",
       languageRequired: 'La langue est requise',
