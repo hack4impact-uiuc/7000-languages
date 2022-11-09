@@ -1,6 +1,9 @@
 const { models, isUniqueOrder } = require('../models');
 const { NOT_FOUND_INDEX } = require('../utils/constants');
 const { exampleData } = require('./example-data.js');
+const {
+  deleteFile,
+} = require('./aws/s3.js');
 const mongoose = require('mongoose');
 
 /**
@@ -243,5 +246,112 @@ const populateExampleData = async (course_id) => {
     populateLessons(course_id, unit_id, unit['lessons']);
   }
 };
+
+const findVocabItem = async (lesson_id, vocab_id) => {
+  const isValid = await checkIds({ lesson_id, vocab_id });
+
+  if (!isValid) {
+    return {success: false, vocab: undefined, lesson: undefined}
+  }
+
+  let lesson = await models.Lesson.findById(lesson_id); // find a lesson
+  if (lesson) {
+    const found = getVocabIndexByID(vocab_id, lesson)
+
+    if (found >= 0) {
+      const vocabItem = lesson.vocab[found];
+      return {success: true, vocab: vocabItem, lesson: lesson}
+    }
+  }
+  return {success: false, vocab: undefined, lesson: undefined}
+}
+
+const deleteVocabAudio = async (course_id, unit_id, lesson_id, vocab_id) => {
+
+  const isValid = await checkIds({ course_id, unit_id, lesson_id, vocab_id });
+
+  if (!isValid) {
+    return {success: false, vocab: undefined}
+  }
+
+  const {success, vocab, lesson} = await findVocabItem(lesson_id, vocab_id);
+  if (success) {
+    let fileType = 'm4a';
+    const splitAudioPath = vocab.audio.split('.');
+
+    if (splitAudioPath.length === 2) {
+      fileType = splitAudioPath[1];
+    }
+
+    // Delete file from S3
+    await deleteFile(
+      `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio.${fileType}`,
+    );
+
+    vocab.audio = '';
+
+    await lesson.save();
+
+    return {success: true, vocab: vocab}
+  }
+  return {success: false, vocab: undefined}
+}
+
+const deleteVocabImage = async (course_id, unit_id, lesson_id, vocab_id) => {
+  
+  const isValid = await checkIds({ course_id, unit_id, lesson_id, vocab_id });
+
+  if (!isValid) {
+    return {success: false, vocab: undefined}
+  }
+
+  const {success, vocab, lesson} = await findVocabItem(lesson_id, vocab_id);
+  if (success) {
+    let fileType = 'jpg';
+    const splitImagePath = vocab.image.split('.');
+
+    if (splitImagePath.length === 2) {
+      fileType = splitImagePath[1];
+    }
+
+    // Delete file from S3
+    await deleteFile(
+      `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.${fileType}`,
+    );
+
+    // Upadte path to image file in MongoDB
+    vocab.image = '';
+
+    await lesson.save();
+
+    return {success: true, vocab: vocab}
+  }
+  return {success: false, vocab: undefined}
+}
+
+const deleteVocabItem = async (lesson_id, vocab_id) => {
+  const isValid = await checkIds({ lesson_id, vocab_id });
+
+  if (!isValid) {
+    return {success: false}
+  }
+
+  const {success, lesson} = await findVocabItem(lesson_id, vocab_id);
+  if (success) {
+    const course_id = lesson._course_id;
+    const unit_id = lesson._unit_id;
+    await Promise.all([
+      deleteVocabAudio(course_id, unit_id, lesson_id, vocab_id),
+      deleteVocabImage(course_id, unit_id, lesson_id, vocab_id)
+    ])
+    const index = getVocabIndexByID(vocab_id, lesson);
+    lesson.vocab.splice(index, 1);
+
+    await lesson.save();
+  }
+}
+module.exports.deleteVocabImage = deleteVocabImage
+module.exports.deleteVocabAudio = deleteVocabAudio
+module.exports.deleteVocabItem = deleteVocabItem
 
 module.exports.populateExampleData = populateExampleData;
