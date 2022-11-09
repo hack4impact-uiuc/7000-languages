@@ -90,11 +90,7 @@ const CreateUnit = ({ navigation }) => {
             </Text>
           </View>
           <Text color={colors.blue.dark} fontSize="md">
-<<<<<<< HEAD
-            When creating a unit, think about how it will be used.
-=======
             {i18n.t('dialogue.createUnitDescription')}
->>>>>>> dev
           </Text>
         </View>
 

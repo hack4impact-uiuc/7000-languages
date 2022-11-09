@@ -33,11 +33,7 @@ const Home = ({ navigation, courseId }) => {
 
         // Sets the title of the page
         navigation.setOptions({
-<<<<<<< HEAD
-          title: 'Course',
-=======
           title: `${i18n.t('dict.courseHome')}`,
->>>>>>> dev
         })
         dispatch(setField({ key: 'courseDetails', value: course.details }))
         dispatch(setField({ key: 'allUnits', value: units }))

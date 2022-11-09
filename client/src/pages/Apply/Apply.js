@@ -224,33 +224,6 @@ const Apply = ({ navigation }) => {
                 {i18n.t('dialogue.alternativeNamesPrompt')}
               </Text>
 
-<<<<<<< HEAD
-              <View style={styles.checkboxes}>
-                <Checkbox
-                  value="accepted"
-                  colorScheme="danger"
-                  onChange={setAcceptTerms}
-                >
-                  <View>
-                    <Text
-                      fontFamily="body"
-                      fontWeight="regular"
-                      color="black"
-                      fontStyle="normal"
-                      fontSize="md"
-                    >
-                      I agree to the{' '}
-                      <Text
-                        fontFamily="heading"
-                        onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
-                      >
-                        Terms and Conditions
-                      </Text>
-                    </Text>
-                  </View>
-                </Checkbox>
-              </View>
-=======
               <Input
                 size="xl"
                 style={styles.inputHeight}
@@ -330,7 +303,6 @@ const Apply = ({ navigation }) => {
                 returnKeyType="done"
                 onChangeText={(text) => setIsoCode(text)}
               />
->>>>>>> dev
 
               <Text
                 fontFamily="body"
