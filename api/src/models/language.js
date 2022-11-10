@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+// function to get a random code for a new course
+const getRandomCode = () => {
+  return Math.random().toString(36).substring(2, 7)
+}
+
 /* Schemas */
 
 const CourseDetails = new mongoose.Schema({
@@ -14,6 +19,8 @@ const CourseDetails = new mongoose.Schema({
   population: { type: String, required: false, default: '' },
   location: { type: String, required: false, default: '' },
   link: { type: String, required: false, default: '' },
+  is_private: { type: Boolean, required: false, default: true },
+  code: { type: String, required: false, default: getRandomCode },
 });
 
 const Course = new mongoose.Schema({

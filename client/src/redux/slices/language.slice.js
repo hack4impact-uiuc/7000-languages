@@ -28,6 +28,8 @@ const initialState = {
     population: '',
     location: '',
     link: '',
+    is_private: true,
+    code: '',
   },
   allUnits: [],
   currentUnitId: '',
@@ -96,6 +98,9 @@ const languageSlice = createSlice({
       state.currentLessonId = initialState.currentLessonId
       state.lessonData = initialState.lessonData
       state.currentVocabId = initialState.currentVocabId
+    },
+    updateCourseVisibilty: (state, { payload }) => {
+      state.courseDetails.is_private = payload.is_private
     },
     updateNumLessons: (state, { payload }) => {
       const unitIdx = state.allUnits.findIndex(

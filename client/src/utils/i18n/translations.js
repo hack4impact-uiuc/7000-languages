@@ -137,6 +137,8 @@ const translations = {
         'Use this space to give additional information about the vocab item, such as grammatical and cultural information, usage, or additional translations/meanings.',
       courseSettingsDescription:
         'Here is the settings for you to manage your own course.',
+      courseSettingsSave:
+        'You can save your changes by clicking the save button. If you leave this screen without pressing the button, your changes will be discarded.',
     },
   },
   fr: {
@@ -279,6 +281,8 @@ const translations = {
         "Utilisez cet espace pour donner des informations supplémentaires sur l'élément de vocabulaire, par exemple grammaticale et culturelle, l'usage, ou des traductions/significations traductions/significations supplémentaires.",
       courseSettingsDescription:
         'Voici les paramètres qui vous permettront de gérer votre propre cours.',
+      courseSettingsSave:
+        'Vous pouvez enregistrer vos modifications en cliquant sur le bouton "Enregistrer". Si vous quittez cet écran sans cliquer sur le bouton, vos modifications seront annulées.',
     },
   },
 }
