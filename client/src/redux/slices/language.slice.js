@@ -90,25 +90,24 @@ const languageSlice = createSlice({
       const lessonIndex = state.allLessons.findIndex(
         (element) => element._id === state.currentLessonId,
       )
-
-      for (var key in payload.lesson) {
+      Object.keys(payload.lesson).forEach((key) => {
         if (
-          key in state.allLessons[lessonIndex]
-          && typeof state.allLessons[lessonIndex][key]
-            === typeof payload.lesson[key]
+          key in state.allLessons[lessonIndex] &&
+          typeof state.allLessons[lessonIndex][key] ===
+            typeof payload.lesson[key]
         ) {
           state.allLessons[lessonIndex][key] = payload.lesson[key]
         }
-      }
+      })
       // Update the data in lessonData
-      for (var key in payload.lesson) {
+      Object.keys(payload.lesson).forEach((key) => {
         if (
-          key in state.lessonData
-          && typeof state.lessonData[key] === typeof payload.lesson[key]
+          key in state.lessonData &&
+          typeof state.lessonData[key] === typeof payload.lesson[key]
         ) {
           state.lessonData[key] = payload.lesson[key]
         }
-      }
+      })
     },
 
     patchSelectedCourse: (state, { payload }) => {
@@ -117,24 +116,25 @@ const languageSlice = createSlice({
         (element) => element._id === state.currentCourseId,
       )
 
-      for (var key in payload.course) {
+      Object.keys(payload.course).forEach((key) => {
         if (
-          key in state.allCourses[courseIndex]
-          && typeof state.allCourses[courseIndex][key]
-            === typeof payload.course[key]
+          key in state.allCourses[courseIndex] &&
+          typeof state.allCourses[courseIndex][key] ===
+            typeof payload.course[key]
         ) {
           state.allCourses[courseIndex][key] = payload.course[key]
         }
-      }
+      })
+
       // Update the data in courseDetails
-      for (var key in payload.course.details) {
+      Object.keys(payload.course.details).forEach((key) => {
         if (
-          key in state.courseDetails
-          && typeof state.courseDetails[key] === typeof payload.course.details[key]
+          key in state.courseDetails &&
+          typeof state.courseDetails[key] === typeof payload.course.details[key]
         ) {
           state.courseDetails[key] = payload.course.details[key]
         }
-      }
+      })
     },
 
     patchSelectedUnit: (state, { payload }) => {
@@ -145,14 +145,14 @@ const languageSlice = createSlice({
         (element) => element._id === state.currentUnitId,
       )
 
-      for (const key in payload.unit) {
+      Object.keys(payload.unit).forEach((key) => {
         if (
-          key in state.allUnits[unitIndex]
-          && typeof state.allUnits[unitIndex][key] === typeof payload.unit[key]
+          key in state.allUnits[unitIndex] &&
+          typeof state.allUnits[unitIndex][key] === typeof payload.unit[key]
         ) {
           state.allUnits[unitIndex][key] = payload.unit[key]
         }
-      }
+      })
     },
     clear: () => initialState,
     resetField: (state, { payload }) => {

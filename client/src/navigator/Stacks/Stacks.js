@@ -15,6 +15,7 @@ import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
 import UpdateLesson from 'pages/UpdateLesson'
 import UpdateUnit from 'pages/UpdateUnit'
+import CourseSettings from 'pages/CourseSettings'
 import UpdateCourse from 'pages/UpdateCourse'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
@@ -177,6 +178,7 @@ export const HomeNavigator = ({ courseId }) => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
+
     <Stack.Screen
       name="UpdateLesson"
       component={UpdateLesson}
@@ -184,6 +186,24 @@ export const HomeNavigator = ({ courseId }) => (
         ...manageNavigationProps,
         title: 'Update Lesson',
         headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+  </Stack.Navigator>
+)
+
+export const SettingsNavigator = () => (
+  <Stack.Navigator
+    initialRouteName="CourseSettings"
+    headerMode="screen"
+    screenOptions={settingsNavigationProps}
+  >
+    <Stack.Screen
+      name="CourseSettings"
+      component={CourseSettings}
+      options={({ navigation }) => ({
+        title: 'Settings',
+        headerLeft: () => <BackButton navigation={navigation} color="black" />,
         cardStyle: { backgroundColor: 'white' },
       })}
     />

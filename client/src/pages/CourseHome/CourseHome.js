@@ -91,7 +91,6 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
       rightIconName="pencil"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
-      addCallback={navigateToAdd}
       data={data}
     />
   )

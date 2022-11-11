@@ -3,7 +3,7 @@ import {
   combineReducers,
   getDefaultMiddleware,
 } from '@reduxjs/toolkit'
-// import logger from 'redux-logger'
+import logger from 'redux-logger'
 import authReducer from './slices/auth.slice'
 import languageReducer from './slices/language.slice'
 import appReducer from './slices/app.slice'
@@ -38,7 +38,7 @@ const defaultMiddleware = getDefaultMiddleware({
 const store = configureStore({
   reducer: rootReducer,
   // eslint-disable-next-line no-undef
-  middleware: __DEV__ ? defaultMiddleware : defaultMiddleware,
+  middleware: __DEV__ ? defaultMiddleware.concat(logger) : defaultMiddleware,
 })
 
 export default store

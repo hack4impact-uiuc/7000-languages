@@ -12,12 +12,12 @@ const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
   const dispatch = useDispatch()
-  const {
-    currentCourseId, currentLessonId, currentUnitId, lessonData,
-  } = useSelector((state) => state.language)
+  const { currentCourseId, currentLessonId, currentUnitId, lessonData } =
+    useSelector((state) => state.language)
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
+  const [lessonName, setLessonName] = useState('')
   const mounted = useRef(false)
 
   // Fixes the warning that we are setting the state of unmounted components in the call back functions for downloads
@@ -36,10 +36,11 @@ const LessonHome = ({ navigation }) => {
    * Source: https://reactnavigation.org/docs/preventing-going-back/
    */
   useEffect(
-    () => navigation.addListener('beforeRemove', (e) => {
-      dispatch(resetField({ key: 'lessonData' }))
-      navigation.dispatch(e.data.action)
-    }),
+    () =>
+      navigation.addListener('beforeRemove', (e) => {
+        dispatch(resetField({ key: 'lessonData' }))
+        navigation.dispatch(e.data.action)
+      }),
     [navigation],
   )
 
@@ -182,7 +183,7 @@ const LessonHome = ({ navigation }) => {
       nextUpdate={navigateToUpdate}
       valueName="Lessons"
       rightIconName="plus-circle"
-      buttonCallback={navigateTo}
+      buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
       singularItemText={i18n.t('dict.vocabItemSingle')}
       pluralItemText={i18n.t('dict.vocabItemPlural')}
@@ -190,7 +191,6 @@ const LessonHome = ({ navigation }) => {
       manageButtonText={i18n.t('actions.manageVocab')}
       addButtonText="Add Vocab Item"
       data={data}
-      addCallback={navigateToAdd}
     />
   )
 }

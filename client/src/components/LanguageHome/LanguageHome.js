@@ -4,7 +4,7 @@ import { colors } from 'theme'
 import PropTypes from 'prop-types'
 import { ScrollView, Text, Pressable } from 'native-base'
 import StyledButton from 'components/StyledButton'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { Ionicons, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { Audio } from 'expo-av'
@@ -47,6 +47,7 @@ const LanguageHome = ({
   languageDescription,
   lessonName,
   lessonDescription,
+  nextUpdate,
   singularItemText,
   pluralItemText,
   manageButtonText,
@@ -142,13 +143,13 @@ const LanguageHome = ({
             title={i18n.t('actions.addNew')}
             variant="manage"
             fontSize={15}
-            rightIcon={(
+            rightIcon={
               <MaterialCommunityIcons
                 name="plus-circle"
                 color={colors.red.dark}
                 size={20}
               />
-            )}
+            }
             onPress={buttonCallback}
           />
         </View>
@@ -170,14 +171,14 @@ const LanguageHome = ({
                 volumeIconCallback={() => playAudio(element.audioURI)}
                 width={width * 0.97}
                 height={element.imageURI === '' ? 75 : 100}
-                rightIcon={(
+                rightIcon={
                   <MaterialCommunityIcons
                     name="pencil"
                     color="black"
                     size={20}
                     onPress={() => nextPageCallback(element)}
                   />
-                )}
+                }
               />
             ))}
           </View>
@@ -247,13 +248,13 @@ const LanguageHome = ({
           title={manageButtonText}
           variant="manage"
           fontSize={15}
-          rightIcon={(
+          rightIcon={
             <MaterialCommunityIcons
               name={manageIconName}
               color={colors.red.dark}
               size={20}
             />
-          )}
+          }
           onPress={buttonCallback}
         />
       </View>
@@ -279,13 +280,13 @@ const LanguageHome = ({
                   width={width * 0.97}
                   height={75}
                   indicatorType={element.indicatorType}
-                  rightIcon={(
+                  rightIcon={
                     <MaterialCommunityIcons
                       name="chevron-right"
                       color="black"
                       size={40}
                     />
-                  )}
+                  }
                   isPressed={isPressed}
                 />
               )}
@@ -313,13 +314,11 @@ const LanguageHome = ({
 // Page Object Fields
 LanguageHome.propTypes = {
   isLessonHome: PropTypes.bool,
+  lessonName: PropTypes.string,
   languageName: PropTypes.string,
   languageDescription: PropTypes.string,
   lessonDescription: PropTypes.string,
   nextUpdate: PropTypes.func,
-  valueName: PropTypes.string,
-  buttonText: PropTypes.string,
-  rightIconName: PropTypes.string,
   singularItemText: PropTypes.string,
   pluralItemText: PropTypes.string,
   manageButtonText: PropTypes.string,
@@ -334,13 +333,10 @@ LanguageHome.propTypes = {
 // Page Default Fields
 LanguageHome.defaultProps = {
   isLessonHome: false,
+  lessonName: '',
   languageName: '',
   languageDescription: '',
-  lessonDescription: '',
   nextUpdate: () => {},
-  valueName: '',
-  buttonText: '',
-  rightIconName: '',
   lessonDescription: `${i18n.t('dialogue.setDescriptionPrompt')}`,
   singularItemText: '',
   pluralItemText: '',
