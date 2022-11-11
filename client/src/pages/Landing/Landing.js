@@ -72,15 +72,19 @@ const Landing = () => {
           const userData = {
             idToken,
           }
-          // call API
-          await saveUserIDToken(idToken)
-          await createUser(userData)
           // Save to Secure Store
+          await saveUserIDToken(idToken)
 
-          // TODO: Add back support for Refresh Tokens
+          // Call API, creating a user record if the user has logged in for the first time
+          await createUser(userData)
 
-          // await saveUserRefreshToken(refreshToken)
-          // await saveUserClientId(clientId)
+          /*
+            TODO: Add back support for Refresh Tokens.
+            Make sure to call below:
+
+            await saveUserRefreshToken(refreshToken);
+            await saveUserClientId(clientId);
+          */
 
           // Update Redux Store
           dispatch(authenticate({ loggedIn: true }))
