@@ -80,7 +80,7 @@ const Landing = () => {
     //     dispatch(authenticate({ loggedIn: true }))
     //   }
     // })
-    alert("Trying to login");
+    alert('Trying to login')
   }
 
   const window = useWindowDimensions()

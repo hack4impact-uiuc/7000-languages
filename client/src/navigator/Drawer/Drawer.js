@@ -252,7 +252,7 @@ const DrawerNavigator = () => {
 
   return (
     <Drawer.Navigator
-      drawerContentOptions={{
+      screenOptions={{
         activeTintColor: 'black',
         inactiveTintColor: 'black',
         activeBackgroundColor: '#F9F9F9',
