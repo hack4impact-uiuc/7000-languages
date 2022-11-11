@@ -5,7 +5,7 @@ import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
-import * as Google from 'expo-auth-session/providers/google';
+import * as Google from 'expo-auth-session/providers/google'
 import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
@@ -59,10 +59,13 @@ const Landing = () => {
   const config = {
     expoClientId: Constants.manifest.extra.expoClientId,
     iosClientId: Constants.manifest.extra.iosClientId,
-    androidClientId: Constants.manifest.extra.androidClientId
+    androidClientId: Constants.manifest.extra.androidClientId,
   }
   const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
-  const [request, response, promptAsync] = Google.useIdTokenAuthRequest(config, {useProxy: true});
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
+    config,
+    { useProxy: true },
+  )
 
   useEffect(() => {
     errorWrap(async () => {
@@ -76,8 +79,8 @@ const Landing = () => {
           await saveUserIDToken(idToken)
           await createUser(userData)
           // Save to Secure Store
-          //await saveUserRefreshToken(refreshToken)
-          //await saveUserClientId(clientId)
+          // await saveUserRefreshToken(refreshToken)
+          // await saveUserClientId(clientId)
           // Update Redux Store
           dispatch(authenticate({ loggedIn: true }))
         }
@@ -115,13 +118,13 @@ const Landing = () => {
 
       <StyledButton
         title={i18n.t('actions.continueGoogle')}
-        leftIcon={
+        leftIcon={(
           <AntDesign
             name="google"
             size={`${window.height}` / 25}
             color={colors.red.dark}
           />
-        }
+        )}
         variant="secondary"
         onPress={() => promptAsync()}
         style={styles.loginButton}
