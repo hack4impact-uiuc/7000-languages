@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native'
 import { colors } from 'theme'
 import PropTypes from 'prop-types'
-import { ScrollView, Text } from 'native-base'
+import { ScrollView, Text, Pressable } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
-import { downloadAudioFile } from 'api'
-import { useDispatch, useSelector } from 'react-redux'
 import { Audio } from 'expo-av'
-import { useErrorWrap, useTrackPromise } from 'hooks'
-import { pushAudioURI } from 'slices/language.slice'
+import { useErrorWrap } from 'hooks'
+import i18n from 'utils/i18n'
 
 const { width } = Dimensions.get('window')
 
@@ -49,17 +47,17 @@ const LanguageHome = ({
   languageDescription,
   lessonName,
   lessonDescription,
-  nextUpdate,
-  valueName,
-  buttonText,
-  rightIconName,
+  singularItemText,
+  pluralItemText,
+  manageButtonText,
+  addButtonText,
+  manageIconName,
   buttonCallback,
   nextPageCallback,
+  addCallback,
   data,
 }) => {
   const errorWrap = useErrorWrap()
-  const trackPromise = useTrackPromise()
-  const dispatch = useDispatch()
 
   const [renderData, setRenderData] = useState(data)
 
@@ -67,50 +65,8 @@ const LanguageHome = ({
     setRenderData(data)
   }, [data])
 
-  const {
-    currentCourseId, currentUnitId, currentLessonId, lessonData,
-  } = useSelector((state) => state.language)
-
-  const getAudio = async (vocabId) => {
+  const playAudio = async (uri) => {
     await errorWrap(async () => {
-      const vocabIndex = lessonData.vocab.findIndex(
-        (element) => element._id === vocabId,
-      )
-
-      const vocabItem = lessonData.vocab[vocabIndex]
-
-      let uri = null
-
-      // Check if the audio has already been fetched
-      if (vocabItem.audioURI) {
-        uri = vocabItem.audioURI
-      } else {
-        const filePath = vocabItem.audio
-        const splitPath = filePath.split('.')
-
-        // Get the file type from the vocabItem's audio field
-        let fileType = 'm4a'
-
-        if (splitPath.length === 2) {
-          // eslint-disable-next-line prefer-destructuring
-          fileType = splitPath[1]
-        }
-
-        // Downloads audio file and gets Filesystem uri
-        uri = await trackPromise(
-          downloadAudioFile(
-            currentCourseId,
-            currentUnitId,
-            currentLessonId,
-            vocabId,
-            fileType,
-          ),
-        )
-
-        // Add to redux
-        dispatch(pushAudioURI({ vocabId, uri }))
-      }
-
       if (uri) {
         // Plays audio recording
         await Audio.setAudioModeAsync({
@@ -122,6 +78,8 @@ const LanguageHome = ({
       }
     })
   }
+
+  const itemTitle = renderData.length === 1 ? singularItemText : pluralItemText
 
   // Generates the Lesson Home Page
   if (isLessonHome) {
@@ -178,10 +136,10 @@ const LanguageHome = ({
             paddingTop={3}
             paddingLeft={5}
           >
-            {renderData.length} Vocabulary Items
+            {`${renderData.length} ${itemTitle}`}
           </Text>
           <StyledButton
-            title="Add New"
+            title={i18n.t('actions.addNew')}
             variant="manage"
             fontSize={15}
             rightIcon={(
@@ -209,7 +167,7 @@ const LanguageHome = ({
                 bodyText={element.name}
                 imageURI={element.imageURI}
                 showVolumeIcon={element.audio}
-                volumeIconCallback={() => getAudio(element._id)}
+                volumeIconCallback={() => playAudio(element.audioURI)}
                 width={width * 0.97}
                 height={element.imageURI === '' ? 75 : 100}
                 rightIcon={(
@@ -283,15 +241,15 @@ const LanguageHome = ({
           paddingTop={3}
           paddingLeft={5}
         >
-          {renderData.length} {valueName}
+          {`${renderData.length} ${itemTitle}`}
         </Text>
         <StyledButton
-          title={buttonText}
+          title={manageButtonText}
           variant="manage"
           fontSize={15}
           rightIcon={(
             <MaterialCommunityIcons
-              name={rightIconName}
+              name={manageIconName}
               color={colors.red.dark}
               size={20}
             />
@@ -308,26 +266,46 @@ const LanguageHome = ({
           }}
         >
           {renderData.map((element, index) => (
-            <StyledCard
+            <Pressable
+              onPress={() => nextPageCallback(element)}
               key={element._id}
-              leftIcon={<NumberBox number={index + 1} />}
-              titleText={element.name}
-              bodyText={element.body}
-              width={width * 0.97}
-              height={75}
-              indicatorType={element.indicatorType}
-              rightIcon={(
-                <MaterialCommunityIcons
-                  name="pencil"
-                  color="black"
-                  size={20}
-                  onPress={() => nextPageCallback(element)}
+            >
+              {({ isPressed }) => (
+                <StyledCard
+                  key={element._id}
+                  leftIcon={<NumberBox number={index + 1} />}
+                  titleText={element.name}
+                  bodyText={element.body}
+                  width={width * 0.97}
+                  height={75}
+                  indicatorType={element.indicatorType}
+                  rightIcon={(
+                    <MaterialCommunityIcons
+                      name="chevron-right"
+                      color="black"
+                      size={40}
+                    />
+                  )}
+                  isPressed={isPressed}
                 />
               )}
-            />
+            </Pressable>
           ))}
         </View>
       </ScrollView>
+
+      <View style={{ position: 'absolute', bottom: '5%', right: '5%' }}>
+        <StyledButton
+          title={addButtonText}
+          variant="small"
+          fontSize="20"
+          leftIcon={
+            <AntDesign name="pluscircle" size={20} color={colors.red.dark} />
+          }
+          shadow
+          onPress={addCallback}
+        />
+      </View>
     </>
   )
 }
@@ -342,8 +320,14 @@ LanguageHome.propTypes = {
   valueName: PropTypes.string,
   buttonText: PropTypes.string,
   rightIconName: PropTypes.string,
+  singularItemText: PropTypes.string,
+  pluralItemText: PropTypes.string,
+  manageButtonText: PropTypes.string,
+  addButtonText: PropTypes.string,
+  manageIconName: PropTypes.string,
   buttonCallback: PropTypes.func,
   nextPageCallback: PropTypes.func,
+  addCallback: PropTypes.func,
   data: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
 }
 
@@ -357,8 +341,15 @@ LanguageHome.defaultProps = {
   valueName: '',
   buttonText: '',
   rightIconName: '',
+  lessonDescription: `${i18n.t('dialogue.setDescriptionPrompt')}`,
+  singularItemText: '',
+  pluralItemText: '',
+  manageButtonText: '',
+  addButtonText: '',
+  manageIconName: '',
   buttonCallback: () => {},
   nextPageCallback: () => {},
+  addCallback: () => {},
   data: [],
 }
 

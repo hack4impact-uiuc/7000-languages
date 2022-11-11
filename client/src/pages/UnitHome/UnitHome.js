@@ -7,6 +7,7 @@ import { setField, resetField } from 'slices/language.slice'
 import { getUnit } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 
+import i18n from 'utils/i18n'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const UnitHome = ({ navigation }) => {
@@ -86,8 +87,10 @@ const UnitHome = ({ navigation }) => {
         const formattedItem = {
           _id: item._id,
           name: item.name,
-          body: `${item.num_vocab} Vocab ${
-            item.num_vocab === 1 ? 'Item' : 'Items'
+          body: `${item.num_vocab} ${i18n.t('dict.vocab')} ${
+            item.num_vocab === 1
+              ? `${i18n.t('dict.itemSingle')}`
+              : `${i18n.t('dict.itemPlural')}`
           }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
@@ -128,6 +131,13 @@ const UnitHome = ({ navigation }) => {
     navigation.navigate('LessonHome')
   }
 
+  /**
+   * Navigates to the Add Lesson Page
+   */
+  const navigateToAdd = () => {
+    navigation.navigate('Modal', { screen: 'CreateLesson' })
+  }
+
   return (
     <LanguageHome
       languageName={unitName}
@@ -136,8 +146,14 @@ const UnitHome = ({ navigation }) => {
       valueName="Lessons"
       buttonText="Manage Lessons"
       rightIconName="pencil"
+      singularItemText={i18n.t('dict.lessonSingle')}
+      pluralItemText={i18n.t('dict.lessonPlural')}
+      manageButtonText={i18n.t('actions.manageLessons')}
+      manageIconName="cog"
+      addButtonText={i18n.t('actions.addLesson')}
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
+      addCallback={navigateToAdd}
       data={data}
     />
   )

@@ -27,9 +27,15 @@ const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 const ModalStack = createStackNavigator()
 
-const navigationProps = {
+const homeNavigationProps = {
   headerTintColor: 'white',
   headerStyle: { backgroundColor: colors.red.dark },
+  headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+}
+
+const settingsNavigationProps = {
+  headerTintColor: 'black',
+  headerStyle: { backgroundColor: 'white' },
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
 }
 
@@ -96,7 +102,7 @@ export const HomeNavigator = ({ courseId }) => (
   <Stack.Navigator
     initialRouteName="Course"
     headerMode="screen"
-    screenOptions={navigationProps}
+    screenOptions={homeNavigationProps}
   >
     <Stack.Screen
       name={courseId}

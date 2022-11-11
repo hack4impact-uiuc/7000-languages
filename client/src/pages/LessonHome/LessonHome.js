@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import LanguageHome from 'components/LanguageHome'
 import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
-import { getLesson, downloadImageFile } from 'api'
+import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
+import i18n from 'utils/i18n'
 
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -17,7 +18,15 @@ const LessonHome = ({ navigation }) => {
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
-  const [lessonName, setLessonName] = useState('')
+  const mounted = useRef(false)
+
+  // Fixes the warning that we are setting the state of unmounted components in the call back functions for downloads
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+    }
+  }, [])
 
   /**
    * When going back from the Lesson Page to the Unit Page,
@@ -62,15 +71,14 @@ const LessonHome = ({ navigation }) => {
   useEffect(() => {
     const getData = async () => {
       if (lessonData?.vocab) {
-        let formattedVocabData = []
-
-        for (let i = 0; i < lessonData.vocab.length; i += 1) {
-          const item = lessonData.vocab[i]
-
+        // only attempt to display selected vocab items
+        const selectedData = lessonData.vocab.filter((item) => item.selected)
+        const formattedVocabData = selectedData.map((item) => {
           const formattedItem = {
             _id: item._id,
             name: item.original,
             body: item.translation,
+            audioURI: '',
             audio: item.audio !== '',
             _order: item._order,
             imageURI: '',
@@ -83,37 +91,57 @@ const LessonHome = ({ navigation }) => {
             const filePath = item.image
             const splitPath = filePath.split('.')
 
-            // Get the file type from the vocabItem's audio field
-            let fileType = 'jpg'
-
-            if (splitPath.length === 2) {
-              // eslint-disable-next-line prefer-destructuring
-              fileType = splitPath[1]
-            }
+            // Get the file type from the vocabItem's image field
+            const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
 
             // Need to fetch image uri
-            // eslint-disable-next-line no-await-in-loop
-            const uri = await trackPromise(
-              downloadImageFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                item._id,
-                fileType,
-              ),
-            )
-
-            formattedItem.imageURI = uri
+            // [TODO]: Add backend trackPromise()
+            downloadImageFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              item._id,
+              fileType,
+            ).then((value) => {
+              if (mounted) {
+                formattedItem.imageURI = value
+                // spread to force react to re-render so it thinks formattedVocabData is a new object
+                setData([...formattedVocabData])
+              }
+            })
           }
 
-          formattedVocabData.push(formattedItem)
-        }
+          if (item.audioURI) {
+            formattedItem.audioURI = item.audioURI
+          } else if (item.audio !== '') {
+            const filePath = item.audio
+            const splitPath = filePath.split('.')
 
-        formattedVocabData = formattedVocabData.sort(
+            // Get the file type from the vocabItem's audio field
+            const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
+
+            // Downloads audio file and gets Filesystem uri
+            // [TODO]: Add backend trackPromise()
+            downloadAudioFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              item._id,
+              fileType,
+            ).then((value) => {
+              if (mounted) {
+                formattedItem.audioURI = value
+                setData([...formattedVocabData])
+              }
+            })
+          }
+          return formattedItem
+        })
+
+        const sortedData = formattedVocabData.sort(
           (a, b) => a._order - b._order,
         )
-
-        setData(formattedVocabData)
+        setData(sortedData)
       }
     }
     setLessonName(lessonData.name)
@@ -122,12 +150,10 @@ const LessonHome = ({ navigation }) => {
   }, [lessonData])
 
   /**
-   * Navigates to the Vocab Drawer for adding a vocab item
+   * Navigates to the Manage Vocab Page
    */
-  const navigateTo = () => {
-    // Since we aren't editing a vocab item, we need to clear the current vocab id
-    dispatch(setField({ key: 'currentVocabId', value: '' }))
-    navigation.navigate('Modal', { screen: 'VocabDrawer' })
+  const navigateToManage = () => {
+    navigation.navigate('ManageVocab')
   }
 
   /**
@@ -158,7 +184,13 @@ const LessonHome = ({ navigation }) => {
       rightIconName="plus-circle"
       buttonCallback={navigateTo}
       nextPageCallback={goToNextPage}
+      singularItemText={i18n.t('dict.vocabItemSingle')}
+      pluralItemText={i18n.t('dict.vocabItemPlural')}
+      manageIconName="cog"
+      manageButtonText={i18n.t('actions.manageVocab')}
+      addButtonText="Add Vocab Item"
       data={data}
+      addCallback={navigateToAdd}
     />
   )
 }

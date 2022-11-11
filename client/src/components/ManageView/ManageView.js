@@ -16,6 +16,7 @@ import {
   DRAGGABLE_LIST_CARD_HEIGHT,
 } from 'utils/constants'
 import { moveFromList } from 'utils/manageHelper'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   root: {
@@ -68,9 +69,7 @@ const ManageView = ({
   unselectedTitleText,
   selectedBodyText,
   unselectedBodyText,
-  addText,
   saveCallback,
-  addCallback,
   initialSelectedData,
   initialUnselectedData,
   playAudio,
@@ -98,12 +97,16 @@ const ManageView = ({
 
       // Prompt the user before leaving the screen
       Alert.alert(
-        'Discard changes?',
-        'You have unsaved changes. Are you sure to discard them and leave the screen?',
+        `${i18n.t('dialogue.discardChangesPrompt')}`,
+        `${i18n.t('dialogue.unsavedChangesPrompt')}`,
         [
-          { text: "Don't leave", style: 'cancel', onPress: () => {} },
           {
-            text: 'Discard',
+            text: `${i18n.t('actions.notLeave')}`,
+            style: 'cancel',
+            onPress: () => {},
+          },
+          {
+            text: `${i18n.t('dict.discard')}`,
             style: 'destructive',
             // If the user confirmed, then we dispatch the action we blocked earlier
             // This will continue the action that had triggered the removal of the screen
@@ -270,14 +273,14 @@ const ManageView = ({
   const saveAndDiscardButtons = shouldShowButtons ? (
     <View style={styles.save}>
       <StyledButton
-        title="Save Changes"
+        title={i18n.t('actions.saveChanges')}
         variant="primary"
         fontSize="md"
         onPress={saveData}
         style={{ width: '47%' }}
       />
       <StyledButton
-        title="Discard Changes"
+        title={i18n.t('dialogue.discardChangesPrompt')}
         variant="secondary"
         fontSize="md"
         onPress={discardChanges}
@@ -301,19 +304,6 @@ const ManageView = ({
             <Text fontFamily="heading" fontWeight="regular" fontSize="xl">
               {selectedTitleText}
             </Text>
-            <StyledButton
-              title={addText}
-              variant="small"
-              fontSize="md"
-              rightIcon={(
-                <AntDesign
-                  name="pluscircle"
-                  size={18}
-                  color={colors.red.dark}
-                />
-              )}
-              onPress={addCallback}
-            />
           </View>
           <Text
             fontFamily="body"
@@ -372,9 +362,7 @@ ManageView.propTypes = {
   unselectedTitleText: PropTypes.string,
   selectedBodyText: PropTypes.string,
   unselectedBodyText: PropTypes.string,
-  addText: PropTypes.string,
   saveCallback: PropTypes.func,
-  addCallback: PropTypes.func,
   initialSelectedData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   initialUnselectedData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   playAudio: PropTypes.func,
@@ -389,9 +377,7 @@ ManageView.defaultProps = {
   unselectedTitleText: '',
   selectedBodyText: '',
   unselectedBodyText: '',
-  addText: '',
   saveCallback: () => {},
-  addCallback: () => {},
   initialSelectedData: [],
   initialUnselectedData: [],
   playAudio: () => {},

@@ -5,6 +5,7 @@ import { colors } from 'theme'
 import { Text } from 'native-base'
 import { useDispatch } from 'react-redux'
 import { authenticate } from 'slices/auth.slice'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   root: {
@@ -32,10 +33,10 @@ const Login = () => {
         fontStyle="italic"
         fontSize="6xl"
       >
-        Login
+        {i18n.t('dict.login')}
       </Text>
       <Button
-        title="Login to app"
+        title={i18n.t('actions.loginToApp')}
         color="white"
         backgroundColor={colors.orange.dark}
         onPress={loginUser}

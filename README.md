@@ -34,6 +34,29 @@ Written in [JavaScript](https://www.javascript.com/) and built with [React Nativ
 
 ## Team
 
+### Fall 2022
+
+<table align="center">
+  <tr align="center">
+    <td align="center"><a href="https://www.linkedin.com/in/ananth-yogi-koppol/"><img src="https://uiuc.hack4impact.org/images/people/yogi_koppol.jpg" width="75px;" alt="Ananth Koppol"/><br /><b>Ananth Koppol</b></a><br/><sub>Product Manager</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/ashay-parikh-a0621619a/"><img src="https://uiuc.hack4impact.org/images/people/ashay_parikh.jpg" width="75px;" alt="Ashay Parikh"/><br /><b>Ashay Parikh</b></a><br /><sub>Technical Lead</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/jocelyn-xu-a931511b3/"><img src="https://uiuc.hack4impact.org/images/people/jocelyn_xu.jpg" width="75px;" alt="Jocelyn Xu"/><br /><b>Jocelyn Xu</b></a><br /><sub>Product Designer</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/madison-park/"><img src="https://uiuc.hack4impact.org/images/people/madison_park.jpg" width="75px;" alt="Madison Park"/><br /><b>Madison Park</b></a><br /><sub>Product Designer</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/alex-masgras-b055971b5"><img src="https://uiuc.hack4impact.org/images/people/alex_masgras.jpg" width="75px;" alt="Alex Masgras"/><br /><b>Alex Masgras</b></a><br /><sub>Software Developer</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/feiyuwong/"><img src="https://uiuc.hack4impact.org/images/people/andy_wong.jpg" width="75px;" alt="Andy Wong"/><br /><b>Andy Wong</b></a><br /><sub>Software Developer</sub></td>
+  </tr>
+</table>
+<table align="center">
+  <tr align="center">
+    <td align="center"><a href="https://www.linkedin.com/in/eesha-barua/"><img src="https://uiuc.hack4impact.org/images/people/eesha_barua.jpg" width="75px;" alt="Eesha Barua"/><br /><b>Eesha Barua</b></a><br /><sub>Software Developer</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/estrella-2021/"><img src="https://uiuc.hack4impact.org/images/people/estrella_popoca.jpg" width="75px;" alt="Ellie Popoca"/><br /><b>Ellie Popoca</b></a><br /><sub>Software Developer</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/jamierollison/"><img src="https://uiuc.hack4impact.org/images/people/jamie_rollison.jpg" width="75px;" alt="Jamie Rollison"/><br /><b>Jamie Rollison</b></a><br /><sub>Software Developer</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/rustom-ichhaporia"><img src="https://uiuc.hack4impact.org/images/people/rustom_ichhaporia.jpg" width="75px;" alt="Rustom Ichhaporia"/><br /><b>Rustom Ichhaporia</b></a><br /><sub>Software Developer</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/xiaofan-li"><img src="https://images.ctfassets.net/xig6hkxlux4q/6miOsyd3tcgH8EeGvHM9xf/d72c4e83e0c3c6667475faad11b7c709/IMG_6494_-_Xiaofan_Li.jpg?h=300" width="75px;" alt="Xiaofan Li"/><br /><b>Xiaofan Li</b></a><br /><sub>Software Developer</sub></td>
+  </tr>
+</table>
+
+### Spring 2022
 <table align="center">
   <tr align="center">
     <td align="center"><a href="https://www.linkedin.com/in/ananth-yogi-koppol/"><img src="https://uiuc.hack4impact.org/images/people/yogi_koppol.jpg" width="75px;" alt="Ananth Koppol"/><br /><b>Ananth Koppol</b></a><br/><sub>Product Manager</sub></td>
