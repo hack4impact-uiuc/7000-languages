@@ -20,6 +20,10 @@ const Tab = createBottomTabNavigator()
 const TabNavigator = (navigationData) => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
+<<<<<<< HEAD
+      activeTintColor: colors.red.dark,
+      inactiveTintColor: colors.gray.dark,
+=======
       tabBarActiveTintColor: '#DF4E47',
       tabBarInactiveTintColor: '#666666',
       tabBarStyle: [
@@ -28,6 +32,7 @@ const TabNavigator = (navigationData) => (
         },
         null,
       ],
+>>>>>>> 6973180b80f40262fe8c8b19991a4818157fa3b8
       // eslint-disable-next-line react/prop-types
       tabBarIcon: ({ focused }) => {
         switch (route.name) {
