@@ -101,8 +101,5 @@
       "yarn lint",
       "yarn test"
     ]
-  },
-  "engines": {
-    "node": ">=15.0.0"
   }
 }
