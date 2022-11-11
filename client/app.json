@@ -18,12 +18,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true,
-      "config": {
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.558041423211-hc41ckr5muh3l09rsqqrs4nkaspltrba"
-        }
-      }
+      "supportsTablet": true
     },
     "packagerOpts": {
       "config": "metro.config.js",
