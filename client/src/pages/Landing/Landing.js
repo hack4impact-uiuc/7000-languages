@@ -5,7 +5,6 @@ import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
-import * as Google from 'expo-google-app-auth'
 import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
@@ -59,28 +58,29 @@ const Landing = () => {
   const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
 
   const loginUser = async () => {
-    await errorWrap(async () => {
-      const config = {
-        iosClientId: Constants.manifest.extra.iosClientId,
-        androidClientId: Constants.manifest.extra.androidClientId,
-      }
-      const { idToken, refreshToken } = await Google.logInAsync(config)
-      const guid = Google.getPlatformGUID(config)
-      const clientId = `${guid}.apps.googleusercontent.com`
-      if (idToken !== undefined && refreshToken !== undefined) {
-        const userData = {
-          idToken,
-        }
-        // call API
-        await createUser(userData)
-        // Save to Secure Store
-        await saveUserIDToken(idToken)
-        await saveUserRefreshToken(refreshToken)
-        await saveUserClientId(clientId)
-        // Update Redux Store
-        dispatch(authenticate({ loggedIn: true }))
-      }
-    })
+    // await errorWrap(async () => {
+    //   const config = {
+    //     iosClientId: Constants.manifest.extra.iosClientId,
+    //     androidClientId: Constants.manifest.extra.androidClientId,
+    //   }
+    //   const { idToken, refreshToken } = await Google.logInAsync(config)
+    //   const guid = Google.getPlatformGUID(config)
+    //   const clientId = `${guid}.apps.googleusercontent.com`
+    //   if (idToken !== undefined && refreshToken !== undefined) {
+    //     const userData = {
+    //       idToken,
+    //     }
+    //     // call API
+    //     await createUser(userData)
+    //     // Save to Secure Store
+    //     await saveUserIDToken(idToken)
+    //     await saveUserRefreshToken(refreshToken)
+    //     await saveUserClientId(clientId)
+    //     // Update Redux Store
+    //     dispatch(authenticate({ loggedIn: true }))
+    //   }
+    // })
+    alert("Trying to login");
   }
 
   const window = useWindowDimensions()
