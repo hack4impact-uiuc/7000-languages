@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'native-base'
-import { ViewPropTypes } from 'react-native'
+import { ViewPropTypes } from 'deprecated-react-native-prop-types'
 
 const StyledButton = ({
   title,

@@ -80,7 +80,7 @@ const Landing = () => {
     //     dispatch(authenticate({ loggedIn: true }))
     //   }
     // })
-    alert("Trying to login");
+    alert('Trying to login')
   }
 
   const window = useWindowDimensions()
@@ -113,13 +113,13 @@ const Landing = () => {
 
       <StyledButton
         title={i18n.t('actions.continueGoogle')}
-        leftIcon={(
+        leftIcon={
           <AntDesign
             name="google"
             size={`${window.height}` / 25}
             color={colors.red.dark}
           />
-        )}
+        }
         variant="secondary"
         onPress={loginUser}
         style={styles.loginButton}
