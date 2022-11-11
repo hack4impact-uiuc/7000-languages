@@ -12,9 +12,8 @@ const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
   const dispatch = useDispatch()
-  const {
-    currentCourseId, currentLessonId, currentUnitId, lessonData,
-  } = useSelector((state) => state.language)
+  const { currentCourseId, currentLessonId, currentUnitId, lessonData } =
+    useSelector((state) => state.language)
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
@@ -36,10 +35,11 @@ const LessonHome = ({ navigation }) => {
    * Source: https://reactnavigation.org/docs/preventing-going-back/
    */
   React.useEffect(
-    () => navigation.addListener('beforeRemove', (e) => {
-      dispatch(resetField({ key: 'lessonData' }))
-      navigation.dispatch(e.data.action)
-    }),
+    () =>
+      navigation.addListener('beforeRemove', (e) => {
+        dispatch(resetField({ key: 'lessonData' }))
+        navigation.dispatch(e.data.action)
+      }),
     [navigation],
   )
 

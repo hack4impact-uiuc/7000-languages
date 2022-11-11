@@ -57,17 +57,15 @@ const Landing = () => {
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
   const config = {
-    responseType: 'id_token',
     expoClientId: Constants.manifest.extra.expoClientId,
     iosClientId: Constants.manifest.extra.iosClientId,
-    androidClientId: Constants.manifest.extra.androidClientId,
-    scopes: ['profile', 'email']
+    androidClientId: Constants.manifest.extra.androidClientId
   }
   const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
-  const [request, response, promptAsync] = Google.useAuthRequest(config, {useProxy: true});
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest(config, {useProxy: true});
 
-  useEffect(async () => {
-    await errorWrap(async () => {
+  useEffect(() => {
+    errorWrap(async () => {
       if (response?.type === 'success') {
         const { id_token: idToken } = response.params
         if (idToken !== undefined) {
@@ -117,17 +115,15 @@ const Landing = () => {
 
       <StyledButton
         title={i18n.t('actions.continueGoogle')}
-        leftIcon={(
+        leftIcon={
           <AntDesign
             name="google"
             size={`${window.height}` / 25}
             color={colors.red.dark}
           />
-        )}
+        }
         variant="secondary"
-        onPress={() => {
-          promptAsync()
-        }}
+        onPress={() => promptAsync()}
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
       />

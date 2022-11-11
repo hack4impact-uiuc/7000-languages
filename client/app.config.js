@@ -13,4 +13,4 @@ export default ({ config }) => {
         '1534417123-gmng6jq2mvii7oa2gibcovt0cqpqk6fn.apps.googleusercontent.com',
     },
   }
-} 
+}
