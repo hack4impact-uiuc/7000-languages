@@ -37,9 +37,12 @@ const Navigator = () => {
 
   return (
     <RootStack.Navigator
-      headerMode="none"
-      screenOptions={{ animationEnabled: true, gestureEnabled: true }}
-      mode="modal"
+      screenOptions={{
+        animationEnabled: true,
+        gestureEnabled: true,
+        presentation: 'modal',
+        headerShown: 'false',
+      }}
     >
       {loggedIn ? (
         <>

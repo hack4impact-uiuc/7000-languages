@@ -20,6 +20,8 @@ const Tab = createBottomTabNavigator()
 const TabNavigator = (navigationData) => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
+      activeTintColor: colors.red.dark,
+      inactiveTintColor: colors.gray.dark,
       // eslint-disable-next-line react/prop-types
       tabBarIcon: ({ focused }) => {
         switch (route.name) {
@@ -46,10 +48,6 @@ const TabNavigator = (navigationData) => (
         }
       },
     })}
-    tabBarOptions={{
-      activeTintColor: colors.red.dark,
-      inactiveTintColor: colors.gray.dark,
-    }}
     initialRouteName="Units"
     swipeEnabled={false}
   >

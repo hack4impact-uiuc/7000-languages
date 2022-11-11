@@ -3,9 +3,6 @@ import { View } from 'react-native'
 import { Provider } from 'react-redux'
 import 'utils/ignore'
 
-import { LogBox } from 'react-native'
-LogBox.ignoreLogs(['EventEmitter.removeListener'])
-
 // assets
 import { imageAssets } from 'theme/images'
 import { fontAssets } from 'theme/fonts'

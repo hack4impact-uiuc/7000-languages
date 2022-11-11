@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'native-base'
-import { ViewPropTypes } from 'deprecated-react-native-prop-types'
 
 const StyledButton = ({
   title,
@@ -36,7 +35,6 @@ StyledButton.propTypes = {
   rightIcon: PropTypes.element,
   fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   shadow: PropTypes.bool,
-  style: ViewPropTypes.style,
   isDisabled: PropTypes.bool,
 }
 
@@ -45,7 +43,7 @@ StyledButton.defaultProps = {
   variant: 'primary',
   leftIcon: null,
   rightIcon: null,
-  onPress: () => { },
+  onPress: () => {},
   fontSize: 'lg',
   shadow: false,
   style: {},
