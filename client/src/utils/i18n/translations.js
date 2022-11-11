@@ -33,11 +33,15 @@ const translations = {
       yourName: 'Your Name',
       email: 'Email',
       languageName: 'Name of Language',
+<<<<<<< Updated upstream
       public: 'Public',
       private: 'Private',
       privacy: 'Privacy',
       deleteCourse: 'Delete Course',
       securityCode: 'Security Code',
+=======
+      accountInfo: 'Account Info',
+>>>>>>> Stashed changes
     },
     actions: {
       searchCourses: 'Search Courses',
@@ -173,10 +177,14 @@ const translations = {
       email: 'Courriel',
       languageName: 'Nom de la Langue',
       required: 'Requis',
+<<<<<<< Updated upstream
       public: 'Public',
       private: 'Privé',
       deleteCourse: 'Supprimer le cours',
       securityCode: 'Code de sécurité',
+=======
+      accountInfo: 'Informations de Compte',
+>>>>>>> Stashed changes
     },
     actions: {
       searchCourses: 'Recherche de cours',

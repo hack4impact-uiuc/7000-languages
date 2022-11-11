@@ -10,7 +10,6 @@ import { FontAwesome } from '@expo/vector-icons'
 import { colors, images } from 'theme'
 import { View, Pressable, StyleSheet } from 'react-native'
 import OwnershipButton from 'components/OwnershipButton'
-import DrawerLogoutButton from 'components/DrawerLogoutButton'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
@@ -52,14 +51,12 @@ const drawerStyles = StyleSheet.create({
     backgroundColor: '#F9F9F9',
   },
   topDivider: {
-    marginTop: '10%',
     marginBottom: '5%',
     height: 1,
     backgroundColor: '#EFEFEF',
-    width: '90%',
   },
   bottomDivider: {
-    marginTop: '3%',
+    // marginTop: '3%',
     height: 1,
     backgroundColor: '#EFEFEF',
     width: '90%',
@@ -70,6 +67,7 @@ const drawerStyles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginLeft: 10,
+    marginTop: 10
   },
   userInfoContainer: {
     display: 'flex',
@@ -151,6 +149,7 @@ const DrawerMenuContainer = (props) => {
     <>
       <DrawerContentScrollView {...props}>
         <DrawerMenu {...props} />
+        <View style={drawerStyles.topDivider} />
         <DrawerItemList state={newState} {...rest} />
 
         {drawerApply ? (
@@ -186,33 +185,16 @@ const DrawerMenuContainer = (props) => {
           </View>
         ) : null}
       </DrawerContentScrollView>
-      <View style={drawerStyles.topDivider} />
+        <View style={drawerStyles.bottomDivider} />
       <View style={drawerStyles.bottomContainer}>
-        <Image
-          source={
-            props.profileUrl === ''
-              ? images.default_icon
-              : { uri: props.profileUrl }
-          }
-          alt="Profile Icon"
-          size="sm"
-          resizeMode="contain"
-          borderRadius={100}
+        <StyledButton
+          title={i18n.t('dict.accountInfo')}
+          fontSize="sm"
+          variant={'accountInfo'}
+          onPress={() => props.navigation.navigate('AccountInfo', { from: 'HomeBaseCase' })}
         />
-        <View style={drawerStyles.userInfoContainer}>
-          <Text
-            style={drawerStyles.userName}
-            fontFamily="heading"
-            fontWeight="regular"
-            fontStyle="normal"
-          >
-            {props.name}
-          </Text>
-          <Text style={drawerStyles.userEmail}>{props.email}</Text>
-        </View>
       </View>
       <View style={drawerStyles.bottomDivider} />
-      <DrawerLogoutButton />
     </>
   )
 }

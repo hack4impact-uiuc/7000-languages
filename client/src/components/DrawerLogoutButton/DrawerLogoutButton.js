@@ -26,9 +26,7 @@ const DrawerLogoutButton = () => {
   return (
     <View
       style={{
-        marginTop: 15,
         marginLeft: 8,
-        marginBottom: 35,
       }}
     >
       <Pressable onPress={logoutUser}>

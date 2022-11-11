@@ -17,6 +17,7 @@ import ManageVocab from 'pages/ManageVocab'
 import CourseSettings from 'pages/CourseSettings'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
+import AccountInfo from '../../pages/AccountInfo/AccountInfo'
 
 // ------------------------------------
 // Constants
@@ -143,6 +144,23 @@ export const HomeNavigator = ({ courseId }) => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
+
+    <Stack.Screen
+      name="AccountInfo"
+      component={AccountInfo}
+      options={({ navigation }) => ({
+        title: 'Account Info',
+        headerStyle: { backgroundColor: colors.white.light },
+        headerTitleStyle: {
+          fontSize: 18,
+          fontFamily: 'GT_Haptik_bold',
+          color: 'black',
+        },
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+
     <Stack.Screen
       name="ManageUnits"
       component={ManageUnits}
