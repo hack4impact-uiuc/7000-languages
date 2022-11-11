@@ -45,7 +45,7 @@ StyledButton.defaultProps = {
   variant: 'primary',
   leftIcon: null,
   rightIcon: null,
-  onPress: () => {},
+  onPress: () => { },
   fontSize: 'lg',
   shadow: false,
   style: {},
