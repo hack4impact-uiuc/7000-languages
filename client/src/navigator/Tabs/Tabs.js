@@ -20,6 +20,7 @@ const Tab = createBottomTabNavigator()
 const TabNavigator = (navigationData) => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
+      headerShown: false,
       tabBarActiveTintColor: '#DF4E47',
       tabBarInactiveTintColor: '#666666',
       tabBarStyle: [

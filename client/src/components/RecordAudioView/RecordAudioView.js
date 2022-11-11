@@ -246,7 +246,7 @@ const RecordAudioView = ({
 }
 
 // Button object fields
-RecordAudioViewPropTypes = {
+RecordAudioView.propTypes = {
   recordingStage: PropTypes.number,
   startRecording: PropTypes.func,
   stopRecording: PropTypes.func,

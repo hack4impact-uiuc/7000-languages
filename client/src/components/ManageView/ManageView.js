@@ -357,7 +357,7 @@ const ManageView = ({
 }
 
 // Button object fields
-ManageViewPropTypes = {
+ManageView.propTypes = {
   selectedTitleText: PropTypes.string,
   unselectedTitleText: PropTypes.string,
   selectedBodyText: PropTypes.string,

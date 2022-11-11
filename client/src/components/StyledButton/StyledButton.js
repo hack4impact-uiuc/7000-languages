@@ -35,6 +35,7 @@ StyledButton.propTypes = {
   rightIcon: PropTypes.element,
   fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   shadow: PropTypes.bool,
+  style: PropTypes.objectOf(PropTypes.string),
   isDisabled: PropTypes.bool,
 }
 
