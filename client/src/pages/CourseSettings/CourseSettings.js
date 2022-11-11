@@ -76,19 +76,21 @@ const CourseSettings = () => {
         leftIcon={
           <MaterialCommunityIcons name="delete" color="black" size={20} />
         }
-        onPress={() => Alert.alert(
-          'Are you sure you want to delete this course?',
-          'This action cannot be undone.',
-          [
-            { text: 'Cancel' },
-            {
-              text: 'Delete',
-              onPress: () => {
-                /* TODO: delete course */
+        onPress={() =>
+          Alert.alert(
+            'Are you sure you want to delete this course?',
+            'This action cannot be undone.',
+            [
+              { text: 'Cancel' },
+              {
+                text: 'Delete',
+                onPress: () => {
+                  /* TODO: delete course */
+                },
               },
-            },
-          ],
-        )}
+            ],
+          )
+        }
       />
     </View>
   )

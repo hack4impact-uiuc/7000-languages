@@ -40,8 +40,8 @@ const Navigator = () => {
       screenOptions={{
         animationEnabled: true,
         gestureEnabled: true,
+        headerShown: false,
         presentation: 'modal',
-        headerShown: 'false',
       }}
     >
       {loggedIn ? (

@@ -4,4 +4,6 @@ import { LogBox } from 'react-native'
 // for more context
 // eslint-disable-next-line no-unused-expressions
 LogBox?.ignoreLogs(['Remote debugger'])
-// LogBox?.ignoreLogs(['EventEmitter.remove()'])
+LogBox.ignoreLogs(['EventEmitter.remove()'])
+LogBox.ignoreLogs(['EventEmitter.removeListener()'])
+LogBox.ignoreLogs(['EventEmitter.addListener()'])

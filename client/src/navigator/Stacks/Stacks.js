@@ -97,7 +97,10 @@ export const ModalNavigator = () => (
 export const HomeNavigator = ({ courseId }) => (
   <Stack.Navigator
     initialRouteName="Home"
-    screenOptions={(homeNavigationProps, (headerMode = 'screen'))}
+    screenOptions={{
+      ...homeNavigationProps,
+      headerMode: 'screen',
+    }}
   >
     <Stack.Screen
       name={courseId}
@@ -178,7 +181,10 @@ export const HomeNavigator = ({ courseId }) => (
 export const SettingsNavigator = () => (
   <Stack.Navigator
     initialRouteName="CourseSettings"
-    screenOptions={(settingsNavigationProps, (headerMode = 'screen'))}
+    screenOptions={{
+      ...settingsNavigationProps,
+      headerMode: 'screen',
+    }}
   >
     <Stack.Screen
       name="CourseSettings"
