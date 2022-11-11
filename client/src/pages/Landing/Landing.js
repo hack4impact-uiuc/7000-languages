@@ -58,7 +58,7 @@ const Landing = () => {
   const errorWrap = useErrorWrap()
   const config = {
     responseType: 'id_token',
-    expoClientId: Constants.manifest.extra,expoClientId,
+    expoClientId: Constants.manifest.extra.expoClientId,
     iosClientId: Constants.manifest.extra.iosClientId,
     androidClientId: Constants.manifest.extra.androidClientId,
     scopes: ['profile', 'email']
@@ -67,36 +67,25 @@ const Landing = () => {
   const [request, response, promptAsync] = Google.useAuthRequest(config, {useProxy: true});
 
   useEffect(async () => {
-    console.log('HIT')
-    console.log(response)
-    console.log('response')
-    if (response?.type === 'success') {
-      const { id_token } = response.params
-      if (id_token !== undefined) {
-        const userData = {
-          id_token,
+    await errorWrap(async () => {
+      if (response?.type === 'success') {
+        const { id_token: idToken } = response.params
+        if (idToken !== undefined) {
+          const userData = {
+            idToken,
+          }
+          // call API
+          await saveUserIDToken(idToken)
+          await createUser(userData)
+          // Save to Secure Store
+          //await saveUserRefreshToken(refreshToken)
+          //await saveUserClientId(clientId)
+          // Update Redux Store
+          dispatch(authenticate({ loggedIn: true }))
         }
-        // call API
-        await createUser(userData)
-        // Save to Secure Store
-        await saveUserIDToken(id_token)
-        //await saveUserRefreshToken(refreshToken)
-        //await saveUserClientId(clientId)
-        // Update Redux Store
-        dispatch(authenticate({ loggedIn: true }))
       }
-    }
+    })
   }, [response])
-  // const loginUser = async () => {
-  //   await errorWrap(async () => {
-      
-  //     .then(async () => {
-        
-  //       // const clientId = `${guid}.apps.googleusercontent.com`
-  //     } )
-      
-  //   })
-  // }
 
   const window = useWindowDimensions()
 
@@ -136,7 +125,9 @@ const Landing = () => {
           />
         )}
         variant="secondary"
-        onPress={() => promptAsync()}
+        onPress={() => {
+          promptAsync()
+        }}
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
       />

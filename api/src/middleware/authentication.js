@@ -59,9 +59,10 @@ const getUserByIDToken = async (idToken) => {
     if (idToken) {
       const ticket = await client.verifyIdToken({
         idToken,
-        audience: [process.env.EXPO_CLIENT_ID, process.env.IOS_CLIENT_ID, process.env.ANDROID_CLIENT_ID],
+        audience: ["1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com", process.env.IOS_CLIENT_ID, process.env.ANDROID_CLIENT_ID],
       });
       const data = ticket.getPayload();
+      console.log(data)
       return data;
     }
     return null;
