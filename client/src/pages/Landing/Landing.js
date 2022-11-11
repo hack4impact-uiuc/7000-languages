@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
-import * as Google from 'expo-google-app-auth'
+import * as Google from 'expo-auth-session/providers/google';
 import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
@@ -56,32 +56,47 @@ const Landing = () => {
     */
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
+  const config = {
+    responseType: 'id_token',
+    expoClientId: Constants.manifest.extra,expoClientId,
+    iosClientId: Constants.manifest.extra.iosClientId,
+    androidClientId: Constants.manifest.extra.androidClientId,
+    scopes: ['profile', 'email']
+  }
   const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
+  const [request, response, promptAsync] = Google.useAuthRequest(config, {useProxy: true});
 
-  const loginUser = async () => {
-    await errorWrap(async () => {
-      const config = {
-        iosClientId: Constants.manifest.extra.iosClientId,
-        androidClientId: Constants.manifest.extra.androidClientId,
-      }
-      const { idToken, refreshToken } = await Google.logInAsync(config)
-      const guid = Google.getPlatformGUID(config)
-      const clientId = `${guid}.apps.googleusercontent.com`
-      if (idToken !== undefined && refreshToken !== undefined) {
+  useEffect(async () => {
+    console.log('HIT')
+    console.log(response)
+    console.log('response')
+    if (response?.type === 'success') {
+      const { id_token } = response.params
+      if (id_token !== undefined) {
         const userData = {
-          idToken,
+          id_token,
         }
         // call API
         await createUser(userData)
         // Save to Secure Store
-        await saveUserIDToken(idToken)
-        await saveUserRefreshToken(refreshToken)
-        await saveUserClientId(clientId)
+        await saveUserIDToken(id_token)
+        //await saveUserRefreshToken(refreshToken)
+        //await saveUserClientId(clientId)
         // Update Redux Store
         dispatch(authenticate({ loggedIn: true }))
       }
-    })
-  }
+    }
+  }, [response])
+  // const loginUser = async () => {
+  //   await errorWrap(async () => {
+      
+  //     .then(async () => {
+        
+  //       // const clientId = `${guid}.apps.googleusercontent.com`
+  //     } )
+      
+  //   })
+  // }
 
   const window = useWindowDimensions()
 
@@ -121,7 +136,7 @@ const Landing = () => {
           />
         )}
         variant="secondary"
-        onPress={loginUser}
+        onPress={() => promptAsync()}
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
       />
