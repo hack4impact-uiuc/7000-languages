@@ -150,6 +150,18 @@ const theme = extendTheme({
             fontFamily: 'heading',
           },
         },
+        settings: {
+          bg: 'gray.300',
+          borderRadius: 10,
+          h: '6.5%',
+          minW: 100,
+          my: 3,
+          mx: 5,
+          _text: {
+            color: 'gray.dark',
+            fontFamily: 'heading',
+          },
+        },
       },
     },
   },
