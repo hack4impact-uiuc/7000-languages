@@ -51,7 +51,7 @@ const SplitDrawerItemList = ({
    * @param zeroBasedShift - A shift to apply in the instance the route belongs to the second list
    * @returns
    */
-  const createCustomDrawerItem = (route, i, zeroBasedShift = 0) => {
+  const createCustomDrawerItem = (route, i, zeroBasedShift) => {
     const focused = i === state.index - zeroBasedShift
 
     const {

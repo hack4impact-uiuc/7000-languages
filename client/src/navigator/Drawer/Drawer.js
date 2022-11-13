@@ -134,8 +134,7 @@ const generateCourseTabs = (tabData, contributor) => tabData.map((element, index
           </View>
         </View>
       ),
-      drawerIcon: () => (
-        contributor ?
+      drawerIcon: () => (contributor ? (
         <View
           style={{
             position: 'relative',
@@ -156,11 +155,12 @@ const generateCourseTabs = (tabData, contributor) => tabData.map((element, index
             color={tabColors[1]}
             style={{ position: 'absolute' }}
           />
-        </View> :
+        </View>
+      ) : (
         <View>
           <NumberBox number={index + 1} learner noMargin />
         </View>
-      ),
+      )),
     })}
   />
 ))
@@ -321,9 +321,9 @@ const DrawerNavigator = () => {
         inactiveBackgroundColor: 'white',
         itemStyle: { marginVertical: 4 },
         headerShown: false,
-      }}
-      drawerStyle={{
-        width: 350,
+        drawerStyle: {
+          width: 300,
+        },
       }}
       initialRouteName="Units"
       drawerContent={(props) => (

@@ -236,8 +236,7 @@ const translations = {
       errorCaught: 'useErrorWrap() : erreur détectée :',
       shareIndigenousLanguage:
         'Connaissez-vous une langue indigène que vous aimeriez partager avec le monde ?',
-      learnIndigenousLanguage:
-        'Voulez-vous apprendre une langue indigène ?',
+      learnIndigenousLanguage: 'Voulez-vous apprendre une langue indigène ?',
       nameRequired: 'Le nom est obligatoire',
       emailRequired: "L'adresse électronique est obligatoire",
       languageRequired: 'La langue est requise',
