@@ -132,23 +132,27 @@ const SplitDrawerItemList = ({
 SplitDrawerItemList.propTypes = {
   state: PropTypes.shape({
     index: PropTypes.number,
-    routes: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+    routes: PropTypes.arrayOf(
+      PropTypes.shape({
+        key: PropTypes.string,
+      }),
+    ),
     key: PropTypes.string,
   }),
   navigation: PropTypes.shape({
     emit: PropTypes.func,
     dispatch: PropTypes.func,
   }),
-  descriptors: PropTypes.arrayOf(PropTypes.string),
+  descriptors: PropTypes.shape({}),
   firstRouteNames: PropTypes.arrayOf(PropTypes.string),
   secondRouteNames: PropTypes.arrayOf(PropTypes.string),
-  middleChildComponent: PropTypes.elementType,
+  middleChildComponent: PropTypes.element,
 }
 
 SplitDrawerItemList.defaultProps = {
   state: { index: 0, routes: [] },
   navigation: { emit: () => {}, dispatch: () => {} },
-  descriptors: [],
+  descriptors: {},
   firstRouteNames: [],
   secondRouteNames: [],
   middleChildComponent: null,
