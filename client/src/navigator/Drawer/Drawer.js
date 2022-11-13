@@ -320,6 +320,7 @@ const DrawerNavigator = () => {
         activeBackgroundColor: '#F9F9F9',
         inactiveBackgroundColor: 'white',
         itemStyle: { marginVertical: 4 },
+        headerShown: false,
       }}
       drawerStyle={{
         width: 350,
