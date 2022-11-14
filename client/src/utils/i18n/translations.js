@@ -47,10 +47,12 @@ const translations = {
       searchCourses: 'Search Courses',
       logOut: 'Log Out',
       becomeContributor: 'Become a contributor.',
+      startLearning: 'Start Learning!',
       manageUnits: 'Manage Units',
       notLeave: "Don't leave",
       saveChanges: 'Save Changes',
       recordAudio: 'Record Audio',
+      accountInfo: 'Account Info',
       applyNow: 'Apply Now',
       myCourses: 'My Courses',
       required: 'Required.',
@@ -92,8 +94,10 @@ const translations = {
       discardChangesPrompt: 'Discard Changes?',
       requiredField: 'This field is required',
       errorCaught: 'useErrorWrap(): error caught:',
-      indigenousLanguagePrompt:
+      shareIndigenousLanguage:
         'Do you know an indigenous language that you would like to share with the world?',
+      learnIndigenousLanguage:
+        'Do you want to learn about an indigenous language?',
       nameRequired: 'Name is required',
       emailRequired: 'Email is required',
       languageRequired: 'Language is required',
@@ -189,11 +193,13 @@ const translations = {
     actions: {
       searchCourses: 'Recherche de cours',
       logOut: 'Déconnexion',
+      startLearning: 'Commencez à apprendre !',
       becomeContributor: 'Devenir un contributeur.',
       manageUnits: 'Gérer les unités',
       notLeave: 'Ne partez pas.',
       saveChanges: 'Enregistrer les modifications',
       recordAudio: 'Enregistrement audio',
+      accountInfo: 'Informations sur le compte',
       applyNow: 'Postulez maintenant',
       myCourses: 'Mes cours',
       required: 'Le nom est obligatoire.',
@@ -236,8 +242,9 @@ const translations = {
       discardChangesPrompt: 'Changements dans les rejets?',
       requiredField: 'Ce champ est obligatoire',
       errorCaught: 'useErrorWrap() : erreur détectée :',
-      indigenousLanguagePrompt:
+      shareIndigenousLanguage:
         'Connaissez-vous une langue indigène que vous aimeriez partager avec le monde ?',
+      learnIndigenousLanguage: 'Voulez-vous apprendre une langue indigène ?',
       nameRequired: 'Le nom est obligatoire',
       emailRequired: "L'adresse électronique est obligatoire",
       languageRequired: 'La langue est requise',

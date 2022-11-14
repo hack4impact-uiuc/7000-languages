@@ -72,9 +72,9 @@ More reading: https://reactnavigation.org/docs/stack-navigator/
 export const AuthNavigator = () => (
   <AuthStack.Navigator
     initialRouteName="Landing"
-    headerMode="screen"
     screenOptions={{
       headerShown: false,
+      headerMode: 'screen',
     }}
   >
     <AuthStack.Screen
@@ -98,8 +98,10 @@ export const ModalNavigator = () => (
 export const HomeNavigator = ({ courseId }) => (
   <Stack.Navigator
     initialRouteName="Home"
-    headerMode="screen"
-    screenOptions={homeNavigationProps}
+    screenOptions={{
+      ...homeNavigationProps,
+      headerMode: 'screen',
+    }}
   >
     <Stack.Screen
       name={courseId}
@@ -197,8 +199,10 @@ export const HomeNavigator = ({ courseId }) => (
 export const SettingsNavigator = () => (
   <Stack.Navigator
     initialRouteName="CourseSettings"
-    headerMode="screen"
-    screenOptions={settingsNavigationProps}
+    screenOptions={{
+      ...settingsNavigationProps,
+      headerMode: 'screen',
+    }}
   >
     <Stack.Screen
       name="CourseSettings"
