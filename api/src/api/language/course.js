@@ -114,18 +114,17 @@ router.delete(
   errorWrap(async (req, res) => {
     const course_id = req.params.id;
     const course = await models.Course.findById(course_id);
-    
+
     // delete all units
     let units = await models.Unit.find({ _course_id: course_id });
     for (var i = 0; i < units.length; i++) {
       deleteUnit(units[i]._id);
     }
-    
+
     await course.remove();
 
     return sendResponse(res, 200, 'Successfully deleted course');
   }),
 );
-
 
 module.exports = router;

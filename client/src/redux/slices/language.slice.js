@@ -99,7 +99,10 @@ const languageSlice = createSlice({
       state.lessonData = initialState.lessonData
       state.currentVocabId = initialState.currentVocabId
     },
-    updateCourseVisibilty: (state, { payload }) => {
+    setSecurityCode: (state, { payload }) => {
+      state.courseDetails.code = payload.code
+    },
+    updateCourseVisibility: (state, { payload }) => {
       state.courseDetails.is_private = payload.is_private
     },
     updateNumLessons: (state, { payload }) => {
@@ -148,8 +151,10 @@ export const {
   addVocab,
   updateVocab,
   clear,
+  setSecurityCode,
   resetField,
   clearCourseData,
+  updateCourseVisibility,
   updateNumLessons,
   updateNumUnits,
   updateVocabs,

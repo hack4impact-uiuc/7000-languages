@@ -3,10 +3,12 @@ import { Text, Select, Divider } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
+import { updateCourseVisibility, setSecurityCode } from 'slices/language.slice'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { changeVisibility } from 'api'
+import { changeVisibility, deleteCourse, updateSecurityCode } from 'api'
 import { useErrorWrap } from 'hooks'
 import { colors } from 'theme'
+import PropTypes from 'prop-types'
 import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
   },
   delete: {
     position: 'absolute',
-    bottom: 0,
+    bottom: '0%',
     width: '90%',
   },
   save: {
@@ -33,41 +35,60 @@ const styles = StyleSheet.create({
   },
 })
 
-const CourseSettings = ({navigation}) => {
-  const [initialVisibility] = useState('public') // get from api
-  const [visibility, setVisibility] = useState(initialVisibility)
+const CourseSettings = ({ navigation }) => {
+  const { currentCourseId, courseDetails } = useSelector(
+    (state) => state.language,
+  )
+  const [visibility, setVisibility] = useState(
+    courseDetails.is_private ? 'private' : 'public',
+  )
   const [shouldShowButton, setShouldShowButton] = useState(false)
-  const { currentCourseId, code } = useSelector((state) => state.language)
+  const { code } = courseDetails
 
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
 
   const handleVisibilityChange = async (value) => {
-    setVisibility(value)
-    setShouldShowButton(true)
+    if (value !== visibility || shouldShowButton) {
+      setVisibility(value)
+      setShouldShowButton(true)
+    }
   }
 
   // Update the API and redux
   const saveChanges = async () => {
     errorWrap(async () => {
-      const isPrivate = visibility === 'private'
+      const isPrivate = visibility
+
+      // disables save button
+      setShouldShowButton(false)
 
       // makes the API call
       await changeVisibility(currentCourseId, isPrivate)
 
       // updates the redux store
-      dispatch({ is_private: isPrivate })
-    })
+      dispatch(updateCourseVisibility({ is_private: isPrivate }))
+
+      // If a new security code is necessary, create one
+      if (isPrivate && !code) {
+        const newCode = Math.random().toString().substring(2, 7)
+        dispatch(setSecurityCode({ code: newCode }))
+        await updateSecurityCode(currentCourseId, newCode)
+      }
+    }, navigation.goBack())
   }
 
   const saveButton = shouldShowButton ? (
     <View>
-      <Text fontFamily="body"
-      fontWeight="normal"
-      fontSize="md"
-      color="gray.medium"
+      <Text
+        fontFamily="body"
+        fontWeight="normal"
+        fontSize="md"
+        color="gray.medium"
+        width="90%"
+        alignSelf="center"
       >
-        {i18n.t('dialog.courseSettingsSave')}
+        {i18n.t('dialogue.courseSettingsSave')}
       </Text>
       <View style={styles.save}>
         <StyledButton
@@ -82,32 +103,32 @@ const CourseSettings = ({navigation}) => {
   ) : null
 
   const securityCode = visibility === 'private' ? (
-      <View style={styles.body}>
-        <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
-          {i18n.t('dict.securityCode')}
-        </Text>
-        <Text
-          fontFamily="body"
-          fontWeight="normal"
-          fontSize="2xl"
-          textAlign="right"
-          my="5"
-        >
-          {code} {/* TODO: get this from the API */}
-        </Text>
-      </View>
-  ): null
+    <View style={styles.body}>
+      <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
+        {i18n.t('dict.securityCode')}
+      </Text>
+      <Text
+        fontFamily="body"
+        fontWeight="normal"
+        fontSize="2xl"
+        textAlign="right"
+        my="5"
+      >
+        {code}
+      </Text>
+    </View>
+  ) : null
 
   const visibilitySelect = (currentVisibility) => (
     <Select
-          defaultValue={currentVisibility}
-          borderColor="black"
-          height="35%"
-          onValueChange={handleVisibilityChange}
-        >
-          <Select.Item label={i18n.t('dict.public')} value="public" />
-          <Select.Item label={i18n.t('dict.private')} value="private" />
-      </Select>
+      defaultValue={currentVisibility}
+      borderColor="black"
+      height="35%"
+      onValueChange={handleVisibilityChange}
+    >
+      <Select.Item label={i18n.t('dict.public')} value="public" />
+      <Select.Item label={i18n.t('dict.private')} value="private" />
+    </Select>
   )
 
   return (
@@ -146,7 +167,7 @@ const CourseSettings = ({navigation}) => {
             {
               text: 'Delete',
               onPress: () => {
-                /* TODO: delete course */
+                deleteCourse(currentCourseId)
               },
             },
           ],
@@ -154,6 +175,17 @@ const CourseSettings = ({navigation}) => {
       />
     </View>
   )
+}
+
+CourseSettings.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+    goBack: PropTypes.func,
+  }),
+}
+
+CourseSettings.defaultProps = {
+  navigation: { navigate: () => null, goBack: () => null },
 }
 
 export default CourseSettings
