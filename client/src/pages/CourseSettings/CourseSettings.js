@@ -69,12 +69,6 @@ const CourseSettings = ({ navigation }) => {
       // updates the redux store
       dispatch(updateCourseVisibility({ is_private: isPrivate }))
 
-      // If a new security code is necessary, create one
-      if (isPrivate && !code) {
-        const newCode = Math.random().toString().substring(2, 7)
-        dispatch(setSecurityCode({ code: newCode }))
-        await updateSecurityCode(currentCourseId, newCode)
-      }
     }, navigation.goBack())
   }
 

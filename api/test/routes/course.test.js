@@ -19,6 +19,7 @@ const {
   PATCH_UPDATE_COURSE_DETAILS,
   PATCH_UPDATE_INVALID_FIELD,
   PATCH_UPDATE_NON_BOOLEAN_APPROVAL,
+  PATCH_UPDATE_VISIBILITY,
 } = require('../mock-data/course-mock-data');
 const {
   POST_BERBER_COURSE,
@@ -233,7 +234,7 @@ describe('PATCH /language/course/ ', () => {
         .send(body),
     );
 
-    const result = _.omit(response.body.result, ['_id', '__v']);
+    const result = _.omit(response.body.result, ['_id', '__v', 'details.code']);
     delete result['details']['_id'];
 
     expect(result).toEqual(original);
@@ -289,10 +290,25 @@ describe('PATCH /language/course/ ', () => {
         .send(body),
     );
 
-    const result = _.omit(response.body.result, ['_id', '__v']);
+    const result = _.omit(response.body.result, ['_id', '__v', 'details.code']);
     delete result['details']['_id'];
 
     expect(result).toEqual(PATCH_BERBER_COURSE_EXPECTED);
+    expect(response.status).toBe(200);
+  });
+
+  test('Patch request updates course visibility', async () => {
+    const body = PATCH_UPDATE_VISIBILITY;
+    const response = await withAuthentication(
+      request(app)
+        .patch('/language/course/62391a30487d5ae343c82311')
+        .send(body),
+    );
+
+    const result = _.omit(response.body.result, ['_id', '__v', 'details.code']);
+    delete result['details']['_id'];
+
+    expect(result.details.is_private).toEqual(false);
     expect(response.status).toBe(200);
   });
 });

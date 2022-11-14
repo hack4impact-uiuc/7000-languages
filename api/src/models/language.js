@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // function to get a random code for a new course
-const getRandomCode = () => Math.random().toString().substring(2, 7);
+const getRandomCode = () => Math.random().toString(36).substring(2, 7);
 
 /* Schemas */
 
