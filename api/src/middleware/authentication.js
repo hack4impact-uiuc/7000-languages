@@ -66,6 +66,8 @@ const getUserByIDToken = async (idToken) => {
     }
     return null;
   } catch (error) {
+    console.log("Error :(");
+    console.log(error);
     return null;
   }
 };
