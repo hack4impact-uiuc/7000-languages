@@ -53,37 +53,40 @@ const Landing = () => {
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
   const config = {
-    responseType: 'id_token',
     expoClientId: Constants.manifest.extra.expoClientId,
     iosClientId: Constants.manifest.extra.iosClientId,
     androidClientId: Constants.manifest.extra.androidClientId,
-    scopes: ['profile', 'email'],
+    scopes: ['profile'],
+    responseType: 'code',
+    shouldAutoExchangeCode: true,
+    extraParams: {
+      access_type: 'offline'
+    },
   }
   const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
-  const [, response, promptAsync] = Google.useAuthRequest(config, {
-    useProxy: true,
-  })
+  const [request, response, promptAsync] = Google.useAuthRequest(config)
 
   useEffect(() => {
     errorWrap(async () => {
       if (response?.type === 'success') {
-        const { id_token: idToken } = response.params
+        console.log('here')
+        console.log(response)
+        const { idToken, refreshToken } = response.authentication
         if (idToken !== undefined) {
           const userData = {
             idToken,
           }
           // Save to Secure Store
           await saveUserIDToken(idToken)
-
+          await saveUserRefreshToken(refreshToken);
+          await saveUserClientId(Constants.manifest.extra.expoClientId);
           // Call API, creating a user record if the user has logged in for the first time
           await createUser(userData)
-
+          
           /*
             TODO: Add back support for Refresh Tokens.
-            Make sure to call below:
-
-            await saveUserRefreshToken(refreshToken);
-            await saveUserClientId(clientId);
+            Make sure to call below:            
+            
           */
 
           // Update Redux Store
