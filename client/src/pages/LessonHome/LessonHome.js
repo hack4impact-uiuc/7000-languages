@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import LanguageHome from 'components/LanguageHome'
 import PropTypes from 'prop-types'
 
@@ -7,9 +7,6 @@ import { setField, resetField } from 'slices/language.slice'
 import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import i18n from 'utils/i18n'
-
-// eslint-disable-next-line no-unused-vars
-import _, { clone } from 'lodash'
 
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -21,6 +18,15 @@ const LessonHome = ({ navigation }) => {
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
+  const mounted = useRef(false)
+
+  // Fixes the warning that we are setting the state of unmounted components in the call back functions for downloads
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+    }
+  }, [])
 
   /**
    * When going back from the Lesson Page to the Unit Page,
@@ -64,7 +70,9 @@ const LessonHome = ({ navigation }) => {
   useEffect(() => {
     const getData = async () => {
       if (lessonData?.vocab) {
-        const formattedVocabData = lessonData.vocab.map((item) => {
+        // only attempt to display selected vocab items
+        const selectedData = lessonData.vocab.filter((item) => item.selected)
+        const formattedVocabData = selectedData.map((item) => {
           const formattedItem = {
             _id: item._id,
             name: item.original,
@@ -94,14 +102,11 @@ const LessonHome = ({ navigation }) => {
               item._id,
               fileType,
             ).then((value) => {
-              const updatedData = formattedVocabData.map((element) => {
-                if (element._id === formattedItem._id) {
-                  return { ...element, imageURI: value }
-                }
-                return element
-              })
-              setData(updatedData)
-              return value
+              if (mounted) {
+                formattedItem.imageURI = value
+                // spread to force react to re-render so it thinks formattedVocabData is a new object
+                setData([...formattedVocabData])
+              }
             })
           }
 
@@ -123,24 +128,18 @@ const LessonHome = ({ navigation }) => {
               item._id,
               fileType,
             ).then((value) => {
-              const updatedData = formattedVocabData.map((element) => {
-                if (element._id === formattedItem._id) {
-                  return { ...element, audioURI: value }
-                }
-                return element
-              })
-              setData(updatedData)
-              return value
+              if (mounted) {
+                formattedItem.audioURI = value
+                setData([...formattedVocabData])
+              }
             })
           }
-
           return formattedItem
         })
 
         const sortedData = formattedVocabData.sort(
           (a, b) => a._order - b._order,
         )
-
         setData(sortedData)
       }
     }
@@ -148,12 +147,10 @@ const LessonHome = ({ navigation }) => {
   }, [lessonData])
 
   /**
-   * Navigates to the Vocab Drawer for adding a vocab item
+   * Navigates to the Manage Vocab Page
    */
-  const navigateTo = () => {
-    // Since we aren't editing a vocab item, we need to clear the current vocab id
-    dispatch(setField({ key: 'currentVocabId', value: '' }))
-    navigation.navigate('Modal', { screen: 'VocabDrawer' })
+  const navigateToManage = () => {
+    navigation.navigate('ManageVocab')
   }
 
   /**
@@ -167,15 +164,24 @@ const LessonHome = ({ navigation }) => {
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
+  const navigateToAdd = () => {
+    // Since we aren't editing a vocab item, we need to clear the current vocab id
+    dispatch(setField({ key: 'currentVocabId', value: '' }))
+    navigation.navigate('Modal', { screen: 'VocabDrawer' })
+  }
+
   return (
     <LanguageHome
-      isLessonHome
       lessonDescription={lessonDescription}
-      valueName={i18n.t('dict.lessonsPlural')}
+      singularItemText={i18n.t('dict.vocabItemSingle')}
+      pluralItemText={i18n.t('dict.vocabItemPlural')}
       manageIconName="cog"
-      buttonCallback={navigateTo}
-      nextPageCallback={goToNextPage}
+      manageButtonText={i18n.t('actions.manageVocab')}
+      addButtonText="Add Vocab Item"
       data={data}
+      buttonCallback={navigateToManage}
+      nextPageCallback={goToNextPage}
+      addCallback={navigateToAdd}
     />
   )
 }

@@ -102,17 +102,6 @@ const VocabDrawer = ({ navigation }) => {
         if (vocabItem.audioURI) {
           setAudioRecording(vocabItem.audioURI)
         } else if (vocabItem.audio !== '') {
-          const filePath = vocabItem.audio
-          const splitPath = filePath.split('.')
-
-          // Get the file type from the vocabItem's audio field
-          let fileType = 'm4a'
-
-          if (splitPath.length === 2) {
-            // eslint-disable-next-line prefer-destructuring
-            fileType = splitPath[1]
-          }
-
           // Downloads audio file and gets Filesystem uri
           const uri = await trackPromise(
             downloadAudioFile(
@@ -120,7 +109,6 @@ const VocabDrawer = ({ navigation }) => {
               currentUnitId,
               currentLessonId,
               currentVocabId,
-              fileType,
             ),
           )
 
@@ -132,16 +120,6 @@ const VocabDrawer = ({ navigation }) => {
         if (vocabItem.imageURI) {
           setImage(vocabItem.imageURI)
         } else if (vocabItem.image !== '') {
-          const filePath = vocabItem.image
-          const splitPath = filePath.split('.')
-
-          // Get the file type from the vocabItem's audio field
-          let fileType = 'jpg'
-
-          if (splitPath.length === 2) {
-            // eslint-disable-next-line prefer-destructuring
-            fileType = splitPath[1]
-          }
           // Downloads audio file and gets Filesystem uri
           const uri = await trackPromise(
             downloadImageFile(
@@ -149,7 +127,6 @@ const VocabDrawer = ({ navigation }) => {
               currentUnitId,
               currentLessonId,
               currentVocabId,
-              fileType,
             ),
           )
 
@@ -279,6 +256,7 @@ const VocabDrawer = ({ navigation }) => {
             original: originalText,
             translation: translatedText,
             notes: additionalInformation,
+            selected: true,
           }
 
           // Updated vocab item text
@@ -409,7 +387,7 @@ const VocabDrawer = ({ navigation }) => {
         },
       },
       {
-        text: `${i18n.t('dict.cancel')}`,
+        text: `${i18n.t('actions.cancel')}`,
         style: 'cancel',
       },
     ])
@@ -436,7 +414,7 @@ const VocabDrawer = ({ navigation }) => {
         },
       },
       {
-        text: `${i18n.t('dict.cancel')}`,
+        text: `${i18n.t('actions.cancel')}`,
         style: 'cancel',
       },
     ])
@@ -447,10 +425,6 @@ const VocabDrawer = ({ navigation }) => {
     await audioRecording.stopAndUnloadAsync()
     const uri = audioRecording.getURI()
     setAudioRecording(uri)
-    setRecordingState(RECORDING.CONFIRMATION)
-  }
-
-  const confirmRecording = () => {
     setRecordingState(RECORDING.COMPLETE)
   }
 
@@ -521,7 +495,6 @@ const VocabDrawer = ({ navigation }) => {
       <Text color="gray.medium">
         {i18n.t('dialogue.itemDescriptionPrompt')}
       </Text>
-      {generateImageContainer()}
       <RequiredField title={translatedLanguage} />
       <Input
         placeholder=""
@@ -534,7 +507,6 @@ const VocabDrawer = ({ navigation }) => {
         startRecording={startRecording}
         stopRecording={stopRecording}
         playRecording={playRecording}
-        confirmRecording={confirmRecording}
         discardRecording={discardRecording}
         stopPlayingRecording={stopPlayingRecording}
       />
@@ -546,6 +518,9 @@ const VocabDrawer = ({ navigation }) => {
         onChangeText={(val) => setOriginalText(val)}
       />
       <Text>{i18n.t('dict.moreInfo')}</Text>
+      <Text fontSize="sm" color="gray.medium">
+        {i18n.t('dialogue.moreInfoPrompt')}
+      </Text>
       <TextArea
         size="2xl"
         h={40}
@@ -557,9 +532,7 @@ const VocabDrawer = ({ navigation }) => {
         value={additionalInformation}
         onChangeText={(val) => setAdditionalInformation(val)}
       />
-      <Text fontSize="sm" color="gray.medium">
-        {i18n.t('dialogue.moreInfoPrompt')}
-      </Text>
+      {generateImageContainer()}
     </>
   )
 

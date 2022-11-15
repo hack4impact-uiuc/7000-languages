@@ -3,22 +3,21 @@ import React, { useState, useEffect } from 'react'
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
-  DrawerItemList,
 } from '@react-navigation/drawer'
-import { Text, Image } from 'native-base'
+import { Text } from 'native-base'
 import { FontAwesome } from '@expo/vector-icons'
-import { colors, images } from 'theme'
+import { colors } from 'theme'
 import { View, Pressable, StyleSheet } from 'react-native'
-import OwnershipButton from 'components/OwnershipButton'
-import DrawerLogoutButton from 'components/DrawerLogoutButton'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
 import { setField } from 'slices/language.slice'
 import { useDispatch, useSelector } from 'react-redux'
+import NumberBox from 'components/NumberBox'
 import i18n from 'utils/i18n'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
+import SplitDrawerItemList from './SplitDrawerItemList'
 
 const tabStyles = StyleSheet.create({
   container: {
@@ -40,7 +39,7 @@ const drawerStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginVertical: 10,
   },
   pressable: {
     alignItems: 'center',
@@ -52,7 +51,6 @@ const drawerStyles = StyleSheet.create({
     backgroundColor: '#F9F9F9',
   },
   topDivider: {
-    marginTop: '10%',
     marginBottom: '5%',
     height: 1,
     backgroundColor: '#EFEFEF',
@@ -89,7 +87,12 @@ const drawerStyles = StyleSheet.create({
 
 const Drawer = createDrawerNavigator()
 
-const tabColors = [colors.red.dark]
+const tabColors = [
+  colors.red.light,
+  colors.red.dark,
+  colors.blue.light,
+  colors.blue.dark,
+]
 
 const generateUnitLabel = (numUnits) => {
   // eslint-disable-next-line no-restricted-globals
@@ -107,7 +110,8 @@ const generateUnitLabel = (numUnits) => {
  * @param {Array} data Array of Course Data to use for each tab bar
  * @returns
  */
-const generateTabs = (tabData) => tabData.map((element, index) => (
+
+const generateCourseTabs = (tabData, contributor) => tabData.map((element, index) => (
   <Drawer.Screen
     key={element._id}
     name={element._id}
@@ -128,97 +132,155 @@ const generateTabs = (tabData) => tabData.map((element, index) => (
               {generateUnitLabel(element.num_units)}
             </Text>
           </View>
-          {element.isContributor ? <OwnershipButton isContributor /> : null}
         </View>
       ),
-      drawerIcon: () => (
-        <FontAwesome
-          name="square"
-          size={45}
-          color={tabColors[index % tabColors.length]}
-        />
-      ),
+      drawerIcon: () => (contributor ? (
+        <View
+          style={{
+            position: 'relative',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <FontAwesome
+            name="square"
+            size={45}
+            icon="user"
+            color={tabColors[0]}
+          />
+          <FontAwesome
+            name="globe"
+            size={25}
+            icon="user"
+            color={tabColors[1]}
+            style={{ position: 'absolute' }}
+          />
+        </View>
+      ) : (
+        <View>
+          <NumberBox number={index + 1} learner noMargin />
+        </View>
+      )),
     })}
   />
 ))
 
 const DrawerMenuContainer = (props) => {
-  const { state, ...rest } = props
+  const {
+    state, firstRouteNames, secondRouteNames, ...rest
+  } = props
   const newState = { ...state }
-  const drawerApply = true
+
+  const middleChildComponent = (
+    <>
+      <View style={drawerStyles.container}>
+        <Pressable
+          style={drawerStyles.pressable}
+          forceInset={{
+            top: 'always',
+            horizontal: 'never',
+          }}
+        >
+          <Text
+            fontWeight="regular"
+            color="gray.dark"
+            fontSize="sm"
+            textAlign="left"
+          >
+            {`${i18n.t('dialogue.learnIndigenousLanguage')} `}
+            <Text fontFamily="heading" fontWeight="regular" fontStyle="normal">
+              {i18n.t('actions.startLearning')}
+            </Text>
+          </Text>
+          <StyledButton
+            title={i18n.t('actions.searchCourses')}
+            fontSize="sm"
+            variant="learner_primary"
+          />
+        </Pressable>
+      </View>
+
+      <StyledButton
+        title="CONTRIBUTOR"
+        fontSize={15}
+        variant="contributor"
+        onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+      />
+    </>
+  )
 
   return (
     <>
       <DrawerContentScrollView {...props}>
         <DrawerMenu {...props} />
-        <DrawerItemList state={newState} {...rest} />
 
-        {drawerApply ? (
-          <View style={drawerStyles.container}>
-            <Pressable
-              style={drawerStyles.pressable}
-              forceInset={{
-                top: 'always',
-                horizontal: 'never',
-              }}
+        <StyledButton
+          title="LEARNER"
+          fontSize={15}
+          variant="learner"
+          onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+        />
+
+        <SplitDrawerItemList
+          state={newState}
+          firstRouteNames={firstRouteNames}
+          secondRouteNames={secondRouteNames}
+          middleChildComponent={middleChildComponent}
+          {...rest}
+        />
+
+        <View style={drawerStyles.container}>
+          <Pressable
+            style={drawerStyles.pressable}
+            forceInset={{
+              top: 'always',
+              horizontal: 'never',
+            }}
+          >
+            <Text
+              fontWeight="regular"
+              color="gray.dark"
+              fontSize="sm"
+              textAlign="left"
             >
+              {`${i18n.t('dialogue.shareIndigenousLanguage')} `}
               <Text
+                fontFamily="heading"
                 fontWeight="regular"
-                color="gray.dark"
-                fontSize="sm"
-                textAlign="left"
+                fontStyle="normal"
               >
-                {`${i18n.t('dialogue.indigenousLanguagePrompt')} `}
-                <Text
-                  fontFamily="heading"
-                  fontWeight="regular"
-                  fontStyle="normal"
-                >
-                  {i18n.t('actions.becomeContributor')}
-                </Text>
+                {i18n.t('actions.becomeContributor')}
               </Text>
-              <StyledButton
-                title={i18n.t('actions.applyNow')}
-                fontSize="sm"
-                onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
-              />
-            </Pressable>
-          </View>
-        ) : null}
+            </Text>
+            <StyledButton
+              title={i18n.t('actions.applyNow')}
+              fontSize="sm"
+              onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
+            />
+          </Pressable>
+        </View>
       </DrawerContentScrollView>
       <View style={drawerStyles.topDivider} />
-      <View style={drawerStyles.bottomContainer}>
-        <Image
-          source={
-            props.profileUrl === ''
-              ? images.default_icon
-              : { uri: props.profileUrl }
-          }
-          alt="Profile Icon"
-          size="sm"
-          resizeMode="contain"
-          borderRadius={100}
-        />
-        <View style={drawerStyles.userInfoContainer}>
-          <Text
-            style={drawerStyles.userName}
-            fontFamily="heading"
-            fontWeight="regular"
-            fontStyle="normal"
-          >
-            {props.name}
-          </Text>
-          <Text style={drawerStyles.userEmail}>{props.email}</Text>
-        </View>
-      </View>
-      <View style={drawerStyles.bottomDivider} />
-      <DrawerLogoutButton />
+      <StyledButton
+        title={i18n.t('actions.accountInfo')}
+        fontSize="sm"
+        leftIcon={<FontAwesome name="user" size={20} color={colors.black} />}
+        variant="settings"
+      />
     </>
   )
 }
 
 const DrawerNavigator = () => {
   const { allCourses } = useSelector((state) => state.language)
+  const learnerCourses = allCourses.filter(
+    (element) => element.isContributor === false,
+  )
+  const contributorCourses = allCourses.filter(
+    (element) => element.isContributor === true,
+  )
+  const learnerIds = learnerCourses.map((course) => course._id)
+  const contributorIds = contributorCourses.map((course) => course._id)
 
   const [userEmail, setEmail] = useState('')
   const [userName, setName] = useState(`${i18n.t('dialogue.loading')}`)
@@ -252,15 +314,16 @@ const DrawerNavigator = () => {
 
   return (
     <Drawer.Navigator
-      drawerContentOptions={{
+      screenOptions={{
         activeTintColor: 'black',
         inactiveTintColor: 'black',
         activeBackgroundColor: '#F9F9F9',
         inactiveBackgroundColor: 'white',
         itemStyle: { marginVertical: 4 },
-      }}
-      drawerStyle={{
-        width: 350,
+        headerShown: false,
+        drawerStyle: {
+          width: 300,
+        },
       }}
       initialRouteName="Units"
       drawerContent={(props) => (
@@ -268,11 +331,14 @@ const DrawerNavigator = () => {
           email={userEmail}
           name={userName}
           profileUrl={profileUrl}
+          firstRouteNames={learnerIds}
+          secondRouteNames={contributorIds}
           {...props}
         />
       )}
     >
-      {(() => generateTabs(allCourses))()}
+      {(() => generateCourseTabs(learnerCourses, false))()}
+      {(() => generateCourseTabs(contributorCourses, true))()}
     </Drawer.Navigator>
   )
 }

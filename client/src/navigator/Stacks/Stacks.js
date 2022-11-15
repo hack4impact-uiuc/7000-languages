@@ -14,6 +14,8 @@ import PropTypes from 'prop-types'
 import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
+import ManageVocab from 'pages/ManageVocab'
+import CourseSettings from 'pages/CourseSettings'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -25,9 +27,15 @@ const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 const ModalStack = createStackNavigator()
 
-const navigationProps = {
+const homeNavigationProps = {
   headerTintColor: 'white',
   headerStyle: { backgroundColor: colors.red.dark },
+  headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+}
+
+const settingsNavigationProps = {
+  headerTintColor: 'black',
+  headerStyle: { backgroundColor: 'white' },
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
 }
 
@@ -63,10 +71,11 @@ More reading: https://reactnavigation.org/docs/stack-navigator/
 
 export const AuthNavigator = () => (
   <AuthStack.Navigator
-    initialRouteName="SelectLanguage"
+    initialRouteName="Landing"
     headerMode="screen"
     screenOptions={{
       headerShown: false,
+      headerMode: 'screen',
     }}
   >
     <AuthStack.Screen
@@ -97,8 +106,10 @@ export const ModalNavigator = () => (
 export const HomeNavigator = ({ courseId }) => (
   <Stack.Navigator
     initialRouteName="Home"
-    headerMode="screen"
-    screenOptions={navigationProps}
+    screenOptions={{
+      ...homeNavigationProps,
+      headerMode: 'screen',
+    }}
   >
     <Stack.Screen
       name={courseId}
@@ -161,6 +172,36 @@ export const HomeNavigator = ({ courseId }) => (
         ...manageNavigationProps,
         title: 'Manage Lessons',
         headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <Stack.Screen
+      name="ManageVocab"
+      component={ManageVocab}
+      options={({ navigation }) => ({
+        ...manageNavigationProps,
+        title: 'Manage Vocab',
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+  </Stack.Navigator>
+)
+
+export const SettingsNavigator = () => (
+  <Stack.Navigator
+    initialRouteName="CourseSettings"
+    screenOptions={{
+      ...settingsNavigationProps,
+      headerMode: 'screen',
+    }}
+  >
+    <Stack.Screen
+      name="CourseSettings"
+      component={CourseSettings}
+      options={({ navigation }) => ({
+        title: 'Settings',
+        headerLeft: () => <BackButton navigation={navigation} color="black" />,
         cardStyle: { backgroundColor: 'white' },
       })}
     />

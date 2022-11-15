@@ -5,10 +5,12 @@ const translations = {
       vocabItems: 'Vocabulary Items',
       discard: 'Discard',
       ok: 'OK',
-      unitSingle: '1 Unit',
+      unitSingle: 'Unit',
       unitPlural: 'Units',
       lessonSingle: 'Lesson',
       lessonPlural: 'Lessons',
+      vocabItemSingle: 'Vocab Item',
+      vocabItemPlural: 'Vocab Items',
       loading: 'Loading...',
       success: 'Success!',
       languageDescription: 'Language Description',
@@ -25,26 +27,38 @@ const translations = {
       unselectedLessons: 'Unselected Lessons',
       selectedUnits: 'Selected Units',
       unselectedUnits: 'Unselected Units',
-      moreInfo: 'Additional Information',
+      moreInfo: 'Context',
       profile: 'Profile',
       submit: 'Submit',
       yourName: 'Your Name',
       email: 'Email',
       languageName: 'Name of Language',
+<<<<<<< HEAD
       cancel: 'Cancel',
+=======
+      public: 'Public',
+      private: 'Private',
+      privacy: 'Privacy',
+      deleteCourse: 'Delete Course',
+      securityCode: 'Security Code',
+>>>>>>> 0362738d61a335eba06551423cc30d8dd5531a0c
     },
     actions: {
       searchCourses: 'Search Courses',
       logOut: 'Log Out',
       becomeContributor: 'Become a contributor.',
+      startLearning: 'Start Learning!',
       manageUnits: 'Manage Units',
       notLeave: "Don't leave",
       saveChanges: 'Save Changes',
       recordAudio: 'Record Audio',
+      accountInfo: 'Account Info',
       applyNow: 'Apply Now',
       myCourses: 'My Courses',
       required: 'Required.',
       addCustomLesson: 'Add Custom Lesson',
+      addLesson: 'Add Lesson',
+      addUnit: 'Add Unit',
       createLessonSingle: 'Create Lesson',
       addCustomUnit: 'Add Custom Unit',
       createUnit: 'Create Unit',
@@ -66,6 +80,7 @@ const translations = {
       editVocabItem: 'Edit Vocab Item',
       addVocabItem: 'Add a Vocab Item',
       addNew: 'Add New',
+      manageVocab: 'Manage Vocab',
     },
     dialogue: {
       notLearnerPrompt: "Looks like you aren't a learner in any courses yet.",
@@ -79,8 +94,10 @@ const translations = {
       discardChangesPrompt: 'Discard Changes?',
       requiredField: 'This field is required',
       errorCaught: 'useErrorWrap(): error caught:',
-      indigenousLanguagePrompt:
+      shareIndigenousLanguage:
         'Do you know an indigenous language that you would like to share with the world?',
+      learnIndigenousLanguage:
+        'Do you want to learn about an indigenous language?',
       nameRequired: 'Name is required',
       emailRequired: 'Email is required',
       languageRequired: 'Language is required',
@@ -126,6 +143,8 @@ const translations = {
       itemDescriptionPrompt: 'A vocab item can be a word or phrase.',
       moreInfoPrompt:
         'Use this space to give additional information about the vocab item, such as grammatical and cultural information, usage, or additional translations/meanings.',
+      courseSettingsDescription:
+        'Here is the settings for you to manage your own course.',
     },
   },
   fr: {
@@ -138,6 +157,8 @@ const translations = {
       unitPlural: 'Unités',
       lessonSingle: 'Leçon',
       lessonPlural: 'Leçons',
+      vocabItemSingle: 'Item de vocabulaire',
+      vocabItemPlural: 'Articles de vocabulaire',
       loading: 'Chargement...',
       success: 'Succès!',
       languageDescription: 'Description de la langue',
@@ -160,22 +181,33 @@ const translations = {
       email: 'Courriel',
       languageName: 'Nom de la Langue',
       required: 'Requis',
+<<<<<<< HEAD
       cancel: 'annuler',
+=======
+      public: 'Public',
+      private: 'Privé',
+      deleteCourse: 'Supprimer le cours',
+      securityCode: 'Code de sécurité',
+>>>>>>> 0362738d61a335eba06551423cc30d8dd5531a0c
     },
     actions: {
       searchCourses: 'Recherche de cours',
       logOut: 'Déconnexion',
+      startLearning: 'Commencez à apprendre !',
       becomeContributor: 'Devenir un contributeur.',
       manageUnits: 'Gérer les unités',
       notLeave: 'Ne partez pas.',
       saveChanges: 'Enregistrer les modifications',
       recordAudio: 'Enregistrement audio',
+      accountInfo: 'Informations sur le compte',
       applyNow: 'Postulez maintenant',
       myCourses: 'Mes cours',
       required: 'Le nom est obligatoire.',
       addCustomLesson: 'Ajouter une leçon personnalisée',
+      addLesson: 'Ajouter une leçon',
       createLessonSingle: 'Créer une leçon',
       addCustomUnit: 'Ajouter une unité personnalisée',
+      addUnit: 'Ajouter une unité',
       createUnit: 'Créer une unité',
       goBack: 'Retourner',
       continueGoogle: 'Continuer avec Google',
@@ -195,6 +227,7 @@ const translations = {
       editVocabItem: 'Modifier un élément de vocabulaire',
       addVocabItem: 'Ajouter un élément de vocabulaire',
       addNew: 'Ajouter un Nouveau',
+      manageVocab: 'Gérer les éléments de vocabulaire',
     },
     dialogue: {
       notLearnerPrompt:
@@ -209,8 +242,9 @@ const translations = {
       discardChangesPrompt: 'Changements dans les rejets?',
       requiredField: 'Ce champ est obligatoire',
       errorCaught: 'useErrorWrap() : erreur détectée :',
-      indigenousLanguagePrompt:
+      shareIndigenousLanguage:
         'Connaissez-vous une langue indigène que vous aimeriez partager avec le monde ?',
+      learnIndigenousLanguage: 'Voulez-vous apprendre une langue indigène ?',
       nameRequired: 'Le nom est obligatoire',
       emailRequired: "L'adresse électronique est obligatoire",
       languageRequired: 'La langue est requise',
@@ -258,6 +292,8 @@ const translations = {
         'Un élément de vocabulaire peut être un mot ou une phrase.',
       moreInfoPrompt:
         "Utilisez cet espace pour donner des informations supplémentaires sur l'élément de vocabulaire, par exemple grammaticale et culturelle, l'usage, ou des traductions/significations traductions/significations supplémentaires.",
+      courseSettingsDescription:
+        'Voici les paramètres qui vous permettront de gérer votre propre cours.',
     },
   },
 }
