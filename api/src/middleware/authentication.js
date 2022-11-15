@@ -66,6 +66,7 @@ const getUserByIDToken = async (idToken) => {
     }
     return null;
   } catch (error) {
+    console.error('Error during Google Auth ID Token Verification: ', error);
     return null;
   }
 };
