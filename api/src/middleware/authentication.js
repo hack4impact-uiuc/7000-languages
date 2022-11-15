@@ -59,7 +59,7 @@ const getUserByIDToken = async (idToken) => {
     if (idToken) {
       const ticket = await client.verifyIdToken({
         idToken,
-        audience: [process.env.EXPO_CLIENT_ID],
+        audience: process.env.EXPO_CLIENT_ID,
       });
       const data = ticket.getPayload();
       return data;
