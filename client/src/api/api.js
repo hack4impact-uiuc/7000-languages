@@ -40,7 +40,13 @@ export const getCourse = async (courseID) => {
 
 export const changeVisibility = async (courseID, makePrivate) => {
   const requestString = `/language/course/${courseID}`
-  const res = await instance.patch(requestString, { is_private: makePrivate })
+  const body = {
+    course_id: courseID,
+    details: {
+      is_private: makePrivate,
+    }
+  }
+  const res = await instance.patch(requestString, body)
 
   if (!res?.data?.success) throw new Error(res.data?.message)
   return res.data

@@ -34,7 +34,6 @@ module.exports.GET_SIMPLE_COURSE_EXPECTED = {
       glotto: 'stan1293',
       population: '8750',
       link: 'https://tepid-toll.com',
-      code: '12345',
       is_private: true,
     },
   }, //remove admin_id
@@ -157,6 +156,7 @@ module.exports.POST_SIMPLE_COURSE_EXPECTED = {
     location: 'Michigan',
     link: '',
     code: '12345',
+    is_private: true,
   },
 };
 
@@ -217,11 +217,12 @@ module.exports.POST_COURSE_ADDITIONAL_FIELDS = {
     population: '',
     location: 'Michigan',
     link: '',
+    code: '12345',
     extraDetails: '',
   },
 };
 
-module.exports.POST_COURSE_ADDITIONAL_FIELDS_EXPECTED = this.POST_SIMPLE_COURSE;
+module.exports.POST_COURSE_ADDITIONAL_FIELDS_EXPECTED = this.POST_SIMPLE_COURSE_EXPECTED;
 
 module.exports.PATCH_ORIGINAL_COURSE = {
   approved: true,
@@ -238,6 +239,7 @@ module.exports.PATCH_ORIGINAL_COURSE = {
     iso: 'en',
     glotto: 'stan1293',
     population: '8750',
+    is_private: true,
     link: 'https://tepid-toll.com',
   },
 };
@@ -297,17 +299,14 @@ module.exports.PATCH_EXPECTED_COURSE_UPDATED_COURSE_DETAILS = {
     iso: 'en',
     glotto: 'stan1293',
     population: '8750',
+    code: 'abcde',
     link: 'https://tepid-toll.com',
-    is_private: true,
+    is_private: false,
   },
 };
 
 module.exports.PATCH_UPDATE_APPROVAL = {
   approved: false,
-};
-
-module.exports.PATCH_UPDATE_VISIBILITY = {
-  details: { is_private: false },
 };
 
 module.exports.PATCH_UPDATE_ADMIN_ID = {
@@ -327,7 +326,9 @@ module.exports.PATCH_UPDATE_COURSE_DETAILS = {
     iso: 'en',
     glotto: 'stan1293',
     population: '8750',
+    code: 'abcde',
     link: 'https://tepid-toll.com',
+    is_private: false,
   },
 };
 

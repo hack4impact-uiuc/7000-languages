@@ -58,7 +58,7 @@ const CourseSettings = ({ navigation }) => {
   // Update the API and redux
   const saveChanges = async () => {
     errorWrap(async () => {
-      const isPrivate = visibility
+      const isPrivate = visibility === 'private'
 
       // disables save button
       setShouldShowButton(false)
