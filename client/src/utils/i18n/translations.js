@@ -33,15 +33,12 @@ const translations = {
       yourName: 'Your Name',
       email: 'Email',
       languageName: 'Name of Language',
-<<<<<<< HEAD
       cancel: 'Cancel',
-=======
       public: 'Public',
       private: 'Private',
       privacy: 'Privacy',
       deleteCourse: 'Delete Course',
       securityCode: 'Security Code',
->>>>>>> 0362738d61a335eba06551423cc30d8dd5531a0c
     },
     actions: {
       searchCourses: 'Search Courses',
@@ -181,14 +178,11 @@ const translations = {
       email: 'Courriel',
       languageName: 'Nom de la Langue',
       required: 'Requis',
-<<<<<<< HEAD
       cancel: 'annuler',
-=======
       public: 'Public',
       private: 'Privé',
       deleteCourse: 'Supprimer le cours',
       securityCode: 'Code de sécurité',
->>>>>>> 0362738d61a335eba06551423cc30d8dd5531a0c
     },
     actions: {
       searchCourses: 'Recherche de cours',
