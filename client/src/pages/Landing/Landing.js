@@ -1,20 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
-import * as Google from 'expo-google-app-auth'
+import * as Google from 'expo-auth-session/providers/google'
 import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
-import {
-  saveUserIDToken,
-  saveUserRefreshToken,
-  saveUserClientId,
-} from 'utils/auth'
+import { saveUserIDToken } from 'utils/auth'
 import { createUser } from 'api'
 import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/landing-logo.svg'
@@ -56,32 +52,46 @@ const Landing = () => {
     */
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
+  const config = {
+    responseType: 'id_token',
+    expoClientId: Constants.manifest.extra.expoClientId,
+    iosClientId: Constants.manifest.extra.iosClientId,
+    androidClientId: Constants.manifest.extra.androidClientId,
+    scopes: ['profile', 'email'],
+  }
   const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
+  const [, response, promptAsync] = Google.useAuthRequest(config, {
+    useProxy: true,
+  })
 
-  const loginUser = async () => {
-    await errorWrap(async () => {
-      const config = {
-        iosClientId: Constants.manifest.extra.iosClientId,
-        androidClientId: Constants.manifest.extra.androidClientId,
-      }
-      const { idToken, refreshToken } = await Google.logInAsync(config)
-      const guid = Google.getPlatformGUID(config)
-      const clientId = `${guid}.apps.googleusercontent.com`
-      if (idToken !== undefined && refreshToken !== undefined) {
-        const userData = {
-          idToken,
+  useEffect(() => {
+    errorWrap(async () => {
+      if (response?.type === 'success') {
+        const { id_token: idToken } = response.params
+        if (idToken !== undefined) {
+          const userData = {
+            idToken,
+          }
+          // Save to Secure Store
+          await saveUserIDToken(idToken)
+
+          // Call API, creating a user record if the user has logged in for the first time
+          await createUser(userData)
+
+          /*
+            TODO: Add back support for Refresh Tokens.
+            Make sure to call below:
+
+            await saveUserRefreshToken(refreshToken);
+            await saveUserClientId(clientId);
+          */
+
+          // Update Redux Store
+          dispatch(authenticate({ loggedIn: true }))
         }
-        // call API
-        await createUser(userData)
-        // Save to Secure Store
-        await saveUserIDToken(idToken)
-        await saveUserRefreshToken(refreshToken)
-        await saveUserClientId(clientId)
-        // Update Redux Store
-        dispatch(authenticate({ loggedIn: true }))
       }
     })
-  }
+  }, [response])
 
   const window = useWindowDimensions()
 
@@ -121,7 +131,7 @@ const Landing = () => {
           />
         }
         variant="secondary"
-        onPress={loginUser}
+        onPress={() => promptAsync()}
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
       />
