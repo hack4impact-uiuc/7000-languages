@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Alert, StyleSheet, useWindowDimensions, View } from 'react-native'
+import {
+  Alert, StyleSheet, useWindowDimensions, View,
+} from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
@@ -7,33 +9,9 @@ import * as WebBrowser from 'expo-web-browser'
 import { AntDesign } from '@expo/vector-icons'
 import i18n from 'utils/i18n'
 import PropTypes from 'prop-types'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Logo from '../../../assets/images/landing-logo.svg'
 import { CURRENT_LANGUAGE } from '../../utils/constants'
-
-storeLanguage = async () => {
-  try {
-    {
-      isEnglish
-        ? await AsyncStorage.setItem(CURRENT_LANGUAGE, 'English')
-        : await AsyncStorage.setItem(CURRENT_LANGUAGE, 'French')
-    }
-  } catch (error) {
-    // Error saving data
-    Alert.alert('Error saving data.')
-  }
-}
-
-retrieveData = async () => {
-  try {
-    const value = await AsyncStorage.getItem(CURRENT_LANGUAGE)
-    if (value !== null) {
-      setIsEnglish(true)
-    }
-  } catch (error) {
-    // Error retrieving data
-    Alert.alert('Error retrieving data.')
-  }
-}
 
 const styles = StyleSheet.create({
   root: {
@@ -75,16 +53,44 @@ WebBrowser.maybeCompleteAuthSession()
 const SelectLanguage = ({ navigation }) => {
   const window = useWindowDimensions()
 
-  const [isEnglish, setIsEnglish] = useState(true)
+  const retrieveData = async () => {
+    let isEnglish = false
+    try {
+      const value = await AsyncStorage.getItem(CURRENT_LANGUAGE)
+      if (value === 'English') {
+        isEnglish = true
+      }
+    } catch (error) {
+      // Error retrieving data
+      Alert.alert('Error retrieving data.')
+    }
+    return isEnglish
+  }
+
+  const [isEnglish, setIsEnglish] = useState(retrieveData)
+
+  const storeLanguage = async () => {
+    try {
+      await AsyncStorage.setItem(
+        CURRENT_LANGUAGE,
+        isEnglish ? 'English' : 'French',
+      )
+    } catch (error) {
+      // Error saving data
+      Alert.alert('Error saving data.')
+    }
+  }
 
   const handlePressEnglish = () => {
     i18n.locale = 'en'
     setIsEnglish(true)
+    storeLanguage()
   }
 
   const handlePressFrench = () => {
     i18n.locale = 'fr'
     setIsEnglish(false)
+    storeLanguage()
   }
 
   return (
@@ -135,13 +141,13 @@ const SelectLanguage = ({ navigation }) => {
 
       <StyledButton
         title={isEnglish ? 'Next' : 'Suivant'}
-        rightIcon={
+        rightIcon={(
           <AntDesign
             name="right"
             size={`${window.height}` / 45}
             color={colors.white.light}
           />
-        }
+        )}
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
         onPress={() => {
