@@ -3,9 +3,9 @@ import { Text, Select, Divider } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateCourseVisibility, setSecurityCode } from 'slices/language.slice'
+import { updateCourseVisibility } from 'slices/language.slice'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { changeVisibility, deleteCourse, updateSecurityCode } from 'api'
+import { changeVisibility, deleteCourse } from 'api'
 import { useErrorWrap } from 'hooks'
 import { colors } from 'theme'
 import PropTypes from 'prop-types'
@@ -68,7 +68,6 @@ const CourseSettings = ({ navigation }) => {
 
       // updates the redux store
       dispatch(updateCourseVisibility({ is_private: isPrivate }))
-
     }, navigation.goBack())
   }
 

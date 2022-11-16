@@ -41,10 +41,9 @@ export const getCourse = async (courseID) => {
 export const changeVisibility = async (courseID, makePrivate) => {
   const requestString = `/language/course/${courseID}`
   const body = {
-    course_id: courseID,
     details: {
       is_private: makePrivate,
-    }
+    },
   }
   const res = await instance.patch(requestString, body)
 
