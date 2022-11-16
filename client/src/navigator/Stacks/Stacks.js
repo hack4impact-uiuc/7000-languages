@@ -18,6 +18,9 @@ import ManageVocab from 'pages/ManageVocab'
 import CourseSettings from 'pages/CourseSettings'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
+import { Alert } from 'react-native'
+import * as SecureStore from 'expo-secure-store'
+import { CURRENT_LANGUAGE } from '../../utils/constants'
 
 // ------------------------------------
 // Constants
@@ -54,6 +57,19 @@ const manageNavigationProps = {
 }
 
 // ------------------------------------
+// Async Storage
+// ------------------------------------
+
+const retrieveLanguage = async () => {
+  try {
+    let value = await SecureStore.getItemAsync(CURRENT_LANGUAGE)
+    return value
+  } catch (error) {
+    return null
+  }
+}
+
+// ------------------------------------
 // Navigators
 // ------------------------------------
 
@@ -71,7 +87,7 @@ More reading: https://reactnavigation.org/docs/stack-navigator/
 
 export const AuthNavigator = () => (
   <AuthStack.Navigator
-    initialRouteName="Landing"
+    initialRouteName={retrieveLanguage() ? 'Landing' : 'SelectLanguage'}
     headerMode="screen"
     screenOptions={{
       headerShown: false,

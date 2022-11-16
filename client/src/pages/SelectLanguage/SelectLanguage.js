@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
-import {
-  Alert, StyleSheet, useWindowDimensions, View,
-} from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Alert, StyleSheet, useWindowDimensions, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
@@ -10,6 +8,7 @@ import { AntDesign } from '@expo/vector-icons'
 import i18n from 'utils/i18n'
 import PropTypes from 'prop-types'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as SecureStore from 'expo-secure-store'
 import Logo from '../../../assets/images/landing-logo.svg'
 import { CURRENT_LANGUAGE } from '../../utils/constants'
 
@@ -54,43 +53,46 @@ const SelectLanguage = ({ navigation }) => {
   const window = useWindowDimensions()
 
   const retrieveData = async () => {
-    let isEnglish = false
     try {
-      const value = await AsyncStorage.getItem(CURRENT_LANGUAGE)
-      if (value === 'English') {
-        isEnglish = true
+      const value = await SecureStore.getItemAsync(CURRENT_LANGUAGE)
+      if (value === 'French') {
+        return 'French'
+      } else {
+        return 'English'
       }
     } catch (error) {
       // Error retrieving data
       Alert.alert('Error retrieving data.')
     }
-    return isEnglish
   }
 
-  const [isEnglish, setIsEnglish] = useState(retrieveData)
-
-  const storeLanguage = async () => {
+  const storeLanguage = async (language) => {
     try {
-      await AsyncStorage.setItem(
-        CURRENT_LANGUAGE,
-        isEnglish ? 'English' : 'French',
-      )
+      await SecureStore.setItemAsync(CURRENT_LANGUAGE, language)
     } catch (error) {
       // Error saving data
       Alert.alert('Error saving data.')
     }
   }
 
+  const [language, setLanguage] = useState(retrieveData())
+  useEffect(() => {
+    if (retrieveData() == 'English') {
+      setLanguage('English')
+    }
+    if (retrieveData() == 'French') {
+      setLanguage('French')
+    }
+  })
+
   const handlePressEnglish = () => {
     i18n.locale = 'en'
-    setIsEnglish(true)
-    storeLanguage()
+    storeLanguage('English')
   }
 
   const handlePressFrench = () => {
     i18n.locale = 'fr'
-    setIsEnglish(false)
-    storeLanguage()
+    storeLanguage('French')
   }
 
   return (
@@ -111,7 +113,7 @@ const SelectLanguage = ({ navigation }) => {
         <Text
           color={colors.red.dark}
           fontSize={`${window.height}` / 60}
-          fontFamily={isEnglish ? 'heading' : 'body'}
+          fontFamily={language == 'English' ? 'heading' : 'body'}
           top="18%"
           onPress={handlePressEnglish}
         >
@@ -131,7 +133,7 @@ const SelectLanguage = ({ navigation }) => {
         <Text
           color={colors.red.dark}
           fontSize={`${window.height}` / 60}
-          fontFamily={!isEnglish ? 'heading' : 'body'}
+          fontFamily={language == 'French' ? 'heading' : 'body'}
           top="18%"
           onPress={handlePressFrench}
         >
@@ -140,14 +142,14 @@ const SelectLanguage = ({ navigation }) => {
       </View>
 
       <StyledButton
-        title={isEnglish ? 'Next' : 'Suivant'}
-        rightIcon={(
+        title={retrieveData() ? 'Next' : 'Suivant'}
+        rightIcon={
           <AntDesign
             name="right"
             size={`${window.height}` / 45}
             color={colors.white.light}
           />
-        )}
+        }
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
         onPress={() => {
