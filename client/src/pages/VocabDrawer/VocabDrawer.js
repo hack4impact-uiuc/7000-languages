@@ -485,7 +485,7 @@ const VocabDrawer = ({ navigation }) => {
         title={i18n.t('actions.addImage')}
         variant="image_picker"
         onPress={selectImage}
-        style={{ height: 100 }}
+        style={{ height: '10%' }}
       />
     )
   }
