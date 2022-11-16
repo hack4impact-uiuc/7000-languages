@@ -28,11 +28,6 @@ const styles = StyleSheet.create({
     bottom: '0%',
     width: '90%',
   },
-  save: {
-    backgroundColor: colors.white.dark,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
 })
 
 const CourseSettings = ({ navigation }) => {
@@ -47,13 +42,6 @@ const CourseSettings = ({ navigation }) => {
 
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
-
-  const handleVisibilityChange = async (value) => {
-    if (value !== visibility || shouldShowButton) {
-      setVisibility(value)
-      setShouldShowButton(true)
-    }
-  }
 
   // Update the API and redux
   const saveChanges = async () => {
@@ -71,30 +59,6 @@ const CourseSettings = ({ navigation }) => {
     }, navigation.goBack())
   }
 
-  const saveButton = shouldShowButton ? (
-    <View>
-      <Text
-        fontFamily="body"
-        fontWeight="normal"
-        fontSize="md"
-        color="gray.medium"
-        width="90%"
-        alignSelf="center"
-      >
-        {i18n.t('dialogue.courseSettingsSave')}
-      </Text>
-      <View style={styles.save}>
-        <StyledButton
-          title={i18n.t('actions.saveChanges')}
-          variant="primary"
-          fontSize="md"
-          onPress={saveChanges}
-          style={{ width: '90%' }}
-        />
-      </View>
-    </View>
-  ) : null
-
   const securityCode = visibility === 'private' ? (
     <View style={styles.body}>
       <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
@@ -104,7 +68,7 @@ const CourseSettings = ({ navigation }) => {
         fontFamily="body"
         fontWeight="normal"
         fontSize="2xl"
-        textAlign="right"
+        textAlign="left"
         my="5"
       >
         {code}
@@ -117,7 +81,7 @@ const CourseSettings = ({ navigation }) => {
       defaultValue={currentVisibility}
       borderColor="black"
       height="35%"
-      onValueChange={handleVisibilityChange}
+      onValueChange={saveChanges}
     >
       <Select.Item label={i18n.t('dict.public')} value="public" />
       <Select.Item label={i18n.t('dict.private')} value="private" />
@@ -143,7 +107,6 @@ const CourseSettings = ({ navigation }) => {
         {visibilitySelect(visibility)}
       </View>
       {securityCode}
-      {saveButton}
       <Divider />
       <StyledButton
         style={styles.delete}
