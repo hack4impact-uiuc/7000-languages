@@ -6,6 +6,7 @@ import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
+import * as AuthSession from 'expo-auth-session'
 import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
@@ -14,6 +15,8 @@ import { saveUserIDToken } from 'utils/auth'
 import { createUser } from 'api'
 import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/landing-logo.svg'
+import axios from 'axios'
+import { fetchRefreshToken } from '../../utils/auth'
 
 const styles = StyleSheet.create({
   root: {
@@ -52,36 +55,62 @@ const Landing = () => {
     */
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
+  const redirectUri = AuthSession.makeRedirectUri({
+    useProxy: true,
+  });
   const config = {
     expoClientId: Constants.manifest.extra.expoClientId,
-    iosClientId: Constants.manifest.extra.iosClientId,
-    androidClientId: Constants.manifest.extra.androidClientId,
     scopes: ['profile'],
     responseType: 'code',
-    shouldAutoExchangeCode: true,
+    shouldAutoExchangeCode: false,
+    prompt: 'consent',
     extraParams: {
       access_type: 'offline'
     },
   }
   const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
-  const [request, response, promptAsync] = Google.useAuthRequest(config)
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId: Constants.manifest.extra.expoClientId,
+    scopes: ['profile'],
+    responseType: 'code',
+    shouldAutoExchangeCode: false,
+    prompt: 'consent',
+    extraParams: {
+      access_type: 'offline'
+    },
+  })
+  
 
   useEffect(() => {
     errorWrap(async () => {
       if (response?.type === 'success') {
         console.log('here')
         console.log(response)
-        const { idToken, refreshToken } = response.authentication
-        if (idToken !== undefined) {
-          const userData = {
-            idToken,
-          }
+        const { code } = response.params
+        if (code !== undefined) {
+
+          //fetchRefreshToken(code, "1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com", "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", redirectUri)
+          const result = await AuthSession.exchangeCodeAsync(
+            { 
+              code, 
+              clientId: "1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com",
+              clientSecret: "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", 
+              redirectUri,
+              extraParams: {
+                code_verifier: request?.codeVerifier
+              }
+            }
+          , {tokenEndpoint: "https://oauth2.googleapis.com/token"})
+          console.log(result)
+          // const userData = {
+          //   idToken,
+          // }
           // Save to Secure Store
-          await saveUserIDToken(idToken)
-          await saveUserRefreshToken(refreshToken);
-          await saveUserClientId(Constants.manifest.extra.expoClientId);
+          // await saveUserIDToken(idToken);
+          // await saveUserRefreshToken(refreshToken);
+          // await saveUserClientId(Constants.manifest.extra.expoClientId);
           // Call API, creating a user record if the user has logged in for the first time
-          await createUser(userData)
+          // await createUser(userData)
           
           /*
             TODO: Add back support for Refresh Tokens.
@@ -90,7 +119,7 @@ const Landing = () => {
           */
 
           // Update Redux Store
-          dispatch(authenticate({ loggedIn: true }))
+          // dispatch(authenticate({ loggedIn: true }))
         }
       }
     })

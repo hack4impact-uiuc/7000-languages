@@ -143,6 +143,34 @@ export const removeUserClientId = async () => {
   }
 }
 
+export const fetchRefreshToken = async (code, client_id, client_secret, redirect_uri) => {
+  try {
+    // const values = {
+    //   code,
+    //   client_id,
+    //   client_secret,
+    //   redirect_uri: googleConfig.redirect,
+    //   grant_type: 'authorization_code',
+    // };
+    const values = {
+      grant_type: 'authorization_code',
+      code,
+      client_id,
+      client_secret,
+      redirect_uri
+    }
+    console.log(values)
+    axios.post("https://oauth2.googleapis.com/token", values).then((res) => {
+      console.log('got result', res)
+    }).catch((reason) => {
+      console.log(reason)
+      console.error('rejected request', reason)
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 /**
  * Refreshes the ID token for user using refreshToken from SecureStore
  * @returns {String} new IdToken if refresh is successful
