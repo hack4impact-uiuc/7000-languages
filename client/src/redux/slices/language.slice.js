@@ -35,6 +35,7 @@ const initialState = {
   currentLessonId: '',
   lessonData: { vocab: [] },
   currentVocabId: '',
+  currentLanguage: 'English',
 }
 
 // ------------------------------------

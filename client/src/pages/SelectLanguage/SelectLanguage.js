@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, useWindowDimensions, View } from 'react-native'
+import { Alert, StyleSheet, useWindowDimensions, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
@@ -8,6 +8,32 @@ import { AntDesign } from '@expo/vector-icons'
 import i18n from 'utils/i18n'
 import PropTypes from 'prop-types'
 import Logo from '../../../assets/images/landing-logo.svg'
+import { CURRENT_LANGUAGE } from '../../utils/constants'
+
+storeLanguage = async () => {
+  try {
+    {
+      isEnglish
+        ? await AsyncStorage.setItem(CURRENT_LANGUAGE, 'English')
+        : await AsyncStorage.setItem(CURRENT_LANGUAGE, 'French')
+    }
+  } catch (error) {
+    // Error saving data
+    Alert.alert('Error saving data.')
+  }
+}
+
+retrieveData = async () => {
+  try {
+    const value = await AsyncStorage.getItem(CURRENT_LANGUAGE)
+    if (value !== null) {
+      setIsEnglish(true)
+    }
+  } catch (error) {
+    // Error retrieving data
+    Alert.alert('Error retrieving data.')
+  }
+}
 
 const styles = StyleSheet.create({
   root: {
@@ -52,13 +78,11 @@ const SelectLanguage = ({ navigation }) => {
   const [isEnglish, setIsEnglish] = useState(true)
 
   const handlePressEnglish = () => {
-    // Alert.alert('Translating to English...')
     i18n.locale = 'en'
     setIsEnglish(true)
   }
 
   const handlePressFrench = () => {
-    // Alert.alert('Translating to French...')
     i18n.locale = 'fr'
     setIsEnglish(false)
   }
@@ -111,13 +135,13 @@ const SelectLanguage = ({ navigation }) => {
 
       <StyledButton
         title={isEnglish ? 'Next' : 'Suivant'}
-        rightIcon={(
+        rightIcon={
           <AntDesign
             name="right"
             size={`${window.height}` / 45}
             color={colors.white.light}
           />
-        )}
+        }
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
         onPress={() => {
