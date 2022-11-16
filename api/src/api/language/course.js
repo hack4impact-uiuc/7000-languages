@@ -31,7 +31,7 @@ router.patch(
 
     console.log(course, 'course', updates, 'updates');
     // TODO: change to course instead of course.details
-    patchDocument(course.details, updates);
+    patchDocument(course, updates);
   
 
     await course.save();
