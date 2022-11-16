@@ -7,6 +7,7 @@ export default ({ config }) => {
       apiDevelopmentPort: 3000,
       expoClientId:
         '1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com',
+      clientSecret: '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',
     },
   }
 }
