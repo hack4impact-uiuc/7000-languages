@@ -55,8 +55,6 @@ const Landing = () => {
   const config = {
     responseType: 'id_token',
     expoClientId: Constants.manifest.extra.expoClientId,
-    iosClientId: Constants.manifest.extra.iosClientId,
-    androidClientId: Constants.manifest.extra.androidClientId,
     scopes: ['profile', 'email'],
   }
   const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
