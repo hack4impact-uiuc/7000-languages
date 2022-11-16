@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { colors } from 'theme'
 import Home from 'pages/Home'
 import Landing from 'pages/Landing'
+import SelectLanguage from 'pages/SelectLanguage'
 import VocabDrawer from 'pages/VocabDrawer'
 import CreateLesson from 'pages/CreateLesson'
 import CreateUnit from 'pages/CreateUnit'
@@ -15,6 +16,7 @@ import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
 import ManageVocab from 'pages/ManageVocab'
 import CourseSettings from 'pages/CourseSettings'
+import Intro from 'pages/Intro'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -70,12 +72,15 @@ More reading: https://reactnavigation.org/docs/stack-navigator/
 
 export const AuthNavigator = () => (
   <AuthStack.Navigator
-    initialRouteName="Landing"
+    initialRouteName="Intro"
     screenOptions={{
       headerShown: false,
       headerMode: 'screen',
+      gestureEnabled: false,
     }}
   >
+    <AuthStack.Screen name="Intro" component={Intro} />
+    <AuthStack.Screen name="SelectLanguage" component={SelectLanguage} />
     <AuthStack.Screen
       name="Landing"
       component={Landing}
@@ -145,6 +150,7 @@ export const HomeNavigator = ({ courseId }) => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
+
     <Stack.Screen
       name="ManageUnits"
       component={ManageUnits}

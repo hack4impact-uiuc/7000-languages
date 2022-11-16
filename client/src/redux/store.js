@@ -37,8 +37,7 @@ const defaultMiddleware = getDefaultMiddleware({
 
 const store = configureStore({
   reducer: rootReducer,
-  // eslint-disable-next-line no-undef
-  middleware: false ? defaultMiddleware.concat(logger) : defaultMiddleware,
+  middleware: __DEV__ ? defaultMiddleware.concat(logger) : defaultMiddleware,
 })
 
 export default store
