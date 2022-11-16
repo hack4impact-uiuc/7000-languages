@@ -51,14 +51,6 @@ export const changeVisibility = async (courseID, makePrivate) => {
   return res.data
 }
 
-export const updateSecurityCode = async (courseID, newCode) => {
-  const requestString = `/language/course/${courseID}`
-  const res = await instance.patch(requestString, { code: newCode })
-
-  if (!res?.data?.success) throw new Error(res.data?.message)
-  return res.data
-}
-
 export const deleteCourse = async (courseID) => {
   const requestString = `/language/course/${courseID}`
   const res = await instance.delete(requestString)

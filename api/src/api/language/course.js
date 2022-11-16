@@ -113,15 +113,15 @@ router.delete(
   requireLanguageAuthorization,
   errorWrap(async (req, res) => {
     const course_id = req.params.id;
-    const course = await models.Course.findById(course_id);
+    // const course = await models.Course.findById(course_id);
 
     // delete all units
     let units = await models.Unit.find({ _course_id: course_id });
     for (var i = 0; i < units.length; i++) {
-      deleteUnit(units[i]._id);
+      // deleteUnit(units[i]._id); TODO: make this work
     }
 
-    await course.remove();
+    // await course.remove(); commented because we don't want to delete the course until we can delete all units
 
     return sendResponse(res, 200, 'Successfully deleted course');
   }),
