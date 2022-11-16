@@ -71,13 +71,6 @@ const Landing = () => {
   const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: Constants.manifest.extra.expoClientId,
-    scopes: ['profile'],
-    responseType: 'code',
-    shouldAutoExchangeCode: false,
-    prompt: 'consent',
-    extraParams: {
-      access_type: 'offline'
-    },
   })
   
 
@@ -86,41 +79,42 @@ const Landing = () => {
       if (response?.type === 'success') {
         console.log('here')
         console.log(response)
-        const { code } = response.params
-        if (code !== undefined) {
+        setTimeout(() => {console.log('timed out: ', response)}, 5000)
+        // const { code } = response.params
+        // if (code !== undefined) {
 
-          //fetchRefreshToken(code, "1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com", "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", redirectUri)
-          const result = await AuthSession.exchangeCodeAsync(
-            { 
-              code, 
-              clientId: "1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com",
-              clientSecret: "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", 
-              redirectUri,
-              extraParams: {
-                code_verifier: request?.codeVerifier
-              }
-            }
-          , {tokenEndpoint: "https://oauth2.googleapis.com/token"})
-          console.log(result)
-          // const userData = {
-          //   idToken,
-          // }
-          // Save to Secure Store
-          // await saveUserIDToken(idToken);
-          // await saveUserRefreshToken(refreshToken);
-          // await saveUserClientId(Constants.manifest.extra.expoClientId);
-          // Call API, creating a user record if the user has logged in for the first time
-          // await createUser(userData)
+        //   //fetchRefreshToken(code, "1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com", "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", redirectUri)
+        //   const result = await AuthSession.exchangeCodeAsync(
+        //     { 
+        //       code, 
+        //       clientId: "1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com",
+        //       clientSecret: "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", 
+        //       redirectUri,
+        //       extraParams: {
+        //                             code_verifier: request?.codeVerifier
+        //                         }
+        //     }
+        //   , {tokenEndpoint: "https://oauth2.googleapis.com/token"})
+        //   console.log(result)
+        //   // const userData = {
+        //   //   idToken,
+        //   // }
+        //   // Save to Secure Store
+        //   // await saveUserIDToken(idToken);
+        //   // await saveUserRefreshToken(refreshToken);
+        //   // await saveUserClientId(Constants.manifest.extra.expoClientId);
+        //   // Call API, creating a user record if the user has logged in for the first time
+        //   // await createUser(userData)
           
-          /*
-            TODO: Add back support for Refresh Tokens.
-            Make sure to call below:            
+        //   /*
+        //     TODO: Add back support for Refresh Tokens.
+        //     Make sure to call below:            
             
-          */
+        //   */
 
-          // Update Redux Store
-          // dispatch(authenticate({ loggedIn: true }))
-        }
+        //   // Update Redux Store
+        //   // dispatch(authenticate({ loggedIn: true }))
+        // }
       }
     })
   }, [response])
@@ -163,7 +157,7 @@ const Landing = () => {
           />
         )}
         variant="secondary"
-        onPress={() => promptAsync()}
+        onPress={() => promptAsync().then((resp) => {console.log('prompt response:', resp)})}
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
       />
