@@ -76,6 +76,7 @@ export const AuthNavigator = () => (
     screenOptions={{
       headerShown: false,
       headerMode: 'screen',
+      gestureEnabled: false,
     }}
   >
     <AuthStack.Screen name="Intro" component={Intro} />
