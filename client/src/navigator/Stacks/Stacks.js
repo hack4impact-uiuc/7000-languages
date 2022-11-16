@@ -86,7 +86,6 @@ More reading: https://reactnavigation.org/docs/stack-navigator/
 export const AuthNavigator = () => (
   <AuthStack.Navigator
     initialRouteName={retrieveLanguage() ? 'Landing' : 'SelectLanguage'}
-    headerMode="screen"
     screenOptions={{
       headerShown: false,
       headerMode: 'screen',
