@@ -293,7 +293,9 @@ const DrawerNavigator = () => {
   useEffect(() => {
     const getUserData = async () => {
       await errorWrap(async () => {
-        const { picture, name, email, courses } = await trackPromise(
+        const {
+          picture, name, email, courses,
+        } = await trackPromise(
           getAllUserCourses(),
         )
 

@@ -5,4 +5,6 @@ import {
   SettingsNavigator,
 } from './Stacks'
 
-export { HomeNavigator, AuthNavigator, ModalNavigator, SettingsNavigator }
+export {
+  HomeNavigator, AuthNavigator, ModalNavigator, SettingsNavigator,
+}
