@@ -9,18 +9,16 @@ import CreateLesson from 'pages/CreateLesson'
 import CreateUnit from 'pages/CreateUnit'
 import ManageUnits from 'pages/ManageUnits'
 import Apply from 'pages/Apply'
-import { NO_COURSE_ID } from 'utils/constants'
+import { NO_COURSE_ID, CURRENT_LANGUAGE } from 'utils/constants'
 import PropTypes from 'prop-types'
 import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
 import ManageVocab from 'pages/ManageVocab'
 import CourseSettings from 'pages/CourseSettings'
+import * as SecureStore from 'expo-secure-store'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
-import { Alert } from 'react-native'
-import * as SecureStore from 'expo-secure-store'
-import { CURRENT_LANGUAGE } from '../../utils/constants'
 
 // ------------------------------------
 // Constants
@@ -62,7 +60,7 @@ const manageNavigationProps = {
 
 const retrieveLanguage = async () => {
   try {
-    let value = await SecureStore.getItemAsync(CURRENT_LANGUAGE)
+    const value = await SecureStore.getItemAsync(CURRENT_LANGUAGE)
     return value
   } catch (error) {
     return null
