@@ -6,17 +6,14 @@ import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
-import * as AuthSession from 'expo-auth-session'
 import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
-import { saveUserIDToken } from 'utils/auth'
 import { createUser } from 'api'
 import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/landing-logo.svg'
-import axios from 'axios'
-import { fetchRefreshToken } from '../../utils/auth'
+import { exchangeAuthCode } from '../../utils/auth'
 
 const styles = StyleSheet.create({
   root: {
@@ -48,16 +45,14 @@ const styles = StyleSheet.create({
 WebBrowser.maybeCompleteAuthSession()
 
 const Landing = () => {
-  /*
-      Sources:
-      https://docs.expo.dev/versions/latest/sdk/auth-session/
-      https://stackoverflow.com/questions/66966772/expo-auth-session-providers-google-google-useauthrequest
-    */
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
-  const redirectUri = AuthSession.makeRedirectUri({
-    useProxy: true,
-  });
+
+  /*
+    Sources:
+    https://docs.expo.dev/versions/latest/sdk/auth-session/
+    https://stackoverflow.com/questions/71095191/refresh-token-with-expo-auth-sessions-google
+  */
   const config = {
     expoClientId: Constants.manifest.extra.expoClientId,
     scopes: ['profile'],
@@ -65,56 +60,34 @@ const Landing = () => {
     shouldAutoExchangeCode: false,
     prompt: 'consent',
     extraParams: {
-      access_type: 'offline'
+      access_type: 'offline',
     },
   }
+
   const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: Constants.manifest.extra.expoClientId,
-  })
-  
+  const [request, response, promptAsync] = Google.useAuthRequest(config)
 
   useEffect(() => {
     errorWrap(async () => {
       if (response?.type === 'success') {
-        console.log('here')
-        console.log(response)
-        setTimeout(() => {console.log('timed out: ', response)}, 5000)
-        // const { code } = response.params
-        // if (code !== undefined) {
-
-        //   //fetchRefreshToken(code, "1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com", "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", redirectUri)
-        //   const result = await AuthSession.exchangeCodeAsync(
-        //     { 
-        //       code, 
-        //       clientId: "1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com",
-        //       clientSecret: "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", 
-        //       redirectUri,
-        //       extraParams: {
-        //                             code_verifier: request?.codeVerifier
-        //                         }
-        //     }
-        //   , {tokenEndpoint: "https://oauth2.googleapis.com/token"})
-        //   console.log(result)
-        //   // const userData = {
-        //   //   idToken,
-        //   // }
-        //   // Save to Secure Store
-        //   // await saveUserIDToken(idToken);
-        //   // await saveUserRefreshToken(refreshToken);
-        //   // await saveUserClientId(Constants.manifest.extra.expoClientId);
-        //   // Call API, creating a user record if the user has logged in for the first time
-        //   // await createUser(userData)
-          
-        //   /*
-        //     TODO: Add back support for Refresh Tokens.
-        //     Make sure to call below:            
-            
-        //   */
-
-        //   // Update Redux Store
-        //   // dispatch(authenticate({ loggedIn: true }))
-        // }
+        const { code } = response.params
+        if (code !== undefined) {
+          exchangeAuthCode(
+            code,
+            config.expoClientId,
+            Constants.manifest.extra.clientSecret,
+            request?.codeVerifier,
+          ).then(async (res) => {
+            if (res.success) {
+              const { idToken } = res
+              const userData = {
+                idToken,
+              }
+              await createUser(userData)
+              dispatch(authenticate({ loggedIn: true }))
+            }
+          })
+        }
       }
     })
   }, [response])
@@ -157,7 +130,7 @@ const Landing = () => {
           />
         )}
         variant="secondary"
-        onPress={() => promptAsync().then((resp) => {console.log('prompt response:', resp)})}
+        onPress={() => promptAsync()}
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
       />
