@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
-  Alert, StyleSheet, useWindowDimensions, View,
+  StyleSheet,
+  useWindowDimensions,
+  TouchableOpacity,
+  View,
 } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
@@ -9,9 +12,9 @@ import * as WebBrowser from 'expo-web-browser'
 import { AntDesign } from '@expo/vector-icons'
 import i18n from 'utils/i18n'
 import PropTypes from 'prop-types'
-import * as SecureStore from 'expo-secure-store'
+import { ENGLISH, FRENCH } from 'utils/constants'
+import { storeLanguage, getDeviceLocale } from 'utils/i18n/utils'
 import Logo from '../../../assets/images/landing-logo.svg'
-import { CURRENT_LANGUAGE } from '../../utils/constants'
 
 const styles = StyleSheet.create({
   root: {
@@ -19,6 +22,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.red.dark,
     width: '100%',
     height: '100%',
+  },
+  languageSelectContainer: {
+    position: 'absolute',
+    top: '20%',
+    width: '100%',
+    height: '60%',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
   },
   backgroundImage: {
     width: '100%',
@@ -33,14 +46,11 @@ const styles = StyleSheet.create({
     display: 'flex',
   },
   textSection: {
-    position: 'absolute',
-    top: '50%',
     padding: '10%',
-    backgroundColor: 'white',
     borderRadius: 10,
     maxWidth: '80%',
   },
-  loginButton: {
+  nextButton: {
     position: 'absolute',
     bottom: '5%',
     justifyContent: 'flex-end',
@@ -52,45 +62,20 @@ WebBrowser.maybeCompleteAuthSession()
 
 const SelectLanguage = ({ navigation }) => {
   const window = useWindowDimensions()
+  const [language, setLanguage] = useState(ENGLISH)
 
-  const retrieveData = async () => {
-    try {
-      const value = await SecureStore.getItemAsync(CURRENT_LANGUAGE)
-      return value === 'French' ? 'French' : 'English'
-    } catch (error) {
-      // Error retrieving data
-      Alert.alert('Error retrieving data.')
-    }
-    return null
-  }
-
-  const storeLanguage = async (language) => {
-    try {
-      await SecureStore.setItemAsync(CURRENT_LANGUAGE, language)
-    } catch (error) {
-      // Error saving data
-      Alert.alert('Error saving data.')
-    }
-  }
-
-  const [language, setLanguage] = useState(retrieveData())
   useEffect(() => {
-    if (retrieveData() === 'English') {
-      setLanguage('English')
+    const setDefaultLanguage = async () => {
+      const deviceLocale = getDeviceLocale()
+      setLanguage(deviceLocale)
     }
-    if (retrieveData() === 'French') {
-      setLanguage('French')
-    }
-  })
+    setDefaultLanguage()
+  }, [getDeviceLocale, setLanguage])
 
-  const handlePressEnglish = () => {
-    i18n.locale = 'en'
-    storeLanguage('English')
-  }
-
-  const handlePressFrench = () => {
-    i18n.locale = 'fr'
-    storeLanguage('French')
+  const saveLanguage = async () => {
+    await storeLanguage(language)
+    i18n.locale = language
+    navigation.navigate('Landing')
   }
 
   return (
@@ -103,44 +88,81 @@ const SelectLanguage = ({ navigation }) => {
 
       <Logo height={160} width={160} style={styles.logo} />
 
-      <View style={styles.textSection} top="31%" width="97%">
-        <Text fontSize={`${window.height}` / 45}>Hello!</Text>
-        <Text fontSize={`${window.height}` / 45}>
-          Welcome to 7000 Languages
-        </Text>
-        <Text
-          color={colors.red.dark}
-          fontSize={`${window.height}` / 60}
-          fontFamily={language === 'English' ? 'heading' : 'body'}
-          top="18%"
-          onPress={handlePressEnglish}
+      <View style={styles.languageSelectContainer}>
+        <TouchableOpacity
+          style={{
+            ...styles.textSection,
+            backgroundColor: colors.white.light,
+            borderColor:
+              language === ENGLISH ? colors.black : colors.white.light,
+            borderWidth: 3,
+            borderRadius: 20,
+          }}
+          top="31%"
+          width="97%"
+          onPress={() => setLanguage(ENGLISH)}
         >
-          Proceed in English
-        </Text>
-      </View>
+          <Text
+            fontSize={`${window.height}` / 45}
+            fontFamily={language === ENGLISH ? 'heading' : 'body'}
+          >
+            Hello!
+          </Text>
+          <Text
+            fontSize={`${window.height}` / 45}
+            fontFamily={language === ENGLISH ? 'heading' : 'body'}
+          >
+            Welcome to 7000 Languages
+          </Text>
+          <Text
+            color={colors.red.dark}
+            fontSize={`${window.height}` / 60}
+            fontFamily={language === ENGLISH ? 'heading' : 'body'}
+            top="18%"
+          >
+            Proceed in English
+          </Text>
+        </TouchableOpacity>
 
-      <View style={styles.textSection} top="55%" width="97%">
-        <Text fontSize={`${window.height}` / 45}>Bonjour!</Text>
-        <Text
-          color="black"
-          fontFamily="body"
-          fontSize={`${window.height}` / 45}
+        <TouchableOpacity
+          style={{
+            ...styles.textSection,
+            backgroundColor: colors.white.light,
+            borderColor:
+              language === FRENCH ? colors.black : colors.white.light,
+            borderWidth: 3,
+            borderRadius: 20,
+          }}
+          top="55%"
+          width="97%"
+          onPress={() => setLanguage(FRENCH)}
         >
-          Bienvenue sur 7000 Langues
-        </Text>
-        <Text
-          color={colors.red.dark}
-          fontSize={`${window.height}` / 60}
-          fontFamily={language === 'French' ? 'heading' : 'body'}
-          top="18%"
-          onPress={handlePressFrench}
-        >
-          Procéder en français
-        </Text>
+          <Text
+            fontSize={`${window.height}` / 45}
+            fontFamily={language === FRENCH ? 'heading' : 'body'}
+          >
+            Bonjour!
+          </Text>
+          <Text
+            color="black"
+            fontFamily={language === FRENCH ? 'heading' : 'body'}
+            fontSize={`${window.height}` / 45}
+          >
+            Bienvenue sur 7000 Langues
+          </Text>
+          <Text
+            color={colors.red.dark}
+            fontSize={`${window.height}` / 60}
+            fontFamily={language === FRENCH ? 'heading' : 'body'}
+            top="18%"
+          >
+            Procéder en français
+          </Text>
+        </TouchableOpacity>
       </View>
 
       <StyledButton
-        title={retrieveData() ? 'Next' : 'Suivant'}
+        title={language === ENGLISH ? 'Next' : 'Suivant'}
         rightIcon={(
           <AntDesign
             name="right"
@@ -148,11 +170,9 @@ const SelectLanguage = ({ navigation }) => {
             color={colors.white.light}
           />
         )}
-        style={styles.loginButton}
+        style={styles.nextButton}
         fontSize={`${window.height}` / 40}
-        onPress={() => {
-          navigation.navigate('Landing', { from: 'SelectLanguage' })
-        }}
+        onPress={saveLanguage}
       />
     </View>
   )

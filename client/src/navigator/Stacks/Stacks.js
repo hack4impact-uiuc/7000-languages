@@ -9,14 +9,14 @@ import CreateLesson from 'pages/CreateLesson'
 import CreateUnit from 'pages/CreateUnit'
 import ManageUnits from 'pages/ManageUnits'
 import Apply from 'pages/Apply'
-import { NO_COURSE_ID, CURRENT_LANGUAGE } from 'utils/constants'
+import { NO_COURSE_ID } from 'utils/constants'
 import PropTypes from 'prop-types'
 import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
 import ManageVocab from 'pages/ManageVocab'
 import CourseSettings from 'pages/CourseSettings'
-import * as SecureStore from 'expo-secure-store'
+import Intro from 'pages/Intro'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -55,19 +55,6 @@ const manageNavigationProps = {
 }
 
 // ------------------------------------
-// Async Storage
-// ------------------------------------
-
-const retrieveLanguage = async () => {
-  try {
-    const value = await SecureStore.getItemAsync(CURRENT_LANGUAGE)
-    return value
-  } catch (error) {
-    return null
-  }
-}
-
-// ------------------------------------
 // Navigators
 // ------------------------------------
 
@@ -85,19 +72,14 @@ More reading: https://reactnavigation.org/docs/stack-navigator/
 
 export const AuthNavigator = () => (
   <AuthStack.Navigator
-    initialRouteName={retrieveLanguage() ? 'Landing' : 'SelectLanguage'}
+    initialRouteName="Intro"
     screenOptions={{
       headerShown: false,
       headerMode: 'screen',
     }}
   >
-    <AuthStack.Screen
-      name="SelectLanguage"
-      component={SelectLanguage}
-      options={() => ({
-        title: 'SelectLanguage',
-      })}
-    />
+    <AuthStack.Screen name="Intro" component={Intro} />
+    <AuthStack.Screen name="SelectLanguage" component={SelectLanguage} />
     <AuthStack.Screen
       name="Landing"
       component={Landing}

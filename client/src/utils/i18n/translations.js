@@ -150,7 +150,7 @@ const translations = {
       vocabItems: 'Éléments de vocabulaire',
       discard: 'Jeter',
       ok: 'OK',
-      unitSingle: '1 unité',
+      unitSingle: 'Unité',
       unitPlural: 'Unités',
       lessonSingle: 'Leçon',
       lessonPlural: 'Leçons',

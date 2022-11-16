@@ -18,3 +18,5 @@ export const RECORDING = {
 }
 export const NO_COURSE_ID = 'no_course_id'
 export const CURRENT_LANGUAGE = 'current_language'
+export const ENGLISH = 'en'
+export const FRENCH = 'fr'
