@@ -10,9 +10,9 @@ import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
-import { saveUserIDToken } from 'utils/auth'
 import { createUser } from 'api'
 import i18n from 'utils/i18n'
+import { exchangeAuthCode } from 'utils/auth'
 import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
@@ -45,49 +45,49 @@ const styles = StyleSheet.create({
 WebBrowser.maybeCompleteAuthSession()
 
 const Landing = () => {
-  /*
-      Sources:
-      https://docs.expo.dev/versions/latest/sdk/auth-session/
-      https://stackoverflow.com/questions/66966772/expo-auth-session-providers-google-google-useauthrequest
-    */
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
+
+  /*
+    Sources:
+    https://docs.expo.dev/versions/latest/sdk/auth-session/
+    https://stackoverflow.com/questions/71095191/refresh-token-with-expo-auth-sessions-google
+  */
   const config = {
-    responseType: 'id_token',
     expoClientId: Constants.manifest.extra.expoClientId,
-    iosClientId: Constants.manifest.extra.iosClientId,
-    androidClientId: Constants.manifest.extra.androidClientId,
-    scopes: ['profile', 'email'],
+    scopes: ['profile'],
+    responseType: 'code',
+    shouldAutoExchangeCode: false,
+    prompt: 'consent',
+    extraParams: {
+      access_type: 'offline',
+    },
   }
+
   const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
-  const [, response, promptAsync] = Google.useAuthRequest(config, {
-    useProxy: true,
-  })
+  const [request, response, promptAsync] = Google.useAuthRequest(config)
 
   useEffect(() => {
     errorWrap(async () => {
       if (response?.type === 'success') {
-        const { id_token: idToken } = response.params
-        if (idToken !== undefined) {
-          const userData = {
-            idToken,
-          }
-          // Save to Secure Store
-          await saveUserIDToken(idToken)
-
-          // Call API, creating a user record if the user has logged in for the first time
-          await createUser(userData)
-
-          /*
-            TODO: Add back support for Refresh Tokens.
-            Make sure to call below:
-
-            await saveUserRefreshToken(refreshToken);
-            await saveUserClientId(clientId);
-          */
-
-          // Update Redux Store
-          dispatch(authenticate({ loggedIn: true }))
+        const { code } = response.params
+        if (code !== undefined) {
+          exchangeAuthCode(
+            code,
+            config.expoClientId,
+            Constants.manifest.extra.clientSecret,
+            request?.codeVerifier,
+          ).then(async ({ success, message, idToken }) => {
+            if (success) {
+              const userData = {
+                idToken,
+              }
+              await createUser(userData)
+              dispatch(authenticate({ loggedIn: true }))
+            } else {
+              console.error('exchangeAuthCode(): ', message)
+            }
+          })
         }
       }
     })
