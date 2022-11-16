@@ -175,6 +175,7 @@ export const exchangeAuthCode = async (
     return {
       success: false,
       message: `idToken or refreshToken is none, authentication result: ${authentication}`,
+      idToken: undefined,
     }
   })
   .catch((reason) => ({

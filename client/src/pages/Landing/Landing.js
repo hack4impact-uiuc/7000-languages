@@ -77,14 +77,15 @@ const Landing = () => {
             config.expoClientId,
             Constants.manifest.extra.clientSecret,
             request?.codeVerifier,
-          ).then(async (res) => {
-            if (res.success) {
-              const { idToken } = res
+          ).then(async ({ success, message, idToken }) => {
+            if (success) {
               const userData = {
                 idToken,
               }
               await createUser(userData)
               dispatch(authenticate({ loggedIn: true }))
+            } else {
+              console.error('exchangeAuthCode(): ', message)
             }
           })
         }
