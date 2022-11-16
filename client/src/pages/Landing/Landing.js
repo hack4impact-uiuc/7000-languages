@@ -12,8 +12,8 @@ import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
 import { createUser } from 'api'
 import i18n from 'utils/i18n'
+import { exchangeAuthCode } from 'utils/auth'
 import Logo from '../../../assets/images/landing-logo.svg'
-import { exchangeAuthCode } from '../../utils/auth'
 
 const styles = StyleSheet.create({
   root: {
