@@ -52,9 +52,13 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     setDescription(courseDetails.description)
   }, [courseDetails])
 
+  // Sets the title of the page
   useEffect(() => {
     setName(courseName)
     setDescription(courseDescription)
+    navigation.setOptions({
+      title: courseDetails.name,
+    })
   }, [courseName, courseDescription])
 
   /**
@@ -74,13 +78,12 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     navigation.navigate('UnitHome')
   }
 
-  /**
-   * Navigates to the update unit modal
-   */
   const navigateToUpdate = () => {
     navigation.navigate('Modal', { screen: 'UpdateCourse' })
   }
-
+  /**
+   * Navigates to the update unit modal
+   */
   const navigateToAdd = () => {
     navigation.navigate('Modal', { screen: 'CreateUnit' })
   }

@@ -300,9 +300,13 @@ const LanguageHome = ({
           title={addButtonText}
           variant="small"
           fontSize="20"
-          leftIcon={
-            <AntDesign name="pluscircle" size={20} color={colors.red.medium_dark} />
-          }
+          leftIcon={(
+            <AntDesign
+              name="pluscircle"
+              size={20}
+              color={colors.red.medium_dark}
+            />
+          )}
           shadow
           onPress={addCallback}
         />
@@ -343,9 +347,9 @@ LanguageHome.defaultProps = {
   manageButtonText: '',
   addButtonText: '',
   manageIconName: '',
-  buttonCallback: () => { },
-  nextPageCallback: () => { },
-  addCallback: () => { },
+  buttonCallback: () => {},
+  nextPageCallback: () => {},
+  addCallback: () => {},
   data: [],
 }
 

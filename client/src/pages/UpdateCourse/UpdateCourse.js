@@ -57,22 +57,10 @@ const UpdateCourse = ({ navigation }) => {
     errorWrap(
       async () => {
         let updatedCourseItem = null
-
-        // TODO: pass in an object like this:
-        /*
-        const updates = {
-          details: {
-            ...courseDetails,
-            name,
-            alternative_name: purpose,
-          }
-        }
-        */
         const updates = {
           name,
           alternative_name: purpose,
         }
-        // error here is that the course is not being updated
         const courseItemResponse = await updateCourse(currentCourseId, updates)
         updatedCourseItem = courseItemResponse.result
         // Update course in Redux store
