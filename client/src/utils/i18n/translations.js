@@ -144,6 +144,8 @@ const translations = {
         'Here is the settings for you to manage your own course.',
       courseSettingsSave:
         'You can save your changes by clicking the save button. If you leave this screen without pressing the button, your changes will be discarded.',
+      courseSettingsChangeCode:
+        'You can change the security code for your course by tapping on it. The code must be 5 characters long and alphanumeric.',
     },
   },
   fr: {
@@ -292,6 +294,8 @@ const translations = {
         'Voici les paramètres qui vous permettront de gérer votre propre cours.',
       courseSettingsSave:
         'Vous pouvez enregistrer vos modifications en cliquant sur le bouton "Enregistrer". Si vous quittez cet écran sans cliquer sur le bouton, vos modifications seront annulées.',
+      courseSettingsChangeCode:
+        'Vous pouvez modifier le code de sécurité de votre cours en appuyant dessus. Le code doit comporter 5 caractères et être alphanumérique.',
     },
   },
 }

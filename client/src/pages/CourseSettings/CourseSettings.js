@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { Text, Select, Divider } from 'native-base'
+import React, { useState, useEffect } from 'react'
+import { Text, Select, Divider, Input } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateCourseVisibility } from 'slices/language.slice'
+import { updateCourseVisibility, updateSecurityCode } from 'slices/language.slice'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { changeVisibility, deleteCourse } from 'api'
+import { patchVisibility, patchSecurityCode, deleteCourse } from 'api'
 import { useErrorWrap } from 'hooks'
 import { colors } from 'theme'
 import PropTypes from 'prop-types'
@@ -30,33 +30,55 @@ const styles = StyleSheet.create({
   },
 })
 
-const CourseSettings = ({ navigation }) => {
+const CourseSettings = () => {
   const { currentCourseId, courseDetails } = useSelector(
     (state) => state.language,
   )
   const [visibility, setVisibility] = useState(
     courseDetails.is_private ? 'private' : 'public',
   )
-  const [shouldShowButton, setShouldShowButton] = useState(false)
-  const { code } = courseDetails
+  const [code, setCode] = useState(courseDetails.code)
 
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
 
+  const handleVisibilityChange = async (value) => {
+    if (value !== visibility) {
+      setVisibility(value)
+      saveVisibilityChanges()
+    }
+  }
+
   // Update the API and redux
-  const saveChanges = async () => {
+  const saveVisibilityChanges = async () => {
     errorWrap(async () => {
       const isPrivate = visibility === 'private'
 
-      // disables save button
-      setShouldShowButton(false)
-
       // makes the API call
-      await changeVisibility(currentCourseId, isPrivate)
+      const { result } = await patchVisibility(currentCourseId, isPrivate)
+      const success = result?.data?.success
 
       // updates the redux store
-      dispatch(updateCourseVisibility({ is_private: isPrivate }))
-    }, navigation.goBack())
+      if (success) {
+        dispatch(updateCourseVisibility({ is_private: isPrivate }))
+      }
+    })
+  }
+
+  useEffect( () => {
+    handleCodeChange()
+  }, [code])
+
+  const handleCodeChange = async () => {
+    errorWrap(async () => {
+      const { result } = await patchSecurityCode(currentCourseId, code)
+      const success = result?.data?.success
+
+      // updates the redux store
+      if (success) {
+        dispatch(updateSecurityCode({ code }))
+      }
+    })
   }
 
   const securityCode = visibility === 'private' ? (
@@ -64,15 +86,22 @@ const CourseSettings = ({ navigation }) => {
       <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
         {i18n.t('dict.securityCode')}
       </Text>
-      <Text
+      <Text fontFamily="body"
+          fontWeight="normal"
+          fontSize="md"
+          color="gray.medium">
+       {i18n.t('dialogue.courseSettingsChangeCode')}
+      </Text>
+      <Input
         fontFamily="body"
         fontWeight="normal"
         fontSize="2xl"
         textAlign="left"
         my="5"
+        onEndEditing={(e) => setCode(e.nativeEvent.text)} // we don't want to call the API until the user is done typing
       >
         {code}
-      </Text>
+      </Input>
     </View>
   ) : null
 
@@ -81,7 +110,7 @@ const CourseSettings = ({ navigation }) => {
       defaultValue={currentVisibility}
       borderColor="black"
       height="35%"
-      onValueChange={saveChanges}
+      onValueChange={handleVisibilityChange}
     >
       <Select.Item label={i18n.t('dict.public')} value="public" />
       <Select.Item label={i18n.t('dict.private')} value="private" />
