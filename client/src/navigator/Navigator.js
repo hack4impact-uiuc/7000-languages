@@ -5,7 +5,7 @@ import { authenticate } from 'slices/auth.slice'
 import { createStackNavigator } from '@react-navigation/stack'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator, ModalNavigator } from './Stacks'
-import { getUser } from '../api/api'
+import { getUser } from 'api'
 
 const RootStack = createStackNavigator()
 const Navigator = () => {
@@ -17,7 +17,7 @@ const Navigator = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const loadUserAuth = async () => {
+    const loadUserAuth = () => {
       getUser()
         .then(() => {
           dispatch(authenticate({ loggedIn: true }))
