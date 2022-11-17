@@ -183,7 +183,11 @@ const RecordAudioView = ({
     case RECORDING.INCOMPLETE:
       return (
         <TouchableOpacity style={styles.incompleteView} onPress={start}>
-          <FontAwesome name="microphone" size={30} color={colors.red.medium_dark} />
+          <FontAwesome
+            name="microphone"
+            size={30}
+            color={colors.red.medium_dark}
+          />
           <Text
             fontFamily="heading"
             fontWeight="regular"
@@ -257,11 +261,11 @@ RecordAudioView.propTypes = {
 
 RecordAudioView.defaultProps = {
   recordingStage: RECORDING.IN_COMPLETE,
-  startRecording: () => { },
-  stopRecording: () => { },
-  playRecording: () => { },
-  discardRecording: () => { },
-  stopPlayingRecording: () => { },
+  startRecording: () => {},
+  stopRecording: () => {},
+  playRecording: () => {},
+  discardRecording: () => {},
+  stopPlayingRecording: () => {},
 }
 
 export default RecordAudioView

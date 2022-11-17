@@ -480,7 +480,9 @@ const VocabDrawer = ({ navigation }) => {
     }
     return (
       <StyledButton
-        leftIcon={<Entypo name="image" size={24} color={colors.red.medium_dark} />}
+        leftIcon={
+          <Entypo name="image" size={24} color={colors.red.medium_dark} />
+        }
         title={i18n.t('actions.addImage')}
         variant="image_picker"
         onPress={selectImage}

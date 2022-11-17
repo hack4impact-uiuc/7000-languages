@@ -77,7 +77,7 @@ const HomeBaseCase = ({ navigation }) => (
       fontStyle="normal"
       paddingTop="8%"
       paddingBottom="10%"
-      color="red.dark"
+      color="red.medium_dark"
       fontSize="2xl"
       onPress={() => {
         navigation.navigate('Apply', { from: 'HomeBaseCase' })
