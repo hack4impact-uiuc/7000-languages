@@ -197,6 +197,7 @@ const LessonHome = ({ navigation }) => {
       addButtonText="Add Vocab Item"
       addCallback={navigateToAdd}
       data={data}
+      addCallback={navigateToAdd}
     />
   )
 }

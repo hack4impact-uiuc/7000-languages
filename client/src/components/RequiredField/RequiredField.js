@@ -7,7 +7,7 @@ import i18n from 'utils/i18n'
 const RequiredField = ({ title, fontSize }) => (
   <Text fontSize={fontSize}>
     {title}
-    <Text bold color={colors.red.dark} fontSize={fontSize}>
+    <Text bold color={colors.red.medium_dark} fontSize={fontSize}>
       {' *'}
     </Text>
   </Text>
