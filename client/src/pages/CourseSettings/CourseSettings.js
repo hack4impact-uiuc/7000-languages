@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Text, Select, Divider, Input } from 'native-base'
+import {
+  Text, Select, Divider, Input,
+} from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateCourseVisibility, updateSecurityCode } from 'slices/language.slice'
+import {
+  updateCourseVisibility,
+  updateSecurityCode,
+} from 'slices/language.slice'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { patchVisibility, patchSecurityCode, deleteCourse } from 'api'
 import { useErrorWrap } from 'hooks'
-import { colors } from 'theme'
 import PropTypes from 'prop-types'
 import i18n from 'utils/i18n'
 
@@ -42,13 +46,6 @@ const CourseSettings = () => {
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
 
-  const handleVisibilityChange = async (value) => {
-    if (value !== visibility) {
-      setVisibility(value)
-      saveVisibilityChanges()
-    }
-  }
-
   // Update the API and redux
   const saveVisibilityChanges = async () => {
     errorWrap(async () => {
@@ -65,9 +62,12 @@ const CourseSettings = () => {
     })
   }
 
-  useEffect( () => {
-    handleCodeChange()
-  }, [code])
+  const handleVisibilityChange = async (value) => {
+    if (value !== visibility) {
+      setVisibility(value)
+      saveVisibilityChanges()
+    }
+  }
 
   const handleCodeChange = async () => {
     errorWrap(async () => {
@@ -81,16 +81,22 @@ const CourseSettings = () => {
     })
   }
 
+  useEffect(() => {
+    handleCodeChange()
+  }, [code])
+
   const securityCode = visibility === 'private' ? (
     <View style={styles.body}>
       <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
         {i18n.t('dict.securityCode')}
       </Text>
-      <Text fontFamily="body"
-          fontWeight="normal"
-          fontSize="md"
-          color="gray.medium">
-       {i18n.t('dialogue.courseSettingsChangeCode')}
+      <Text
+        fontFamily="body"
+        fontWeight="normal"
+        fontSize="md"
+        color="gray.medium"
+      >
+        {i18n.t('dialogue.courseSettingsChangeCode')}
       </Text>
       <Input
         fontFamily="body"
@@ -98,7 +104,7 @@ const CourseSettings = () => {
         fontSize="2xl"
         textAlign="left"
         my="5"
-        onEndEditing={(e) => setCode(e.nativeEvent.text)} // we don't want to call the API until the user is done typing
+        onEndEditing={(e) => setCode(e.nativeEvent.text)}
       >
         {code}
       </Input>
