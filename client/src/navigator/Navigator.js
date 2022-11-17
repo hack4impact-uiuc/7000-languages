@@ -3,9 +3,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticate } from 'slices/auth.slice'
 import { createStackNavigator } from '@react-navigation/stack'
+import { getUser } from 'api'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator, ModalNavigator } from './Stacks'
-import { getUser } from 'api'
 
 const RootStack = createStackNavigator()
 const Navigator = () => {
