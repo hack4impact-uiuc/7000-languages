@@ -81,16 +81,26 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     navigation.navigate('Modal', { screen: 'UpdateCourse' })
   }
 
+  const navigateToAdd = () => {
+    navigation.navigate('Modal', { screen: 'CreateUnit' })
+  }
+
   return (
     <LanguageHome
       languageName={name}
       languageDescription={description}
       valueName="Units"
       buttonText="Manage Units"
+      singularItemText={i18n.t('dict.unitSingle')}
+      pluralItemText={i18n.t('dict.unitPlural')}
       nextUpdate={navigateToUpdate}
+      manageIconName="cog"
       rightIconName="pencil"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
+      manageButtonText={i18n.t('actions.manageUnits')}
+      addCallback={navigateToAdd}
+      addButtonText={i18n.t('actions.addUnit')}
       data={data}
     />
   )

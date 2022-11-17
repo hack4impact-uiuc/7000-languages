@@ -55,9 +55,8 @@ const LessonHome = ({ navigation }) => {
         )
 
         setLessonDescription(result.description)
-        setLessonName(result.name)
         navigation.setOptions({
-          title: 'Lesson',
+          title: result.name,
         })
         dispatch(setField({ key: 'lessonData', value: result }))
       })
@@ -175,6 +174,12 @@ const LessonHome = ({ navigation }) => {
     navigation.navigate('Modal', { screen: 'UpdateLesson' })
   }
 
+  const navigateToAdd = () => {
+    // Since we aren't editing a vocab item, we need to clear the current vocab id
+    dispatch(setField({ key: 'currentVocabId', value: '' }))
+    navigation.navigate('Modal', { screen: 'VocabDrawer' })
+  }
+
   return (
     <LanguageHome
       isLessonHome
@@ -190,6 +195,7 @@ const LessonHome = ({ navigation }) => {
       manageIconName="cog"
       manageButtonText={i18n.t('actions.manageVocab')}
       addButtonText="Add Vocab Item"
+      addCallback={navigateToAdd}
       data={data}
     />
   )

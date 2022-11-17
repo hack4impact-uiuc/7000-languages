@@ -9,6 +9,7 @@ import { useErrorWrap, useTrackPromise } from 'hooks'
 
 import i18n from 'utils/i18n'
 import { INDICATOR_TYPES } from '../../utils/constants'
+import { result } from 'lodash'
 
 const UnitHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -69,9 +70,9 @@ const UnitHome = ({ navigation }) => {
 
     // Sets the title of the page
     navigation.setOptions({
-      title: 'Unit',
+      title: result.name,
     })
-  }, [allUnits, currentUnitId])
+  }, [allUnits, currentUnitId, currentCourseId])
 
   /**
    * Formats the lesson data in order to be presented on this page
