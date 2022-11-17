@@ -1,4 +1,5 @@
 import * as SecureStore from 'expo-secure-store'
+import * as AuthSession from 'expo-auth-session'
 import axios from 'axios'
 import {
   SECURE_STORAGE_ID_TOKEN_KEY,
@@ -7,7 +8,9 @@ import {
 } from './constants'
 
 const GOOGLE_OAUTH_TOKEN_URL = 'https://www.googleapis.com/oauth2/v4/token'
-
+const redirectUri = AuthSession.makeRedirectUri({
+  useProxy: true,
+})
 /**
  * Obtains a user's Google ID Token from SecureStore
  * @returns {String} The user token saved in SecureStore
@@ -142,6 +145,60 @@ export const removeUserClientId = async () => {
     return false
   }
 }
+
+/**
+ * @typedef {Object} ExchangeResponse
+ * @property {boolean} success - Whether exchange auth code was successful
+ * @property {String} message - Response Message
+ * @property {String} idToken - idToken exchanged from authorization code
+ */
+
+/**
+ * Exchanges the authorization_code for idToken and refreshToken
+ * @param {String} code
+ * @param {String} clientId
+ * @param {String} clientSecret
+ * @param {String} codeVerifier
+ * @returns {ExchangeResponse} Exchange response
+ */
+export const exchangeAuthCode = async (
+  code,
+  clientId,
+  clientSecret,
+  codeVerifier,
+) => AuthSession.exchangeCodeAsync(
+  {
+    code,
+    clientId,
+    clientSecret,
+    redirectUri,
+    extraParams: {
+      code_verifier: codeVerifier,
+    },
+  },
+  { tokenEndpoint: GOOGLE_OAUTH_TOKEN_URL },
+)
+  .then(async (authentication) => {
+    const { idToken, refreshToken } = authentication
+    if (idToken !== null && refreshToken !== null) {
+      // id token has to be saved before api calls are made, the other save's can be async
+      await saveUserIDToken(idToken)
+      saveUserRefreshToken(refreshToken)
+      saveUserClientId(clientId)
+
+      return { success: true, message: 'successfully saved', idToken }
+    }
+    return {
+      success: false,
+      message: `idToken or refreshToken is none, authentication result: ${authentication}`,
+      idToken: undefined,
+    }
+  })
+  .catch((reason) => ({
+    success: false,
+    message: `failed to save due to error: ${reason}`,
+    idToken: undefined,
+  }))
 
 /**
  * Refreshes the ID token for user using refreshToken from SecureStore

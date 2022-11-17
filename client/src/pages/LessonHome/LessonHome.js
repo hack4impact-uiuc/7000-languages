@@ -191,6 +191,7 @@ const LessonHome = ({ navigation }) => {
       manageButtonText={i18n.t('actions.manageVocab')}
       addButtonText="Add Vocab Item"
       data={data}
+      addCallback={navigateToAdd}
     />
   )
 }

@@ -1,16 +1,25 @@
-// imports to test localization
-// import * as Localization from 'expo-localization'
 import { I18n } from 'i18n-js'
 import translations from './translations'
+import { retrieveLanguage, getDeviceLocale } from './utils'
 
 const i18n = new I18n(translations)
 
-// Set the locale once at the beginning of your app.
-// i18n.locale = Localization.locale
+const setAppLanguage = async () => {
+  /* Sets the app language based on what is saved in SecureStore and what the
+  default language of the user's phone (locale) is. */
+  const savedLanguage = await retrieveLanguage()
 
-// When a value is missing from a language it'll fallback to another language with the key present.
+  if (savedLanguage === null) {
+    // Default to device locale
+    i18n.locale = getDeviceLocale()
+  } else {
+    // Reference SecureStore saved value
+    i18n.locale = savedLanguage
+  }
+}
+
 i18n.enableFallback = true
-// To see the fallback mechanism uncomment line below to force app to use French language.
-i18n.locale = 'en'
+
+setAppLanguage()
 
 export default i18n

@@ -38,7 +38,7 @@ const DrawerLogoutButton = () => {
             flexDirection: 'row',
           }}
         >
-          <Entypo name="align-left" size={25} color={colors.red.dark} />
+          <Entypo name="align-left" size={25} color={colors.red.medium_dark} />
           <Text
             style={{
               fontSize: 20,

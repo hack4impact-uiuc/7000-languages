@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   delete: {
     position: 'absolute',
-    bottom: 0,
+    bottom: '0%',
     width: '90%',
   },
 })

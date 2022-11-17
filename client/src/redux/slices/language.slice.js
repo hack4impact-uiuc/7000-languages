@@ -12,7 +12,7 @@ const initialState = {
       _id: NO_COURSE_ID,
       name: 'No Courses',
       num_units: 'Join or start a course!',
-      isContributor: false,
+      isContributor: true,
     },
   ],
   currentCourseId: '',
@@ -35,6 +35,7 @@ const initialState = {
   currentLessonId: '',
   lessonData: { vocab: [] },
   currentVocabId: '',
+  currentLanguage: 'English',
 }
 
 // ------------------------------------
