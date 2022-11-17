@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { authenticate } from 'slices/auth.slice'
 import { createStackNavigator } from '@react-navigation/stack'
 import { getUser } from 'api'
+import { loadUserIDToken } from 'utils/auth'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator, ModalNavigator } from './Stacks'
-import { loadUserIDToken } from '../utils/auth'
 
 const RootStack = createStackNavigator()
 const Navigator = () => {

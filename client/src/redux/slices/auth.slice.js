@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
-import { removeUserIDToken, removeUserRefreshToken } from '../../utils/auth'
 
 /*
   Here is an example slice. A "slice" is a collection of Redux reducer logic and
@@ -27,8 +26,6 @@ const authSlice = createSlice({
       state.loggedIn = payload.loggedIn
     },
     logout: (state) => {
-      removeUserIDToken()
-      removeUserRefreshToken()
       state.loggedIn = initialState.loggedIn
     },
   },

@@ -7,10 +7,13 @@ import { logout } from 'slices/auth.slice'
 import { clear } from 'slices/language.slice'
 import { useDispatch } from 'react-redux'
 import i18n from 'utils/i18n'
+import { removeUserIDToken, removeUserRefreshToken } from 'utils/auth'
 
 const DrawerLogoutButton = () => {
   const dispatch = useDispatch()
   const logoutUser = async () => {
+    removeUserIDToken()
+    removeUserRefreshToken()
     dispatch(logout())
     dispatch(clear())
   }
