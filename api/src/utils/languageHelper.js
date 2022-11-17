@@ -165,7 +165,11 @@ const isValidId = async (model, id) => {
 const patchDocument = (document, updates) => {
   for (var key in updates) {
     if (key in document && typeof document[key] === typeof updates[key]) {
-      document[key] = updates[key];
+      if (typeof document[key] === 'object') {
+        patchDocument(document[key], updates[key]);
+      } else {
+        document[key] = updates[key];
+      }
     }
   }
 };

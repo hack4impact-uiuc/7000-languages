@@ -106,6 +106,9 @@ const languageSlice = createSlice({
     updateCourseVisibility: (state, { payload }) => {
       state.courseDetails.is_private = payload.is_private
     },
+    updateSecurityCode: (state, { payload }) => {
+      state.courseDetails.code = payload.code
+    },
     updateNumLessons: (state, { payload }) => {
       const unitIdx = state.allUnits.findIndex(
         (element) => element._id === state.currentUnitId,
@@ -156,6 +159,7 @@ export const {
   resetField,
   clearCourseData,
   updateCourseVisibility,
+  updateSecurityCode,
   updateNumLessons,
   updateNumUnits,
   updateVocabs,

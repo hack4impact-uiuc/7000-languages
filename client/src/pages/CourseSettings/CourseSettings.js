@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
-import { Text, Select, Divider } from 'native-base'
+import React, { useState, useEffect } from 'react'
+import {
+  Text, Select, Divider, Input,
+} from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateCourseVisibility } from 'slices/language.slice'
+import {
+  updateCourseVisibility,
+  updateSecurityCode,
+} from 'slices/language.slice'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { changeVisibility, deleteCourse } from 'api'
+import { patchVisibility, patchSecurityCode, deleteCourse } from 'api'
 import { useErrorWrap } from 'hooks'
-import { colors } from 'theme'
 import PropTypes from 'prop-types'
 import i18n from 'utils/i18n'
 
@@ -28,72 +32,58 @@ const styles = StyleSheet.create({
     bottom: '0%',
     width: '90%',
   },
-  save: {
-    backgroundColor: colors.white.dark,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
 })
 
-const CourseSettings = ({ navigation }) => {
+const CourseSettings = () => {
   const { currentCourseId, courseDetails } = useSelector(
     (state) => state.language,
   )
   const [visibility, setVisibility] = useState(
     courseDetails.is_private ? 'private' : 'public',
   )
-  const [shouldShowButton, setShouldShowButton] = useState(false)
-  const { code } = courseDetails
+  const [code, setCode] = useState(courseDetails.code)
 
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
 
-  const handleVisibilityChange = async (value) => {
-    if (value !== visibility || shouldShowButton) {
-      setVisibility(value)
-      setShouldShowButton(true)
-    }
-  }
-
   // Update the API and redux
-  const saveChanges = async () => {
+  const saveVisibilityChanges = async () => {
     errorWrap(async () => {
       const isPrivate = visibility === 'private'
 
-      // disables save button
-      setShouldShowButton(false)
-
       // makes the API call
-      await changeVisibility(currentCourseId, isPrivate)
+      const { result } = await patchVisibility(currentCourseId, isPrivate)
+      const success = result?.data?.success
 
       // updates the redux store
-      dispatch(updateCourseVisibility({ is_private: isPrivate }))
-    }, navigation.goBack())
+      if (success) {
+        dispatch(updateCourseVisibility({ is_private: isPrivate }))
+      }
+    })
   }
 
-  const saveButton = shouldShowButton ? (
-    <View>
-      <Text
-        fontFamily="body"
-        fontWeight="normal"
-        fontSize="md"
-        color="gray.medium"
-        width="90%"
-        alignSelf="center"
-      >
-        {i18n.t('dialogue.courseSettingsSave')}
-      </Text>
-      <View style={styles.save}>
-        <StyledButton
-          title={i18n.t('actions.saveChanges')}
-          variant="primary"
-          fontSize="md"
-          onPress={saveChanges}
-          style={{ width: '90%' }}
-        />
-      </View>
-    </View>
-  ) : null
+  const handleVisibilityChange = async (value) => {
+    if (value !== visibility) {
+      setVisibility(value)
+      saveVisibilityChanges()
+    }
+  }
+
+  const handleCodeChange = async () => {
+    errorWrap(async () => {
+      const { result } = await patchSecurityCode(currentCourseId, code)
+      const success = result?.data?.success
+
+      // updates the redux store
+      if (success) {
+        dispatch(updateSecurityCode({ code }))
+      }
+    })
+  }
+
+  useEffect(() => {
+    handleCodeChange()
+  }, [code])
 
   const securityCode = visibility === 'private' ? (
     <View style={styles.body}>
@@ -103,12 +93,21 @@ const CourseSettings = ({ navigation }) => {
       <Text
         fontFamily="body"
         fontWeight="normal"
+        fontSize="md"
+        color="gray.medium"
+      >
+        {i18n.t('dialogue.courseSettingsChangeCode')}
+      </Text>
+      <Input
+        fontFamily="body"
+        fontWeight="normal"
         fontSize="2xl"
-        textAlign="right"
+        textAlign="left"
         my="5"
+        onEndEditing={(e) => setCode(e.nativeEvent.text)}
       >
         {code}
-      </Text>
+      </Input>
     </View>
   ) : null
 
@@ -143,7 +142,6 @@ const CourseSettings = ({ navigation }) => {
         {visibilitySelect(visibility)}
       </View>
       {securityCode}
-      {saveButton}
       <Divider />
       <StyledButton
         style={styles.delete}

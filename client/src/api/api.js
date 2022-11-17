@@ -38,11 +38,30 @@ export const getCourse = async (courseID) => {
   return res.data
 }
 
-export const changeVisibility = async (courseID, makePrivate) => {
+export const patchVisibility = async (courseID, makePrivate) => {
   const requestString = `/language/course/${courseID}`
   const body = {
     details: {
       is_private: makePrivate,
+    },
+  }
+  const res = await instance.patch(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res.data?.message)
+  return res.data
+}
+
+export const patchSecurityCode = async (courseID, securityCode) => {
+  const requestString = `/language/course/${courseID}`
+
+  const allowedExpression = /^([0-9]|[a-z])+([0-9a-z]+)$/i
+  if (securityCode.length !== 5 || !securityCode.match(allowedExpression)) {
+    throw new Error('Security code must be 5 alphanumeric characters')
+  }
+
+  const body = {
+    details: {
+      code: securityCode,
     },
   }
   const res = await instance.patch(requestString, body)
