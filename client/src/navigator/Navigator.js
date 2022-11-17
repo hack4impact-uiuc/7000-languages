@@ -17,7 +17,7 @@ const Navigator = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const loadAuthFromPersistentStorage = async () => {
+    const loadUserAuth = async () => {
       getUser()
         .then(() => {
           dispatch(authenticate({ loggedIn: true }))
@@ -27,7 +27,7 @@ const Navigator = () => {
         })
     }
 
-    loadAuthFromPersistentStorage()
+    loadUserAuth()
   }, [])
 
   const { loggedIn } = useSelector((state) => state.auth)
