@@ -335,7 +335,7 @@ const VocabDrawer = ({ navigation }) => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync(expoImageSettings)
 
-    if (!result.canceled) {
+    if (!result.canceled && result.assets.length > 0) {
       setImage(result.assets[0].uri)
     }
   }
@@ -344,7 +344,7 @@ const VocabDrawer = ({ navigation }) => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchCameraAsync(expoImageSettings)
 
-    if (!result.canceled) {
+    if (!result.canceled && result.assets.length > 0) {
       setImage(result.assets[0].uri)
     }
   }
