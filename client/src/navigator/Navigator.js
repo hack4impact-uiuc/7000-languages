@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { getUser } from 'api'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator, ModalNavigator } from './Stacks'
+import { loadUserIDToken } from '../utils/auth'
 
 const RootStack = createStackNavigator()
 const Navigator = () => {
@@ -17,7 +18,11 @@ const Navigator = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const loadUserAuth = () => {
+    const loadUserAuth = async () => {
+      const idToken = await loadUserIDToken()
+      if (!idToken) {
+        dispatch(authenticate({ loggedIn: false }))
+      }
       getUser()
         .then(() => {
           dispatch(authenticate({ loggedIn: true }))

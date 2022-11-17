@@ -6,19 +6,11 @@ import { Text } from 'native-base'
 import { logout } from 'slices/auth.slice'
 import { clear } from 'slices/language.slice'
 import { useDispatch } from 'react-redux'
-import {
-  removeUserIDToken,
-  removeUserClientId,
-  removeUserRefreshToken,
-} from 'utils/auth'
 import i18n from 'utils/i18n'
 
 const DrawerLogoutButton = () => {
   const dispatch = useDispatch()
   const logoutUser = async () => {
-    await removeUserIDToken()
-    await removeUserClientId()
-    await removeUserRefreshToken()
     dispatch(logout())
     dispatch(clear())
   }
