@@ -103,7 +103,7 @@ const ManageView = ({
           {
             text: `${i18n.t('actions.notLeave')}`,
             style: 'cancel',
-            onPress: () => {},
+            onPress: () => { },
           },
           {
             text: `${i18n.t('dict.discard')}`,
@@ -206,7 +206,7 @@ const ManageView = ({
         <AntDesign
           name="minuscircle"
           size={25}
-          color={colors.red.dark}
+          color={colors.red.medium_dark}
           onPress={() => moveToUnselected(index)}
         />
       )}
@@ -377,10 +377,10 @@ ManageView.defaultProps = {
   unselectedTitleText: '',
   selectedBodyText: '',
   unselectedBodyText: '',
-  saveCallback: () => {},
+  saveCallback: () => { },
   initialSelectedData: [],
   initialUnselectedData: [],
-  playAudio: () => {},
+  playAudio: () => { },
   navigation: { addListener: () => null, dispatch: () => null },
 }
 

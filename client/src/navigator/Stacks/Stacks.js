@@ -30,7 +30,7 @@ const ModalStack = createStackNavigator()
 
 const homeNavigationProps = {
   headerTintColor: 'white',
-  headerStyle: { backgroundColor: colors.red.dark },
+  headerStyle: { backgroundColor: colors.red.medium_dark },
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
 }
 

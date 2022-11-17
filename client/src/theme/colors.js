@@ -3,8 +3,8 @@ const colors = {
   red: {
     light: '#FBEAE9', // 100 opacity
     medium: '#F2B8B5', // 300 opacity
-    dark: '#DF4E47', // 500 opacity
-    darker: '#7A100E',
+    medium_dark: '#DF4E47', // 500 opacity
+    dark: '#7A100E',
   },
   blue: {
     light: '#E5F7F7', // 100 opacity

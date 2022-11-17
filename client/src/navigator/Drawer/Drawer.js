@@ -89,7 +89,7 @@ const Drawer = createDrawerNavigator()
 
 const tabColors = [
   colors.red.light,
-  colors.red.dark,
+  colors.red.medium_dark,
   colors.blue.light,
   colors.blue.dark,
 ]

@@ -18,7 +18,7 @@ import Logo from '../../../assets/images/landing-logo.svg'
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
-    backgroundColor: colors.red.dark,
+    backgroundColor: colors.red.medium_dark,
     width: '100%',
     height: '100%',
   },
@@ -127,7 +127,7 @@ const Landing = () => {
           <AntDesign
             name="google"
             size={`${window.height}` / 25}
-            color={colors.red.dark}
+            color={colors.red.medium_dark}
           />
         )}
         variant="secondary"
