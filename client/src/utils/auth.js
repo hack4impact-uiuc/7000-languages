@@ -146,6 +146,21 @@ export const removeUserClientId = async () => {
   }
 }
 
+/**
+ * @typedef {Object} ExchangeResponse
+ * @property {boolean} success - Whether exchange auth code was successful
+ * @property {String} message - Response Message
+ * @property {String} idToken - idToken exchanged from authorization code
+ */
+
+/**
+ * Exchanges the authorization_code for idToken and refreshToken
+ * @param {String} code
+ * @param {String} clientId
+ * @param {String} clientSecret
+ * @param {String} codeVerifier
+ * @returns {ExchangeResponse} Exchange response
+ */
 export const exchangeAuthCode = async (
   code,
   clientId,
@@ -166,6 +181,7 @@ export const exchangeAuthCode = async (
   .then(async (authentication) => {
     const { idToken, refreshToken } = authentication
     if (idToken !== null && refreshToken !== null) {
+      // id token has to be saved before api calls are made, the other save's can be async
       await saveUserIDToken(idToken)
       saveUserRefreshToken(refreshToken)
       saveUserClientId(clientId)
