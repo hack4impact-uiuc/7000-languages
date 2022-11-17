@@ -20,7 +20,7 @@ const Navigator = () => {
   useEffect(() => {
     const loadUserAuth = async () => {
       const idToken = await loadUserIDToken()
-      if (!idToken) {
+      if (idToken != null) {
         dispatch(authenticate({ loggedIn: false }))
       }
       getUser()
