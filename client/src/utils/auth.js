@@ -171,7 +171,6 @@ export const refreshIDToken = async () => {
         clientSecret,
       })
       .then(({ data: { id_token: idToken } }) => {
-        console.log('refresh success')
         saveUserIDToken(idToken)
         return Promise.resolve(idToken)
       })
