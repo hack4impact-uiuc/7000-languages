@@ -42,7 +42,7 @@ const DrawerLogoutButton = () => {
             fontFamily="heading"
             fontWeight="regular"
             fontStyle="normal"
-            color="red.dark"
+            color="red.medium_dark"
           >
             {i18n.t('actions.logOut')}
           </Text>
