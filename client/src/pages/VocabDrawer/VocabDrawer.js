@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
   imageSelectorContainer: {
     alignItems: 'center',
     flexDirection: 'column',
-    paddingVertical: 10,
     justifyContent: 'center',
   },
   imageButtonContainer: {
@@ -336,8 +335,8 @@ const VocabDrawer = ({ navigation }) => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync(expoImageSettings)
 
-    if (!result.cancelled) {
-      setImage(result.uri)
+    if (!result.canceled) {
+      setImage(result.assets[0].uri)
     }
   }
 
@@ -345,8 +344,8 @@ const VocabDrawer = ({ navigation }) => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchCameraAsync(expoImageSettings)
 
-    if (!result.cancelled) {
-      setImage(result.uri)
+    if (!result.canceled) {
+      setImage(result.assets[0].uri)
     }
   }
 
@@ -485,7 +484,7 @@ const VocabDrawer = ({ navigation }) => {
         title={i18n.t('actions.addImage')}
         variant="image_picker"
         onPress={selectImage}
-        style={{ height: '10%' }}
+        style={{ height: '20%' }}
       />
     )
   }

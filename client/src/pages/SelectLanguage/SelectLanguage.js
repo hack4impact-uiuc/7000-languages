@@ -92,9 +92,10 @@ const SelectLanguage = ({ navigation }) => {
         <TouchableOpacity
           style={{
             ...styles.textSection,
-            backgroundColor: colors.white.light,
+            backgroundColor:
+              language === FRENCH ? colors.red.light : colors.white.light,
             borderColor:
-              language === ENGLISH ? colors.black : colors.white.light,
+              language === ENGLISH ? colors.red.darker : colors.white.light,
             borderWidth: 3,
             borderRadius: 20,
           }}
@@ -127,9 +128,10 @@ const SelectLanguage = ({ navigation }) => {
         <TouchableOpacity
           style={{
             ...styles.textSection,
-            backgroundColor: colors.white.light,
+            backgroundColor:
+              language === FRENCH ? colors.red.light : colors.white.light,
             borderColor:
-              language === FRENCH ? colors.black : colors.white.light,
+              language === FRENCH ? colors.red.darker : colors.white.light,
             borderWidth: 3,
             borderRadius: 20,
           }}
