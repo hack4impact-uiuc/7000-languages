@@ -1,27 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
 import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
+import * as Google from 'expo-auth-session/providers/google'
 import { authenticate } from 'slices/auth.slice'
 import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
-import {
-  saveUserIDToken,
-  saveUserRefreshToken,
-  saveUserClientId,
-} from 'utils/auth'
 import { createUser } from 'api'
 import i18n from 'utils/i18n'
+import { exchangeAuthCode } from 'utils/auth'
 import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
-    backgroundColor: colors.red.dark,
+    backgroundColor: colors.red.medium_dark,
     width: '100%',
     height: '100%',
   },
@@ -48,40 +45,53 @@ const styles = StyleSheet.create({
 WebBrowser.maybeCompleteAuthSession()
 
 const Landing = () => {
-  /*
-      Sources:
-      https://docs.expo.dev/versions/latest/sdk/auth-session/
-      https://stackoverflow.com/questions/66966772/expo-auth-session-providers-google-google-useauthrequest
-    */
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
-  const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
 
-  const loginUser = async () => {
-    // await errorWrap(async () => {
-    //   const config = {
-    //     iosClientId: Constants.manifest.extra.iosClientId,
-    //     androidClientId: Constants.manifest.extra.androidClientId,
-    //   }
-    //   const { idToken, refreshToken } = await Google.logInAsync(config)
-    //   const guid = Google.getPlatformGUID(config)
-    //   const clientId = `${guid}.apps.googleusercontent.com`
-    //   if (idToken !== undefined && refreshToken !== undefined) {
-    //     const userData = {
-    //       idToken,
-    //     }
-    //     // call API
-    //     await createUser(userData)
-    //     // Save to Secure Store
-    //     await saveUserIDToken(idToken)
-    //     await saveUserRefreshToken(refreshToken)
-    //     await saveUserClientId(clientId)
-    //     // Update Redux Store
-    //     dispatch(authenticate({ loggedIn: true }))
-    //   }
-    // })
-    alert("Trying to login");
+  /*
+    Sources:
+    https://docs.expo.dev/versions/latest/sdk/auth-session/
+    https://stackoverflow.com/questions/71095191/refresh-token-with-expo-auth-sessions-google
+  */
+  const config = {
+    expoClientId: Constants.manifest.extra.expoClientId,
+    scopes: ['profile'],
+    responseType: 'code',
+    shouldAutoExchangeCode: false,
+    prompt: 'consent',
+    extraParams: {
+      access_type: 'offline',
+    },
   }
+
+  const [quote] = useState(`${i18n.t('dialogue.landingQuote')}`)
+  const [request, response, promptAsync] = Google.useAuthRequest(config)
+
+  useEffect(() => {
+    errorWrap(async () => {
+      if (response?.type === 'success') {
+        const { code } = response.params
+        if (code !== undefined) {
+          exchangeAuthCode(
+            code,
+            config.expoClientId,
+            Constants.manifest.extra.clientSecret,
+            request?.codeVerifier,
+          ).then(async ({ success, message, idToken }) => {
+            if (success) {
+              const userData = {
+                idToken,
+              }
+              await createUser(userData)
+              dispatch(authenticate({ loggedIn: true }))
+            } else {
+              console.error('exchangeAuthCode(): ', message)
+            }
+          })
+        }
+      }
+    })
+  }, [response])
 
   const window = useWindowDimensions()
 
@@ -117,11 +127,11 @@ const Landing = () => {
           <AntDesign
             name="google"
             size={`${window.height}` / 25}
-            color={colors.red.dark}
+            color={colors.red.medium_dark}
           />
         )}
         variant="secondary"
-        onPress={loginUser}
+        onPress={() => promptAsync()}
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
       />

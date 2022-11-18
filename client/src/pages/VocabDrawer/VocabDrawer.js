@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   imageSelectorContainer: {
     alignItems: 'center',
     flexDirection: 'column',
-    paddingVertical: 10,
     justifyContent: 'center',
   },
   imageButtonContainer: {
@@ -360,8 +359,8 @@ const VocabDrawer = ({ navigation }) => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync(expoImageSettings)
 
-    if (!result.cancelled) {
-      setImage(result.uri)
+    if (!result.canceled && result.assets.length > 0) {
+      setImage(result.assets[0].uri)
     }
   }
 
@@ -369,8 +368,8 @@ const VocabDrawer = ({ navigation }) => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchCameraAsync(expoImageSettings)
 
-    if (!result.cancelled) {
-      setImage(result.uri)
+    if (!result.canceled && result.assets.length > 0) {
+      setImage(result.assets[0].uri)
     }
   }
 
@@ -495,7 +494,7 @@ const VocabDrawer = ({ navigation }) => {
               <Entypo
                 name="image"
                 size={24}
-                color={colors.red.dark}
+                color={colors.red.medium_dark}
                 onPress={selectImageWithRemove}
               />
             </View>
@@ -505,11 +504,13 @@ const VocabDrawer = ({ navigation }) => {
     }
     return (
       <StyledButton
-        leftIcon={<Entypo name="image" size={24} color={colors.red.dark} />}
+        leftIcon={
+          <Entypo name="image" size={24} color={colors.red.medium_dark} />
+        }
         title={i18n.t('actions.addImage')}
         variant="image_picker"
         onPress={selectImage}
-        style={{ height: 100 }}
+        style={{ height: '20%' }}
       />
     )
   }
