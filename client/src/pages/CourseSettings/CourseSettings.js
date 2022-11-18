@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Text, Select, Divider, Input,
-} from 'native-base'
+import { Text, Select, Input } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Alert, StyleSheet, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
@@ -53,7 +51,6 @@ const CourseSettings = () => {
 
       // makes the API call
       const { result } = await patchVisibility(currentCourseId, isPrivate)
-      console.log(result)
       const success = result?.data?.success
 
       // updates the redux store
@@ -64,8 +61,8 @@ const CourseSettings = () => {
   }
 
   const handleVisibilityChange = async (value) => {
-      setVisibility(value)
-      saveVisibilityChanges()
+    setVisibility(value)
+    saveVisibilityChanges()
   }
 
   const handleCodeChange = async () => {
@@ -111,15 +108,16 @@ const CourseSettings = () => {
   ) : null
 
   const visibilitySelect = (currentVisibility) => (
-    <Select
-      defaultValue={currentVisibility}
-      borderColor="black"
-      height="35%"
-      onValueChange={handleVisibilityChange}
-    >
-      <Select.Item label={i18n.t('dict.public')} value="public" />
-      <Select.Item label={i18n.t('dict.private')} value="private" />
-    </Select>
+    <>
+      <Select
+        defaultValue={currentVisibility}
+        borderColor="black"
+        onValueChange={handleVisibilityChange}
+      >
+        <Select.Item label={i18n.t('dict.public')} value="public" />
+        <Select.Item label={i18n.t('dict.private')} value="private" />
+      </Select>
+    </>
   )
 
   return (
@@ -141,7 +139,6 @@ const CourseSettings = () => {
         {visibilitySelect(visibility)}
       </View>
       {securityCode}
-      <Divider />
       <StyledButton
         style={styles.delete}
         variant="settings"

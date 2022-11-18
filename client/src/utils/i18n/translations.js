@@ -295,7 +295,7 @@ const translations = {
       courseSettingsSave:
         'Vous pouvez enregistrer vos modifications en cliquant sur le bouton "Enregistrer". Si vous quittez cet écran sans cliquer sur le bouton, vos modifications seront annulées.',
       courseSettingsChangeCode:
-        'Les apprenants devront saisir ce code afin de s\'inscrire à votre cours.',
+        "Les apprenants devront saisir ce code afin de s'inscrire à votre cours.",
     },
   },
 }
