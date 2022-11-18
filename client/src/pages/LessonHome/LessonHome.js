@@ -80,16 +80,14 @@ const LessonHome = ({ navigation }) => {
             _id: item._id,
             name: item.original,
             body: item.translation,
-            audioURI: audioUri == null ? item.audioURI : audioUri,
+            audioURI: item.audio ? audioUri : '',
             audio: item.audio !== '',
             _order: item._order,
-            imageURI: imageUri == null ? item.imageURI : imageUri,
-            image: item.image !== '',
+            imageURI: item.image ? imageUri : '',
+            image: item.image,
           }
 
-          if (item.imageURI) {
-            formattedItem.imageURI = item.imageURI
-          } else if (item.image !== '') {
+          if (item.image) {
             const filePath = item.image
             const splitPath = filePath.split('.')
 
@@ -173,7 +171,7 @@ const LessonHome = ({ navigation }) => {
 
   return (
     <LanguageHome
-      // isLessonHome
+       isLessonHome
       lessonDescription={lessonDescription}
       singularItemText={i18n.t('dict.vocabItemSingle')}
       pluralItemText={i18n.t('dict.vocabItemPlural')}

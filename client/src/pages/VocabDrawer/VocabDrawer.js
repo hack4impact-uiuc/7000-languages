@@ -214,6 +214,10 @@ const VocabDrawer = ({ navigation }) => {
   const success = async () => {
     errorWrap(
       async () => {
+        if(recordingStage === RECORDING.IN_PROGRESS)
+        {
+          await stopRecording()
+        }
         let updatedVocabItem = null
         const promises = []
         if (deleteAudioUri !== '') {
@@ -246,28 +250,28 @@ const VocabDrawer = ({ navigation }) => {
 
           // Push audio recording
           if (audioRecording && recordingStage === RECORDING.COMPLETE) {
-            const audioResponse = await trackPromise(
+            // [TODO]: Add backend trackPromise()
+            const audioResponse = await 
               uploadAudioFile(
                 currentCourseId,
                 currentUnitId,
                 currentLessonId,
                 updatedVocabItem._id,
                 audioRecording,
-              ),
-            )
+              )
             updatedVocabItem = audioResponse.result
           }
 
           if (image) {
-            const imageResponse = await trackPromise(
+            // [TODO]: Add backend trackPromise()
+            const imageResponse = await
               uploadImageFile(
                 currentCourseId,
                 currentUnitId,
                 currentLessonId,
                 updatedVocabItem._id,
                 image,
-              ),
-            )
+              )
             updatedVocabItem = imageResponse.result
           }
 
@@ -301,7 +305,6 @@ const VocabDrawer = ({ navigation }) => {
                 audioRecording,
               ),
             )
-
             updatedVocabItem = audioResponse.result
           }
 
@@ -315,7 +318,6 @@ const VocabDrawer = ({ navigation }) => {
                 image,
               ),
             )
-
             updatedVocabItem = imageResponse.result
           }
           // Update vocab item in Redux store
@@ -517,6 +519,7 @@ const VocabDrawer = ({ navigation }) => {
       <Text color="gray.medium">
         {i18n.t('dialogue.itemDescriptionPrompt')}
       </Text>
+      {generateImageContainer()}
       <RequiredField title={translatedLanguage} />
       <Input
         placeholder=""
@@ -554,7 +557,6 @@ const VocabDrawer = ({ navigation }) => {
         value={additionalInformation}
         onChangeText={(val) => setAdditionalInformation(val)}
       />
-      {generateImageContainer()}
     </>
   )
 
