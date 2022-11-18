@@ -2,7 +2,12 @@ import axios from 'axios'
 import Constants from 'expo-constants'
 import { logout } from 'slices/auth.slice'
 import store from '../redux/store'
-import { loadUserIDToken, refreshIDToken } from '../utils/auth'
+import {
+  loadUserIDToken,
+  refreshIDToken,
+  removeUserIDToken,
+  removeUserRefreshToken,
+} from '../utils/auth'
 
 const API_URL = Constants.manifest.extra.apiURL
 const API_PORT = Constants.manifest.extra.apiDevelopmentPort
@@ -46,6 +51,8 @@ const authRefresh = async (response) => {
         return instance.request(response.config)
       }
       // Unable to retrieve new idToken -> Prompt log in again
+      removeUserIDToken()
+      removeUserRefreshToken()
       store.dispatch(logout())
       if (typeof response.data === 'object') {
         response.data.message = LOGOUT_MESSAGE

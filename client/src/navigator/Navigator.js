@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { authenticate } from 'slices/auth.slice'
 import { createStackNavigator } from '@react-navigation/stack'
 import { getUser } from 'api'
+import { loadUserIDToken } from 'utils/auth'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator, ModalNavigator } from './Stacks'
 
@@ -17,7 +18,11 @@ const Navigator = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const loadUserAuth = () => {
+    const loadUserAuth = async () => {
+      const idToken = await loadUserIDToken()
+      if (idToken != null) {
+        dispatch(authenticate({ loggedIn: false }))
+      }
       getUser()
         .then(() => {
           dispatch(authenticate({ loggedIn: true }))
