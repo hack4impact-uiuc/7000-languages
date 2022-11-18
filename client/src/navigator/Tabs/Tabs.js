@@ -5,6 +5,7 @@ import { colors } from 'theme'
 import { AntDesign } from '@expo/vector-icons'
 import PropTypes from 'prop-types'
 import { HomeNavigator, SettingsNavigator } from '../Stacks'
+import { useSelector } from 'react-redux'
 import { NO_COURSE_ID } from '../../utils/constants'
 
 const Tab = createBottomTabNavigator()
@@ -17,7 +18,12 @@ const Tab = createBottomTabNavigator()
   More reading: https://reactnavigation.org/docs/tab-based-navigation
 */
 
-const TabNavigator = (navigationData) => (
+const TabNavigator = (navigationData) => {
+  const { currentCourseId, courseDetails } = useSelector(
+    (state) => state.language,
+  )
+  
+  return (
   <Tab.Navigator
     screenOptions={({ route }) => ({
       headerShown: false,
@@ -31,6 +37,7 @@ const TabNavigator = (navigationData) => (
       ],
       // eslint-disable-next-line react/prop-types
       tabBarIcon: ({ focused }) => {
+
         switch (route.name) {
           case 'Units':
             return (
@@ -64,12 +71,14 @@ const TabNavigator = (navigationData) => (
         <HomeNavigator {...props} courseId={navigationData.route.name} />
       )}
     />
+    { currentCourseId !== '' ? (
     <Tab.Screen
       name="Setting"
       children={(props) => <SettingsNavigator {...props} />}
-    />
+    /> ) : null }
   </Tab.Navigator>
 )
+}
 
 TabNavigator.propTypes = {
   navigationData: PropTypes.shape({
