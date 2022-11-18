@@ -70,7 +70,7 @@ const TabNavigator = (navigationData) => {
       />
       {currentCourseId !== '' ? (
         <Tab.Screen
-          name="Setting"
+          name="Settings"
           children={(props) => <SettingsNavigator {...props} />}
         />
       ) : null}
