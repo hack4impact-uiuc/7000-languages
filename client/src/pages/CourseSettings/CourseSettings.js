@@ -53,6 +53,7 @@ const CourseSettings = () => {
 
       // makes the API call
       const { result } = await patchVisibility(currentCourseId, isPrivate)
+      console.log(result)
       const success = result?.data?.success
 
       // updates the redux store
@@ -63,10 +64,8 @@ const CourseSettings = () => {
   }
 
   const handleVisibilityChange = async (value) => {
-    if (value !== visibility) {
       setVisibility(value)
       saveVisibilityChanges()
-    }
   }
 
   const handleCodeChange = async () => {
