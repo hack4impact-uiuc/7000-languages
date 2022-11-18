@@ -57,7 +57,7 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     setName(courseName)
     setDescription(courseDescription)
     navigation.setOptions({
-      title: courseDetails.name,
+      title: `${i18n.t('dict.courseHome')}`,
     })
   }, [courseName, courseDescription])
 

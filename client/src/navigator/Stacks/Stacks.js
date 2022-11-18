@@ -14,11 +14,13 @@ import PropTypes from 'prop-types'
 import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
+import ManageVocab from 'pages/ManageVocab'
 import UpdateLesson from 'pages/UpdateLesson'
 import UpdateUnit from 'pages/UpdateUnit'
 import CourseSettings from 'pages/CourseSettings'
 import UpdateCourse from 'pages/UpdateCourse'
 import Intro from 'pages/Intro'
+import i18n from 'utils/i18n'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -116,7 +118,7 @@ export const HomeNavigator = ({ courseId }) => (
       name={courseId}
       children={(props) => <Home {...props} courseId={courseId} />}
       options={({ navigation }) => ({
-        title: 'Course',
+        title: i18n.t('dict.courseHome'),
         headerLeft: () => <DrawerButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}
@@ -144,7 +146,7 @@ export const HomeNavigator = ({ courseId }) => (
       name="Apply"
       component={Apply}
       options={({ navigation }) => ({
-        title: 'Become a Contributor',
+        title: i18n.t('actions.becomeContributorTitle'),
         headerStyle: { backgroundColor: colors.white.light },
         headerTitleStyle: {
           fontSize: 18,
@@ -155,13 +157,22 @@ export const HomeNavigator = ({ courseId }) => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
-
+    <Stack.Screen
+      name="ManageVocab"
+      component={ManageVocab}
+      options={({ navigation }) => ({
+        ...manageNavigationProps,
+        title: i18n.t('actions.manageVocab'),
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
     <Stack.Screen
       name="ManageUnits"
       component={ManageUnits}
       options={({ navigation }) => ({
         ...manageNavigationProps,
-        title: 'Manage Units',
+        title: i18n.t('actions.manageUnits'),
         headerLeft: () => <BackButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}
@@ -171,7 +182,7 @@ export const HomeNavigator = ({ courseId }) => (
       component={ManageLessons}
       options={({ navigation }) => ({
         ...manageNavigationProps,
-        title: 'Manage Lessons',
+        title: i18n.t('actions.manageLessons'),
         headerLeft: () => <BackButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}
@@ -181,7 +192,6 @@ export const HomeNavigator = ({ courseId }) => (
       component={UpdateUnit}
       options={({ navigation }) => ({
         ...manageNavigationProps,
-        title: 'Update',
         headerLeft: () => <BackButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}
@@ -192,7 +202,6 @@ export const HomeNavigator = ({ courseId }) => (
       component={UpdateLesson}
       options={({ navigation }) => ({
         ...manageNavigationProps,
-        title: 'Update Lesson',
         headerLeft: () => <BackButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}
@@ -212,7 +221,7 @@ export const SettingsNavigator = () => (
       name="CourseSettings"
       component={CourseSettings}
       options={({ navigation }) => ({
-        title: 'Settings',
+        title: i18n.t('dict.settings'),
         headerLeft: () => <BackButton navigation={navigation} color="black" />,
         cardStyle: { backgroundColor: 'white' },
       })}

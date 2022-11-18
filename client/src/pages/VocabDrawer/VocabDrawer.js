@@ -554,7 +554,7 @@ const VocabDrawer = ({ navigation }) => {
       }
       successCallback={success}
       closeCallback={close}
-      isDisabled={!areRequiredFieldsFilled}
+      areAllFieldsFilled={areRequiredFieldsFilled}
       body={body}
     />
   )

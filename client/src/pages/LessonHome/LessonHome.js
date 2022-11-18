@@ -56,7 +56,7 @@ const LessonHome = ({ navigation }) => {
 
         setLessonDescription(result.description)
         navigation.setOptions({
-          title: result.name,
+          title: `${i18n.t('dict.lessonSingle')}`,
         })
         dispatch(setField({ key: 'lessonData', value: result }))
       })
@@ -183,7 +183,7 @@ const LessonHome = ({ navigation }) => {
   return (
     <LanguageHome
       isLessonHome
-      lessonName={lessonName}
+      languageName={lessonName}
       lessonDescription={lessonDescription}
       nextUpdate={navigateToUpdate}
       valueName="Lessons"
@@ -194,7 +194,7 @@ const LessonHome = ({ navigation }) => {
       pluralItemText={i18n.t('dict.vocabItemPlural')}
       manageIconName="cog"
       manageButtonText={i18n.t('actions.manageVocab')}
-      addButtonText="Add Vocab Item"
+      addButtonText={i18n.t('actions.addVocabItem')}
       data={data}
       addCallback={navigateToAdd}
     />

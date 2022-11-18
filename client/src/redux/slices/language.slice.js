@@ -127,6 +127,10 @@ const languageSlice = createSlice({
         }
       })
 
+      if (payload.course.details?.name) {
+        state.allCourses[courseIndex].name = payload.course.details?.name
+      }
+
       // Update the data in courseDetails
       Object.keys(payload.course.details).forEach((key) => {
         if (

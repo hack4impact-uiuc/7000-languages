@@ -163,7 +163,6 @@ const isValidId = async (model, id) => {
  * @param {Object} update
  */
 const patchDocument = (document, updates) => {
-  console.log(document, updates, 'patching');
   for (var key in updates) {
     if (key in document && typeof document[key] === typeof updates[key]) {
       if (typeof document[key] === 'object') {

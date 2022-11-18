@@ -69,7 +69,7 @@ const UnitHome = ({ navigation }) => {
 
     // Sets the title of the page
     navigation.setOptions({
-      title: unitData.name,
+      title: `${i18n.t('dict.unitSingle')}`,
     })
   }, [allUnits, currentUnitId, currentCourseId])
 
@@ -144,7 +144,6 @@ const UnitHome = ({ navigation }) => {
       languageDescription={unitDescription}
       nextUpdate={navigateToUpdate}
       valueName="Lessons"
-      buttonText="Manage Lessons"
       rightIconName="pencil"
       singularItemText={i18n.t('dict.lessonSingle')}
       pluralItemText={i18n.t('dict.lessonPlural')}

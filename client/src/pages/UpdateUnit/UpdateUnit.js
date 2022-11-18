@@ -10,6 +10,7 @@ import { patchSelectedUnit } from 'slices/language.slice'
 import { updateUnit } from 'api'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   container: {
@@ -98,15 +99,18 @@ const UpdateUnit = ({ navigation }) => {
               color={colors.blue.dark}
             >
               {' '}
-              Suggestion{' '}
+              {i18n.t('dict.suggestion')}{' '}
             </Text>
           </View>
           <Text color={colors.blue.dark} fontSize="md">
-            When updating a unit, think about how it will be used.
+            {i18n.t('dialogue.updateUnit')}
           </Text>
         </View>
 
-        <RequiredField title="Change your unit name" fontSize="md" />
+        <RequiredField
+          title={i18n.t('dialogue.changeUnitName')}
+          fontSize="md"
+        />
         <Input
           size="xl"
           placeholder=""
@@ -115,10 +119,7 @@ const UpdateUnit = ({ navigation }) => {
           onChangeText={(text) => setName(text)}
         />
 
-        <RequiredField
-          title="What is the purpose of this unit?"
-          fontSize="md"
-        />
+        <RequiredField title={i18n.t('dialogue.unitPurpose')} fontSize="md" />
         <TextArea
           size="xl"
           h={40}
@@ -135,11 +136,11 @@ const UpdateUnit = ({ navigation }) => {
 
   return (
     <Drawer
-      titleText="Edit Unit"
-      successText="Confirm Edit"
+      titleText={i18n.t('actions.editUnit')}
+      successText={i18n.t('actions.confirmEdit')}
       successCallback={success}
       closeCallback={close}
-      isDisabled={!areRequiredFieldsFilled}
+      areAllFieldsFilled={areRequiredFieldsFilled}
       body={body}
     />
   )

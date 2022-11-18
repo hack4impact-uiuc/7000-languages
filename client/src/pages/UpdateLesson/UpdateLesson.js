@@ -10,6 +10,7 @@ import { updateSingleLesson } from 'api'
 import { useSelector, useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   container: {
@@ -103,15 +104,18 @@ const UpdateLesson = ({ navigation }) => {
               color={colors.blue.dark}
             >
               {' '}
-              Suggestion{' '}
+              {i18n.t('dict.suggestion')}{' '}
             </Text>
           </View>
           <Text color={colors.blue.dark} fontSize="md">
-            When updating a lesson, think about how it will be used.
+            {i18n.t('dialogue.updateLesson')}
           </Text>
         </View>
 
-        <RequiredField title="Change your lesson name" fontSize="md" />
+        <RequiredField
+          title={i18n.t('dialogue.changeLessonName')}
+          fontSize="md"
+        />
         <Input
           size="xl"
           placeholder=""
@@ -120,10 +124,7 @@ const UpdateLesson = ({ navigation }) => {
           onChangeText={(text) => setName(text)}
         />
 
-        <RequiredField
-          title="What is the purpose of this lesson?"
-          fontSize="md"
-        />
+        <RequiredField title={i18n.t('dialogue.lessonPurpose')} fontSize="md" />
         <TextArea
           size="xl"
           h={40}
@@ -140,11 +141,11 @@ const UpdateLesson = ({ navigation }) => {
 
   return (
     <Drawer
-      titleText="Edit Lesson"
-      successText="Confirm Edit"
+      titleText={i18n.t('actions.editLesson')}
+      successText={i18n.t('actions.confirmEdit')}
       successCallback={success}
       closeCallback={close}
-      isDisabled={!areRequiredFieldsFilled}
+      areAllFieldsFilled={areRequiredFieldsFilled}
       body={body}
     />
   )

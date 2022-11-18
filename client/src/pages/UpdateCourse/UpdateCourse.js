@@ -10,6 +10,7 @@ import { updateCourse } from 'api'
 import { useSelector, useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   container: {
@@ -32,24 +33,25 @@ const UpdateCourse = ({ navigation }) => {
 
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
-  const { currentCourseId, allCourses } = useSelector((state) => state.language)
+  const { currentCourseId, courseDetails } = useSelector(
+    (state) => state.language,
+  )
 
   const [name, setName] = useState('')
-  const [purpose, setPurpose] = useState('')
+  const [description, setDescription] = useState('')
+  const [alternativeName, setAlternativeName] = useState('')
+  const [translatedLanguage, setTranslatedLanguage] = useState('')
 
   // checks if all fields are filled
   // otherwise, the submit button is disabled
-  const areRequiredFieldsFilled = name !== '' && purpose !== ''
+  const areRequiredFieldsFilled = name !== '' && translatedLanguage !== ''
 
   useEffect(() => {
-    const courseIndex = allCourses.findIndex(
-      (element) => element._id === currentCourseId,
-    )
-    const courseDetails = allCourses[courseIndex]
-
     setName(courseDetails.name)
-    setPurpose(courseDetails.alternative_name)
-  }, [currentCourseId, allCourses])
+    setDescription(courseDetails.description)
+    setAlternativeName(courseDetails.alternative_name)
+    setTranslatedLanguage(courseDetails.translated_language)
+  }, [courseDetails])
   /**
    * Posts a new course to the API and saves the new course in state
    */
@@ -59,7 +61,9 @@ const UpdateCourse = ({ navigation }) => {
         let updatedCourseItem = null
         const updates = {
           name,
-          alternative_name: purpose,
+          description,
+          alternative_name: alternativeName,
+          translated_language: translatedLanguage,
         }
         const courseItemResponse = await updateCourse(currentCourseId, updates)
         updatedCourseItem = courseItemResponse.result
@@ -94,21 +98,52 @@ const UpdateCourse = ({ navigation }) => {
               color={colors.blue.dark}
             >
               {' '}
-              Suggestion{' '}
+              {i18n.t('dict.suggestion')}{' '}
             </Text>
           </View>
           <Text color={colors.blue.dark} fontSize="md">
-            When updating a course, think about how it will be used.
+            {i18n.t('dialogue.updateCourse')}{' '}
           </Text>
         </View>
 
-        <RequiredField title="Change your course name" fontSize="md" />
+        <RequiredField
+          title={i18n.t('dialogue.changeCourseName')}
+          fontSize="md"
+        />
+
         <Input
           size="xl"
           placeholder=""
           returnKeyType="done"
           value={name}
           onChangeText={(text) => setName(text)}
+        />
+
+        <Text fontSize="md">{i18n.t('dialogue.changeAlternativeText')}</Text>
+
+        <Input
+          size="xl"
+          placeholder=""
+          returnKeyType="done"
+          value={alternativeName}
+          onChangeText={(text) => setAlternativeName(text)}
+        />
+
+        <RequiredField
+          title={i18n.t('dialogue.changeTeachingLanguage')}
+          fontSize="md"
+        />
+
+        <Text fontSize="sm" color="gray.medium">
+          {i18n.t('dialogue.teachingChosenLanguage')}
+        </Text>
+
+        <Input
+          size="xl"
+          placeholder=""
+          returnKeyType="done"
+          value={translatedLanguage}
+          onChangeText={(text) => setTranslatedLanguage(text)}
         />
 
         <Text
@@ -119,7 +154,7 @@ const UpdateCourse = ({ navigation }) => {
           fontSize="md"
           paddingTop={2}
         >
-          Change the alternative name for your course
+          {i18n.t('dialogue.editCourseDescription')}
         </Text>
         <TextArea
           size="xl"
@@ -128,8 +163,8 @@ const UpdateCourse = ({ navigation }) => {
           keyboardType="default"
           returnKeyType="done"
           blurOnSubmit
-          value={purpose}
-          onChangeText={(text) => setPurpose(text)}
+          value={description}
+          onChangeText={(text) => setDescription(text)}
         />
       </View>
     </>
@@ -137,11 +172,11 @@ const UpdateCourse = ({ navigation }) => {
 
   return (
     <Drawer
-      titleText="Edit Course"
-      successText="Confirm Edit"
+      titleText={i18n.t('actions.editCourse')}
+      successText={i18n.t('actions.confirmEdit')}
       successCallback={success}
       closeCallback={close}
-      isDisabled={!areRequiredFieldsFilled}
+      areAllFieldsFilled={areRequiredFieldsFilled}
       body={body}
     />
   )

@@ -43,9 +43,8 @@ const styles = StyleSheet.create({
 
 const LanguageHome = ({
   isLessonHome,
-  languageName,
   languageDescription,
-  lessonName,
+  languageName,
   lessonDescription,
   nextUpdate,
   singularItemText,
@@ -97,7 +96,7 @@ const LanguageHome = ({
               paddingLeft={5}
               paddingTop={5}
             >
-              {lessonName}
+              {languageName}
             </Text>
             <Ionicons
               style={{
@@ -140,12 +139,12 @@ const LanguageHome = ({
             {`${renderData.length} ${itemTitle}`}
           </Text>
           <StyledButton
-            title={i18n.t('actions.addNew')}
+            title={manageButtonText}
             variant="manage"
             fontSize={15}
             rightIcon={(
               <MaterialCommunityIcons
-                name="plus-circle"
+                name={manageIconName}
                 color={colors.red.medium_dark}
                 size={20}
               />
@@ -183,6 +182,22 @@ const LanguageHome = ({
             ))}
           </View>
         </ScrollView>
+        <View style={{ position: 'absolute', bottom: '5%', right: '5%' }}>
+          <StyledButton
+            title={addButtonText}
+            variant="small"
+            fontSize="20"
+            leftIcon={(
+              <AntDesign
+                name="pluscircle"
+                size={20}
+                color={colors.red.medium_dark}
+              />
+            )}
+            shadow
+            onPress={addCallback}
+          />
+        </View>
       </>
     )
   }
@@ -318,7 +333,6 @@ const LanguageHome = ({
 // Page Object Fields
 LanguageHome.propTypes = {
   isLessonHome: PropTypes.bool,
-  lessonName: PropTypes.string,
   languageName: PropTypes.string,
   languageDescription: PropTypes.string,
   lessonDescription: PropTypes.string,
@@ -337,7 +351,6 @@ LanguageHome.propTypes = {
 // Page Default Fields
 LanguageHome.defaultProps = {
   isLessonHome: false,
-  lessonName: '',
   languageName: '',
   languageDescription: '',
   nextUpdate: () => {},
