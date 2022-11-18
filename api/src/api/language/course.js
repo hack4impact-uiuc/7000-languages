@@ -29,7 +29,6 @@ router.patch(
 
     const course = await models.Course.findById(course_id);
 
-    // TODO: change to course instead of course.details
     patchDocument(course, updates);
 
     await course.save();
