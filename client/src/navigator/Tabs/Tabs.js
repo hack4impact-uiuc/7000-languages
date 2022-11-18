@@ -4,8 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { colors } from 'theme'
 import { AntDesign } from '@expo/vector-icons'
 import PropTypes from 'prop-types'
-import { HomeNavigator, SettingsNavigator } from '../Stacks'
 import { useSelector } from 'react-redux'
+import { HomeNavigator, SettingsNavigator } from '../Stacks'
 import { NO_COURSE_ID } from '../../utils/constants'
 
 const Tab = createBottomTabNavigator()
@@ -19,65 +19,63 @@ const Tab = createBottomTabNavigator()
 */
 
 const TabNavigator = (navigationData) => {
-  const { currentCourseId, courseDetails } = useSelector(
-    (state) => state.language,
-  )
-  
-  return (
-  <Tab.Navigator
-    screenOptions={({ route }) => ({
-      headerShown: false,
-      tabBarActiveTintColor: '#DF4E47',
-      tabBarInactiveTintColor: '#666666',
-      tabBarStyle: [
-        {
-          display: 'flex',
-        },
-        null,
-      ],
-      // eslint-disable-next-line react/prop-types
-      tabBarIcon: ({ focused }) => {
+  const { currentCourseId } = useSelector((state) => state.language)
 
-        switch (route.name) {
-          case 'Units':
-            return (
-              <AntDesign
-                name="appstore1"
-                color={focused ? colors.red.medium_dark : colors.gray.dark}
-                size={20}
-                solid
-              />
-            )
-          case 'Setting':
-            return (
-              <AntDesign
-                name="setting"
-                color={focused ? colors.red.medium_dark : colors.gray.dark}
-                size={25}
-                solid
-              />
-            )
-          default:
-            return <View />
-        }
-      },
-    })}
-    initialRouteName="Units"
-    swipeEnabled={false}
-  >
-    <Tab.Screen
-      name="Units"
-      children={(props) => (
-        <HomeNavigator {...props} courseId={navigationData.route.name} />
-      )}
-    />
-    { currentCourseId !== '' ? (
-    <Tab.Screen
-      name="Setting"
-      children={(props) => <SettingsNavigator {...props} />}
-    /> ) : null }
-  </Tab.Navigator>
-)
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarActiveTintColor: '#DF4E47',
+        tabBarInactiveTintColor: '#666666',
+        tabBarStyle: [
+          {
+            display: 'flex',
+          },
+          null,
+        ],
+        // eslint-disable-next-line react/prop-types
+        tabBarIcon: ({ focused }) => {
+          switch (route.name) {
+            case 'Units':
+              return (
+                <AntDesign
+                  name="appstore1"
+                  color={focused ? colors.red.medium_dark : colors.gray.dark}
+                  size={20}
+                  solid
+                />
+              )
+            case 'Setting':
+              return (
+                <AntDesign
+                  name="setting"
+                  color={focused ? colors.red.medium_dark : colors.gray.dark}
+                  size={25}
+                  solid
+                />
+              )
+            default:
+              return <View />
+          }
+        },
+      })}
+      initialRouteName="Units"
+      swipeEnabled={false}
+    >
+      <Tab.Screen
+        name="Units"
+        children={(props) => (
+          <HomeNavigator {...props} courseId={navigationData.route.name} />
+        )}
+      />
+      {currentCourseId !== '' ? (
+        <Tab.Screen
+          name="Setting"
+          children={(props) => <SettingsNavigator {...props} />}
+        />
+      ) : null}
+    </Tab.Navigator>
+  )
 }
 
 TabNavigator.propTypes = {
