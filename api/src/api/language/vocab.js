@@ -16,6 +16,7 @@ const {
   getVocabIndexByID,
   checkIds,
   patchDocument,
+  deleteVocabItem,
 } = require('../../utils/languageHelper');
 
 /**
@@ -150,4 +151,26 @@ router.put(
     );
   }),
 );
+
+router.delete(
+  '/',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const { lesson_id, vocab_id } = req.body;
+    if (!lesson_id || !vocab_id) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    const { success } = deleteVocabItem(lesson_id, vocab_id);
+
+    if (success) {
+      return sendResponse(res, 200, 'Successfully deleted vocab item');
+    } else {
+      return sendResponse(res, 404, 'Vocab item not found');
+    }
+  }),
+);
+
+
 module.exports = router;

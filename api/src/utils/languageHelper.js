@@ -5,6 +5,7 @@ const {
   deleteFile,
 } = require('./aws/s3.js');
 const mongoose = require('mongoose');
+const { remove } = require('lodash');
 
 /**
  * Determines the number of units in a course
@@ -348,10 +349,61 @@ const deleteVocabItem = async (lesson_id, vocab_id) => {
     lesson.vocab.splice(index, 1);
 
     await lesson.save();
+
+    return {success: true}
   }
 }
+
+const deleteLesson = async (course_id, unit_id, lesson_id) => {
+  const isValid = await checkIds({ course_id, unit_id, lesson_id });
+
+  if (!isValid) {
+    return {success: false}
+  }
+
+  const lesson = await models.Lesson.findById(lesson_id);
+  if (lesson) {
+    // Delete all vocab items in lesson
+    for (const vocabItem of lesson.vocab) {
+      await deleteVocabItem(lesson_id, vocabItem._id);
+    }
+  }
+
+  // delete lesson from mongoDB
+  await lesson.remove();
+}
+
+const deleteUnit = async (course_id, unit_id) => {
+  const isValid = await checkIds({ course_id, unit_id });
+
+  if (!isValid) {
+    return {success: false}
+  }
+
+  const unit = await models.Unit.findById(unit_id);
+  if (unit) {
+    // Delete all lessons in unit
+    for (const lesson of unit.lessons) {
+      await deleteLesson(course_id, unit_id, lesson._id);
+    }
+
+    // Delete unit from course
+    const course = await models.Course.findById(course_id);
+    if (course) {
+      const index = getUnitIndexByID(unit_id, course);
+      course.units.splice(index, 1);
+      await course.save();
+    }
+
+    // Delete unit from MongoDB
+    await unit.remove();
+  }
+}
+
 module.exports.deleteVocabImage = deleteVocabImage
 module.exports.deleteVocabAudio = deleteVocabAudio
 module.exports.deleteVocabItem = deleteVocabItem
+module.exports.deleteLesson = deleteLesson
+
 
 module.exports.populateExampleData = populateExampleData;
