@@ -8,6 +8,7 @@ import { updateVocabs, setField, updateNumVocab } from 'slices/language.slice'
 import { updateVocabItems } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
+import i18n from 'utils/i18n'
 
 const ManageVocab = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -107,10 +108,10 @@ const ManageVocab = ({ navigation }) => {
   return (
     <ManageView
       navigation={navigation}
-      selectedTitleText="Test"
-      unselectedTitleText="Unselected Vocab Items"
-      selectedBodyText="These vocab items will be available to your students. Drag them around to reorder them."
-      unselectedBodyText="These vocab items are not included in your course. You can still continue to edit them."
+      selectedTitleText={i18n.t('dict.selectedVocab')}
+      unselectedTitleText={i18n.t('dict.unselectedVocab')}
+      selectedBodyText={i18n.t('dialogue.selectedVocabPrompt')}
+      unselectedBodyText={i18n.t('dialogue.unselectedVocabPrompt')}
       addText="Create Vocab Item"
       saveCallback={saveChanges}
       addCallback={add}

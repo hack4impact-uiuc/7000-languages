@@ -18,6 +18,7 @@ const LessonHome = ({ navigation }) => {
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
+  const [lessonName, setLessonName] = useState('')
   const mounted = useRef(false)
 
   // Fixes the warning that we are setting the state of unmounted components in the call back functions for downloads
@@ -35,7 +36,7 @@ const LessonHome = ({ navigation }) => {
    *
    * Source: https://reactnavigation.org/docs/preventing-going-back/
    */
-  React.useEffect(
+  useEffect(
     () => navigation.addListener('beforeRemove', (e) => {
       dispatch(resetField({ key: 'lessonData' }))
       navigation.dispatch(e.data.action)
@@ -55,7 +56,7 @@ const LessonHome = ({ navigation }) => {
 
         setLessonDescription(result.description)
         navigation.setOptions({
-          title: result.name,
+          title: `${i18n.t('dict.lessonSingle')}`,
         })
         dispatch(setField({ key: 'lessonData', value: result }))
       })
@@ -65,7 +66,7 @@ const LessonHome = ({ navigation }) => {
   }, [currentCourseId, currentLessonId, navigation])
 
   /**
-   * Updates the formatted vocab data that will be presented on this page
+   * Updates the lesson name, lesson description, and formatted vocab data that will be presented on this page
    */
   useEffect(() => {
     const getData = async () => {
@@ -143,6 +144,8 @@ const LessonHome = ({ navigation }) => {
         setData(sortedData)
       }
     }
+    setLessonName(lessonData.name)
+    setLessonDescription(lessonData.description)
     getData()
   }, [lessonData])
 
@@ -164,6 +167,13 @@ const LessonHome = ({ navigation }) => {
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
+  /**
+   * Navigates to the update unit modal
+   */
+  const navigateToUpdate = () => {
+    navigation.navigate('Modal', { screen: 'UpdateLesson' })
+  }
+
   const navigateToAdd = () => {
     // Since we aren't editing a vocab item, we need to clear the current vocab id
     dispatch(setField({ key: 'currentVocabId', value: '' }))
@@ -172,17 +182,21 @@ const LessonHome = ({ navigation }) => {
 
   return (
     <LanguageHome
-      languageDescription={lessonDescription}
+      isLessonHome
+      languageName={lessonName}
+      lessonDescription={lessonDescription}
+      nextUpdate={navigateToUpdate}
+      valueName="Lessons"
+      rightIconName="plus-circle"
+      buttonCallback={navigateToManage}
+      nextPageCallback={goToNextPage}
       singularItemText={i18n.t('dict.vocabItemSingle')}
       pluralItemText={i18n.t('dict.vocabItemPlural')}
       manageIconName="cog"
       manageButtonText={i18n.t('actions.manageVocab')}
-      addButtonText="Add Vocab Item"
+      addButtonText={i18n.t('actions.addVocabItem')}
       data={data}
-      buttonCallback={navigateToManage}
-      nextPageCallback={goToNextPage}
       addCallback={navigateToAdd}
-      isLessonHome
     />
   )
 }

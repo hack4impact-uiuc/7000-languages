@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { StyleSheet, View } from 'react-native'
 import Drawer from 'components/Drawer'
 import { colors } from 'theme'
 import { Input, Text, TextArea } from 'native-base'
 import { Foundation } from '@expo/vector-icons'
-
+import { patchSelectedLesson } from 'slices/language.slice'
+import { updateSingleLesson } from 'api'
 import { useSelector, useDispatch } from 'react-redux'
-import { addUnit } from 'slices/language.slice'
-import { createUnit } from 'api'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
 import i18n from 'utils/i18n'
@@ -27,14 +26,16 @@ const styles = StyleSheet.create({
   },
 })
 
-const CreateUnit = ({ navigation }) => {
+const UpdateLesson = ({ navigation }) => {
   const close = () => {
     navigation.goBack()
   }
 
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
-  const { currentCourseId } = useSelector((state) => state.language)
+  const { currentLessonId, currentCourseId, allLessons } = useSelector(
+    (state) => state.language,
+  )
 
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
@@ -43,21 +44,37 @@ const CreateUnit = ({ navigation }) => {
   // otherwise, the submit button is disabled
   const areRequiredFieldsFilled = name !== '' && purpose !== ''
 
+  useEffect(() => {
+    const lessonIndex = allLessons.findIndex(
+      (element) => element._id === currentLessonId,
+    )
+    const lessonData = allLessons[lessonIndex]
+
+    setName(lessonData.name)
+    setPurpose(lessonData.description)
+  }, [currentLessonId, allLessons])
+
   /**
    * Posts a new unit to the API and saves the new unit in state
    */
   const success = async () => {
     errorWrap(
       async () => {
-        const newUnit = {
+        let updatedLessonItem = null
+        const updates = {
           name,
           description: purpose,
-          _course_id: currentCourseId,
-          selected: true,
         }
 
-        const { result } = await createUnit(newUnit)
-        dispatch(addUnit({ unit: result }))
+        const lessonItemResponse = await updateSingleLesson(
+          currentLessonId,
+          currentCourseId,
+          updates,
+        )
+        updatedLessonItem = lessonItemResponse.result
+
+        // Update lesson in Redux store
+        dispatch(patchSelectedLesson({ lesson: updatedLessonItem }))
       },
       () => {
         // on success, close the modal
@@ -86,23 +103,28 @@ const CreateUnit = ({ navigation }) => {
               fontStyle="normal"
               color={colors.blue.dark}
             >
-              {i18n.t('dict.suggestion')}
+              {' '}
+              {i18n.t('dict.suggestion')}{' '}
             </Text>
           </View>
           <Text color={colors.blue.dark} fontSize="md">
-            {i18n.t('dialogue.createUnitDescription')}
+            {i18n.t('dialogue.updateLesson')}
           </Text>
         </View>
 
-        <RequiredField title={i18n.t('dialogue.unitNamePrompt')} />
+        <RequiredField
+          title={i18n.t('dialogue.changeLessonName')}
+          fontSize="md"
+        />
         <Input
           size="xl"
           placeholder=""
           returnKeyType="done"
+          value={name}
           onChangeText={(text) => setName(text)}
         />
 
-        <RequiredField title={i18n.t('dialogue.unitPurposePrompt')} />
+        <RequiredField title={i18n.t('dialogue.lessonPurpose')} fontSize="md" />
         <TextArea
           size="xl"
           h={40}
@@ -110,6 +132,7 @@ const CreateUnit = ({ navigation }) => {
           keyboardType="default"
           returnKeyType="done"
           blurOnSubmit
+          value={purpose}
           onChangeText={(text) => setPurpose(text)}
         />
       </View>
@@ -118,8 +141,8 @@ const CreateUnit = ({ navigation }) => {
 
   return (
     <Drawer
-      titleText={i18n.t('actions.addCustomUnit')}
-      successText={i18n.t('actions.createUnit')}
+      titleText={i18n.t('actions.editLesson')}
+      successText={i18n.t('actions.confirmEdit')}
       successCallback={success}
       closeCallback={close}
       areAllFieldsFilled={areRequiredFieldsFilled}
@@ -128,15 +151,15 @@ const CreateUnit = ({ navigation }) => {
   )
 }
 
-CreateUnit.propTypes = {
+UpdateLesson.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     goBack: PropTypes.func,
   }),
 }
 
-CreateUnit.defaultProps = {
+UpdateLesson.defaultProps = {
   navigation: { navigate: () => null, goBack: () => null },
 }
 
-export default CreateUnit
+export default UpdateLesson
