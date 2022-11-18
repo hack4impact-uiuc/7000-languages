@@ -56,7 +56,19 @@ const theme = extendTheme({
       },
       variants: {
         primary: {
-          bg: 'red.dark',
+          bg: 'red.medium_dark',
+          w: '90%',
+          my: 2,
+          px: 20,
+          py: 4,
+          _text: {
+            fontSize: '2xl',
+            color: 'white.dark',
+            fontFamily: 'heading',
+          },
+        },
+        learner_primary: {
+          bg: 'blue.dark',
           w: '90%',
           my: 2,
           px: 20,
@@ -68,20 +80,21 @@ const theme = extendTheme({
           },
         },
         primary_short: {
-          bg: 'red.dark',
+          bg: 'red.medium_dark',
           w: '67%',
           _text: {
             color: 'white.dark',
             fontFamily: 'heading',
           },
         },
+
         secondary: {
           bg: 'white.dark',
           w: '90%',
           my: 2,
           py: 4,
           _text: {
-            color: 'red.dark',
+            color: 'red.medium_dark',
             fontFamily: 'heading',
           },
         },
@@ -92,10 +105,10 @@ const theme = extendTheme({
           borderStyle: 'dashed',
           borderWidth: 2,
           borderRadius: 1,
-          borderColor: 'red.dark',
+          borderColor: 'red.medium_dark',
           _text: {
             fontSize: 20,
-            color: 'red.dark',
+            color: 'red.medium_dark',
             fontFamily: 'heading',
           },
         },
@@ -104,7 +117,7 @@ const theme = extendTheme({
           px: 0,
           py: 4,
           _text: {
-            color: 'red.dark',
+            color: 'red.medium_dark',
             fontFamily: 'heading',
           },
         },
@@ -133,9 +146,25 @@ const theme = extendTheme({
           bg: 'red.light',
           borderColor: 'white.dark',
           borderRadius: 70,
-          my: 3,
+          w: '45%',
+          mx: 2,
+          my: 2,
+          h: 10,
           _text: {
-            color: 'red.dark',
+            color: 'red.medium_dark',
+            fontFamily: 'heading',
+          },
+        },
+        learner: {
+          bg: 'blue.light',
+          borderColor: 'white.dark',
+          borderRadius: 70,
+          w: '45%',
+          mx: 2,
+          h: 10,
+          my: 2,
+          _text: {
+            color: 'blue.dark',
             fontFamily: 'heading',
           },
         },
@@ -146,7 +175,7 @@ const theme = extendTheme({
           my: 3,
           mx: 5,
           _text: {
-            color: 'red.dark',
+            color: 'red.medium_dark',
             fontFamily: 'heading',
           },
         },

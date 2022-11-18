@@ -19,10 +19,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.red.dark,
+    backgroundColor: colors.red.medium_dark,
   },
   top: {
-    backgroundColor: colors.red.dark,
+    backgroundColor: colors.red.medium_dark,
     minHeight: 100,
     overflow: 'hidden',
     display: 'flex',
@@ -112,7 +112,7 @@ const LanguageHome = ({
             rightIcon={(
               <MaterialCommunityIcons
                 name="plus-circle"
-                color={colors.red.dark}
+                color={colors.red.medium_dark}
                 size={20}
               />
             )}
@@ -202,7 +202,7 @@ const LanguageHome = ({
           rightIcon={(
             <MaterialCommunityIcons
               name={manageIconName}
-              color={colors.red.dark}
+              color={colors.red.medium_dark}
               size={20}
             />
           )}
@@ -251,9 +251,13 @@ const LanguageHome = ({
           title={addButtonText}
           variant="small"
           fontSize="20"
-          leftIcon={
-            <AntDesign name="pluscircle" size={20} color={colors.red.dark} />
-          }
+          leftIcon={(
+            <AntDesign
+              name="pluscircle"
+              size={20}
+              color={colors.red.medium_dark}
+            />
+          )}
           shadow
           onPress={addCallback}
         />
