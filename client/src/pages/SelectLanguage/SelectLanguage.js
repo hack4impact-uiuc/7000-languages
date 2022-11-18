@@ -19,7 +19,7 @@ import Logo from '../../../assets/images/landing-logo.svg'
 const styles = StyleSheet.create({
   root: {
     alignItems: 'center',
-    backgroundColor: colors.red.dark,
+    backgroundColor: colors.red.medium_dark,
     width: '100%',
     height: '100%',
   },
@@ -92,9 +92,10 @@ const SelectLanguage = ({ navigation }) => {
         <TouchableOpacity
           style={{
             ...styles.textSection,
-            backgroundColor: colors.white.light,
+            backgroundColor:
+              language === FRENCH ? colors.red.light : colors.white.light,
             borderColor:
-              language === ENGLISH ? colors.black : colors.white.light,
+              language === ENGLISH ? colors.red.dark : colors.white.light,
             borderWidth: 3,
             borderRadius: 20,
           }}
@@ -115,7 +116,7 @@ const SelectLanguage = ({ navigation }) => {
             Welcome to 7000 Languages
           </Text>
           <Text
-            color={colors.red.dark}
+            color={colors.red.medium_dark}
             fontSize={`${window.height}` / 60}
             fontFamily={language === ENGLISH ? 'heading' : 'body'}
             top="18%"
@@ -127,9 +128,10 @@ const SelectLanguage = ({ navigation }) => {
         <TouchableOpacity
           style={{
             ...styles.textSection,
-            backgroundColor: colors.white.light,
+            backgroundColor:
+              language === FRENCH ? colors.red.light : colors.white.light,
             borderColor:
-              language === FRENCH ? colors.black : colors.white.light,
+              language === FRENCH ? colors.red.dark : colors.white.light,
             borderWidth: 3,
             borderRadius: 20,
           }}
@@ -151,7 +153,7 @@ const SelectLanguage = ({ navigation }) => {
             Bienvenue sur 7000 Langues
           </Text>
           <Text
-            color={colors.red.dark}
+            color={colors.red.medium_dark}
             fontSize={`${window.height}` / 60}
             fontFamily={language === FRENCH ? 'heading' : 'body'}
             top="18%"

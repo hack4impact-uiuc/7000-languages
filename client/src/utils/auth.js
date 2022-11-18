@@ -1,10 +1,10 @@
 import * as SecureStore from 'expo-secure-store'
 import * as AuthSession from 'expo-auth-session'
+import Constants from 'expo-constants'
 import axios from 'axios'
 import {
   SECURE_STORAGE_ID_TOKEN_KEY,
   SECURE_STORAGE_REFRESH_TOKEN_KEY,
-  SECURE_STORAGE_CLIENT_ID_KEY,
 } from './constants'
 
 const GOOGLE_OAUTH_TOKEN_URL = 'https://www.googleapis.com/oauth2/v4/token'
@@ -44,22 +44,6 @@ export const loadUserRefreshToken = async () => {
 }
 
 /**
- * Obtains a user's Google Client ID from SecureStore
- * @returns {String} The user client id saved in SecureStore
- */
-export const loadUserClientId = async () => {
-  try {
-    const clientId = await SecureStore.getItemAsync(
-      SECURE_STORAGE_CLIENT_ID_KEY,
-    )
-    return clientId
-  } catch (e) {
-    console.error('loadUserClientId(): ', e.message)
-    return null
-  }
-}
-
-/**
  * Saves a user's Google ID Token to SecureStore
  * @param {String} value The users Google ID Token
  * @returns {Boolean} true if the operation was successful
@@ -85,21 +69,6 @@ export const saveUserRefreshToken = async (value) => {
     return true
   } catch (e) {
     console.error('saveUserRefreshToken(): ', e.message)
-    return false
-  }
-}
-
-/**
- * Saves a user's Google Client Id to SecureStore
- * @param {String} value The users Google Client Id
- * @returns {Boolean} true if the operation was successful
- */
-export const saveUserClientId = async (value) => {
-  try {
-    await SecureStore.setItemAsync(SECURE_STORAGE_CLIENT_ID_KEY, value)
-    return true
-  } catch (e) {
-    console.error('saveUserClientId(): ', e.message)
     return false
   }
 }
@@ -133,19 +102,20 @@ export const removeUserRefreshToken = async () => {
 }
 
 /**
- * Removes a user's Google Client Id from SecureStore
- * @returns {Boolean} true if the operation was successful
+ * @typedef {Object} ExchangeResponse
+ * @property {boolean} success - Whether exchange auth code was successful
+ * @property {String} message - Response Message
+ * @property {String} idToken - idToken exchanged from authorization code
  */
-export const removeUserClientId = async () => {
-  try {
-    await SecureStore.deleteItemAsync(SECURE_STORAGE_CLIENT_ID_KEY)
-    return true
-  } catch (e) {
-    console.error('removeUserClientId(): ', e.message)
-    return false
-  }
-}
 
+/**
+ * Exchanges the authorization_code for idToken and refreshToken
+ * @param {String} code
+ * @param {String} clientId
+ * @param {String} clientSecret
+ * @param {String} codeVerifier
+ * @returns {ExchangeResponse} Exchange response
+ */
 export const exchangeAuthCode = async (
   code,
   clientId,
@@ -166,9 +136,9 @@ export const exchangeAuthCode = async (
   .then(async (authentication) => {
     const { idToken, refreshToken } = authentication
     if (idToken !== null && refreshToken !== null) {
+      // id token has to be saved before api calls are made, the other save's can be async
       await saveUserIDToken(idToken)
       saveUserRefreshToken(refreshToken)
-      saveUserClientId(clientId)
 
       return { success: true, message: 'successfully saved', idToken }
     }
@@ -191,12 +161,13 @@ export const exchangeAuthCode = async (
 export const refreshIDToken = async () => {
   try {
     const refreshToken = await loadUserRefreshToken()
-    const clientId = await loadUserClientId()
+    const { clientSecret, expoClientId: clientId } = Constants.manifest.extra
     return axios
       .post(GOOGLE_OAUTH_TOKEN_URL, {
         grant_type: 'refresh_token',
         refresh_token: refreshToken,
         clientId,
+        clientSecret,
       })
       .then(({ data: { id_token: idToken } }) => {
         saveUserIDToken(idToken)

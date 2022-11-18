@@ -167,7 +167,7 @@ const RecordAudioView = ({
         fontStyle="normal"
         color={
           recordingStage === RECORDING.IN_PROGRESS
-            ? colors.red.dark
+            ? colors.red.medium_dark
             : colors.gray.dark
         }
         fontSize="2xl"
@@ -183,12 +183,16 @@ const RecordAudioView = ({
     case RECORDING.INCOMPLETE:
       return (
         <TouchableOpacity style={styles.incompleteView} onPress={start}>
-          <FontAwesome name="microphone" size={30} color={colors.red.dark} />
+          <FontAwesome
+            name="microphone"
+            size={30}
+            color={colors.red.medium_dark}
+          />
           <Text
             fontFamily="heading"
             fontWeight="regular"
             fontStyle="normal"
-            color={colors.red.dark}
+            color={colors.red.medium_dark}
             fontSize="xl"
             style={styles.recordAudioText}
           >
@@ -203,7 +207,7 @@ const RecordAudioView = ({
           <MaterialCommunityIcons
             name="stop-circle"
             size={35}
-            color={colors.red.dark}
+            color={colors.red.medium_dark}
             onPress={stop}
           />
         </View>
@@ -213,7 +217,7 @@ const RecordAudioView = ({
         <View style={styles.completeView}>
           <MaterialCommunityIcons
             name="trash-can"
-            color={colors.red.dark}
+            color={colors.red.medium_dark}
             size={35}
             onPress={discardRecording}
             style={{ paddingRight: 10 }}

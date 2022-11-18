@@ -182,6 +182,7 @@ const LessonHome = ({ navigation }) => {
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
       addCallback={navigateToAdd}
+      isLessonHome
     />
   )
 }

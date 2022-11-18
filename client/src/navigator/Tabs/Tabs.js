@@ -36,7 +36,7 @@ const TabNavigator = (navigationData) => (
             return (
               <AntDesign
                 name="appstore1"
-                color={focused ? colors.red.dark : colors.gray.dark}
+                color={focused ? colors.red.medium_dark : colors.gray.dark}
                 size={20}
                 solid
               />
@@ -45,7 +45,7 @@ const TabNavigator = (navigationData) => (
             return (
               <AntDesign
                 name="setting"
-                color={focused ? colors.red.dark : colors.gray.dark}
+                color={focused ? colors.red.medium_dark : colors.gray.dark}
                 size={25}
                 solid
               />
