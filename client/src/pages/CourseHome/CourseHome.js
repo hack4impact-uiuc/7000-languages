@@ -7,11 +7,13 @@ import i18n from 'utils/i18n'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const CourseHome = ({ navigation, courseDescription, courseName }) => {
-  const { allUnits } = useSelector((state) => state.language)
+  const { allUnits, courseDetails } = useSelector((state) => state.language)
 
   const dispatch = useDispatch()
 
   const [data, setData] = useState([])
+  const [name, setName] = useState(courseName)
+  const [description, setDescription] = useState(courseDescription)
 
   /**
    * Updates the units presented in a list on this page
@@ -45,6 +47,20 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     setData(formattedUnitData)
   }, [allUnits])
 
+  useEffect(() => {
+    setName(courseDetails.name)
+    setDescription(courseDetails.description)
+  }, [courseDetails])
+
+  // Sets the title of the page
+  useEffect(() => {
+    setName(courseName)
+    setDescription(courseDescription)
+    navigation.setOptions({
+      title: `${i18n.t('dict.courseHome')}`,
+    })
+  }, [courseName, courseDescription])
+
   /**
    * Navigates to the Manage Units Page
    */
@@ -62,8 +78,11 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     navigation.navigate('UnitHome')
   }
 
+  const navigateToUpdate = () => {
+    navigation.navigate('Modal', { screen: 'UpdateCourse' })
+  }
   /**
-   * Navigates to the Add Unit Page
+   * Navigates to the update unit modal
    */
   const navigateToAdd = () => {
     navigation.navigate('Modal', { screen: 'CreateUnit' })
@@ -71,16 +90,20 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
 
   return (
     <LanguageHome
-      languageName={courseName}
-      languageDescription={courseDescription}
-      manageButtonText={i18n.t('actions.manageUnits')}
+      languageName={name}
+      languageDescription={description}
+      valueName="Units"
+      buttonText="Manage Units"
       singularItemText={i18n.t('dict.unitSingle')}
       pluralItemText={i18n.t('dict.unitPlural')}
-      addButtonText={i18n.t('actions.addUnit')}
+      nextUpdate={navigateToUpdate}
       manageIconName="cog"
+      rightIconName="pencil"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
+      manageButtonText={i18n.t('actions.manageUnits')}
       addCallback={navigateToAdd}
+      addButtonText={i18n.t('actions.addUnit')}
       data={data}
     />
   )
