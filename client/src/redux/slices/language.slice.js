@@ -28,6 +28,8 @@ const initialState = {
     population: '',
     location: '',
     link: '',
+    is_private: true,
+    code: '',
   },
   allUnits: [],
   currentUnitId: '',
@@ -48,6 +50,21 @@ const languageSlice = createSlice({
   reducers: {
     setField: (state, { payload }) => {
       state[payload.key] = payload.value
+    },
+    removeCourse: (state, { payload }) => {
+      // Removes a course from redux
+      const courseIdx = state.allCourses.findIndex(
+        (element) => element._id === payload.courseId,
+      )
+      state.allCourses.splice(courseIdx, 1)
+
+      if (state.allCourses.length === 0) {
+        state.allCourses = initialState.allCourses
+      }
+
+      if (state.currentCourseId === payload.courseId) {
+        state.currentCourseId = initialState.currentCourseId
+      }
     },
     addUnit: (state, { payload }) => {
       // Pushes new unit to the list containing all units
@@ -173,6 +190,15 @@ const languageSlice = createSlice({
       state.lessonData = initialState.lessonData
       state.currentVocabId = initialState.currentVocabId
     },
+    setSecurityCode: (state, { payload }) => {
+      state.courseDetails.code = payload.code
+    },
+    updateCourseVisibility: (state, { payload }) => {
+      state.courseDetails.is_private = payload.is_private
+    },
+    updateSecurityCode: (state, { payload }) => {
+      state.courseDetails.code = payload.code
+    },
     updateNumLessons: (state, { payload }) => {
       const unitIdx = state.allUnits.findIndex(
         (element) => element._id === state.currentUnitId,
@@ -214,6 +240,7 @@ const languageSlice = createSlice({
 export const { action } = languageSlice
 export const {
   setField,
+  removeCourse,
   addUnit,
   addLesson,
   addVocab,
@@ -222,8 +249,11 @@ export const {
   patchSelectedUnit,
   patchSelectedCourse,
   clear,
+  setSecurityCode,
   resetField,
   clearCourseData,
+  updateCourseVisibility,
+  updateSecurityCode,
   updateNumLessons,
   updateNumUnits,
   updateVocabs,

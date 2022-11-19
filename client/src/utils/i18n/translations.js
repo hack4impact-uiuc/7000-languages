@@ -42,6 +42,7 @@ const translations = {
       deleteCourse: 'Delete Course',
       securityCode: 'Security Code',
       settings: 'Settings',
+      delete: 'Delete',
     },
     actions: {
       becomeContributorTitle: 'Become a contributor',
@@ -88,6 +89,8 @@ const translations = {
       manageVocab: 'Manage Vocab',
     },
     dialogue: {
+      areYouSureDeleteCourse: 'Are you sure you want to delete this course?',
+      actionCannotBeUndone: 'This action cannot be undone.',
       lessonPurpose: 'What is the purpose of this lesson?',
       changeLessonName: 'Change your lesson name',
       changeUnitName: 'Change your unit name',
@@ -167,6 +170,10 @@ const translations = {
         'Use this space to give additional information about the vocab item, such as grammatical and cultural information, usage, or additional translations/meanings.',
       courseSettingsDescription:
         'Here is the settings for you to manage your own course.',
+      courseSettingsSave:
+        'You can save your changes by clicking the save button. If you leave this screen without pressing the button, your changes will be discarded.',
+      courseSettingsChangeCode:
+        'Learners will have to enter this code in order to join your course.',
     },
   },
   fr: {
@@ -211,6 +218,7 @@ const translations = {
       securityCode: 'Code de sécurité',
       suggestion: 'Suggestion',
       settings: 'Paramètres',
+      delete: 'Supprimer',
     },
     actions: {
       becomeContributorTitle: 'Devenir un contributeur',
@@ -257,6 +265,8 @@ const translations = {
       manageVocab: 'Gérer les éléments de vocabulaire',
     },
     dialogue: {
+      areYouSureDeleteCourse: 'Vous êtes sûr de vouloir supprimer ce cours?',
+      actionCannotBeUndone: 'Cette action ne peut être annulée.',
       lessonPurpose: 'Quel est le but de cette leçon?',
       changeLessonName: 'Changez le nom de votre leçon',
       changeUnitName: 'Changez le nom de votre unité',
@@ -341,6 +351,10 @@ const translations = {
         "Utilisez cet espace pour donner des informations supplémentaires sur l'élément de vocabulaire, par exemple grammaticale et culturelle, l'usage, ou des traductions/significations traductions/significations supplémentaires.",
       courseSettingsDescription:
         'Voici les paramètres qui vous permettront de gérer votre propre cours.',
+      courseSettingsSave:
+        'Vous pouvez enregistrer vos modifications en cliquant sur le bouton "Enregistrer". Si vous quittez cet écran sans cliquer sur le bouton, vos modifications seront annulées.',
+      courseSettingsChangeCode:
+        "Les apprenants devront saisir ce code afin de s'inscrire à votre cours.",
     },
   },
 }

@@ -47,6 +47,41 @@ export const getCourse = async (courseID) => {
   return res.data
 }
 
+export const patchVisibility = async (courseID, makePrivate) => {
+  const requestString = `/language/course/${courseID}`
+  const body = {
+    details: {
+      is_private: makePrivate,
+    },
+  }
+  const res = await instance.patch(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res.data?.message)
+  return res.data
+}
+
+export const patchSecurityCode = async (courseID, securityCode) => {
+  const requestString = `/language/course/${courseID}`
+
+  const body = {
+    details: {
+      code: securityCode,
+    },
+  }
+  const res = await instance.patch(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res.data?.message)
+  return res.data
+}
+
+export const deleteCourse = async (courseID) => {
+  const requestString = `/language/course/${courseID}`
+  const res = await instance.delete(requestString)
+
+  if (!res?.data?.success) throw new Error(res.data?.message)
+  return res.data
+}
+
 /* Unit Endpoints */
 
 export const getUnit = async (courseID, unitID) => {
