@@ -45,7 +45,7 @@ const TabNavigator = (navigationData) => {
                   solid
                 />
               )
-            case 'Setting':
+            case 'Settings':
               return (
                 <AntDesign
                   name="setting"
