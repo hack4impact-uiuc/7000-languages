@@ -107,8 +107,7 @@ router.get(
 );
 
 /**
- * Deletes specified course in the database
- * TODO: Delete all units, lessons, and vocab items associated with the course
+ * Deletes specified course and all references to this course in MongoDB and AWS S3
  */
 router.delete(
   '/:id',
