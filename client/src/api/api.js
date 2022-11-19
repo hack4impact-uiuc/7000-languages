@@ -63,11 +63,6 @@ export const patchVisibility = async (courseID, makePrivate) => {
 export const patchSecurityCode = async (courseID, securityCode) => {
   const requestString = `/language/course/${courseID}`
 
-  const allowedExpression = /^([0-9]|[a-z])+([0-9a-z]+)$/i
-  if (!securityCode.match(allowedExpression)) {
-    throw new Error('Security code must be alphanumeric')
-  }
-
   const body = {
     details: {
       code: securityCode,

@@ -42,6 +42,7 @@ const translations = {
       deleteCourse: 'Delete Course',
       securityCode: 'Security Code',
       settings: 'Settings',
+      delete: 'Delete',
     },
     actions: {
       becomeContributorTitle: 'Become a contributor',
@@ -88,6 +89,8 @@ const translations = {
       manageVocab: 'Manage Vocab',
     },
     dialogue: {
+      areYouSureDeleteCourse: 'Are you sure you want to delete this course?',
+      actionCannotBeUndone: 'This action cannot be undone.',
       lessonPurpose: 'What is the purpose of this lesson?',
       changeLessonName: 'Change your lesson name',
       changeUnitName: 'Change your unit name',
@@ -215,6 +218,7 @@ const translations = {
       securityCode: 'Code de sécurité',
       suggestion: 'Suggestion',
       settings: 'Paramètres',
+      delete: 'Supprimer',
     },
     actions: {
       becomeContributorTitle: 'Devenir un contributeur',
@@ -261,6 +265,8 @@ const translations = {
       manageVocab: 'Gérer les éléments de vocabulaire',
     },
     dialogue: {
+      areYouSureDeleteCourse: 'Vous êtes sûr de vouloir supprimer ce cours?',
+      actionCannotBeUndone: 'Cette action ne peut être annulée.',
       lessonPurpose: 'Quel est le but de cette leçon?',
       changeLessonName: 'Changez le nom de votre leçon',
       changeUnitName: 'Changez le nom de votre unité',

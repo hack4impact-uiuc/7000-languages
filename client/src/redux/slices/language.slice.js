@@ -51,6 +51,21 @@ const languageSlice = createSlice({
     setField: (state, { payload }) => {
       state[payload.key] = payload.value
     },
+    removeCourse: (state, { payload }) => {
+      // Removes a course from redux
+      const courseIdx = state.allCourses.findIndex(
+        (element) => element._id === payload.courseId,
+      )
+      state.allCourses.splice(courseIdx, 1)
+
+      if (state.allCourses.length === 0) {
+        state.allCourses = initialState.allCourses
+      }
+
+      if (state.currentCourseId === payload.courseId) {
+        state.currentCourseId = initialState.currentCourseId
+      }
+    },
     addUnit: (state, { payload }) => {
       // Pushes new unit to the list containing all units
       state.allUnits.push(payload.unit)
@@ -225,6 +240,7 @@ const languageSlice = createSlice({
 export const { action } = languageSlice
 export const {
   setField,
+  removeCourse,
   addUnit,
   addLesson,
   addVocab,

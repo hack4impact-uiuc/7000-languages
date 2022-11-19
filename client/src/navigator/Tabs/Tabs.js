@@ -5,6 +5,7 @@ import { colors } from 'theme'
 import { AntDesign } from '@expo/vector-icons'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
 import { HomeNavigator, SettingsNavigator } from '../Stacks'
 import { NO_COURSE_ID } from '../../utils/constants'
 
@@ -18,6 +19,9 @@ const Tab = createBottomTabNavigator()
   More reading: https://reactnavigation.org/docs/tab-based-navigation
 */
 
+// Contains the names of all routes that should not show the tab bar described below
+const tabHiddenRoutes = ['Apply']
+
 const TabNavigator = (navigationData) => {
   const { currentCourseId } = useSelector((state) => state.language)
 
@@ -29,7 +33,11 @@ const TabNavigator = (navigationData) => {
         tabBarInactiveTintColor: '#666666',
         tabBarStyle: [
           {
-            display: 'flex',
+            display: tabHiddenRoutes.includes(
+              getFocusedRouteNameFromRoute(route),
+            )
+              ? 'none'
+              : 'flex',
           },
           null,
         ],
@@ -45,7 +53,7 @@ const TabNavigator = (navigationData) => {
                   solid
                 />
               )
-            case 'Setting':
+            case 'Settings':
               return (
                 <AntDesign
                   name="setting"

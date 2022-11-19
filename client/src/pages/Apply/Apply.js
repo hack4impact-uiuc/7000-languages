@@ -87,6 +87,7 @@ const Apply = ({ navigation }) => {
     && language !== ''
     && acceptTerms
     && teachingLanguage !== ''
+    && description !== ''
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -230,15 +231,12 @@ const Apply = ({ navigation }) => {
                 returnKeyType="done"
                 onChangeText={(text) => setOtherNames(text)}
               />
-              <Text
-                fontFamily="body"
-                fontWeight="regular"
-                color="black"
-                fontStyle="normal"
+
+              <RequiredField
+                title={i18n.t('dict.languageDescription')}
                 fontSize="md"
-              >
-                {i18n.t('dict.languageDescription')}
-              </Text>
+              />
+
               <Text
                 fontFamily="body"
                 fontWeight="regular"

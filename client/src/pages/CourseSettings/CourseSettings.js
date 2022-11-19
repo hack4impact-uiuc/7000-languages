@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
   updateCourseVisibility,
   updateSecurityCode,
+  removeCourse,
 } from 'slices/language.slice'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { patchVisibility, patchSecurityCode, deleteCourse } from 'api'
@@ -39,15 +40,16 @@ const CourseSettings = () => {
   const [visibility, setVisibility] = useState(
     courseDetails.is_private ? 'private' : 'public',
   )
+
   const [code, setCode] = useState(courseDetails.code)
 
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
 
   // Update the API and redux
-  const saveVisibilityChanges = async () => {
+  const saveVisibilityChanges = async (newVisibility) => {
     errorWrap(async () => {
-      const isPrivate = visibility === 'private'
+      const isPrivate = newVisibility === 'private'
 
       // makes the API call
       const { result } = await patchVisibility(currentCourseId, isPrivate)
@@ -60,9 +62,9 @@ const CourseSettings = () => {
     })
   }
 
-  const handleVisibilityChange = async (value) => {
-    setVisibility(value)
-    saveVisibilityChanges()
+  const handleVisibilityChange = async (newVisibility) => {
+    setVisibility(newVisibility)
+    saveVisibilityChanges(newVisibility)
   }
 
   const handleCodeChange = async () => {
@@ -80,6 +82,13 @@ const CourseSettings = () => {
   useEffect(() => {
     handleCodeChange()
   }, [code])
+
+  const handleDelete = () => {
+    // Call delete course endpoint
+    deleteCourse(currentCourseId)
+    // Remove course from Redux
+    dispatch(removeCourse({ courseId: currentCourseId }))
+  }
 
   const securityCode = visibility === 'private' ? (
     <View style={styles.body}>
@@ -107,19 +116,6 @@ const CourseSettings = () => {
     </View>
   ) : null
 
-  const visibilitySelect = (currentVisibility) => (
-    <>
-      <Select
-        defaultValue={currentVisibility}
-        borderColor="black"
-        onValueChange={handleVisibilityChange}
-      >
-        <Select.Item label={i18n.t('dict.public')} value="public" />
-        <Select.Item label={i18n.t('dict.private')} value="private" />
-      </Select>
-    </>
-  )
-
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.description}>
@@ -136,7 +132,14 @@ const CourseSettings = () => {
         <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
           {i18n.t('dict.privacy')}
         </Text>
-        {visibilitySelect(visibility)}
+        <Select
+          defaultValue={visibility}
+          borderColor="black"
+          onValueChange={handleVisibilityChange}
+        >
+          <Select.Item label={i18n.t('dict.public')} value="public" />
+          <Select.Item label={i18n.t('dict.private')} value="private" />
+        </Select>
       </View>
       {securityCode}
       <StyledButton
@@ -147,15 +150,13 @@ const CourseSettings = () => {
           <MaterialCommunityIcons name="delete" color="black" size={20} />
         }
         onPress={() => Alert.alert(
-          'Are you sure you want to delete this course?',
-          'This action cannot be undone.',
+          i18n.t('dialogue.areYouSureDeleteCourse'),
+          i18n.t('dialogue.actionCannotBeUndone'),
           [
-            { text: 'Cancel' },
+            { text: i18n.t('dict.cancel') },
             {
-              text: 'Delete',
-              onPress: () => {
-                deleteCourse(currentCourseId)
-              },
+              text: i18n.t('dict.delete'),
+              onPress: handleDelete,
             },
           ],
         )}

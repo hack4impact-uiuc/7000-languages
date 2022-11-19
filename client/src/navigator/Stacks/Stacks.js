@@ -220,9 +220,8 @@ export const SettingsNavigator = () => (
     <Stack.Screen
       name="CourseSettings"
       component={CourseSettings}
-      options={({ navigation }) => ({
+      options={() => ({
         title: i18n.t('dict.settings'),
-        headerLeft: () => <BackButton navigation={navigation} color="black" />,
         cardStyle: { backgroundColor: 'white' },
       })}
     />
