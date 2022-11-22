@@ -19,7 +19,7 @@ const translations = {
       glottoCode: 'Glotto Code',
       termsAndConditions: 'Terms and Conditions',
       suggestion: 'Suggestion',
-      courseHome: 'Course Home',
+      courseHome: 'Course',
       vocab: 'Vocab',
       itemSingle: 'Item',
       itemPlural: 'Items',
@@ -27,6 +27,8 @@ const translations = {
       unselectedLessons: 'Unselected Lessons',
       selectedUnits: 'Selected Units',
       unselectedUnits: 'Unselected Units',
+      selectedVocab: 'Selected Vocab Items',
+      unselectedVocab: 'Unselected Vocab Items',
       moreInfo: 'Context',
       profile: 'Profile',
       submit: 'Submit',
@@ -39,8 +41,15 @@ const translations = {
       privacy: 'Privacy',
       deleteCourse: 'Delete Course',
       securityCode: 'Security Code',
+      settings: 'Settings',
+      delete: 'Delete',
     },
     actions: {
+      becomeContributorTitle: 'Become a contributor',
+      editLesson: 'Edit Lesson',
+      editUnit: 'Edit Unit',
+      editCourse: 'Edit Course',
+      confirmEdit: 'Confirm Edit',
       searchCourses: 'Search Courses',
       logOut: 'Log Out',
       becomeContributor: 'Become a contributor.',
@@ -80,12 +89,27 @@ const translations = {
       manageVocab: 'Manage Vocab',
     },
     dialogue: {
+      areYouSureDeleteCourse: 'Are you sure you want to delete this course?',
+      actionCannotBeUndone: 'This action cannot be undone.',
+      lessonPurpose: 'What is the purpose of this lesson?',
+      changeLessonName: 'Change your lesson name',
+      changeUnitName: 'Change your unit name',
+      unitPurpose: 'What is the purpose of this unit?',
+      changeTeachingLanguage: 'Change the teaching language',
+      changeCourseName: 'Change your course name',
+      editCourseDescription: 'Edit the course description',
+      teachingChosenLanguage:
+        'You are teaching your course in this chosen language.',
+      changeAlternativeText: 'Change the alternative text',
+      updateCourse: 'When updating a course, think about how it will be used.',
+      updateUnit: 'When updating a unit, think about how it will be used.',
+      updateLesson: 'When updating a lesson, think about how it will be used.',
       notLearnerPrompt: "Looks like you aren't a learner in any courses yet.",
       ourMission:
         'Our mission is to help communities teach, learn, and sustain their endangered languages.',
       supportRevitalization:
         "We'd love to support your revitalization efforts.",
-      setDescriptionPrompt: 'You currently have not set a description.',
+      setDescriptionPrompt: '',
       unsavedChangesPrompt:
         'You have unsaved changes. Are you sure to discard them and leave the screen?',
       discardChangesPrompt: 'Discard Changes?',
@@ -129,12 +153,16 @@ const translations = {
       unitPurposePrompt: 'What is the purpose of this unit?',
       details: 'Details (from ___ )',
       landingQuote: 'To speak a language is to take on a world, a culture.',
+      selectedVocabPrompt:
+        'These vocab items will be available to your learner. Drag them around to reorder them.',
+      unselectedVocabPrompt:
+        'These vocab items are not included in your course. You can still continue to edit them.',
       selectedLessonsPrompt:
-        'These lessons will be available to your students. Drag them around to reorder them.',
+        'These lessons will be available to your learner. Drag them around to reorder them.',
       unselectedLessonsPrompt:
         'These lessons are not included in your course. You can still continue to edit them.',
       selectedUnitsPrompt:
-        'These units will be available to your students. Drag them around to reorder them.',
+        'These units will be available to your learner. Drag them around to reorder them.',
       unselectedUnitsPrompt:
         'These units are not included in your course. You can still continue to edit them.',
       itemDescriptionPrompt: 'A vocab item can be a word or phrase.',
@@ -142,6 +170,10 @@ const translations = {
         'Use this space to give additional information about the vocab item, such as grammatical and cultural information, usage, or additional translations/meanings.',
       courseSettingsDescription:
         'Here is the settings for you to manage your own course.',
+      courseSettingsSave:
+        'You can save your changes by clicking the save button. If you leave this screen without pressing the button, your changes will be discarded.',
+      courseSettingsChangeCode:
+        'Learners will have to enter this code in order to join your course.',
     },
   },
   fr: {
@@ -162,13 +194,14 @@ const translations = {
       ISOCode: 'Code ISO',
       glottoCode: 'Code Glotto',
       termsAndConditions: 'Modalités et conditions',
-      suggestion: 'Suggestion',
       courseHome: 'Accueil du cours',
       vocab: 'Vocabulaire',
       itemSingle: 'Article',
       itemPlural: 'Articles',
       selectedLessons: 'Leçons choisies',
       unselectedLessons: 'Leçons non sélectionnées',
+      selectedVocab: 'Items de vocabulaire sélectionnés',
+      unselectedVocab: 'Éléments de vocabulaire non sélectionnés',
       selectedUnits: 'Unités sélectionnées',
       unselectedUnits: 'Unités non sélectionnées',
       moreInfo: 'Informations Complémentaires',
@@ -183,8 +216,16 @@ const translations = {
       private: 'Privé',
       deleteCourse: 'Supprimer le cours',
       securityCode: 'Code de sécurité',
+      suggestion: 'Suggestion',
+      settings: 'Paramètres',
+      delete: 'Supprimer',
     },
     actions: {
+      becomeContributorTitle: 'Devenir un contributeur',
+      editLesson: "Leçon d'édition",
+      editUnit: "Unité d'édition",
+      editCourse: 'Modifier le cours',
+      confirmEdit: "Confirmer l'édition",
       searchCourses: 'Recherche de cours',
       logOut: 'Déconnexion',
       startLearning: 'Commencez à apprendre !',
@@ -224,6 +265,24 @@ const translations = {
       manageVocab: 'Gérer les éléments de vocabulaire',
     },
     dialogue: {
+      areYouSureDeleteCourse: 'Vous êtes sûr de vouloir supprimer ce cours?',
+      actionCannotBeUndone: 'Cette action ne peut être annulée.',
+      lessonPurpose: 'Quel est le but de cette leçon?',
+      changeLessonName: 'Changez le nom de votre leçon',
+      changeUnitName: 'Changez le nom de votre unité',
+      unitPurpose: 'Quel est le but de cette unité?',
+      changeTeachingLanguage: "Changer la langue d'enseignement",
+      changeCourseName: 'Changez le nom de votre cours',
+      editCourseDescription: 'Modifier la description du cours',
+      teachingChosenLanguage:
+        'Vous donnez votre cours dans cette langue choisie.',
+      changeAlternativeText: 'Modifier le texte alternatif.',
+      updateCourse:
+        'Lorsque vous mettez à jour un cours, pensez à la façon dont il sera utilisé.',
+      updateUnit:
+        'Lorsque vous mettez à jour une unité, pensez à la façon dont elle sera utilisée.',
+      updateLesson:
+        'Lorsque vous mettez à jour une leçon, pensez à la façon dont elle sera utilisée.',
       notLearnerPrompt:
         'Il semble que vous ne soyez pas encore un apprenant dans aucun cours.',
       ourMission:
@@ -274,6 +333,10 @@ const translations = {
       details: 'Détails (de ___ )',
       landingQuote:
         "Parler une langue, c'est s'approprier un monde, une culture.",
+      selectedVocabPrompt:
+        'Ces éléments de vocabulaire seront disponibles pour votre apprenant. Faites-les glisser pour les réorganiser.',
+      unselectedVocabPrompt:
+        'Ces éléments de vocabulaire ne sont pas inclus dans votre cours. Vous pouvez néanmoins continuer à les modifier.',
       selectedLessonsPrompt:
         'Ces leçons seront disponibles pour vos élèves. Faites-les glisser pour les réorganiser.',
       unselectedLessonsPrompt:
@@ -288,6 +351,10 @@ const translations = {
         "Utilisez cet espace pour donner des informations supplémentaires sur l'élément de vocabulaire, par exemple grammaticale et culturelle, l'usage, ou des traductions/significations traductions/significations supplémentaires.",
       courseSettingsDescription:
         'Voici les paramètres qui vous permettront de gérer votre propre cours.',
+      courseSettingsSave:
+        'Vous pouvez enregistrer vos modifications en cliquant sur le bouton "Enregistrer". Si vous quittez cet écran sans cliquer sur le bouton, vos modifications seront annulées.',
+      courseSettingsChangeCode:
+        "Les apprenants devront saisir ce code afin de s'inscrire à votre cours.",
     },
   },
 }

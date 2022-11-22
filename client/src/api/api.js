@@ -31,11 +31,55 @@ export const createCourse = async (applicationData) => {
   return res.data
 }
 
+export const updateCourse = async (courseID, updates) => {
+  const body = { details: updates }
+  const requestString = `/language/course/${courseID}`
+  const res = await instance.patch(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 export const getCourse = async (courseID) => {
   const requestString = `/language/course/${courseID}`
   const res = await instance.get(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+export const patchVisibility = async (courseID, makePrivate) => {
+  const requestString = `/language/course/${courseID}`
+  const body = {
+    details: {
+      is_private: makePrivate,
+    },
+  }
+  const res = await instance.patch(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res.data?.message)
+  return res.data
+}
+
+export const patchSecurityCode = async (courseID, securityCode) => {
+  const requestString = `/language/course/${courseID}`
+
+  const body = {
+    details: {
+      code: securityCode,
+    },
+  }
+  const res = await instance.patch(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res.data?.message)
+  return res.data
+}
+
+export const deleteCourse = async (courseID) => {
+  const requestString = `/language/course/${courseID}`
+  const res = await instance.delete(requestString)
+
+  if (!res?.data?.success) throw new Error(res.data?.message)
   return res.data
 }
 
@@ -52,6 +96,16 @@ export const getUnit = async (courseID, unitID) => {
 export const createUnit = async (unit) => {
   const requestString = '/language/unit'
   const res = await instance.post(requestString, unit)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+export const updateUnit = async (unitId, updates) => {
+  const body = updates
+
+  const requestString = `/language/unit/${unitId}`
+  const res = await instance.patch(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
@@ -74,6 +128,19 @@ export const updateUnits = async (courseID, updates) => {
 export const getLesson = async (courseID, lessonID) => {
   const requestString = `/language/lesson?course_id=${courseID}&lesson_id=${lessonID}`
   const res = await instance.get(requestString)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+export const updateSingleLesson = async (lessonID, courseID, updates) => {
+  const body = {
+    course_id: courseID,
+    lesson_id: lessonID,
+    updates,
+  }
+  const requestString = '/language/lesson'
+  const res = await instance.patch(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data

@@ -119,7 +119,7 @@ const CreateLesson = ({ navigation }) => {
       successText={i18n.t('actions.createLessonSingle')}
       successCallback={success}
       closeCallback={close}
-      isDisabled={!areRequiredFieldsFilled}
+      areAllFieldsFilled={areRequiredFieldsFilled}
       body={body}
     />
   )

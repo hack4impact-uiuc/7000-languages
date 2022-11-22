@@ -19,6 +19,7 @@ const {
   PATCH_UPDATE_COURSE_DETAILS,
   PATCH_UPDATE_INVALID_FIELD,
   PATCH_UPDATE_NON_BOOLEAN_APPROVAL,
+  PATCH_UPDATE_VISIBILITY,
 } = require('../mock-data/course-mock-data');
 const {
   POST_BERBER_COURSE,
@@ -62,7 +63,7 @@ describe('GET /language/course/ ', () => {
       request(app).get('/language/course/62391a30487d5ae343c82311'),
     );
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '__v');
+    const result = omitDeep(response.body.result, '__v', 'details.code');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully fetched course');
     expect(result).toEqual(GET_SIMPLE_COURSE_EXPECTED);
@@ -154,7 +155,7 @@ describe('POST /language/course/ ', () => {
       request(app).post('/language/course/').send(body),
     );
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '_id', '__v');
+    const result = omitDeep(response.body.result, '_id', '__v', 'details.code');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new course');
     expect(result).toEqual(POST_BERBER_COURSE_EXPECTED);
@@ -186,7 +187,7 @@ describe('PATCH /language/course/ ', () => {
         .send(body),
     );
 
-    const result = _.omit(response.body.result, ['_id', '__v']);
+    const result = _.omit(response.body.result, ['_id', '__v', 'details.code']);
     delete result['details']['_id'];
 
     expect(result).toEqual(PATCH_EXPECTED_COURSE_UPDATED_APPROVAL);
@@ -201,7 +202,7 @@ describe('PATCH /language/course/ ', () => {
         .send(body),
     );
 
-    const result = _.omit(response.body.result, ['_id', '__v']);
+    const result = _.omit(response.body.result, ['_id', '__v', 'details.code']);
     delete result['details']['_id'];
 
     expect(result).toEqual(PATCH_EXPECTED_COURSE_UPDATED_ADMIN_ID);
@@ -233,7 +234,7 @@ describe('PATCH /language/course/ ', () => {
         .send(body),
     );
 
-    const result = _.omit(response.body.result, ['_id', '__v']);
+    const result = _.omit(response.body.result, ['_id', '__v', 'details.code']);
     delete result['details']['_id'];
 
     expect(result).toEqual(original);
@@ -250,7 +251,7 @@ describe('PATCH /language/course/ ', () => {
         .send(body),
     );
 
-    const result = _.omit(response.body.result, ['_id', '__v']);
+    const result = _.omit(response.body.result, ['_id', '__v', 'details.code']);
     delete result['details']['_id'];
 
     expect(result).toEqual(original);
@@ -289,7 +290,7 @@ describe('PATCH /language/course/ ', () => {
         .send(body),
     );
 
-    const result = _.omit(response.body.result, ['_id', '__v']);
+    const result = _.omit(response.body.result, ['_id', '__v', 'details.code']);
     delete result['details']['_id'];
 
     expect(result).toEqual(PATCH_BERBER_COURSE_EXPECTED);

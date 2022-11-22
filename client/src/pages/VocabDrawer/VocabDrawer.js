@@ -184,6 +184,14 @@ const VocabDrawer = ({ navigation }) => {
     }
   }
 
+  const stopRecording = async () => {
+    setAudioRecording(undefined)
+    await audioRecording.stopAndUnloadAsync()
+    const uri = audioRecording.getURI()
+    setAudioRecording(uri)
+    setRecordingState(RECORDING.COMPLETE)
+  }
+
   const clearImage = async (path) => {
     if (path !== null) {
       const splitPath = path.split('.')
@@ -213,8 +221,7 @@ const VocabDrawer = ({ navigation }) => {
   const success = async () => {
     errorWrap(
       async () => {
-        if(recordingStage === RECORDING.IN_PROGRESS)
-        {
+        if (recordingStage === RECORDING.IN_PROGRESS) {
           await stopRecording()
         }
         let updatedVocabItem = null
@@ -250,27 +257,25 @@ const VocabDrawer = ({ navigation }) => {
           // Push audio recording
           if (audioRecording && recordingStage === RECORDING.COMPLETE) {
             // [TODO]: Add backend trackPromise()
-            const audioResponse = await 
-              uploadAudioFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                updatedVocabItem._id,
-                audioRecording,
-              )
+            const audioResponse = await uploadAudioFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              updatedVocabItem._id,
+              audioRecording,
+            )
             updatedVocabItem = audioResponse.result
           }
 
           if (image) {
             // [TODO]: Add backend trackPromise()
-            const imageResponse = await
-              uploadImageFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                updatedVocabItem._id,
-                image,
-              )
+            const imageResponse = await uploadImageFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              updatedVocabItem._id,
+              image,
+            )
             updatedVocabItem = imageResponse.result
           }
 
@@ -443,14 +448,6 @@ const VocabDrawer = ({ navigation }) => {
     ])
   }
 
-  const stopRecording = async () => {
-    setAudioRecording(undefined)
-    await audioRecording.stopAndUnloadAsync()
-    const uri = audioRecording.getURI()
-    setAudioRecording(uri)
-    setRecordingState(RECORDING.COMPLETE)
-  }
-
   const playRecording = async () => {
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
@@ -578,7 +575,7 @@ const VocabDrawer = ({ navigation }) => {
       }
       successCallback={success}
       closeCallback={close}
-      isDisabled={!areRequiredFieldsFilled}
+      areAllFieldsFilled={areRequiredFieldsFilled}
       body={body}
     />
   )
