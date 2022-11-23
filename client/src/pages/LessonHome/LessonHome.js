@@ -8,6 +8,7 @@ import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import i18n from 'utils/i18n'
 import { getFileURI } from 'utils/cache'
+import { MEDIA_TYPE } from 'utils/constants'
 
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -74,18 +75,18 @@ const LessonHome = ({ navigation }) => {
       if (lessonData?.vocab) {
         const selectedData = lessonData.vocab.filter((item) => item.selected)
         let formattedVocabData = selectedData.map(async (item) => {
-          const { fileURI: imageUri, shouldRefresh: shouldRefreshImage } = await getFileURI(item._id, 'image')
-          const { fileURI: audioUri, shouldRefresh: shouldRefreshAudio } = await getFileURI(item._id, 'audio')
+          const { fileURI: imageUri, shouldRefresh: shouldRefreshImage } = await getFileURI(item._id, MEDIA_TYPE.IMAGE)
+          const { fileURI: audioUri, shouldRefresh: shouldRefreshAudio } = await getFileURI(item._id, MEDIA_TYPE.AUDIO)
 
           const formattedItem = {
             _id: item._id,
             name: item.original,
             body: item.translation,
             audioURI: item.audio ? audioUri : '',
-            audio: item.audio !== '',
+            hasAudio: item.audio !== '',
             _order: item._order,
             imageURI: item.image ? imageUri : '',
-            image: item.image !== '',
+            hasImage: item.image !== '',
           }
 
           /*

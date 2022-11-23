@@ -10,12 +10,13 @@ import { colors } from 'theme'
 import * as ImagePicker from 'expo-image-picker'
 import { StyleSheet, Alert, ImageBackground } from 'react-native'
 import { Audio } from 'expo-av'
-import { RECORDING } from 'utils/constants'
+import { RECORDING, MEDIA_TYPE } from 'utils/constants'
 import RecordAudioView from 'components/RecordAudioView'
 import { useSelector, useDispatch } from 'react-redux' // import at the top of the file
 import { addVocab, updateVocab } from 'slices/language.slice'
 import i18n from 'utils/i18n'
 import { getFileURI } from 'utils/cache'
+
 
 import {
   createVocabItem,
@@ -26,8 +27,8 @@ import {
   downloadImageFile,
   deleteAudioFile,
   deleteImageFile,
-  uploadImageFileToExpo,
-  downloadAudioFileToExpo,
+  persistImageFileInExpo,
+  persistAudioFileInExpo,
 } from 'api'
 
 import { useErrorWrap, useTrackPromise } from 'hooks'
@@ -109,23 +110,17 @@ const VocabDrawer = ({ navigation }) => {
           let uri = ''
           const { fileURI: audioUri } = await getFileURI(
             currentVocabId,
-            'audio',
+            MEDIA_TYPE.AUDIO
           )
           if (audioUri != null) {
             uri = audioUri
           } else {
-            trackPromise(
-              downloadAudioFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                currentVocabId,
-              ).then((value) => {
-                uri = value
-                setAudioRecording(uri)
-                setRecordingState(RECORDING.COMPLETE)
-              }),
-            )
+            uri = await trackPromise(downloadAudioFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              currentVocabId,
+            ));
           }
 
           setAudioRecording(uri)
@@ -141,22 +136,18 @@ const VocabDrawer = ({ navigation }) => {
           let uri = ''
           const { fileURI: imageUri } = await getFileURI(
             currentVocabId,
-            'image',
+            MEDIA_TYPE.IMAGE
           )
           if (imageUri != null) {
             uri = imageUri
           } else {
-            trackPromise(
+            uri = await trackPromise(
               downloadImageFile(
                 currentCourseId,
                 currentUnitId,
                 currentLessonId,
                 currentVocabId,
-              ).then((value) => {
-                uri = value
-                setImage(uri)
-              }),
-            )
+              ));
           }
 
           setImage(uri)
@@ -274,7 +265,7 @@ const VocabDrawer = ({ navigation }) => {
 
         // Push audio recording to Expo's filesystem and the API
         if (audioRecording && recordingStage === RECORDING.COMPLETE) {
-          const { fileType } = await downloadAudioFileToExpo(
+          const { fileType } = await persistAudioFileInExpo(
             updatedVocabItem._id,
             audioRecording,
           )
@@ -295,7 +286,7 @@ const VocabDrawer = ({ navigation }) => {
 
         // Push image to Expo's filesystem and the API
         if (image) {
-          const { fileType } = await uploadImageFileToExpo(
+          const { fileType } = await persistImageFileInExpo(
             updatedVocabItem._id,
             image,
           )

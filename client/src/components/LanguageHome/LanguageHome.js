@@ -162,7 +162,7 @@ const LanguageHome = ({
               titleText={element.body}
               bodyText={element.name}
               imageURI={element.imageURI}
-              showVolumeIcon={element.audio}
+              showVolumeIcon={element.hasAudio}
               volumeIconCallback={() => playAudio(element.audioURI)}
               width={width * 0.97}
               height={element.imageURI === '' ? 75 : 100}
@@ -344,16 +344,16 @@ LanguageHome.defaultProps = {
   isLessonHome: false,
   languageName: '',
   languageDescription: '',
-  nextUpdate: () => {},
+  nextUpdate: () => { },
   lessonDescription: `${i18n.t('dialogue.setDescriptionPrompt')}`,
   singularItemText: '',
   pluralItemText: '',
   manageButtonText: '',
   addButtonText: '',
   manageIconName: '',
-  buttonCallback: () => {},
-  nextPageCallback: () => {},
-  addCallback: () => {},
+  buttonCallback: () => { },
+  nextPageCallback: () => { },
+  addCallback: () => { },
   data: [],
 }
 

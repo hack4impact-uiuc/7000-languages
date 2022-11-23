@@ -13,33 +13,24 @@ const INVALIDATION_SECONDS = 60 * 60 * 24
 /**
  * Returns the AsyncStorage key encoding given a vocab item and its associated file
  * @param {String} vocabID Unique MongoDB ID of Vocab Item
- * @param {String} fileType Image or Audio
+ * @param {String} mediaType Image or Audio
  * @returns
  */
-const getGetGivenType = (vocabID, fileType) => {
-  switch (fileType) {
-    case 'audio':
-      return `${vocabID}/audio`
-    case 'image':
-      return `${vocabID}/image`
-    default:
-      throw new Error('No file type provided')
-  }
-}
+const getAsyncStorageKeyGivenMediaType = (vocabID, mediaType) => `${vocabID}/${mediaType}`;
 
-/**
+/*
  * Removes a vocab id and file URI mapping from Async Storage and Expo FileSystem
  * @param {String} vocabID Unique MongoDB ID of Vocab Item
- * @param {String} fileType Unique MongoDB ID of Vocab Item
+ * @param {String} mediaType Image or Audio
  * @param {Boolean} shouldDeleteFromExpo true if the file should also get deleted from Expo.
  * @returns true if successful, false otherwise
  */
 export const deleteFileURI = async (
   vocabID,
-  fileType,
+  mediaType,
   shouldDeleteFromExpo = true,
 ) => {
-  const key = getGetGivenType(vocabID, fileType)
+  const key = getAsyncStorageKeyGivenMediaType(vocabID, mediaType)
   const fileURI = await AsyncStorage.getItem(key)
 
   if (fileURI) {
@@ -62,19 +53,19 @@ export const deleteFileURI = async (
 /**
  * Gets the file URI of a vocab item. Returns null if no URI is saved in Async Storage.
  * @param {String} vocabID Unique MongoDB ID of Vocab Item
- * @param {String} fileType Image or Audio
+ * @param {String} mediaType Image or Audio
  * @returns Expo FileSystem URI or null, along with an boolean
  * indicating if this file URI should get refetched from the API
  */
-export const getFileURI = async (vocabID, fileType) => {
-  const key = getGetGivenType(vocabID, fileType)
+export const getFileURI = async (vocabID, mediaType) => {
+  const key = getAsyncStorageKeyGivenMediaType(vocabID, mediaType)
   const fileURI = await AsyncStorage.getItem(key)
 
   if (fileURI) {
     // Check when was the last time this file was updated
     const fileInfo = await FileSystem.getInfoAsync(fileURI)
     if (!fileInfo.exists) {
-      deleteFileURI(vocabID, fileType, false)
+      deleteFileURI(vocabID, mediaType, false)
       return {
         fileURI,
         shouldRefresh: true,
@@ -102,16 +93,17 @@ export const getFileURI = async (vocabID, fileType) => {
  * Adds the file URI of a vocab item.
  * @param {String} vocabID Unique MongoDB ID of Vocab Item
  * @param {String} fileURI Expo FileSystem URI
- * @param {String} fileType Unique MongoDB ID of Vocab Item
+ * @param {String} mediaType Unique MongoDB ID of Vocab Item
  * @returns true if successful, false otherwise
  */
-export const putFileURI = async (vocabID, fileURI, fileType) => {
-  const key = getGetGivenType(vocabID, fileType)
+export const setFileURI = async (vocabID, fileURI, mediaType) => {
+  const key = getAsyncStorageKeyGivenMediaType(vocabID, mediaType);
+
   try {
     await AsyncStorage.setItem(key, fileURI)
     return true
   } catch (error) {
-    console.error('putFileURI(): ', error)
+    console.error('setFileURI(): ', error)
     return false
   }
 }

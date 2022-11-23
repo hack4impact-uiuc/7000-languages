@@ -1,7 +1,8 @@
 import * as FileSystem from 'expo-file-system'
 import { loadUserIDToken } from 'utils/auth'
-import { putFileURI, deleteFileURI } from 'utils/cache'
+import { setFileURI, deleteFileURI } from 'utils/cache'
 import instance, { BASE_URL } from './axios-config'
+import { MEDIA_TYPE } from 'utils/constants'
 
 /* User Endpoints */
 
@@ -249,19 +250,21 @@ export const uploadAudioFile = async (
 }
 
 /* Audio Endpoints */
-export const downloadAudioFileToExpo = async (vocabId, uri) => {
-  /* Download to a new URI based, with the filename including Date.now() in order to
+export const persistAudioFileInExpo = async (vocabId, temporaryURI) => {
+  /* Download to a new URI base with the filename including Date.now() in order for
     React Native to rerender the audio. If the same filename is kept as before,
     it won't change the audio displayed on the screen.
-  */
-  const splitPath = uri.split('.')
-  const fileType = splitPath.length > 2 ? splitPath[1] : 'caf'
 
-  const newURI = `${
-    FileSystem.documentDirectory
-  }${vocabId}-audio-${Date.now()}.${fileType}`
-  await FileSystem.copyAsync({ from: uri, to: newURI })
-  await putFileURI(vocabId, newURI, 'audio')
+    There is no need to delete the file stored at temporaryURI since that will be handled by Expo.
+  */
+  const splitPath = temporaryURI.split('.')
+  const fileType = splitPath.length > 2 ? splitPath[1] : 'caf';
+
+  const newURI = `${FileSystem.documentDirectory
+    }${vocabId}-audio-${Date.now()}.${fileType}`
+  await FileSystem.copyAsync({ from: temporaryURI, to: newURI })
+  await setFileURI(vocabId, newURI, MEDIA_TYPE.AUDIO)
+  console.log("new uri: ", newURI);
 
   return { fileType }
 }
@@ -287,7 +290,7 @@ export const downloadAudioFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
-    await putFileURI(vocabId, uri, 'audio')
+    await setFileURI(vocabId, uri, MEDIA_TYPE.AUDIO)
     return uri
   } catch (e) {
     throw new Error(e.message)
@@ -303,24 +306,25 @@ export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
-  await deleteFileURI(vocabId, 'audio')
+  await deleteFileURI(vocabId, MEDIA_TYPE.AUDIO)
   return body
 }
 
 /* Image Endpoints */
-export const uploadImageFileToExpo = async (vocabId, uri) => {
-  /* Download to a new URI based, with the filename including Date.now() in order to
+export const persistImageFileInExpo = async (vocabId, temporaryURI) => {
+  /* Download to a new URI based with the filename including Date.now() in order for
     React Native to rerender the image. If the same filename is kept as before,
     it won't change the image displayed on the screen.
+
+    There is no need to delete the file stored at temporaryURI since that will be handled by Expo.
   */
-  const splitPath = uri.split('.')
+  const splitPath = temporaryURI.split('.')
   const fileType = splitPath.length > 2 ? splitPath[1] : 'jpg'
 
-  const newURI = `${
-    FileSystem.documentDirectory
-  }${vocabId}-image-${Date.now()}.${fileType}`
-  await FileSystem.copyAsync({ from: uri, to: newURI })
-  await putFileURI(vocabId, newURI, 'image')
+  const newURI = `${FileSystem.documentDirectory
+    }${vocabId}-image-${Date.now()}.${fileType}`
+  await FileSystem.copyAsync({ from: temporaryURI, to: newURI })
+  await setFileURI(vocabId, newURI, MEDIA_TYPE.IMAGE)
 
   return { fileType }
 }
@@ -377,7 +381,7 @@ export const downloadImageFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
-    await putFileURI(vocabId, uri, 'image')
+    await setFileURI(vocabId, uri, MEDIA_TYPE.IMAGE)
     return uri
   } catch (e) {
     throw new Error(e.message)
@@ -392,6 +396,6 @@ export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
-  await deleteFileURI(vocabId, 'image')
+  await deleteFileURI(vocabId, MEDIA_TYPE.IMAGE)
   return body
 }
