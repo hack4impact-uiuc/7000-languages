@@ -15,7 +15,7 @@ import RecordAudioView from 'components/RecordAudioView'
 import { useSelector, useDispatch } from 'react-redux' // import at the top of the file
 import { addVocab, updateVocab } from 'slices/language.slice'
 import i18n from 'utils/i18n'
-import { getFileURI } from 'utils/cache'
+import { getFileURI, deleteFileURI } from 'utils/cache'
 
 import {
   createVocabItem,
@@ -171,9 +171,8 @@ const VocabDrawer = ({ navigation }) => {
   const clearRecording = async (path) => {
     if (path !== null) {
       const splitPath = path.split('.')
-      const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
-      setRecordingState(RECORDING.INCOMPLETE)
-      deleteAudioFile(
+      const fileType = splitPath.length === 2 ? splitPath[1] : 'caf'
+      await deleteAudioFile(
         currentCourseId,
         currentUnitId,
         currentLessonId,
@@ -195,7 +194,8 @@ const VocabDrawer = ({ navigation }) => {
     if (path !== null) {
       const splitPath = path.split('.')
       const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
-      deleteImageFile(
+
+      await deleteImageFile(
         currentCourseId,
         currentUnitId,
         currentLessonId,
@@ -223,26 +223,38 @@ const VocabDrawer = ({ navigation }) => {
         }
 
         const areCreatingNewVocabItem = currentVocabId === ''
+        const areSavingAudio = audioRecording && recordingStage === RECORDING.COMPLETE
+        const areSavingImage = image !== null
 
-        // Clear the audio and image file saved to state for the next time the user opens the Vocab Drawer.
-        // The functions below as async and must finish before continuing. Otherwise, there is the possible of a race
-        // condition between deleting a previous file and adding a new one.
+        /* Clear the audio and image file saved to state for the next time the user opens the Vocab Drawer.
+          The functions below as async and must finish before continuing. Otherwise, there is the possible of a race
+          condition between deleting a previous file and adding a new one.
+
+          We DELETE audio from the API and Expo's file system iff there is an audio file that was marked as deleted by the user, we are not saving
+          any other audio files, and we are not creating a new audio file.
+
+          We clear images from Expo's file system if an image was marked as deleted by the user and we aren't create a new image,
+          but the user will be pushing a new image to the API. Hence, there is no need to do a DELETE followed by a POST
+          when the POST will automatically replace the file we want to DELETE. Otherwise, if the user is not pushing a new file,
+          then we also DELETE the image from the API.
+        */
 
         const deletePromises = []
 
         if (
           deleteAudioUri !== ''
-          && deleteAudioUri !== null
+          && !areSavingAudio
           && !areCreatingNewVocabItem
         ) {
           deletePromises.push(clearRecording(deleteAudioUri))
         }
-        if (
-          deleteImageUri !== ''
-          && deleteImageUri !== null
-          && !areCreatingNewVocabItem
-        ) {
-          deletePromises.push(clearImage(deleteImageUri))
+
+        if (deleteImageUri !== '' && !areCreatingNewVocabItem) {
+          if (!areSavingImage) {
+            deletePromises.push(clearImage(deleteImageUri))
+          } else {
+            deletePromises.push(deleteFileURI(currentVocabId, MEDIA_TYPE.IMAGE))
+          }
         }
 
         await Promise.all(deletePromises)
@@ -279,7 +291,7 @@ const VocabDrawer = ({ navigation }) => {
         const updatedVocabItem = vocabResponse.result
 
         // Push audio recording to Expo's filesystem and the API
-        if (audioRecording && recordingStage === RECORDING.COMPLETE) {
+        if (areSavingAudio) {
           const { fileType } = await persistAudioFileInExpo(
             updatedVocabItem._id,
             audioRecording,
@@ -300,7 +312,7 @@ const VocabDrawer = ({ navigation }) => {
         }
 
         // Push image to Expo's filesystem and the API
-        if (image) {
+        if (areSavingImage) {
           const { fileType } = await persistImageFileInExpo(
             updatedVocabItem._id,
             image,

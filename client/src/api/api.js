@@ -251,21 +251,18 @@ export const uploadAudioFile = async (
 
 /* Audio Endpoints */
 export const persistAudioFileInExpo = async (vocabId, temporaryURI) => {
-  /* Download to a new URI base with the filename including Date.now() in order for
-    React Native to rerender the audio. If the same filename is kept as before,
-    it won't change the audio displayed on the screen.
-
+  /* Copies an audio files saved at a temporary URI to a permanent URI.
     There is no need to delete the file stored at temporaryURI since that will be handled by Expo.
   */
   const splitPath = temporaryURI.split('.')
   const fileType = splitPath.length > 2 ? splitPath[1] : 'caf'
 
-  const newURI = `${
-    FileSystem.documentDirectory
-  }${vocabId}-audio-${Date.now()}.${fileType}`
-  await FileSystem.copyAsync({ from: temporaryURI, to: newURI })
-  await setFileURI(vocabId, newURI, MEDIA_TYPE.AUDIO)
-  console.log('new uri: ', newURI)
+  const newURI = `${FileSystem.documentDirectory}${vocabId}-audio.${fileType}`
+
+  if (newURI !== temporaryURI) {
+    await FileSystem.copyAsync({ from: temporaryURI, to: newURI })
+    await setFileURI(vocabId, newURI, MEDIA_TYPE.AUDIO)
+  }
 
   return { fileType }
 }
@@ -300,6 +297,9 @@ export const downloadAudioFile = async (
 
 /* Audio Endpoints */
 export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
+  /**
+   * Deletes an audio file from the API and the AsyncStorage file cache
+   */
   const requestString = `/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
 
@@ -325,8 +325,11 @@ export const persistImageFileInExpo = async (vocabId, temporaryURI) => {
   const newURI = `${
     FileSystem.documentDirectory
   }${vocabId}-image-${Date.now()}.${fileType}`
-  await FileSystem.copyAsync({ from: temporaryURI, to: newURI })
-  await setFileURI(vocabId, newURI, MEDIA_TYPE.IMAGE)
+
+  if (newURI !== temporaryURI) {
+    await FileSystem.copyAsync({ from: temporaryURI, to: newURI })
+    await setFileURI(vocabId, newURI, MEDIA_TYPE.IMAGE)
+  }
 
   return { fileType }
 }
@@ -391,6 +394,9 @@ export const downloadImageFile = async (
 }
 
 export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
+  /**
+   * Deletes an image from the API and the AsyncStorage file cache
+   */
   const requestString = `/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
 
