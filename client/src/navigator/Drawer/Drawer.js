@@ -111,64 +111,64 @@ const generateUnitLabel = (numUnits) => {
  * @returns
  */
 
-const generateCourseTabs = (tabData, contributor) =>
-  tabData.map((element, index) => (
-    <Drawer.Screen
-      key={element._id}
-      name={element._id}
-      component={TabNavigator}
-      options={() => ({
-        drawerLabel: () => (
-          <View style={tabStyles.container}>
-            <View>
-              <Text
-                style={tabStyles.title}
-                fontFamily="heading"
-                fontWeight="regular"
-                fontStyle="normal"
-              >
-                {element.name}
-              </Text>
-              <Text style={tabStyles.units}>
-                {generateUnitLabel(element.num_units)}
-              </Text>
-            </View>
-          </View>
-        ),
-        drawerIcon: () =>
-          contributor ? (
-            <View
-              style={{
-                position: 'relative',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
+const generateCourseTabs = (tabData, contributor) => tabData.map((element, index) => (
+  <Drawer.Screen
+    key={element._id}
+    name={element._id}
+    component={TabNavigator}
+    options={() => ({
+      drawerLabel: () => (
+        <View style={tabStyles.container}>
+          <View>
+            <Text
+              style={tabStyles.title}
+              fontFamily="heading"
+              fontWeight="regular"
+              fontStyle="normal"
             >
-              <FontAwesome
-                name="square"
-                size={45}
-                icon="user"
-                color={tabColors[0]}
-              />
-              <FontAwesome
-                name="globe"
-                size={25}
-                icon="user"
-                color={tabColors[1]}
-                style={{ position: 'absolute' }}
-              />
-            </View>
-          ) : (
-            <View>
-              <NumberBox number={index + 1} learner noMargin />
-            </View>
-          ),
-      })}
-    />
-  ))
+              {element.name}
+            </Text>
+            <Text style={tabStyles.units}>
+              {generateUnitLabel(element.num_units)}
+            </Text>
+          </View>
+        </View>
+      ),
+      drawerIcon: () => (contributor ? (
+        <View
+          style={{
+            position: 'relative',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <FontAwesome
+            name="square"
+            size={45}
+            icon="user"
+            color={tabColors[0]}
+          />
+          <FontAwesome
+            name="globe"
+            size={25}
+            icon="user"
+            color={tabColors[1]}
+            style={{ position: 'absolute' }}
+          />
+        </View>
+      ) : (
+        <View>
+          <NumberBox number={index + 1} learner noMargin />
+        </View>
+      )),
+    })}
+  />
+))
 
 const DrawerMenuContainer = (props) => {
-  const { state, firstRouteNames, secondRouteNames, ...rest } = props
+  const {
+    state, firstRouteNames, secondRouteNames, ...rest
+  } = props
   const newState = { ...state }
 
   const middleChildComponent = (
@@ -197,7 +197,7 @@ const DrawerMenuContainer = (props) => {
             fontSize="sm"
             variant="learner_primary"
             onPress={() => {
-              props.navigation.navigate('LearnerSearch')
+              props.navigation.navigate('Search', { screen: 'LearnerSearch' })
             }}
           />
         </Pressable>
@@ -207,9 +207,7 @@ const DrawerMenuContainer = (props) => {
         title="CONTRIBUTOR"
         fontSize={15}
         variant="contributor"
-        onPress={() =>
-          props.navigation.navigate('Apply', { from: 'HomeBaseCase' })
-        }
+        onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
       />
     </>
   )
@@ -223,9 +221,7 @@ const DrawerMenuContainer = (props) => {
           title="LEARNER"
           fontSize={15}
           variant="learner"
-          onPress={() =>
-            props.navigation.navigate('Apply', { from: 'HomeBaseCase' })
-          }
+          onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
         />
 
         <SplitDrawerItemList
@@ -262,9 +258,7 @@ const DrawerMenuContainer = (props) => {
             <StyledButton
               title={i18n.t('actions.applyNow')}
               fontSize="sm"
-              onPress={() =>
-                props.navigation.navigate('Apply', { from: 'HomeBaseCase' })
-              }
+              onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
             />
           </Pressable>
         </View>
@@ -302,7 +296,9 @@ const DrawerNavigator = () => {
   useEffect(() => {
     const getUserData = async () => {
       await errorWrap(async () => {
-        const { picture, name, email, courses } = await trackPromise(
+        const {
+          picture, name, email, courses,
+        } = await trackPromise(
           getAllUserCourses(),
         )
 

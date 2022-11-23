@@ -142,13 +142,13 @@ const LanguageHome = ({
             title={manageButtonText}
             variant="manage"
             fontSize={15}
-            rightIcon={
+            rightIcon={(
               <MaterialCommunityIcons
                 name={manageIconName}
                 color={colors.red.medium_dark}
                 size={20}
               />
-            }
+            )}
             onPress={buttonCallback}
           />
         </View>
@@ -170,14 +170,14 @@ const LanguageHome = ({
                 volumeIconCallback={() => playAudio(element.audioURI)}
                 width={width * 0.97}
                 height={element.imageURI === '' ? 75 : 100}
-                rightIcon={
+                rightIcon={(
                   <MaterialCommunityIcons
                     name="pencil"
                     color="black"
                     size={20}
                     onPress={() => nextPageCallback(element)}
                   />
-                }
+                )}
               />
             ))}
           </View>
@@ -187,13 +187,13 @@ const LanguageHome = ({
             title={addButtonText}
             variant="small"
             fontSize="20"
-            leftIcon={
+            leftIcon={(
               <AntDesign
                 name="pluscircle"
                 size={20}
                 color={colors.red.medium_dark}
               />
-            }
+            )}
             shadow
             onPress={addCallback}
           />
@@ -263,13 +263,13 @@ const LanguageHome = ({
           title={manageButtonText}
           variant="manage"
           fontSize={15}
-          rightIcon={
+          rightIcon={(
             <MaterialCommunityIcons
               name={manageIconName}
               color={colors.red.medium_dark}
               size={20}
             />
-          }
+          )}
           onPress={buttonCallback}
         />
       </View>
@@ -295,13 +295,13 @@ const LanguageHome = ({
                   width={width * 0.97}
                   height={75}
                   indicatorType={element.indicatorType}
-                  rightIcon={
+                  rightIcon={(
                     <MaterialCommunityIcons
                       name="chevron-right"
                       color="black"
                       size={40}
                     />
-                  }
+                  )}
                   isPressed={isPressed}
                 />
               )}
@@ -315,13 +315,13 @@ const LanguageHome = ({
           title={addButtonText}
           variant="small"
           fontSize="20"
-          leftIcon={
+          leftIcon={(
             <AntDesign
               name="pluscircle"
               size={20}
               color={colors.red.medium_dark}
             />
-          }
+          )}
           shadow
           onPress={addCallback}
         />

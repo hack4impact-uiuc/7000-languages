@@ -165,13 +165,13 @@ const SelectLanguage = ({ navigation }) => {
 
       <StyledButton
         title={language === ENGLISH ? 'Next' : 'Suivant'}
-        rightIcon={
+        rightIcon={(
           <AntDesign
             name="right"
             size={`${window.height}` / 45}
             color={colors.white.light}
           />
-        }
+        )}
         style={styles.nextButton}
         fontSize={`${window.height}` / 40}
         onPress={saveLanguage}

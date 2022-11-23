@@ -1,6 +1,6 @@
 import React from 'react'
 import { colors } from 'theme'
-import { Text, Input } from 'native-base'
+import { Text, Input, Image } from 'native-base'
 import { StyleSheet, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
@@ -16,28 +16,27 @@ const styles = StyleSheet.create({
   },
 })
 
-const LearnerSearch = () => {
-  return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.search}>
-        <Input
-          height="25%"
-          borderRadius={10}
-          placeholderTextColor={colors.blue.dark}
-          placeholder="Search Courses"
-          backgroundColor={colors.blue.light}
-          InputLeftElement={
-            <AntDesign
-              name="search1"
-              size={24}
-              color={colors.blue.dark}
-              style={{ paddingLeft: '3%' }}
-            />
-          }
-        />
-      </View>
+const LearnerSearch = () => (
+  <View style={{ flex: 1 }}>
+    <View style={styles.search}>
+      <Input
+        height="25%"
+        borderRadius={10}
+        placeholderTextColor={colors.blue.dark}
+        placeholder="Search Courses"
+        backgroundColor={colors.blue.light}
+        InputLeftElement={(
+          <AntDesign
+            name="search1"
+            size={24}
+            color={colors.blue.dark}
+            style={{ paddingLeft: '3%' }}
+          />
+          )}
+      />
     </View>
-  )
-}
+
+  </View>
+)
 
 export default LearnerSearch

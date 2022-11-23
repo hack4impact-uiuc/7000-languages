@@ -21,9 +21,9 @@ import CourseSettings from 'pages/CourseSettings'
 import UpdateCourse from 'pages/UpdateCourse'
 import Intro from 'pages/Intro'
 import i18n from 'utils/i18n'
+import LearnerSearch from 'pages/LearnerSearch'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
-import LearnerSearch from 'pages/LearnerSearch'
 
 // ------------------------------------
 // Constants
@@ -32,6 +32,7 @@ import LearnerSearch from 'pages/LearnerSearch'
 const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 const ModalStack = createStackNavigator()
+const SearchStack = createStackNavigator()
 
 const homeNavigationProps = {
   headerTintColor: 'white',
@@ -215,7 +216,18 @@ export const HomeNavigator = ({ courseId }) => (
       })}
     />
 
-    <Stack.Screen
+  </Stack.Navigator>
+)
+
+export const SearchNavigator = () => (
+  <SearchStack.Navigator
+    initialRouteName="Search"
+    screenOptions={{
+      ...learnerNavigationProps,
+      headerMode: 'screen',
+    }}
+  >
+    <SearchStack.Screen
       name="LearnerSearch"
       component={LearnerSearch}
       options={({ navigation }) => ({
@@ -225,8 +237,9 @@ export const HomeNavigator = ({ courseId }) => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
-  </Stack.Navigator>
+  </SearchStack.Navigator>
 )
+
 
 export const SettingsNavigator = () => (
   <Stack.Navigator
