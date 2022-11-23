@@ -40,19 +40,23 @@ export const deleteFileURI = async (
   shouldDeleteFromExpo = true,
 ) => {
   const key = getGetGivenType(vocabID, fileType)
-  try {
-    const fileURI = await AsyncStorage.getItem(key)
-    if (shouldDeleteFromExpo) {
-      await FileSystem.deleteAsync(fileURI)
+  const fileURI = await AsyncStorage.getItem(key)
+
+  if (fileURI) {
+    try {
+      if (shouldDeleteFromExpo) {
+        await FileSystem.deleteAsync(fileURI)
+      }
+
+      await AsyncStorage.removeItem(key)
+
+      return true
+    } catch (error) {
+      console.error('deleteFileURI(): ', error)
+      return false
     }
-
-    await AsyncStorage.removeItem(key)
-
-    return true
-  } catch (error) {
-    console.error('deleteFileURI(): ', error)
-    return false
   }
+  return true
 }
 
 /**
