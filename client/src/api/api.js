@@ -1,6 +1,6 @@
 import * as FileSystem from 'expo-file-system'
 import { loadUserIDToken } from 'utils/auth'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { putFileURI, deleteFileURI } from 'utils/cache'
 import instance, { BASE_URL } from './axios-config'
 
 /* User Endpoints */
@@ -249,12 +249,29 @@ export const uploadAudioFile = async (
 }
 
 /* Audio Endpoints */
+export const downloadAudioFileToExpo = async (vocabId, uri) => {
+  /* Download to a new URI based, with the filename including Date.now() in order to
+    React Native to rerender the audio. If the same filename is kept as before,
+    it won't change the audio displayed on the screen.
+  */
+  const splitPath = uri.split('.')
+  const fileType = splitPath.length > 2 ? splitPath[1] : 'caf'
+
+  const newURI = `${
+    FileSystem.documentDirectory
+  }${vocabId}-audio-${Date.now()}.${fileType}`
+  await FileSystem.copyAsync({ from: uri, to: newURI })
+  await putFileURI(vocabId, newURI, 'audio')
+
+  return { fileType }
+}
+
 export const downloadAudioFile = async (
   courseId,
   unitId,
   lessonId,
   vocabId,
-  fileType,
+  fileType = 'm4a',
 ) => {
   const idToken = await loadUserIDToken()
   const downloadResumable = FileSystem.createDownloadResumable(
@@ -270,7 +287,7 @@ export const downloadAudioFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
-    await AsyncStorage.setItem(`${vocabId}/audio`, uri)
+    await putFileURI(vocabId, uri, 'audio')
     return uri
   } catch (e) {
     throw new Error(e.message)
@@ -286,15 +303,28 @@ export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
-  try {
-    await AsyncStorage.removeItem(`${vocabId}/audio`)
-  } catch (e) {
-    throw new Error(e.message)
-  }
+  await deleteFileURI(vocabId, 'audio')
   return body
 }
 
 /* Image Endpoints */
+export const uploadImageFileToExpo = async (vocabId, uri) => {
+  /* Download to a new URI based, with the filename including Date.now() in order to
+    React Native to rerender the image. If the same filename is kept as before,
+    it won't change the image displayed on the screen.
+  */
+  const splitPath = uri.split('.')
+  const fileType = splitPath.length > 2 ? splitPath[1] : 'jpg'
+
+  const newURI = `${
+    FileSystem.documentDirectory
+  }${vocabId}-image-${Date.now()}.${fileType}`
+  await FileSystem.copyAsync({ from: uri, to: newURI })
+  await putFileURI(vocabId, newURI, 'image')
+
+  return { fileType }
+}
+
 export const uploadImageFile = async (
   courseId,
   unitId,
@@ -303,6 +333,8 @@ export const uploadImageFile = async (
   uri,
 ) => {
   const idToken = await loadUserIDToken()
+
+  // Upload to API
   const res = await FileSystem.uploadAsync(
     `${BASE_URL}/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`,
     uri,
@@ -329,7 +361,7 @@ export const downloadImageFile = async (
   unitId,
   lessonId,
   vocabId,
-  fileType,
+  fileType = 'jpg',
 ) => {
   const idToken = await loadUserIDToken()
   const downloadResumable = FileSystem.createDownloadResumable(
@@ -345,14 +377,13 @@ export const downloadImageFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
-    await AsyncStorage.setItem(`${vocabId}/image`, uri)
+    await putFileURI(vocabId, uri, 'image')
     return uri
   } catch (e) {
     throw new Error(e.message)
   }
 }
 
-/* Image Endpoints */
 export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
   const requestString = `/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
@@ -361,10 +392,6 @@ export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
-  try {
-    await AsyncStorage.removeItem(`${vocabId}/image`)
-  } catch (e) {
-    throw new Error(e.message)
-  }
+  await deleteFileURI(vocabId, 'image')
   return body
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
 import LanguageHome from 'components/LanguageHome'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,6 +7,7 @@ import { setField, resetField } from 'slices/language.slice'
 import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import i18n from 'utils/i18n'
+import { getFileURI } from 'utils/cache'
 
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -74,8 +74,8 @@ const LessonHome = ({ navigation }) => {
       if (lessonData?.vocab) {
         const selectedData = lessonData.vocab.filter((item) => item.selected)
         let formattedVocabData = selectedData.map(async (item) => {
-          const imageUri = await AsyncStorage.getItem(`${item._id}/image`)
-          const audioUri = await AsyncStorage.getItem(`${item._id}/audio`)
+          const { fileURI: imageUri, shouldRefresh: shouldRefreshImage } = await getFileURI(item._id, 'image')
+          const { fileURI: audioUri, shouldRefresh: shouldRefreshAudio } = await getFileURI(item._id, 'audio')
 
           const formattedItem = {
             _id: item._id,
@@ -85,10 +85,16 @@ const LessonHome = ({ navigation }) => {
             audio: item.audio !== '',
             _order: item._order,
             imageURI: item.image ? imageUri : '',
-            image: item.image,
+            image: item.image !== '',
           }
 
-          if (item.image) {
+          /*
+            Below, we only load the image and audio files from the API
+            if the file has an image and audio file AND it needs to be refetched from the API
+            because it 1) doesn't exist in Expo's file system or 2) has existed in Expo's file system for too long.
+          */
+
+          if (item.image !== '' && shouldRefreshImage) {
             const filePath = item.image
             const splitPath = filePath.split('.')
 
@@ -96,7 +102,6 @@ const LessonHome = ({ navigation }) => {
             const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
 
             // Need to fetch image uri
-            // [TODO]: Add backend trackPromise()
             downloadImageFile(
               currentCourseId,
               currentUnitId,
@@ -112,7 +117,7 @@ const LessonHome = ({ navigation }) => {
             })
           }
 
-          if (item.audio !== '') {
+          if (item.audio !== '' && shouldRefreshAudio) {
             const filePath = item.audio
             const splitPath = filePath.split('.')
 
@@ -120,7 +125,6 @@ const LessonHome = ({ navigation }) => {
             const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
 
             // Downloads audio file and gets Filesystem uri
-            // [TODO]: Add backend trackPromise()
             downloadAudioFile(
               currentCourseId,
               currentUnitId,
