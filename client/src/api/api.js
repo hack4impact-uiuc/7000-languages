@@ -257,9 +257,8 @@ export const downloadAudioFileToExpo = async (vocabId, uri) => {
   const splitPath = uri.split('.')
   const fileType = splitPath.length > 2 ? splitPath[1] : 'caf'
 
-  const newURI = `${
-    FileSystem.documentDirectory
-  }${vocabId}-audio-${Date.now()}.${fileType}`
+  const newURI = `${FileSystem.documentDirectory
+    }${vocabId}-audio-${Date.now()}.${fileType}`
   await FileSystem.copyAsync({ from: uri, to: newURI })
   await putFileURI(vocabId, newURI, 'audio')
 
@@ -271,7 +270,7 @@ export const downloadAudioFile = async (
   unitId,
   lessonId,
   vocabId,
-  fileType = 'm4a',
+  fileType = 'caf',
 ) => {
   const idToken = await loadUserIDToken()
   const downloadResumable = FileSystem.createDownloadResumable(
@@ -316,9 +315,8 @@ export const uploadImageFileToExpo = async (vocabId, uri) => {
   const splitPath = uri.split('.')
   const fileType = splitPath.length > 2 ? splitPath[1] : 'jpg'
 
-  const newURI = `${
-    FileSystem.documentDirectory
-  }${vocabId}-image-${Date.now()}.${fileType}`
+  const newURI = `${FileSystem.documentDirectory
+    }${vocabId}-image-${Date.now()}.${fileType}`
   await FileSystem.copyAsync({ from: uri, to: newURI })
   await putFileURI(vocabId, newURI, 'image')
 
