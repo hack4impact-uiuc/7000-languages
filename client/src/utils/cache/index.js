@@ -16,7 +16,7 @@ const INVALIDATION_SECONDS = 60 * 60 * 24
  * @param {String} mediaType Image or Audio
  * @returns
  */
-const getAsyncStorageKeyGivenMediaType = (vocabID, mediaType) => `${vocabID}/${mediaType}`;
+const getAsyncStorageKeyGivenMediaType = (vocabID, mediaType) => `${vocabID}/${mediaType}`
 
 /*
  * Removes a vocab id and file URI mapping from Async Storage and Expo FileSystem
@@ -97,7 +97,7 @@ export const getFileURI = async (vocabID, mediaType) => {
  * @returns true if successful, false otherwise
  */
 export const setFileURI = async (vocabID, fileURI, mediaType) => {
-  const key = getAsyncStorageKeyGivenMediaType(vocabID, mediaType);
+  const key = getAsyncStorageKeyGivenMediaType(vocabID, mediaType)
 
   try {
     await AsyncStorage.setItem(key, fileURI)

@@ -1,8 +1,8 @@
 import * as FileSystem from 'expo-file-system'
 import { loadUserIDToken } from 'utils/auth'
 import { setFileURI, deleteFileURI } from 'utils/cache'
-import instance, { BASE_URL } from './axios-config'
 import { MEDIA_TYPE } from 'utils/constants'
+import instance, { BASE_URL } from './axios-config'
 
 /* User Endpoints */
 
@@ -258,13 +258,14 @@ export const persistAudioFileInExpo = async (vocabId, temporaryURI) => {
     There is no need to delete the file stored at temporaryURI since that will be handled by Expo.
   */
   const splitPath = temporaryURI.split('.')
-  const fileType = splitPath.length > 2 ? splitPath[1] : 'caf';
+  const fileType = splitPath.length > 2 ? splitPath[1] : 'caf'
 
-  const newURI = `${FileSystem.documentDirectory
-    }${vocabId}-audio-${Date.now()}.${fileType}`
+  const newURI = `${
+    FileSystem.documentDirectory
+  }${vocabId}-audio-${Date.now()}.${fileType}`
   await FileSystem.copyAsync({ from: temporaryURI, to: newURI })
   await setFileURI(vocabId, newURI, MEDIA_TYPE.AUDIO)
-  console.log("new uri: ", newURI);
+  console.log('new uri: ', newURI)
 
   return { fileType }
 }
@@ -321,8 +322,9 @@ export const persistImageFileInExpo = async (vocabId, temporaryURI) => {
   const splitPath = temporaryURI.split('.')
   const fileType = splitPath.length > 2 ? splitPath[1] : 'jpg'
 
-  const newURI = `${FileSystem.documentDirectory
-    }${vocabId}-image-${Date.now()}.${fileType}`
+  const newURI = `${
+    FileSystem.documentDirectory
+  }${vocabId}-image-${Date.now()}.${fileType}`
   await FileSystem.copyAsync({ from: temporaryURI, to: newURI })
   await setFileURI(vocabId, newURI, MEDIA_TYPE.IMAGE)
 

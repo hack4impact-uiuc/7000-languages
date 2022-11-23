@@ -17,7 +17,6 @@ import { addVocab, updateVocab } from 'slices/language.slice'
 import i18n from 'utils/i18n'
 import { getFileURI } from 'utils/cache'
 
-
 import {
   createVocabItem,
   updateVocabItem,
@@ -110,17 +109,19 @@ const VocabDrawer = ({ navigation }) => {
           let uri = ''
           const { fileURI: audioUri } = await getFileURI(
             currentVocabId,
-            MEDIA_TYPE.AUDIO
+            MEDIA_TYPE.AUDIO,
           )
           if (audioUri != null) {
             uri = audioUri
           } else {
-            uri = await trackPromise(downloadAudioFile(
-              currentCourseId,
-              currentUnitId,
-              currentLessonId,
-              currentVocabId,
-            ));
+            uri = await trackPromise(
+              downloadAudioFile(
+                currentCourseId,
+                currentUnitId,
+                currentLessonId,
+                currentVocabId,
+              ),
+            )
           }
 
           setAudioRecording(uri)
@@ -136,7 +137,7 @@ const VocabDrawer = ({ navigation }) => {
           let uri = ''
           const { fileURI: imageUri } = await getFileURI(
             currentVocabId,
-            MEDIA_TYPE.IMAGE
+            MEDIA_TYPE.IMAGE,
           )
           if (imageUri != null) {
             uri = imageUri
@@ -147,7 +148,8 @@ const VocabDrawer = ({ navigation }) => {
                 currentUnitId,
                 currentLessonId,
                 currentVocabId,
-              ));
+              ),
+            )
           }
 
           setImage(uri)
@@ -220,17 +222,30 @@ const VocabDrawer = ({ navigation }) => {
           await stopRecording()
         }
 
+        const areCreatingNewVocabItem = currentVocabId === ''
+
         // Clear the audio and image file saved to state for the next time the user opens the Vocab Drawer.
-        // The functions below as async, but we want to continue with the rest of this method even if these methods
-        // aren't complete
-        if (deleteAudioUri !== '' && deleteAudioUri !== null) {
-          clearRecording(deleteAudioUri)
+        // The functions below as async and must finish before continuing. Otherwise, there is the possible of a race
+        // condition between deleting a previous file and adding a new one.
+
+        const deletePromises = []
+
+        if (
+          deleteAudioUri !== ''
+          && deleteAudioUri !== null
+          && !areCreatingNewVocabItem
+        ) {
+          deletePromises.push(clearRecording(deleteAudioUri))
         }
-        if (deleteImageUri !== '' && deleteImageUri !== null) {
-          clearImage(deleteImageUri)
+        if (
+          deleteImageUri !== ''
+          && deleteImageUri !== null
+          && !areCreatingNewVocabItem
+        ) {
+          deletePromises.push(clearImage(deleteImageUri))
         }
 
-        const areCreatingNewVocabItem = currentVocabId === ''
+        await Promise.all(deletePromises)
 
         // Build the vocab item from the component's state
         const vocabItem = {
