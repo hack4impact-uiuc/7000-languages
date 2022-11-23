@@ -79,6 +79,8 @@ const LanguageHome = ({
     })
   }
 
+  const extraSpaceView = <View style={{ height: 100 }} />
+
   const itemTitle = renderData.length === 1 ? singularItemText : pluralItemText
 
   // Generates the Lesson Home Page
@@ -154,34 +156,29 @@ const LanguageHome = ({
         </View>
 
         <ScrollView>
-          <View
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            {renderData.map((element) => (
-              <StyledCard
-                key={element._id}
-                titleText={element.body}
-                bodyText={element.name}
-                imageURI={element.imageURI}
-                showVolumeIcon={element.audio}
-                volumeIconCallback={() => playAudio(element.audioURI)}
-                width={width * 0.97}
-                height={element.imageURI === '' ? 75 : 100}
-                rightIcon={(
-                  <MaterialCommunityIcons
-                    name="pencil"
-                    color="black"
-                    size={20}
-                    onPress={() => nextPageCallback(element)}
-                  />
-                )}
-              />
-            ))}
-          </View>
+          {renderData.map((element) => (
+            <StyledCard
+              key={element._id}
+              titleText={element.body}
+              bodyText={element.name}
+              imageURI={element.imageURI}
+              showVolumeIcon={element.hasAudio}
+              volumeIconCallback={() => playAudio(element.audioURI)}
+              width={width * 0.97}
+              height={element.imageURI === '' ? 75 : 100}
+              rightIcon={(
+                <MaterialCommunityIcons
+                  name="pencil"
+                  color="black"
+                  size={20}
+                  onPress={() => nextPageCallback(element)}
+                />
+              )}
+            />
+          ))}
+          {extraSpaceView}
         </ScrollView>
+
         <View style={{ position: 'absolute', bottom: '5%', right: '5%' }}>
           <StyledButton
             title={addButtonText}
@@ -275,39 +272,33 @@ const LanguageHome = ({
       </View>
 
       <ScrollView>
-        <View
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          {renderData.map((element, index) => (
-            <Pressable
-              onPress={() => nextPageCallback(element)}
-              key={element._id}
-            >
-              {({ isPressed }) => (
-                <StyledCard
-                  key={element._id}
-                  leftIcon={<NumberBox number={index + 1} />}
-                  titleText={element.name}
-                  bodyText={element.body}
-                  width={width * 0.97}
-                  height={75}
-                  indicatorType={element.indicatorType}
-                  rightIcon={(
-                    <MaterialCommunityIcons
-                      name="chevron-right"
-                      color="black"
-                      size={40}
-                    />
-                  )}
-                  isPressed={isPressed}
-                />
-              )}
-            </Pressable>
-          ))}
-        </View>
+        {renderData.map((element, index) => (
+          <Pressable
+            onPress={() => nextPageCallback(element)}
+            key={element._id}
+          >
+            {({ isPressed }) => (
+              <StyledCard
+                key={element._id}
+                leftIcon={<NumberBox number={index + 1} />}
+                titleText={element.name}
+                bodyText={element.body}
+                width={width * 0.97}
+                height={75}
+                indicatorType={element.indicatorType}
+                rightIcon={(
+                  <MaterialCommunityIcons
+                    name="chevron-right"
+                    color="black"
+                    size={40}
+                  />
+                )}
+                isPressed={isPressed}
+              />
+            )}
+          </Pressable>
+        ))}
+        {extraSpaceView}
       </ScrollView>
 
       <View style={{ position: 'absolute', bottom: '5%', right: '5%' }}>
