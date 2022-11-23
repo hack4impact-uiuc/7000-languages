@@ -128,7 +128,13 @@ router.delete(
       // Remove reference to course from each user that has this course listed
       await models.User.updateMany(
         {},
-        { $pull: { adminLanguages: course_id, learnerLanguages: course_id, collaboratorLanguages: course_id } }
+        {
+          $pull: {
+            adminLanguages: course_id,
+            learnerLanguages: course_id,
+            collaboratorLanguages: course_id,
+          },
+        },
       );
 
       // Remove audio and image data from AWS

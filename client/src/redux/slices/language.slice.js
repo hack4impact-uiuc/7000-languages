@@ -110,9 +110,9 @@ const languageSlice = createSlice({
       )
       Object.keys(payload.lesson).forEach((key) => {
         if (
-          key in state.allLessons[lessonIndex]
-          && typeof state.allLessons[lessonIndex][key]
-            === typeof payload.lesson[key]
+          key in state.allLessons[lessonIndex] &&
+          typeof state.allLessons[lessonIndex][key] ===
+            typeof payload.lesson[key]
         ) {
           state.allLessons[lessonIndex][key] = payload.lesson[key]
         }
@@ -120,8 +120,8 @@ const languageSlice = createSlice({
       // Update the data in lessonData
       Object.keys(payload.lesson).forEach((key) => {
         if (
-          key in state.lessonData
-          && typeof state.lessonData[key] === typeof payload.lesson[key]
+          key in state.lessonData &&
+          typeof state.lessonData[key] === typeof payload.lesson[key]
         ) {
           state.lessonData[key] = payload.lesson[key]
         }
@@ -136,9 +136,9 @@ const languageSlice = createSlice({
 
       Object.keys(payload.course).forEach((key) => {
         if (
-          key in state.allCourses[courseIndex]
-          && typeof state.allCourses[courseIndex][key]
-            === typeof payload.course[key]
+          key in state.allCourses[courseIndex] &&
+          typeof state.allCourses[courseIndex][key] ===
+            typeof payload.course[key]
         ) {
           state.allCourses[courseIndex][key] = payload.course[key]
         }
@@ -151,8 +151,8 @@ const languageSlice = createSlice({
       // Update the data in courseDetails
       Object.keys(payload.course.details).forEach((key) => {
         if (
-          key in state.courseDetails
-          && typeof state.courseDetails[key] === typeof payload.course.details[key]
+          key in state.courseDetails &&
+          typeof state.courseDetails[key] === typeof payload.course.details[key]
         ) {
           state.courseDetails[key] = payload.course.details[key]
         }
@@ -169,8 +169,8 @@ const languageSlice = createSlice({
 
       Object.keys(payload.unit).forEach((key) => {
         if (
-          key in state.allUnits[unitIndex]
-          && typeof state.allUnits[unitIndex][key] === typeof payload.unit[key]
+          key in state.allUnits[unitIndex] &&
+          typeof state.allUnits[unitIndex][key] === typeof payload.unit[key]
         ) {
           state.allUnits[unitIndex][key] = payload.unit[key]
         }

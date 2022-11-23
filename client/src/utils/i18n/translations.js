@@ -87,6 +87,7 @@ const translations = {
       addVocabItem: 'Add a Vocab Item',
       addNew: 'Add New',
       manageVocab: 'Manage Vocab',
+      search: 'Search',
     },
     dialogue: {
       areYouSureDeleteCourse: 'Are you sure you want to delete this course?',
@@ -219,6 +220,7 @@ const translations = {
       suggestion: 'Suggestion',
       settings: 'Paramètres',
       delete: 'Supprimer',
+      search: 'Chercher',
     },
     actions: {
       becomeContributorTitle: 'Devenir un contributeur',

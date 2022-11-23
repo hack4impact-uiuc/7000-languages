@@ -23,6 +23,7 @@ import Intro from 'pages/Intro'
 import i18n from 'utils/i18n'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
+import LearnerSearch from 'pages/LearnerSearch'
 
 // ------------------------------------
 // Constants
@@ -41,6 +42,13 @@ const homeNavigationProps = {
 const settingsNavigationProps = {
   headerTintColor: 'black',
   headerStyle: { backgroundColor: 'white' },
+  headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+}
+
+// TODO : does the learner side go in a different nav stack?
+const learnerNavigationProps = {
+  headerTintColor: 'white',
+  headerStyle: { backgroundColor: colors.blue.dark },
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
 }
 
@@ -202,6 +210,17 @@ export const HomeNavigator = ({ courseId }) => (
       component={UpdateLesson}
       options={({ navigation }) => ({
         ...manageNavigationProps,
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+
+    <Stack.Screen
+      name="LearnerSearch"
+      component={LearnerSearch}
+      options={({ navigation }) => ({
+        ...learnerNavigationProps,
+        title: i18n.t('actions.search'),
         headerLeft: () => <BackButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}

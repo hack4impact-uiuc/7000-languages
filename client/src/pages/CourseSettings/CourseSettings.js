@@ -90,31 +90,32 @@ const CourseSettings = () => {
     dispatch(removeCourse({ courseId: currentCourseId }))
   }
 
-  const securityCode = visibility === 'private' ? (
-    <View style={styles.body}>
-      <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
-        {i18n.t('dict.securityCode')}
-      </Text>
-      <Text
-        fontFamily="body"
-        fontWeight="normal"
-        fontSize="md"
-        color="gray.medium"
-      >
-        {i18n.t('dialogue.courseSettingsChangeCode')}
-      </Text>
-      <Input
-        fontFamily="body"
-        fontWeight="normal"
-        fontSize="2xl"
-        textAlign="left"
-        my="5"
-        onEndEditing={(e) => setCode(e.nativeEvent.text)}
-      >
-        {code}
-      </Input>
-    </View>
-  ) : null
+  const securityCode =
+    visibility === 'private' ? (
+      <View style={styles.body}>
+        <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
+          {i18n.t('dict.securityCode')}
+        </Text>
+        <Text
+          fontFamily="body"
+          fontWeight="normal"
+          fontSize="md"
+          color="gray.medium"
+        >
+          {i18n.t('dialogue.courseSettingsChangeCode')}
+        </Text>
+        <Input
+          fontFamily="body"
+          fontWeight="normal"
+          fontSize="2xl"
+          textAlign="left"
+          my="5"
+          onEndEditing={(e) => setCode(e.nativeEvent.text)}
+        >
+          {code}
+        </Input>
+      </View>
+    ) : null
 
   return (
     <View style={{ flex: 1 }}>
@@ -149,17 +150,19 @@ const CourseSettings = () => {
         leftIcon={
           <MaterialCommunityIcons name="delete" color="black" size={20} />
         }
-        onPress={() => Alert.alert(
-          i18n.t('dialogue.areYouSureDeleteCourse'),
-          i18n.t('dialogue.actionCannotBeUndone'),
-          [
-            { text: i18n.t('dict.cancel') },
-            {
-              text: i18n.t('dict.delete'),
-              onPress: handleDelete,
-            },
-          ],
-        )}
+        onPress={() =>
+          Alert.alert(
+            i18n.t('dialogue.areYouSureDeleteCourse'),
+            i18n.t('dialogue.actionCannotBeUndone'),
+            [
+              { text: i18n.t('dict.cancel') },
+              {
+                text: i18n.t('dict.delete'),
+                onPress: handleDelete,
+              },
+            ],
+          )
+        }
       />
     </View>
   )

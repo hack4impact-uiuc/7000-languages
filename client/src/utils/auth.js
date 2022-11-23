@@ -121,38 +121,39 @@ export const exchangeAuthCode = async (
   clientId,
   clientSecret,
   codeVerifier,
-) => AuthSession.exchangeCodeAsync(
-  {
-    code,
-    clientId,
-    clientSecret,
-    redirectUri,
-    extraParams: {
-      code_verifier: codeVerifier,
+) =>
+  AuthSession.exchangeCodeAsync(
+    {
+      code,
+      clientId,
+      clientSecret,
+      redirectUri,
+      extraParams: {
+        code_verifier: codeVerifier,
+      },
     },
-  },
-  { tokenEndpoint: GOOGLE_OAUTH_TOKEN_URL },
-)
-  .then(async (authentication) => {
-    const { idToken, refreshToken } = authentication
-    if (idToken !== null && refreshToken !== null) {
-      // id token has to be saved before api calls are made, the other save's can be async
-      await saveUserIDToken(idToken)
-      saveUserRefreshToken(refreshToken)
+    { tokenEndpoint: GOOGLE_OAUTH_TOKEN_URL },
+  )
+    .then(async (authentication) => {
+      const { idToken, refreshToken } = authentication
+      if (idToken !== null && refreshToken !== null) {
+        // id token has to be saved before api calls are made, the other save's can be async
+        await saveUserIDToken(idToken)
+        saveUserRefreshToken(refreshToken)
 
-      return { success: true, message: 'successfully saved', idToken }
-    }
-    return {
+        return { success: true, message: 'successfully saved', idToken }
+      }
+      return {
+        success: false,
+        message: `idToken or refreshToken is none, authentication result: ${authentication}`,
+        idToken: undefined,
+      }
+    })
+    .catch((reason) => ({
       success: false,
-      message: `idToken or refreshToken is none, authentication result: ${authentication}`,
+      message: `failed to save due to error: ${reason}`,
       idToken: undefined,
-    }
-  })
-  .catch((reason) => ({
-    success: false,
-    message: `failed to save due to error: ${reason}`,
-    idToken: undefined,
-  }))
+    }))
 
 /**
  * Refreshes the ID token for user using refreshToken from SecureStore

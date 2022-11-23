@@ -27,12 +27,14 @@ export const retrieveLanguage = async () => {
 }
 
 /* This is a function to map the locale to an existing language on our languageData json object. i.e. fr_DZ -> fr */
-const convertLanguage = (locale) => (locale.indexOf(FRENCH) >= 0 ? FRENCH : ENGLISH)
+const convertLanguage = (locale) =>
+  locale.indexOf(FRENCH) >= 0 ? FRENCH : ENGLISH
 
 export const getDeviceLocale = () => {
-  const locale = Platform.OS === 'ios'
-    ? NativeModules.SettingsManager.settings.AppleLocale
-    : NativeModules.I18nManager.localeIdentifier
+  const locale =
+    Platform.OS === 'ios'
+      ? NativeModules.SettingsManager.settings.AppleLocale
+      : NativeModules.I18nManager.localeIdentifier
 
   return convertLanguage(locale)
 }

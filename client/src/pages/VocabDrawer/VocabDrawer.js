@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Drawer from 'components/Drawer'
-import {
-  View, Input, Text, TextArea,
-} from 'native-base'
+import { View, Input, Text, TextArea } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { Entypo } from '@expo/vector-icons'
 import { colors } from 'theme'
@@ -311,7 +309,7 @@ const VocabDrawer = ({ navigation }) => {
 
   /* Requests audio and camera permissions */
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       await Audio.requestPermissionsAsync()
       await ImagePicker.requestCameraPermissionsAsync()
       await Audio.setAudioModeAsync({
@@ -323,11 +321,12 @@ const VocabDrawer = ({ navigation }) => {
 
   /* Always unload the Sound after using it to prevent memory leaks. */
   React.useEffect(
-    () => (listeningSound
-      ? () => {
-        listeningSound.unloadAsync()
-      }
-      : undefined),
+    () =>
+      listeningSound
+        ? () => {
+            listeningSound.unloadAsync()
+          }
+        : undefined,
     [listeningSound],
   )
 
