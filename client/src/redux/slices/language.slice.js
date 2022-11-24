@@ -12,7 +12,7 @@ const initialState = {
       _id: NO_COURSE_ID,
       name: 'No Courses',
       num_units: 'Join or start a course!',
-      isContributor: false,
+      isContributor: true,
     },
   ],
   currentCourseId: '',
@@ -28,6 +28,8 @@ const initialState = {
     population: '',
     location: '',
     link: '',
+    is_private: true,
+    code: '',
   },
   allUnits: [],
   currentUnitId: '',
@@ -35,6 +37,7 @@ const initialState = {
   currentLessonId: '',
   lessonData: { vocab: [] },
   currentVocabId: '',
+  currentLanguage: 'English',
 }
 
 // ------------------------------------
@@ -47,6 +50,21 @@ const languageSlice = createSlice({
   reducers: {
     setField: (state, { payload }) => {
       state[payload.key] = payload.value
+    },
+    removeCourse: (state, { payload }) => {
+      // Removes a course from redux
+      const courseIdx = state.allCourses.findIndex(
+        (element) => element._id === payload.courseId,
+      )
+      state.allCourses.splice(courseIdx, 1)
+
+      if (state.allCourses.length === 0) {
+        state.allCourses = initialState.allCourses
+      }
+
+      if (state.currentCourseId === payload.courseId) {
+        state.currentCourseId = initialState.currentCourseId
+      }
     },
     addUnit: (state, { payload }) => {
       // Pushes new unit to the list containing all units
@@ -83,6 +101,81 @@ const languageSlice = createSlice({
       )
       state.lessonData.vocab[vocabIndex] = payload.vocab
     },
+    patchSelectedLesson: (state, { payload }) => {
+      /* Patches the fields for a selected lesson. This is called after submitting on <UpdateLesson/>. */
+
+      // Update the data in allLessons
+      const lessonIndex = state.allLessons.findIndex(
+        (element) => element._id === state.currentLessonId,
+      )
+      Object.keys(payload.lesson).forEach((key) => {
+        if (
+          key in state.allLessons[lessonIndex]
+          && typeof state.allLessons[lessonIndex][key]
+            === typeof payload.lesson[key]
+        ) {
+          state.allLessons[lessonIndex][key] = payload.lesson[key]
+        }
+      })
+      // Update the data in lessonData
+      Object.keys(payload.lesson).forEach((key) => {
+        if (
+          key in state.lessonData
+          && typeof state.lessonData[key] === typeof payload.lesson[key]
+        ) {
+          state.lessonData[key] = payload.lesson[key]
+        }
+      })
+    },
+
+    patchSelectedCourse: (state, { payload }) => {
+      /* Patches the fields for a selected course. This is called after submitting on <UpdateCourse/>. */
+      const courseIndex = state.allCourses.findIndex(
+        (element) => element._id === state.currentCourseId,
+      )
+
+      Object.keys(payload.course).forEach((key) => {
+        if (
+          key in state.allCourses[courseIndex]
+          && typeof state.allCourses[courseIndex][key]
+            === typeof payload.course[key]
+        ) {
+          state.allCourses[courseIndex][key] = payload.course[key]
+        }
+      })
+
+      if (payload.course.details?.name) {
+        state.allCourses[courseIndex].name = payload.course.details?.name
+      }
+
+      // Update the data in courseDetails
+      Object.keys(payload.course.details).forEach((key) => {
+        if (
+          key in state.courseDetails
+          && typeof state.courseDetails[key] === typeof payload.course.details[key]
+        ) {
+          state.courseDetails[key] = payload.course.details[key]
+        }
+      })
+    },
+
+    patchSelectedUnit: (state, { payload }) => {
+      /* Patches the fields for a selected unit. This is called after submitting on <UpdateUnit/>. */
+
+      // Update the data in allUnits
+      const unitIndex = state.allUnits.findIndex(
+        (element) => element._id === state.currentUnitId,
+      )
+
+      Object.keys(payload.unit).forEach((key) => {
+        if (
+          key in state.allUnits[unitIndex]
+          && typeof state.allUnits[unitIndex][key] === typeof payload.unit[key]
+        ) {
+          state.allUnits[unitIndex][key] = payload.unit[key]
+        }
+      })
+    },
     clear: () => initialState,
     resetField: (state, { payload }) => {
       state[payload.key] = initialState[payload.key]
@@ -96,6 +189,15 @@ const languageSlice = createSlice({
       state.currentLessonId = initialState.currentLessonId
       state.lessonData = initialState.lessonData
       state.currentVocabId = initialState.currentVocabId
+    },
+    setSecurityCode: (state, { payload }) => {
+      state.courseDetails.code = payload.code
+    },
+    updateCourseVisibility: (state, { payload }) => {
+      state.courseDetails.is_private = payload.is_private
+    },
+    updateSecurityCode: (state, { payload }) => {
+      state.courseDetails.code = payload.code
     },
     updateNumLessons: (state, { payload }) => {
       const unitIdx = state.allUnits.findIndex(
@@ -138,13 +240,20 @@ const languageSlice = createSlice({
 export const { action } = languageSlice
 export const {
   setField,
+  removeCourse,
   addUnit,
   addLesson,
   addVocab,
   updateVocab,
+  patchSelectedLesson,
+  patchSelectedUnit,
+  patchSelectedCourse,
   clear,
+  setSecurityCode,
   resetField,
   clearCourseData,
+  updateCourseVisibility,
+  updateSecurityCode,
   updateNumLessons,
   updateNumUnits,
   updateVocabs,

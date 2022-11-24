@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { colors } from 'theme'
 import Home from 'pages/Home'
 import Landing from 'pages/Landing'
+import SelectLanguage from 'pages/SelectLanguage'
 import VocabDrawer from 'pages/VocabDrawer'
 import CreateLesson from 'pages/CreateLesson'
 import CreateUnit from 'pages/CreateUnit'
@@ -14,7 +15,12 @@ import UnitHome from 'pages/UnitHome'
 import LessonHome from 'pages/LessonHome'
 import ManageLessons from 'pages/ManageLessons'
 import ManageVocab from 'pages/ManageVocab'
+import UpdateLesson from 'pages/UpdateLesson'
+import UpdateUnit from 'pages/UpdateUnit'
 import CourseSettings from 'pages/CourseSettings'
+import UpdateCourse from 'pages/UpdateCourse'
+import Intro from 'pages/Intro'
+import i18n from 'utils/i18n'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -28,7 +34,7 @@ const ModalStack = createStackNavigator()
 
 const homeNavigationProps = {
   headerTintColor: 'white',
-  headerStyle: { backgroundColor: colors.red.dark },
+  headerStyle: { backgroundColor: colors.red.medium_dark },
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
 }
 
@@ -70,12 +76,15 @@ More reading: https://reactnavigation.org/docs/stack-navigator/
 
 export const AuthNavigator = () => (
   <AuthStack.Navigator
-    initialRouteName="Landing"
+    initialRouteName="Intro"
     screenOptions={{
       headerShown: false,
       headerMode: 'screen',
+      gestureEnabled: false,
     }}
   >
+    <AuthStack.Screen name="Intro" component={Intro} />
+    <AuthStack.Screen name="SelectLanguage" component={SelectLanguage} />
     <AuthStack.Screen
       name="Landing"
       component={Landing}
@@ -91,6 +100,9 @@ export const ModalNavigator = () => (
     <ModalStack.Screen name="CreateUnit" component={CreateUnit} />
     <ModalStack.Screen name="VocabDrawer" component={VocabDrawer} />
     <ModalStack.Screen name="CreateLesson" component={CreateLesson} />
+    <ModalStack.Screen name="UpdateUnit" component={UpdateUnit} />
+    <ModalStack.Screen name="UpdateLesson" component={UpdateLesson} />
+    <ModalStack.Screen name="UpdateCourse" component={UpdateCourse} />
   </ModalStack.Navigator>
 )
 
@@ -106,7 +118,7 @@ export const HomeNavigator = ({ courseId }) => (
       name={courseId}
       children={(props) => <Home {...props} courseId={courseId} />}
       options={({ navigation }) => ({
-        title: 'Home',
+        title: i18n.t('dict.courseHome'),
         headerLeft: () => <DrawerButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}
@@ -134,7 +146,7 @@ export const HomeNavigator = ({ courseId }) => (
       name="Apply"
       component={Apply}
       options={({ navigation }) => ({
-        title: 'Become a Contributor',
+        title: i18n.t('actions.becomeContributorTitle'),
         headerStyle: { backgroundColor: colors.white.light },
         headerTitleStyle: {
           fontSize: 18,
@@ -146,11 +158,21 @@ export const HomeNavigator = ({ courseId }) => (
       })}
     />
     <Stack.Screen
+      name="ManageVocab"
+      component={ManageVocab}
+      options={({ navigation }) => ({
+        ...manageNavigationProps,
+        title: i18n.t('actions.manageVocab'),
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <Stack.Screen
       name="ManageUnits"
       component={ManageUnits}
       options={({ navigation }) => ({
         ...manageNavigationProps,
-        title: 'Manage Units',
+        title: i18n.t('actions.manageUnits'),
         headerLeft: () => <BackButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}
@@ -160,17 +182,26 @@ export const HomeNavigator = ({ courseId }) => (
       component={ManageLessons}
       options={({ navigation }) => ({
         ...manageNavigationProps,
-        title: 'Manage Lessons',
+        title: i18n.t('actions.manageLessons'),
         headerLeft: () => <BackButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}
     />
     <Stack.Screen
-      name="ManageVocab"
-      component={ManageVocab}
+      name="UpdateUnit"
+      component={UpdateUnit}
       options={({ navigation }) => ({
         ...manageNavigationProps,
-        title: 'Manage Vocab',
+        headerLeft: () => <BackButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+
+    <Stack.Screen
+      name="UpdateLesson"
+      component={UpdateLesson}
+      options={({ navigation }) => ({
+        ...manageNavigationProps,
         headerLeft: () => <BackButton navigation={navigation} />,
         cardStyle: { backgroundColor: 'white' },
       })}
@@ -189,9 +220,8 @@ export const SettingsNavigator = () => (
     <Stack.Screen
       name="CourseSettings"
       component={CourseSettings}
-      options={({ navigation }) => ({
-        title: 'Settings',
-        headerLeft: () => <BackButton navigation={navigation} color="black" />,
+      options={() => ({
+        title: i18n.t('dict.settings'),
         cardStyle: { backgroundColor: 'white' },
       })}
     />

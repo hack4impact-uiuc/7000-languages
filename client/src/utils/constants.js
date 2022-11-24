@@ -1,6 +1,5 @@
 export const SECURE_STORAGE_ID_TOKEN_KEY = 'userToken'
 export const SECURE_STORAGE_REFRESH_TOKEN_KEY = 'refreshToken'
-export const SECURE_STORAGE_CLIENT_ID_KEY = 'clientId'
 export const ERROR_ALERT_TITLE = 'Error'
 export const DRAGGABLE_LIST_COMPONENT_DELAY = 0.75
 export const DRAGGABLE_LIST_CARD_WIDTH_FACTOR = -10
@@ -17,3 +16,10 @@ export const RECORDING = {
   COMPLETE: 3,
 }
 export const NO_COURSE_ID = 'no_course_id'
+export const CURRENT_LANGUAGE = 'current_language'
+export const ENGLISH = 'en'
+export const FRENCH = 'fr'
+export const MEDIA_TYPE = {
+  IMAGE: 'image',
+  AUDIO: 'audio',
+}
