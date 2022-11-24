@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   soundIcon: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#DEE5E9',
+    backgroundColor: colors.gray.semi_light,
     height: 40,
     width: 40,
     borderRadius: 20,
@@ -66,6 +66,8 @@ const StyledCard = ({
   width,
   height,
   isPressed,
+  containerStyle = {},
+  backgroundColor = colors.white.dark
 }) => {
   const generateLeftIcon = leftIcon ? (
     <Box style={styles.leftIcon}>{leftIcon}</Box>
@@ -80,7 +82,7 @@ const StyledCard = ({
     </Box>
   ) : null
   const generateImage = imageURI === '' ? (
-    indicator
+    null
   ) : (
     <Box style={styles.indicator}>
       <Image
@@ -111,9 +113,12 @@ const StyledCard = ({
       py="3"
       width={width}
       height={height}
-      style={styles.root}
+      style={{
+        ...styles.root,
+        ...containerStyle
+      }}
       borderRadius="md"
-      bg={isPressed ? colors.gray.medium_light : colors.white.dark}
+      bg={isPressed ? colors.gray.medium_light : backgroundColor}
     >
       <Box px="2" style={styles.left}>
         {generateImage}
@@ -131,6 +136,7 @@ const StyledCard = ({
           <Text color="gray.medium" fontSize="lg" numberOfLines={1}>
             {bodyText}
           </Text>
+          {indicator}
         </Box>
       </Box>
       <Box style={styles.right}>
@@ -153,6 +159,8 @@ StyledCard.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   isPressed: PropTypes.bool,
+  containerStyle: PropTypes.object,
+  backgroundColor: PropTypes.string
 }
 
 StyledCard.defaultProps = {
@@ -163,10 +171,12 @@ StyledCard.defaultProps = {
   indicatorType: INDICATOR_TYPES.NONE,
   imageURI: '',
   showVolumeIcon: false,
-  volumeIconCallback: () => {},
+  volumeIconCallback: () => { },
   width: 100,
   height: 70,
   isPressed: false,
+  containerStyle: {},
+  backgroundColor: colors.white.dark
 }
 
 export default StyledCard

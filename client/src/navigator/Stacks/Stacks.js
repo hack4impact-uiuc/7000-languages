@@ -23,6 +23,7 @@ import Intro from 'pages/Intro'
 import i18n from 'utils/i18n'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
+import LearnerUnitHome from 'pages/LearnerUnitHome'
 
 // ------------------------------------
 // Constants
@@ -120,6 +121,15 @@ export const HomeNavigator = ({ courseId }) => (
       options={({ navigation }) => ({
         title: i18n.t('dict.courseHome'),
         headerLeft: () => <DrawerButton navigation={navigation} />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <Stack.Screen
+      name="LearnerUnitHome"
+      component={LearnerUnitHome}
+      options={({ navigation }) => ({
+        title: '',
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
         cardStyle: { backgroundColor: 'white' },
       })}
     />

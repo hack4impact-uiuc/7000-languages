@@ -20,7 +20,7 @@ const _ = require('lodash');
 router.get(
   '/',
   requireAuthentication,
-  requireLanguageAuthorization,
+  // requireLanguageAuthorization, TODO: comment back in
   errorWrap(async (req, res) => {
     const { unit_id } = req.query;
 

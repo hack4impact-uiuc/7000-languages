@@ -5,6 +5,7 @@ import HomeBaseCase from 'components/HomeBaseCase'
 import { setField, clearCourseData } from 'slices/language.slice'
 import { useDispatch, useSelector } from 'react-redux'
 import CourseHome from 'pages/CourseHome'
+import LearnerCourseHome from 'pages/LearnerCourseHome'
 import { getCourse } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import i18n from 'utils/i18n'
@@ -15,7 +16,7 @@ const Home = ({ navigation, courseId }) => {
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
 
-  const { currentCourseId } = useSelector((state) => state.language)
+  const { currentCourseId, allCourses } = useSelector((state) => state.language)
 
   const [courseDescription, setCourseDescription] = useState('')
   const [courseName, setCourseName] = useState('')
@@ -58,6 +59,19 @@ const Home = ({ navigation, courseId }) => {
 
   if (courseId === NO_COURSE_ID || currentCourseId === NO_COURSE_ID) {
     return <HomeBaseCase navigation={navigation} />
+  }
+
+  // Check if this course is a Learner Course or a Contributor Course
+
+  const courseIndex = allCourses.findIndex((course) => course._id === courseId);
+
+  if (courseIndex >= 0 && !allCourses[courseIndex].isContributor) {
+    return <LearnerCourseHome
+      navigation={navigation}
+      courseId={courseId}
+      courseName={courseName}
+      courseDescription={courseDescription}
+    />
   }
 
   return (

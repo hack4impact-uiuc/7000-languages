@@ -29,11 +29,10 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
         const formattedItem = {
           _id: item._id,
           name: item.name,
-          body: `${item.num_lessons} ${
-            item.num_lessons === 1
+          body: `${item.num_lessons} ${item.num_lessons === 1
               ? `${i18n.t('dict.lessonSingle')}`
               : `${i18n.t('dict.lessonPlural')}`
-          }`,
+            }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
         }
@@ -92,8 +91,6 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     <LanguageHome
       languageName={name}
       languageDescription={description}
-      valueName="Units"
-      buttonText="Manage Units"
       singularItemText={i18n.t('dict.unitSingle')}
       pluralItemText={i18n.t('dict.unitPlural')}
       nextUpdate={navigateToUpdate}

@@ -23,13 +23,17 @@ const Tab = createBottomTabNavigator()
 const tabHiddenRoutes = ['Apply']
 
 const TabNavigator = (navigationData) => {
-  const { currentCourseId } = useSelector((state) => state.language)
+  const { currentCourseId, allCourses } = useSelector((state) => state.language)
+
+  // Determine if we are showing a Learner Course. If so, we need to hide the Settings icon
+  const courseIndex = allCourses.findIndex((course) => course._id === currentCourseId);
+  const isLearnerCourse = courseIndex >= 0 && !allCourses[courseIndex].isContributor;
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarActiveTintColor: '#DF4E47',
+        tabBarActiveTintColor: colors.gray.dark,
         tabBarInactiveTintColor: '#666666',
         tabBarStyle: [
           {
@@ -48,7 +52,7 @@ const TabNavigator = (navigationData) => {
               return (
                 <AntDesign
                   name="appstore1"
-                  color={focused ? colors.red.medium_dark : colors.gray.dark}
+                  color={focused ? colors.gray.dark : colors.gray.dark}
                   size={20}
                   solid
                 />
@@ -57,7 +61,7 @@ const TabNavigator = (navigationData) => {
               return (
                 <AntDesign
                   name="setting"
-                  color={focused ? colors.red.medium_dark : colors.gray.dark}
+                  color={focused ? colors.gray.dark : colors.gray.dark}
                   size={25}
                   solid
                 />
@@ -76,7 +80,7 @@ const TabNavigator = (navigationData) => {
           <HomeNavigator {...props} courseId={navigationData.route.name} />
         )}
       />
-      {currentCourseId !== '' ? (
+      {currentCourseId !== '' && !isLearnerCourse ? (
         <Tab.Screen
           name="Settings"
           children={(props) => <SettingsNavigator {...props} />}

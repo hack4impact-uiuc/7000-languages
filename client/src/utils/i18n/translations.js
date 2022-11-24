@@ -43,6 +43,8 @@ const translations = {
       securityCode: 'Security Code',
       settings: 'Settings',
       delete: 'Delete',
+      completed: "Completed",
+      inProgress: "In Progress"
     },
     actions: {
       becomeContributorTitle: 'Become a contributor',
@@ -219,6 +221,8 @@ const translations = {
       suggestion: 'Suggestion',
       settings: 'Paramètres',
       delete: 'Supprimer',
+      completed: "Complété",
+      inProgress: "En cours"
     },
     actions: {
       becomeContributorTitle: 'Devenir un contributeur',
