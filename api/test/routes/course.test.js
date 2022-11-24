@@ -195,7 +195,6 @@ describe('PATCH /language/course/ ', () => {
       request(app)
         .patch('/language/course/62391a30487d5ae343c82311')
         .send(body),
-      'ba32cb26-2020-4fbc-b77d-34ea6b0790a6',
     );
 
     const result = _.omit(response.body.result, ['_id', '__v', 'details.code']);
