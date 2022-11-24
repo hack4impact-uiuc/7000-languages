@@ -36,7 +36,7 @@ const requireLanguageAuthorization = async (req, res, next) => {
     }
     // check for if anguage request is in user's learnerLanguages field
     // check iff the user fails the admin check and it’s a GET request
-    if (!isAuthorized && 'GET'.equals(req.method)) {
+    if (!isAuthorized && 'GET' === req.method) {
       var authorized_learner_languages = req.user.learnerLanguages;
       for (let i = 0; i < authorized_learner_languages.length; i++) {
         if (authorized_learner_languages[i] === current_language) {
