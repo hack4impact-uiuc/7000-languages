@@ -84,18 +84,18 @@ describe('GET /language/course/ ', () => {
     expect(response.status).toBeGreaterThanOrEqual(400);
   });
 
-  // test('Valid learner id results in success', async () => {
-  //   const response = await withAuthentication(
-  //     request(app).get('/language/course/62391a30487d5ae343c82311'),
-  //     '69023be1-368c-4a86-8eb0-9771bffa0186',
-  //   );
+  test('Valid learner id results in success', async () => {
+    const response = await withAuthentication(
+      request(app).get('/language/course/62391a30487d5ae343c82311'),
+      '69023be1-368c-4a86-8eb0-9771bffa0186',
+    );
 
-  //   const message = response.body.message;
-  //   const result = omitDeep(response.body.result, '__v');
-  //   expect(response.status).toBe(200);
-  //   expect(message).toEqual('Successfully fetched course');
-  //   expect(result).toEqual(GET_SIMPLE_COURSE_EXPECTED);
-  // });
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual('Successfully fetched course');
+    expect(result).toEqual(GET_SIMPLE_COURSE_EXPECTED);
+  });
 });
 
 // This block tests the POST /user/ endpoint.
