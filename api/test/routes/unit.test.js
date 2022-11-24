@@ -236,6 +236,14 @@ describe('POST /language/unit/ ', () => {
     expect(message).toEqual('Successfully created a new unit');
     expect(result).toEqual(POST_BERBER_UNIT_EXPECTED);
   });
+
+  test('Learner attempt to post unit should fail', async () => {
+    const response = await withAuthentication(
+      request(app).post('/language/unit').send(POST_SIMPLE_UNIT),
+      '69023be1-368c-4a86-8eb0-9771bffa0186',
+    );
+    expect(response.status).toBeGreaterThanOrEqual(400);
+  });
 });
 
 // This block tests the PUT /unit/ endpoint.

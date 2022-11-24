@@ -98,6 +98,15 @@ describe('GET /language/course/ ', () => {
     expect(message).toEqual('Successfully fetched course');
     expect(result).toEqual(GET_SIMPLE_COURSE_EXPECTED);
   });
+
+  test('Invalid learner id results in error', async () => {
+    const response = await withAuthentication(
+      request(app).get('/language/course/62391a30487d5ae343c82311'),
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
+    );
+
+    expect(response.status).toBeGreaterThanOrEqual(400);
+  });
 });
 
 // This block tests the POST /user/ endpoint.
