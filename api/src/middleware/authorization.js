@@ -19,11 +19,13 @@ const requireLanguageAuthorization = async (req, res, next) => {
     return sendResponse(res, 400, 'Invalid ObjectID');
   }
   try {
+    /* Check if the course exists */
     const courseExists = await models.Course.findById(current_language);
     if (!courseExists) {
       return sendResponse(res, 404, 'Course does not exist');
     }
-    //check if language is in user's adminLanguages field
+
+    /* Check if the user is an admin for this course */
     var authorized_languages = req.user.adminLanguages;
 
     let isAuthorized = false;
@@ -34,8 +36,22 @@ const requireLanguageAuthorization = async (req, res, next) => {
         break;
       }
     }
-    // check for if anguage request is in user's learnerLanguages field
-    // check iff the user fails the admin check and it’s a GET request
+
+    if (isAuthorized) {
+      const course = await models.Course.findById(current_language);
+      if (course.admin_id !== req.user.authID) {
+        // Course doesn't contain the admin id, so we discredit the user as an admin of this course
+        isAuthorized = false;
+      } else {
+        // Authorized admin
+        return next();
+      }
+    }
+
+    /* 
+      Check if the user is a learner for this course if the user isn't an admin
+      and it is a GET request
+    */
     if (!isAuthorized && 'GET' === req.method) {
       var authorized_learner_languages = req.user.learnerLanguages;
       for (let i = 0; i < authorized_learner_languages.length; i++) {
@@ -50,12 +66,7 @@ const requireLanguageAuthorization = async (req, res, next) => {
       return sendResponse(res, 403, ERR_NOT_AUTHORIZED);
     }
 
-    //check if course contains admin id of user
-    const course = await models.Course.findById(current_language);
-    if (course.admin_id !== req.user.authID) {
-      return sendResponse(res, 403, ERR_NOT_AUTHORIZED);
-    }
-    next();
+    return next();
   } catch (error) {
     console.error(
       'requireLanguageAuthorization(): error caught: ',

@@ -62,8 +62,9 @@ describe('GET /language/course/ ', () => {
     const response = await withAuthentication(
       request(app).get('/language/course/62391a30487d5ae343c82311'),
     );
+
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '__v', 'details.code');
+    const result = omitDeep(response.body.result, '__v', 'code');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully fetched course');
     expect(result).toEqual(GET_SIMPLE_COURSE_EXPECTED);
@@ -92,7 +93,7 @@ describe('GET /language/course/ ', () => {
     );
 
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '__v');
+    const result = omitDeep(response.body.result, '__v', 'code');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully fetched course');
     expect(result).toEqual(GET_SIMPLE_COURSE_EXPECTED);
@@ -168,7 +169,7 @@ describe('POST /language/course/ ', () => {
       request(app).post('/language/course/').send(body),
     );
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '_id', '__v', 'details.code');
+    const result = omitDeep(response.body.result, '_id', '__v', 'code');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new course');
     expect(result).toEqual(POST_BERBER_COURSE_EXPECTED);
@@ -188,37 +189,19 @@ describe('PATCH /language/course/ ', () => {
     await db.connect();
   });
 
-  test('simple test', async () => {
-    expect(1).toEqual(1);
-  });
-
   test('Patch request should update course approval status', async () => {
     const body = PATCH_UPDATE_APPROVAL;
     const response = await withAuthentication(
       request(app)
         .patch('/language/course/62391a30487d5ae343c82311')
         .send(body),
+      'ba32cb26-2020-4fbc-b77d-34ea6b0790a6',
     );
 
     const result = _.omit(response.body.result, ['_id', '__v', 'details.code']);
     delete result['details']['_id'];
 
     expect(result).toEqual(PATCH_EXPECTED_COURSE_UPDATED_APPROVAL);
-    expect(response.status).toBe(200);
-  });
-
-  test('Patch request should updated course admin id', async () => {
-    const body = PATCH_UPDATE_ADMIN_ID;
-    const response = await withAuthentication(
-      request(app)
-        .patch('/language/course/62391a30487d5ae343c82311')
-        .send(body),
-    );
-
-    const result = _.omit(response.body.result, ['_id', '__v', 'details.code']);
-    delete result['details']['_id'];
-
-    expect(result).toEqual(PATCH_EXPECTED_COURSE_UPDATED_ADMIN_ID);
     expect(response.status).toBe(200);
   });
 

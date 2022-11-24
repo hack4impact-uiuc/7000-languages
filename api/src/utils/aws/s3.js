@@ -71,7 +71,9 @@ const deleteFolder = async (folderName) => {
 
   // Gets up to 1000 files that need to be deleted
   const listedObjects = await s3.listObjectsV2(params).promise();
-  if (listedObjects.Contents.length === 0) { return; }
+  if (listedObjects.Contents.length === 0) {
+    return;
+  }
 
   const deleteParams = {
     Bucket: S3_BUCKET_NAME,
