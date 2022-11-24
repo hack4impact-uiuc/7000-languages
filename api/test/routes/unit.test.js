@@ -48,8 +48,8 @@ verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
 // This block tests the GET /unit/ endpoint.
 describe('GET /language/unit/ ', () => {
-  /* 
-    We have to make sure we connect to a MongoDB mock db before the test 
+  /*
+    We have to make sure we connect to a MongoDB mock db before the test
     and close the connection at the end.
   */
   afterAll(async () => await db.closeDatabase());
