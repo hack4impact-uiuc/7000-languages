@@ -29,10 +29,11 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
         const formattedItem = {
           _id: item._id,
           name: item.name,
-          body: `${item.num_lessons} ${item.num_lessons === 1
+          body: `${item.num_lessons} ${
+            item.num_lessons === 1
               ? `${i18n.t('dict.lessonSingle')}`
               : `${i18n.t('dict.lessonPlural')}`
-            }`,
+          }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
         }

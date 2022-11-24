@@ -191,6 +191,17 @@ const theme = extendTheme({
             fontFamily: 'heading',
           },
         },
+        learner_secondary: {
+          bg: 'blue.medium_light',
+          w: '90%',
+          h: 60,
+          my: 3,
+          borderRadius: 40,
+          _text: {
+            color: 'blue.darker',
+            fontFamily: 'heading',
+          },
+        },
       },
     },
   },

@@ -26,8 +26,10 @@ const TabNavigator = (navigationData) => {
   const { currentCourseId, allCourses } = useSelector((state) => state.language)
 
   // Determine if we are showing a Learner Course. If so, we need to hide the Settings icon
-  const courseIndex = allCourses.findIndex((course) => course._id === currentCourseId);
-  const isLearnerCourse = courseIndex >= 0 && !allCourses[courseIndex].isContributor;
+  const courseIndex = allCourses.findIndex(
+    (course) => course._id === currentCourseId,
+  )
+  const isLearnerCourse = courseIndex >= 0 && !allCourses[courseIndex].isContributor
 
   return (
     <Tab.Navigator

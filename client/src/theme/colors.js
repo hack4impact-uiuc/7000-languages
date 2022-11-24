@@ -8,8 +8,10 @@ const colors = {
   },
   blue: {
     light: '#E5F7F7', // 100 opacity
+    medium_light: '#9ADFE0',
     medium: '#489FA3', // 300 opacity
-    dark: '#4FACB0', // 500 opacity
+    dark: '#4FACB0', // 500 opacity,
+    darker: '#006F7B',
   },
   orange: {
     light: '#FFF9E2', // 100 opacity

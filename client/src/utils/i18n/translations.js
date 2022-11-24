@@ -43,10 +43,12 @@ const translations = {
       securityCode: 'Security Code',
       settings: 'Settings',
       delete: 'Delete',
-      completed: "Completed",
-      inProgress: "In Progress"
+      completed: 'Completed',
+      inProgress: 'In Progress',
     },
     actions: {
+      playAudio: 'Play Audio',
+      startActivity: 'Start Activity',
       becomeContributorTitle: 'Become a contributor',
       editLesson: 'Edit Lesson',
       editUnit: 'Edit Unit',
@@ -91,6 +93,9 @@ const translations = {
       manageVocab: 'Manage Vocab',
     },
     dialogue: {
+      noActivitiesAvailable: 'No Activities Available',
+      activitiesInDevelopment:
+        'Learner activities are currently in development.',
       areYouSureDeleteCourse: 'Are you sure you want to delete this course?',
       actionCannotBeUndone: 'This action cannot be undone.',
       lessonPurpose: 'What is the purpose of this lesson?',
@@ -221,10 +226,12 @@ const translations = {
       suggestion: 'Suggestion',
       settings: 'Paramètres',
       delete: 'Supprimer',
-      completed: "Complété",
-      inProgress: "En cours"
+      completed: 'Complété',
+      inProgress: 'En cours',
     },
     actions: {
+      playAudio: 'Lecture audio',
+      startActivity: "Début de l'activité",
       becomeContributorTitle: 'Devenir un contributeur',
       editLesson: "Leçon d'édition",
       editUnit: "Unité d'édition",
@@ -269,6 +276,9 @@ const translations = {
       manageVocab: 'Gérer les éléments de vocabulaire',
     },
     dialogue: {
+      noActivitiesAvailable: 'Aucune activité disponible',
+      activitiesInDevelopment:
+        'Les activités pour les apprenants sont en cours de développement.',
       areYouSureDeleteCourse: 'Vous êtes sûr de vouloir supprimer ce cours?',
       actionCannotBeUndone: 'Cette action ne peut être annulée.',
       lessonPurpose: 'Quel est le but de cette leçon?',

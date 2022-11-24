@@ -63,15 +63,17 @@ const Home = ({ navigation, courseId }) => {
 
   // Check if this course is a Learner Course or a Contributor Course
 
-  const courseIndex = allCourses.findIndex((course) => course._id === courseId);
+  const courseIndex = allCourses.findIndex((course) => course._id === courseId)
 
   if (courseIndex >= 0 && !allCourses[courseIndex].isContributor) {
-    return <LearnerCourseHome
-      navigation={navigation}
-      courseId={courseId}
-      courseName={courseName}
-      courseDescription={courseDescription}
-    />
+    return (
+      <LearnerCourseHome
+        navigation={navigation}
+        courseId={courseId}
+        courseName={courseName}
+        courseDescription={courseDescription}
+      />
+    )
   }
 
   return (

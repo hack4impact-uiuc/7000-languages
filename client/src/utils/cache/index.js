@@ -72,7 +72,7 @@ export const getFileURI = async (vocabID, mediaType) => {
       }
     }
 
-    // If too much time has passed, we remove the file from Ascync Storage and Expo FileSystem
+    // If too much time has passed, we indicated that the file needs to get refreshed (fetched from the API again)
     const timeDifference = Date.now() / 1000 - fileInfo.modificationTime
 
     if (timeDifference >= INVALIDATION_SECONDS) {
@@ -81,11 +81,18 @@ export const getFileURI = async (vocabID, mediaType) => {
         shouldRefresh: true,
       }
     }
+
+    // Valid file URI
+    return {
+      fileURI,
+      shouldRefresh: false,
+    }
   }
 
+  // No file URI saved
   return {
-    fileURI,
-    shouldRefresh: false,
+    fileURI: null,
+    shouldRefresh: true,
   }
 }
 

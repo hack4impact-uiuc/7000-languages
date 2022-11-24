@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     left: 0,
   },
   right: {
-    width: 120,
     display: 'flex',
     flexDirection: 'row-reverse',
     justifyContent: 'flex-start',
@@ -67,7 +66,8 @@ const StyledCard = ({
   height,
   isPressed,
   containerStyle = {},
-  backgroundColor = colors.white.dark
+  backgroundColor = colors.white.dark,
+  bodyTextColor = 'gray.medium',
 }) => {
   const generateLeftIcon = leftIcon ? (
     <Box style={styles.leftIcon}>{leftIcon}</Box>
@@ -82,7 +82,7 @@ const StyledCard = ({
     </Box>
   ) : null
   const generateImage = imageURI === '' ? (
-    null
+    false
   ) : (
     <Box style={styles.indicator}>
       <Image
@@ -115,7 +115,7 @@ const StyledCard = ({
       height={height}
       style={{
         ...styles.root,
-        ...containerStyle
+        ...containerStyle,
       }}
       borderRadius="md"
       bg={isPressed ? colors.gray.medium_light : backgroundColor}
@@ -133,7 +133,7 @@ const StyledCard = ({
           >
             {titleText}
           </Text>
-          <Text color="gray.medium" fontSize="lg" numberOfLines={1}>
+          <Text color={bodyTextColor} fontSize="lg" numberOfLines={1}>
             {bodyText}
           </Text>
           {indicator}
@@ -159,8 +159,9 @@ StyledCard.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   isPressed: PropTypes.bool,
-  containerStyle: PropTypes.object,
-  backgroundColor: PropTypes.string
+  containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  backgroundColor: PropTypes.string,
+  bodyTextColor: PropTypes.string,
 }
 
 StyledCard.defaultProps = {
@@ -171,12 +172,13 @@ StyledCard.defaultProps = {
   indicatorType: INDICATOR_TYPES.NONE,
   imageURI: '',
   showVolumeIcon: false,
-  volumeIconCallback: () => { },
+  volumeIconCallback: () => {},
   width: 100,
   height: 70,
   isPressed: false,
   containerStyle: {},
-  backgroundColor: colors.white.dark
+  backgroundColor: colors.white.dark,
+  bodyTextColor: 'gray.medium',
 }
 
 export default StyledCard
