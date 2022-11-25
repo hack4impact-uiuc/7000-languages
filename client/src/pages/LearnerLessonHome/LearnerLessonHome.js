@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import LanguageHome from 'components/LanguageHome'
+import LearnerHome from 'components/LearnerHome'
 import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -9,8 +9,9 @@ import { useErrorWrap, useTrackPromise } from 'hooks'
 import i18n from 'utils/i18n'
 import { getFileURI } from 'utils/cache'
 import { MEDIA_TYPE } from 'utils/constants'
+import { Alert } from 'react-native'
 
-const LessonHome = ({ navigation }) => {
+const LearnerLessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
   const dispatch = useDispatch()
@@ -82,6 +83,7 @@ const LessonHome = ({ navigation }) => {
             _id: item._id,
             name: item.original,
             body: item.translation,
+            notes: item.notes,
             audioURI: item.audio ? audioUri : '',
             hasAudio: item.audio !== '',
             _order: item._order,
@@ -90,10 +92,10 @@ const LessonHome = ({ navigation }) => {
           }
 
           /*
-            Below, we only load the image and audio files from the API
-            if the file has an image and audio file AND it needs to be refetched from the API
-            because it 1) doesn't exist in Expo's file system or 2) has existed in Expo's file system for too long.
-          */
+                      Below, we only load the image and audio files from the API
+                      if the file has an image and audio file AND it needs to be refetched from the API
+                      because it 1) doesn't exist in Expo's file system or 2) has existed in Expo's file system for too long.
+                    */
 
           if (item.image !== '' && shouldRefreshImage) {
             const filePath = item.image
@@ -153,58 +155,33 @@ const LessonHome = ({ navigation }) => {
     getData()
   }, [lessonData])
 
-  /**
-   * Navigates to the Manage Vocab Page
-   */
-  const navigateToManage = () => {
-    navigation.navigate('ManageVocab')
-  }
-
-  /**
-   * Navigates to the Vocab Drawer for editing a vocab item
-   * @param {Object} element Vocab Item that was selected
-   */
-  const goToNextPage = (element) => {
-    const currentVocabId = element._id
-    // Save the id of the vocab item that we need to edit
-    dispatch(setField({ key: 'currentVocabId', value: currentVocabId }))
-    navigation.navigate('Modal', { screen: 'VocabDrawer' })
-  }
-
-  /**
-   * Navigates to the update unit modal
-   */
-  const navigateToUpdate = () => {
-    navigation.navigate('Modal', { screen: 'UpdateLesson' })
-  }
-
-  const navigateToAdd = () => {
-    // Since we aren't editing a vocab item, we need to clear the current vocab id
-    dispatch(setField({ key: 'currentVocabId', value: '' }))
-    navigation.navigate('Modal', { screen: 'VocabDrawer' })
+  const startLearningCallback = () => {
+    Alert.alert(
+      i18n.t('dialogue.noActivitiesAvailable'),
+      i18n.t('dialogue.activitiesInDevelopment'),
+      [
+        {
+          text: i18n.t('dict.ok'),
+          style: 'cancel',
+        },
+      ],
+    )
   }
 
   return (
-    <LanguageHome
+    <LearnerHome
       isLessonHome
       languageName={lessonName}
-      lessonDescription={lessonDescription}
-      nextUpdate={navigateToUpdate}
-      rightIconName="plus-circle"
-      buttonCallback={navigateToManage}
-      nextPageCallback={goToNextPage}
+      languageDescription={lessonDescription}
       singularItemText={i18n.t('dict.vocabItemSingle')}
       pluralItemText={i18n.t('dict.vocabItemPlural')}
-      manageIconName="cog"
-      manageButtonText={i18n.t('actions.manageVocab')}
-      addButtonText={i18n.t('actions.addVocabItem')}
       data={data}
-      addCallback={navigateToAdd}
+      startLearningCallback={startLearningCallback}
     />
   )
 }
 
-LessonHome.propTypes = {
+LearnerLessonHome.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
     goBack: PropTypes.func,
@@ -214,7 +191,7 @@ LessonHome.propTypes = {
   }),
 }
 
-LessonHome.defaultProps = {
+LearnerLessonHome.defaultProps = {
   navigation: {
     navigate: () => null,
     goBack: () => null,
@@ -224,4 +201,4 @@ LessonHome.defaultProps = {
   },
 }
 
-export default LessonHome
+export default LearnerLessonHome

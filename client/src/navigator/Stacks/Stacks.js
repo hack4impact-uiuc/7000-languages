@@ -21,6 +21,8 @@ import CourseSettings from 'pages/CourseSettings'
 import UpdateCourse from 'pages/UpdateCourse'
 import Intro from 'pages/Intro'
 import i18n from 'utils/i18n'
+import LearnerUnitHome from 'pages/LearnerUnitHome'
+import LearnerLessonHome from 'pages/LearnerLessonHome'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -124,12 +126,32 @@ export const HomeNavigator = ({ courseId }) => (
       })}
     />
     <Stack.Screen
+      name="LearnerUnitHome"
+      component={LearnerUnitHome}
+      options={({ navigation }) => ({
+        title: '',
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
+        headerStyle: { backgroundColor: colors.blue.medium },
+      })}
+    />
+    <Stack.Screen
       name="UnitHome"
       component={UnitHome}
       options={({ navigation }) => ({
         title: '',
         headerLeft: () => <BackButton navigation={navigation} color="white" />,
         cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <Stack.Screen
+      name="LearnerLessonHome"
+      component={LearnerLessonHome}
+      options={({ navigation }) => ({
+        title: '',
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
+        headerStyle: { backgroundColor: colors.blue.medium },
       })}
     />
     <Stack.Screen

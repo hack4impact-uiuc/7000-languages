@@ -1,43 +1,67 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import StyledButton from 'components/StyledButton'
-import { AntDesign, Ionicons } from '@expo/vector-icons'
+import { Text, View } from 'native-base'
+import { FontAwesome } from '@expo/vector-icons'
 import { colors } from 'theme'
 import { INDICATOR_TYPES } from 'utils/constants'
+import i18n from 'utils/i18n'
 
 const Indicator = ({ indicatorType }) => {
+  let indicatorBody = null
+
   switch (indicatorType) {
     case INDICATOR_TYPES.COMPLETE:
-      return (
-        <StyledButton
-          title="COMPLETE"
-          variant="complete"
-          rightIcon={(
-            <AntDesign
-              name="checkcircle"
-              size={12}
-              color={colors.green.medium}
-            />
-          )}
-          fontSize={10}
-        />
+      indicatorBody = (
+        <>
+          <FontAwesome
+            name="circle"
+            size={20}
+            color={colors.green.medium_light}
+          />
+          <Text
+            fontFamily="body"
+            fontWeight="regular"
+            color={colors.gray.medium}
+            fontSize="md"
+          >
+            {i18n.t('dict.completed')}
+          </Text>
+        </>
       )
+      break
     case INDICATOR_TYPES.INCOMPLETE:
-      return (
-        <StyledButton
-          title="INCOMPLETE"
-          variant="incomplete"
-          rightIcon={
-            <Ionicons name="warning" size={12} color={colors.orange.medium} />
-          }
-          fontSize={10}
-        />
+      indicatorBody = (
+        <>
+          <FontAwesome name="circle-o" size={20} color={colors.gray.medium} />
+          <Text
+            fontFamily="body"
+            fontWeight="regular"
+            color={colors.gray.medium}
+            fontSize="md"
+          >
+            {i18n.t('dict.inProgress')}
+          </Text>
+        </>
       )
+      break
     case INDICATOR_TYPES.NONE:
       return null
     default:
       return null
   }
+
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: 105,
+      }}
+    >
+      {indicatorBody}
+    </View>
+  )
 }
 
 // Button object fields
