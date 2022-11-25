@@ -7,17 +7,12 @@ import { INDICATOR_TYPES } from 'utils/constants'
 import i18n from 'utils/i18n'
 
 const Indicator = ({ indicatorType }) => {
+  let indicatorBody = null
+
   switch (indicatorType) {
     case INDICATOR_TYPES.COMPLETE:
-      return (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: 105,
-          }}
-        >
+      indicatorBody = (
+        <>
           <FontAwesome
             name="circle"
             size={20}
@@ -31,18 +26,12 @@ const Indicator = ({ indicatorType }) => {
           >
             {i18n.t('dict.completed')}
           </Text>
-        </View>
+        </>
       )
+      break
     case INDICATOR_TYPES.INCOMPLETE:
-      return (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: 105,
-          }}
-        >
+      indicatorBody = (
+        <>
           <FontAwesome name="circle-o" size={20} color={colors.gray.medium} />
           <Text
             fontFamily="body"
@@ -52,13 +41,27 @@ const Indicator = ({ indicatorType }) => {
           >
             {i18n.t('dict.inProgress')}
           </Text>
-        </View>
+        </>
       )
+      break
     case INDICATOR_TYPES.NONE:
       return null
     default:
       return null
   }
+
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: 105,
+      }}
+    >
+      {indicatorBody}
+    </View>
+  )
 }
 
 // Button object fields
