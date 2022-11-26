@@ -155,7 +155,10 @@ const LearnerLessonHome = ({ navigation }) => {
   }, [lessonData])
 
   const startLearningCallback = () => {
-    navigation.navigate('Activity', { screen: 'StartActivity', params: { activityType: ACTIVITY_TYPE.AUDIO_L2 } })
+    navigation.navigate('Activity', {
+      screen: 'StartActivity',
+      params: { activityType: ACTIVITY_TYPE.AUDIO_L2 },
+    })
   }
 
   return (

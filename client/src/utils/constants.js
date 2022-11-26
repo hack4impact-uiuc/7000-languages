@@ -25,11 +25,11 @@ export const MEDIA_TYPE = {
 }
 export const ACTIVITY_TYPE = {
   AUDIO_L2: 0,
-  L1_AUDIO: 1
+  L1_AUDIO: 1,
 }
-export const TOTAL_ACTIVITIES = 2;
+export const TOTAL_ACTIVITIES = 2
 export const QUESTION_STATE = {
   IN_PROGRESS: 0,
   INCORRECT: 1,
-  CORRECT: 2
+  CORRECT: 2,
 }

@@ -54,8 +54,6 @@ const StartActivity = ({ navigation, route }) => {
   useEffect(() => {
     setLessonTitle(lessonData.name)
     setLessonNumber(lessonData._order + 1)
-
-
   }, [lessonData, setLessonNumber, setLessonTitle])
 
   useEffect(() => {
@@ -69,10 +67,10 @@ const StartActivity = ({ navigation, route }) => {
   const startActivity = () => {
     const activityNumber = route.params.activityType
     if (activityNumber >= TOTAL_ACTIVITIES) {
-      navigation.goBack('LearnerHome');
+      navigation.navigate('Drawer', { screen: 'LearnerHome' })
     } else {
-      const activityScreen = `Activity${route.params.activityType + 1}`;
-      navigation.navigate('Activity', { screen: activityScreen });
+      const activityScreen = `Activity${route.params.activityType + 1}`
+      navigation.navigate('Activity', { screen: activityScreen })
     }
   }
 
@@ -80,14 +78,14 @@ const StartActivity = ({ navigation, route }) => {
     if (route.params.activityType != null) {
       switch (route.params.activityType) {
         case ACTIVITY_TYPE.AUDIO_L2:
-          return "Matching L1 Audio to L2 Text"
+          return 'Matching L1 Audio to L2 Text'
         case ACTIVITY_TYPE.L1_AUDIO:
-          return "Matching L1 Text to L1 Audio"
+          return 'Matching L1 Text to L1 Audio'
         default:
-          return ""
+          return ''
       }
     }
-    return "";
+    return ''
   }
 
   return (
@@ -133,15 +131,18 @@ const StartActivity = ({ navigation, route }) => {
 StartActivity.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    setOptions: PropTypes.func,
   }),
   route: PropTypes.shape({
-    params: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+    params: PropTypes.objectOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    ),
   }),
 }
 
 StartActivity.defaultProps = {
-  navigation: { navigate: () => null },
-  route: { params: {} }
+  navigation: { navigate: () => null, setOptions: () => null },
+  route: { params: {} },
 }
 
 export default StartActivity

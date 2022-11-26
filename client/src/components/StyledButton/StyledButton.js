@@ -35,7 +35,9 @@ StyledButton.propTypes = {
   rightIcon: PropTypes.element,
   fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   shadow: PropTypes.bool,
-  style: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  style: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ),
   isDisabled: PropTypes.bool,
 }
 
@@ -44,7 +46,7 @@ StyledButton.defaultProps = {
   variant: 'primary',
   leftIcon: null,
   rightIcon: null,
-  onPress: () => { },
+  onPress: () => {},
   fontSize: 'lg',
   shadow: false,
   style: {},

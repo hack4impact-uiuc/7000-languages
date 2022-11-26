@@ -1,18 +1,46 @@
+import _ from 'lodash'
+import { downloadAudioFile } from 'api'
+import { MEDIA_TYPE } from 'utils/constants'
+import { getFileURI } from 'utils/cache'
+
+/* eslint-disable no-param-reassign */
+
 export const shuffle = (array) => {
-    // Source: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-    let currentIndex = array.length, randomIndex;
+  const arrayToShuffle = _.cloneDeep(array)
 
-    // While there remain elements to shuffle.
-    while (currentIndex != 0) {
+  for (let i = arrayToShuffle.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const temp = arrayToShuffle[i]
+    arrayToShuffle[i] = arrayToShuffle[j]
+    arrayToShuffle[j] = temp
+  }
+  return arrayToShuffle
+}
 
-        // Pick a remaining element.
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
+export const getAudioURIGivenVocabItem = async (
+  _id,
+  audio,
+  courseId,
+  unitId,
+  lessonId,
+) => {
+  const { fileURI: audioUri, shouldRefresh: shouldRefreshAudio } = await getFileURI(_id, MEDIA_TYPE.AUDIO)
 
-        // And swap it with the current element.
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-    }
+  if (shouldRefreshAudio) {
+    const splitPath = audio.split('.')
 
-    return array;
+    // Get the file type from the vocabItem's audio field
+    const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
+
+    // Downloads audio file and gets Filesystem uri
+    const uri = await downloadAudioFile(
+      courseId,
+      unitId,
+      lessonId,
+      _id,
+      fileType,
+    )
+    return uri
+  }
+  return audioUri
 }

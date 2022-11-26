@@ -1,8 +1,8 @@
 const translations = {
   en: {
     dict: {
-      confirm: "Confirm",
-      audio: "Audio",
+      confirm: 'Confirm',
+      audio: 'Audio',
       activity: 'Activity',
       welcome: 'Welcome!',
       vocabItems: 'Vocabulary Items',
@@ -191,8 +191,8 @@ const translations = {
   },
   fr: {
     dict: {
-      confirm: "Confirmer",
-      audio: "Audio",
+      confirm: 'Confirmer',
+      audio: 'Audio',
       activity: 'Activité',
       welcome: 'Bienvenue !',
       vocabItems: 'Éléments de vocabulaire',

@@ -24,10 +24,10 @@ import i18n from 'utils/i18n'
 import LearnerUnitHome from 'pages/LearnerUnitHome'
 import LearnerLessonHome from 'pages/LearnerLessonHome'
 import StartActivity from 'pages/StartActivity'
-import BackButton from './BackButton'
-import DrawerButton from './DrawerButton'
 import Activity1 from 'pages/Activity1'
 import Activity2 from 'pages/Activity2'
+import BackButton from './BackButton'
+import DrawerButton from './DrawerButton'
 
 // ------------------------------------
 // Constants
@@ -135,7 +135,7 @@ export const ActivityNavigator = () => (
       options={({ navigation }) => ({
         title: `${i18n.t('dict.activity')} 1`,
         headerLeft: () => <BackButton navigation={navigation} color="white" />,
-        cardStyle: { backgroundColor: "white" },
+        cardStyle: { backgroundColor: 'white' },
       })}
     />
     <ActivityStack.Screen
@@ -144,7 +144,7 @@ export const ActivityNavigator = () => (
       options={({ navigation }) => ({
         title: `${i18n.t('dict.activity')} 2`,
         headerLeft: () => <BackButton navigation={navigation} color="white" />,
-        cardStyle: { backgroundColor: "white" },
+        cardStyle: { backgroundColor: 'white' },
       })}
     />
   </ActivityStack.Navigator>
