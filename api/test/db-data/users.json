@@ -396,7 +396,7 @@
     "role": 0,
     "authID": "69023be1-368c-4a86-8eb0-9771bffa0186",
     "adminLanguages": [],
-    "learnerLanguages": [],
+    "learnerLanguages": ["62391a30487d5ae343c82311"],
     "collaboratorLanguages": []
   }
 ]

@@ -10,11 +10,12 @@ import { colors } from 'theme'
 import * as ImagePicker from 'expo-image-picker'
 import { StyleSheet, Alert, ImageBackground } from 'react-native'
 import { Audio } from 'expo-av'
-import { RECORDING } from 'utils/constants'
+import { RECORDING, MEDIA_TYPE } from 'utils/constants'
 import RecordAudioView from 'components/RecordAudioView'
 import { useSelector, useDispatch } from 'react-redux' // import at the top of the file
 import { addVocab, updateVocab } from 'slices/language.slice'
 import i18n from 'utils/i18n'
+import { getFileURI, deleteFileURI } from 'utils/cache'
 
 import {
   createVocabItem,
@@ -25,6 +26,8 @@ import {
   downloadImageFile,
   deleteAudioFile,
   deleteImageFile,
+  persistImageFileInExpo,
+  persistAudioFileInExpo,
 } from 'api'
 
 import { useErrorWrap, useTrackPromise } from 'hooks'
@@ -102,14 +105,24 @@ const VocabDrawer = ({ navigation }) => {
           setAudioRecording(vocabItem.audioURI)
         } else if (vocabItem.audio !== '') {
           // Downloads audio file and gets Filesystem uri
-          const uri = await trackPromise(
-            downloadAudioFile(
-              currentCourseId,
-              currentUnitId,
-              currentLessonId,
-              currentVocabId,
-            ),
+
+          let uri = ''
+          const { fileURI: audioUri } = await getFileURI(
+            currentVocabId,
+            MEDIA_TYPE.AUDIO,
           )
+          if (audioUri != null) {
+            uri = audioUri
+          } else {
+            uri = await trackPromise(
+              downloadAudioFile(
+                currentCourseId,
+                currentUnitId,
+                currentLessonId,
+                currentVocabId,
+              ),
+            )
+          }
 
           setAudioRecording(uri)
           setRecordingState(RECORDING.COMPLETE)
@@ -119,15 +132,25 @@ const VocabDrawer = ({ navigation }) => {
         if (vocabItem.imageURI) {
           setImage(vocabItem.imageURI)
         } else if (vocabItem.image !== '') {
-          // Downloads audio file and gets Filesystem uri
-          const uri = await trackPromise(
-            downloadImageFile(
-              currentCourseId,
-              currentUnitId,
-              currentLessonId,
-              currentVocabId,
-            ),
+          // Downloads image file and gets Filesystem uri
+
+          let uri = ''
+          const { fileURI: imageUri } = await getFileURI(
+            currentVocabId,
+            MEDIA_TYPE.IMAGE,
           )
+          if (imageUri != null) {
+            uri = imageUri
+          } else {
+            uri = await trackPromise(
+              downloadImageFile(
+                currentCourseId,
+                currentUnitId,
+                currentLessonId,
+                currentVocabId,
+              ),
+            )
+          }
 
           setImage(uri)
         }
@@ -148,33 +171,37 @@ const VocabDrawer = ({ navigation }) => {
   const clearRecording = async (path) => {
     if (path !== null) {
       const splitPath = path.split('.')
-      const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
-      setRecordingState(RECORDING.INCOMPLETE)
-      deleteAudioFile(
+      const fileType = splitPath.length === 2 ? splitPath[1] : 'caf'
+      await deleteAudioFile(
         currentCourseId,
         currentUnitId,
         currentLessonId,
         currentVocabId,
         fileType,
-      ).then((audioResponse) => {
-        dispatch(updateVocab({ vocab: audioResponse.result }))
-      })
+      )
     }
+  }
+
+  const stopRecording = async () => {
+    setAudioRecording(undefined)
+    await audioRecording.stopAndUnloadAsync()
+    const uri = audioRecording.getURI()
+    setAudioRecording(uri)
+    setRecordingState(RECORDING.COMPLETE)
   }
 
   const clearImage = async (path) => {
     if (path !== null) {
       const splitPath = path.split('.')
       const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
-      deleteImageFile(
+
+      await deleteImageFile(
         currentCourseId,
         currentUnitId,
         currentLessonId,
         currentVocabId,
         fileType,
-      ).then((imageResponse) => {
-        dispatch(updateVocab({ vocab: imageResponse.result }))
-      })
+      )
     }
   }
 
@@ -191,111 +218,124 @@ const VocabDrawer = ({ navigation }) => {
   const success = async () => {
     errorWrap(
       async () => {
-        let updatedVocabItem = null
-        const promises = []
-        if (deleteAudioUri !== '') {
-          promises.push(clearRecording(deleteAudioUri))
-        }
-        if (deleteImageUri !== '') {
-          promises.push(clearImage(deleteImageUri))
-        }
-        if (promises.length) {
-          await trackPromise(Promise.all(promises))
+        if (recordingStage === RECORDING.IN_PROGRESS) {
+          await stopRecording()
         }
 
-        if (currentVocabId === '') {
-          const vocabItem = {
-            original: originalText,
-            translation: translatedText,
-            image: '',
-            audio: '',
-            notes: additionalInformation,
+        const areCreatingNewVocabItem = currentVocabId === ''
+        const areSavingAudio = audioRecording && recordingStage === RECORDING.COMPLETE
+        const areSavingImage = image !== null
+
+        /* Clear the audio and image file saved to state for the next time the user opens the Vocab Drawer.
+          The functions below as async and must finish before continuing. Otherwise, there is the possible of a race
+          condition between deleting a previous file and adding a new one.
+
+          We DELETE audio from the API and Expo's file system iff there is an audio file that was marked as deleted by the user, we are not saving
+          any other audio files, and we are not creating a new audio file.
+
+          We clear images from Expo's file system if an image was marked as deleted by the user and we aren't create a new image,
+          but the user will be pushing a new image to the API. Hence, there is no need to do a DELETE followed by a POST
+          when the POST will automatically replace the file we want to DELETE. Otherwise, if the user is not pushing a new file,
+          then we also DELETE the image from the API.
+        */
+
+        const deletePromises = []
+
+        if (
+          deleteAudioUri !== ''
+          && !areSavingAudio
+          && !areCreatingNewVocabItem
+        ) {
+          deletePromises.push(clearRecording(deleteAudioUri))
+        }
+
+        if (deleteImageUri !== '' && !areCreatingNewVocabItem) {
+          if (!areSavingImage) {
+            deletePromises.push(clearImage(deleteImageUri))
+          } else {
+            deletePromises.push(deleteFileURI(currentVocabId, MEDIA_TYPE.IMAGE))
           }
+        }
 
-          // Need to create a new vocab item
-          const vocabItemResponse = await createVocabItem(
+        await Promise.all(deletePromises)
+
+        // Build the vocab item from the component's state
+        const vocabItem = {
+          original: originalText,
+          translation: translatedText,
+          image: '',
+          audio: '',
+          notes: additionalInformation,
+          selected: true,
+          ...(areCreatingNewVocabItem && { image: '', audio: '' }),
+        }
+
+        let vocabResponse
+
+        // Make an API call
+        if (areCreatingNewVocabItem) {
+          vocabResponse = await createVocabItem(
             currentCourseId,
             currentLessonId,
             vocabItem,
           )
-
-          updatedVocabItem = vocabItemResponse.result
-
-          // Push audio recording
-          if (audioRecording && recordingStage === RECORDING.COMPLETE) {
-            const audioResponse = await trackPromise(
-              uploadAudioFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                updatedVocabItem._id,
-                audioRecording,
-              ),
-            )
-            updatedVocabItem = audioResponse.result
-          }
-
-          if (image) {
-            const imageResponse = await trackPromise(
-              uploadImageFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                updatedVocabItem._id,
-                image,
-              ),
-            )
-            updatedVocabItem = imageResponse.result
-          }
-
-          // Update vocab item in Redux store
-          dispatch(addVocab({ vocab: updatedVocabItem }))
         } else {
-          const vocabItem = {
-            original: originalText,
-            translation: translatedText,
-            notes: additionalInformation,
-            selected: true,
-          }
-
-          // Updated vocab item text
-          const vocabItemResponse = await updateVocabItem(
+          vocabResponse = await updateVocabItem(
             currentCourseId,
             currentLessonId,
             currentVocabId,
             vocabItem,
           )
-          updatedVocabItem = vocabItemResponse.result
+        }
 
-          // Push audio recording
-          if (audioRecording && recordingStage === RECORDING.COMPLETE) {
-            const audioResponse = await trackPromise(
-              uploadAudioFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                currentVocabId,
-                audioRecording,
-              ),
-            )
+        const updatedVocabItem = vocabResponse.result
 
-            updatedVocabItem = audioResponse.result
-          }
+        // Push audio recording to Expo's filesystem and the API
+        if (areSavingAudio) {
+          const { fileType } = await persistAudioFileInExpo(
+            updatedVocabItem._id,
+            audioRecording,
+          )
 
-          if (image) {
-            const imageResponse = await trackPromise(
-              uploadImageFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                currentVocabId,
-                image,
-              ),
-            )
+          // Use the same encoding as the API to mark the vocab item as having an audio file in Redux
+          updatedVocabItem.audio = `${currentCourseId}/${currentUnitId}/${currentLessonId}/${updatedVocabItem._id}/audio.${fileType}`
 
-            updatedVocabItem = imageResponse.result
-          }
-          // Update vocab item in Redux store
+          uploadAudioFile(
+            currentCourseId,
+            currentUnitId,
+            currentLessonId,
+            updatedVocabItem._id,
+            audioRecording,
+          )
+        } else {
+          updatedVocabItem.audio = ''
+        }
+
+        // Push image to Expo's filesystem and the API
+        if (areSavingImage) {
+          const { fileType } = await persistImageFileInExpo(
+            updatedVocabItem._id,
+            image,
+          )
+
+          // Use the same encoding as the API to mark the vocab item as having an image file in Redux
+          updatedVocabItem.image = `${currentCourseId}/${currentUnitId}/${currentLessonId}/${updatedVocabItem._id}/image.${fileType}`
+
+          uploadImageFile(
+            currentCourseId,
+            currentUnitId,
+            currentLessonId,
+            updatedVocabItem._id,
+            image,
+          )
+        } else {
+          updatedVocabItem.image = ''
+        }
+
+        // Finally, update redux
+        if (areCreatingNewVocabItem) {
+          dispatch(addVocab({ vocab: updatedVocabItem }))
+        } else {
           dispatch(updateVocab({ vocab: updatedVocabItem }))
         }
       },
@@ -419,14 +459,6 @@ const VocabDrawer = ({ navigation }) => {
     ])
   }
 
-  const stopRecording = async () => {
-    setAudioRecording(undefined)
-    await audioRecording.stopAndUnloadAsync()
-    const uri = audioRecording.getURI()
-    setAudioRecording(uri)
-    setRecordingState(RECORDING.COMPLETE)
-  }
-
   const playRecording = async () => {
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
@@ -496,6 +528,7 @@ const VocabDrawer = ({ navigation }) => {
       <Text color="gray.medium">
         {i18n.t('dialogue.itemDescriptionPrompt')}
       </Text>
+      {generateImageContainer()}
       <RequiredField title={translatedLanguage} />
       <Input
         placeholder=""
@@ -533,7 +566,6 @@ const VocabDrawer = ({ navigation }) => {
         value={additionalInformation}
         onChangeText={(val) => setAdditionalInformation(val)}
       />
-      {generateImageContainer()}
     </>
   )
 
@@ -554,7 +586,7 @@ const VocabDrawer = ({ navigation }) => {
       }
       successCallback={success}
       closeCallback={close}
-      isDisabled={!areRequiredFieldsFilled}
+      areAllFieldsFilled={areRequiredFieldsFilled}
       body={body}
     />
   )

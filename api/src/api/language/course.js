@@ -13,6 +13,9 @@ const {
   patchDocument,
   populateExampleData,
 } = require('../../utils/languageHelper');
+const { deleteFolder } = require('../../utils/aws/s3');
+
+const ObjectId = require('mongoose').Types.ObjectId;
 
 /**
  * Does a patch update a single course in the database, meaning
@@ -100,6 +103,46 @@ router.get(
       units: units,
     };
     return sendResponse(res, 200, 'Successfully fetched course', returnedData);
+  }),
+);
+
+/**
+ * Deletes specified course and all references to this course in MongoDB and AWS S3
+ */
+router.delete(
+  '/:id',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const course_id = req.params.id;
+
+    // Make sure the course exists
+    const courseToDelete = await models.Course.findById(course_id);
+
+    if (courseToDelete) {
+      // Remove text data from MongoDB
+      await models.Course.deleteOne({ _id: ObjectId(course_id) });
+      await models.Unit.deleteMany({ _course_id: ObjectId(course_id) });
+      await models.Lesson.deleteMany({ _course_id: ObjectId(course_id) });
+
+      // Remove reference to course from each user that has this course listed
+      await models.User.updateMany(
+        {},
+        {
+          $pull: {
+            adminLanguages: course_id,
+            learnerLanguages: course_id,
+            collaboratorLanguages: course_id,
+          },
+        },
+      );
+
+      // Remove audio and image data from AWS
+      await deleteFolder(course_id);
+
+      return sendResponse(res, 200, 'Successfully deleted course');
+    }
+    return sendResponse(res, 404, 'Course not found');
   }),
 );
 

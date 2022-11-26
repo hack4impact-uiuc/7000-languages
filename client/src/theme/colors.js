@@ -8,8 +8,10 @@ const colors = {
   },
   blue: {
     light: '#E5F7F7', // 100 opacity
-    medium: '#9ADFE0', // 300 opacity
-    dark: '#4FACB0', // 500 opacity
+    medium_light: '#9ADFE0',
+    medium: '#489FA3', // 300 opacity
+    dark: '#4FACB0', // 500 opacity,
+    darker: '#006F7B',
   },
   orange: {
     light: '#FFF9E2', // 100 opacity
@@ -18,12 +20,14 @@ const colors = {
   },
   green: {
     light: '#E8FFEC', // 100 opacity
+    medium_light: '#BCD331',
     medium: '#63B079', // 300 opacity
     dark: '#C0D152', // 500 opacity
   },
   gray: {
     semi_transparent: '#00000020',
-    light: '#EFEFEF', // 100 opacity
+    semi_light: '#DEE5E9',
+    light: '#F9F9F9', // 100 opacity
     medium_light: '#F4F4F4', // 300 opacity
     medium: '#A4A4A4', // 500 opacity
     medium_dark: '#F2F2F2',

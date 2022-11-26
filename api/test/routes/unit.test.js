@@ -48,8 +48,8 @@ verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
 // This block tests the GET /unit/ endpoint.
 describe('GET /language/unit/ ', () => {
-  /* 
-    We have to make sure we connect to a MongoDB mock db before the test 
+  /*
+    We have to make sure we connect to a MongoDB mock db before the test
     and close the connection at the end.
   */
   afterAll(async () => await db.closeDatabase());
@@ -235,6 +235,14 @@ describe('POST /language/unit/ ', () => {
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully created a new unit');
     expect(result).toEqual(POST_BERBER_UNIT_EXPECTED);
+  });
+
+  test('Learner attempt to post unit should fail', async () => {
+    const response = await withAuthentication(
+      request(app).post('/language/unit').send(POST_SIMPLE_UNIT),
+      '69023be1-368c-4a86-8eb0-9771bffa0186',
+    );
+    expect(response.status).toBeGreaterThanOrEqual(400);
   });
 });
 

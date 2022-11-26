@@ -38,10 +38,10 @@ const requireAuthentication = async (req, res, next) => {
         };
         const mergedUserData = Object.assign(userData, userInMongo.toJSON());
         req.user = mergedUserData;
-        next();
-      } else {
-        sendResponse(res, 401, ERR_NO_MONGO_DOCUMENT);
+
+        return next();
       }
+      return sendResponse(res, 401, ERR_NO_MONGO_DOCUMENT);
     }
   } catch (error) {
     console.error('Error during authentication middleware:', error);
