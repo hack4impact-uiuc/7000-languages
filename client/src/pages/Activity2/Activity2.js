@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux' // import at the top of the file
 import { FontAwesome } from '@expo/vector-icons'
 import { useErrorWrap } from 'hooks'
-import { QUESTION_STATE } from 'utils/constants'
+import { QUESTION_STATE, ACTIVITY_DELAY } from 'utils/constants'
 import { Audio } from 'expo-av'
 import _ from 'lodash'
 import { shuffle, getAudioURIGivenVocabItem } from 'utils/learnerHelper'
@@ -53,10 +53,11 @@ const Activity2 = ({ navigation }) => {
     lessonData, currentCourseId, currentUnitId, currentLessonId,
   } = useSelector((state) => state.language)
 
-  const [questions, setQuestions] = useState([])
-  const [currentQuestionIdx, setCurrentQuestionIdx] = useState(-1)
-  const [questionState, setQuestionState] = useState(QUESTION_STATE.IN_PROGRESS)
-  const [selectedOptionIdx, setSelectedOptionIdx] = useState(-1)
+  const [questions, setQuestions] = useState([]) // Represents a list of all questions that the user will answer for this activity
+  const [currentQuestionIdx, setCurrentQuestionIdx] = useState(-1) // The current index of the question that the user is on
+  const [questionState, setQuestionState] = useState(QUESTION_STATE.IN_PROGRESS) // State representing whether the user has gotten the current question right, wrong, or not answered
+
+  const [selectedOptionIdx, setSelectedOptionIdx] = useState(-1) // Represents the current option that is selected by the user in the activity
 
   const allDone = () => {
     navigation.navigate('Drawer', { screen: 'LearnerHome' })
@@ -64,11 +65,15 @@ const Activity2 = ({ navigation }) => {
 
   useEffect(() => {
     errorWrap(async () => {
-      // Determine how many questions and options there are
-      const selectedData = lessonData.vocab.filter((item) => item.selected)
-      const vocabWithAudio = selectedData.filter((vocab) => vocab.audio !== '')
-      const numOptions = Math.min(vocabWithAudio.length, 4)
+      /*
+        This method generates all of the questions that the user has to answer
+      */
 
+      const selectedData = lessonData.vocab.filter((item) => item.selected) // get all of the selected vocab items
+      const vocabWithAudio = selectedData.filter((vocab) => vocab.audio !== '') // determine which vocab items have audio
+      const numOptions = Math.min(vocabWithAudio.length, 4) // determine how many answer options the user will have
+
+      /* Get all of the audio URI of vocab items in a parallel manner */
       const fetchAllAudioList = []
 
       for (let i = 0; i < vocabWithAudio.length; i += 1) {
@@ -85,6 +90,8 @@ const Activity2 = ({ navigation }) => {
       }
 
       const allAudioURIs = await Promise.all(fetchAllAudioList)
+
+      // Using the Audio URI, build a list of vocab items' audio URI and L1
       const vocabAudioL1 = allAudioURIs.map((uri, idx) => ({
         l1: vocabWithAudio[idx].original,
         uri,
@@ -110,11 +117,11 @@ const Activity2 = ({ navigation }) => {
 
         const newOptions = [uri]
 
-        // Build options
+        // Build options, making sure to not take duplicate options
         for (let j = 0; j < numOptions - 1; j += 1) {
           let { uri: newOption } = vocabAudioL1[Math.floor(Math.random() * vocabAudioL1.length)]
 
-          while (newOption === uri || newOptions.indexOf(newOption) >= 0) {
+          while (newOptions.indexOf(newOption) >= 0) {
             newOption = vocabAudioL1[Math.floor(Math.random() * vocabAudioL1.length)].uri
           }
           newOptions.push(newOption)
@@ -140,6 +147,9 @@ const Activity2 = ({ navigation }) => {
   }, [lessonData, currentCourseId, currentUnitId, currentLessonId])
 
   const updateOptionState = (optionURI, newState) => {
+    /**
+     * Updates the state of an option after a user correctly or incorrectly answers that option
+     */
     const questionsCopy = _.cloneDeep(questions)
 
     for (
@@ -157,6 +167,9 @@ const Activity2 = ({ navigation }) => {
   }
 
   const nextQuestion = () => {
+    /**
+     * Move onto the next question or finish the activity
+     */
     if (currentQuestionIdx + 1 >= questions.length) {
       allDone()
     } else {
@@ -181,10 +194,11 @@ const Activity2 = ({ navigation }) => {
       setQuestionState(QUESTION_STATE.CORRECT)
       updateOptionState(answer, QUESTION_STATE.CORRECT)
 
+      // Delay for a bit before presenting the next question
       setTimeout(() => {
         setSelectedOptionIdx(-1)
         nextQuestion()
-      }, 1500)
+      }, ACTIVITY_DELAY)
     } else {
       // Mark option as incorrect and already answered
       setQuestionState(QUESTION_STATE.INCORRECT)
@@ -196,20 +210,21 @@ const Activity2 = ({ navigation }) => {
 
   const playAudio = async (uri, idx) => {
     await errorWrap(async () => {
+      /* Don't play audio and mark this as an option if:
+        - The user has already answered correctly and we are in the delay state
+        - The user has already guessed this option and gotten it incorrect
+      */
       if (
         currentQuestionIdx < 0
         || currentQuestionIdx >= questions.length
         || questionState === QUESTION_STATE.CORRECT
-      ) {
-        return
-      }
-      if (
-        questions[currentQuestionIdx].options[idx].state
-        === QUESTION_STATE.INCORRECT
+        || questions[currentQuestionIdx].options[idx].state
+          === QUESTION_STATE.INCORRECT
       ) {
         return
       }
 
+      // Anytime the user plays audio for a vocab item, the vocab item gets selected
       setSelectedOptionIdx(idx)
 
       if (uri) {

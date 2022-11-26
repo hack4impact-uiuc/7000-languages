@@ -29,7 +29,8 @@ export const ACTIVITY_TYPE = {
 }
 export const TOTAL_ACTIVITIES = 2
 export const QUESTION_STATE = {
-  IN_PROGRESS: 0,
-  INCORRECT: 1,
-  CORRECT: 2,
+  IN_PROGRESS: 0, // user hasn't correctly answered
+  INCORRECT: 1, // user has answered incorrectly during an activity
+  CORRECT: 2, // user got a question right during an activity
 }
+export const ACTIVITY_DELAY = 1500 // represents how long the user should wait in between questions during an activity
