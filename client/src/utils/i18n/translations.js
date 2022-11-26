@@ -1,6 +1,8 @@
 const translations = {
   en: {
     dict: {
+      confirm: "Confirm",
+      audio: "Audio",
       activity: 'Activity',
       welcome: 'Welcome!',
       vocabItems: 'Vocabulary Items',
@@ -48,6 +50,9 @@ const translations = {
       inProgress: 'In Progress',
     },
     actions: {
+      pressAndSelect: 'Press Audio & Select',
+      correct: 'Correct',
+      tryAgain: 'Try Again',
       playAudio: 'Play Audio',
       startActivity: 'Start Activity',
       becomeContributorTitle: 'Become a contributor',
@@ -186,6 +191,8 @@ const translations = {
   },
   fr: {
     dict: {
+      confirm: "Confirmer",
+      audio: "Audio",
       activity: 'Activité',
       welcome: 'Bienvenue !',
       vocabItems: 'Éléments de vocabulaire',
@@ -232,6 +239,9 @@ const translations = {
       inProgress: 'En cours',
     },
     actions: {
+      pressAndSelect: 'Appuyez sur Audio et sélectionnez',
+      correct: 'Correct',
+      tryAgain: 'Essayez à nouveau',
       playAudio: 'Lecture audio',
       startActivity: "Début de l'activité",
       becomeContributorTitle: 'Devenir un contributeur',

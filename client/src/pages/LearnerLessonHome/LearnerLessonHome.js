@@ -8,8 +8,7 @@ import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import i18n from 'utils/i18n'
 import { getFileURI } from 'utils/cache'
-import { MEDIA_TYPE } from 'utils/constants'
-import { Alert } from 'react-native'
+import { MEDIA_TYPE, ACTIVITY_TYPE } from 'utils/constants'
 
 const LearnerLessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -92,10 +91,10 @@ const LearnerLessonHome = ({ navigation }) => {
           }
 
           /*
-                      Below, we only load the image and audio files from the API
-                      if the file has an image and audio file AND it needs to be refetched from the API
-                      because it 1) doesn't exist in Expo's file system or 2) has existed in Expo's file system for too long.
-                    */
+            Below, we only load the image and audio files from the API
+            if the file has an image and audio file AND it needs to be refetched from the API
+            because it 1) doesn't exist in Expo's file system or 2) has existed in Expo's file system for too long.
+          */
 
           if (item.image !== '' && shouldRefreshImage) {
             const filePath = item.image
@@ -156,17 +155,7 @@ const LearnerLessonHome = ({ navigation }) => {
   }, [lessonData])
 
   const startLearningCallback = () => {
-    // Alert.alert(
-    //   i18n.t('dialogue.noActivitiesAvailable'),
-    //   i18n.t('dialogue.activitiesInDevelopment'),
-    //   [
-    //     {
-    //       text: i18n.t('dict.ok'),
-    //       style: 'cancel',
-    //     },
-    //   ],
-    // )
-    navigation.navigate('Activity', { screen: 'StartActivity' })
+    navigation.navigate('Activity', { screen: 'StartActivity', params: { activityType: ACTIVITY_TYPE.AUDIO_L2 } })
   }
 
   return (

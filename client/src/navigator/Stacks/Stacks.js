@@ -26,6 +26,8 @@ import LearnerLessonHome from 'pages/LearnerLessonHome'
 import StartActivity from 'pages/StartActivity'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
+import Activity1 from 'pages/Activity1'
+import Activity2 from 'pages/Activity2'
 
 // ------------------------------------
 // Constants
@@ -56,7 +58,6 @@ const activityNavigationProps = {
   headerTintColor: 'white',
   headerStyle: { backgroundColor: colors.blue.medium },
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
-  headerMode: 'screen',
 }
 
 const manageNavigationProps = {
@@ -126,6 +127,24 @@ export const ActivityNavigator = () => (
         title: i18n.t('dict.activity'),
         headerLeft: () => <BackButton navigation={navigation} color="white" />,
         cardStyle: { backgroundColor: colors.blue.light },
+      })}
+    />
+    <ActivityStack.Screen
+      name="Activity1"
+      component={Activity1}
+      options={({ navigation }) => ({
+        title: `${i18n.t('dict.activity')} 1`,
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: "white" },
+      })}
+    />
+    <ActivityStack.Screen
+      name="Activity2"
+      component={Activity2}
+      options={({ navigation }) => ({
+        title: `${i18n.t('dict.activity')} 2`,
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: "white" },
       })}
     />
   </ActivityStack.Navigator>

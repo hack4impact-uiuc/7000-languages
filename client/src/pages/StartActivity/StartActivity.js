@@ -6,6 +6,7 @@ import { Text } from 'native-base'
 import i18n from 'utils/i18n'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux' // import at the top of the file
+import { ACTIVITY_TYPE, TOTAL_ACTIVITIES } from 'utils/constants'
 
 const styles = StyleSheet.create({
   root: {
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const StartActivity = ({ navigation }) => {
+const StartActivity = ({ navigation, route }) => {
   const { lessonData } = useSelector((state) => state.language)
 
   const [lessonTitle, setLessonTitle] = useState('')
@@ -53,7 +54,41 @@ const StartActivity = ({ navigation }) => {
   useEffect(() => {
     setLessonTitle(lessonData.name)
     setLessonNumber(lessonData._order + 1)
+
+
   }, [lessonData, setLessonNumber, setLessonTitle])
+
+  useEffect(() => {
+    if (route.params.activityType != null) {
+      navigation.setOptions({
+        title: `${i18n.t('dict.activity')} ${route.params.activityType + 1}`,
+      })
+    }
+  }, [route])
+
+  const startActivity = () => {
+    const activityNumber = route.params.activityType
+    if (activityNumber >= TOTAL_ACTIVITIES) {
+      navigation.goBack('LearnerHome');
+    } else {
+      const activityScreen = `Activity${route.params.activityType + 1}`;
+      navigation.navigate('Activity', { screen: activityScreen });
+    }
+  }
+
+  const generateActivityTypeText = () => {
+    if (route.params.activityType != null) {
+      switch (route.params.activityType) {
+        case ACTIVITY_TYPE.AUDIO_L2:
+          return "Matching L1 Audio to L2 Text"
+        case ACTIVITY_TYPE.L1_AUDIO:
+          return "Matching L1 Text to L1 Audio"
+        default:
+          return ""
+      }
+    }
+    return "";
+  }
 
   return (
     <View style={styles.root}>
@@ -72,7 +107,7 @@ const StartActivity = ({ navigation }) => {
           color={colors.gray.dark}
           style={{ marginVertical: 20 }}
         >
-          Matching L1 Audio to L2 Text
+          {generateActivityTypeText()}
         </Text>
         <Text fontFamily="heading" fontSize="md">
           Instructions:{' '}
@@ -88,6 +123,7 @@ const StartActivity = ({ navigation }) => {
         fontSize="20"
         style={{ height: 75, marginTop: 10 }}
         shadow
+        onPress={startActivity}
       />
     </View>
   )
@@ -98,10 +134,14 @@ StartActivity.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
   }),
+  route: PropTypes.shape({
+    params: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  }),
 }
 
 StartActivity.defaultProps = {
   navigation: { navigate: () => null },
+  route: { params: {} }
 }
 
 export default StartActivity
