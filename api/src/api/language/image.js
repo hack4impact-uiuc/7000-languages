@@ -4,7 +4,7 @@ const { errorWrap } = require('../../middleware');
 const { models } = require('../../models/index.js');
 const { sendResponse } = require('../../utils/response');
 const { requireAuthentication } = require('../../middleware/authentication');
-const { uploadFile, downloadFile, deleteFile } = require('../../utils/aws/s3');
+const { uploadFile, downloadFile } = require('../../utils/aws/s3');
 const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
 const { checkIds, deleteVocabImage } = require('../../utils/languageHelper');
 const fs = require('fs');
@@ -142,17 +142,16 @@ router.delete(
   errorWrap(async (req, res) => {
     const { course_id, unit_id, lesson_id, vocab_id } = req.params;
 
-    const {success, vocab} = deleteVocabImage(course_id, unit_id, lesson_id, vocab_id)
-    if(success) {
-      return sendResponse(
-        res,
-        200,
-        'Success deleting the image file.',
-        vocab,
-      );
-    } else {
-      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    const { success, vocab } = deleteVocabImage(
+      course_id,
+      unit_id,
+      lesson_id,
+      vocab_id,
+    );
+    if (success) {
+      return sendResponse(res, 200, 'Success deleting the image file.', vocab);
     }
+    return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
   }),
 );
 

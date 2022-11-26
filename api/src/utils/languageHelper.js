@@ -1,11 +1,11 @@
 const { models, isUniqueOrder } = require('../models');
-const { NOT_FOUND_INDEX } = require('../utils/constants');
-const { exampleData } = require('./example-data.js');
 const {
-  deleteFile,
-} = require('./aws/s3.js');
+  NOT_FOUND_INDEX,
+  ERR_MISSING_OR_INVALID_DATA,
+} = require('../utils/constants');
+const { exampleData } = require('./example-data.js');
+const { deleteFile } = require('./aws/s3.js');
 const mongoose = require('mongoose');
-const { remove } = require('lodash');
 
 /**
  * Determines the number of units in a course
@@ -47,7 +47,7 @@ module.exports.getNumLessonsInUnit = getNumLessonsInUnit;
  * @param {*} lesson Lesson data, contains an array of vocab items
  * @returns Index of vocab item or -1 if vocab item not found
  */
-module.exports.getVocabIndexByID = (vocabId, lesson) => {
+const getVocabIndexByID = (vocabId, lesson) => {
   for (let i = 0; i < lesson.vocab.length; i++) {
     if (lesson.vocab[i]._id.toString() === vocabId) {
       return i;
@@ -55,6 +55,8 @@ module.exports.getVocabIndexByID = (vocabId, lesson) => {
   }
   return NOT_FOUND_INDEX;
 };
+
+module.exports.getVocabIndexByID = getVocabIndexByID
 
 const validateDocument = async (model, document, session) => {
   // Run synchronous tests
@@ -91,7 +93,6 @@ module.exports.updateDocumentsInTransaction = async (
   let documentData = [];
   // Go through all of the step updates in the request body and apply them
   for (let idx = 0; idx < updatedDocuments.length; idx++) {
-    // eslint-disable-next-line max-len
     const updatedDocument = await updateDocumentInTransaction(
       model,
       updatedDocuments[idx],
@@ -252,30 +253,29 @@ const findVocabItem = async (lesson_id, vocab_id) => {
   const isValid = await checkIds({ lesson_id, vocab_id });
 
   if (!isValid) {
-    return {success: false, vocab: undefined, lesson: undefined}
+    return { success: false, vocab: undefined, lesson: undefined };
   }
 
   let lesson = await models.Lesson.findById(lesson_id); // find a lesson
   if (lesson) {
-    const found = getVocabIndexByID(vocab_id, lesson)
+    const found = getVocabIndexByID(vocab_id, lesson);
 
     if (found >= 0) {
       const vocabItem = lesson.vocab[found];
-      return {success: true, vocab: vocabItem, lesson: lesson}
+      return { success: true, vocab: vocabItem, lesson: lesson };
     }
   }
-  return {success: false, vocab: undefined, lesson: undefined}
-}
+  return { success: false, vocab: undefined, lesson: undefined };
+};
 
 const deleteVocabAudio = async (course_id, unit_id, lesson_id, vocab_id) => {
-
   const isValid = await checkIds({ course_id, unit_id, lesson_id, vocab_id });
 
   if (!isValid) {
-    return {success: false, vocab: undefined}
+    return { success: false, vocab: undefined };
   }
 
-  const {success, vocab, lesson} = await findVocabItem(lesson_id, vocab_id);
+  const { success, vocab, lesson } = await findVocabItem(lesson_id, vocab_id);
   if (success) {
     let fileType = 'm4a';
     const splitAudioPath = vocab.audio.split('.');
@@ -293,20 +293,19 @@ const deleteVocabAudio = async (course_id, unit_id, lesson_id, vocab_id) => {
 
     await lesson.save();
 
-    return {success: true, vocab: vocab}
+    return { success: true, vocab: vocab };
   }
-  return {success: false, vocab: undefined}
-}
+  return { success: false, vocab: undefined };
+};
 
 const deleteVocabImage = async (course_id, unit_id, lesson_id, vocab_id) => {
-  
   const isValid = await checkIds({ course_id, unit_id, lesson_id, vocab_id });
 
   if (!isValid) {
-    return {success: false, vocab: undefined}
+    return { success: false, vocab: undefined };
   }
 
-  const {success, vocab, lesson} = await findVocabItem(lesson_id, vocab_id);
+  const { success, vocab, lesson } = await findVocabItem(lesson_id, vocab_id);
   if (success) {
     let fileType = 'jpg';
     const splitImagePath = vocab.image.split('.');
@@ -325,85 +324,84 @@ const deleteVocabImage = async (course_id, unit_id, lesson_id, vocab_id) => {
 
     await lesson.save();
 
-    return {success: true, vocab: vocab}
+    return { success: true, vocab: vocab };
   }
-  return {success: false, vocab: undefined}
-}
+  return { success: false, vocab: undefined };
+};
 
 const deleteVocabItem = async (lesson_id, vocab_id) => {
   const isValid = await checkIds({ lesson_id, vocab_id });
 
   if (!isValid) {
-    return {success: false}
+    return { success: false, message: ERR_MISSING_OR_INVALID_DATA };
   }
 
-  const {success, lesson} = await findVocabItem(lesson_id, vocab_id);
+  const { success, lesson } = await findVocabItem(lesson_id, vocab_id);
   if (success) {
     const course_id = lesson._course_id;
     const unit_id = lesson._unit_id;
     await Promise.all([
       deleteVocabAudio(course_id, unit_id, lesson_id, vocab_id),
-      deleteVocabImage(course_id, unit_id, lesson_id, vocab_id)
-    ])
+      deleteVocabImage(course_id, unit_id, lesson_id, vocab_id),
+    ]);
     const index = getVocabIndexByID(vocab_id, lesson);
     lesson.vocab.splice(index, 1);
 
     await lesson.save();
 
-    return {success: true}
+    return { success: true, message: 'Successfully deleted vocab item' };
   }
-}
+};
 
-const deleteLesson = async (course_id, unit_id, lesson_id) => {
-  const isValid = await checkIds({ course_id, unit_id, lesson_id });
+const deleteLesson = async (lesson_id) => {
+  const isValid = await checkIds({ lesson_id });
 
   if (!isValid) {
-    return {success: false}
+    return { success: false, message: ERR_MISSING_OR_INVALID_DATA };
   }
 
   const lesson = await models.Lesson.findById(lesson_id);
   if (lesson) {
     // Delete all vocab items in lesson
-    for (const vocabItem of lesson.vocab) {
-      await deleteVocabItem(lesson_id, vocabItem._id);
-    }
+    await Promise.all(
+      lesson.vocab.map((vocabItem) =>
+        deleteVocabItem(lesson_id, vocabItem._id),
+      ),
+    );
+    // delete lesson from mongoDB
+    await lesson.remove();
+    return { success: true, message: 'Successfully deleted lesson' };
   }
 
-  // delete lesson from mongoDB
-  await lesson.remove();
-}
+  return { success: false, message: ERR_MISSING_OR_INVALID_DATA };
+};
 
 const deleteUnit = async (course_id, unit_id) => {
   const isValid = await checkIds({ course_id, unit_id });
 
   if (!isValid) {
-    return {success: false}
+    return { success: false, message: ERR_MISSING_OR_INVALID_DATA };
   }
 
   const unit = await models.Unit.findById(unit_id);
   if (unit) {
-    // Delete all lessons in unit
-    for (const lesson of unit.lessons) {
-      await deleteLesson(course_id, unit_id, lesson._id);
-    }
-
-    // Delete unit from course
-    const course = await models.Course.findById(course_id);
-    if (course) {
-      const index = getUnitIndexByID(unit_id, course);
-      course.units.splice(index, 1);
-      await course.save();
-    }
+    const lessons = await models.Lesson.find({ _unit_id: unit._id.toString() });
+    await Promise.all(
+      lessons.map((lesson) => deleteLesson(lesson._id.toString())),
+    );
 
     // Delete unit from MongoDB
     await unit.remove();
+    return { success: true, message: 'Successfully deleted unit' };
   }
-}
 
-module.exports.deleteVocabImage = deleteVocabImage
-module.exports.deleteVocabAudio = deleteVocabAudio
-module.exports.deleteVocabItem = deleteVocabItem
-module.exports.deleteLesson = deleteLesson
+  return { success: false, message: ERR_MISSING_OR_INVALID_DATA };
+};
 
+module.exports.deleteVocabImage = deleteVocabImage;
+module.exports.deleteVocabAudio = deleteVocabAudio;
+module.exports.deleteVocabItem = deleteVocabItem;
+module.exports.deleteLesson = deleteLesson;
+module.exports.deleteUnit = deleteUnit;
 
 module.exports.populateExampleData = populateExampleData;

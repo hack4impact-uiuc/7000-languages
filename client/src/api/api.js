@@ -68,6 +68,14 @@ export const updateUnits = async (courseID, updates) => {
   return res.data
 }
 
+export const deleteUnit = async (courseID, unitID) => {
+  const requestString = `/language/unit?course_id=${courseID}&unit_id=${unitID}`
+  const res = await instance.delete(requestString)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 /* Lesson Endpoints */
 
 export const getLesson = async (courseID, lessonID) => {
@@ -98,6 +106,14 @@ export const createLesson = async (courseID, unitID, lesson) => {
   }
   const requestString = '/language/lesson'
   const res = await instance.post(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+export const deleteLesson = async (courseID, lessonID) => {
+  const requestString = `/language/lesson?course_id=${courseID}&lesson_id=${lessonID}`
+  const res = await instance.delete(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data

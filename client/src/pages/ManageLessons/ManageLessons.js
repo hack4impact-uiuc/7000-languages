@@ -5,10 +5,11 @@ import ManageView from 'components/ManageView'
 import { useErrorWrap } from 'hooks'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, updateNumLessons } from 'slices/language.slice'
-import { updateLessons } from 'api'
+import { updateLessons, deleteLesson } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
 import i18n from 'utils/i18n'
+
 
 const ManageLessons = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -17,6 +18,7 @@ const ManageLessons = ({ navigation }) => {
 
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
+  const [deletedIds, setDeletedIds] = useState([])
 
   /**
    * Filers all of the lessons into selected and unselected lists
@@ -55,6 +57,10 @@ const ManageLessons = ({ navigation }) => {
     setUnselected(unselectedList)
   }, [allLessons])
 
+  const deleteItem = (lessonsId) => {
+    setDeletedIds([...deletedIds, lessonsId])
+  }
+
   /**
    * Calls API in order to update lesson data
    * @param {*} selectedData List of Unit objects that are marked as selected
@@ -64,7 +70,14 @@ const ManageLessons = ({ navigation }) => {
     errorWrap(
       async () => {
         /* We need to iterate through allLessons, and update the selected and _order fields */
-        const updatedAllLessons = _.cloneDeep(allLessons)
+        const updatedAllLessons = _.cloneDeep(allLessons).filter(
+          (lesson) => !deletedIds.includes(lesson._id),
+        )
+
+        // Delete removed lessons from unselected lessons
+        const filteredUnselectedData = unselectedData.filter(
+          (lesson) => !deletedIds.includes(lesson._id),
+        )
 
         for (let i = 0; i < selectedData.length; i += 1) {
           const updatedIdx = updatedAllLessons.findIndex(
@@ -74,15 +87,20 @@ const ManageLessons = ({ navigation }) => {
           updatedAllLessons[updatedIdx]._order = i
         }
 
-        for (let i = 0; i < unselectedData.length; i += 1) {
+        for (let i = 0; i < filteredUnselectedData.length; i += 1) {
           const updatedIdx = updatedAllLessons.findIndex(
-            (element) => element._id === unselectedData[i]._id,
+            (element) => element._id === filteredUnselectedData[i]._id,
           )
           updatedAllLessons[updatedIdx].selected = false
           updatedAllLessons[updatedIdx]._order = i
         }
 
-        // Makes API request
+        // Makes API requests
+        // Delete
+        // await Promise.all(deletedIds.map((lessonId) => {
+        //   deleteLesson(currentCourseId, lessonId)
+        // }))
+        // Update existing
         await updateLessons(currentCourseId, updatedAllLessons)
         // Updates Redux store
         dispatch(setField({ key: 'allLessons', value: updatedAllLessons }))
@@ -104,6 +122,7 @@ const ManageLessons = ({ navigation }) => {
       selectedBodyText={i18n.t('dialogue.selectedLessonsPrompt')}
       unselectedBodyText={i18n.t('dialogue.unselectedLessonsPrompt')}
       saveCallback={saveChanges}
+      deleteCallback={deleteItem}
       initialSelectedData={selected}
       initialUnselectedData={unselected}
     />

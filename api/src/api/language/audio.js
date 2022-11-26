@@ -3,10 +3,7 @@ const router = express.Router();
 const { errorWrap } = require('../../middleware');
 const { sendResponse } = require('../../utils/response');
 const { models } = require('../../models/index.js');
-const {
-  uploadFile,
-  downloadFile,
-} = require('../../utils/aws/s3.js');
+const { uploadFile, downloadFile } = require('../../utils/aws/s3.js');
 const { requireAuthentication } = require('../../middleware/authentication');
 const {
   requireLanguageAuthorization,
@@ -146,17 +143,16 @@ router.delete(
   errorWrap(async (req, res) => {
     const { course_id, unit_id, lesson_id, vocab_id } = req.params;
 
-    const {success, vocab} = await deleteVocabAudio(course_id, unit_id, lesson_id, vocab_id)
-    if (success){
-      return sendResponse(
-        res,
-        200,
-        'Success deleting the audio file.',
-        vocab,
-      );
-    } else {
-      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    const { success, vocab } = await deleteVocabAudio(
+      course_id,
+      unit_id,
+      lesson_id,
+      vocab_id,
+    );
+    if (success) {
+      return sendResponse(res, 200, 'Success deleting the audio file.', vocab);
     }
+    return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
   }),
 );
 

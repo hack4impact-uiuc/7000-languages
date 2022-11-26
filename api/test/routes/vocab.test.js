@@ -238,5 +238,4 @@ describe('POST /vocab/ ', () => {
 });
 
 // This block tests the DELETE /vocab/ endpoint.
-describe('DELETE /vocab/ ', () => {
-});
+describe('DELETE /vocab/ ', () => {});

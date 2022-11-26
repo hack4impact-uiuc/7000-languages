@@ -162,15 +162,13 @@ router.delete(
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
-    const { success } = deleteVocabItem(lesson_id, vocab_id);
-
-    if (success) {
-      return sendResponse(res, 200, 'Successfully deleted vocab item');
-    } else {
-      return sendResponse(res, 404, 'Vocab item not found');
-    }
+    deleteVocabItem(lesson_id, vocab_id).then(({ success, message }) => {
+      if (success) {
+        return sendResponse(res, 200, message);
+      }
+      return sendResponse(res, 404, message);
+    });
   }),
 );
-
 
 module.exports = router;

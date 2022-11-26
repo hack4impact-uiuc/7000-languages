@@ -5,7 +5,7 @@ import ManageView from 'components/ManageView'
 import { useErrorWrap } from 'hooks'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, updateNumUnits } from 'slices/language.slice'
-import { updateUnits } from 'api'
+import { updateUnits, deleteUnit } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
 import i18n from 'utils/i18n'
@@ -17,6 +17,7 @@ const ManageUnits = ({ navigation }) => {
 
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
+  const [deletedIds, setDeletedIds] = useState([])
 
   /**
    * Filers all of the units into selected and unselected lists
@@ -55,6 +56,10 @@ const ManageUnits = ({ navigation }) => {
     setUnselected(unselectedList)
   }, [allUnits])
 
+  const deleteItem = (unitId) => {
+    setDeletedIds([...deletedIds, unitId])
+  }
+
   /**
    * Calls API in order to update unit data
    * @param {*} selectedData List of Unit objects that are marked as selected
@@ -64,7 +69,14 @@ const ManageUnits = ({ navigation }) => {
     errorWrap(
       async () => {
         /* We need to iterate through allUnits, and update the selected and _order fields */
-        const updatedAllUnits = _.cloneDeep(allUnits)
+        const updatedAllUnits = _.cloneDeep(allUnits).filter(
+          (unit) => !deletedIds.includes(unit._id),
+        )
+
+        // Delete removed units from unselected units
+        const filteredUnselectedData = unselectedData.filter(
+          (unit) => !deletedIds.includes(unit._id),
+        )
 
         for (let i = 0; i < selectedData.length; i += 1) {
           const updatedIdx = updatedAllUnits.findIndex(
@@ -74,15 +86,20 @@ const ManageUnits = ({ navigation }) => {
           updatedAllUnits[updatedIdx]._order = i
         }
 
-        for (let i = 0; i < unselectedData.length; i += 1) {
+        for (let i = 0; i < filteredUnselectedData.length; i += 1) {
           const updatedIdx = updatedAllUnits.findIndex(
-            (element) => element._id === unselectedData[i]._id,
+            (element) => element._id === filteredUnselectedData[i]._id,
           )
           updatedAllUnits[updatedIdx].selected = false
           updatedAllUnits[updatedIdx]._order = i
         }
 
-        // Makes API request
+        // Makes API requests
+        // Delete
+        // await Promise.all(deletedIds.map((unitId) => {
+        //   deleteUnit(currentCourseId, unitId)
+        // }))
+        // Update existing
         await updateUnits(currentCourseId, updatedAllUnits)
 
         // Updates Redux store
@@ -105,6 +122,7 @@ const ManageUnits = ({ navigation }) => {
       selectedBodyText={i18n.t('dialogue.selectedUnitsPrompt')}
       unselectedBodyText={i18n.t('dialogue.unselectedUnitsPrompt')}
       saveCallback={saveChanges}
+      deleteCallback={deleteItem}
       initialSelectedData={selected}
       initialUnselectedData={unselected}
     />

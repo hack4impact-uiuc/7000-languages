@@ -70,6 +70,7 @@ const ManageView = ({
   selectedBodyText,
   unselectedBodyText,
   saveCallback,
+  deleteCallback,
   initialSelectedData,
   initialUnselectedData,
   playAudio,
@@ -235,6 +236,21 @@ const ManageView = ({
           size={25}
           color={colors.green.medium}
           onPress={() => moveToSelected(index)}
+        />
+      )}
+      rightIcon={(
+        <Feather
+          name="trash-2"
+          size={25}
+          color={colors.gray.medium}
+          onPress={() => {
+            setUnselectedData(
+              unselectedData.filter((unit) => {
+                unit._id !== item._id
+              }),
+            )
+            deleteCallback(item._id)
+          }}
         />
       )}
       volumeIconCallback={playAudio}
