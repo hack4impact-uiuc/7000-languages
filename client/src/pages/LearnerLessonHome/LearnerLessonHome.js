@@ -156,16 +156,17 @@ const LearnerLessonHome = ({ navigation }) => {
   }, [lessonData])
 
   const startLearningCallback = () => {
-    Alert.alert(
-      i18n.t('dialogue.noActivitiesAvailable'),
-      i18n.t('dialogue.activitiesInDevelopment'),
-      [
-        {
-          text: i18n.t('dict.ok'),
-          style: 'cancel',
-        },
-      ],
-    )
+    // Alert.alert(
+    //   i18n.t('dialogue.noActivitiesAvailable'),
+    //   i18n.t('dialogue.activitiesInDevelopment'),
+    //   [
+    //     {
+    //       text: i18n.t('dict.ok'),
+    //       style: 'cancel',
+    //     },
+    //   ],
+    // )
+    navigation.navigate('Activity', { screen: 'StartActivity' })
   }
 
   return (
