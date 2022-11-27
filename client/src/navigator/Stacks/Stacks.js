@@ -232,7 +232,9 @@ export const SearchNavigator = () => (
       options={({ navigation }) => ({
         ...learnerNavigationProps,
         title: i18n.t('actions.search'),
-        headerLeft: () => <BackButton navigation={navigation} />,
+        headerLeft: () => (
+          <BackButton navigation={navigation} color={colors.white.dark} />
+        ),
         cardStyle: { backgroundColor: 'white' },
       })}
     />

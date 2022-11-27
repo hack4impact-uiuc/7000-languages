@@ -12,6 +12,7 @@ import { useErrorWrap, useTrackPromise } from 'hooks'
 import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
 import { setField } from 'slices/language.slice'
+import { setUserName } from 'slices/app.slice'
 import { useDispatch, useSelector } from 'react-redux'
 import NumberBox from 'components/NumberBox'
 import i18n from 'utils/i18n'
@@ -306,6 +307,9 @@ const DrawerNavigator = () => {
         setProfileUrl(picture)
         setName(name)
         setEmail(email)
+
+        // put name in redux store
+        dispatch(setUserName({ userName: name }))
 
         if (courses.length > 0) {
           dispatch(setField({ key: 'allCourses', value: courses }))
