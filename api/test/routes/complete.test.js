@@ -5,12 +5,15 @@ const {
   POST_COMPLETE_LESSON,
   POST_INVALID_LESSON,
   POST_MISSING_LESSON,
+  POST_LESSON_INVALID_COURSE,
+  POST_LESSON_NONEXISTING_COURSE,
 } = require('../mock-data/complete-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const _ = require('lodash');
 const {
   ERR_MISSING_OR_INVALID_DATA,
   ERR_NOT_AUTHORIZED,
+  ERR_AUTH_FAILED,
 } = require('../../src/utils/constants');
 
 /* 
@@ -31,9 +34,9 @@ verifyIdTokenMock.mockImplementation(verifyIdTokenMockReturnValue);
 
 describe('POST /learner/complete/ ', () => {
   /*
-      We have to make sure we connect to a MongoDB mock db before the test
-      and close the connection at the end.
-    */
+        We have to make sure we connect to a MongoDB mock db before the test
+        and close the connection at the end.
+      */
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
   beforeAll(async () => {
@@ -99,5 +102,40 @@ describe('POST /learner/complete/ ', () => {
 
     expect(response.status).toBe(403);
     expect(message).toEqual(ERR_NOT_AUTHORIZED);
+  });
+
+  test('Fail to mark lesson complete with empty body', async () => {
+    const response = await withAuthentication(
+      request(app).post('/learner/complete').send({}),
+    );
+
+    const message = response.body.message;
+
+    expect(response.status).toBe(403);
+    expect(message).toEqual(ERR_AUTH_FAILED);
+  });
+
+  test('Fail to mark lesson complete with invalid course_id', async () => {
+    const response = await withAuthentication(
+      request(app).post('/learner/complete').send(POST_LESSON_INVALID_COURSE),
+    );
+
+    const message = response.body.message;
+
+    expect(response.status).toBe(400);
+    expect(message).toEqual('Invalid ObjectID');
+  });
+
+  test('Fail to mark lesson complete with non-existing course', async () => {
+    const response = await withAuthentication(
+      request(app)
+        .post('/learner/complete')
+        .send(POST_LESSON_NONEXISTING_COURSE),
+    );
+
+    const message = response.body.message;
+
+    expect(response.status).toBe(404);
+    expect(message).toEqual('Course does not exist');
   });
 });
