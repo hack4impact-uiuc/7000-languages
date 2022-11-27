@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { colors } from 'theme'
-import { Text, Input, Image, InputRightAddon } from 'native-base'
+import { Text, Input, Image, InputRightAddon, InputGroup } from 'native-base'
 import { StyleSheet, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { images } from 'theme'
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     top: '5%',
   },
   cancelButton: {
+    fontSize: 15,
     paddingRight: '3%',
     color: colors.blue.dark,
   },
@@ -38,9 +39,14 @@ const LearnerSearch = () => {
   const [searchFocused, setSearchFocused] = useState(false)
 
   return (
-  <View style={{ flex: 1 }}>
+  <View style={{ 
+    flex: 1 }}>
     <View style={styles.search}>
       <Input
+      w={{
+        base: "100%",
+      md: "100%",
+      }}
         height="25%"
         borderRadius={10}
         placeholderTextColor={colors.blue.dark}
@@ -57,7 +63,13 @@ const LearnerSearch = () => {
             style={{ paddingLeft: '3%' }}
           />
         )}
+        InputRightElement={(
+          <Text style={styles.cancelButton}>
+            {searchFocused ? 'Cancel' : ''}
+          </Text>
+        )}
       />
+      
     </View>
 
     {/* <Image alignSelf='center' source={images.logo_sm}  alt={"7000 languages logo"}/> */}
