@@ -144,7 +144,7 @@ const ManageView = ({
       (data) => data.data,
     )
 
-    return { selected, unselected: unselectedData, deleted: deletedData}
+    return { selected, unselected: unselectedData, deleted: deletedData }
   }
 
   /**
@@ -160,7 +160,7 @@ const ManageView = ({
    */
   const updateData = (newSelectedData, newUnselectedData, newDeletedData) => {
     /**
-     * This cheeky hack allows the state of AutoDragSortableView (Draggable component) to force an update. 
+     * This cheeky hack allows the state of AutoDragSortableView (Draggable component) to force an update.
      * Currently, if the selectedData contains the same items on update, the items disappear.
      */
     childrenWidth += widthFlag ? 0.001 : -0.001
@@ -173,7 +173,6 @@ const ManageView = ({
   }
 
   const discardChanges = () => {
-
     /**
      * This cheeky hack allows the state of AutoDragSortableView (Draggable component) to update on discard.
      */
@@ -205,7 +204,7 @@ const ManageView = ({
    * Moves data from unselectedData to deletedData
    * @param {Number} index Index of the data to move in unselectedData
    */
-   const moveToDeleted = (index) => {
+  const moveToDeleted = (index) => {
     const data = getData()
     const { src, dest } = moveFromList(data.unselected, data.deleted, index)
     updateData(selectedData, src, dest)

@@ -235,6 +235,14 @@ export const updateVocabItem = async (
   return res.data
 }
 
+export const deleteVocabItem = async (courseID, lessonID, vocabID) => {
+  const requestString = `/language/vocab?course_id=${courseID}&lesson_id=${lessonID}&vocab_id=${vocabID}`
+  const res = await instance.delete(requestString)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 /* Audio Endpoints */
 export const uploadAudioFile = async (
   courseId,

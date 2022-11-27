@@ -10,7 +10,6 @@ import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
 import i18n from 'utils/i18n'
 
-
 const ManageLessons = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
@@ -64,8 +63,7 @@ const ManageLessons = ({ navigation }) => {
   const saveChanges = async (selectedData, unselectedData, deletedData) => {
     errorWrap(
       async () => {
-
-        const deletedIds = deletedData.map((data) => (data._id))
+        const deletedIds = deletedData.map((data) => data._id)
 
         /* We need to iterate through allLessons, and update the selected and _order fields */
         const updatedAllLessons = _.cloneDeep(allLessons).filter(
@@ -95,9 +93,9 @@ const ManageLessons = ({ navigation }) => {
 
         // Makes API requests
         // Delete
-        // await Promise.all(deletedIds.map((lessonId) => {
-        //   deleteLesson(currentCourseId, lessonId)
-        // }))
+        await Promise.all(
+          deletedIds.map((lessonId) => deleteLesson(currentCourseId, lessonId)),
+        )
         // Update existing
         await updateLessons(currentCourseId, updatedAllLessons)
         // Updates Redux store

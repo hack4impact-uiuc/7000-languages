@@ -56,7 +56,7 @@ const getVocabIndexByID = (vocabId, lesson) => {
   return NOT_FOUND_INDEX;
 };
 
-module.exports.getVocabIndexByID = getVocabIndexByID
+module.exports.getVocabIndexByID = getVocabIndexByID;
 
 const validateDocument = async (model, document, session) => {
   // Run synchronous tests

@@ -63,8 +63,7 @@ const ManageUnits = ({ navigation }) => {
   const saveChanges = async (selectedData, unselectedData, deletedData) => {
     errorWrap(
       async () => {
-
-        const deletedIds = deletedData.map((data) => (data._id))
+        const deletedIds = deletedData.map((data) => data._id)
 
         /* We need to iterate through allUnits, and update the selected and _order fields */
         const updatedAllUnits = _.cloneDeep(allUnits).filter(
@@ -93,10 +92,11 @@ const ManageUnits = ({ navigation }) => {
         }
 
         // Makes API requests
-        // Delete
-        await Promise.all(deletedIds.map((unitId) => {
-          deleteUnit(currentCourseId, unitId)
-        }))
+        // Delete needs to happen before update since we don't want
+        // the updates to validate against deleted documents
+        await Promise.all(
+          deletedIds.map((unitId) => deleteUnit(currentCourseId, unitId)),
+        )
         // Update existing
         await updateUnits(currentCourseId, updatedAllUnits)
 

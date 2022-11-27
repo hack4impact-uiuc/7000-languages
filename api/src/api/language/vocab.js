@@ -157,10 +157,7 @@ router.delete(
   requireAuthentication,
   requireLanguageAuthorization,
   errorWrap(async (req, res) => {
-    const { lesson_id, vocab_id } = req.body;
-    if (!lesson_id || !vocab_id) {
-      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
-    }
+    const { lesson_id, vocab_id } = req.query;
 
     deleteVocabItem(lesson_id, vocab_id).then(({ success, message }) => {
       if (success) {
