@@ -36,13 +36,13 @@ router.post(
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
-    const hasCreatedLessonAlready = await hasCompletedLesson(
+    const hasCompletedLessonAlready = await hasCompletedLesson(
       req.user._id,
       lesson_id,
     );
 
     // Check if this document has already been created
-    if (hasCreatedLessonAlready) {
+    if (hasCompletedLessonAlready) {
       return sendResponse(
         res,
         400,
