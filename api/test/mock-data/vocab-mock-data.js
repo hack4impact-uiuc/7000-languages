@@ -130,6 +130,8 @@ module.exports.POST_FIRST_VOCAB_ITEM = {
   vocab: {
     original: 'Hello',
     translation: 'Hola',
+    image: 'image link',
+    audio: 'audio link',
   },
 };
 
@@ -137,8 +139,8 @@ module.exports.POST_FIRST_VOCAB_ITEM_EXPECTED = {
   _order: 15,
   original: 'Hello',
   translation: 'Hola',
-  audio: '',
-  image: '',
+  audio: 'audio link',
+  image: 'image link',
   selected: true,
   notes: '',
 };
@@ -149,6 +151,8 @@ module.exports.POST_SECOND_VOCAB_ITEM = {
   vocab: {
     original: 'Morning',
     translation: 'Manana',
+    image: 'other image link',
+    audio: 'other audio link',
   },
 };
 
@@ -156,8 +160,8 @@ module.exports.POST_SECOND_VOCAB_ITEM_EXPECTED = {
   _order: 16,
   original: 'Morning',
   translation: 'Manana',
-  audio: '',
-  image: '',
+  image: 'other image link',
+  audio: 'other audio link',
   selected: true,
   notes: '',
 };
@@ -201,6 +205,8 @@ module.exports.POST_VOCAB_ITEM_EXTRA_FIELDS = {
     translation: 'Hola',
     randomField: 1312312,
     randomFieldTwo: false,
+    image: 'image link',
+    audio: 'audio link',
   },
 };
 

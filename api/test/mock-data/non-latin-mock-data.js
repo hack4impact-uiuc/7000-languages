@@ -79,6 +79,8 @@ module.exports.POST_BERBER_VOCAB_ITEM = {
   vocab: {
     original: 'Berber',
     translation: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
+    image: 'link',
+    audio: 'link',
   },
 };
 
@@ -86,8 +88,8 @@ module.exports.POST_BERBER_VOCAB_ITEM_EXPECTED = {
   _order: 15,
   original: 'Berber',
   translation: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',
-  audio: '',
-  image: '',
+  audio: 'link',
+  image: 'link',
   notes: '',
   selected: true,
 };
