@@ -23,6 +23,9 @@ import Intro from 'pages/Intro'
 import i18n from 'utils/i18n'
 import LearnerUnitHome from 'pages/LearnerUnitHome'
 import LearnerLessonHome from 'pages/LearnerLessonHome'
+import StartActivity from 'pages/StartActivity'
+import Activity1 from 'pages/Activity1'
+import Activity2 from 'pages/Activity2'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -33,6 +36,7 @@ import DrawerButton from './DrawerButton'
 const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 const ModalStack = createStackNavigator()
+const ActivityStack = createStackNavigator()
 
 const homeNavigationProps = {
   headerTintColor: 'white',
@@ -48,6 +52,12 @@ const settingsNavigationProps = {
 
 const modalNavigationProps = {
   headerShown: false,
+}
+
+const activityNavigationProps = {
+  headerTintColor: 'white',
+  headerStyle: { backgroundColor: colors.blue.medium },
+  headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
 }
 
 const manageNavigationProps = {
@@ -106,6 +116,38 @@ export const ModalNavigator = () => (
     <ModalStack.Screen name="UpdateLesson" component={UpdateLesson} />
     <ModalStack.Screen name="UpdateCourse" component={UpdateCourse} />
   </ModalStack.Navigator>
+)
+
+export const ActivityNavigator = () => (
+  <ActivityStack.Navigator screenOptions={activityNavigationProps}>
+    <ActivityStack.Screen
+      name="StartActivity"
+      component={StartActivity}
+      options={({ navigation }) => ({
+        title: i18n.t('dict.activity'),
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: colors.blue.light },
+      })}
+    />
+    <ActivityStack.Screen
+      name="Activity1"
+      component={Activity1}
+      options={({ navigation }) => ({
+        title: `${i18n.t('dict.activity')} 1`,
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <ActivityStack.Screen
+      name="Activity2"
+      component={Activity2}
+      options={({ navigation }) => ({
+        title: `${i18n.t('dict.activity')} 2`,
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+  </ActivityStack.Navigator>
 )
 
 export const HomeNavigator = ({ courseId }) => (

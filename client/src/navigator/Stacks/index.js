@@ -3,8 +3,13 @@ import {
   AuthNavigator,
   ModalNavigator,
   SettingsNavigator,
+  ActivityNavigator,
 } from './Stacks'
 
 export {
-  HomeNavigator, AuthNavigator, ModalNavigator, SettingsNavigator,
+  HomeNavigator,
+  AuthNavigator,
+  ModalNavigator,
+  SettingsNavigator,
+  ActivityNavigator,
 }

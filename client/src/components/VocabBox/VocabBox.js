@@ -94,6 +94,19 @@ const VocabBox = ({
     <View style={{ height: 100 }} />
   )
 
+  const generateNotes = notes === '' ? null : (
+    <View style={{ width: '50%' }}>
+      <Text
+        fontWeight="regular"
+        color="gray.medium"
+        fontStyle="italic"
+        fontSize="lg"
+      >
+        {notes}
+      </Text>
+    </View>
+  )
+
   return (
     <Box
       py="3"
@@ -119,19 +132,11 @@ const VocabBox = ({
       <Box
         style={{
           ...styles.middle,
-          justifyContent: imageURI === '' ? 'flex-start' : 'space-evenly',
+          justifyContent:
+            imageURI === '' || notes === '' ? 'flex-start' : 'space-evenly',
         }}
       >
-        <View style={{ width: '50%' }}>
-          <Text
-            fontWeight="regular"
-            color="gray.medium"
-            fontStyle="italic"
-            fontSize="lg"
-          >
-            {notes}
-          </Text>
-        </View>
+        {generateNotes}
         {generateImage}
       </Box>
       <Box style={styles.bottom}>{generateAudio}</Box>
