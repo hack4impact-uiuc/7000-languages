@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bodyText: {
-    textAlign:"center",
+    textAlign: 'center',
     color: colors.gray.medium,
     width: '90%',
-  }
+  },
 })
 
 const LearnerSearch = () => {
@@ -78,8 +78,7 @@ const LearnerSearch = () => {
           {userName}
           {'.'}
         </Text>
-        <Text style={styles.bodyText}
-        fontFamily='body'>
+        <Text style={styles.bodyText} fontFamily="body">
           {i18n.t('dialogue.startSearching')}
         </Text>
       </View>
