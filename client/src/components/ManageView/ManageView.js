@@ -85,7 +85,6 @@ const ManageView = ({
     setUnselectedData(initialUnselectedData)
   }, [initialSelectedData, initialUnselectedData])
 
-
   /* Prompts the user to confirm action of leaving the page when they have unsaved changes */
   React.useEffect(
     () => navigation.addListener('beforeRemove', (e) => {
