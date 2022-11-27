@@ -9,6 +9,7 @@ const {
 const { models } = require('../../models/index.js');
 const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
 const { checkIds } = require('../../utils/languageHelper');
+const { hasCompletedLesson } = require('../../utils/learnerHelper');
 
 /**
  * Marks the user as having completed a specific lesson
@@ -27,6 +28,21 @@ router.post(
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
+    const hasCreatedLessonAlready = await hasCompletedLesson(
+      req.user._id,
+      lesson_id,
+    );
+
+    // Check if this document has already been created
+    if (hasCreatedLessonAlready) {
+      return sendResponse(
+        res,
+        400,
+        'Lesson has already been marked as complete',
+      );
+    }
+
+    // Go on to marking the lesson as complete
     const lessonComplete = new models.Complete({
       user_id: req.user._id,
       _course_id: course_id,

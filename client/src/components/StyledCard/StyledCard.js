@@ -172,7 +172,7 @@ StyledCard.defaultProps = {
   indicatorType: INDICATOR_TYPES.NONE,
   imageURI: '',
   showVolumeIcon: false,
-  volumeIconCallback: () => { },
+  volumeIconCallback: () => {},
   width: 100,
   height: 70,
   isPressed: false,

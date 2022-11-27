@@ -51,6 +51,8 @@ const hasCompletedLesson = async (user_id, lesson_id) => {
   return docExists;
 };
 
+module.exports.hasCompletedLesson = hasCompletedLesson;
+
 /**
  * Determines if a user has completed a specific lesson
  * @param {String} user_id User MongoDB _id
