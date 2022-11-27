@@ -105,7 +105,7 @@ router.get(
       units[i].num_lessons = numLessons;
 
       if (req.user.isLearner) {
-        units[i].complete = completedUnits.indexOf(String(units[i]._id)) >= 0;
+        units[i].complete = completedUnits.includes(String(units[i]._id));
       }
     }
     let newCourse = _.omit(course, ['admin_id']);

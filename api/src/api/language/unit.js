@@ -44,7 +44,7 @@ router.get(
 
       if (req.user.isLearner) {
         lessons[i].complete =
-          completedLessons.indexOf(String(lessons[i]._id)) >= 0;
+          completedLessons.includes(String(lessons[i]._id));
       }
     }
 
