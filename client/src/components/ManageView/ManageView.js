@@ -85,10 +85,6 @@ const ManageView = ({
     setUnselectedData(initialUnselectedData)
   }, [initialSelectedData, initialUnselectedData])
 
-  useEffect(() => {
-    console.log('updated')
-    console.log(selectedData)
-  }, [selectedData])
 
   /* Prompts the user to confirm action of leaving the page when they have unsaved changes */
   React.useEffect(
