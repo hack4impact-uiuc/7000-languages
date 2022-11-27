@@ -129,7 +129,6 @@ const Activity1 = ({ navigation }) => {
           while (newOptions.indexOf(newOption) >= 0) {
             newOption = vocabL2[Math.floor(Math.random() * vocabL2.length)]
           }
-
           newOptions.push(newOption)
         }
 
