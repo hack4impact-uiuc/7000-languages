@@ -18,17 +18,21 @@ const styles = StyleSheet.create({
     variant: 'filled',
     color: colors.blue.medium,
   },
-  logo: {
-    alignSelf: 'center',
-  },
   cancelButton: {
     fontSize: 15,
     paddingRight: '3%',
     color: colors.blue.dark,
   },
-  welcomeText: {
-    color: colors.gray.medium,
+  body: {
+    flex: 1,
+    height: '100%',
+    alignItems: 'center',
   },
+  bodyText: {
+    textAlign:"center",
+    color: colors.gray.medium,
+    width: '90%',
+  }
 })
 
 const LearnerSearch = () => {
@@ -61,22 +65,24 @@ const LearnerSearch = () => {
           )}
         />
       </View>
-
-      <Logo style={styles.logo} width="18%" height="18%" />
-      {/* Concerned about i18n on this one */}
-      <Text
-        style={styles.welcomeText}
-        fontFamily="heading"
-        fontSize="2xl"
-        textAlign="center"
-      >
-        {i18n.t('dict.searchWelcome')}
-        {userName}
-        {'.'}
-      </Text>
-      <Text textAlign="center" fontFamily="body" color={colors.gray.medium}>
-        {i18n.t('dialogue.startSearching')}
-      </Text>
+      <View style={styles.body}>
+        <Logo style={styles.logo} width="18%" height="18%" />
+        {/* Concerned about i18n on this one */}
+        <Text
+          color={colors.gray.dark}
+          fontFamily="heading"
+          fontSize="2xl"
+          textAlign="center"
+        >
+          {i18n.t('dict.searchWelcome')}
+          {userName}
+          {'.'}
+        </Text>
+        <Text style={styles.bodyText}
+        fontFamily='body'>
+          {i18n.t('dialogue.startSearching')}
+        </Text>
+      </View>
     </View>
   )
 }
