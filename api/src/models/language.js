@@ -39,10 +39,10 @@ Unit.index({ _course_id: 1, _order: 1 });
 
 const Vocab = new mongoose.Schema({
   _order: { type: Number, required: true, index: true },
-  original: { type: String, required: true },
+  original: { type: String, required: false },
   translation: { type: String, required: true },
   image: { type: String, required: false, default: '' },
-  audio: { type: String, required: false, default: '' },
+  audio: { type: String, required: true, default: '' },
   selected: { type: Boolean, required: true, default: true },
   notes: { type: String, required: false, default: '' },
 });
