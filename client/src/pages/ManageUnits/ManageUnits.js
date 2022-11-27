@@ -17,7 +17,6 @@ const ManageUnits = ({ navigation }) => {
 
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
-  const [deletedIds, setDeletedIds] = useState([])
 
   /**
    * Filers all of the units into selected and unselected lists
@@ -56,18 +55,17 @@ const ManageUnits = ({ navigation }) => {
     setUnselected(unselectedList)
   }, [allUnits])
 
-  const deleteItem = (unitId) => {
-    setDeletedIds([...deletedIds, unitId])
-  }
-
   /**
    * Calls API in order to update unit data
    * @param {*} selectedData List of Unit objects that are marked as selected
    * @param {*} unselectedData List of unit objects that are marked as unselected
    */
-  const saveChanges = async (selectedData, unselectedData) => {
+  const saveChanges = async (selectedData, unselectedData, deletedData) => {
     errorWrap(
       async () => {
+
+        const deletedIds = deletedData.map((data) => (data._id))
+
         /* We need to iterate through allUnits, and update the selected and _order fields */
         const updatedAllUnits = _.cloneDeep(allUnits).filter(
           (unit) => !deletedIds.includes(unit._id),
@@ -96,9 +94,9 @@ const ManageUnits = ({ navigation }) => {
 
         // Makes API requests
         // Delete
-        // await Promise.all(deletedIds.map((unitId) => {
-        //   deleteUnit(currentCourseId, unitId)
-        // }))
+        await Promise.all(deletedIds.map((unitId) => {
+          deleteUnit(currentCourseId, unitId)
+        }))
         // Update existing
         await updateUnits(currentCourseId, updatedAllUnits)
 
@@ -122,7 +120,6 @@ const ManageUnits = ({ navigation }) => {
       selectedBodyText={i18n.t('dialogue.selectedUnitsPrompt')}
       unselectedBodyText={i18n.t('dialogue.unselectedUnitsPrompt')}
       saveCallback={saveChanges}
-      deleteCallback={deleteItem}
       initialSelectedData={selected}
       initialUnselectedData={unselected}
     />

@@ -70,13 +70,13 @@ const ManageView = ({
   selectedBodyText,
   unselectedBodyText,
   saveCallback,
-  deleteCallback,
   initialSelectedData,
   initialUnselectedData,
   playAudio,
 }) => {
   const [selectedData, setSelectedData] = useState(initialSelectedData)
   const [unselectedData, setUnselectedData] = useState(initialUnselectedData)
+  const [deletedData, setDeletedData] = useState([])
   const [shouldShowButtons, setShouldShowButtons] = useState(false)
 
   // Updates the data shown in the draggable list component whenever the props update
@@ -84,6 +84,11 @@ const ManageView = ({
     setSelectedData(initialSelectedData)
     setUnselectedData(initialUnselectedData)
   }, [initialSelectedData, initialUnselectedData])
+
+  useEffect(() => {
+    console.log('updated')
+    console.log(selectedData)
+  }, [selectedData])
 
   /* Prompts the user to confirm action of leaving the page when they have unsaved changes */
   React.useEffect(
@@ -139,7 +144,7 @@ const ManageView = ({
       (data) => data.data,
     )
 
-    return { selected, unselected: unselectedData }
+    return { selected, unselected: unselectedData, deleted: deletedData}
   }
 
   /**
@@ -153,23 +158,27 @@ const ManageView = ({
   /**
    * Updates the selected and unselected data after an operation on both lists
    */
-  const updateData = (newSelectedData, newUnselectedData) => {
-    setSelectedData(newSelectedData)
-    setUnselectedData(newUnselectedData)
-    updateShouldShowButtons()
-  }
-
-  const discardChanges = () => {
-    setShouldShowButtons(false)
-
+  const updateData = (newSelectedData, newUnselectedData, newDeletedData) => {
     /**
-     * This cheeky hack allows the state of AutoDragSortableView (Draggable component) to update on discard.
+     * This cheeky hack allows the state of AutoDragSortableView (Draggable component) to force an update. 
+     * Currently, if the selectedData contains the same items on update, the items disappear.
      */
     childrenWidth += widthFlag ? 0.001 : -0.001
     widthFlag = !widthFlag
 
-    setSelectedData(initialSelectedData)
-    setUnselectedData(initialUnselectedData)
+    setSelectedData(newSelectedData)
+    setUnselectedData(newUnselectedData)
+    setDeletedData(newDeletedData)
+    updateShouldShowButtons()
+  }
+
+  const discardChanges = () => {
+
+    /**
+     * This cheeky hack allows the state of AutoDragSortableView (Draggable component) to update on discard.
+     */
+    updateData(initialSelectedData, initialUnselectedData, [])
+    setShouldShowButtons(false)
   }
 
   /**
@@ -179,7 +188,7 @@ const ManageView = ({
   const moveToSelected = (index) => {
     const data = getData()
     const { src, dest } = moveFromList(data.unselected, data.selected, index)
-    updateData(dest, src)
+    updateData(dest, src, deletedData)
   }
 
   /**
@@ -189,7 +198,17 @@ const ManageView = ({
   const moveToUnselected = (index) => {
     const data = getData()
     const { src, dest } = moveFromList(data.selected, data.unselected, index)
-    updateData(src, dest)
+    updateData(src, dest, deletedData)
+  }
+
+  /**
+   * Moves data from unselectedData to deletedData
+   * @param {Number} index Index of the data to move in unselectedData
+   */
+   const moveToDeleted = (index) => {
+    const data = getData()
+    const { src, dest } = moveFromList(data.unselected, data.deleted, index)
+    updateData(selectedData, src, dest)
   }
 
   /**
@@ -243,14 +262,7 @@ const ManageView = ({
           name="trash-2"
           size={25}
           color={colors.gray.medium}
-          onPress={() => {
-            setUnselectedData(
-              unselectedData.filter((unit) => {
-                unit._id !== item._id
-              }),
-            )
-            deleteCallback(item._id)
-          }}
+          onPress={() => moveToDeleted(index)}
         />
       )}
       volumeIconCallback={playAudio}
@@ -275,7 +287,7 @@ const ManageView = ({
   const saveData = () => {
     const data = getData()
     setShouldShowButtons(false)
-    saveCallback(data.selected, data.unselected)
+    saveCallback(data.selected, data.unselected, data.deleted)
   }
 
   /**

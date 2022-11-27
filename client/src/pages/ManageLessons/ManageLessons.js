@@ -18,7 +18,6 @@ const ManageLessons = ({ navigation }) => {
 
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
-  const [deletedIds, setDeletedIds] = useState([])
 
   /**
    * Filers all of the lessons into selected and unselected lists
@@ -57,18 +56,17 @@ const ManageLessons = ({ navigation }) => {
     setUnselected(unselectedList)
   }, [allLessons])
 
-  const deleteItem = (lessonsId) => {
-    setDeletedIds([...deletedIds, lessonsId])
-  }
-
   /**
    * Calls API in order to update lesson data
    * @param {*} selectedData List of Unit objects that are marked as selected
    * @param {*} unselectedData List of unit objects that are marked as unselected
    */
-  const saveChanges = async (selectedData, unselectedData) => {
+  const saveChanges = async (selectedData, unselectedData, deletedData) => {
     errorWrap(
       async () => {
+
+        const deletedIds = deletedData.map((data) => (data._id))
+
         /* We need to iterate through allLessons, and update the selected and _order fields */
         const updatedAllLessons = _.cloneDeep(allLessons).filter(
           (lesson) => !deletedIds.includes(lesson._id),
@@ -122,7 +120,6 @@ const ManageLessons = ({ navigation }) => {
       selectedBodyText={i18n.t('dialogue.selectedLessonsPrompt')}
       unselectedBodyText={i18n.t('dialogue.unselectedLessonsPrompt')}
       saveCallback={saveChanges}
-      deleteCallback={deleteItem}
       initialSelectedData={selected}
       initialUnselectedData={unselected}
     />
