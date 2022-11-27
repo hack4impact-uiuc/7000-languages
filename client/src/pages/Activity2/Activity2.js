@@ -5,13 +5,15 @@ import { colors } from 'theme'
 import { Text } from 'native-base'
 import i18n from 'utils/i18n'
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux' // import at the top of the file
 import { FontAwesome } from '@expo/vector-icons'
 import { useErrorWrap } from 'hooks'
 import { QUESTION_STATE, ACTIVITY_DELAY } from 'utils/constants'
 import { Audio } from 'expo-av'
 import _ from 'lodash'
 import { shuffle, getAudioURIGivenVocabItem } from 'utils/learnerHelper'
+import { markLessonAsComplete } from 'api'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLessonToComplete } from 'slices/language.slice'
 
 const styles = StyleSheet.create({
   root: {
@@ -48,6 +50,7 @@ const styles = StyleSheet.create({
 
 const Activity2 = ({ navigation }) => {
   const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
 
   const {
     lessonData, currentCourseId, currentUnitId, currentLessonId,
@@ -59,7 +62,9 @@ const Activity2 = ({ navigation }) => {
 
   const [selectedOptionIdx, setSelectedOptionIdx] = useState(-1) // Represents the current option that is selected by the user in the activity
 
-  const allDone = () => {
+const allDone = async () => {
+    await markLessonAsComplete(currentCourseId, currentUnitId, currentLessonId)
+    dispatch(setLessonToComplete({}))
     navigation.navigate('Drawer', { screen: 'LearnerHome' })
   }
 
