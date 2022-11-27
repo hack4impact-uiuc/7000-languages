@@ -12,6 +12,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isLoading: false,
+  userName: '',
 }
 
 // ------------------------------------
@@ -25,10 +26,13 @@ const appSlice = createSlice({
     setLoading: (state, { payload }) => {
       state.isLoading = payload.isLoading
     },
+    setUserName: (state, { payload }) => {
+      state.userName = payload.userName
+    },
   },
 })
 
 export const { action } = appSlice
-export const { setLoading } = appSlice.actions
+export const { setLoading, setUserName } = appSlice.actions
 
 export default appSlice.reducer

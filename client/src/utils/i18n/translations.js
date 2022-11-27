@@ -2,7 +2,7 @@ const translations = {
   en: {
     dict: {
       welcome: 'Welcome!',
-      searchWelcome: 'Welcome, {{name}}!',
+      searchWelcome: 'Welcome, ',
       vocabItems: 'Vocabulary Items',
       discard: 'Discard',
       ok: 'OK',
@@ -176,12 +176,13 @@ const translations = {
         'You can save your changes by clicking the save button. If you leave this screen without pressing the button, your changes will be discarded.',
       courseSettingsChangeCode:
         'Learners will have to enter this code in order to join your course.',
+      startSearching: 'Start searching for courses and new languages to learn!',
     },
   },
   fr: {
     dict: {
       welcome: 'Bienvenue !',
-      searchWelcome: 'Bienvenue, {{name}}!',
+      searchWelcome: 'Bienvenue, ',
       vocabItems: 'Éléments de vocabulaire',
       discard: 'Jeter',
       ok: 'OK',
@@ -222,7 +223,6 @@ const translations = {
       suggestion: 'Suggestion',
       settings: 'Paramètres',
       delete: 'Supprimer',
-      search: 'Chercher',
     },
     actions: {
       becomeContributorTitle: 'Devenir un contributeur',
@@ -359,6 +359,8 @@ const translations = {
         'Vous pouvez enregistrer vos modifications en cliquant sur le bouton "Enregistrer". Si vous quittez cet écran sans cliquer sur le bouton, vos modifications seront annulées.',
       courseSettingsChangeCode:
         "Les apprenants devront saisir ce code afin de s'inscrire à votre cours.",
+      startSearching:
+        'Commencez à chercher des cours et de nouvelles langues à apprendre !',
     },
   },
 }
