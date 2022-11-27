@@ -2,6 +2,7 @@ const translations = {
   en: {
     dict: {
       welcome: 'Welcome!',
+      searchWelcome: 'Welcome, {{name}}!',
       vocabItems: 'Vocabulary Items',
       discard: 'Discard',
       ok: 'OK',
@@ -180,6 +181,7 @@ const translations = {
   fr: {
     dict: {
       welcome: 'Bienvenue !',
+      searchWelcome: 'Bienvenue, {{name}}!',
       vocabItems: 'Éléments de vocabulaire',
       discard: 'Jeter',
       ok: 'OK',

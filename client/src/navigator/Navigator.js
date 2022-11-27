@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { getUser } from 'api'
 import { loadUserIDToken } from 'utils/auth'
 import DrawerNavigator from './Drawer'
-import { AuthNavigator, ModalNavigator } from './Stacks'
+import { AuthNavigator, ModalNavigator, SearchNavigator } from './Stacks'
 
 const RootStack = createStackNavigator()
 const Navigator = () => {
@@ -47,13 +47,13 @@ const Navigator = () => {
         animationEnabled: true,
         gestureEnabled: true,
         headerShown: false,
-        presentation: 'modal',
       }}
     >
       {loggedIn ? (
         <>
           <RootStack.Screen name="Drawer" component={DrawerNavigator} />
           <RootStack.Screen name="Modal" component={ModalNavigator} />
+          <RootStack.Screen name="Search" component={SearchNavigator} />
         </>
       ) : (
         <RootStack.Screen name="Auth" component={AuthNavigator} />

@@ -46,11 +46,11 @@ const settingsNavigationProps = {
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
 }
 
-// TODO : does the learner side go in a different nav stack?
 const learnerNavigationProps = {
   headerTintColor: 'white',
   headerStyle: { backgroundColor: colors.blue.dark },
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+  headerShown: true,
 }
 
 const modalNavigationProps = {
@@ -215,7 +215,6 @@ export const HomeNavigator = ({ courseId }) => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
-
   </Stack.Navigator>
 )
 
@@ -239,7 +238,6 @@ export const SearchNavigator = () => (
     />
   </SearchStack.Navigator>
 )
-
 
 export const SettingsNavigator = () => (
   <Stack.Navigator
