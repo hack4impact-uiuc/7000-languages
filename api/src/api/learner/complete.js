@@ -21,6 +21,14 @@ router.post(
   errorWrap(async (req, res) => {
     const { course_id, unit_id, lesson_id } = req.body;
 
+    if (
+      course_id === undefined ||
+      unit_id === undefined ||
+      lesson_id === undefined
+    ) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
     // Checks if the ids are valid
     const isValid = await checkIds({ course_id, unit_id, lesson_id });
 
