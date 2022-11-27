@@ -7,5 +7,6 @@ router.get('/', (req, res) =>
 // Put all routes here
 router.use('/user', require('./user'));
 router.use('/language', require('./language'));
+router.use('/learner', require('./learner'));
 
 module.exports = router;

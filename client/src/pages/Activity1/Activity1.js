@@ -116,11 +116,20 @@ const Activity1 = ({ navigation }) => {
 
         // Build options, making sure to not take duplicate options
         for (let j = 0; j < numOptions - 1; j += 1) {
+          if (
+            vocabL2.filter((val) => newOptions.includes(val)).length
+            === vocabL2.length
+          ) {
+            // All of the possible options are already in newOptions, so we can stop looking for new options
+            break
+          }
+
           let newOption = vocabL2[Math.floor(Math.random() * vocabL2.length)]
 
           while (newOptions.indexOf(newOption) >= 0) {
             newOption = vocabL2[Math.floor(Math.random() * vocabL2.length)]
           }
+
           newOptions.push(newOption)
         }
 
