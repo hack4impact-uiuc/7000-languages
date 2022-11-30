@@ -12,30 +12,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    // alignItems: 'center',
     maxWidth: '100%',
-  },
-  left: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexShrink: 2,
   },
   middle: {
     paddingLeft: 15,
-    flexShrink: 2,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    left: 0,
   },
   right: {
-    width: 120,
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    justifyContent: 'flex-start',
-  },
-  leftIcon: {
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   rightIcon: {
     alignItems: 'center',
@@ -43,19 +26,11 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  soundIcon: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#DEE5E9',
-    height: 40,
-    width: 40,
-    borderRadius: 20,
-  },
-  indicator: {},
 })
 
 const PlainCard = ({
   titleText,
+  bodyText,
   leftIcon,
   rightIcon,
   imageURI,
@@ -66,43 +41,8 @@ const PlainCard = ({
   height,
   isPressed,
 }) => {
-  const generateLeftIcon = leftIcon ? (
-    <Box style={styles.leftIcon}>{leftIcon}</Box>
-  ) : null
   const generateRightIcon = rightIcon ? (
     <Box style={styles.rightIcon}>{rightIcon}</Box>
-  ) : null
-
-  const indicator = indicatorType !== INDICATOR_TYPES.NONE ? (
-    <Box style={styles.indicator}>
-      <Indicator indicatorType={indicatorType} />
-    </Box>
-  ) : null
-  const generateImage = imageURI === '' ? (
-    indicator
-  ) : (
-    <Box style={styles.indicator}>
-      <Image
-        source={{
-          uri: imageURI,
-        }}
-        alt="Alternate Text"
-        size="md"
-        resizeMode="cover"
-        borderRadius={10}
-      />
-    </Box>
-  )
-
-  const generateVolumeIcon = showVolumeIcon ? (
-    <Box style={styles.soundIcon}>
-      <FontAwesome
-        name="volume-up"
-        size={25}
-        color={colors.black}
-        onPress={volumeIconCallback}
-      />
-    </Box>
   ) : null
 
   return (
@@ -114,31 +54,27 @@ const PlainCard = ({
       borderRadius="md"
       bg={isPressed ? colors.gray.medium_light : colors.white.dark}
     >
-      <Box px="2" style={styles.left}>
-        {generateImage}
-        {generateLeftIcon}
-        <Box style={styles.middle}>
-          <Text
-            fontFamily="heading"
-            fontWeight="regular"
-            fontStyle="normal"
-            fontSize="xl"
-            numberOfLines={1}
-          >
-            {titleText}
-          </Text>
-        </Box>
+      <Box style={styles.middle}>
+        <Text
+          fontFamily="heading"
+          fontWeight="regular"
+          fontStyle="normal"
+          fontSize="xl"
+          numberOfLines={1}
+        >
+          {titleText}
+        </Text>
       </Box>
       <Box style={styles.right}>
         {generateRightIcon}
-        {generateVolumeIcon}
       </Box>
     </Box>
   )
 }
 
-StyledCard.propTypes = {
+PlainCard.propTypes = {
   titleText: PropTypes.string,
+  bodyText: PropTypes.string,
   leftIcon: PropTypes.element,
   rightIcon: PropTypes.element,
   indicatorType: PropTypes.number,
@@ -150,8 +86,9 @@ StyledCard.propTypes = {
   isPressed: PropTypes.bool,
 }
 
-StyledCard.defaultProps = {
+PlainCard.defaultProps = {
   titleText: '',
+  bodyText: '',
   leftIcon: null,
   rightIcon: null,
   indicatorType: INDICATOR_TYPES.NONE,

@@ -7,6 +7,7 @@ import { getUser } from 'api'
 import { loadUserIDToken } from 'utils/auth'
 import DrawerNavigator from './Drawer'
 import { AuthNavigator, ModalNavigator, ActivityNavigator } from './Stacks'
+import { AccountInfoNavigator } from './Stacks/Stacks'
 
 const RootStack = createStackNavigator()
 
@@ -56,6 +57,7 @@ const Navigator = () => {
             <RootStack.Screen name="Drawer" component={DrawerNavigator} />
             <RootStack.Screen name="Modal" component={ModalNavigator} />
           </RootStack.Group>
+          <RootStack.Screen name="AccountInfo" component={AccountInfoNavigator} />
           <RootStack.Screen name="Activity" component={ActivityNavigator} />
         </>
       ) : (

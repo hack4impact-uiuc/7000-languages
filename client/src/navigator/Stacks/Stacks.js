@@ -19,6 +19,7 @@ import UpdateLesson from 'pages/UpdateLesson'
 import UpdateUnit from 'pages/UpdateUnit'
 import CourseSettings from 'pages/CourseSettings'
 import UpdateCourse from 'pages/UpdateCourse'
+import AppLanguageSelection from 'pages/AppLanguageSelection'
 import Intro from 'pages/Intro'
 import i18n from 'utils/i18n'
 import LearnerUnitHome from 'pages/LearnerUnitHome'
@@ -52,6 +53,10 @@ const settingsNavigationProps = {
 }
 
 const modalNavigationProps = {
+  headerShown: false,
+}
+
+const accountInfoNavigationProps = {
   headerShown: false,
 }
 
@@ -106,6 +111,13 @@ export const AuthNavigator = () => (
       })}
     />
   </AuthStack.Navigator>
+)
+
+export const AccountInfoNavigator = () => (
+  <Stack.Navigator screenOptions={accountInfoNavigationProps}>
+    <Stack.Screen name="AccountInfoHome" component={AccountInfo} />
+    <Stack.Screen name="AppLanguageSelection" component={AppLanguageSelection} />
+  </Stack.Navigator>
 )
 
 export const ModalNavigator = () => (

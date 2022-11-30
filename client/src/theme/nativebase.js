@@ -179,7 +179,6 @@ const theme = extendTheme({
             fontFamily: 'heading',
           },
         },
-<<<<<<< Updated upstream
         settings: {
           bg: 'gray.300',
           borderRadius: 10,
@@ -191,10 +190,8 @@ const theme = extendTheme({
             color: 'gray.dark',
             fontFamily: 'heading',
           },
-=======
         accountInfo: {
           bg: 'gray.dark'
->>>>>>> Stashed changes
         },
         learner_secondary: {
           bg: 'blue.medium_light',
@@ -282,6 +279,6 @@ const theme = extendTheme({
     body: 'GT_Haptik_font',
     mono: 'GT_Haptik_font',
   },
-})
+}})
 
 export default theme

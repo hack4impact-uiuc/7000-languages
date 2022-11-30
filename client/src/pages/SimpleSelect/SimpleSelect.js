@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Text, Select, Divider, Image } from 'native-base'
-import StyledButton from 'components/StyledButton'
 import { Alert, StyleSheet, View, Dimensions } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import i18n from 'utils/i18n'
@@ -100,7 +99,7 @@ const drawerStyles = StyleSheet.create({
   },
 })
 
-const AccountInfo = ({ props, navigation }) => {
+const SimpleSelect = () => {
   const [userEmail, setEmail] = useState('')
   const [userName, setName] = useState(`${i18n.t('dict.loading')}`)
   const [profileUrl, setProfileUrl] = useState('')
@@ -154,10 +153,6 @@ const AccountInfo = ({ props, navigation }) => {
             size={40}
           />
         )}
-        // onPress={() => props.navigation.navigate('AccountInfo', { screen: 'AppLanguageSelection' })}
-        onPress={() => {
-          props.navigation.navigate('AccountInfo', { screen: 'AppLanguageSelection' })
-        }}
       />
       <View style={styles.personalInfoContainer}>
         <View style={drawerStyles.bottomContainer}>
@@ -191,4 +186,4 @@ const AccountInfo = ({ props, navigation }) => {
   )
 }
 
-export default AccountInfo
+export default SimpleSelect

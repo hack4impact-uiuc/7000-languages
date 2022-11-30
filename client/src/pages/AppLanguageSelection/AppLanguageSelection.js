@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Text, Select, Divider, Image } from 'native-base'
-import StyledButton from 'components/StyledButton'
 import { Alert, StyleSheet, View, Dimensions } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import i18n from 'utils/i18n'
@@ -100,7 +99,7 @@ const drawerStyles = StyleSheet.create({
   },
 })
 
-const AccountInfo = ({ props, navigation }) => {
+const AppLanguageSelection = ({ navigation }) => {
   const [userEmail, setEmail] = useState('')
   const [userName, setName] = useState(`${i18n.t('dict.loading')}`)
   const [profileUrl, setProfileUrl] = useState('')
@@ -140,11 +139,11 @@ const AccountInfo = ({ props, navigation }) => {
         </View>
         <Text style={styles.descriptionText} fontSize="md"
         >
-          Here are the settings page for you to manage your app.
+          Here you can select which language you want the app to work in.
         </Text>
       </View>
       <PlainCard
-        titleText='Language'
+        titleText='Bruh'
         width={width * 0.97}
         height={60}
         rightIcon={(
@@ -154,41 +153,11 @@ const AccountInfo = ({ props, navigation }) => {
             size={40}
           />
         )}
-        // onPress={() => props.navigation.navigate('AccountInfo', { screen: 'AppLanguageSelection' })}
-        onPress={() => {
-          props.navigation.navigate('AccountInfo', { screen: 'AppLanguageSelection' })
-        }}
       />
-      <View style={styles.personalInfoContainer}>
-        <View style={drawerStyles.bottomContainer}>
-          <Image
-            source={
-              profileUrl === ''
-                ? images.default_icon
-                : { uri: profileUrl }
-            }
-            alt="Profile Icon"
-            size="sm"
-            resizeMode="contain"
-            borderRadius={100}
-          />
-          <View style={drawerStyles.userInfoContainer}>
-            <Text
-              style={drawerStyles.userName}
-              fontFamily="heading"
-              fontWeight="regular"
-              fontStyle="normal"
-            >
-              {userName}
-            </Text>
-            <Text style={drawerStyles.userEmail}>{userEmail}</Text>
-          </View>
-        </View>
-        <DrawerLogoutButton />
-      </View>
+
       <View style={drawerStyles.bottomDivider} />
     </View >
   )
 }
 
-export default AccountInfo
+export default AppLanguageSelection
