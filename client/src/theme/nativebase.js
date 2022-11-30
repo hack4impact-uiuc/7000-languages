@@ -56,7 +56,7 @@ const theme = extendTheme({
       },
       variants: {
         primary: {
-          bg: 'red.dark',
+          bg: 'red.medium_dark',
           w: '90%',
           my: 2,
           px: 20,
@@ -80,7 +80,7 @@ const theme = extendTheme({
           },
         },
         primary_short: {
-          bg: 'red.dark',
+          bg: 'red.medium_dark',
           w: '67%',
           _text: {
             color: 'white.dark',
@@ -94,7 +94,7 @@ const theme = extendTheme({
           my: 2,
           py: 4,
           _text: {
-            color: 'red.dark',
+            color: 'red.medium_dark',
             fontFamily: 'heading',
           },
         },
@@ -105,10 +105,10 @@ const theme = extendTheme({
           borderStyle: 'dashed',
           borderWidth: 2,
           borderRadius: 1,
-          borderColor: 'red.dark',
+          borderColor: 'red.medium_dark',
           _text: {
             fontSize: 20,
-            color: 'red.dark',
+            color: 'red.medium_dark',
             fontFamily: 'heading',
           },
         },
@@ -117,7 +117,7 @@ const theme = extendTheme({
           px: 0,
           py: 4,
           _text: {
-            color: 'red.dark',
+            color: 'red.medium_dark',
             fontFamily: 'heading',
           },
         },
@@ -151,7 +151,7 @@ const theme = extendTheme({
           my: 2,
           h: 10,
           _text: {
-            color: 'red.dark',
+            color: 'red.medium_dark',
             fontFamily: 'heading',
           },
         },
@@ -175,7 +175,7 @@ const theme = extendTheme({
           my: 3,
           mx: 5,
           _text: {
-            color: 'red.dark',
+            color: 'red.medium_dark',
             fontFamily: 'heading',
           },
         },
@@ -195,6 +195,67 @@ const theme = extendTheme({
         accountInfo: {
           bg: 'gray.dark'
 >>>>>>> Stashed changes
+        },
+        learner_secondary: {
+          bg: 'blue.medium_light',
+          w: '90%',
+          h: 60,
+          my: 3,
+          borderRadius: 40,
+          _text: {
+            color: 'blue.darker',
+            fontFamily: 'heading',
+          },
+        },
+        learner_in_progress: {
+          bg: 'gray.light',
+          borderWidth: 2,
+          borderColor: colors.gray.semi_light,
+          borderRadius: '9%',
+          w: '90%',
+          h: 65,
+          my: 3,
+          _text: {
+            fontFamily: 'heading',
+          },
+        },
+        learner_incorrect: {
+          bg: 'gray.semi_light',
+          borderWidth: 2,
+          borderColor: colors.gray.semi_light,
+          borderRadius: '9%',
+          w: '90%',
+          h: 65,
+          my: 3,
+          _text: {
+            color: 'white.medium',
+            fontFamily: 'heading',
+          },
+        },
+        learner_correct: {
+          bg: 'green.medium_light',
+          borderWidth: 2,
+          borderColor: colors.green.medium_light,
+          borderRadius: '9%',
+          w: '90%',
+          h: 65,
+          my: 3,
+          _text: {
+            fontFamily: 'heading',
+          },
+        },
+        learner_selected: {
+          bg: '#04AFB2',
+          borderWidth: 3,
+          borderColor: colors.blue.darker,
+          borderRadius: 40,
+          w: '90%',
+          h: 65,
+          my: 3,
+          _text: {
+            color: 'blue.light',
+            fontFamily: 'heading',
+          },
         },
       },
     },

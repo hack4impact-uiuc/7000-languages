@@ -91,7 +91,7 @@ const Drawer = createDrawerNavigator()
 
 const tabColors = [
   colors.red.light,
-  colors.red.dark,
+  colors.red.medium_dark,
   colors.blue.light,
   colors.blue.dark,
 ]
@@ -102,7 +102,7 @@ const generateUnitLabel = (numUnits) => {
     return numUnits
   }
   if (parseInt(numUnits, 10) === 1) {
-    return `${i18n.t('dict.unitSingle')}`
+    return `1 ${i18n.t('dict.unitSingle')}`
   }
   return `${numUnits} ${i18n.t('dict.unitPlural')}`
 }

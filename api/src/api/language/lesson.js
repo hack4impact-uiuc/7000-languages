@@ -130,6 +130,7 @@ router.patch(
   '/',
   requireAuthentication,
   requireLanguageAuthorization,
+
   errorWrap(async (req, res) => {
     const { lesson_id, updates } = req.body;
 

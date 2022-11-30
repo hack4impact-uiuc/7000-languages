@@ -30,6 +30,7 @@ module.exports.POST_BERBER_COURSE_EXPECTED = {
     translated_language: 'Français',
     population: '',
     location: 'Algeria',
+    is_private: true,
     link: '',
   },
 };
@@ -138,6 +139,7 @@ module.exports.PATCH_BERBER_COURSE_EXPECTED = {
     population: '',
     location: 'Algeria',
     link: '',
+    is_private: true,
   },
 };
 

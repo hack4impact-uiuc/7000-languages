@@ -2,12 +2,14 @@ import React, { useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { useSelector, useDispatch } from 'react-redux'
 import { authenticate } from 'slices/auth.slice'
-import { loadUserIDToken } from 'utils/auth'
 import { createStackNavigator } from '@react-navigation/stack'
+import { getUser } from 'api'
+import { loadUserIDToken } from 'utils/auth'
 import DrawerNavigator from './Drawer'
-import { AuthNavigator, ModalNavigator } from './Stacks'
+import { AuthNavigator, ModalNavigator, ActivityNavigator } from './Stacks'
 
 const RootStack = createStackNavigator()
+
 const Navigator = () => {
   /*
     Here is an example of useSelector, a hook that allows you to extract data from the Redux store state.
@@ -17,16 +19,21 @@ const Navigator = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const loadAuthFromPersistentStorage = async () => {
+    const loadUserAuth = async () => {
       const idToken = await loadUserIDToken()
       if (idToken != null) {
-        dispatch(authenticate({ loggedIn: true }))
-      } else {
         dispatch(authenticate({ loggedIn: false }))
       }
+      getUser()
+        .then(() => {
+          dispatch(authenticate({ loggedIn: true }))
+        })
+        .catch(() => {
+          dispatch(authenticate({ loggedIn: false }))
+        })
     }
 
-    loadAuthFromPersistentStorage()
+    loadUserAuth()
   }, [])
 
   const { loggedIn } = useSelector((state) => state.auth)
@@ -41,13 +48,15 @@ const Navigator = () => {
         animationEnabled: true,
         gestureEnabled: true,
         headerShown: false,
-        presentation: 'modal',
       }}
     >
       {loggedIn ? (
         <>
-          <RootStack.Screen name="Drawer" component={DrawerNavigator} />
-          <RootStack.Screen name="Modal" component={ModalNavigator} />
+          <RootStack.Group screenOptions={{ presentation: 'modal' }}>
+            <RootStack.Screen name="Drawer" component={DrawerNavigator} />
+            <RootStack.Screen name="Modal" component={ModalNavigator} />
+          </RootStack.Group>
+          <RootStack.Screen name="Activity" component={ActivityNavigator} />
         </>
       ) : (
         <RootStack.Screen name="Auth" component={AuthNavigator} />

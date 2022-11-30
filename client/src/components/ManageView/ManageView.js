@@ -206,7 +206,7 @@ const ManageView = ({
         <AntDesign
           name="minuscircle"
           size={25}
-          color={colors.red.dark}
+          color={colors.red.medium_dark}
           onPress={() => moveToUnselected(index)}
         />
       )}
@@ -307,7 +307,7 @@ const ManageView = ({
           </View>
           <Text
             fontFamily="body"
-            fontWeight="normal"
+            fontWeight="regular"
             fontSize="md"
             color="gray.medium"
           >
