@@ -12,14 +12,11 @@ const {
   POST_COURSE_ADDITIONAL_FIELDS_EXPECTED,
   PATCH_ORIGINAL_COURSE,
   PATCH_EXPECTED_COURSE_UPDATED_APPROVAL,
-  PATCH_EXPECTED_COURSE_UPDATED_ADMIN_ID,
   PATCH_EXPECTED_COURSE_UPDATED_COURSE_DETAILS,
   PATCH_UPDATE_APPROVAL,
-  PATCH_UPDATE_ADMIN_ID,
   PATCH_UPDATE_COURSE_DETAILS,
   PATCH_UPDATE_INVALID_FIELD,
   PATCH_UPDATE_NON_BOOLEAN_APPROVAL,
-  PATCH_UPDATE_VISIBILITY,
 } = require('../mock-data/course-mock-data');
 const {
   POST_BERBER_COURSE,
@@ -93,7 +90,7 @@ describe('GET /language/course/ ', () => {
     );
 
     const message = response.body.message;
-    const result = omitDeep(response.body.result, '__v', 'code');
+    const result = omitDeep(response.body.result, '__v', 'code', 'complete');
     expect(response.status).toBe(200);
     expect(message).toEqual('Successfully fetched course');
     expect(result).toEqual(GET_SIMPLE_COURSE_EXPECTED);

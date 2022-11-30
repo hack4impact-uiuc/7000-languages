@@ -14,7 +14,7 @@ const {
   populateExampleData,
 } = require('../../utils/languageHelper');
 const { deleteFolder } = require('../../utils/aws/s3');
-
+const { getAllCompletedUnits } = require('../../utils/learnerHelper');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 /**
@@ -89,6 +89,13 @@ router.get(
     let course = await models.Course.findOne({ _id: req.params.id });
     course = course.toJSON();
     let units = await models.Unit.find({ _course_id: req.params.id });
+
+    let completedUnits = [];
+
+    if (req.user.isLearner) {
+      completedUnits = await getAllCompletedUnits(req.user._id, req.params.id);
+    }
+
     for (var i = 0; i < units.length; i++) {
       const numLessons = await models.Lesson.countDocuments({
         _unit_id: { $eq: units[i]._id },
@@ -96,6 +103,10 @@ router.get(
       });
       units[i] = units[i].toJSON();
       units[i].num_lessons = numLessons;
+
+      if (req.user.isLearner) {
+        units[i].complete = completedUnits.includes(String(units[i]._id));
+      }
     }
     let newCourse = _.omit(course, ['admin_id']);
     const returnedData = {

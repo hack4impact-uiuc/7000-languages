@@ -44,7 +44,9 @@ const LearnerCourseHome = ({ navigation, courseDescription, courseName }) => {
               ? `${i18n.t('dict.lessonSingle')}`
               : `${i18n.t('dict.lessonPlural')}`
           }`,
-          indicatorType: INDICATOR_TYPES.INCOMPLETE,
+          indicatorType: item.complete
+            ? INDICATOR_TYPES.COMPLETE
+            : INDICATOR_TYPES.INCOMPLETE,
           _order: item._order,
         }
         formattedUnitData.push(formattedItem)

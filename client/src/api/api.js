@@ -4,6 +4,21 @@ import { setFileURI, deleteFileURI } from 'utils/cache'
 import { MEDIA_TYPE } from 'utils/constants'
 import instance, { BASE_URL } from './axios-config'
 
+/* Learner Endpoints */
+export const markLessonAsComplete = async (courseId, unitId, lessonId) => {
+  const body = {
+    course_id: courseId,
+    unit_id: unitId,
+    lesson_id: lessonId,
+  }
+
+  const requestString = '/learner/complete'
+  const res = await instance.post(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 /* User Endpoints */
 
 export const createUser = async (userData) => {

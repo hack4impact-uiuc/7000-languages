@@ -12,7 +12,7 @@ import { StyleSheet, Alert, ImageBackground } from 'react-native'
 import { Audio } from 'expo-av'
 import { RECORDING, MEDIA_TYPE } from 'utils/constants'
 import RecordAudioView from 'components/RecordAudioView'
-import { useSelector, useDispatch } from 'react-redux' // import at the top of the file
+import { useSelector, useDispatch } from 'react-redux'
 import { addVocab, updateVocab } from 'slices/language.slice'
 import i18n from 'utils/i18n'
 import { getFileURI, deleteFileURI } from 'utils/cache'
