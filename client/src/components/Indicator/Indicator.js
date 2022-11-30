@@ -15,14 +15,15 @@ const Indicator = ({ indicatorType }) => {
         <>
           <FontAwesome
             name="circle"
-            size={20}
+            size={16}
             color={colors.green.medium_light}
           />
           <Text
             fontFamily="body"
             fontWeight="regular"
             color={colors.gray.medium}
-            fontSize="md"
+            fontSize={16}
+            style={{ marginRight: 5 }}
           >
             {i18n.t('dict.completed')}
           </Text>
@@ -32,12 +33,13 @@ const Indicator = ({ indicatorType }) => {
     case INDICATOR_TYPES.INCOMPLETE:
       indicatorBody = (
         <>
-          <FontAwesome name="circle-o" size={20} color={colors.gray.medium} />
+          <FontAwesome name="circle-o" size={16} color={colors.gray.medium} />
           <Text
             fontFamily="body"
             fontWeight="regular"
             color={colors.gray.medium}
-            fontSize="md"
+            fontSize={16}
+            style={{ marginRight: 5 }}
           >
             {i18n.t('dict.inProgress')}
           </Text>

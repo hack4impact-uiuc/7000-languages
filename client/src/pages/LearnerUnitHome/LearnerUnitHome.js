@@ -92,7 +92,9 @@ const LearnerUnitHome = ({ navigation }) => {
               ? `${i18n.t('dict.itemSingle')}`
               : `${i18n.t('dict.itemPlural')}`
           }`,
-          indicatorType: INDICATOR_TYPES.INCOMPLETE,
+          indicatorType: item.complete
+            ? INDICATOR_TYPES.COMPLETE
+            : INDICATOR_TYPES.INCOMPLETE,
           _order: item._order,
         }
         formattedLessonData.push(formattedItem)

@@ -1,4 +1,4 @@
-const { User } = require('./user');
+const { User, Complete } = require('./user');
 const {
   Course,
   CourseDetails,
@@ -15,6 +15,7 @@ const models = {
   Unit,
   Lesson,
   Vocab,
+  Complete,
 };
 
 module.exports = {
