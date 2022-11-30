@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import {
-  StyleSheet, View, Linking, Alert,
-} from 'react-native'
+import { StyleSheet, View, Linking, Alert } from 'react-native'
 import StyledButton from 'components/StyledButton'
-import {
-  Text, ScrollView, Input, Checkbox, TextArea, Box,
-} from 'native-base'
+import { Text, ScrollView, Input, Checkbox, TextArea, Box } from 'native-base'
 import { useErrorWrap } from 'hooks'
 import { createCourse } from 'api'
 import { getAllUserCourses } from 'utils/languageHelper'
@@ -82,12 +78,13 @@ const Apply = ({ navigation }) => {
   const dispatch = useDispatch()
 
   // Confirms validation of course for pressing 'Submit'
-  const areRequiredFieldsFilled = name !== ''
-    && email !== ''
-    && language !== ''
-    && acceptTerms
-    && teachingLanguage !== ''
-    && description !== ''
+  const areRequiredFieldsFilled =
+    name !== '' &&
+    email !== '' &&
+    language !== '' &&
+    acceptTerms &&
+    teachingLanguage !== '' &&
+    description !== ''
 
   // Called when a user successfuly creates a new course
   const routeSuccess = () => {
@@ -149,6 +146,7 @@ const Apply = ({ navigation }) => {
 
   const onSubmit = async () => {
     if (!isDisabled) {
+      sendMail()
       setDisabled(true)
       if (areRequiredFieldsFilled) {
         await applyCourse()
@@ -291,7 +289,9 @@ const Apply = ({ navigation }) => {
                 color="textBlue"
                 fontStyle="normal"
                 fontSize="md"
-                onPress={() => Linking.openURL('https://www.iso.org/obp/ui/#search')}
+                onPress={() =>
+                  Linking.openURL('https://www.iso.org/obp/ui/#search')
+                }
               >
                 {i18n.t('dialogue.ISOCodePrompt')}
               </Text>
@@ -318,7 +318,9 @@ const Apply = ({ navigation }) => {
                 color="textBlue"
                 fontStyle="normal"
                 fontSize="md"
-                onPress={() => Linking.openURL('https://glottolog.org/glottolog')}
+                onPress={() =>
+                  Linking.openURL('https://glottolog.org/glottolog')
+                }
               >
                 {i18n.t('dialogue.glottoCodePrompt')}
               </Text>
@@ -393,7 +395,9 @@ const Apply = ({ navigation }) => {
                     {`${i18n.t('dialogue.agree')} `}
                     <Text
                       fontFamily="heading"
-                      onPress={() => Linking.openURL('https://www.7000.org/about-3-1')}
+                      onPress={() =>
+                        Linking.openURL('https://www.7000.org/about-3-1')
+                      }
                     >
                       {i18n.t('dict.termsAndConditions')}
                     </Text>
