@@ -69,7 +69,7 @@ const theme = extendTheme({
         },
         learner_primary: {
           bg: 'blue.dark',
-          w: '90%',
+          w: '100%',
           my: 2,
           px: 20,
           py: 4,

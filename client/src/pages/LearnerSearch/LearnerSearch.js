@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { colors } from 'theme'
-import { Text, Input } from 'native-base'
+import { Text, Input, ScrollView } from 'native-base'
 import { StyleSheet, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
+import SearchResultCard from 'components/SearchResultCard'
 
 import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/logo-sm-gray.svg'
@@ -35,12 +36,38 @@ const styles = StyleSheet.create({
   },
 })
 
+const baseCase = ({userName}) => (
+  <View style={styles.body}>
+    <Logo style={styles.logo} width="18%" height="18%" />
+    {/* Concerned about i18n on this one */}
+    <Text
+      color={colors.gray.dark}
+      fontFamily="heading"
+      fontSize="2xl"
+      textAlign="center"
+    >
+      {i18n.t('dict.searchWelcome')}
+      {userName}
+      {'.'}
+    </Text>
+    <Text style={styles.bodyText} fontFamily="body">
+      {i18n.t('dialogue.startSearching')}
+    </Text>
+  </View>
+)
+
+const searchResults = () => (
+  <ScrollView/>
+)
+
 const LearnerSearch = () => {
   const [searchFocused, setSearchFocused] = useState(false)
-  const { userName } = useSelector((state) => state.app)
+  const [searchText, setSearchText] = useState('')
+  const { userName } = useSelector((state) => state.auth)
+  console.log(userName)
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <View style={styles.search}>
         <Input
           height="25%"
@@ -50,6 +77,7 @@ const LearnerSearch = () => {
           backgroundColor={colors.blue.light}
           onFocus={() => setSearchFocused(true)}
           onBlur={() => setSearchFocused(false)}
+          onChangeText={setSearchText}
           InputLeftElement={(
             <AntDesign
               name="search1"
@@ -65,23 +93,9 @@ const LearnerSearch = () => {
           )}
         />
       </View>
-      <View style={styles.body}>
-        <Logo style={styles.logo} width="18%" height="18%" />
-        {/* Concerned about i18n on this one */}
-        <Text
-          color={colors.gray.dark}
-          fontFamily="heading"
-          fontSize="2xl"
-          textAlign="center"
-        >
-          {i18n.t('dict.searchWelcome')}
-          {userName}
-          {'.'}
-        </Text>
-        <Text style={styles.bodyText} fontFamily="body">
-          {i18n.t('dialogue.startSearching')}
-        </Text>
-      </View>
+      <SearchResultCard />
+      <SearchResultCard />
+      {searchText ? searchResults : baseCase({userName}) }
     </View>
   )
 }

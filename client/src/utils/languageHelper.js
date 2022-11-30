@@ -15,6 +15,7 @@ export const getAllUserCourses = async () => {
     collaboratorLanguages,
     learnerLanguages,
   } = result
+  // console.log(name)
 
   let allCourses = []
 

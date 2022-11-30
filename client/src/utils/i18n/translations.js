@@ -44,6 +44,8 @@ const translations = {
       securityCode: 'Security Code',
       settings: 'Settings',
       delete: 'Delete',
+      creator: 'Creator',
+      learnerSearchDescription: 'Description:',
     },
     actions: {
       becomeContributorTitle: 'Become a contributor',
@@ -223,6 +225,8 @@ const translations = {
       suggestion: 'Suggestion',
       settings: 'Paramètres',
       delete: 'Supprimer',
+      creator: 'Créateur',
+      learnerSearchDescription: 'Description:',
     },
     actions: {
       becomeContributorTitle: 'Devenir un contributeur',
