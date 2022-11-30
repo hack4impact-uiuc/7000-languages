@@ -3,7 +3,7 @@ const { models } = require('../models');
 /**
  * Determines if a user has completed a unit
  * @param {String} user_id User MongoDB _id
- * @param {String} unit_id MongDB _id of the unit to check
+ * @param {String} unit_id MongoDB _id of the unit to check
  * @returns True if the unit is complete
  */
 const hasCompletedUnit = async (user_id, unit_id) => {
@@ -37,7 +37,7 @@ const hasCompletedUnit = async (user_id, unit_id) => {
 /**
  * Determines if a user has completed a specific lesson
  * @param {String} user_id User MongoDB _id
- * @param {String} lesson_id MongDB _id of the lesson to check
+ * @param {String} lesson_id MongoDB _id of the lesson to check
  * @returns True if the lesson is marked as complete
  */
 const hasCompletedLesson = async (user_id, lesson_id) => {
@@ -54,10 +54,10 @@ const hasCompletedLesson = async (user_id, lesson_id) => {
 module.exports.hasCompletedLesson = hasCompletedLesson;
 
 /**
- * Determines if a user has completed a specific lesson
+ * Gets all lessons a user has completed within a given unit
  * @param {String} user_id User MongoDB _id
- * @param {String} lesson_id MongDB _id of the lesson to check
- * @returns True if the lesson is marked as complete
+ * @param {String} unit_id MongoDB _id of the unit to check
+ * @returns List of lessons completed in the unit
  */
 const getAllCompletedLessons = async (user_id, unit_id) => {
   if (!unit_id || !user_id) {
@@ -101,3 +101,28 @@ const getAllCompletedUnits = async (user_id, course_id) => {
 };
 
 module.exports.getAllCompletedUnits = getAllCompletedUnits;
+
+/**
+ * Determines if a user has joined a specific course
+ * @param {String} user_id User MongoDB _id
+ * @param {String} course_id MongoDB _id of the course to check
+ * @returns True if the course is listed as a learner language
+ */
+const isPartOfCourse = async (user_id, course_id) => {
+  if (!course_id || !user_id) {
+    return false;
+  }
+
+  const course = await models.User.findById(user_id);
+  if(course)
+  {
+    const index = course.learnerLanguages.findIndex(course_id);
+    if(index == -1)
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
+module.exports.isPartOfCourse = isPartOfCourse;
