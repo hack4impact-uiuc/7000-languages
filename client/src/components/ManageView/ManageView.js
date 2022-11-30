@@ -205,6 +205,25 @@ const ManageView = ({
     updateData(selectedData, src, dest)
   }
 
+  const confirmDelete = (index) => Alert.alert(
+    `${i18n.t('dict.delete')}`,
+    `${i18n.t('dialogue.areYouSureDelete')}`,
+    [
+      {
+        text: `${i18n.t('dict.cancel')}`,
+        style: 'cancel',
+        onPress: () => {},
+      },
+      {
+        text: `${i18n.t('dict.delete')}`,
+        style: 'destructive',
+        // If the user confirmed, then we dispatch the action we blocked earlier
+        // This will continue the action that had triggered the removal of the screen
+        onPress: () => moveToDeleted(index),
+      },
+    ],
+  )
+
   /**
    * Generates the card for one selected item in a draggable list
    * @param {Object} item  Selected Item data
@@ -256,7 +275,7 @@ const ManageView = ({
           name="trash-2"
           size={25}
           color={colors.gray.medium}
-          onPress={() => moveToDeleted(index)}
+          onPress={() => confirmDelete(index)}
         />
       )}
       volumeIconCallback={playAudio}
