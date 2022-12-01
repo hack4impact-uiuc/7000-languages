@@ -12,7 +12,7 @@ import { useErrorWrap, useTrackPromise } from 'hooks'
 import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
 import { setField } from 'slices/language.slice'
-import { setUserName } from 'slices/auth.slice'
+import { setUserFullName, setUserGivenName } from 'slices/auth.slice'
 import { useDispatch, useSelector } from 'react-redux'
 import NumberBox from 'components/NumberBox'
 import i18n from 'utils/i18n'
@@ -298,12 +298,10 @@ const DrawerNavigator = () => {
     const getUserData = async () => {
       await errorWrap(async () => {
         const {
-          picture, name, email, courses,
+          picture, name, email, courses, given_name
         } = await trackPromise(
           getAllUserCourses(),
         )
-
-        // console.log(email, name)
 
         // Set personal info
         setProfileUrl(picture)
@@ -311,7 +309,8 @@ const DrawerNavigator = () => {
         setEmail(email)
 
         // put name in redux store
-        dispatch(setUserName({ userName }))
+        dispatch(setUserFullName({ userFullName: userName }))
+        dispatch(setUserGivenName({ userGivenName: given_name }))
 
         if (courses.length > 0) {
           dispatch(setField({ key: 'allCourses', value: courses }))

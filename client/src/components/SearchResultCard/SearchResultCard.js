@@ -16,7 +16,9 @@ creatorName,
 unitNumber,
 languageDescription,
 }) => {
-    const [isClicked, setIsClicked] = useState(false)
+  // later we will move this to be a prop passed in
+  // and guaranteeing it is unique will be handled by learnerSearch
+  const [isClicked, setIsClicked] = useState(false)
   return (
     <Pressable
         onPress={() => setIsClicked(!isClicked)}
@@ -41,12 +43,12 @@ languageDescription,
         <Text
             fontFamily="heading"
             fontSize="3xl"
-        >Spanish
+        >{languageName}
         </Text>
         <Text
         color="gray.dark"
         fontSize="sm"
-        > (taught in Anglais)</Text>
+        > {i18n.t("dict.taughtIn")} {learnerLanguage}</Text>
       </View>
         <Text
         fontSize="lg"
@@ -59,11 +61,10 @@ languageDescription,
            >{unitNumber} Units available</Text>
            <Text
            fontSize="lg"
-           >{i18n.t('dict.learnerSearchDescription')} Here is a description from the owner</Text>
+           >{i18n.t('dict.learnerSearchDescription')} {languageDescription}</Text>
           <StyledButton 
           title="Join Now"
           fontSize={20}
-          
           variant="learner_primary"
             />
             </>

@@ -36,40 +36,56 @@ const styles = StyleSheet.create({
   },
 })
 
-const baseCase = ({userName}) => (
-  <View style={styles.body}>
-    <Logo style={styles.logo} width="18%" height="18%" />
-    {/* Concerned about i18n on this one */}
-    <Text
-      color={colors.gray.dark}
-      fontFamily="heading"
-      fontSize="2xl"
-      textAlign="center"
-    >
-      {i18n.t('dict.searchWelcome')}
-      {userName}
-      {'.'}
-    </Text>
-    <Text style={styles.bodyText} fontFamily="body">
-      {i18n.t('dialogue.startSearching')}
-    </Text>
-  </View>
-)
-
-const searchResults = () => (
-  <ScrollView/>
-)
-
 const LearnerSearch = () => {
   const [searchFocused, setSearchFocused] = useState(false)
   const [searchText, setSearchText] = useState('')
-  const { userName } = useSelector((state) => state.auth)
-  console.log(userName)
+  const { userGivenName } = useSelector((state) => state.auth)
+
+  const baseCase = (
+    <View style={styles.body}>
+      <Logo style={styles.logo} width="18%" height="18%" />
+      <Text
+        color={colors.gray.dark}
+        fontFamily="heading"
+        fontSize="2xl"
+        textAlign="center"
+      >
+        {i18n.t('dict.searchWelcome')}
+        {userGivenName}
+        {'.'}
+      </Text>
+      <Text style={styles.bodyText} fontFamily="body">
+        {i18n.t('dialogue.startSearching')}
+      </Text>
+    </View>
+  )
+  
+  const searchResults = (
+    // get all the cards from searching searchText and display them
+    // we also need to add a way to only select one card at a time
+    // to be done in a later issue?
+    // for now it presents example cards
+    <ScrollView >
+
+      <SearchResultCard languageName='Spanish'
+    learnerLanguage='English'
+    creatorName='Ellie'
+    unitNumber={5}
+    languageDescription= 'This is the description'/>
+      <SearchResultCard languageName='French'
+      learnerLanguage='English'
+    creatorName='Jamie'
+    unitNumber={4}
+    languageDescription= ''/>
+
+    </ScrollView>
+  )
 
   return (
     <View style={{flex: 1}}>
       <View style={styles.search}>
         <Input
+          value={searchText}
           height="25%"
           borderRadius={10}
           placeholderTextColor={colors.blue.dark}
@@ -87,15 +103,19 @@ const LearnerSearch = () => {
             />
           )}
           InputRightElement={(
-            <Text style={styles.cancelButton}>
+            <Text style={styles.cancelButton}
+              onPress={() => {
+                setSearchText('')
+                setSearchFocused(false)
+                // clear state of frontend
+              }}
+            >
               {searchFocused ? 'Cancel' : ''}
             </Text>
           )}
         />
       </View>
-      <SearchResultCard />
-      <SearchResultCard />
-      {searchText ? searchResults : baseCase({userName}) }
+      {searchText ? searchResults : baseCase }
     </View>
   )
 }

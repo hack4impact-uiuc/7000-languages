@@ -17,7 +17,7 @@ export const getUser = async () => {
   const res = await instance.get(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
-  console.log(res.data?.name)
+  console.log(res.data)
   return res.data
 }
 

@@ -12,7 +12,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   loggedIn: false,
-  userName: '',
+  userFullName: '',
 }
 
 // ------------------------------------
@@ -29,13 +29,16 @@ const authSlice = createSlice({
     logout: (state) => {
       state.loggedIn = initialState.loggedIn
     },
-    setUserName: (state, { payload }) => {
-      state.userName = payload.userName
+    setUserFullName: (state, { payload }) => {
+      state.userFullName = payload.userFullName
+    },
+    setUserGivenName: (state, { payload }) => {
+      state.userGivenName = payload.userGivenName
     }
   },
 })
 
 export const { action } = authSlice
-export const { authenticate, logout, setUserName } = authSlice.actions
+export const { authenticate, logout, setUserFullName, setUserGivenName } = authSlice.actions
 
 export default authSlice.reducer

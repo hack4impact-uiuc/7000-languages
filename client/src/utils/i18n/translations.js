@@ -46,6 +46,7 @@ const translations = {
       delete: 'Delete',
       creator: 'Creator',
       learnerSearchDescription: 'Description:',
+      taughtIn: 'Taught in',
     },
     actions: {
       becomeContributorTitle: 'Become a contributor',
@@ -227,6 +228,7 @@ const translations = {
       delete: 'Supprimer',
       creator: 'Créateur',
       learnerSearchDescription: 'Description:',
+      taughtIn: 'Enseigné en',
     },
     actions: {
       becomeContributorTitle: 'Devenir un contributeur',
