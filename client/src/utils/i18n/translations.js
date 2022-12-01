@@ -104,6 +104,7 @@ const translations = {
       activitiesInDevelopment:
         'Learner activities are currently in development.',
       areYouSureDeleteCourse: 'Are you sure you want to delete this course?',
+      areYouSureDelete: 'Are you sure you want to delete?',
       actionCannotBeUndone: 'This action cannot be undone.',
       lessonPurpose: 'What is the purpose of this lesson?',
       changeLessonName: 'Change your lesson name',
@@ -294,6 +295,7 @@ const translations = {
       activitiesInDevelopment:
         'Les activités pour les apprenants sont en cours de développement.',
       areYouSureDeleteCourse: 'Vous êtes sûr de vouloir supprimer ce cours?',
+      areYouSureDelete: 'Etes-vous sûr que vous voulez supprimer?',
       actionCannotBeUndone: 'Cette action ne peut être annulée.',
       lessonPurpose: 'Quel est le but de cette leçon?',
       changeLessonName: 'Changez le nom de votre leçon',

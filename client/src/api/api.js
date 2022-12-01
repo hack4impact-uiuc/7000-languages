@@ -139,6 +139,14 @@ export const updateUnits = async (courseID, updates) => {
   return res.data
 }
 
+export const deleteUnit = async (courseID, unitID) => {
+  const requestString = `/language/unit?course_id=${courseID}&unit_id=${unitID}`
+  const res = await instance.delete(requestString)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 /* Lesson Endpoints */
 
 export const getLesson = async (courseID, lessonID) => {
@@ -187,6 +195,14 @@ export const createLesson = async (courseID, unitID, lesson) => {
   return res.data
 }
 
+export const deleteLesson = async (courseID, lessonID) => {
+  const requestString = `/language/lesson?course_id=${courseID}&lesson_id=${lessonID}`
+  const res = await instance.delete(requestString)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 /* Vocab Item Endpoints */
 
 export const createVocabItem = async (courseID, lessonID, vocab) => {
@@ -229,6 +245,14 @@ export const updateVocabItem = async (
   }
   const requestString = '/language/vocab'
   const res = await instance.patch(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+export const deleteVocabItem = async (courseID, lessonID, vocabID) => {
+  const requestString = `/language/vocab?course_id=${courseID}&lesson_id=${lessonID}&vocab_id=${vocabID}`
+  const res = await instance.delete(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data

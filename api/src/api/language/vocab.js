@@ -16,6 +16,7 @@ const {
   getVocabIndexByID,
   checkIds,
   patchDocument,
+  deleteVocabItem,
 } = require('../../utils/languageHelper');
 
 /**
@@ -150,4 +151,21 @@ router.put(
     );
   }),
 );
+
+router.delete(
+  '/',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const { lesson_id, vocab_id } = req.query;
+
+    deleteVocabItem(lesson_id, vocab_id).then(({ success, message }) => {
+      if (success) {
+        return sendResponse(res, 200, message);
+      }
+      return sendResponse(res, 404, message);
+    });
+  }),
+);
+
 module.exports = router;
