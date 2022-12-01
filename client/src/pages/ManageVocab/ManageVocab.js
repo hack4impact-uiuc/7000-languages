@@ -5,7 +5,7 @@ import ManageView from 'components/ManageView'
 import { useErrorWrap } from 'hooks'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateVocabs, setField, updateNumVocab } from 'slices/language.slice'
-import { updateVocabItems } from 'api'
+import { updateVocabItems, deleteVocabItem } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
 import i18n from 'utils/i18n'
@@ -56,11 +56,20 @@ const ManageVocab = ({ navigation }) => {
    * @param {*} selectedData List of vocab item objects that are marked as selected
    * @param {*} unselectedData List of vocab item objects that are marked as unselected
    */
-  const saveChanges = async (selectedData, unselectedData) => {
+  const saveChanges = async (selectedData, unselectedData, deletedData) => {
     errorWrap(
       async () => {
         /* We need to iterate through allVocab, and update the selected and _order fields */
-        const updatedAllVocab = _.cloneDeep(lessonData.vocab)
+        const deletedIds = deletedData.map((data) => data._id)
+
+        const updatedAllVocab = _.cloneDeep(lessonData.vocab).filter(
+          (vocab) => !deletedIds.includes(vocab._id),
+        )
+
+        // Delete removed vocab from unselected vocab
+        const filteredUnselectedData = unselectedData.filter(
+          (vocab) => !deletedIds.includes(vocab._id),
+        )
 
         for (let i = 0; i < selectedData.length; i += 1) {
           const updatedIdx = updatedAllVocab.findIndex(
@@ -70,15 +79,21 @@ const ManageVocab = ({ navigation }) => {
           updatedAllVocab[updatedIdx]._order = i
         }
 
-        for (let i = 0; i < unselectedData.length; i += 1) {
+        for (let i = 0; i < filteredUnselectedData.length; i += 1) {
           const updatedIdx = updatedAllVocab.findIndex(
-            (element) => element._id === unselectedData[i]._id,
+            (element) => element._id === filteredUnselectedData[i]._id,
           )
           updatedAllVocab[updatedIdx].selected = false
           updatedAllVocab[updatedIdx]._order = i
         }
 
-        // Makes API request
+        // Makes API requests
+        // Delete needs to happen before update since we don't want
+        // the updates to validate against deleted documents
+        await Promise.all(
+          deletedIds.map((vocabId) => deleteVocabItem(currentCourseId, currentLessonId, vocabId)),
+        )
+        // Update existing
         await updateVocabItems(
           currentCourseId,
           currentLessonId,
