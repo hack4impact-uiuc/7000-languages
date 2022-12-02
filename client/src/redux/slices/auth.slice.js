@@ -14,7 +14,7 @@ const initialState = {
   loggedIn: false,
   userEmail: '',
   userName: '',
-  profileUrl: ''
+  profileUrl: '',
 }
 
 // ------------------------------------
@@ -29,9 +29,9 @@ const authSlice = createSlice({
       state.loggedIn = payload.loggedIn
     },
     setPersonalInfo: (state, { payload }) => {
-      state.userEmail = payload.userEmail;
-      state.userName = payload.userName;
-      state.profileUrl = payload.profileUrl;
+      state.userEmail = payload.userEmail
+      state.userName = payload.userName
+      state.profileUrl = payload.profileUrl
     },
     logout: (state) => {
       state.loggedIn = initialState.loggedIn

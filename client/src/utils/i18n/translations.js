@@ -1,7 +1,7 @@
 const translations = {
   en: {
     dict: {
-      availableLanguages: "Available Languages",
+      availableLanguages: 'Available Languages',
       userInfo: 'User Info',
       language: 'Language',
       confirm: 'Confirm',
@@ -51,7 +51,7 @@ const translations = {
       delete: 'Delete',
       completed: 'Completed',
       inProgress: 'In Progress',
-      accountInfo: 'Account Info'
+      accountInfo: 'Account Info',
     },
     actions: {
       pressAndSelect: 'Press Audio & Select',
@@ -72,7 +72,6 @@ const translations = {
       notLeave: "Don't leave",
       saveChanges: 'Save Changes',
       recordAudio: 'Record Audio',
-      accountInfo: 'Account Info',
       applyNow: 'Apply Now',
       myCourses: 'My Courses',
       required: 'Required.',
@@ -198,7 +197,7 @@ const translations = {
   },
   fr: {
     dict: {
-      availableLanguages: "Langues disponibles",
+      availableLanguages: 'Langues disponibles',
       userInfo: 'Info utilisateur',
       language: 'Langue',
       confirm: 'Confirmer',
@@ -296,7 +295,6 @@ const translations = {
       addVocabItem: 'Ajouter un élément de vocabulaire',
       addNew: 'Ajouter un Nouveau',
       manageVocab: 'Gérer les éléments de vocabulaire',
-      accountInfo: 'Informations sur le compte',
     },
     dialogue: {
       noActivitiesAvailable: 'Aucune activité disponible',
