@@ -202,8 +202,8 @@ describe('POST /lesson/ ', () => {
 
 // This block tests the PATCH /lesson/ endpoint.
 describe('PATCH /lesson/ ', () => {
-  /* 
-          We have to make sure we connect to a MongoDB mock db before the test 
+  /*
+          We have to make sure we connect to a MongoDB mock db before the test
           and close the connection at the end.
         */
   afterAll(async () => await db.closeDatabase());

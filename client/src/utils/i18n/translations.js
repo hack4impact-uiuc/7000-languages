@@ -1,6 +1,9 @@
 const translations = {
   en: {
     dict: {
+      confirm: 'Confirm',
+      audio: 'Audio',
+      activity: 'Activity',
       welcome: 'Welcome!',
       searchWelcome: 'Welcome, ',
       vocabItems: 'Vocabulary Items',
@@ -47,8 +50,15 @@ const translations = {
       creator: 'Creator',
       learnerSearchDescription: 'Description:',
       taughtIn: 'Taught in',
+      completed: 'Completed',
+      inProgress: 'In Progress',
     },
     actions: {
+      pressAndSelect: 'Press Audio & Select',
+      correct: 'Correct',
+      tryAgain: 'Try Again',
+      playAudio: 'Play Audio',
+      startActivity: 'Start Activity',
       becomeContributorTitle: 'Become a contributor',
       editLesson: 'Edit Lesson',
       editUnit: 'Edit Unit',
@@ -94,7 +104,11 @@ const translations = {
       search: 'Search',
     },
     dialogue: {
+      noActivitiesAvailable: 'No Activities Available',
+      activitiesInDevelopment:
+        'Learner activities are currently in development.',
       areYouSureDeleteCourse: 'Are you sure you want to delete this course?',
+      areYouSureDelete: 'Are you sure you want to delete?',
       actionCannotBeUndone: 'This action cannot be undone.',
       lessonPurpose: 'What is the purpose of this lesson?',
       changeLessonName: 'Change your lesson name',
@@ -184,6 +198,9 @@ const translations = {
   },
   fr: {
     dict: {
+      confirm: 'Confirmer',
+      audio: 'Audio',
+      activity: 'Activité',
       welcome: 'Bienvenue !',
       searchWelcome: 'Bienvenue, ',
       vocabItems: 'Éléments de vocabulaire',
@@ -229,8 +246,15 @@ const translations = {
       creator: 'Créateur',
       learnerSearchDescription: 'Description:',
       taughtIn: 'Enseigné en',
+      completed: 'Complété',
+      inProgress: 'En cours',
     },
     actions: {
+      pressAndSelect: 'Appuyez sur Audio et sélectionnez',
+      correct: 'Correct',
+      tryAgain: 'Essayez à nouveau',
+      playAudio: 'Lecture audio',
+      startActivity: "Début de l'activité",
       becomeContributorTitle: 'Devenir un contributeur',
       editLesson: "Leçon d'édition",
       editUnit: "Unité d'édition",
@@ -275,7 +299,11 @@ const translations = {
       manageVocab: 'Gérer les éléments de vocabulaire',
     },
     dialogue: {
+      noActivitiesAvailable: 'Aucune activité disponible',
+      activitiesInDevelopment:
+        'Les activités pour les apprenants sont en cours de développement.',
       areYouSureDeleteCourse: 'Vous êtes sûr de vouloir supprimer ce cours?',
+      areYouSureDelete: 'Etes-vous sûr que vous voulez supprimer?',
       actionCannotBeUndone: 'Cette action ne peut être annulée.',
       lessonPurpose: 'Quel est le but de cette leçon?',
       changeLessonName: 'Changez le nom de votre leçon',

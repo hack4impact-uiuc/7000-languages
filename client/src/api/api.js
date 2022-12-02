@@ -1,6 +1,23 @@
 import * as FileSystem from 'expo-file-system'
 import { loadUserIDToken } from 'utils/auth'
+import { setFileURI, deleteFileURI } from 'utils/cache'
+import { MEDIA_TYPE } from 'utils/constants'
 import instance, { BASE_URL } from './axios-config'
+
+/* Learner Endpoints */
+export const markLessonAsComplete = async (courseId, unitId, lessonId) => {
+  const body = {
+    course_id: courseId,
+    unit_id: unitId,
+    lesson_id: lessonId,
+  }
+
+  const requestString = '/learner/complete'
+  const res = await instance.post(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
 
 /* User Endpoints */
 
@@ -123,6 +140,14 @@ export const updateUnits = async (courseID, updates) => {
   return res.data
 }
 
+export const deleteUnit = async (courseID, unitID) => {
+  const requestString = `/language/unit?course_id=${courseID}&unit_id=${unitID}`
+  const res = await instance.delete(requestString)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 /* Lesson Endpoints */
 
 export const getLesson = async (courseID, lessonID) => {
@@ -166,6 +191,14 @@ export const createLesson = async (courseID, unitID, lesson) => {
   }
   const requestString = '/language/lesson'
   const res = await instance.post(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+export const deleteLesson = async (courseID, lessonID) => {
+  const requestString = `/language/lesson?course_id=${courseID}&lesson_id=${lessonID}`
+  const res = await instance.delete(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
@@ -218,6 +251,14 @@ export const updateVocabItem = async (
   return res.data
 }
 
+export const deleteVocabItem = async (courseID, lessonID, vocabID) => {
+  const requestString = `/language/vocab?course_id=${courseID}&lesson_id=${lessonID}&vocab_id=${vocabID}`
+  const res = await instance.delete(requestString)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 /* Audio Endpoints */
 export const uploadAudioFile = async (
   courseId,
@@ -249,12 +290,29 @@ export const uploadAudioFile = async (
 }
 
 /* Audio Endpoints */
+export const persistAudioFileInExpo = async (vocabId, temporaryURI) => {
+  /* Copies an audio files saved at a temporary URI to a permanent URI.
+    There is no need to delete the file stored at temporaryURI since that will be handled by Expo.
+  */
+  const splitPath = temporaryURI.split('.')
+  const fileType = splitPath.length > 2 ? splitPath[1] : 'caf'
+
+  const newURI = `${FileSystem.documentDirectory}${vocabId}-audio.${fileType}`
+
+  if (newURI !== temporaryURI) {
+    await FileSystem.copyAsync({ from: temporaryURI, to: newURI })
+    await setFileURI(vocabId, newURI, MEDIA_TYPE.AUDIO)
+  }
+
+  return { fileType }
+}
+
 export const downloadAudioFile = async (
   courseId,
   unitId,
   lessonId,
   vocabId,
-  fileType,
+  fileType = 'caf',
 ) => {
   const idToken = await loadUserIDToken()
   const downloadResumable = FileSystem.createDownloadResumable(
@@ -270,6 +328,7 @@ export const downloadAudioFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
+    await setFileURI(vocabId, uri, MEDIA_TYPE.AUDIO)
     return uri
   } catch (e) {
     throw new Error(e.message)
@@ -278,6 +337,9 @@ export const downloadAudioFile = async (
 
 /* Audio Endpoints */
 export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
+  /**
+   * Deletes an audio file from the API and the AsyncStorage file cache
+   */
   const requestString = `/language/audio/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
 
@@ -285,10 +347,33 @@ export const deleteAudioFile = async (courseId, unitId, lessonId, vocabId) => {
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
+  await deleteFileURI(vocabId, MEDIA_TYPE.AUDIO)
   return body
 }
 
 /* Image Endpoints */
+export const persistImageFileInExpo = async (vocabId, temporaryURI) => {
+  /* Download to a new URI based with the filename including Date.now() in order for
+    React Native to rerender the image. If the same filename is kept as before,
+    it won't change the image displayed on the screen.
+
+    There is no need to delete the file stored at temporaryURI since that will be handled by Expo.
+  */
+  const splitPath = temporaryURI.split('.')
+  const fileType = splitPath.length > 2 ? splitPath[1] : 'jpg'
+
+  const newURI = `${
+    FileSystem.documentDirectory
+  }${vocabId}-image-${Date.now()}.${fileType}`
+
+  if (newURI !== temporaryURI) {
+    await FileSystem.copyAsync({ from: temporaryURI, to: newURI })
+    await setFileURI(vocabId, newURI, MEDIA_TYPE.IMAGE)
+  }
+
+  return { fileType }
+}
+
 export const uploadImageFile = async (
   courseId,
   unitId,
@@ -297,6 +382,8 @@ export const uploadImageFile = async (
   uri,
 ) => {
   const idToken = await loadUserIDToken()
+
+  // Upload to API
   const res = await FileSystem.uploadAsync(
     `${BASE_URL}/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`,
     uri,
@@ -323,7 +410,7 @@ export const downloadImageFile = async (
   unitId,
   lessonId,
   vocabId,
-  fileType,
+  fileType = 'jpg',
 ) => {
   const idToken = await loadUserIDToken()
   const downloadResumable = FileSystem.createDownloadResumable(
@@ -339,14 +426,17 @@ export const downloadImageFile = async (
   )
   try {
     const { uri } = await downloadResumable.downloadAsync()
+    await setFileURI(vocabId, uri, MEDIA_TYPE.IMAGE)
     return uri
   } catch (e) {
     throw new Error(e.message)
   }
 }
 
-/* Image Endpoints */
 export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
+  /**
+   * Deletes an image from the API and the AsyncStorage file cache
+   */
   const requestString = `/language/image/${courseId}/${unitId}/${lessonId}/${vocabId}`
   const res = await instance.delete(requestString)
 
@@ -354,5 +444,6 @@ export const deleteImageFile = async (courseId, unitId, lessonId, vocabId) => {
   if (!body.success || body.success === 'false') {
     throw new Error(body.message)
   }
+  await deleteFileURI(vocabId, MEDIA_TYPE.IMAGE)
   return body
 }

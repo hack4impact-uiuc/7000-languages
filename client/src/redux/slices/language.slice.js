@@ -51,6 +51,26 @@ const languageSlice = createSlice({
     setField: (state, { payload }) => {
       state[payload.key] = payload.value
     },
+    setLessonToComplete: (state) => {
+      const lessonIdx = state.allLessons.findIndex(
+        (element) => element._id === state.currentLessonId,
+      )
+
+      state.allLessons[lessonIdx].complete = true
+
+      // Check if all lessons are complete - if so, mark the unit as complete
+      const completeLessons = state.allLessons.filter(
+        (lesson) => lesson.complete,
+      ).length
+
+      if (completeLessons === state.allLessons.length) {
+        const unitIdx = state.allUnits.findIndex(
+          (element) => element._id === state.currentUnitId,
+        )
+
+        state.allUnits[unitIdx].complete = true
+      }
+    },
     removeCourse: (state, { payload }) => {
       // Removes a course from redux
       const courseIdx = state.allCourses.findIndex(
@@ -260,6 +280,7 @@ export const {
   updateNumVocab,
   pushAudioURI,
   pushImageURI,
+  setLessonToComplete,
 } = languageSlice.actions
 
 export default languageSlice.reducer

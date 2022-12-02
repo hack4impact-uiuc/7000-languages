@@ -92,8 +92,6 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     <LanguageHome
       languageName={name}
       languageDescription={description}
-      valueName="Units"
-      buttonText="Manage Units"
       singularItemText={i18n.t('dict.unitSingle')}
       pluralItemText={i18n.t('dict.unitPlural')}
       nextUpdate={navigateToUpdate}
