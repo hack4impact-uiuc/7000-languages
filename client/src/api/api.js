@@ -5,6 +5,20 @@ import { MEDIA_TYPE } from 'utils/constants'
 import instance, { BASE_URL } from './axios-config'
 
 /* Learner Endpoints */
+
+export const joinCourse = async (courseId, passcode = null) => {
+  const body = {
+    course_id: courseId,
+    code: passcode,
+  }
+
+  const requestString = '/learner/join'
+  const res = await instance.post(requestString, body)
+
+  if(!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 export const markLessonAsComplete = async (courseId, unitId, lessonId) => {
   const body = {
     course_id: courseId,

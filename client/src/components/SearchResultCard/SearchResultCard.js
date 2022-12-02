@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { colors } from 'theme'
 import i18n from 'utils/i18n'
 import StyledButton  from 'components/StyledButton'
+import { joinCourse } from 'api'
 
 const styles = StyleSheet.create({
 })
@@ -66,6 +67,7 @@ languageDescription,
           title="Join Now"
           fontSize={20}
           variant="learner_primary"
+          onPress={() => joinCourse()}
             />
             </>
         ) : ( ''
