@@ -6,7 +6,12 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { getUser } from 'api'
 import { loadUserIDToken } from 'utils/auth'
 import DrawerNavigator from './Drawer'
-import { AuthNavigator, ModalNavigator, ActivityNavigator } from './Stacks'
+import {
+  AppSettingsNavigator,
+  AuthNavigator,
+  ModalNavigator,
+  ActivityNavigator,
+} from './Stacks'
 
 const RootStack = createStackNavigator()
 
@@ -56,6 +61,10 @@ const Navigator = () => {
             <RootStack.Screen name="Drawer" component={DrawerNavigator} />
             <RootStack.Screen name="Modal" component={ModalNavigator} />
           </RootStack.Group>
+          <RootStack.Screen
+            name="AppSettings"
+            component={AppSettingsNavigator}
+          />
           <RootStack.Screen name="Activity" component={ActivityNavigator} />
         </>
       ) : (
