@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    top: '32%',
+    top: '35%',
     width: '100%',
   },
 })
@@ -309,7 +309,7 @@ const Activity2 = ({ navigation }) => {
             fontFamily="heading"
             fontWeight="regular"
             color="orange.medium_dark"
-            fontSize="2xl"
+            fontSize={22}
           >
             {i18n.t('actions.tryAgain')}
           </Text>
@@ -320,7 +320,7 @@ const Activity2 = ({ navigation }) => {
             fontFamily="heading"
             fontWeight="regular"
             color="green.medium_light"
-            fontSize="2xl"
+            fontSize={22}
           >
             {i18n.t('actions.correct')}
           </Text>
