@@ -76,9 +76,9 @@ const StartActivity = ({ navigation, route }) => {
     if (route.params.activityType != null) {
       switch (route.params.activityType) {
         case ACTIVITY_TYPE.AUDIO_L2:
-          return 'Matching L1 Audio to L2 Text'
+          return i18n.t('dialogue.activity1')
         case ACTIVITY_TYPE.L1_AUDIO:
-          return 'Matching L1 Text to L1 Audio'
+          return i18n.t('dialogue.activity2')
         default:
           return ''
       }
@@ -106,10 +106,10 @@ const StartActivity = ({ navigation, route }) => {
           {generateActivityTypeText()}
         </Text>
         <Text fontFamily="heading" fontSize="md">
-          Instructions:{' '}
+          {i18n.t('dict.instructions')}
+          {': '}
           <Text fontFamily="body" fontWeight="regular" fontStyle="normal">
-            Here you will be presented some options and you will need to find
-            the corresponding option to match with.
+            {i18n.t('dialogue.activityInstructions')}
           </Text>
         </Text>
       </View>

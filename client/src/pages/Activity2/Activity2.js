@@ -46,6 +46,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
+  feedbackContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: '32%',
+    width: '100%',
+  },
 })
 
 const Activity2 = ({ navigation }) => {
@@ -368,21 +376,23 @@ const Activity2 = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.root}>
-      <Text
-        fontFamily="heading"
-        fontWeight="regular"
-        color="gray.dark"
-        fontStyle="italic"
-        fontSize="lg"
-      >
-        {currentQuestionIdx + 1}/{questions.length}
-      </Text>
-      {generateL1Text()}
-      {generateFeedbackText()}
-      <View style={styles.answerContainer}>{generateOptions()}</View>
-      {generateConfirmButton()}
-    </View>
+    <>
+      <View style={styles.root}>
+        <Text
+          fontFamily="heading"
+          fontWeight="regular"
+          color="gray.dark"
+          fontStyle="italic"
+          fontSize="lg"
+        >
+          {currentQuestionIdx + 1}/{questions.length}
+        </Text>
+        {generateL1Text()}
+        <View style={styles.answerContainer}>{generateOptions()}</View>
+        {generateConfirmButton()}
+      </View>
+      <View style={styles.feedbackContainer}>{generateFeedbackText()}</View>
+    </>
   )
 }
 
