@@ -252,6 +252,21 @@ const theme = extendTheme({
             fontFamily: 'heading',
           },
         },
+        learner_filter: {
+          bg: 'white.dark',
+          borderWidth: 2,
+          borderColor: colors.gray.medium_darker,
+          borderRadius: 10,
+          my: 2,
+          px: 20,
+          py: 4,
+          _text: {
+            fontSize: '2xl',
+            color: 'gray.medium',
+            fontFamily: 'body',
+          w: '100%',
+          },
+        }
       },
     },
   },

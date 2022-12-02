@@ -5,6 +5,7 @@ import { StyleSheet, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
 import SearchResultCard from 'components/SearchResultCard'
+import StyledButton from 'components/StyledButton'
 
 import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/logo-sm-gray.svg'
@@ -66,11 +67,42 @@ const LearnerSearch = () => {
   )
   
   const searchResults = (
-    // get all the cards from searching searchText and display them
-    // we also need to add a way to only select one card at a time
-    // to be done in a later issue?
-    // for now it presents example cards
-    <ScrollView style={styles.results}>
+    <>
+  {/* // get all the cards from searching searchText and display them
+  // we also need to add a way to only select one card at a time
+  // to be done in a later issue?
+  // for now it presents example cards */}
+  <View
+    style={{
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+    }}
+  >
+  <View
+  style={{
+    width: '40%',
+  }}
+  >
+    <StyledButton
+    variant="learner_filter"
+    title={i18n.t('dict.creator')}>
+    </StyledButton>
+  </View>
+  <View
+  style={{
+    width: '50%',
+    marginLeft: '2%',
+  }}
+  >
+    <StyledButton
+    variant="learner_filter"
+    title="Learning Language">
+    </StyledButton>
+  </View>
+  </View>
+    <ScrollView >
+
       <SearchResultCard languageName='Spanish'
     learnerLanguage='English'
     creatorName='Ellie'
@@ -83,6 +115,7 @@ const LearnerSearch = () => {
     languageDescription= 'This is a different description'/>
 
     </ScrollView>
+    </>
   )
 
   return (
