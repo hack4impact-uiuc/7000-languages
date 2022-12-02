@@ -12,6 +12,7 @@ import { useErrorWrap, useTrackPromise } from 'hooks'
 import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
 import { setField } from 'slices/language.slice'
+import { setUserFullName, setUserGivenName } from 'slices/auth.slice'
 import { useDispatch, useSelector } from 'react-redux'
 import NumberBox from 'components/NumberBox'
 import i18n from 'utils/i18n'
@@ -196,6 +197,9 @@ const DrawerMenuContainer = (props) => {
             title={i18n.t('actions.searchCourses')}
             fontSize="sm"
             variant="learner_primary"
+            onPress={() => {
+              props.navigation.navigate('Search', { screen: 'LearnerSearch' })
+            }}
           />
         </Pressable>
       </View>
@@ -283,7 +287,7 @@ const DrawerNavigator = () => {
   const contributorIds = contributorCourses.map((course) => course._id)
 
   const [userEmail, setEmail] = useState('')
-  const [userName, setName] = useState(`${i18n.t('dialogue.loading')}`)
+  const [userName, setName] = useState(`${i18n.t('dict.loading')}`)
   const [profileUrl, setProfileUrl] = useState('')
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
@@ -294,7 +298,7 @@ const DrawerNavigator = () => {
     const getUserData = async () => {
       await errorWrap(async () => {
         const {
-          picture, name, email, courses,
+          picture, name, email, courses, given_name
         } = await trackPromise(
           getAllUserCourses(),
         )
@@ -303,6 +307,10 @@ const DrawerNavigator = () => {
         setProfileUrl(picture)
         setName(name)
         setEmail(email)
+
+        // put name in redux store
+        dispatch(setUserFullName({ userFullName: userName }))
+        dispatch(setUserGivenName({ userGivenName: given_name }))
 
         if (courses.length > 0) {
           dispatch(setField({ key: 'allCourses', value: courses }))

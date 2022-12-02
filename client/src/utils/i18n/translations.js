@@ -5,6 +5,7 @@ const translations = {
       audio: 'Audio',
       activity: 'Activity',
       welcome: 'Welcome!',
+      searchWelcome: 'Welcome, ',
       vocabItems: 'Vocabulary Items',
       discard: 'Discard',
       ok: 'OK',
@@ -46,8 +47,9 @@ const translations = {
       securityCode: 'Security Code',
       settings: 'Settings',
       delete: 'Delete',
-      completed: 'Completed',
-      inProgress: 'In Progress',
+      creator: 'Creator',
+      learnerSearchDescription: 'Description:',
+      taughtIn: 'Taught in',
     },
     actions: {
       pressAndSelect: 'Press Audio & Select',
@@ -97,6 +99,7 @@ const translations = {
       addVocabItem: 'Add a Vocab Item',
       addNew: 'Add New',
       manageVocab: 'Manage Vocab',
+      search: 'Search',
     },
     dialogue: {
       noActivitiesAvailable: 'No Activities Available',
@@ -188,6 +191,7 @@ const translations = {
         'You can save your changes by clicking the save button. If you leave this screen without pressing the button, your changes will be discarded.',
       courseSettingsChangeCode:
         'Learners will have to enter this code in order to join your course.',
+      startSearching: 'Start searching for courses and new languages to learn!',
     },
   },
   fr: {
@@ -196,6 +200,7 @@ const translations = {
       audio: 'Audio',
       activity: 'Activité',
       welcome: 'Bienvenue !',
+      searchWelcome: 'Bienvenue, ',
       vocabItems: 'Éléments de vocabulaire',
       discard: 'Jeter',
       ok: 'OK',
@@ -236,8 +241,9 @@ const translations = {
       suggestion: 'Suggestion',
       settings: 'Paramètres',
       delete: 'Supprimer',
-      completed: 'Complété',
-      inProgress: 'En cours',
+      creator: 'Créateur',
+      learnerSearchDescription: 'Description:',
+      taughtIn: 'Enseigné en',
     },
     actions: {
       pressAndSelect: 'Appuyez sur Audio et sélectionnez',
@@ -383,6 +389,8 @@ const translations = {
         'Vous pouvez enregistrer vos modifications en cliquant sur le bouton "Enregistrer". Si vous quittez cet écran sans cliquer sur le bouton, vos modifications seront annulées.',
       courseSettingsChangeCode:
         "Les apprenants devront saisir ce code afin de s'inscrire à votre cours.",
+      startSearching:
+        'Commencez à chercher des cours et de nouvelles langues à apprendre !',
     },
   },
 }

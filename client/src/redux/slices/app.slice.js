@@ -19,7 +19,7 @@ const initialState = {
 // ------------------------------------
 
 const appSlice = createSlice({
-  name: 'auth',
+  name: 'app',
   initialState,
   reducers: {
     setLoading: (state, { payload }) => {

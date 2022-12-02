@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { getUser } from 'api'
 import { loadUserIDToken } from 'utils/auth'
 import DrawerNavigator from './Drawer'
-import { AuthNavigator, ModalNavigator, ActivityNavigator } from './Stacks'
+import { AuthNavigator, ModalNavigator, SearchNavigator } from './Stacks'
 
 const RootStack = createStackNavigator()
 
@@ -52,11 +52,9 @@ const Navigator = () => {
     >
       {loggedIn ? (
         <>
-          <RootStack.Group screenOptions={{ presentation: 'modal' }}>
-            <RootStack.Screen name="Drawer" component={DrawerNavigator} />
-            <RootStack.Screen name="Modal" component={ModalNavigator} />
-          </RootStack.Group>
-          <RootStack.Screen name="Activity" component={ActivityNavigator} />
+          <RootStack.Screen name="Drawer" component={DrawerNavigator} />
+          <RootStack.Screen name="Modal" component={ModalNavigator} />
+          <RootStack.Screen name="Search" component={SearchNavigator} />
         </>
       ) : (
         <RootStack.Screen name="Auth" component={AuthNavigator} />
