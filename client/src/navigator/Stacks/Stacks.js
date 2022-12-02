@@ -28,6 +28,8 @@ import Activity1 from 'pages/Activity1'
 import Activity2 from 'pages/Activity2'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
+import AppLanguage from 'pages/AppLanguage'
+import AccountInfo from 'pages/AccountInfo'
 
 // ------------------------------------
 // Constants
@@ -37,6 +39,7 @@ const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 const ModalStack = createStackNavigator()
 const ActivityStack = createStackNavigator()
+const SettingsStack = createStackNavigator()
 
 const homeNavigationProps = {
   headerTintColor: 'white',
@@ -148,6 +151,29 @@ export const ActivityNavigator = () => (
       })}
     />
   </ActivityStack.Navigator>
+)
+
+export const AppSettingsNavigator = () => (
+  <SettingsStack.Navigator screenOptions={settingsNavigationProps}>
+    <SettingsStack.Screen
+      name="AccountInfo"
+      component={AccountInfo}
+      options={({ navigation }) => ({
+        title: i18n.t('dict.accountInfo'),
+        headerLeft: () => <BackButton navigation={navigation} color="black" />,
+        cardStyle: { backgroundColor: "white" },
+      })}
+    />
+    <SettingsStack.Screen
+      name="AppLanguage"
+      component={AppLanguage}
+      options={({ navigation }) => ({
+        title: `${i18n.t('dict.language')}`,
+        headerLeft: () => <BackButton navigation={navigation} color="black" />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+  </SettingsStack.Navigator>
 )
 
 export const HomeNavigator = ({ courseId }) => (

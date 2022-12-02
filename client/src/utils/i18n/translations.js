@@ -1,6 +1,9 @@
 const translations = {
   en: {
     dict: {
+      availableLanguages: "Available Languages",
+      userInfo: 'User Info',
+      language: 'Language',
       confirm: 'Confirm',
       audio: 'Audio',
       activity: 'Activity',
@@ -48,6 +51,7 @@ const translations = {
       delete: 'Delete',
       completed: 'Completed',
       inProgress: 'In Progress',
+      accountInfo: 'Account Info'
     },
     actions: {
       pressAndSelect: 'Press Audio & Select',
@@ -184,6 +188,8 @@ const translations = {
         'Use this space to give additional information about the vocab item, such as grammatical and cultural information, usage, or additional translations/meanings.',
       courseSettingsDescription:
         'Here is the settings for you to manage your own course.',
+      appSettingsDescription:
+        'Here is the settings for you to manage your app.',
       courseSettingsSave:
         'You can save your changes by clicking the save button. If you leave this screen without pressing the button, your changes will be discarded.',
       courseSettingsChangeCode:
@@ -192,6 +198,9 @@ const translations = {
   },
   fr: {
     dict: {
+      availableLanguages: "Langues disponibles",
+      userInfo: 'Info utilisateur',
+      language: 'Langue',
       confirm: 'Confirmer',
       audio: 'Audio',
       activity: 'Activité',
@@ -287,6 +296,7 @@ const translations = {
       addVocabItem: 'Ajouter un élément de vocabulaire',
       addNew: 'Ajouter un Nouveau',
       manageVocab: 'Gérer les éléments de vocabulaire',
+      accountInfo: 'Informations sur le compte',
     },
     dialogue: {
       noActivitiesAvailable: 'Aucune activité disponible',
@@ -379,6 +389,8 @@ const translations = {
         "Utilisez cet espace pour donner des informations supplémentaires sur l'élément de vocabulaire, par exemple grammaticale et culturelle, l'usage, ou des traductions/significations traductions/significations supplémentaires.",
       courseSettingsDescription:
         'Voici les paramètres qui vous permettront de gérer votre propre cours.',
+      appSettingsDescription:
+        'Voici les paramètres qui vous permettront de gérer votre application.',
       courseSettingsSave:
         'Vous pouvez enregistrer vos modifications en cliquant sur le bouton "Enregistrer". Si vous quittez cet écran sans cliquer sur le bouton, vos modifications seront annulées.',
       courseSettingsChangeCode:

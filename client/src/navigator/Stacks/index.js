@@ -4,6 +4,7 @@ import {
   ModalNavigator,
   SettingsNavigator,
   ActivityNavigator,
+  AppSettingsNavigator
 } from './Stacks'
 
 export {
@@ -12,4 +13,5 @@ export {
   ModalNavigator,
   SettingsNavigator,
   ActivityNavigator,
+  AppSettingsNavigator
 }
