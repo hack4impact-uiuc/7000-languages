@@ -1,6 +1,7 @@
 const translations = {
   en: {
     dict: {
+      instructions: 'Instructions',
       availableLanguages: 'Available Languages',
       userInfo: 'User Info',
       language: 'Language',
@@ -102,6 +103,10 @@ const translations = {
       manageVocab: 'Manage Vocab',
     },
     dialogue: {
+      activityInstructions:
+        'Here you will be presented some options and you will need to find the corresponding option to match with.',
+      activity1: 'Matching L1 Audio to L2 Text',
+      activity2: 'Matching L1 Text to L1 Audio',
       noActivitiesAvailable: 'No Activities Available',
       activitiesInDevelopment:
         'Learner activities are currently in development.',
@@ -197,6 +202,7 @@ const translations = {
   },
   fr: {
     dict: {
+      instructions: 'Instructions',
       availableLanguages: 'Langues disponibles',
       userInfo: 'Info utilisateur',
       language: 'Langue',
@@ -297,6 +303,10 @@ const translations = {
       manageVocab: 'Gérer les éléments de vocabulaire',
     },
     dialogue: {
+      activityInstructions:
+        "Des options vous seront proposées et vous devrez trouver l'option correspondante.",
+      activity1: "Associer l'audio en L1 au texte en L2",
+      activity2: 'Faire correspondre un texte de L1 à un son de L1',
       noActivitiesAvailable: 'Aucune activité disponible',
       activitiesInDevelopment:
         'Les activités pour les apprenants sont en cours de développement.',

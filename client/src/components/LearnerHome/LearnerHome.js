@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native'
 import { colors } from 'theme'
 import PropTypes from 'prop-types'
-import { ScrollView, Text } from 'native-base'
+import { ScrollView, Text, Pressable } from 'native-base'
 import StyledButton from 'components/StyledButton'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
@@ -86,7 +86,8 @@ const LearnerHome = ({
               fontWeight="regular"
               fontStyle="normal"
               color="white.dark"
-              fontSize={35}
+              fontSize={28}
+              isTruncated
               paddingLeft={5}
               paddingTop={5}
               paddingBottom={1}
@@ -146,7 +147,7 @@ const LearnerHome = ({
             variant="learner_primary"
             fontSize="20"
             onPress={startLearningCallback}
-            style={{ height: 75, marginTop: 10 }}
+            style={{ height: 65, marginTop: 20 }}
             shadow
           />
         </View>
@@ -168,7 +169,8 @@ const LearnerHome = ({
             fontWeight="regular"
             fontStyle="normal"
             color="white.dark"
-            fontSize={35}
+            fontSize={28}
+            isTruncated
             paddingLeft={5}
             paddingTop={5}
             paddingBottom={1}
@@ -208,32 +210,39 @@ const LearnerHome = ({
       <View style={styles.cardContainer}>
         <ScrollView>
           {renderData.map((element) => (
-            <StyledCard
+            <Pressable
+              onPress={() => nextPageCallback(element)}
               key={element._id}
-              titleText={element.name}
-              bodyText={element.body}
-              width={width * 0.95}
-              height={95}
-              backgroundColor={
-                isUnitHome ? colors.white.dark : colors.gray.light
-              }
-              indicatorType={element.indicatorType}
-              bodyTextColor={colors.black}
-              containerStyle={{
-                borderWidth: 2,
-                borderColor: colors.gray.semi_light,
-                borderRadius: 12,
-                margin: 4,
-              }}
-              rightIcon={(
-                <MaterialCommunityIcons
-                  name="chevron-right"
-                  color="black"
-                  size={35}
-                  onPress={() => nextPageCallback(element)}
+            >
+              {({ isPressed }) => (
+                <StyledCard
+                  key={element._id}
+                  titleText={element.name}
+                  bodyText={element.body}
+                  width={width * 0.95}
+                  height={95}
+                  backgroundColor={
+                    isUnitHome ? colors.white.dark : colors.gray.light
+                  }
+                  indicatorType={element.indicatorType}
+                  bodyTextColor={colors.black}
+                  containerStyle={{
+                    borderWidth: 2,
+                    borderColor: colors.gray.semi_light,
+                    borderRadius: 12,
+                    margin: 4,
+                  }}
+                  rightIcon={(
+                    <MaterialCommunityIcons
+                      name="chevron-right"
+                      color="black"
+                      size={35}
+                    />
+                  )}
+                  isPressed={isPressed}
                 />
               )}
-            />
+            </Pressable>
           ))}
           {extraSpaceView}
         </ScrollView>

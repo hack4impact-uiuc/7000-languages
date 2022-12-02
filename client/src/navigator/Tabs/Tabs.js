@@ -6,6 +6,7 @@ import { AntDesign } from '@expo/vector-icons'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
+import i18n from 'utils/i18n'
 import { HomeNavigator, SettingsNavigator } from '../Stacks'
 import { NO_COURSE_ID } from '../../utils/constants'
 
@@ -78,6 +79,9 @@ const TabNavigator = (navigationData) => {
     >
       <Tab.Screen
         name="Units"
+        options={() => ({
+          title: i18n.t('dict.courseHome'),
+        })}
         children={(props) => (
           <HomeNavigator {...props} courseId={navigationData.route.name} />
         )}
@@ -85,6 +89,9 @@ const TabNavigator = (navigationData) => {
       {currentCourseId !== '' && !isLearnerCourse ? (
         <Tab.Screen
           name="Settings"
+          options={() => ({
+            title: i18n.t('dict.settings'),
+          })}
           children={(props) => <SettingsNavigator {...props} />}
         />
       ) : null}

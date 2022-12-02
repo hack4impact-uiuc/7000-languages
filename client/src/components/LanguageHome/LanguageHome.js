@@ -94,7 +94,8 @@ const LanguageHome = ({
               fontWeight="regular"
               fontStyle="normal"
               color="white.dark"
-              fontSize={35}
+              fontSize={28}
+              isTruncated
               paddingLeft={5}
               paddingTop={5}
             >
@@ -209,7 +210,9 @@ const LanguageHome = ({
             fontWeight="regular"
             fontStyle="normal"
             color="white.dark"
-            fontSize={35}
+            fontSize={28}
+            isTruncated
+            maxW="85%"
             paddingLeft={5}
             paddingTop={5}
             paddingBottom={1}
