@@ -49,12 +49,10 @@ const StartActivity = ({ navigation, route }) => {
   const { lessonData } = useSelector((state) => state.language)
 
   const [lessonTitle, setLessonTitle] = useState('')
-  const [lessonNumber, setLessonNumber] = useState('')
 
   useEffect(() => {
     setLessonTitle(lessonData.name)
-    setLessonNumber(lessonData._order + 1)
-  }, [lessonData, setLessonNumber, setLessonTitle])
+  }, [lessonData, setLessonTitle])
 
   useEffect(() => {
     if (route.params.activityType != null) {
@@ -96,7 +94,7 @@ const StartActivity = ({ navigation, route }) => {
         </Text>
         <View style={styles.numberContainer}>
           <Text fontFamily="heading" fontSize="60" color={colors.blue.darker}>
-            {lessonNumber}
+            {route.params.activityType + 1}
           </Text>
         </View>
         <Text
