@@ -11,7 +11,7 @@ import Logo from '../../../assets/images/logo-sm-gray.svg'
 
 const styles = StyleSheet.create({
   search: {
-    marginTop: '3%',
+    marginVertical: '3%',
     width: '90%',
     py: '1',
     px: '2',
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     color: colors.blue.dark,
   },
   body: {
-    flex: 1,
+    marginVertical: '30%',
     height: '100%',
     alignItems: 'center',
   },
@@ -34,10 +34,14 @@ const styles = StyleSheet.create({
     color: colors.gray.medium,
     width: '90%',
   },
+  results: {
+    height: '600%',
+    width: '100%',
+    alignSelf: 'center',
+  }
 })
 
 const LearnerSearch = () => {
-  const [searchFocused, setSearchFocused] = useState(false)
   const [searchText, setSearchText] = useState('')
   const { userGivenName } = useSelector((state) => state.auth)
 
@@ -65,8 +69,7 @@ const LearnerSearch = () => {
     // we also need to add a way to only select one card at a time
     // to be done in a later issue?
     // for now it presents example cards
-    <ScrollView >
-
+    <ScrollView style={styles.results}>
       <SearchResultCard languageName='Spanish'
     learnerLanguage='English'
     creatorName='Ellie'
@@ -76,23 +79,20 @@ const LearnerSearch = () => {
       learnerLanguage='English'
     creatorName='Jamie'
     unitNumber={4}
-    languageDescription= ''/>
+    languageDescription= 'This is a different description'/>
 
     </ScrollView>
   )
 
   return (
-    <View style={{flex: 1}}>
+    <View >
       <View style={styles.search}>
         <Input
           value={searchText}
-          height="25%"
           borderRadius={10}
           placeholderTextColor={colors.blue.dark}
           placeholder={i18n.t('actions.searchCourses')}
           backgroundColor={colors.blue.light}
-          onFocus={() => setSearchFocused(true)}
-          onBlur={() => setSearchFocused(false)}
           onChangeText={setSearchText}
           InputLeftElement={(
             <AntDesign
@@ -106,11 +106,9 @@ const LearnerSearch = () => {
             <Text style={styles.cancelButton}
               onPress={() => {
                 setSearchText('')
-                setSearchFocused(false)
-                // clear state of frontend
               }}
             >
-              {searchFocused ? 'Cancel' : ''}
+              {searchText !== '' ? 'Cancel' : ''}
             </Text>
           )}
         />

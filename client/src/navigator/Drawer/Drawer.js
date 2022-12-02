@@ -298,10 +298,8 @@ const DrawerNavigator = () => {
     const getUserData = async () => {
       await errorWrap(async () => {
         const {
-          picture, name, email, courses, given_name
-        } = await trackPromise(
-          getAllUserCourses(),
-        )
+          picture, name, email, courses, given_name,
+        } = await trackPromise(getAllUserCourses())
 
         // Set personal info
         setProfileUrl(picture)

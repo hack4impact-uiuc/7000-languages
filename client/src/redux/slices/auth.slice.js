@@ -34,11 +34,13 @@ const authSlice = createSlice({
     },
     setUserGivenName: (state, { payload }) => {
       state.userGivenName = payload.userGivenName
-    }
+    },
   },
 })
 
 export const { action } = authSlice
-export const { authenticate, logout, setUserFullName, setUserGivenName } = authSlice.actions
+export const {
+  authenticate, logout, setUserFullName, setUserGivenName,
+} = authSlice.actions
 
 export default authSlice.reducer

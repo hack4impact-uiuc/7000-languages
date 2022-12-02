@@ -85,8 +85,6 @@ router.get(
       dataToReturn.collaboratorLanguages,
     );
 
-    console.log(dataToReturn);
-
     return sendResponse(res, 200, SUCCESS_GETTING_USER_DATA, dataToReturn);
   }),
 );
