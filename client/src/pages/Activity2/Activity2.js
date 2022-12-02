@@ -62,7 +62,7 @@ const Activity2 = ({ navigation }) => {
 
   const [selectedOptionIdx, setSelectedOptionIdx] = useState(-1) // Represents the current option that is selected by the user in the activity
 
-const allDone = async () => {
+  const allDone = async () => {
     await markLessonAsComplete(currentCourseId, currentUnitId, currentLessonId)
     dispatch(setLessonToComplete({}))
     navigation.navigate('Drawer', { screen: 'LearnerHome' })
