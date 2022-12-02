@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
 const LearnerSearch = () => {
   const [searchText, setSearchText] = useState('')
-  const { userGivenName } = useSelector((state) => state.auth)
+  const { userName } = useSelector((state) => state.auth)
 
   const baseCase = (
     <View style={styles.body}>
@@ -55,7 +55,7 @@ const LearnerSearch = () => {
         textAlign="center"
       >
         {i18n.t('dict.searchWelcome')}
-        {userGivenName}
+        {userName}
         {'.'}
       </Text>
       <Text style={styles.bodyText} fontFamily="body">

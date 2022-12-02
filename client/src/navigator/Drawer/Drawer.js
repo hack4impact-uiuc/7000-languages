@@ -308,10 +308,6 @@ const DrawerNavigator = () => {
         // Set personal info
         dispatch(setPersonalInfo({ profileUrl, userName, userEmail }));
 
-        // put name in redux store
-        dispatch(setUserFullName({ userFullName: userName }))
-        dispatch(setUserGivenName({ userGivenName: given_name }))
-
         if (courses.length > 0) {
           dispatch(setField({ key: 'allCourses', value: courses }))
         }
