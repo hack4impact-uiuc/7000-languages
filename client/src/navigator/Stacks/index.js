@@ -5,6 +5,7 @@ import {
   SettingsNavigator,
   SearchNavigator,
   ActivityNavigator,
+  AppSettingsNavigator
 } from './Stacks'
 
 export {
@@ -14,4 +15,5 @@ export {
   SettingsNavigator,
   SearchNavigator,
   ActivityNavigator,
+  AppSettingsNavigator
 }

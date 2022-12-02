@@ -12,7 +12,7 @@ import { useErrorWrap, useTrackPromise } from 'hooks'
 import { getAllUserCourses } from 'utils/languageHelper'
 import StyledButton from 'components/StyledButton'
 import { setField } from 'slices/language.slice'
-import { setUserFullName, setUserGivenName } from 'slices/auth.slice'
+import { setPersonalInfo } from 'slices/auth.slice'
 import { useDispatch, useSelector } from 'react-redux'
 import NumberBox from 'components/NumberBox'
 import i18n from 'utils/i18n'
@@ -172,6 +172,10 @@ const DrawerMenuContainer = (props) => {
   } = props
   const newState = { ...state }
 
+  const navigateToSettings = () => {
+    props.navigation.navigate('AppSettings', { screen: 'AccountInfo' });
+  }
+
   const middleChildComponent = (
     <>
       <View style={drawerStyles.container}>
@@ -270,6 +274,7 @@ const DrawerMenuContainer = (props) => {
         fontSize="sm"
         leftIcon={<FontAwesome name="user" size={20} color={colors.black} />}
         variant="settings"
+        onPress={navigateToSettings}
       />
     </>
   )
@@ -286,9 +291,6 @@ const DrawerNavigator = () => {
   const learnerIds = learnerCourses.map((course) => course._id)
   const contributorIds = contributorCourses.map((course) => course._id)
 
-  const [userEmail, setEmail] = useState('')
-  const [userName, setName] = useState(`${i18n.t('dict.loading')}`)
-  const [profileUrl, setProfileUrl] = useState('')
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
 
@@ -298,13 +300,13 @@ const DrawerNavigator = () => {
     const getUserData = async () => {
       await errorWrap(async () => {
         const {
-          picture, name, email, courses, given_name,
-        } = await trackPromise(getAllUserCourses())
+          picture: profileUrl, name: userName, email: userEmail, courses,
+        } = await trackPromise(
+          getAllUserCourses(),
+        )
 
         // Set personal info
-        setProfileUrl(picture)
-        setName(name)
-        setEmail(email)
+        dispatch(setPersonalInfo({ profileUrl, userName, userEmail }));
 
         // put name in redux store
         dispatch(setUserFullName({ userFullName: userName }))
@@ -334,9 +336,6 @@ const DrawerNavigator = () => {
       initialRouteName="Units"
       drawerContent={(props) => (
         <DrawerMenuContainer
-          email={userEmail}
-          name={userName}
-          profileUrl={profileUrl}
           firstRouteNames={learnerIds}
           secondRouteNames={contributorIds}
           {...props}
