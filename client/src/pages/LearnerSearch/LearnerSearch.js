@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
 
 const LearnerSearch = () => {
   const [searchText, setSearchText] = useState('')
+  const [searchField, setSearchField] = useState('name')
   const { userName } = useSelector((state) => state.auth)
 
   const baseCase = (
