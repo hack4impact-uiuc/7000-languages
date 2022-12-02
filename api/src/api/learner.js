@@ -9,11 +9,16 @@ router.get(
     '/',
     requireAuthentication,
     errorWrap(async (req, res) => {
-      const updates = req.body;
-      const {search} = req.query;
+      const {search, field} = req.query;
       const userData = models.Course.aggregate([
-        { $match: { name: search } },
-        //{ $group: { _id: "$stars", count: { $sum: 1 } } },
+        { $search:
+        {  "text": {
+            "path": field,
+            "query": search,
+            "fuzzy": {}
+        }
+        }
+        },
         {$sort : { name : 1 } }
     ]);
 
@@ -28,4 +33,4 @@ router.get(
     }),
   );
 
-  module.exports = router;
+module.exports = router;  
