@@ -104,9 +104,11 @@ const CourseSettings = () => {
         {i18n.t('dialogue.courseSettingsChangeCode')}
       </Text>
       <Input
-        fontFamily="body"
-        fontWeight="normal"
-        fontSize="2xl"
+        _text={{
+          fontFamily: 'body',
+          fontWeight: 'normal',
+        }}
+        fontSize="xl"
         textAlign="left"
         my="5"
         onEndEditing={(e) => setCode(e.nativeEvent.text)}

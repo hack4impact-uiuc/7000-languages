@@ -31,8 +31,6 @@ import AppLanguage from 'pages/AppLanguage'
 import AccountInfo from 'pages/AccountInfo'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
-import AppLanguage from 'pages/AppLanguage'
-import AccountInfo from 'pages/AccountInfo'
 
 // ------------------------------------
 // Constants
