@@ -45,8 +45,9 @@ router.post(
     }
 
     const course = await models.Course.findById(course_id);
+    const private = course.details.is_private;
     const courseCode = course.details.code;
-    if(courseCode && courseCode !== code)
+    if(private && courseCode !== code)
     {
       return sendResponse(
         res,
