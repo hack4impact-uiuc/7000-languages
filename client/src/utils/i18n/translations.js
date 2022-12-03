@@ -1,7 +1,8 @@
 const translations = {
   en: {
     dict: {
-      availableLanguages: "Available Languages",
+      instructions: 'Instructions',
+      availableLanguages: 'Available Languages',
       userInfo: 'User Info',
       language: 'Language',
       confirm: 'Confirm',
@@ -56,7 +57,6 @@ const translations = {
       completed: 'Completed',
       inProgress: 'In Progress',
       accountInfo: 'Account Info',
-      learningLanguage: 'Learning Language',
     },
     actions: {
       pressAndSelect: 'Press Audio & Select',
@@ -77,7 +77,6 @@ const translations = {
       notLeave: "Don't leave",
       saveChanges: 'Save Changes',
       recordAudio: 'Record Audio',
-      accountInfo: 'Account Info',
       applyNow: 'Apply Now',
       myCourses: 'My Courses',
       required: 'Required.',
@@ -109,6 +108,10 @@ const translations = {
       search: 'Search',
     },
     dialogue: {
+      activityInstructions:
+        'Here you will be presented some options and you will need to find the corresponding option to match with.',
+      activity1: 'Matching L1 Audio to L2 Text',
+      activity2: 'Matching L1 Text to L1 Audio',
       noActivitiesAvailable: 'No Activities Available',
       activitiesInDevelopment:
         'Learner activities are currently in development.',
@@ -205,7 +208,8 @@ const translations = {
   },
   fr: {
     dict: {
-      availableLanguages: "Langues disponibles",
+      instructions: 'Instructions',
+      availableLanguages: 'Langues disponibles',
       userInfo: 'Info utilisateur',
       language: 'Langue',
       confirm: 'Confirmer',
@@ -311,6 +315,10 @@ const translations = {
       learningLanguage: 'Langue d\'apprentissage',
     },
     dialogue: {
+      activityInstructions:
+        "Des options vous seront proposées et vous devrez trouver l'option correspondante.",
+      activity1: "Associer l'audio en L1 au texte en L2",
+      activity2: 'Faire correspondre un texte de L1 à un son de L1',
       noActivitiesAvailable: 'Aucune activité disponible',
       activitiesInDevelopment:
         'Les activités pour les apprenants sont en cours de développement.',

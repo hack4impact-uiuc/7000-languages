@@ -27,6 +27,8 @@ import LearnerLessonHome from 'pages/LearnerLessonHome'
 import StartActivity from 'pages/StartActivity'
 import Activity1 from 'pages/Activity1'
 import Activity2 from 'pages/Activity2'
+import AppLanguage from 'pages/AppLanguage'
+import AccountInfo from 'pages/AccountInfo'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 import AppLanguage from 'pages/AppLanguage'
@@ -170,7 +172,7 @@ export const AppSettingsNavigator = () => (
       options={({ navigation }) => ({
         title: i18n.t('dict.accountInfo'),
         headerLeft: () => <BackButton navigation={navigation} color="black" />,
-        cardStyle: { backgroundColor: "white" },
+        cardStyle: { backgroundColor: 'white' },
       })}
     />
     <SettingsStack.Screen

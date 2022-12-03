@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -173,7 +173,7 @@ const DrawerMenuContainer = (props) => {
   const newState = { ...state }
 
   const navigateToSettings = () => {
-    props.navigation.navigate('AppSettings', { screen: 'AccountInfo' });
+    props.navigation.navigate('AppSettings', { screen: 'AccountInfo' })
   }
 
   const middleChildComponent = (
@@ -270,7 +270,7 @@ const DrawerMenuContainer = (props) => {
       </DrawerContentScrollView>
       <View style={drawerStyles.topDivider} />
       <StyledButton
-        title={i18n.t('actions.accountInfo')}
+        title={i18n.t('dict.accountInfo')}
         fontSize="sm"
         leftIcon={<FontAwesome name="user" size={20} color={colors.black} />}
         variant="settings"
@@ -300,13 +300,14 @@ const DrawerNavigator = () => {
     const getUserData = async () => {
       await errorWrap(async () => {
         const {
-          picture: profileUrl, name: userName, email: userEmail, courses,
-        } = await trackPromise(
-          getAllUserCourses(),
-        )
+          picture: profileUrl,
+          name: userName,
+          email: userEmail,
+          courses,
+        } = await trackPromise(getAllUserCourses())
 
         // Set personal info
-        dispatch(setPersonalInfo({ profileUrl, userName, userEmail }));
+        dispatch(setPersonalInfo({ profileUrl, userName, userEmail }))
 
         if (courses.length > 0) {
           dispatch(setField({ key: 'allCourses', value: courses }))
