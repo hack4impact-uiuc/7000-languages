@@ -5,13 +5,14 @@ import { StyleSheet, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
 import SearchResultCard from 'components/SearchResultCard'
+import StyledButton from 'components/StyledButton'
 
 import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/logo-sm-gray.svg'
 
 const styles = StyleSheet.create({
   search: {
-    marginTop: '3%',
+    marginVertical: '3%',
     width: '90%',
     py: '1',
     px: '2',
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     color: colors.blue.dark,
   },
   body: {
-    flex: 1,
+    marginVertical: '30%',
     height: '100%',
     alignItems: 'center',
   },
@@ -34,12 +35,17 @@ const styles = StyleSheet.create({
     color: colors.gray.medium,
     width: '90%',
   },
+  results: {
+    height: '100%',
+    width: '100%',
+    alignSelf: 'center',
+  },
 })
 
 const LearnerSearch = () => {
-  const [searchFocused, setSearchFocused] = useState(false)
   const [searchText, setSearchText] = useState('')
-  const { userGivenName } = useSelector((state) => state.auth)
+  const [searchField, setSearchField] = useState('name')
+  const { userName } = useSelector((state) => state.auth)
 
   const baseCase = (
     <View style={styles.body}>
@@ -51,7 +57,7 @@ const LearnerSearch = () => {
         textAlign="center"
       >
         {i18n.t('dict.searchWelcome')}
-        {userGivenName}
+        {userName}
         {'.'}
       </Text>
       <Text style={styles.bodyText} fontFamily="body">
@@ -59,40 +65,83 @@ const LearnerSearch = () => {
       </Text>
     </View>
   )
-  
-  const searchResults = (
+
+  const searchResults = () => (
+    // const results = []
     // get all the cards from searching searchText and display them
     // we also need to add a way to only select one card at a time
-    // to be done in a later issue?
+    // to be done in a later issue (maybe search)?
     // for now it presents example cards
-    <ScrollView >
-
-      <SearchResultCard languageName='Spanish'
-    learnerLanguage='English'
-    creatorName='Ellie'
-    unitNumber={5}
-    languageDescription= 'This is the description'/>
-      <SearchResultCard languageName='French'
-      learnerLanguage='English'
-    creatorName='Jamie'
-    unitNumber={4}
-    languageDescription= ''/>
-
-    </ScrollView>
+    <>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}
+      >
+        <View
+          style={{
+            width: '40%',
+          }}
+        >
+          <StyledButton
+            variant={
+              searchField === 'admin_name'
+                ? 'learner_filter_active'
+                : 'learner_filter_inactive'
+            }
+            title={i18n.t('dict.creator')}
+            onPress={() => setSearchField('admin_name')}
+          />
+        </View>
+        <View
+          style={{
+            width: '50%',
+            marginLeft: '2%',
+          }}
+        >
+          <StyledButton
+            variant={
+              searchField === 'name'
+                ? 'learner_filter_active'
+                : 'learner_filter_inactive'
+            }
+            title={i18n.t('dict.learningLanguage')}
+            onPress={() => setSearchField('name')}
+          />
+        </View>
+      </View>
+      <View style={styles.results}>
+        <ScrollView>
+          <SearchResultCard
+            languageName="Spanish"
+            learnerLanguage="Spanish"
+            creatorName="Ellie"
+            unitNumber={5}
+            languageDescription="This is the description"
+          />
+          <SearchResultCard
+            languageName="French"
+            learnerLanguage="English"
+            creatorName="Jamie"
+            unitNumber={4}
+            languageDescription="This is a different description"
+          />
+        </ScrollView>
+      </View>
+    </>
   )
 
   return (
-    <View style={{flex: 1}}>
+    <View>
       <View style={styles.search}>
         <Input
           value={searchText}
-          height="25%"
           borderRadius={10}
           placeholderTextColor={colors.blue.dark}
           placeholder={i18n.t('actions.searchCourses')}
           backgroundColor={colors.blue.light}
-          onFocus={() => setSearchFocused(true)}
-          onBlur={() => setSearchFocused(false)}
           onChangeText={setSearchText}
           InputLeftElement={(
             <AntDesign
@@ -103,19 +152,18 @@ const LearnerSearch = () => {
             />
           )}
           InputRightElement={(
-            <Text style={styles.cancelButton}
+            <Text
+              style={styles.cancelButton}
               onPress={() => {
                 setSearchText('')
-                setSearchFocused(false)
-                // clear state of frontend
               }}
             >
-              {searchFocused ? 'Cancel' : ''}
+              {searchText !== '' ? 'Cancel' : ''}
             </Text>
           )}
         />
       </View>
-      {searchText ? searchResults : baseCase }
+      {searchText ? searchResults() : baseCase}
     </View>
   )
 }

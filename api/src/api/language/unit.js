@@ -44,8 +44,7 @@ router.get(
       lessons[i].num_vocab = numVocab;
 
       if (req.user.isLearner) {
-        lessons[i].complete =
-          completedLessons.includes(String(lessons[i]._id));
+        lessons[i].complete = completedLessons.includes(String(lessons[i]._id));
       }
     }
 

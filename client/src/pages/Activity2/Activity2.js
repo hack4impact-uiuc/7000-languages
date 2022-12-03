@@ -46,6 +46,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
+  feedbackContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    top: '35%',
+    width: '100%',
+  },
 })
 
 const Activity2 = ({ navigation }) => {
@@ -301,7 +309,7 @@ const Activity2 = ({ navigation }) => {
             fontFamily="heading"
             fontWeight="regular"
             color="orange.medium_dark"
-            fontSize="2xl"
+            fontSize={22}
           >
             {i18n.t('actions.tryAgain')}
           </Text>
@@ -312,7 +320,7 @@ const Activity2 = ({ navigation }) => {
             fontFamily="heading"
             fontWeight="regular"
             color="green.medium_light"
-            fontSize="2xl"
+            fontSize={22}
           >
             {i18n.t('actions.correct')}
           </Text>
@@ -368,21 +376,23 @@ const Activity2 = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.root}>
-      <Text
-        fontFamily="heading"
-        fontWeight="regular"
-        color="gray.dark"
-        fontStyle="italic"
-        fontSize="lg"
-      >
-        {currentQuestionIdx + 1}/{questions.length}
-      </Text>
-      {generateL1Text()}
-      {generateFeedbackText()}
-      <View style={styles.answerContainer}>{generateOptions()}</View>
-      {generateConfirmButton()}
-    </View>
+    <>
+      <View style={styles.root}>
+        <Text
+          fontFamily="heading"
+          fontWeight="regular"
+          color="gray.dark"
+          fontStyle="italic"
+          fontSize="lg"
+        >
+          {currentQuestionIdx + 1}/{questions.length}
+        </Text>
+        {generateL1Text()}
+        <View style={styles.answerContainer}>{generateOptions()}</View>
+        {generateConfirmButton()}
+      </View>
+      <View style={styles.feedbackContainer}>{generateFeedbackText()}</View>
+    </>
   )
 }
 
