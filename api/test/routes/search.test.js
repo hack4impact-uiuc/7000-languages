@@ -2,9 +2,8 @@ let app = require('../../src/app');
 const request = require('supertest');
 const db = require('../utils/db');
 const {
-GET_SIMPLE_SEARCH, 
-GET
-
+  GET_SIMPLE_SEARCH, 
+  GET_SIMPLE_SEARCH_EXPECTED
 } = require('../mock-data/search-mock-data');
 
 const { withAuthentication } = require('../utils/auth');
