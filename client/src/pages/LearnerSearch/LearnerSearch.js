@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   results: {
-    height: '600%',
+    height: '100%',
     width: '100%',
     alignSelf: 'center',
   }
@@ -66,7 +66,9 @@ const LearnerSearch = () => {
     </View>
   )
   
-  const searchResults = (
+  const searchResults = () => {
+    const results = []
+    return (
     <>
   {/* // get all the cards from searching searchText and display them
   // we also need to add a way to only select one card at a time
@@ -85,8 +87,10 @@ const LearnerSearch = () => {
   }}
   >
     <StyledButton
-    variant="learner_filter"
-    title={i18n.t('dict.creator')}>
+    variant={searchField === "admin_name"? 
+        "learner_filter_active": "learner_filter_inactive"}
+    title={i18n.t('dict.creator')}
+    onPress={() => setSearchField('admin_name')}>
     </StyledButton>
   </View>
   <View
@@ -96,15 +100,18 @@ const LearnerSearch = () => {
   }}
   >
     <StyledButton
-    variant="learner_filter"
-    title="Learning Language">
+    variant={searchField === "name"? 
+    "learner_filter_active": "learner_filter_inactive"}
+    title={i18n.t('dict.learningLanguage')}
+    onPress={() => setSearchField('name')}>
     </StyledButton>
   </View>
   </View>
-    <ScrollView >
+  <View style={styles.results}>
+    <ScrollView>
 
       <SearchResultCard languageName='Spanish'
-    learnerLanguage='English'
+    learnerLanguage='Spanish'
     creatorName='Ellie'
     unitNumber={5}
     languageDescription= 'This is the description'/>
@@ -115,8 +122,9 @@ const LearnerSearch = () => {
     languageDescription= 'This is a different description'/>
 
     </ScrollView>
+    </View>
     </>
-  )
+  )}
 
   return (
     <View >
@@ -147,7 +155,7 @@ const LearnerSearch = () => {
           )}
         />
       </View>
-      {searchText ? searchResults : baseCase }
+      {searchText ? searchResults() : baseCase }
     </View>
   )
 }

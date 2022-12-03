@@ -1,11 +1,20 @@
-import { View, Text, Pressable } from 'native-base'
+import { View, Text, Pressable, Modal, Input } from 'native-base'
 import { StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import i18n from 'utils/i18n'
 import StyledButton from 'components/StyledButton'
+import { joinCourse } from 'api'
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  privateJoinButton: {
+    width: '30%',
+    marginLeft: '2%',
+  },
+  privateCancelButton: {
+    width: '30%',
+  }
+})
 
 const SearchResultCard = ({
   languageName,
@@ -13,11 +22,62 @@ const SearchResultCard = ({
   creatorName,
   unitNumber,
   languageDescription,
+  isPrivate,
+  courseId,
 }) => {
   // later we will move this to be a prop passed in
   // and guaranteeing it is unique will be handled by learnerSearch
   const [isClicked, setIsClicked] = useState(false)
+  const [joinModalVisible, setJoinModalVisible] = useState(false)
+  const [joinCode, setJoinCode] = useState('')
+
+
   return (
+    <>
+    <Modal 
+      isOpen={joinModalVisible} 
+      onClose={() => setJoinModalVisible(false)}
+      width='100%'>
+      <Modal.Content>
+      <Modal.Body>
+        <Text
+          fontFamily='heading'>
+          Join a private course
+        </Text>
+        <Text
+          fontFamily='body'
+          fontSize='md'>
+          The code is provided by the creator.
+        </Text>
+        <Input
+          placeholder='Enter code'
+          value={joinCode}
+          onChangeText={setJoinCode}
+          width='100%'
+          my='2'
+        />
+        <View display="flex" flexDirection="row-reverse" justifyContent="right">
+        <StyledButton
+          title='Join'
+          style={styles.privateJoinButton}
+          variant='learner_primary'
+          onPress={() => {
+            joinCourse(courseId)
+            setJoinModalVisible(false)
+          }}
+        />
+        <StyledButton
+          title='Cancel'
+          style={styles.privateCancelButton}
+          variant='learner_cancel'
+          onPress={() => {
+            setJoinModalVisible(false)
+          }}
+        />
+        </View>
+          </Modal.Body>
+          </Modal.Content>
+        </Modal>
     <Pressable
       onPress={() => setIsClicked(!isClicked)}
       bg={isClicked ? 'blue.light' : 'gray.light'}
@@ -57,12 +117,16 @@ const SearchResultCard = ({
             title="Join Now"
             fontSize={20}
             variant="learner_primary"
+            onPress={() => {
+              isPrivate ? setJoinModalVisible(true) : joinCourse(courseId, '')
+            }}
           />
         </>
       ) : (
         ''
       )}
     </Pressable>
+    </>
   )
 }
 
@@ -72,6 +136,8 @@ SearchResultCard.propTypes = {
   creatorName: PropTypes.string,
   unitNumber: PropTypes.number,
   languageDescription: PropTypes.string,
+  isPrivate: PropTypes.bool,
+  courseId: PropTypes.string,
 }
 
 SearchResultCard.defaultProps = {
@@ -80,5 +146,7 @@ SearchResultCard.defaultProps = {
   creatorName: '',
   unitNumber: 0,
   languageDescription: '',
+  isPrivate: true,
+  courseId: '',
 }
 export default SearchResultCard

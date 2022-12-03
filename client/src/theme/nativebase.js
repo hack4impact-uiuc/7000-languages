@@ -252,7 +252,7 @@ const theme = extendTheme({
             fontFamily: 'heading',
           },
         },
-        learner_filter: {
+        learner_filter_inactive: {
           bg: 'white.dark',
           borderWidth: 2,
           borderColor: colors.gray.medium_darker,
@@ -266,7 +266,34 @@ const theme = extendTheme({
             fontFamily: 'body',
           w: '100%',
           },
-        }
+        },
+        learner_filter_active: {
+          bg: 'blue.darker',
+          borderWidth: 2,
+          borderColor: colors.blue.darker,
+          borderRadius: 10,
+          my: 2,
+          px: 20,
+          py: 4,
+          _text: {
+            fontSize: '2xl',
+            color: 'white.dark',
+            fontFamily: 'heading',
+          w: '100%',
+          },
+        },
+        learner_cancel: {
+          bg: colors.gray.medium_darker,
+          my: 2,
+          px: 20,
+          py: 4,
+          _text: {
+            fontSize: '2xl',
+            color: 'gray.dark',
+            fontFamily: 'heading',
+          w: '100%',
+          },
+        },
       },
     },
   },

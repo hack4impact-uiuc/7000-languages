@@ -55,7 +55,8 @@ const translations = {
       taughtIn: 'Taught in',
       completed: 'Completed',
       inProgress: 'In Progress',
-      accountInfo: 'Account Info'
+      accountInfo: 'Account Info',
+      learningLanguage: 'Learning Language',
     },
     actions: {
       pressAndSelect: 'Press Audio & Select',
@@ -307,6 +308,7 @@ const translations = {
       addNew: 'Ajouter un Nouveau',
       manageVocab: 'Gérer les éléments de vocabulaire',
       accountInfo: 'Informations sur le compte',
+      learningLanguage: 'Langue d\'apprentissage',
     },
     dialogue: {
       noActivitiesAvailable: 'Aucune activité disponible',
