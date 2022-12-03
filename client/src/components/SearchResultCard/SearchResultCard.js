@@ -120,9 +120,7 @@ const SearchResultCard = ({
               title={i18n.t('actions.joinNow')}
               fontSize={20}
               variant="learner_primary"
-              onPress={
-                isPrivate ? setJoinModalVisible(true) : joinCourse(courseId, '')
-              }
+              onPress={() => (isPrivate ? setJoinModalVisible(true) : joinCourse(courseId, ''))}
             />
           </>
         ) : (
