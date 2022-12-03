@@ -57,6 +57,7 @@ const translations = {
       completed: 'Completed',
       inProgress: 'In Progress',
       accountInfo: 'Account Info',
+      learningLanguage: 'Learning Language',
     },
     actions: {
       pressAndSelect: 'Press Audio & Select',
@@ -106,6 +107,9 @@ const translations = {
       addNew: 'Add New',
       manageVocab: 'Manage Vocab',
       search: 'Search',
+      joinPrivateCourse: 'Join a Private Course',
+      enterCode: 'Enter Code',
+      joinNow: 'Join Now',
     },
     dialogue: {
       activityInstructions:
@@ -204,6 +208,7 @@ const translations = {
       courseSettingsChangeCode:
         'Learners will have to enter this code in order to join your course.',
       startSearching: 'Start searching for courses and new languages to learn!',
+      getJoinCode: 'The code is provided by the creator.',
     },
   },
   fr: {
@@ -262,6 +267,7 @@ const translations = {
       taughtIn: 'Enseigné en',
       completed: 'Complété',
       inProgress: 'En cours',
+      learningLanguage: "Langue d'apprentissage",
     },
     actions: {
       pressAndSelect: 'Appuyez sur Audio et sélectionnez',
@@ -311,8 +317,9 @@ const translations = {
       addVocabItem: 'Ajouter un élément de vocabulaire',
       addNew: 'Ajouter un Nouveau',
       manageVocab: 'Gérer les éléments de vocabulaire',
-      accountInfo: 'Informations sur le compte',
-      learningLanguage: 'Langue d\'apprentissage',
+      joinPrivateCourse: "S'inscrire à un cours privé",
+      enterCode: 'Entrez le code',
+      joinNow: 'Rejoindre maintenant',
     },
     dialogue: {
       activityInstructions:
@@ -417,6 +424,7 @@ const translations = {
         "Les apprenants devront saisir ce code afin de s'inscrire à votre cours.",
       startSearching:
         'Commencez à chercher des cours et de nouvelles langues à apprendre !',
+      getJoinCode: 'Le code est fourni par le créateur du cours.',
     },
   },
 }

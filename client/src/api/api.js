@@ -32,8 +32,6 @@ export const joinCourse = async (courseId, code) => {
   return res.data
 }
 
-
-
 /* User Endpoints */
 
 export const createUser = async (userData) => {

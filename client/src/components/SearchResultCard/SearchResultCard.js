@@ -1,4 +1,6 @@
-import { View, Text, Pressable, Modal, Input } from 'native-base'
+import {
+  View, Text, Pressable, Modal, Input,
+} from 'native-base'
 import { StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
@@ -13,7 +15,7 @@ const styles = StyleSheet.create({
   },
   privateCancelButton: {
     width: '30%',
-  }
+  },
 })
 
 const SearchResultCard = ({
@@ -31,101 +33,102 @@ const SearchResultCard = ({
   const [joinModalVisible, setJoinModalVisible] = useState(false)
   const [joinCode, setJoinCode] = useState('')
 
-
   return (
     <>
-    <Modal 
-      isOpen={joinModalVisible} 
-      onClose={() => setJoinModalVisible(false)}
-      width='100%'>
-      <Modal.Content>
-      <Modal.Body>
-        <Text
-          fontFamily='heading'>
-          Join a private course
-        </Text>
-        <Text
-          fontFamily='body'
-          fontSize='md'>
-          The code is provided by the creator.
-        </Text>
-        <Input
-          placeholder='Enter code'
-          value={joinCode}
-          onChangeText={setJoinCode}
-          width='100%'
-          my='2'
-        />
-        <View display="flex" flexDirection="row-reverse" justifyContent="right">
-        <StyledButton
-          title='Join'
-          style={styles.privateJoinButton}
-          variant='learner_primary'
-          onPress={() => {
-            joinCourse(courseId)
-            setJoinModalVisible(false)
-          }}
-        />
-        <StyledButton
-          title='Cancel'
-          style={styles.privateCancelButton}
-          variant='learner_cancel'
-          onPress={() => {
-            setJoinModalVisible(false)
-          }}
-        />
-        </View>
+      <Modal
+        isOpen={joinModalVisible}
+        onClose={() => setJoinModalVisible(false)}
+        width="100%"
+      >
+        <Modal.Content>
+          <Modal.Body>
+            <Text fontFamily="heading">
+              {i18n.t('actions.joinPrivateCourse')}
+            </Text>
+            <Text fontFamily="body" fontSize="md">
+              {i18n.t('dialogue.getJoinCode')}
+            </Text>
+            <Input
+              placeholder={i18n.t('actions.enterCode')}
+              value={joinCode}
+              onChangeText={setJoinCode}
+              width="100%"
+              my="2"
+            />
+            <View
+              display="flex"
+              flexDirection="row-reverse"
+              justifyContent="right"
+            >
+              <StyledButton
+                title="Join"
+                style={styles.privateJoinButton}
+                variant="learner_primary"
+                onPress={() => {
+                  joinCourse(courseId, joinCode)
+                  setJoinModalVisible(false)
+                }}
+              />
+              <StyledButton
+                title={i18n.t('dict.cancel')}
+                style={styles.privateCancelButton}
+                variant="learner_cancel"
+                onPress={() => {
+                  setJoinModalVisible(false)
+                }}
+              />
+            </View>
           </Modal.Body>
-          </Modal.Content>
-        </Modal>
-    <Pressable
-      onPress={() => setIsClicked(!isClicked)}
-      bg={isClicked ? 'blue.light' : 'gray.light'}
-      borderColor={isClicked ? 'blue.medium' : 'gray.medium'}
-      borderWidth="2"
-      alignSelf="center"
-      rounded="lg"
-      width="90%"
-      paddingTop="1"
-      paddingLeft="3"
-      paddingBottom="3"
-      paddingRight="3"
-      marginBottom="3"
-      isPressed={setIsClicked}
-    >
-      <View display="flex" flexDirection="row" alignItems="center">
-        <Text fontFamily="heading" fontSize="3xl">
-          {languageName}
-        </Text>
-        <Text color="gray.dark" fontSize="sm">
-          {' '}
-          {i18n.t('dict.taughtIn')} {learnerLanguage}
-        </Text>
-      </View>
-      <Text fontSize="lg">
-        {i18n.t('dict.creator')}: {creatorName}
-      </Text>
-      {isClicked ? (
-        <>
-          <Text fontSize="lg" color="gray.dark">
-            {unitNumber} Units available
+        </Modal.Content>
+      </Modal>
+      <Pressable
+        onPress={() => setIsClicked(!isClicked)}
+        bg={isClicked ? 'blue.light' : 'gray.light'}
+        borderColor={isClicked ? 'blue.medium' : 'gray.medium'}
+        borderWidth="2"
+        alignSelf="center"
+        rounded="lg"
+        width="90%"
+        paddingTop="1"
+        paddingLeft="3"
+        paddingBottom="3"
+        paddingRight="3"
+        marginBottom="3"
+        isPressed={setIsClicked}
+      >
+        <View display="flex" flexDirection="row" alignItems="center">
+          <Text fontFamily="heading" fontSize="3xl">
+            {languageName}
           </Text>
-          <Text fontSize="lg">
-            {i18n.t('dict.learnerSearchDescription')} {languageDescription}
+          <Text color="gray.dark" fontSize="sm">
+            {' '}
+            {i18n.t('dict.taughtIn')} {learnerLanguage}
           </Text>
-          <StyledButton
-            title="Join Now"
-            fontSize={20}
-            variant="learner_primary"
-            onPress={() => {
-              isPrivate ? setJoinModalVisible(true) : joinCourse(courseId, '')
-            }}
-          />
-        </>
-      ) : (
-        ''
-      )}
-    </Pressable>
+        </View>
+        <Text fontSize="lg">
+          {i18n.t('dict.creator')}: {creatorName}
+        </Text>
+        {isClicked ? (
+          <>
+            <Text fontSize="lg" color="gray.dark">
+              {unitNumber} Units available
+            </Text>
+            <Text fontSize="lg">
+              {i18n.t('dict.learnerSearchDescription')} {languageDescription}
+            </Text>
+            <StyledButton
+              title={i18n.t('actions.joinNow')}
+              fontSize={20}
+              variant="learner_primary"
+              onPress={
+                isPrivate ? setJoinModalVisible(true) : joinCourse(courseId, '')
+              }
+            />
+          </>
+        ) : (
+          ''
+        )}
+      </Pressable>
     </>
   )
 }

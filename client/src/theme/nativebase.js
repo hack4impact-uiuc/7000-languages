@@ -264,7 +264,7 @@ const theme = extendTheme({
             fontSize: '2xl',
             color: 'gray.medium',
             fontFamily: 'body',
-          w: '100%',
+            w: '100%',
           },
         },
         learner_filter_active: {
@@ -279,7 +279,7 @@ const theme = extendTheme({
             fontSize: '2xl',
             color: 'white.dark',
             fontFamily: 'heading',
-          w: '100%',
+            w: '100%',
           },
         },
         learner_cancel: {
@@ -291,7 +291,7 @@ const theme = extendTheme({
             fontSize: '2xl',
             color: 'gray.dark',
             fontFamily: 'heading',
-          w: '100%',
+            w: '100%',
           },
         },
       },

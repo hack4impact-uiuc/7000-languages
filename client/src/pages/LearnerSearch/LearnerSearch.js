@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     alignSelf: 'center',
-  }
+  },
 })
 
 const LearnerSearch = () => {
@@ -65,69 +65,76 @@ const LearnerSearch = () => {
       </Text>
     </View>
   )
-  
-  const searchResults = () => {
-    const results = []
-    return (
+
+  const searchResults = () => (
+    // const results = []
+    // get all the cards from searching searchText and display them
+    // we also need to add a way to only select one card at a time
+    // to be done in a later issue (maybe search)?
+    // for now it presents example cards
     <>
-  {/* // get all the cards from searching searchText and display them
-  // we also need to add a way to only select one card at a time
-  // to be done in a later issue?
-  // for now it presents example cards */}
-  <View
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-    }}
-  >
-  <View
-  style={{
-    width: '40%',
-  }}
-  >
-    <StyledButton
-    variant={searchField === "admin_name"? 
-        "learner_filter_active": "learner_filter_inactive"}
-    title={i18n.t('dict.creator')}
-    onPress={() => setSearchField('admin_name')}>
-    </StyledButton>
-  </View>
-  <View
-  style={{
-    width: '50%',
-    marginLeft: '2%',
-  }}
-  >
-    <StyledButton
-    variant={searchField === "name"? 
-    "learner_filter_active": "learner_filter_inactive"}
-    title={i18n.t('dict.learningLanguage')}
-    onPress={() => setSearchField('name')}>
-    </StyledButton>
-  </View>
-  </View>
-  <View style={styles.results}>
-    <ScrollView>
-
-      <SearchResultCard languageName='Spanish'
-    learnerLanguage='Spanish'
-    creatorName='Ellie'
-    unitNumber={5}
-    languageDescription= 'This is the description'/>
-      <SearchResultCard languageName='French'
-      learnerLanguage='English'
-    creatorName='Jamie'
-    unitNumber={4}
-    languageDescription= 'This is a different description'/>
-
-    </ScrollView>
-    </View>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}
+      >
+        <View
+          style={{
+            width: '40%',
+          }}
+        >
+          <StyledButton
+            variant={
+              searchField === 'admin_name'
+                ? 'learner_filter_active'
+                : 'learner_filter_inactive'
+            }
+            title={i18n.t('dict.creator')}
+            onPress={() => setSearchField('admin_name')}
+          />
+        </View>
+        <View
+          style={{
+            width: '50%',
+            marginLeft: '2%',
+          }}
+        >
+          <StyledButton
+            variant={
+              searchField === 'name'
+                ? 'learner_filter_active'
+                : 'learner_filter_inactive'
+            }
+            title={i18n.t('dict.learningLanguage')}
+            onPress={() => setSearchField('name')}
+          />
+        </View>
+      </View>
+      <View style={styles.results}>
+        <ScrollView>
+          <SearchResultCard
+            languageName="Spanish"
+            learnerLanguage="Spanish"
+            creatorName="Ellie"
+            unitNumber={5}
+            languageDescription="This is the description"
+          />
+          <SearchResultCard
+            languageName="French"
+            learnerLanguage="English"
+            creatorName="Jamie"
+            unitNumber={4}
+            languageDescription="This is a different description"
+          />
+        </ScrollView>
+      </View>
     </>
-  )}
+  )
 
   return (
-    <View >
+    <View>
       <View style={styles.search}>
         <Input
           value={searchText}
@@ -145,7 +152,8 @@ const LearnerSearch = () => {
             />
           )}
           InputRightElement={(
-            <Text style={styles.cancelButton}
+            <Text
+              style={styles.cancelButton}
               onPress={() => {
                 setSearchText('')
               }}
@@ -155,7 +163,7 @@ const LearnerSearch = () => {
           )}
         />
       </View>
-      {searchText ? searchResults() : baseCase }
+      {searchText ? searchResults() : baseCase}
     </View>
   )
 }

@@ -9,14 +9,12 @@ export const getAllUserCourses = async () => {
   const { result } = await getUser()
   const {
     name,
-    given_name,
     email,
     picture,
     adminLanguages,
     collaboratorLanguages,
     learnerLanguages,
   } = result
-  // console.log(name)
 
   let allCourses = []
 
@@ -48,7 +46,6 @@ export const getAllUserCourses = async () => {
     courses: allCourses,
     picture,
     name,
-    given_name,
     email,
   }
 }
