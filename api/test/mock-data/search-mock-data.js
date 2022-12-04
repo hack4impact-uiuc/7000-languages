@@ -33,4 +33,22 @@ module.exports.SEARCH_COURSE_EXPECTED = [
       link: 'https://tepid-toll.com',
     },
   },
+  {
+    details: {
+      name: 'Private course',
+      alternative_name: 'cool course with code!',
+      admin_name: 'Mr Alex Masgras',
+      admin_email: 'email@gmail.com',
+      description:
+        'Minus illo maiores ut laborum vitae soluta eaque est. Numquam atque nostrum rem in aspernatur debitis. Quis aut omnis optio nisi non consequatur autem quod quisquam. Sunt laboriosam quae sapiente ea doloremque.',
+      translated_language: 'English',
+      location: 'North America',
+      iso: 'en',
+      glotto: 'stan1293',
+      population: '8750',
+      link: 'https://tepid-toll.com',
+      is_private: 'true',
+      code: '1234',
+    },
+  },
 ];

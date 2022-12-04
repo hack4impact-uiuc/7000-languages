@@ -239,7 +239,7 @@ module.exports.PATCH_ORIGINAL_COURSE = {
     iso: 'en',
     glotto: 'stan1293',
     population: '8750',
-    is_private: true,
+    is_private: false,
     link: 'https://tepid-toll.com',
   },
 };
@@ -260,7 +260,7 @@ module.exports.PATCH_EXPECTED_COURSE_UPDATED_APPROVAL = {
     glotto: 'stan1293',
     population: '8750',
     link: 'https://tepid-toll.com',
-    is_private: true,
+    is_private: false,
   },
 };
 
@@ -280,7 +280,7 @@ module.exports.PATCH_EXPECTED_COURSE_UPDATED_ADMIN_ID = {
     glotto: 'stan1293',
     population: '8750',
     link: 'https://tepid-toll.com',
-    is_private: true,
+    is_private: false,
   },
 };
 
