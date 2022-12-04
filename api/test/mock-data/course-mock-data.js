@@ -34,7 +34,7 @@ module.exports.GET_SIMPLE_COURSE_EXPECTED = {
       glotto: 'stan1293',
       population: '8750',
       link: 'https://tepid-toll.com',
-      is_private: true,
+      is_private: false,
     },
   }, //remove admin_id
   units: [
