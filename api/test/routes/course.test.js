@@ -50,7 +50,7 @@ describe('GET /language/course/ ', () => {
     and close the connection at the end.
   */
   afterAll(async () => await db.closeDatabase());
-  afterEach(async () => await db.resetDa tabase());
+  afterEach(async () => await db.resetDatabase());
   beforeAll(async () => {
     await db.connect();
   });

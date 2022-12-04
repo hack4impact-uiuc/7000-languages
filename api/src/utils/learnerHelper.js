@@ -101,29 +101,3 @@ const getAllCompletedUnits = async (user_id, course_id) => {
 };
 
 module.exports.getAllCompletedUnits = getAllCompletedUnits;
-
-/**
- * Determines if a user has joined a specific course
- * @param {String} user_id User MongoDB _id
- * @param {String} course_id MongoDB _id of the course to check
- * @returns True if the course is listed as a learner language
- */
-const isPartOfCourse = async (user_id, course_id) => {
-  if (!course_id || !user_id) {
-    return false;
-  }
-
-  const course = await models.User.findById(user_id);
-  console.log("course: ", course)
-  if(course)
-  {
-    const index = course.learnerLanguages.findIndex(course_id);
-    if(index == -1)
-    {
-      return false;
-    }
-  }
-  return true;
-}
-
-module.exports.isPartOfCourse = isPartOfCourse;

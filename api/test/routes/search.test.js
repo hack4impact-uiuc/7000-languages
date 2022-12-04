@@ -1,10 +1,6 @@
 let app = require('../../src/app');
 const request = require('supertest');
 const db = require('../utils/db');
-const {
-  GET_SIMPLE_SEARCH, 
-  GET_SIMPLE_SEARCH_EXPECTED
-} = require('../mock-data/search-mock-data');
 
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
@@ -16,8 +12,6 @@ const { verifyIdTokenMockReturnValue } = require('../mock-data/auth-mock-data');
 const {
   SUCCESS_GETTING_LESSON_DATA,
   ERR_MISSING_OR_INVALID_DATA,
-  SUCCESS_PATCHING_LESSON_DATA,
-  SUCCESS_POSTING_LESSON_DATA,
 } = require('../../src/utils/constants');
 
 const verifyIdTokenMock = OAuth2Client.prototype.verifyIdToken;

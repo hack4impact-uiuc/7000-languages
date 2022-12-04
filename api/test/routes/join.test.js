@@ -46,21 +46,21 @@ describe('POST /learner/join/ ', () => {
   test('Learner can join course', async () => {
     const response = await withAuthentication(
       request(app).post('/learner/join').send(POST_JOIN_COURSE),
-      '69023be1-368c-4a86-8eb0-9771bffa0186',
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
     );
 
     expect(response.status).toBe(200);
   });
 
-  test('Learner cannot mark lesson twice', async () => {
+  test('Learner cannot join lesson twice', async () => {
     await withAuthentication(
       request(app).post('/learner/join').send(POST_JOIN_COURSE),
-      '69023be1-368c-4a86-8eb0-9771bffa0186',
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
     );
 
     const response = await withAuthentication(
       request(app).post('/learner/join').send(POST_JOIN_COURSE),
-      '69023be1-368c-4a86-8eb0-9771bffa0186',
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
     );
 
     const message = response.body.message;
@@ -72,7 +72,7 @@ describe('POST /learner/join/ ', () => {
   test('Learner can join private course', async () => {
     const response = await withAuthentication(
       request(app).post('/learner/join').send(POST_JOIN_PRIVATE),
-      '69023be1-368c-4a86-8eb0-9771bffa0186',
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
     );
 
     expect(response.status).toBe(200);
@@ -81,25 +81,25 @@ describe('POST /learner/join/ ', () => {
   test('Learner cannot join private course with invalid code', async () => {
     const response = await withAuthentication(
       request(app).post('/learner/join').send(POST_WRONG_CODE),
-      '69023be1-368c-4a86-8eb0-9771bffa0186',
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
     );
 
     const message = response.body.message;
 
-    expect(response.status).toBe(403);
-    expect(message).toEqual("You are not authorized to access this course.");
+    expect(response.status).toBe(400);
+    expect(message).toEqual('Invalid code provided for private course');
   });
 
   test('User cannot join private course with no code', async () => {
     const response = await withAuthentication(
       request(app).post('/learner/join').send(POST_NO_CODE),
-      '69023be1-368c-4a86-8eb0-9771bffa0186',
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
     );
 
     const message = response.body.message;
 
-    expect(response.status).toBe(403);
-    expect(message).toEqual("You are not authorized to access this course.");
+    expect(response.status).toBe(400);
+    expect(message).toEqual('Invalid code provided for private course');
   });
 
   test('Fail to join course with empty body', async () => {
@@ -109,32 +109,36 @@ describe('POST /learner/join/ ', () => {
 
     const message = response.body.message;
 
-    expect(response.status).toBe(403);
-    expect(message).toEqual(ERR_AUTH_FAILED);
+    expect(response.status).toBe(400);
+    expect(message).toEqual(
+      'Missing or invalid data in the request. Please try again.',
+    );
   });
 
   test('Fail to join course with invalid course_id', async () => {
     const response = await withAuthentication(
       request(app).post('/learner/join').send(POST_INVALID_COURSE),
-      '69023be1-368c-4a86-8eb0-9771bffa0186',
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
     );
 
     const message = response.body.message;
 
     expect(response.status).toBe(400);
-    expect(message).toEqual('Invalid ObjectID');
+    expect(message).toEqual(
+      'Missing or invalid data in the request. Please try again.',
+    );
   });
 
   test('Fail to join non-existing course', async () => {
     const response = await withAuthentication(
-      request(app)
-        .post('/learner/join')
-        .send(POST_NONEXISTANT_COURSE),
+      request(app).post('/learner/join').send(POST_NONEXISTANT_COURSE),
     );
 
     const message = response.body.message;
 
-    expect(response.status).toBe(404);
-    expect(message).toEqual('Course does not exist');
+    expect(response.status).toBe(400);
+    expect(message).toEqual(
+      'Missing or invalid data in the request. Please try again.',
+    );
   });
 });
