@@ -95,7 +95,7 @@ const LessonHome = ({ navigation }) => {
             because it 1) doesn't exist in Expo's file system or 2) has existed in Expo's file system for too long.
           */
 
-          if (item.image !== '' && shouldRefreshImage) {
+          if (formattedItem.hasImage && shouldRefreshImage) {
             const filePath = item.image
             const splitPath = filePath.split('.')
 
@@ -118,7 +118,7 @@ const LessonHome = ({ navigation }) => {
             })
           }
 
-          if (item.audio !== '' && shouldRefreshAudio) {
+          if (formattedItem.hasAudio && shouldRefreshAudio) {
             const filePath = item.audio
             const splitPath = filePath.split('.')
 

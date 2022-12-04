@@ -5,6 +5,20 @@ import { MEDIA_TYPE } from 'utils/constants'
 import instance, { BASE_URL } from './axios-config'
 
 /* Learner Endpoints */
+
+export const joinCourse = async (courseId, passcode = null) => {
+  const body = {
+    course_id: courseId,
+    code: passcode,
+  }
+
+  const requestString = '/learner/join'
+  const res = await instance.post(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 export const markLessonAsComplete = async (courseId, unitId, lessonId) => {
   const body = {
     course_id: courseId,
@@ -13,19 +27,6 @@ export const markLessonAsComplete = async (courseId, unitId, lessonId) => {
   }
 
   const requestString = '/learner/complete'
-  const res = await instance.post(requestString, body)
-
-  if (!res?.data?.success) throw new Error(res?.data?.message)
-  return res.data
-}
-
-export const joinCourse = async (courseId, code) => {
-  const body = {
-    course_id: courseId,
-    code,
-  }
-
-  const requestString = '/learner/join'
   const res = await instance.post(requestString, body)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
@@ -114,9 +115,8 @@ export const deleteCourse = async (courseID) => {
 }
 
 /* Unit Endpoints */
-
-export const searchUnits = async (searchID, field) => { 
-  //change params
+export const searchUnits = async (searchID, field) => {
+  // change params
   const requestString = `/learner/search?search=${searchID}&field=${field}`
   const res = await instance.get(requestString)
 

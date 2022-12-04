@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { errorWrap } = require('../../middleware');
 const { sendResponse } = require('../../utils/response');
-const { requireAuthentication } = require('../../middleware/authentication');
 const { models } = require('../../models/index.js');
+const { requireAuthentication } = require('../../middleware/authentication');
 
 router.get(
   '/',
