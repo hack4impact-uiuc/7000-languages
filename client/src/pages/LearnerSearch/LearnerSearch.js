@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { colors } from 'theme'
 import { Text, Input, ScrollView } from 'native-base'
 import { StyleSheet, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import SearchResultCard from 'components/SearchResultCard'
 import StyledButton from 'components/StyledButton'
+import { getSearchCourses } from 'api'
+import { useTrackPromise, useErrorWrap } from 'hooks'
+import PropTypes from 'prop-types'
+import { getAllUserCourses } from 'utils/languageHelper'
+import { setPersonalInfo } from 'slices/auth.slice'
+import { setField } from 'slices/language.slice'
 
 import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/logo-sm-gray.svg'
@@ -35,10 +41,45 @@ const styles = StyleSheet.create({
   },
 })
 
-const LearnerSearch = () => {
+const LearnerSearch = ({ navigation }) => {
   const [searchText, setSearchText] = useState('')
   const [searchField, setSearchField] = useState('name')
   const { userName } = useSelector((state) => state.auth)
+  const errorWrap = useErrorWrap()
+  const dispatch = useDispatch()
+
+  const [allCourses, setAllCourses] = useState([])
+
+  const trackPromise = useTrackPromise()
+
+  useEffect(() => {
+    const getCourses = async () => {
+      const { result: courses } = await trackPromise(getSearchCourses())
+      setAllCourses(courses)
+    }
+    getCourses()
+  }, [setAllCourses])
+
+  const navigateToNewCourse = async (courseId) => {
+    // Refetches the user's data and courses and navigates to a new course
+    await errorWrap(async () => {
+      const {
+        picture: profileUrl,
+        name,
+        email: userEmail,
+        courses,
+      } = await trackPromise(getAllUserCourses())
+
+      // Set personal info
+      dispatch(setPersonalInfo({ profileUrl, userName: name, userEmail }))
+
+      if (courses.length > 0) {
+        dispatch(setField({ key: 'allCourses', value: courses }))
+      }
+    })
+
+    navigation.navigate(courseId)
+  }
 
   const baseCase = (
     <View style={styles.body}>
@@ -50,8 +91,7 @@ const LearnerSearch = () => {
         textAlign="center"
       >
         {i18n.t('dict.searchWelcome')}
-        {userName}
-        {'.'}
+        {userName !== undefined && `, ${userName}.`}
       </Text>
       <Text style={styles.bodyText} fontFamily="body">
         {i18n.t('dialogue.startSearching')}
@@ -59,72 +99,85 @@ const LearnerSearch = () => {
     </View>
   )
 
-  const searchResults = () => (
-    // const results = []
-    // get all the cards from searching searchText and display them
-    // we also need to add a way to only select one card at a time
-    // to be done in a later issue (maybe search)?
-    // for now it presents example cards
-    <>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}
-      >
+  const extraSpaceView = <View style={{ height: 400 }} />
+
+  const searchResults = () => {
+    let filteredCourses
+
+    if (searchText !== '') {
+      filteredCourses = allCourses.filter((course) => course.details[searchField]
+        .toLowerCase()
+        .includes(searchText.toLowerCase()))
+    } else {
+      filteredCourses = allCourses
+    }
+
+    if (filteredCourses.length === 0) {
+      return baseCase
+    }
+
+    return (
+      <>
         <View
           style={{
-            width: '40%',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
           }}
         >
-          <StyledButton
-            variant={
-              searchField === 'admin_name'
-                ? 'learner_filter_active'
-                : 'learner_filter_inactive'
-            }
-            title={i18n.t('dict.creator')}
-            onPress={() => setSearchField('admin_name')}
-          />
+          <View
+            style={{
+              width: '50%',
+            }}
+          >
+            <StyledButton
+              variant={
+                searchField === 'name'
+                  ? 'learner_filter_active'
+                  : 'learner_filter_inactive'
+              }
+              title={i18n.t('dict.learningLanguage')}
+              onPress={() => setSearchField('name')}
+            />
+          </View>
+          <View
+            style={{
+              width: '40%',
+              marginLeft: '2%',
+            }}
+          >
+            <StyledButton
+              variant={
+                searchField === 'admin_name'
+                  ? 'learner_filter_active'
+                  : 'learner_filter_inactive'
+              }
+              title={i18n.t('dict.creator')}
+              onPress={() => setSearchField('admin_name')}
+            />
+          </View>
         </View>
-        <View
-          style={{
-            width: '50%',
-            marginLeft: '2%',
-          }}
-        >
-          <StyledButton
-            variant={
-              searchField === 'name'
-                ? 'learner_filter_active'
-                : 'learner_filter_inactive'
-            }
-            title={i18n.t('dict.learningLanguage')}
-            onPress={() => setSearchField('name')}
-          />
+        <View style={styles.results}>
+          <ScrollView>
+            {filteredCourses.map((courseData) => (
+              <SearchResultCard
+                key={courseData._id}
+                languageName={courseData.details.name}
+                learnerLanguage={courseData.details.translated_language}
+                creatorName={courseData.details.admin_name}
+                unitNumber={courseData.numUnits}
+                languageDescription={courseData.details.description}
+                courseId={courseData._id}
+                isPrivate={courseData.details.is_private}
+                navigateToNewCourse={navigateToNewCourse}
+              />
+            ))}
+            {extraSpaceView}
+          </ScrollView>
         </View>
-      </View>
-      <View style={styles.results}>
-        <ScrollView>
-          <SearchResultCard
-            languageName="Spanish"
-            learnerLanguage="Spanish"
-            creatorName="Ellie"
-            unitNumber={5}
-            languageDescription="This is the description"
-          />
-          <SearchResultCard
-            languageName="French"
-            learnerLanguage="English"
-            creatorName="Jamie"
-            unitNumber={4}
-            languageDescription="This is a different description"
-          />
-        </ScrollView>
-      </View>
-    </>
-  )
+      </>
+    )
+  }
 
   return (
     <>
@@ -182,9 +235,19 @@ const LearnerSearch = () => {
           </Text>
         )}
       </View>
-      <View>{searchText ? searchResults() : baseCase}</View>
+      <View>{searchResults()}</View>
     </>
   )
+}
+
+LearnerSearch.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
+}
+
+LearnerSearch.defaultProps = {
+  navigation: { navigate: () => null },
 }
 
 export default LearnerSearch

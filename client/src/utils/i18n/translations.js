@@ -1,6 +1,9 @@
 const translations = {
   en: {
     dict: {
+      congratulations: 'Congratulations',
+      error: 'Error',
+      none: 'None',
       instructions: 'Instructions',
       availableLanguages: 'Available Languages',
       userInfo: 'User Info',
@@ -9,7 +12,7 @@ const translations = {
       audio: 'Audio',
       activity: 'Activity',
       welcome: 'Welcome!',
-      searchWelcome: 'Welcome, ',
+      searchWelcome: 'Welcome',
       vocabItems: 'Vocabulary Items',
       discard: 'Discard',
       ok: 'OK',
@@ -61,6 +64,7 @@ const translations = {
       unitsAvailable: 'Units Available',
     },
     actions: {
+      exitActivity: 'Exit Activity',
       pressAndSelect: 'Press Audio & Select',
       correct: 'Correct',
       tryAgain: 'Try Again',
@@ -113,6 +117,7 @@ const translations = {
       joinNow: 'Join Now',
     },
     dialogue: {
+      invalidCode: 'Invalid code provided for private course',
       activityInstructions:
         'Here you will be presented some options and you will need to find the corresponding option to match with.',
       activity1: 'Matching L1 Audio to L2 Text',
@@ -214,6 +219,9 @@ const translations = {
   },
   fr: {
     dict: {
+      congratulations: 'Félicitations',
+      error: 'Erreur',
+      none: 'Aucun',
       instructions: 'Instructions',
       availableLanguages: 'Langues disponibles',
       userInfo: 'Info utilisateur',
@@ -222,7 +230,7 @@ const translations = {
       audio: 'Audio',
       activity: 'Activité',
       welcome: 'Bienvenue !',
-      searchWelcome: 'Bienvenue, ',
+      searchWelcome: 'Bienvenue',
       vocabItems: 'Éléments de vocabulaire',
       discard: 'Jeter',
       ok: 'OK',
@@ -272,6 +280,7 @@ const translations = {
       unitsAvailable: 'Unités disponibles',
     },
     actions: {
+      exitActivity: 'Activité de sortie',
       pressAndSelect: 'Appuyez sur Audio et sélectionnez',
       correct: 'Correct',
       tryAgain: 'Essayez à nouveau',
@@ -324,6 +333,7 @@ const translations = {
       joinNow: 'Rejoindre maintenant',
     },
     dialogue: {
+      invalidCode: 'Code invalide fourni pour le cours privé',
       activityInstructions:
         "Des options vous seront proposées et vous devrez trouver l'option correspondante.",
       activity1: "Associer l'audio en L1 au texte en L2",

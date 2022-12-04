@@ -65,7 +65,7 @@ const StartActivity = ({ navigation, route }) => {
   const startActivity = () => {
     const activityNumber = route.params.activityType
     if (activityNumber >= TOTAL_ACTIVITIES) {
-      navigation.navigate('Drawer', { screen: 'LearnerHome' })
+      navigation.navigate('Drawer', { screen: 'Congrats' })
     } else {
       const activityScreen = `Activity${route.params.activityType + 1}`
       navigation.navigate('Activity', { screen: activityScreen })

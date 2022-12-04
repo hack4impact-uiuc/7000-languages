@@ -29,6 +29,7 @@ import Activity1 from 'pages/Activity1'
 import Activity2 from 'pages/Activity2'
 import AppLanguage from 'pages/AppLanguage'
 import AccountInfo from 'pages/AccountInfo'
+import Congrats from 'pages/Congrats'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -155,6 +156,15 @@ export const ActivityNavigator = () => (
       component={Activity2}
       options={({ navigation }) => ({
         title: `${i18n.t('dict.activity')} 2`,
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <ActivityStack.Screen
+      name="Congrats"
+      component={Congrats}
+      options={({ navigation }) => ({
+        title: `${i18n.t('dict.congratulations')}`,
         headerLeft: () => <BackButton navigation={navigation} color="white" />,
         cardStyle: { backgroundColor: 'white' },
       })}
