@@ -35,7 +35,7 @@ const SearchResultCard = ({
   const [joinCode, setJoinCode] = useState('')
 
   const submitJoinCourse = async () => {
-    const { success, message } = await joinCourse()
+    const { success, message } = await joinCourse(courseId, joinCode)
 
     if (!success) {
       Alert.alert(`${i18n.t('dict.error')}`, message, [
