@@ -58,6 +58,7 @@ const translations = {
       inProgress: 'In Progress',
       accountInfo: 'Account Info',
       learningLanguage: 'Learning Language',
+      unitsAvailable: 'Units Available',
     },
     actions: {
       pressAndSelect: 'Press Audio & Select',
@@ -268,6 +269,7 @@ const translations = {
       completed: 'Complété',
       inProgress: 'En cours',
       learningLanguage: "Langue d'apprentissage",
+      unitsAvailable: 'Unités disponibles',
     },
     actions: {
       pressAndSelect: 'Appuyez sur Audio et sélectionnez',
