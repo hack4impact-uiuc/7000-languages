@@ -111,7 +111,7 @@ const SearchResultCard = ({
         {isClicked ? (
           <>
             <Text fontSize="lg" color="gray.dark">
-              {unitNumber} Units available
+              {unitNumber} {i18n.t('dict.unitsAvailable')}
             </Text>
             <Text fontSize="lg">
               {i18n.t('dict.learnerSearchDescription')} {languageDescription}
