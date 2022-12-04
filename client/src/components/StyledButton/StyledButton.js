@@ -19,7 +19,7 @@ const StyledButton = ({
     _text={{ fontSize }}
     leftIcon={leftIcon}
     endIcon={rightIcon}
-    shadow={shadow === true ? 4 : -1}
+    shadow={shadow ? 4 : -1}
     style={style}
     isDisabled={isDisabled}
   >
@@ -35,7 +35,9 @@ StyledButton.propTypes = {
   rightIcon: PropTypes.element,
   fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   shadow: PropTypes.bool,
-  style: PropTypes.objectOf(PropTypes.string),
+  style: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ),
   isDisabled: PropTypes.bool,
 }
 

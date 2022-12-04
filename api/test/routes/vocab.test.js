@@ -163,7 +163,7 @@ describe('POST /vocab/ ', () => {
     var message = response.body.message;
     var result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
-    expect(message).toEqual(SUCCESS_POSTING_VOCAB_DATA); // TODO: Ask developers - should this be a constant value?
+    expect(message).toEqual(SUCCESS_POSTING_VOCAB_DATA);
     expect(result).toEqual(POST_FIRST_VOCAB_ITEM_EXPECTED);
 
     response = await withAuthentication(
@@ -236,3 +236,6 @@ describe('POST /vocab/ ', () => {
     expect(result).toEqual(POST_BERBER_VOCAB_ITEM_EXPECTED);
   });
 });
+
+// This block tests the DELETE /vocab/ endpoint.
+describe('DELETE /vocab/ ', () => {});

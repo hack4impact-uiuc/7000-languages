@@ -13,6 +13,9 @@ const {
   patchDocument,
   populateExampleData,
 } = require('../../utils/languageHelper');
+const { deleteFolder } = require('../../utils/aws/s3');
+const { getAllCompletedUnits } = require('../../utils/learnerHelper');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 /**
  * Does a patch update a single course in the database, meaning
@@ -86,6 +89,13 @@ router.get(
     let course = await models.Course.findOne({ _id: req.params.id });
     course = course.toJSON();
     let units = await models.Unit.find({ _course_id: req.params.id });
+
+    let completedUnits = [];
+
+    if (req.user.isLearner) {
+      completedUnits = await getAllCompletedUnits(req.user._id, req.params.id);
+    }
+
     for (var i = 0; i < units.length; i++) {
       const numLessons = await models.Lesson.countDocuments({
         _unit_id: { $eq: units[i]._id },
@@ -93,6 +103,10 @@ router.get(
       });
       units[i] = units[i].toJSON();
       units[i].num_lessons = numLessons;
+
+      if (req.user.isLearner) {
+        units[i].complete = completedUnits.includes(String(units[i]._id));
+      }
     }
     let newCourse = _.omit(course, ['admin_id']);
     const returnedData = {
@@ -103,5 +117,44 @@ router.get(
   }),
 );
 
-module.exports = router;
+/**
+ * Deletes specified course and all references to this course in MongoDB and AWS S3
+ */
+router.delete(
+  '/:id',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const course_id = req.params.id;
 
+    // Make sure the course exists
+    const courseToDelete = await models.Course.findById(course_id);
+
+    if (courseToDelete) {
+      // Remove text data from MongoDB
+      await models.Course.deleteOne({ _id: ObjectId(course_id) });
+      await models.Unit.deleteMany({ _course_id: ObjectId(course_id) });
+      await models.Lesson.deleteMany({ _course_id: ObjectId(course_id) });
+
+      // Remove reference to course from each user that has this course listed
+      await models.User.updateMany(
+        {},
+        {
+          $pull: {
+            adminLanguages: course_id,
+            learnerLanguages: course_id,
+            collaboratorLanguages: course_id,
+          },
+        },
+      );
+
+      // Remove audio and image data from AWS
+      await deleteFolder(course_id);
+
+      return sendResponse(res, 200, 'Successfully deleted course');
+    }
+    return sendResponse(res, 404, 'Course not found');
+  }),
+);
+
+module.exports = router;

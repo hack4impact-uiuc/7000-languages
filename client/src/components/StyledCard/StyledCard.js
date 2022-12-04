@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     left: 0,
   },
   right: {
-    width: 120,
     display: 'flex',
     flexDirection: 'row-reverse',
     justifyContent: 'flex-start',
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
   soundIcon: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#DEE5E9',
+    backgroundColor: colors.gray.semi_light,
     height: 40,
     width: 40,
     borderRadius: 20,
@@ -66,6 +65,9 @@ const StyledCard = ({
   width,
   height,
   isPressed,
+  containerStyle = {},
+  backgroundColor = colors.white.dark,
+  bodyTextColor = 'gray.medium',
 }) => {
   const generateLeftIcon = leftIcon ? (
     <Box style={styles.leftIcon}>{leftIcon}</Box>
@@ -80,7 +82,7 @@ const StyledCard = ({
     </Box>
   ) : null
   const generateImage = imageURI === '' ? (
-    indicator
+    false
   ) : (
     <Box style={styles.indicator}>
       <Image
@@ -111,9 +113,12 @@ const StyledCard = ({
       py="3"
       width={width}
       height={height}
-      style={styles.root}
+      style={{
+        ...styles.root,
+        ...containerStyle,
+      }}
       borderRadius="md"
-      bg={isPressed ? colors.gray.medium_light : colors.white.dark}
+      bg={isPressed ? colors.gray.medium_light : backgroundColor}
     >
       <Box px="2" style={styles.left}>
         {generateImage}
@@ -128,9 +133,10 @@ const StyledCard = ({
           >
             {titleText}
           </Text>
-          <Text color="gray.medium" fontSize="lg" numberOfLines={1}>
+          <Text color={bodyTextColor} fontSize="lg" numberOfLines={1}>
             {bodyText}
           </Text>
+          {indicator}
         </Box>
       </Box>
       <Box style={styles.right}>
@@ -153,6 +159,9 @@ StyledCard.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
   isPressed: PropTypes.bool,
+  containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  backgroundColor: PropTypes.string,
+  bodyTextColor: PropTypes.string,
 }
 
 StyledCard.defaultProps = {
@@ -167,6 +176,9 @@ StyledCard.defaultProps = {
   width: 100,
   height: 70,
   isPressed: false,
+  containerStyle: {},
+  backgroundColor: colors.white.dark,
+  bodyTextColor: 'gray.medium',
 }
 
 export default StyledCard

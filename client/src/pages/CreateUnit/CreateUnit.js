@@ -122,7 +122,7 @@ const CreateUnit = ({ navigation }) => {
       successText={i18n.t('actions.createUnit')}
       successCallback={success}
       closeCallback={close}
-      isDisabled={!areRequiredFieldsFilled}
+      areAllFieldsFilled={areRequiredFieldsFilled}
       body={body}
     />
   )

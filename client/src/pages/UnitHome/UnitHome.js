@@ -16,12 +16,15 @@ const UnitHome = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const { currentCourseId, currentUnitId, allLessons } = useSelector(
+  const {
+    currentCourseId, currentUnitId, allLessons, allUnits,
+  } = useSelector(
     (state) => state.language,
   )
 
   const [data, setData] = useState([])
   const [unitDescription, setUnitDescription] = useState('')
+  const [unitName, setUnitName] = useState('')
 
   /**
    * When going back from the Unit Page to the Course Page,
@@ -42,25 +45,33 @@ const UnitHome = ({ navigation }) => {
    * Gets the data for the unit being presented, including the lessons in the unit
    */
   useEffect(() => {
-    const getLessonData = async () => {
+    const getUnitData = async () => {
       errorWrap(async () => {
         const { result } = await trackPromise(
           getUnit(currentCourseId, currentUnitId),
         )
-        const { unit, lessons } = result
-
-        setUnitDescription(unit.description)
-
-        // Sets the title of the page
-        navigation.setOptions({
-          title: unit.name,
-        })
+        const { lessons } = result
 
         dispatch(setField({ key: 'allLessons', value: lessons }))
       })
     }
-    getLessonData()
-  }, [currentCourseId])
+    getUnitData()
+  }, [currentCourseId, currentUnitId])
+
+  useEffect(() => {
+    const unitIndex = allUnits.findIndex(
+      (element) => element._id === currentUnitId,
+    )
+    const unitData = allUnits[unitIndex]
+
+    setUnitDescription(unitData.description)
+    setUnitName(unitData.name)
+
+    // Sets the title of the page
+    navigation.setOptions({
+      title: `${i18n.t('dict.unitSingle')}`,
+    })
+  }, [allUnits, currentUnitId, currentCourseId])
 
   /**
    * Formats the lesson data in order to be presented on this page
@@ -104,6 +115,13 @@ const UnitHome = ({ navigation }) => {
   }
 
   /**
+   * Navigates to the update unit page
+   */
+  const navigateToUpdate = () => {
+    navigation.navigate('Modal', { screen: 'UpdateUnit' })
+  }
+
+  /**
    * Navigates to the Lesson Home page for a selected lesson
    * @param {Object} element The Lesson that was selected
    */
@@ -122,7 +140,11 @@ const UnitHome = ({ navigation }) => {
 
   return (
     <LanguageHome
+      languageName={unitName}
       languageDescription={unitDescription}
+      nextUpdate={navigateToUpdate}
+      valueName="Lessons"
+      rightIconName="pencil"
       singularItemText={i18n.t('dict.lessonSingle')}
       pluralItemText={i18n.t('dict.lessonPlural')}
       manageButtonText={i18n.t('actions.manageLessons')}
