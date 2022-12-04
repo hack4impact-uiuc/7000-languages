@@ -2,7 +2,7 @@ module.exports.SEARCH_COURSE_EXPECTED = [
   {
     details: {
       name: 'vero',
-      is_private: true,
+      is_private: false,
       alternative_name: 'architecto',
       admin_name: 'Miss Priscilla Nienow',
       admin_email: 'Rodolfo64@gmail.com',
