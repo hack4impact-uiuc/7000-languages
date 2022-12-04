@@ -9,26 +9,13 @@ router.get(
   '/',
   requireAuthentication,
   errorWrap(async (req, res) => {
-    const { search, field } = req.query;
-    const userData = models.Course.aggregate([
-      {
-        $search: {
-          text: {
-            path: field,
-            query: search,
-            fuzzy: {},
-          },
-        },
-      },
-      { $sort: { name: 1 } },
-    ]);
+    let allCourses = await models.Course.find(
+      {},
+      { _id: 0, admin_id: 0, approved: 0 },
+    );
 
-    const pipeline = _.omit(userData, ['authID'], ['approved']);
-
-    pipeline.searchData = await getCoursesByUser(pipeline.searchData);
-
-    //search then sort
-    return sendResponse(res, 200, 'Successfully updated course', pipeline);
+    // Return all of the courses
+    return sendResponse(res, 200, 'Searched courses', allCourses);
   }),
 );
 
