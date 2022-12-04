@@ -9,6 +9,7 @@ const translations = {
       audio: 'Audio',
       activity: 'Activity',
       welcome: 'Welcome!',
+      searchWelcome: 'Welcome, ',
       vocabItems: 'Vocabulary Items',
       discard: 'Discard',
       ok: 'OK',
@@ -50,9 +51,14 @@ const translations = {
       securityCode: 'Security Code',
       settings: 'Settings',
       delete: 'Delete',
+      creator: 'Creator',
+      learnerSearchDescription: 'Description:',
+      taughtIn: 'Taught in',
       completed: 'Completed',
       inProgress: 'In Progress',
       accountInfo: 'Account Info',
+      learningLanguage: 'Learning Language',
+      unitsAvailable: 'Units Available',
     },
     actions: {
       pressAndSelect: 'Press Audio & Select',
@@ -101,6 +107,10 @@ const translations = {
       addVocabItem: 'Add a Vocab Item',
       addNew: 'Add New',
       manageVocab: 'Manage Vocab',
+      search: 'Search',
+      joinPrivateCourse: 'Join a Private Course',
+      enterCode: 'Enter Code',
+      joinNow: 'Join Now',
     },
     dialogue: {
       activityInstructions:
@@ -198,6 +208,8 @@ const translations = {
         'You can save your changes by clicking the save button. If you leave this screen without pressing the button, your changes will be discarded.',
       courseSettingsChangeCode:
         'Learners will have to enter this code in order to join your course.',
+      startSearching: 'Start searching for courses and new languages to learn!',
+      getJoinCode: 'The code is provided by the creator.',
     },
   },
   fr: {
@@ -210,6 +222,7 @@ const translations = {
       audio: 'Audio',
       activity: 'Activité',
       welcome: 'Bienvenue !',
+      searchWelcome: 'Bienvenue, ',
       vocabItems: 'Éléments de vocabulaire',
       discard: 'Jeter',
       ok: 'OK',
@@ -250,8 +263,13 @@ const translations = {
       suggestion: 'Suggestion',
       settings: 'Paramètres',
       delete: 'Supprimer',
+      creator: 'Créateur',
+      learnerSearchDescription: 'Description:',
+      taughtIn: 'Enseigné en',
       completed: 'Complété',
       inProgress: 'En cours',
+      learningLanguage: "Langue d'apprentissage",
+      unitsAvailable: 'Unités disponibles',
     },
     actions: {
       pressAndSelect: 'Appuyez sur Audio et sélectionnez',
@@ -301,6 +319,9 @@ const translations = {
       addVocabItem: 'Ajouter un élément de vocabulaire',
       addNew: 'Ajouter un Nouveau',
       manageVocab: 'Gérer les éléments de vocabulaire',
+      joinPrivateCourse: "S'inscrire à un cours privé",
+      enterCode: 'Entrez le code',
+      joinNow: 'Rejoindre maintenant',
     },
     dialogue: {
       activityInstructions:
@@ -403,6 +424,9 @@ const translations = {
         'Vous pouvez enregistrer vos modifications en cliquant sur le bouton "Enregistrer". Si vous quittez cet écran sans cliquer sur le bouton, vos modifications seront annulées.',
       courseSettingsChangeCode:
         "Les apprenants devront saisir ce code afin de s'inscrire à votre cours.",
+      startSearching:
+        'Commencez à chercher des cours et de nouvelles langues à apprendre !',
+      getJoinCode: 'Le code est fourni par le créateur du cours.',
     },
   },
 }

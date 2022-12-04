@@ -201,6 +201,9 @@ const DrawerMenuContainer = (props) => {
             title={i18n.t('actions.searchCourses')}
             fontSize="sm"
             variant="learner_primary"
+            onPress={() => {
+              props.navigation.navigate('Search', { screen: 'LearnerSearch' })
+            }}
           />
         </Pressable>
       </View>

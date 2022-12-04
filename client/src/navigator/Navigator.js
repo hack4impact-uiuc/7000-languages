@@ -11,6 +11,7 @@ import {
   AuthNavigator,
   ModalNavigator,
   ActivityNavigator,
+  SearchNavigator,
 } from './Stacks'
 
 const RootStack = createStackNavigator()
@@ -66,6 +67,7 @@ const Navigator = () => {
             component={AppSettingsNavigator}
           />
           <RootStack.Screen name="Activity" component={ActivityNavigator} />
+          <RootStack.Screen name="Search" component={SearchNavigator} />
         </>
       ) : (
         <RootStack.Screen name="Auth" component={AuthNavigator} />

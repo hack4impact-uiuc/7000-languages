@@ -21,6 +21,7 @@ import CourseSettings from 'pages/CourseSettings'
 import UpdateCourse from 'pages/UpdateCourse'
 import Intro from 'pages/Intro'
 import i18n from 'utils/i18n'
+import LearnerSearch from 'pages/LearnerSearch'
 import LearnerUnitHome from 'pages/LearnerUnitHome'
 import LearnerLessonHome from 'pages/LearnerLessonHome'
 import StartActivity from 'pages/StartActivity'
@@ -38,6 +39,7 @@ import DrawerButton from './DrawerButton'
 const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 const ModalStack = createStackNavigator()
+const SearchStack = createStackNavigator()
 const ActivityStack = createStackNavigator()
 const SettingsStack = createStackNavigator()
 
@@ -51,6 +53,13 @@ const settingsNavigationProps = {
   headerTintColor: 'black',
   headerStyle: { backgroundColor: 'white' },
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+}
+
+const learnerNavigationProps = {
+  headerTintColor: 'white',
+  headerStyle: { backgroundColor: colors.blue.dark },
+  headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+  headerShown: true,
 }
 
 const modalNavigationProps = {
@@ -297,6 +306,29 @@ export const HomeNavigator = ({ courseId }) => (
       })}
     />
   </Stack.Navigator>
+)
+
+export const SearchNavigator = () => (
+  <SearchStack.Navigator
+    initialRouteName="Search"
+    screenOptions={{
+      ...learnerNavigationProps,
+      headerMode: 'screen',
+    }}
+  >
+    <SearchStack.Screen
+      name="LearnerSearch"
+      component={LearnerSearch}
+      options={({ navigation }) => ({
+        ...learnerNavigationProps,
+        title: i18n.t('actions.search'),
+        headerLeft: () => (
+          <BackButton navigation={navigation} color={colors.white.dark} />
+        ),
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+  </SearchStack.Navigator>
 )
 
 export const SettingsNavigator = () => (

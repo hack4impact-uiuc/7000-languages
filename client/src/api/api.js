@@ -19,6 +19,19 @@ export const markLessonAsComplete = async (courseId, unitId, lessonId) => {
   return res.data
 }
 
+export const joinCourse = async (courseId, code) => {
+  const body = {
+    course_id: courseId,
+    code,
+  }
+
+  const requestString = '/learner/join'
+  const res = await instance.post(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 /* User Endpoints */
 
 export const createUser = async (userData) => {
@@ -34,6 +47,7 @@ export const getUser = async () => {
   const res = await instance.get(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
+  console.log(res.data)
   return res.data
 }
 
