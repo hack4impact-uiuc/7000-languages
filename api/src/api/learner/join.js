@@ -36,9 +36,6 @@ router.post(
     const isPrivate = course.details.is_private;
     const courseCode = course.details.code;
 
-    console.log(code);
-    console.log(courseCode);
-
     if (isPrivate && courseCode !== code) {
       return sendResponse(res, 400, 'Invalid code provided for private course');
     }

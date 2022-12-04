@@ -1,6 +1,7 @@
 const translations = {
   en: {
     dict: {
+      congratulations: 'Congratulations',
       error: 'Error',
       none: 'None',
       instructions: 'Instructions',
@@ -63,6 +64,7 @@ const translations = {
       unitsAvailable: 'Units Available',
     },
     actions: {
+      exitActivity: 'Exit Activity',
       pressAndSelect: 'Press Audio & Select',
       correct: 'Correct',
       tryAgain: 'Try Again',
@@ -217,6 +219,7 @@ const translations = {
   },
   fr: {
     dict: {
+      congratulations: 'Félicitations',
       error: 'Erreur',
       none: 'Aucun',
       instructions: 'Instructions',
@@ -277,6 +280,7 @@ const translations = {
       unitsAvailable: 'Unités disponibles',
     },
     actions: {
+      exitActivity: 'Activité de sortie',
       pressAndSelect: 'Appuyez sur Audio et sélectionnez',
       correct: 'Correct',
       tryAgain: 'Essayez à nouveau',

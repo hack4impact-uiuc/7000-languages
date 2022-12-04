@@ -147,7 +147,7 @@ const LearnerHome = ({
             variant="learner_primary"
             fontSize="20"
             onPress={startLearningCallback}
-            style={{ height: 65, marginTop: 20 }}
+            style={{ height: 65, marginTop: 20, width: '90%' }}
             shadow
           />
         </View>

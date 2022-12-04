@@ -1,6 +1,6 @@
 module.exports.SEARCH_COURSE_EXPECTED = [
   {
-    numUnits: 5,
+    numUnits: 10,
     details: {
       name: 'vero',
       is_private: false,

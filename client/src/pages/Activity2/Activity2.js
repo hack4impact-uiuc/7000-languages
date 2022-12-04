@@ -71,7 +71,7 @@ const Activity2 = ({ navigation }) => {
   const allDone = async () => {
     await markLessonAsComplete(currentCourseId, currentUnitId, currentLessonId)
     dispatch(setLessonToComplete({}))
-    navigation.navigate('Drawer', { screen: 'LearnerHome' })
+    navigation.navigate('Activity', { screen: 'Congrats' })
   }
 
   useEffect(() => {
