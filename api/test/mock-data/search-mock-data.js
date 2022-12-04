@@ -1,10 +1,18 @@
-module.exports.GET_SIMPLE_SEARCH = {
-// list the inputs to the search function
-};
+// module.exports.GET_SIMPLE_SEARCH = {
+// // list the inputs to the search function
+//   search: 'Course', 
+//   field: 
+// };
 
 module.exports.GET_SIMPLE_SEARCH_EXPECTED = {
   // list the expected outputs of the search function
 
+};
+module.exports.POST_SIMPLE_UNIT = {
+  _course_id: '62391a30487d5ae343c82311',
+  name: 'verbs',
+  selected: true,
+  description: 'simple unit',
 };
 
 
