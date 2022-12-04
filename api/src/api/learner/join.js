@@ -20,22 +20,22 @@ router.post(
   requireLearnerAuthorization,
   errorWrap(async (req, res) => {
     const { course_id, code } = req.body;
-
+    console.log("1");
     if (course_id === undefined) {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
-
+    console.log("2");
     const isValid = await checkIds({ course_id });
-
+    console.log("3");
     if (!isValid) {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
-
+    console.log("4");
     const isAlreadyPartOfCourse = await isPartOfCourse(
       req.user._id, 
       course_id,
     );
-
+    console.log("5")
     if (isAlreadyPartOfCourse) {
       return sendResponse(
         res,
@@ -45,9 +45,9 @@ router.post(
     }
 
     const course = await models.Course.findById(course_id);
-    const private = course.details.is_private;
+    const isPrivate = course.details.is_private;
     const courseCode = course.details.code;
-    if(private && courseCode !== code)
+    if(isPrivate && courseCode !== code)
     {
       return sendResponse(
         res,
@@ -55,8 +55,10 @@ router.post(
         'Invalid code provided for private course',
       );
     }
-
+    console.log("before");
     const user = models.User.findById(req.user._id);
+    console.log(user);
+    console.log(user.learnerLanguages);
     user.learnerLanguages.push(course_id);
 
     user.save();

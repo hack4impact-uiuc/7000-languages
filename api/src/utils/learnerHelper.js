@@ -114,6 +114,7 @@ const isPartOfCourse = async (user_id, course_id) => {
   }
 
   const course = await models.User.findById(user_id);
+  console.log("course: ", course)
   if(course)
   {
     const index = course.learnerLanguages.findIndex(course_id);
