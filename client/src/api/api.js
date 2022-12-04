@@ -115,6 +115,15 @@ export const deleteCourse = async (courseID) => {
 
 /* Unit Endpoints */
 
+export const searchUnits = async (searchID, field) => { 
+  //change params
+  const requestString = `/learner/search?search=${searchID}&field=${field}`
+  const res = await instance.get(requestString)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 export const getUnit = async (courseID, unitID) => {
   const requestString = `/language/unit?course_id=${courseID}&unit_id=${unitID}`
   const res = await instance.get(requestString)
