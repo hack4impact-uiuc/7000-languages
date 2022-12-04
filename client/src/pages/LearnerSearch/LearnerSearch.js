@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     paddingLeft: '2%',
     fontSize: 15,
     color: colors.blue.dark,
-    
   },
   body: {
     marginVertical: '30%',
@@ -129,68 +128,63 @@ const LearnerSearch = () => {
 
   return (
     <>
-    <View
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-    }}
-    >
-      <View 
-      {...(searchText === '' ? { 
-        style: { 
-          marginVertical: '3%',
-          py: '1',
-          px: '2',
-          marginLeft: 18,
-          variant: 'filled',
-          color: colors.blue.medium,
-          width: '90%' }
-         } : {
-          style: {
-            marginVertical: '3%',
-            py: '1',
-            px: '2',
-            marginLeft: 18,
-            variant: 'filled',
-            color: colors.blue.medium,
-            width: '80%',
-          }
-        })}>
-      
-        <Input
-          value={searchText}
-          borderRadius={10}
-          placeholderTextColor={colors.blue.dark}
-          placeholder={i18n.t('actions.searchCourses')}
-          backgroundColor={colors.blue.light}
-          onChangeText={setSearchText}
-          InputLeftElement={(
-            <AntDesign
-              name="search1"
-              size={24}
-              color={colors.blue.dark}
-              style={{ paddingLeft: '3%' }}
-            />
-          )}
-        />
-      </View>
-      {searchText.length > 0 && (
-          <Text
-          style={styles.cancelButton}
-          onPress={() => setSearchText('')}
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
+        <View
+          {...(searchText === ''
+            ? {
+              style: {
+                marginVertical: '3%',
+                py: '1',
+                px: '2',
+                marginLeft: 18,
+                variant: 'filled',
+                color: colors.blue.medium,
+                width: '90%',
+              },
+            }
+            : {
+              style: {
+                marginVertical: '3%',
+                py: '1',
+                px: '2',
+                marginLeft: 18,
+                variant: 'filled',
+                color: colors.blue.medium,
+                width: '80%',
+              },
+            })}
         >
-          {i18n.t('actions.cancel')}
-        </Text>
-      )}
-      
-    </View>
-    <View>
-    {searchText ? searchResults() : baseCase}
-    </View>
+          <Input
+            value={searchText}
+            borderRadius={10}
+            placeholderTextColor={colors.blue.dark}
+            placeholder={i18n.t('actions.searchCourses')}
+            backgroundColor={colors.blue.light}
+            onChangeText={setSearchText}
+            InputLeftElement={(
+              <AntDesign
+                name="search1"
+                size={24}
+                color={colors.blue.dark}
+                style={{ paddingLeft: '3%' }}
+              />
+            )}
+          />
+        </View>
+        {searchText.length > 0 && (
+          <Text style={styles.cancelButton} onPress={() => setSearchText('')}>
+            {i18n.t('actions.cancel')}
+          </Text>
+        )}
+      </View>
+      <View>{searchText ? searchResults() : baseCase}</View>
     </>
   )
 }
-
-
 
 export default LearnerSearch
