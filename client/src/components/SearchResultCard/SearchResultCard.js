@@ -1,7 +1,7 @@
 import {
   View, Text, Pressable, Modal, Input,
 } from 'native-base'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import i18n from 'utils/i18n'
@@ -26,12 +26,30 @@ const SearchResultCard = ({
   languageDescription,
   isPrivate,
   courseId,
+  navigateToNewCourse,
 }) => {
   // later we will move this to be a prop passed in
   // and guaranteeing it is unique will be handled by learnerSearch
   const [isClicked, setIsClicked] = useState(false)
   const [joinModalVisible, setJoinModalVisible] = useState(false)
   const [joinCode, setJoinCode] = useState('')
+
+  const submitJoinCourse = async () => {
+    const { success, message } = await joinCourse()
+
+    if (!success) {
+      Alert.alert(`${i18n.t('dict.error')}`, message, [
+        {
+          text: `${i18n.t('dict.ok')}`,
+          style: 'cancel',
+          onPress: () => {},
+        },
+      ])
+    } else {
+      // Get all courses again, navigate to the new screen
+      navigateToNewCourse(courseId)
+    }
+  }
 
   return (
     <>
@@ -65,7 +83,7 @@ const SearchResultCard = ({
                 style={styles.privateJoinButton}
                 variant="learner_primary"
                 onPress={() => {
-                  joinCourse(courseId, joinCode)
+                  submitJoinCourse()
                   setJoinModalVisible(false)
                 }}
               />
@@ -97,7 +115,7 @@ const SearchResultCard = ({
         isPressed={setIsClicked}
       >
         <View display="flex" flexDirection="row" alignItems="center">
-          <Text fontFamily="heading" fontSize="3xl">
+          <Text fontFamily="heading" fontSize="2xl">
             {languageName}
           </Text>
           <Text color="gray.dark" fontSize="sm">
@@ -108,19 +126,25 @@ const SearchResultCard = ({
         <Text fontSize="lg">
           {i18n.t('dict.creator')}: {creatorName}
         </Text>
+        <Text fontSize="lg" color="gray.dark">
+          {isPrivate ? i18n.t('dict.private') : i18n.t('dict.public')}
+        </Text>
         {isClicked ? (
           <>
             <Text fontSize="lg" color="gray.dark">
               {unitNumber} {i18n.t('dict.unitsAvailable')}
             </Text>
             <Text fontSize="lg">
-              {i18n.t('dict.learnerSearchDescription')} {languageDescription}
+              {i18n.t('dict.learnerSearchDescription')}{' '}
+              {languageDescription !== ''
+                ? languageDescription
+                : i18n.t('dict.none')}
             </Text>
             <StyledButton
               title={i18n.t('actions.joinNow')}
               fontSize={20}
               variant="learner_primary"
-              onPress={() => (isPrivate ? setJoinModalVisible(true) : joinCourse(courseId, ''))}
+              onPress={() => (isPrivate ? setJoinModalVisible(true) : submitJoinCourse())}
             />
           </>
         ) : (
@@ -139,6 +163,7 @@ SearchResultCard.propTypes = {
   languageDescription: PropTypes.string,
   isPrivate: PropTypes.bool,
   courseId: PropTypes.string,
+  navigateToNewCourse: PropTypes.func,
 }
 
 SearchResultCard.defaultProps = {
@@ -149,5 +174,6 @@ SearchResultCard.defaultProps = {
   languageDescription: '',
   isPrivate: true,
   courseId: '',
+  navigateToNewCourse: () => {},
 }
 export default SearchResultCard

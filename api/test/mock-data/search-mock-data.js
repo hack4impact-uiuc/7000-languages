@@ -1,5 +1,6 @@
 module.exports.SEARCH_COURSE_EXPECTED = [
   {
+    numUnits: 5,
     details: {
       name: 'vero',
       is_private: false,
@@ -17,6 +18,7 @@ module.exports.SEARCH_COURSE_EXPECTED = [
     },
   },
   {
+    numUnits: 0,
     details: {
       name: 'Course with no units',
       alternative_name: 'what is this?',
@@ -34,6 +36,7 @@ module.exports.SEARCH_COURSE_EXPECTED = [
     },
   },
   {
+    numUnits: 0,
     details: {
       name: 'Private course',
       alternative_name: 'cool course with code!',

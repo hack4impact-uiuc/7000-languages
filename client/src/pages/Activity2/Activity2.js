@@ -50,8 +50,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
-    top: '35%',
     width: '100%',
   },
 })
@@ -387,11 +385,13 @@ const Activity2 = ({ navigation }) => {
         >
           {currentQuestionIdx + 1}/{questions.length}
         </Text>
-        {generateL1Text()}
+        <View style={styles.feedbackContainer}>
+          {generateL1Text()}
+          {generateFeedbackText()}
+        </View>
         <View style={styles.answerContainer}>{generateOptions()}</View>
         {generateConfirmButton()}
       </View>
-      <View style={styles.feedbackContainer}>{generateFeedbackText()}</View>
     </>
   )
 }
