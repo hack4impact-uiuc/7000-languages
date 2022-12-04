@@ -11,19 +11,13 @@ import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/logo-sm-gray.svg'
 
 const styles = StyleSheet.create({
-  search: {
-    marginVertical: '3%',
-    width: '90%',
-    py: '1',
-    px: '2',
-    alignSelf: 'center',
-    variant: 'filled',
-    color: colors.blue.medium,
-  },
   cancelButton: {
+    display: 'flex',
+    paddingTop: '6%',
+    paddingLeft: '2%',
     fontSize: 15,
-    paddingRight: '3%',
     color: colors.blue.dark,
+    
   },
   body: {
     marginVertical: '30%',
@@ -134,8 +128,35 @@ const LearnerSearch = () => {
   )
 
   return (
-    <View>
-      <View style={styles.search}>
+    <>
+    <View
+    style={{
+      display: 'flex',
+      flexDirection: 'row',
+    }}
+    >
+      <View 
+      {...(searchText === '' ? { 
+        style: { 
+          marginVertical: '3%',
+          py: '1',
+          px: '2',
+          marginLeft: 18,
+          variant: 'filled',
+          color: colors.blue.medium,
+          width: '90%' }
+         } : {
+          style: {
+            marginVertical: '3%',
+            py: '1',
+            px: '2',
+            marginLeft: 18,
+            variant: 'filled',
+            color: colors.blue.medium,
+            width: '80%',
+          }
+        })}>
+      
         <Input
           value={searchText}
           borderRadius={10}
@@ -151,21 +172,25 @@ const LearnerSearch = () => {
               style={{ paddingLeft: '3%' }}
             />
           )}
-          InputRightElement={(
-            <Text
-              style={styles.cancelButton}
-              onPress={() => {
-                setSearchText('')
-              }}
-            >
-              {searchText !== '' ? 'Cancel' : ''}
-            </Text>
-          )}
         />
       </View>
-      {searchText ? searchResults() : baseCase}
+      {searchText.length > 0 && (
+          <Text
+          style={styles.cancelButton}
+          onPress={() => setSearchText('')}
+        >
+          {i18n.t('actions.cancel')}
+        </Text>
+      )}
+      
     </View>
+    <View>
+    {searchText ? searchResults() : baseCase}
+    </View>
+    </>
   )
 }
+
+
 
 export default LearnerSearch
