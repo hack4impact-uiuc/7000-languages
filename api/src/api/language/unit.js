@@ -11,6 +11,7 @@ const {
   updateDocumentsInTransaction,
   patchDocument,
   getNumUnitsInCourse,
+  deleteUnit,
 } = require('../../utils/languageHelper');
 const { models } = require('../../models/index.js');
 const _ = require('lodash');
@@ -43,8 +44,7 @@ router.get(
       lessons[i].num_vocab = numVocab;
 
       if (req.user.isLearner) {
-        lessons[i].complete =
-          completedLessons.includes(String(lessons[i]._id));
+        lessons[i].complete = completedLessons.includes(String(lessons[i]._id));
       }
     }
 
@@ -149,6 +149,22 @@ router.put(
     // Ending the session
     session.endSession();
     return sendResponse(res, 200, 'Updated units with success', unitData);
+  }),
+);
+
+router.delete(
+  '/',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const { course_id, unit_id } = req.query;
+
+    deleteUnit(course_id, unit_id).then(({ success, message }) => {
+      if (success) {
+        return sendResponse(res, 200, message);
+      }
+      return sendResponse(res, 400, message);
+    });
   }),
 );
 

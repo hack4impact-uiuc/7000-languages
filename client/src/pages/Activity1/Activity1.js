@@ -41,6 +41,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
+  feedbackContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // position: 'absolute',
+    // top: '38%',
+    width: '100%',
+  },
 })
 
 const Activity1 = ({ navigation }) => {
@@ -256,7 +264,7 @@ const Activity1 = ({ navigation }) => {
             fontFamily="heading"
             fontWeight="regular"
             color="orange.medium_dark"
-            fontSize="2xl"
+            fontSize={22}
           >
             {i18n.t('actions.tryAgain')}
           </Text>
@@ -267,7 +275,7 @@ const Activity1 = ({ navigation }) => {
             fontFamily="heading"
             fontWeight="regular"
             color="green.medium_light"
-            fontSize="2xl"
+            fontSize={22}
           >
             {i18n.t('actions.correct')}
           </Text>
@@ -313,10 +321,12 @@ const Activity1 = ({ navigation }) => {
       >
         {currentQuestionIdx + 1}/{questions.length}
       </Text>
-      <TouchableOpacity style={styles.playAudioContainer} onPress={playAudio}>
-        <FontAwesome name="volume-up" size={45} color={colors.blue.darker} />
-      </TouchableOpacity>
-      {generateFeedbackText()}
+      <View style={styles.feedbackContainer}>
+        <TouchableOpacity style={styles.playAudioContainer} onPress={playAudio}>
+          <FontAwesome name="volume-up" size={45} color={colors.blue.darker} />
+        </TouchableOpacity>
+        {generateFeedbackText()}
+      </View>
       <View style={styles.answerContainer}>{generateOptions()}</View>
     </View>
   )

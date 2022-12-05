@@ -21,11 +21,15 @@ import CourseSettings from 'pages/CourseSettings'
 import UpdateCourse from 'pages/UpdateCourse'
 import Intro from 'pages/Intro'
 import i18n from 'utils/i18n'
+import LearnerSearch from 'pages/LearnerSearch'
 import LearnerUnitHome from 'pages/LearnerUnitHome'
 import LearnerLessonHome from 'pages/LearnerLessonHome'
 import StartActivity from 'pages/StartActivity'
 import Activity1 from 'pages/Activity1'
 import Activity2 from 'pages/Activity2'
+import AppLanguage from 'pages/AppLanguage'
+import AccountInfo from 'pages/AccountInfo'
+import Congrats from 'pages/Congrats'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -36,7 +40,9 @@ import DrawerButton from './DrawerButton'
 const Stack = createStackNavigator()
 const AuthStack = createStackNavigator()
 const ModalStack = createStackNavigator()
+const SearchStack = createStackNavigator()
 const ActivityStack = createStackNavigator()
+const SettingsStack = createStackNavigator()
 
 const homeNavigationProps = {
   headerTintColor: 'white',
@@ -48,6 +54,13 @@ const settingsNavigationProps = {
   headerTintColor: 'black',
   headerStyle: { backgroundColor: 'white' },
   headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+}
+
+const learnerNavigationProps = {
+  headerTintColor: 'white',
+  headerStyle: { backgroundColor: colors.blue.dark },
+  headerTitleStyle: { fontSize: 18, fontFamily: 'GT_Haptik_bold' },
+  headerShown: true,
 }
 
 const modalNavigationProps = {
@@ -147,7 +160,39 @@ export const ActivityNavigator = () => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
+    <ActivityStack.Screen
+      name="Congrats"
+      component={Congrats}
+      options={({ navigation }) => ({
+        title: `${i18n.t('dict.congratulations')}`,
+        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
   </ActivityStack.Navigator>
+)
+
+export const AppSettingsNavigator = () => (
+  <SettingsStack.Navigator screenOptions={settingsNavigationProps}>
+    <SettingsStack.Screen
+      name="AccountInfo"
+      component={AccountInfo}
+      options={({ navigation }) => ({
+        title: i18n.t('dict.accountInfo'),
+        headerLeft: () => <BackButton navigation={navigation} color="black" />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+    <SettingsStack.Screen
+      name="AppLanguage"
+      component={AppLanguage}
+      options={({ navigation }) => ({
+        title: `${i18n.t('dict.language')}`,
+        headerLeft: () => <BackButton navigation={navigation} color="black" />,
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+  </SettingsStack.Navigator>
 )
 
 export const HomeNavigator = ({ courseId }) => (
@@ -271,6 +316,29 @@ export const HomeNavigator = ({ courseId }) => (
       })}
     />
   </Stack.Navigator>
+)
+
+export const SearchNavigator = () => (
+  <SearchStack.Navigator
+    initialRouteName="Search"
+    screenOptions={{
+      ...learnerNavigationProps,
+      headerMode: 'screen',
+    }}
+  >
+    <SearchStack.Screen
+      name="LearnerSearch"
+      component={LearnerSearch}
+      options={({ navigation }) => ({
+        ...learnerNavigationProps,
+        title: i18n.t('actions.search'),
+        headerLeft: () => (
+          <BackButton navigation={navigation} color={colors.white.dark} />
+        ),
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
+  </SearchStack.Navigator>
 )
 
 export const SettingsNavigator = () => (

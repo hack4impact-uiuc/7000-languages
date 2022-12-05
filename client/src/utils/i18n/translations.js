@@ -1,10 +1,18 @@
 const translations = {
   en: {
     dict: {
+      congratulations: 'Congratulations',
+      error: 'Error',
+      none: 'None',
+      instructions: 'Instructions',
+      availableLanguages: 'Available Languages',
+      userInfo: 'User Info',
+      language: 'Language',
       confirm: 'Confirm',
       audio: 'Audio',
       activity: 'Activity',
       welcome: 'Welcome!',
+      searchWelcome: 'Welcome',
       vocabItems: 'Vocabulary Items',
       discard: 'Discard',
       ok: 'OK',
@@ -46,10 +54,17 @@ const translations = {
       securityCode: 'Security Code',
       settings: 'Settings',
       delete: 'Delete',
+      creator: 'Creator',
+      learnerSearchDescription: 'Description:',
+      taughtIn: 'Taught in',
       completed: 'Completed',
       inProgress: 'In Progress',
+      accountInfo: 'Account Info',
+      learningLanguage: 'Learning Language',
+      unitsAvailable: 'Units Available',
     },
     actions: {
+      exitActivity: 'Exit Activity',
       pressAndSelect: 'Press Audio & Select',
       correct: 'Correct',
       tryAgain: 'Try Again',
@@ -68,7 +83,6 @@ const translations = {
       notLeave: "Don't leave",
       saveChanges: 'Save Changes',
       recordAudio: 'Record Audio',
-      accountInfo: 'Account Info',
       applyNow: 'Apply Now',
       myCourses: 'My Courses',
       required: 'Required.',
@@ -97,12 +111,22 @@ const translations = {
       addVocabItem: 'Add a Vocab Item',
       addNew: 'Add New',
       manageVocab: 'Manage Vocab',
+      search: 'Search',
+      joinPrivateCourse: 'Join a Private Course',
+      enterCode: 'Enter Code',
+      joinNow: 'Join Now',
     },
     dialogue: {
+      invalidCode: 'Invalid code provided for private course',
+      activityInstructions:
+        'Here you will be presented some options and you will need to find the corresponding option to match with.',
+      activity1: 'Matching L1 Audio to L2 Text',
+      activity2: 'Matching L1 Text to L1 Audio',
       noActivitiesAvailable: 'No Activities Available',
       activitiesInDevelopment:
         'Learner activities are currently in development.',
       areYouSureDeleteCourse: 'Are you sure you want to delete this course?',
+      areYouSureDelete: 'Are you sure you want to delete?',
       actionCannotBeUndone: 'This action cannot be undone.',
       lessonPurpose: 'What is the purpose of this lesson?',
       changeLessonName: 'Change your lesson name',
@@ -183,18 +207,30 @@ const translations = {
         'Use this space to give additional information about the vocab item, such as grammatical and cultural information, usage, or additional translations/meanings.',
       courseSettingsDescription:
         'Here is the settings for you to manage your own course.',
+      appSettingsDescription:
+        'Here is the settings for you to manage your app.',
       courseSettingsSave:
         'You can save your changes by clicking the save button. If you leave this screen without pressing the button, your changes will be discarded.',
       courseSettingsChangeCode:
         'Learners will have to enter this code in order to join your course.',
+      startSearching: 'Start searching for courses and new languages to learn!',
+      getJoinCode: 'The code is provided by the creator.',
     },
   },
   fr: {
     dict: {
+      congratulations: 'Félicitations',
+      error: 'Erreur',
+      none: 'Aucun',
+      instructions: 'Instructions',
+      availableLanguages: 'Langues disponibles',
+      userInfo: 'Info utilisateur',
+      language: 'Langue',
       confirm: 'Confirmer',
       audio: 'Audio',
       activity: 'Activité',
       welcome: 'Bienvenue !',
+      searchWelcome: 'Bienvenue',
       vocabItems: 'Éléments de vocabulaire',
       discard: 'Jeter',
       ok: 'OK',
@@ -235,10 +271,16 @@ const translations = {
       suggestion: 'Suggestion',
       settings: 'Paramètres',
       delete: 'Supprimer',
+      creator: 'Créateur',
+      learnerSearchDescription: 'Description:',
+      taughtIn: 'Enseigné en',
       completed: 'Complété',
       inProgress: 'En cours',
+      learningLanguage: "Langue d'apprentissage",
+      unitsAvailable: 'Unités disponibles',
     },
     actions: {
+      exitActivity: 'Activité de sortie',
       pressAndSelect: 'Appuyez sur Audio et sélectionnez',
       correct: 'Correct',
       tryAgain: 'Essayez à nouveau',
@@ -286,12 +328,21 @@ const translations = {
       addVocabItem: 'Ajouter un élément de vocabulaire',
       addNew: 'Ajouter un Nouveau',
       manageVocab: 'Gérer les éléments de vocabulaire',
+      joinPrivateCourse: "S'inscrire à un cours privé",
+      enterCode: 'Entrez le code',
+      joinNow: 'Rejoindre maintenant',
     },
     dialogue: {
+      invalidCode: 'Code invalide fourni pour le cours privé',
+      activityInstructions:
+        "Des options vous seront proposées et vous devrez trouver l'option correspondante.",
+      activity1: "Associer l'audio en L1 au texte en L2",
+      activity2: 'Faire correspondre un texte de L1 à un son de L1',
       noActivitiesAvailable: 'Aucune activité disponible',
       activitiesInDevelopment:
         'Les activités pour les apprenants sont en cours de développement.',
       areYouSureDeleteCourse: 'Vous êtes sûr de vouloir supprimer ce cours?',
+      areYouSureDelete: 'Etes-vous sûr que vous voulez supprimer?',
       actionCannotBeUndone: 'Cette action ne peut être annulée.',
       lessonPurpose: 'Quel est le but de cette leçon?',
       changeLessonName: 'Changez le nom de votre leçon',
@@ -377,10 +428,15 @@ const translations = {
         "Utilisez cet espace pour donner des informations supplémentaires sur l'élément de vocabulaire, par exemple grammaticale et culturelle, l'usage, ou des traductions/significations traductions/significations supplémentaires.",
       courseSettingsDescription:
         'Voici les paramètres qui vous permettront de gérer votre propre cours.',
+      appSettingsDescription:
+        'Voici les paramètres qui vous permettront de gérer votre application.',
       courseSettingsSave:
         'Vous pouvez enregistrer vos modifications en cliquant sur le bouton "Enregistrer". Si vous quittez cet écran sans cliquer sur le bouton, vos modifications seront annulées.',
       courseSettingsChangeCode:
         "Les apprenants devront saisir ce code afin de s'inscrire à votre cours.",
+      startSearching:
+        'Commencez à chercher des cours et de nouvelles langues à apprendre !',
+      getJoinCode: 'Le code est fourni par le créateur du cours.',
     },
   },
 }

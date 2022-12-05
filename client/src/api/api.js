@@ -5,6 +5,27 @@ import { MEDIA_TYPE } from 'utils/constants'
 import instance, { BASE_URL } from './axios-config'
 
 /* Learner Endpoints */
+export const getSearchCourses = async () => {
+  // change params
+  const requestString = '/learner/search'
+  const res = await instance.get(requestString)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+export const joinCourse = async (courseId, passcode = null) => {
+  const body = {
+    course_id: courseId,
+    code: passcode,
+  }
+
+  const requestString = '/learner/join'
+  const res = await instance.post(requestString, body)
+
+  return res.data
+}
+
 export const markLessonAsComplete = async (courseId, unitId, lessonId) => {
   const body = {
     course_id: courseId,
@@ -15,7 +36,6 @@ export const markLessonAsComplete = async (courseId, unitId, lessonId) => {
   const requestString = '/learner/complete'
   const res = await instance.post(requestString, body)
 
-  if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
 
@@ -100,7 +120,6 @@ export const deleteCourse = async (courseID) => {
 }
 
 /* Unit Endpoints */
-
 export const getUnit = async (courseID, unitID) => {
   const requestString = `/language/unit?course_id=${courseID}&unit_id=${unitID}`
   const res = await instance.get(requestString)
@@ -134,6 +153,14 @@ export const updateUnits = async (courseID, updates) => {
   }
   const requestString = '/language/unit'
   const res = await instance.put(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+export const deleteUnit = async (courseID, unitID) => {
+  const requestString = `/language/unit?course_id=${courseID}&unit_id=${unitID}`
+  const res = await instance.delete(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
@@ -187,6 +214,14 @@ export const createLesson = async (courseID, unitID, lesson) => {
   return res.data
 }
 
+export const deleteLesson = async (courseID, lessonID) => {
+  const requestString = `/language/lesson?course_id=${courseID}&lesson_id=${lessonID}`
+  const res = await instance.delete(requestString)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
 /* Vocab Item Endpoints */
 
 export const createVocabItem = async (courseID, lessonID, vocab) => {
@@ -229,6 +264,14 @@ export const updateVocabItem = async (
   }
   const requestString = '/language/vocab'
   const res = await instance.patch(requestString, body)
+
+  if (!res?.data?.success) throw new Error(res?.data?.message)
+  return res.data
+}
+
+export const deleteVocabItem = async (courseID, lessonID, vocabID) => {
+  const requestString = `/language/vocab?course_id=${courseID}&lesson_id=${lessonID}&vocab_id=${vocabID}`
+  const res = await instance.delete(requestString)
 
   if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data

@@ -139,7 +139,7 @@ module.exports.PATCH_BERBER_COURSE_EXPECTED = {
     population: '',
     location: 'Algeria',
     link: '',
-    is_private: true,
+    is_private: false,
   },
 };
 

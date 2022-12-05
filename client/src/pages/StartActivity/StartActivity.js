@@ -49,12 +49,10 @@ const StartActivity = ({ navigation, route }) => {
   const { lessonData } = useSelector((state) => state.language)
 
   const [lessonTitle, setLessonTitle] = useState('')
-  const [lessonNumber, setLessonNumber] = useState('')
 
   useEffect(() => {
     setLessonTitle(lessonData.name)
-    setLessonNumber(lessonData._order + 1)
-  }, [lessonData, setLessonNumber, setLessonTitle])
+  }, [lessonData, setLessonTitle])
 
   useEffect(() => {
     if (route.params.activityType != null) {
@@ -67,7 +65,7 @@ const StartActivity = ({ navigation, route }) => {
   const startActivity = () => {
     const activityNumber = route.params.activityType
     if (activityNumber >= TOTAL_ACTIVITIES) {
-      navigation.navigate('Drawer', { screen: 'LearnerHome' })
+      navigation.navigate('Drawer', { screen: 'Congrats' })
     } else {
       const activityScreen = `Activity${route.params.activityType + 1}`
       navigation.navigate('Activity', { screen: activityScreen })
@@ -78,9 +76,9 @@ const StartActivity = ({ navigation, route }) => {
     if (route.params.activityType != null) {
       switch (route.params.activityType) {
         case ACTIVITY_TYPE.AUDIO_L2:
-          return 'Matching L1 Audio to L2 Text'
+          return i18n.t('dialogue.activity1')
         case ACTIVITY_TYPE.L1_AUDIO:
-          return 'Matching L1 Text to L1 Audio'
+          return i18n.t('dialogue.activity2')
         default:
           return ''
       }
@@ -96,7 +94,7 @@ const StartActivity = ({ navigation, route }) => {
         </Text>
         <View style={styles.numberContainer}>
           <Text fontFamily="heading" fontSize="60" color={colors.blue.darker}>
-            {lessonNumber}
+            {route.params.activityType + 1}
           </Text>
         </View>
         <Text
@@ -108,10 +106,10 @@ const StartActivity = ({ navigation, route }) => {
           {generateActivityTypeText()}
         </Text>
         <Text fontFamily="heading" fontSize="md">
-          Instructions:{' '}
+          {i18n.t('dict.instructions')}
+          {': '}
           <Text fontFamily="body" fontWeight="regular" fontStyle="normal">
-            Here you will be presented some options and you will need to find
-            the corresponding option to match with.
+            {i18n.t('dialogue.activityInstructions')}
           </Text>
         </Text>
       </View>
