@@ -161,6 +161,11 @@ export const exchangeAuthCode = async (
 export const refreshIDToken = async () => {
   try {
     const refreshToken = await loadUserRefreshToken()
+
+    if (refreshToken === null) {
+      return null;
+    }
+
     const { clientSecret, expoClientId: clientId } = Constants.manifest.extra
     return axios
       .post(GOOGLE_OAUTH_TOKEN_URL, {

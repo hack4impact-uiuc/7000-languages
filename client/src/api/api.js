@@ -52,8 +52,6 @@ export const createUser = async (userData) => {
 export const getUser = async () => {
   const requestString = '/user'
   const res = await instance.get(requestString)
-
-  if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
 
@@ -380,9 +378,8 @@ export const persistImageFileInExpo = async (vocabId, temporaryURI) => {
   const splitPath = temporaryURI.split('.')
   const fileType = splitPath.length > 2 ? splitPath[1] : 'jpg'
 
-  const newURI = `${
-    FileSystem.documentDirectory
-  }${vocabId}-image-${Date.now()}.${fileType}`
+  const newURI = `${FileSystem.documentDirectory
+    }${vocabId}-image-${Date.now()}.${fileType}`
 
   if (newURI !== temporaryURI) {
     await FileSystem.copyAsync({ from: temporaryURI, to: newURI })

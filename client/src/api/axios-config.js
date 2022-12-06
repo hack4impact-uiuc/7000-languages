@@ -42,6 +42,7 @@ const addAuthHeader = async (config) => loadUserIDToken().then((idToken) => {
  */
 const authRefresh = async (response) => {
   const status = response ? response.status : null
+
   if (status === 401) {
     return refreshIDToken().then((newToken) => {
       if (newToken && !response.config.__isRetryRequest) {
@@ -60,6 +61,7 @@ const authRefresh = async (response) => {
       return response
     })
   }
+
 
   return response
 }

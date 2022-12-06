@@ -21,8 +21,8 @@ export const getAllUserCourses = async () => {
   // Build list of courses that they belong to
   if (
     adminLanguages.length
-      + collaboratorLanguages.length
-      + learnerLanguages.length
+    + collaboratorLanguages.length
+    + learnerLanguages.length
     > 0
   ) {
     for (let i = 0; i < adminLanguages.length; i += 1) {

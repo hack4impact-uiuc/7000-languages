@@ -117,7 +117,7 @@ const StartActivity = ({ navigation, route }) => {
         title={i18n.t('actions.startActivity')}
         variant="learner_primary"
         fontSize="20"
-        style={{ height: 75, marginTop: 10 }}
+        style={{ height: 75, marginTop: 10, width: "90%" }}
         shadow
         onPress={startActivity}
       />
