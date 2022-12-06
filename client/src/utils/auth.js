@@ -163,7 +163,7 @@ export const refreshIDToken = async () => {
     const refreshToken = await loadUserRefreshToken()
 
     if (refreshToken === null) {
-      return null;
+      return null
     }
 
     const { clientSecret, expoClientId: clientId } = Constants.manifest.extra

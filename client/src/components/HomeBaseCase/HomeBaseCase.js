@@ -42,6 +42,7 @@ const HomeBaseCase = ({ navigation }) => (
         <AntDesign name="search1" size={24} color={colors.white.dark} />
       }
       variant="primary_short"
+      onPress={() => navigation.navigate('Search', { screen: 'LearnerSearch' })}
     />
     <View
       style={{
