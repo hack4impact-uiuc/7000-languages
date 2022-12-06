@@ -7,7 +7,6 @@ import { getUser } from 'api'
  */
 export const getAllUserCourses = async () => {
   const { result } = await getUser()
-  alert("we here?asdasdasdasdasdadsadasdas")
   const {
     name,
     email,
