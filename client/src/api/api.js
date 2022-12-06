@@ -378,8 +378,9 @@ export const persistImageFileInExpo = async (vocabId, temporaryURI) => {
   const splitPath = temporaryURI.split('.')
   const fileType = splitPath.length > 2 ? splitPath[1] : 'jpg'
 
-  const newURI = `${FileSystem.documentDirectory
-    }${vocabId}-image-${Date.now()}.${fileType}`
+  const newURI = `${
+    FileSystem.documentDirectory
+  }${vocabId}-image-${Date.now()}.${fileType}`
 
   if (newURI !== temporaryURI) {
     await FileSystem.copyAsync({ from: temporaryURI, to: newURI })
