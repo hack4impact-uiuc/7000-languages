@@ -12,7 +12,7 @@ import * as WebBrowser from 'expo-web-browser'
 import { AntDesign } from '@expo/vector-icons'
 import i18n from 'utils/i18n'
 import PropTypes from 'prop-types'
-import { ENGLISH, FRENCH } from 'utils/constants'
+import { ENGLISH, FRENCH, SPANISH } from 'utils/constants'
 import { storeLanguage, getDeviceLocale } from 'utils/i18n/utils'
 import Logo from '../../../assets/images/landing-logo.svg'
 
@@ -25,9 +25,9 @@ const styles = StyleSheet.create({
   },
   languageSelectContainer: {
     position: 'absolute',
-    top: '20%',
+    top: '15%',
     width: '100%',
-    height: '60%',
+    height: '70%',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
@@ -46,9 +46,11 @@ const styles = StyleSheet.create({
     display: 'flex',
   },
   textSection: {
-    padding: '10%',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 30,
     borderRadius: 10,
-    maxWidth: '80%',
+    width: '60%',
   },
   nextButton: {
     position: 'absolute',
@@ -78,6 +80,17 @@ const SelectLanguage = ({ navigation }) => {
     navigation.navigate('Landing')
   }
 
+  const nextText = () => {
+    switch (language) {
+      case ENGLISH:
+        return 'Next'
+      case FRENCH:
+        return 'Suivant'
+      case SPANISH:
+        return 'Siguiente'
+    }
+  }
+
   return (
     <View style={styles.root}>
       <Image
@@ -93,7 +106,7 @@ const SelectLanguage = ({ navigation }) => {
           style={{
             ...styles.textSection,
             backgroundColor:
-              language === FRENCH ? colors.red.light : colors.white.light,
+              language === ENGLISH ? colors.red.light : colors.white.light,
             borderColor:
               language === ENGLISH ? colors.red.dark : colors.white.light,
             borderWidth: 3,
@@ -161,10 +174,47 @@ const SelectLanguage = ({ navigation }) => {
             Procéder en français
           </Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            ...styles.textSection,
+            backgroundColor:
+              language === SPANISH ? colors.red.light : colors.white.light,
+            borderColor:
+              language === SPANISH ? colors.red.dark : colors.white.light,
+            borderWidth: 3,
+            borderRadius: 20,
+          }}
+          top="55%"
+          width="97%"
+          onPress={() => setLanguage(SPANISH)}
+        >
+          <Text
+            fontSize={`${window.height}` / 45}
+            fontFamily={language === SPANISH ? 'heading' : 'body'}
+          >
+            Hola!
+          </Text>
+          <Text
+            color="black"
+            fontFamily={language === SPANISH ? 'heading' : 'body'}
+            fontSize={`${window.height}` / 45}
+          >
+            Bienvenido a 7000 lenguas
+          </Text>
+          <Text
+            color={colors.red.medium_dark}
+            fontSize={`${window.height}` / 60}
+            fontFamily={language === SPANISH ? 'heading' : 'body'}
+            top="18%"
+          >
+            Proceder en español
+          </Text>
+        </TouchableOpacity>
       </View>
 
       <StyledButton
-        title={language === ENGLISH ? 'Next' : 'Suivant'}
+        title={nextText()}
         rightIcon={(
           <AntDesign
             name="right"
