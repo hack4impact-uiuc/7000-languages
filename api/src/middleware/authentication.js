@@ -38,10 +38,10 @@ const requireAuthentication = async (req, res, next) => {
         };
         const mergedUserData = Object.assign(userData, userInMongo.toJSON());
         req.user = mergedUserData;
-        next();
-      } else {
-        sendResponse(res, 401, ERR_NO_MONGO_DOCUMENT);
+
+        return next();
       }
+      return sendResponse(res, 401, ERR_NO_MONGO_DOCUMENT);
     }
   } catch (error) {
     console.error('Error during authentication middleware:', error);
@@ -59,13 +59,14 @@ const getUserByIDToken = async (idToken) => {
     if (idToken) {
       const ticket = await client.verifyIdToken({
         idToken,
-        audience: [process.env.IOS_CLIENT_ID, process.env.ANDROID_CLIENT_ID],
+        audience: process.env.EXPO_CLIENT_ID,
       });
       const data = ticket.getPayload();
       return data;
     }
     return null;
   } catch (error) {
+    console.error('Error during Google Auth ID Token Verification: ', error);
     return null;
   }
 };

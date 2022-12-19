@@ -9,36 +9,48 @@ import { INDICATOR_TYPES } from 'utils/constants'
 
 const styles = StyleSheet.create({
   root: {
+    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    maxWidth: '100%',
   },
   left: {
+    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexShrink: 2,
+  },
+  middle: {
+    paddingLeft: 15,
+    flexShrink: 2,
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    left: 0,
   },
   right: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    justifyContent: 'flex-start',
   },
   leftIcon: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 20,
   },
   rightIcon: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 30,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   soundIcon: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 10,
+    backgroundColor: colors.gray.semi_light,
+    height: 40,
+    width: 40,
+    borderRadius: 20,
   },
-  indicator: {
-    marginRight: 15,
-  },
+  indicator: {},
 })
 
 const StyledCard = ({
@@ -52,6 +64,10 @@ const StyledCard = ({
   volumeIconCallback,
   width,
   height,
+  isPressed,
+  containerStyle = {},
+  backgroundColor = colors.white.dark,
+  bodyTextColor = 'gray.medium',
 }) => {
   const generateLeftIcon = leftIcon ? (
     <Box style={styles.leftIcon}>{leftIcon}</Box>
@@ -65,9 +81,8 @@ const StyledCard = ({
       <Indicator indicatorType={indicatorType} />
     </Box>
   ) : null
-
-  const generateRightImage = imageURI === '' ? (
-    indicator
+  const generateImage = imageURI === '' ? (
+    false
   ) : (
     <Box style={styles.indicator}>
       <Image
@@ -75,7 +90,7 @@ const StyledCard = ({
           uri: imageURI,
         }}
         alt="Alternate Text"
-        size="lg"
+        size="md"
         resizeMode="cover"
         borderRadius={10}
       />
@@ -98,32 +113,35 @@ const StyledCard = ({
       py="3"
       width={width}
       height={height}
-      style={styles.root}
+      style={{
+        ...styles.root,
+        ...containerStyle,
+      }}
       borderRadius="md"
-      bg="white.dark"
+      bg={isPressed ? colors.gray.medium_light : backgroundColor}
     >
       <Box px="2" style={styles.left}>
+        {generateImage}
         {generateLeftIcon}
-        <Box>
+        <Box style={styles.middle}>
           <Text
             fontFamily="heading"
             fontWeight="regular"
             fontStyle="normal"
-            fontSize="md"
+            fontSize="lg"
+            numberOfLines={1}
           >
             {titleText}
           </Text>
-          <Text color="gray.medium" fontSize="md">
+          <Text color={bodyTextColor} fontSize="lg" numberOfLines={1}>
             {bodyText}
           </Text>
+          {indicator}
         </Box>
-        {generateVolumeIcon}
       </Box>
-      <Box>
-        <Box style={styles.right}>
-          {generateRightImage}
-          {generateRightIcon}
-        </Box>
+      <Box style={styles.right}>
+        {generateRightIcon}
+        {generateVolumeIcon}
       </Box>
     </Box>
   )
@@ -140,6 +158,10 @@ StyledCard.propTypes = {
   volumeIconCallback: PropTypes.func,
   width: PropTypes.number,
   height: PropTypes.number,
+  isPressed: PropTypes.bool,
+  containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  backgroundColor: PropTypes.string,
+  bodyTextColor: PropTypes.string,
 }
 
 StyledCard.defaultProps = {
@@ -153,6 +175,10 @@ StyledCard.defaultProps = {
   volumeIconCallback: () => {},
   width: 100,
   height: 70,
+  isPressed: false,
+  containerStyle: {},
+  backgroundColor: colors.white.dark,
+  bodyTextColor: 'gray.medium',
 }
 
 export default StyledCard

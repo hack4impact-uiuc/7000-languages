@@ -5,9 +5,10 @@ import ManageView from 'components/ManageView'
 import { useErrorWrap } from 'hooks'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, updateNumUnits } from 'slices/language.slice'
-import { updateUnits } from 'api'
+import { updateUnits, deleteUnit } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
+import i18n from 'utils/i18n'
 
 const ManageUnits = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -31,9 +32,11 @@ const ManageUnits = ({ navigation }) => {
         _id: item._id,
         title: item.name,
         body: `${item.num_lessons} ${
-          item.num_vocab === 1 ? 'Lesson' : 'Lessons'
+          item.num_vocab === 1
+            ? `${i18n.t('dict.lessonSingle')}`
+            : `${i18n.t('dict.lessonPlural')}`
         }`,
-        indicatorType: INDICATOR_TYPES.NONE, // TODO: remove hard-coded value
+        indicatorType: INDICATOR_TYPES.NONE,
         _order: item._order,
       }
 
@@ -57,11 +60,20 @@ const ManageUnits = ({ navigation }) => {
    * @param {*} selectedData List of Unit objects that are marked as selected
    * @param {*} unselectedData List of unit objects that are marked as unselected
    */
-  const saveChanges = async (selectedData, unselectedData) => {
+  const saveChanges = async (selectedData, unselectedData, deletedData) => {
     errorWrap(
       async () => {
+        const deletedIds = deletedData.map((data) => data._id)
+
         /* We need to iterate through allUnits, and update the selected and _order fields */
-        const updatedAllUnits = _.cloneDeep(allUnits)
+        const updatedAllUnits = _.cloneDeep(allUnits).filter(
+          (unit) => !deletedIds.includes(unit._id),
+        )
+
+        // Delete removed units from unselected units
+        const filteredUnselectedData = unselectedData.filter(
+          (unit) => !deletedIds.includes(unit._id),
+        )
 
         for (let i = 0; i < selectedData.length; i += 1) {
           const updatedIdx = updatedAllUnits.findIndex(
@@ -71,15 +83,21 @@ const ManageUnits = ({ navigation }) => {
           updatedAllUnits[updatedIdx]._order = i
         }
 
-        for (let i = 0; i < unselectedData.length; i += 1) {
+        for (let i = 0; i < filteredUnselectedData.length; i += 1) {
           const updatedIdx = updatedAllUnits.findIndex(
-            (element) => element._id === unselectedData[i]._id,
+            (element) => element._id === filteredUnselectedData[i]._id,
           )
           updatedAllUnits[updatedIdx].selected = false
           updatedAllUnits[updatedIdx]._order = i
         }
 
-        // Makes API request
+        // Makes API requests
+        // Delete needs to happen before update since we don't want
+        // the updates to validate against deleted documents
+        await Promise.all(
+          deletedIds.map((unitId) => deleteUnit(currentCourseId, unitId)),
+        )
+        // Update existing
         await updateUnits(currentCourseId, updatedAllUnits)
 
         // Updates Redux store
@@ -94,23 +112,14 @@ const ManageUnits = ({ navigation }) => {
     )
   }
 
-  /**
-   * Navigates to the Create Unit modal
-   */
-  const add = () => {
-    navigation.navigate('Modal', { screen: 'CreateUnit' })
-  }
-
   return (
     <ManageView
       navigation={navigation}
-      selectedTitleText="Selected Units"
-      unselectedTitleText="Unselected Units"
-      selectedBodyText="These units will be available to your students. Drag them around to reorder them."
-      unselectedBodyText="These units are not included in your course. You can still continue to edit them."
-      addText="Create Unit"
+      selectedTitleText={i18n.t('dict.selectedUnits')}
+      unselectedTitleText={i18n.t('dict.unselectedUnits')}
+      selectedBodyText={i18n.t('dialogue.selectedUnitsPrompt')}
+      unselectedBodyText={i18n.t('dialogue.unselectedUnitsPrompt')}
       saveCallback={saveChanges}
-      addCallback={add}
       initialSelectedData={selected}
       initialUnselectedData={unselected}
     />

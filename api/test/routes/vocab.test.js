@@ -24,6 +24,10 @@ const {
   POST_VOCAB_ITEM_INVALID_ID,
   POST_VOCAB_ITEM_MISSING_ID,
 } = require('../mock-data/vocab-mock-data');
+const {
+  POST_BERBER_VOCAB_ITEM,
+  POST_BERBER_VOCAB_ITEM_EXPECTED,
+} = require('../mock-data/non-latin-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
 const _ = require('lodash');
@@ -159,7 +163,7 @@ describe('POST /vocab/ ', () => {
     var message = response.body.message;
     var result = omitDeep(response.body.result, '_id', '__v');
     expect(response.status).toBe(200);
-    expect(message).toEqual(SUCCESS_POSTING_VOCAB_DATA); // TODO: Ask developers - should this be a constant value?
+    expect(message).toEqual(SUCCESS_POSTING_VOCAB_DATA);
     expect(result).toEqual(POST_FIRST_VOCAB_ITEM_EXPECTED);
 
     response = await withAuthentication(
@@ -220,4 +224,18 @@ describe('POST /vocab/ ', () => {
     expect(response.status).toBe(400);
     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
   });
+
+  test('Create a Berber vocab item with success', async () => {
+    var response = await withAuthentication(
+      request(app).post('/language/vocab/').send(POST_BERBER_VOCAB_ITEM),
+    );
+    var message = response.body.message;
+    var result = omitDeep(response.body.result, '_id', '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual(SUCCESS_POSTING_VOCAB_DATA);
+    expect(result).toEqual(POST_BERBER_VOCAB_ITEM_EXPECTED);
+  });
 });
+
+// This block tests the DELETE /vocab/ endpoint.
+describe('DELETE /vocab/ ', () => {});

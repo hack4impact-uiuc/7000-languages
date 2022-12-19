@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Text } from 'native-base'
 import {
@@ -20,8 +20,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white.dark,
   },
   form: {
+    marginTop: 10,
     width: '95%',
-    height: '80%',
+    height: '5%',
   },
   header: {
     flexDirection: 'row',
@@ -30,7 +31,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   body: {
-    width: '100%',
+    width: '95%',
+    flex: 1,
+    height: '80%',
   },
 })
 
@@ -38,36 +41,58 @@ const Drawer = ({
   titleText,
   closeCallback,
   successCallback,
+  areAllFieldsFilled,
   successText,
   body,
-}) => (
-  <KeyboardAvoidingView
-    KeyboardAvoidingView
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    style={styles.root}
-  >
-    <View style={styles.form}>
-      <View style={styles.header}>
-        <Text fontFamily="heading" fontWeight="regular" fontSize="2xl">
-          {titleText}
-        </Text>
-        <FontIcon name="x" size={30} solid onPress={closeCallback} />
+}) => {
+  const [isDisabled, setDisabled] = useState(!areAllFieldsFilled) // used to disable success button
+  // sets the initial state of areAllFieldsFilled state to the areAllFieldsFilled param
+  useEffect(() => setDisabled(!areAllFieldsFilled), [areAllFieldsFilled])
+  // always listening to when isDisabled is changed
+
+  const onPress = () => {
+    if (!isDisabled) {
+      setDisabled(true)
+      successCallback()
+    }
+  }
+  return (
+    <KeyboardAvoidingView
+      KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.root}
+    >
+      <View style={styles.form}>
+        <View style={styles.header}>
+          <Text fontFamily="heading" fontWeight="regular" fontSize="2xl">
+            {titleText}
+          </Text>
+          <FontIcon name="x" size={30} solid onPress={closeCallback} />
+        </View>
       </View>
-      <ScrollView style={styles.body}>{body}</ScrollView>
-    </View>
-    <StyledButton
-      title={successText}
-      onPress={successCallback}
-      variant="primary"
-    />
-  </KeyboardAvoidingView>
-)
+      <ScrollView
+        style={styles.body}
+        contentContainerStyle={{ paddingBottom: 20 }}
+      >
+        {body}
+      </ScrollView>
+      <StyledButton
+        title={successText}
+        onPress={onPress}
+        isDisabled={isDisabled}
+        variant="primary"
+      />
+    </KeyboardAvoidingView>
+  )
+}
+
 // Button object fields
 Drawer.propTypes = {
   titleText: PropTypes.string,
   successText: PropTypes.string,
   closeCallback: PropTypes.func,
   successCallback: PropTypes.func,
+  areAllFieldsFilled: PropTypes.bool,
   body: PropTypes.element,
 }
 
@@ -76,6 +101,7 @@ Drawer.defaultProps = {
   successText: '',
   closeCallback: () => null,
   successCallback: () => null,
+  areAllFieldsFilled: false,
   body: null,
 }
 

@@ -16,6 +16,7 @@ import {
   DRAGGABLE_LIST_CARD_HEIGHT,
 } from 'utils/constants'
 import { moveFromList } from 'utils/manageHelper'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   root: {
@@ -68,15 +69,14 @@ const ManageView = ({
   unselectedTitleText,
   selectedBodyText,
   unselectedBodyText,
-  addText,
   saveCallback,
-  addCallback,
   initialSelectedData,
   initialUnselectedData,
   playAudio,
 }) => {
   const [selectedData, setSelectedData] = useState(initialSelectedData)
   const [unselectedData, setUnselectedData] = useState(initialUnselectedData)
+  const [deletedData, setDeletedData] = useState([])
   const [shouldShowButtons, setShouldShowButtons] = useState(false)
 
   // Updates the data shown in the draggable list component whenever the props update
@@ -98,12 +98,16 @@ const ManageView = ({
 
       // Prompt the user before leaving the screen
       Alert.alert(
-        'Discard changes?',
-        'You have unsaved changes. Are you sure to discard them and leave the screen?',
+        `${i18n.t('dialogue.discardChangesPrompt')}`,
+        `${i18n.t('dialogue.unsavedChangesPrompt')}`,
         [
-          { text: "Don't leave", style: 'cancel', onPress: () => {} },
           {
-            text: 'Discard',
+            text: `${i18n.t('actions.notLeave')}`,
+            style: 'cancel',
+            onPress: () => {},
+          },
+          {
+            text: `${i18n.t('dict.discard')}`,
             style: 'destructive',
             // If the user confirmed, then we dispatch the action we blocked earlier
             // This will continue the action that had triggered the removal of the screen
@@ -135,7 +139,7 @@ const ManageView = ({
       (data) => data.data,
     )
 
-    return { selected, unselected: unselectedData }
+    return { selected, unselected: unselectedData, deleted: deletedData }
   }
 
   /**
@@ -149,23 +153,26 @@ const ManageView = ({
   /**
    * Updates the selected and unselected data after an operation on both lists
    */
-  const updateData = (newSelectedData, newUnselectedData) => {
-    setSelectedData(newSelectedData)
-    setUnselectedData(newUnselectedData)
-    updateShouldShowButtons()
-  }
-
-  const discardChanges = () => {
-    setShouldShowButtons(false)
-
+  const updateData = (newSelectedData, newUnselectedData, newDeletedData) => {
     /**
-     * This cheeky hack allows the state of AutoDragSortableView (Draggable component) to update on discard.
+     * This cheeky hack allows the state of AutoDragSortableView (Draggable component) to force an update.
+     * Currently, if the selectedData contains the same items on update, the items disappear.
      */
     childrenWidth += widthFlag ? 0.001 : -0.001
     widthFlag = !widthFlag
 
-    setSelectedData(initialSelectedData)
-    setUnselectedData(initialUnselectedData)
+    setSelectedData(newSelectedData)
+    setUnselectedData(newUnselectedData)
+    setDeletedData(newDeletedData)
+    updateShouldShowButtons()
+  }
+
+  const discardChanges = () => {
+    /**
+     * This cheeky hack allows the state of AutoDragSortableView (Draggable component) to update on discard.
+     */
+    updateData(initialSelectedData, initialUnselectedData, [])
+    setShouldShowButtons(false)
   }
 
   /**
@@ -175,7 +182,7 @@ const ManageView = ({
   const moveToSelected = (index) => {
     const data = getData()
     const { src, dest } = moveFromList(data.unselected, data.selected, index)
-    updateData(dest, src)
+    updateData(dest, src, deletedData)
   }
 
   /**
@@ -185,8 +192,37 @@ const ManageView = ({
   const moveToUnselected = (index) => {
     const data = getData()
     const { src, dest } = moveFromList(data.selected, data.unselected, index)
-    updateData(src, dest)
+    updateData(src, dest, deletedData)
   }
+
+  /**
+   * Moves data from unselectedData to deletedData
+   * @param {Number} index Index of the data to move in unselectedData
+   */
+  const moveToDeleted = (index) => {
+    const data = getData()
+    const { src, dest } = moveFromList(data.unselected, data.deleted, index)
+    updateData(selectedData, src, dest)
+  }
+
+  const confirmDelete = (index) => Alert.alert(
+    `${i18n.t('dict.delete')}`,
+    `${i18n.t('dialogue.areYouSureDelete')}`,
+    [
+      {
+        text: `${i18n.t('dict.cancel')}`,
+        style: 'cancel',
+        onPress: () => {},
+      },
+      {
+        text: `${i18n.t('dict.delete')}`,
+        style: 'destructive',
+        // If the user confirmed, then we dispatch the action we blocked earlier
+        // This will continue the action that had triggered the removal of the screen
+        onPress: () => moveToDeleted(index),
+      },
+    ],
+  )
 
   /**
    * Generates the card for one selected item in a draggable list
@@ -203,7 +239,7 @@ const ManageView = ({
         <AntDesign
           name="minuscircle"
           size={25}
-          color={colors.red.dark}
+          color={colors.red.medium_dark}
           onPress={() => moveToUnselected(index)}
         />
       )}
@@ -234,6 +270,14 @@ const ManageView = ({
           onPress={() => moveToSelected(index)}
         />
       )}
+      rightIcon={(
+        <Feather
+          name="trash-2"
+          size={25}
+          color={colors.gray.medium}
+          onPress={() => confirmDelete(index)}
+        />
+      )}
       volumeIconCallback={playAudio}
       indicatorType={item.indicatorType}
       width={childrenWidth}
@@ -256,7 +300,7 @@ const ManageView = ({
   const saveData = () => {
     const data = getData()
     setShouldShowButtons(false)
-    saveCallback(data.selected, data.unselected)
+    saveCallback(data.selected, data.unselected, data.deleted)
   }
 
   /**
@@ -270,14 +314,14 @@ const ManageView = ({
   const saveAndDiscardButtons = shouldShowButtons ? (
     <View style={styles.save}>
       <StyledButton
-        title="Save Changes"
+        title={i18n.t('actions.saveChanges')}
         variant="primary"
         fontSize="md"
         onPress={saveData}
         style={{ width: '47%' }}
       />
       <StyledButton
-        title="Discard Changes"
+        title={i18n.t('dialogue.discardChangesPrompt')}
         variant="secondary"
         fontSize="md"
         onPress={discardChanges}
@@ -301,23 +345,10 @@ const ManageView = ({
             <Text fontFamily="heading" fontWeight="regular" fontSize="xl">
               {selectedTitleText}
             </Text>
-            <StyledButton
-              title={addText}
-              variant="small"
-              fontSize="md"
-              rightIcon={(
-                <AntDesign
-                  name="pluscircle"
-                  size={18}
-                  color={colors.red.dark}
-                />
-              )}
-              onPress={addCallback}
-            />
           </View>
           <Text
             fontFamily="body"
-            fontWeight="normal"
+            fontWeight="regular"
             fontSize="md"
             color="gray.medium"
           >
@@ -372,9 +403,7 @@ ManageView.propTypes = {
   unselectedTitleText: PropTypes.string,
   selectedBodyText: PropTypes.string,
   unselectedBodyText: PropTypes.string,
-  addText: PropTypes.string,
   saveCallback: PropTypes.func,
-  addCallback: PropTypes.func,
   initialSelectedData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   initialUnselectedData: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
   playAudio: PropTypes.func,
@@ -389,9 +418,7 @@ ManageView.defaultProps = {
   unselectedTitleText: '',
   selectedBodyText: '',
   unselectedBodyText: '',
-  addText: '',
   saveCallback: () => {},
-  addCallback: () => {},
   initialSelectedData: [],
   initialUnselectedData: [],
   playAudio: () => {},

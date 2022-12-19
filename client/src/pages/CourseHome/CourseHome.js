@@ -3,14 +3,19 @@ import PropTypes from 'prop-types'
 import LanguageHome from 'components/LanguageHome'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
+
+import i18n from 'utils/i18n'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const CourseHome = ({ navigation, courseDescription, courseName }) => {
-  const { allUnits } = useSelector((state) => state.language)
+  const { allUnits, courseDetails } = useSelector((state) => state.language)
 
   const dispatch = useDispatch()
 
   const [data, setData] = useState([])
+
+  const [name, setName] = useState(courseName)
+  const [description, setDescription] = useState(courseDescription)
 
   /**
    * Updates the units presented in a list on this page
@@ -27,7 +32,9 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
           _id: item._id,
           name: item.name,
           body: `${item.num_lessons} ${
-            item.num_lessons === 1 ? 'Lesson' : 'Lessons'
+            item.num_lessons === 1
+              ? `${i18n.t('dict.lessonSingle')}`
+              : `${i18n.t('dict.lessonPlural')}`
           }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
@@ -41,6 +48,20 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
 
     setData(formattedUnitData)
   }, [allUnits])
+
+  useEffect(() => {
+    setName(courseDetails.name)
+    setDescription(courseDetails.description)
+  }, [courseDetails])
+
+  // Sets the title of the page
+  useEffect(() => {
+    setName(courseName)
+    setDescription(courseDescription)
+    navigation.setOptions({
+      title: `${i18n.t('dict.courseHome')}`,
+    })
+  }, [courseName, courseDescription])
 
   /**
    * Navigates to the Manage Units Page
@@ -59,15 +80,30 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     navigation.navigate('UnitHome')
   }
 
+  const navigateToUpdate = () => {
+    navigation.navigate('Modal', { screen: 'UpdateCourse' })
+  }
+  /**
+   * Navigates to the update unit modal
+   */
+  const navigateToAdd = () => {
+    navigation.navigate('Modal', { screen: 'CreateUnit' })
+  }
+
   return (
     <LanguageHome
-      languageName={courseName}
-      languageDescription={courseDescription}
-      valueName="Units"
-      buttonText="Manage Units"
+      languageName={name}
+      languageDescription={description}
+      singularItemText={i18n.t('dict.unitSingle')}
+      pluralItemText={i18n.t('dict.unitPlural')}
+      nextUpdate={navigateToUpdate}
+      manageIconName="cog"
       rightIconName="pencil"
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
+      manageButtonText={i18n.t('actions.manageUnits')}
+      addCallback={navigateToAdd}
+      addButtonText={i18n.t('actions.addUnit')}
       data={data}
     />
   )

@@ -1,13 +1,9 @@
-import {
-  configureStore,
-  combineReducers,
-  getDefaultMiddleware,
-} from '@reduxjs/toolkit'
+/* global __DEV__ */
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
 import authReducer from './slices/auth.slice'
 import languageReducer from './slices/language.slice'
 import appReducer from './slices/app.slice'
-import saveAuthToken from './middleware/auth.middleware'
 
 /*
   This is the store. A store holds the whole state tree of your application.
@@ -31,17 +27,9 @@ const rootReducer = combineReducers({
    dispatching an action, and the moment it reaches the reducer. In other words,
    it runs some code before the reducer.
 */
-const defaultMiddleware = getDefaultMiddleware({
-  serializableCheck: false,
-  immutableCheck: false,
-})
-
 const store = configureStore({
   reducer: rootReducer,
-  // eslint-disable-next-line no-undef
-  middleware: __DEV__
-    ? defaultMiddleware.concat(logger).concat(saveAuthToken)
-    : defaultMiddleware.concat(saveAuthToken),
+  middleware: (getDefaultMiddleware) => (__DEV__ ? [...getDefaultMiddleware(), logger] : getDefaultMiddleware()),
 })
 
 export default store

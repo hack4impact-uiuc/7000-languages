@@ -6,12 +6,14 @@ import { Text } from 'native-base'
 import { logout } from 'slices/auth.slice'
 import { clear } from 'slices/language.slice'
 import { useDispatch } from 'react-redux'
-import { removeUserIDToken } from 'utils/auth'
+import i18n from 'utils/i18n'
+import { removeUserIDToken, removeUserRefreshToken } from 'utils/auth'
 
 const DrawerLogoutButton = () => {
   const dispatch = useDispatch()
   const logoutUser = async () => {
-    await removeUserIDToken()
+    removeUserIDToken()
+    removeUserRefreshToken()
     dispatch(logout())
     dispatch(clear())
   }
@@ -31,7 +33,7 @@ const DrawerLogoutButton = () => {
             flexDirection: 'row',
           }}
         >
-          <Entypo name="align-left" size={25} color={colors.red.dark} />
+          <Entypo name="align-left" size={25} color={colors.red.medium_dark} />
           <Text
             style={{
               fontSize: 20,
@@ -40,9 +42,9 @@ const DrawerLogoutButton = () => {
             fontFamily="heading"
             fontWeight="regular"
             fontStyle="normal"
-            color="red.dark"
+            color="red.medium_dark"
           >
-            Log out
+            {i18n.t('actions.logOut')}
           </Text>
         </View>
       </Pressable>

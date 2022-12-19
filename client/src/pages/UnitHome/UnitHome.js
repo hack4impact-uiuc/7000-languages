@@ -7,6 +7,7 @@ import { setField, resetField } from 'slices/language.slice'
 import { getUnit } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 
+import i18n from 'utils/i18n'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const UnitHome = ({ navigation }) => {
@@ -15,12 +16,15 @@ const UnitHome = ({ navigation }) => {
 
   const dispatch = useDispatch()
 
-  const { currentCourseId, currentUnitId, allLessons } = useSelector(
+  const {
+    currentCourseId, currentUnitId, allLessons, allUnits,
+  } = useSelector(
     (state) => state.language,
   )
 
   const [data, setData] = useState([])
   const [unitDescription, setUnitDescription] = useState('')
+  const [unitName, setUnitName] = useState('')
 
   /**
    * When going back from the Unit Page to the Course Page,
@@ -41,25 +45,32 @@ const UnitHome = ({ navigation }) => {
    * Gets the data for the unit being presented, including the lessons in the unit
    */
   useEffect(() => {
-    const getLessonData = async () => {
+    const getUnitData = async () => {
       errorWrap(async () => {
         const { result } = await trackPromise(
           getUnit(currentCourseId, currentUnitId),
         )
-        const { unit, lessons } = result
-
-        setUnitDescription(unit.description)
-
-        // Sets the title of the page
-        navigation.setOptions({
-          title: unit.name,
-        })
-
+        const { lessons } = result
         dispatch(setField({ key: 'allLessons', value: lessons }))
       })
     }
-    getLessonData()
-  }, [currentCourseId])
+    getUnitData()
+  }, [currentCourseId, currentUnitId])
+
+  useEffect(() => {
+    const unitIndex = allUnits.findIndex(
+      (element) => element._id === currentUnitId,
+    )
+    const unitData = allUnits[unitIndex]
+
+    setUnitDescription(unitData.description)
+    setUnitName(unitData.name)
+
+    // Sets the title of the page
+    navigation.setOptions({
+      title: `${i18n.t('dict.unitSingle')}`,
+    })
+  }, [allUnits, currentUnitId, currentCourseId])
 
   /**
    * Formats the lesson data in order to be presented on this page
@@ -75,8 +86,10 @@ const UnitHome = ({ navigation }) => {
         const formattedItem = {
           _id: item._id,
           name: item.name,
-          body: `${item.num_vocab} Vocab ${
-            item.num_vocab === 1 ? 'Item' : 'Items'
+          body: `${item.num_vocab} ${i18n.t('dict.vocab')} ${
+            item.num_vocab === 1
+              ? `${i18n.t('dict.itemSingle')}`
+              : `${i18n.t('dict.itemPlural')}`
           }`,
           indicatorType: INDICATOR_TYPES.NONE,
           _order: item._order,
@@ -101,6 +114,13 @@ const UnitHome = ({ navigation }) => {
   }
 
   /**
+   * Navigates to the update unit page
+   */
+  const navigateToUpdate = () => {
+    navigation.navigate('Modal', { screen: 'UpdateUnit' })
+  }
+
+  /**
    * Navigates to the Lesson Home page for a selected lesson
    * @param {Object} element The Lesson that was selected
    */
@@ -110,14 +130,28 @@ const UnitHome = ({ navigation }) => {
     navigation.navigate('LessonHome')
   }
 
+  /**
+   * Navigates to the Add Lesson Page
+   */
+  const navigateToAdd = () => {
+    navigation.navigate('Modal', { screen: 'CreateLesson' })
+  }
+
   return (
     <LanguageHome
+      languageName={unitName}
       languageDescription={unitDescription}
+      nextUpdate={navigateToUpdate}
       valueName="Lessons"
-      buttonText="Manage Lessons"
-      rightIconName="plus-circle"
+      rightIconName="pencil"
+      singularItemText={i18n.t('dict.lessonSingle')}
+      pluralItemText={i18n.t('dict.lessonPlural')}
+      manageButtonText={i18n.t('actions.manageLessons')}
+      manageIconName="cog"
+      addButtonText={i18n.t('actions.addLesson')}
       buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
+      addCallback={navigateToAdd}
       data={data}
     />
   )

@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addUnit } from 'slices/language.slice'
 import { createUnit } from 'api'
 import { useErrorWrap } from 'hooks'
+import RequiredField from 'components/RequiredField'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   container: {
@@ -37,20 +39,23 @@ const CreateUnit = ({ navigation }) => {
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')
 
+  // checks if all fields are filled
+  // otherwise, the submit button is disabled
+  const areRequiredFieldsFilled = name !== '' && purpose !== ''
   /**
    * Posts a new unit to the API and saves the new unit in state
    */
   const success = async () => {
     errorWrap(
       async () => {
-        const newLesson = {
+        const newUnit = {
           name,
           description: purpose,
-          course_id: currentCourseId,
+          _course_id: currentCourseId,
           selected: true,
         }
 
-        const { result } = await createUnit(newLesson)
+        const { result } = await createUnit(newUnit)
         dispatch(addUnit({ unit: result }))
       },
       () => {
@@ -80,17 +85,15 @@ const CreateUnit = ({ navigation }) => {
               fontStyle="normal"
               color={colors.blue.dark}
             >
-              {' '}
-              Suggestion{' '}
+              {i18n.t('dict.suggestion')}
             </Text>
           </View>
           <Text color={colors.blue.dark} fontSize="md">
-            When creating a unit, think about how it will be used. More text
-            here explaining what they should look for when making a unit.
+            {i18n.t('dialogue.createUnitDescription')}
           </Text>
         </View>
 
-        <Text fontSize="md">Give your unit a name</Text>
+        <RequiredField title={i18n.t('dialogue.unitNamePrompt')} />
         <Input
           size="xl"
           placeholder=""
@@ -98,10 +101,7 @@ const CreateUnit = ({ navigation }) => {
           onChangeText={(text) => setName(text)}
         />
 
-        <Text paddingTop={2} fontSize="md">
-          What is the purpose of this unit?
-        </Text>
-
+        <RequiredField title={i18n.t('dialogue.unitPurposePrompt')} />
         <TextArea
           size="xl"
           h={40}
@@ -117,10 +117,11 @@ const CreateUnit = ({ navigation }) => {
 
   return (
     <Drawer
-      titleText="Add Custom Unit"
-      successText="Create Unit"
+      titleText={i18n.t('actions.addCustomUnit')}
+      successText={i18n.t('actions.createUnit')}
       successCallback={success}
       closeCallback={close}
+      areAllFieldsFilled={areRequiredFieldsFilled}
       body={body}
     />
   )

@@ -40,6 +40,14 @@ const {
   POST_LESSON_EXTRA_DATA,
   POST_LESSON_EXTRA_DATA_EXPECTED,
 } = require('../mock-data/lesson-mock-data');
+
+const {
+  POST_BERBER_LESSON,
+  POST_BERBER_LESSON_EXPECTED,
+  PATCH_BERBER_LESSON_DESCRIPTION,
+  PATCH_BERBER_LESSON_DESCRIPTION_EXPECTED,
+} = require('../mock-data/non-latin-mock-data');
+
 const { withAuthentication } = require('../utils/auth');
 const omitDeep = require('omit-deep-lodash');
 const _ = require('lodash');
@@ -180,14 +188,27 @@ describe('POST /lesson/ ', () => {
     );
     expect(response.status).toBe(500);
   });
+
+  test('Success creating lesson with berber characters', async () => {
+    const response = await withAuthentication(
+      request(app).post(`/language/lesson`).send(POST_BERBER_LESSON),
+    );
+
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '_id', '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual(SUCCESS_POSTING_LESSON_DATA);
+    expect(result).toEqual(POST_BERBER_LESSON_EXPECTED);
+  });
 });
 
 // This block tests the PATCH /lesson/ endpoint.
 describe('PATCH /lesson/ ', () => {
-  /* 
-          We have to make sure we connect to a MongoDB mock db before the test 
-          and close the connection at the end.
-        */
+  /*
+    We have to make sure we connect to a MongoDB mock db before the test
+    and close the connection at the end.
+  */
+
   afterAll(async () => await db.closeDatabase());
   afterEach(async () => await db.resetDatabase());
 
@@ -277,6 +298,21 @@ describe('PATCH /lesson/ ', () => {
     const message = response.body.message;
     expect(response.status).toBe(400);
     expect(message).toEqual(ERR_MISSING_OR_INVALID_DATA);
+  });
+
+  test('Patch request should update description with Berber characters', async () => {
+    const response = await withAuthentication(
+      request(app)
+        .patch(`/language/lesson`)
+        .send(PATCH_BERBER_LESSON_DESCRIPTION),
+    );
+    const message = response.body.message;
+    const result = omitDeep(response.body.result, '__v');
+    expect(response.status).toBe(200);
+    expect(message).toEqual(SUCCESS_PATCHING_LESSON_DATA);
+    expect(result.description).toEqual(
+      PATCH_BERBER_LESSON_DESCRIPTION_EXPECTED.description,
+    );
   });
 });
 

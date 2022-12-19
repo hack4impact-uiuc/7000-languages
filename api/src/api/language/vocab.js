@@ -12,7 +12,12 @@ const {
   SUCCESS_POSTING_VOCAB_DATA,
   NOT_FOUND_INDEX,
 } = require('../../utils/constants');
-const { getVocabIndexByID, checkIds } = require('../../utils/languageHelper');
+const {
+  getVocabIndexByID,
+  checkIds,
+  patchDocument,
+  deleteVocabItem,
+} = require('../../utils/languageHelper');
 
 /**
  * Updates the fields for a vocab item
@@ -100,6 +105,66 @@ router.post(
     } catch (error) {
       return sendResponse(res, 404, ERR_MISSING_OR_INVALID_DATA);
     }
+  }),
+);
+
+/**
+ * Updates the fields for multiple vocab items
+ */
+router.put(
+  '/',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const { lesson_id, vocab_updates } = req.body;
+    if (!lesson_id || !vocab_updates) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    // Checks if the ids are valid
+    const isValid = await checkIds({ lesson_id });
+
+    if (!isValid) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    /* Get the lesson data from MongoDB */
+    let lesson = await models.Lesson.findById(lesson_id);
+
+    for (let i = 0; i < vocab_updates.length; i++) {
+      /* Obtain the index of the vocab item that we want to update */
+      const vocabIndex = getVocabIndexByID(vocab_updates[i]._id, lesson);
+
+      if (vocabIndex === NOT_FOUND_INDEX) {
+        return sendResponse(res, 404, 'Vocab item not found');
+      }
+
+      /* Using the index, apply changes to the lesson data */
+      patchDocument(lesson.vocab[vocabIndex], vocab_updates[i]);
+    }
+    await lesson.save();
+    return sendResponse(
+      res,
+      200,
+      'Successfully updated vocab items',
+      vocab_updates,
+    );
+  }),
+);
+
+router.delete(
+  '/',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const { lesson_id, vocab_id } = req.query;
+
+    deleteVocabItem(lesson_id, vocab_id).then(({ success, message }) => {
+      if (success) {
+        return sendResponse(res, 200, message);
+      }
+      return sendResponse(res, 404, message);
+    });
   }),
 );
 

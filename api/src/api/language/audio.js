@@ -9,7 +9,7 @@ const {
   requireLanguageAuthorization,
 } = require('../../middleware/authorization');
 const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
-const { checkIds } = require('../../utils/languageHelper');
+const { checkIds, deleteVocabAudio } = require('../../utils/languageHelper');
 const fs = require('fs');
 
 router.get(
@@ -132,6 +132,26 @@ router.post(
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
     }
 
+    return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+  }),
+);
+
+router.delete(
+  '/:course_id/:unit_id/:lesson_id/:vocab_id/',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const { course_id, unit_id, lesson_id, vocab_id } = req.params;
+
+    const { success, vocab } = await deleteVocabAudio(
+      course_id,
+      unit_id,
+      lesson_id,
+      vocab_id,
+    );
+    if (success) {
+      return sendResponse(res, 200, 'Success deleting the audio file.', vocab);
+    }
     return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
   }),
 );

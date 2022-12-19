@@ -5,6 +5,7 @@ import { Text } from 'native-base'
 import { DrawerActions } from '@react-navigation/native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
+import i18n from 'utils/i18n'
 
 const styles = {
   root: {
@@ -14,7 +15,7 @@ const styles = {
   },
   head: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-around',
   },
   main: {
     flex: 1,
@@ -44,15 +45,16 @@ const DrawerMenu = ({ navigation }) => (
         color="black"
         fontSize="25px"
       >
-        My Courses
+        {i18n.t('actions.myCourses')}
       </Text>
     </View>
-    <View style={styles.head}>
+    <View>
       <FontIcon.Button
         name="times"
-        size={20}
+        size={25}
         color={colors.gray.dark}
-        backgroundColor="white"
+        backgroundColor="transparent"
+        underlayColor={colors.gray.semi_transparent}
         onPress={() => {
           navigation.dispatch(DrawerActions.closeDrawer())
         }}

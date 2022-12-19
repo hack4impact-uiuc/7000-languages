@@ -43,7 +43,7 @@ You will have the open to run the app on a connected device via USB, [iOS simula
 To set up, first `cd` into this directory. Then,
 
 ```bash
-expo start
+yarn start
 ```
 
 Before commiting and pushing code to the remote repository, run the command below for linting and formatting:

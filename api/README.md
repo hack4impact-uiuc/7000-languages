@@ -28,11 +28,10 @@ Then, set the necessary environment variables by creating a `development.env` fi
 NODE_ENV=development
 PORT=3000
 MONGO_URL=
-IOS_CLIENT_ID=
-ANDROID_CLIENT_ID=
+EXPO_CLIENT_ID=
 ```
 
-You can obtain `MONGO_URL` by [creating a MongoDB Atlas Database](https://www.mongodb.com/atlas) and the `IOS_CLIENT_ID` and `ANDROID_CLIENT_ID` by creating [Google OAuth credentials](https://console.cloud.google.com/apis/credentials?pli=1).
+You can obtain `MONGO_URL` by [creating a MongoDB Atlas Database](https://www.mongodb.com/atlas) and the `EXPO_CLIENT_ID` by creating [Google OAuth credentials](https://console.cloud.google.com/apis/credentials?pli=1).
 
 Finally, run:
 
@@ -40,7 +39,7 @@ Finally, run:
 yarn start
 ```
 
-This will create a server on [http://localhost:9000](http://localhost:9000).
+This will create a server on [http://localhost:3000](http://localhost:3000).
 
 ## Run
 

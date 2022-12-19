@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'native-base'
-import { ViewPropTypes } from 'react-native'
 
 const StyledButton = ({
   title,
@@ -10,6 +9,7 @@ const StyledButton = ({
   leftIcon,
   rightIcon,
   fontSize,
+  shadow,
   style,
   isDisabled,
 }) => (
@@ -19,6 +19,7 @@ const StyledButton = ({
     _text={{ fontSize }}
     leftIcon={leftIcon}
     endIcon={rightIcon}
+    shadow={shadow ? 4 : -1}
     style={style}
     isDisabled={isDisabled}
   >
@@ -33,7 +34,10 @@ StyledButton.propTypes = {
   leftIcon: PropTypes.element,
   rightIcon: PropTypes.element,
   fontSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  style: ViewPropTypes.style,
+  shadow: PropTypes.bool,
+  style: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  ),
   isDisabled: PropTypes.bool,
 }
 
@@ -44,6 +48,7 @@ StyledButton.defaultProps = {
   rightIcon: null,
   onPress: () => {},
   fontSize: 'lg',
+  shadow: false,
   style: {},
   isDisabled: false,
 }

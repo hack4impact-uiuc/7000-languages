@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import LanguageHome from 'components/LanguageHome'
 import PropTypes from 'prop-types'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
-import { getLesson, downloadImageFile } from 'api'
+import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
+import i18n from 'utils/i18n'
+import { getFileURI } from 'utils/cache'
+import { MEDIA_TYPE } from 'utils/constants'
 
 const LessonHome = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -17,6 +20,16 @@ const LessonHome = ({ navigation }) => {
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
+  const [lessonName, setLessonName] = useState('')
+  const mounted = useRef(false)
+
+  // Fixes the warning that we are setting the state of unmounted components in the call back functions for downloads
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+    }
+  }, [])
 
   /**
    * When going back from the Lesson Page to the Unit Page,
@@ -25,7 +38,7 @@ const LessonHome = ({ navigation }) => {
    *
    * Source: https://reactnavigation.org/docs/preventing-going-back/
    */
-  React.useEffect(
+  useEffect(
     () => navigation.addListener('beforeRemove', (e) => {
       dispatch(resetField({ key: 'lessonData' }))
       navigation.dispatch(e.data.action)
@@ -45,7 +58,7 @@ const LessonHome = ({ navigation }) => {
 
         setLessonDescription(result.description)
         navigation.setOptions({
-          title: result.name,
+          title: `${i18n.t('dict.lessonSingle')}`,
         })
         dispatch(setField({ key: 'lessonData', value: result }))
       })
@@ -55,75 +68,96 @@ const LessonHome = ({ navigation }) => {
   }, [currentCourseId, currentLessonId, navigation])
 
   /**
-   * Updates the formatted vocab data that will be presented on this page
+   * Updates the lesson name, lesson description, and formatted vocab data that will be presented on this page
    */
   useEffect(() => {
     const getData = async () => {
       if (lessonData?.vocab) {
-        let formattedVocabData = []
-
-        for (let i = 0; i < lessonData.vocab.length; i += 1) {
-          const item = lessonData.vocab[i]
+        const selectedData = lessonData.vocab.filter((item) => item.selected)
+        let formattedVocabData = selectedData.map(async (item) => {
+          const { fileURI: imageUri, shouldRefresh: shouldRefreshImage } = await getFileURI(item._id, MEDIA_TYPE.IMAGE)
+          const { fileURI: audioUri, shouldRefresh: shouldRefreshAudio } = await getFileURI(item._id, MEDIA_TYPE.AUDIO)
 
           const formattedItem = {
             _id: item._id,
             name: item.original,
             body: item.translation,
-            audio: item.audio !== '',
+            audioURI: item.audio ? audioUri : '',
+            hasAudio: item.audio !== '',
             _order: item._order,
-            imageURI: '',
-            image: item.image,
+            imageURI: item.image ? imageUri : '',
+            hasImage: item.image !== '',
           }
 
-          if (item.imageURI) {
-            formattedItem.imageURI = item.imageURI
-          } else if (item.image !== '') {
+          /*
+            Below, we only load the image and audio files from the API
+            if the file has an image and audio file AND it needs to be refetched from the API
+            because it 1) doesn't exist in Expo's file system or 2) has existed in Expo's file system for too long.
+          */
+
+          if (formattedItem.hasImage && shouldRefreshImage) {
             const filePath = item.image
             const splitPath = filePath.split('.')
 
-            // Get the file type from the vocabItem's audio field
-            let fileType = 'jpg'
-
-            if (splitPath.length === 2) {
-              // eslint-disable-next-line prefer-destructuring
-              fileType = splitPath[1]
-            }
+            // Get the file type from the vocabItem's image field
+            const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
 
             // Need to fetch image uri
-            // eslint-disable-next-line no-await-in-loop
-            const uri = await trackPromise(
-              downloadImageFile(
-                currentCourseId,
-                currentUnitId,
-                currentLessonId,
-                item._id,
-                fileType,
-              ),
-            )
-
-            formattedItem.imageURI = uri
+            downloadImageFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              item._id,
+              fileType,
+            ).then((value) => {
+              if (mounted) {
+                formattedItem.imageURI = value
+                // spread to force react to re-render so it thinks formattedVocabData is a new object
+                setData([...formattedVocabData])
+              }
+            })
           }
 
-          formattedVocabData.push(formattedItem)
-        }
+          if (formattedItem.hasAudio && shouldRefreshAudio) {
+            const filePath = item.audio
+            const splitPath = filePath.split('.')
 
-        formattedVocabData = formattedVocabData.sort(
+            // Get the file type from the vocabItem's audio field
+            const fileType = splitPath.length === 2 ? splitPath[1] : 'm4a'
+
+            // Downloads audio file and gets Filesystem uri
+            downloadAudioFile(
+              currentCourseId,
+              currentUnitId,
+              currentLessonId,
+              item._id,
+              fileType,
+            ).then((value) => {
+              if (mounted) {
+                formattedItem.audioURI = value
+                setData([...formattedVocabData])
+              }
+            })
+          }
+          return formattedItem
+        })
+        formattedVocabData = await Promise.all(formattedVocabData)
+        const sortedData = formattedVocabData.sort(
           (a, b) => a._order - b._order,
         )
-
-        setData(formattedVocabData)
+        setData(sortedData)
       }
     }
+    setLessonName(lessonData.name)
+    setLessonDescription(lessonData.description)
     getData()
   }, [lessonData])
 
   /**
-   * Navigates to the Vocab Drawer for adding a vocab item
+   * Navigates to the Manage Vocab Page
    */
-  const navigateTo = () => {
-    // Since we aren't editing a vocab item, we need to clear the current vocab id
-    dispatch(setField({ key: 'currentVocabId', value: '' }))
-    navigation.navigate('Modal', { screen: 'VocabDrawer' })
+  const navigateToManage = () => {
+    navigation.navigate('ManageVocab')
   }
 
   /**
@@ -137,15 +171,35 @@ const LessonHome = ({ navigation }) => {
     navigation.navigate('Modal', { screen: 'VocabDrawer' })
   }
 
+  /**
+   * Navigates to the update unit modal
+   */
+  const navigateToUpdate = () => {
+    navigation.navigate('Modal', { screen: 'UpdateLesson' })
+  }
+
+  const navigateToAdd = () => {
+    // Since we aren't editing a vocab item, we need to clear the current vocab id
+    dispatch(setField({ key: 'currentVocabId', value: '' }))
+    navigation.navigate('Modal', { screen: 'VocabDrawer' })
+  }
+
   return (
     <LanguageHome
       isLessonHome
+      languageName={lessonName}
       lessonDescription={lessonDescription}
-      valueName="Lessons"
+      nextUpdate={navigateToUpdate}
       rightIconName="plus-circle"
-      buttonCallback={navigateTo}
+      buttonCallback={navigateToManage}
       nextPageCallback={goToNextPage}
+      singularItemText={i18n.t('dict.vocabItemSingle')}
+      pluralItemText={i18n.t('dict.vocabItemPlural')}
+      manageIconName="cog"
+      manageButtonText={i18n.t('actions.manageVocab')}
+      addButtonText={i18n.t('actions.addVocabItem')}
       data={data}
+      addCallback={navigateToAdd}
     />
   )
 }

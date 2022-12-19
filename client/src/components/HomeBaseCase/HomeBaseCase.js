@@ -5,6 +5,7 @@ import { Text } from 'native-base'
 import { StyleSheet, View, StatusBar } from 'react-native'
 import PropTypes from 'prop-types'
 import { AntDesign } from '@expo/vector-icons'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   root: {
@@ -25,7 +26,7 @@ const HomeBaseCase = ({ navigation }) => (
       color="gray.medium"
       fontSize="xl"
     >
-      Welcome!
+      {i18n.t('dict.welcome')}
     </Text>
     <Text
       color="gray.medium"
@@ -33,15 +34,15 @@ const HomeBaseCase = ({ navigation }) => (
       textAlign="center"
       paddingBottom="10px"
     >
-      {`Looks like you aren't a learner in
-any courses yet.`}
+      {i18n.t('dialogue.notLearnerPrompt')}
     </Text>
     <StyledButton
-      title="Search Courses"
+      title={i18n.t('actions.searchCourses')}
       leftIcon={
         <AntDesign name="search1" size={24} color={colors.white.dark} />
       }
       variant="primary_short"
+      onPress={() => navigation.navigate('Search', { screen: 'LearnerSearch' })}
     />
     <View
       style={{
@@ -66,11 +67,9 @@ any courses yet.`}
       paddingBottom="10px"
       marginX="20px"
     >
-      Our mission is to help communities teach, learn, and sustain their
-      endangered languages.
+      {i18n.t('dialogue.ourMission')}
       <Text fontFamily="heading" fontWeight="regular" fontStyle="normal">
-        {' '}
-        We’d love to support your revitalization efforts.
+        {i18n.t('dialogue.supportRevitalization')}
       </Text>
     </Text>
     <Text
@@ -79,13 +78,13 @@ any courses yet.`}
       fontStyle="normal"
       paddingTop="8%"
       paddingBottom="10%"
-      color="red.dark"
+      color="red.medium_dark"
       fontSize="2xl"
       onPress={() => {
         navigation.navigate('Apply', { from: 'HomeBaseCase' })
       }}
     >
-      Become a contributor
+      {i18n.t('actions.becomeContributor')}
     </Text>
   </View>
 )

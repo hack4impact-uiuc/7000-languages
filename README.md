@@ -35,18 +35,20 @@ Written in [JavaScript](https://www.javascript.com/) and built with [React Nativ
 ## Team
 
 <table align="center">
-  <tr align="center">
-    <td align="center"><a href="https://www.linkedin.com/in/ananth-yogi-koppol/"><img src="https://uiuc.hack4impact.org/images/people/yogi_koppol.jpg" width="75px;" alt="Ananth Koppol"/><br /><b>Ananth Koppol</b></a><br/><sub>Product Manager</sub></td>
-    <td align="center"><a href="https://www.linkedin.com/in/ashay-parikh-a0621619a/"><img src="https://uiuc.hack4impact.org/images/people/ashay_parikh.jpg" width="75px;" alt="Ashay Parikh"/><br /><b>Ashay Parikh</b></a><br /><sub>Technical Lead</sub></td>
-    <td align="center"><a href="https://www.linkedin.com/in/praneethguduguntla/"><img src="https://uiuc.hack4impact.org/images/people/praneeth_guduguntla.jpg" width="75px;" alt="Praneeth Guduguntla"/><br /><b>Praneeth Guduguntla</b></a><br /><sub>Product Designer</sub></td>
-    <td align="center"><a href="https://www.linkedin.com/in/estrella-2021/"><img src="https://uiuc.hack4impact.org/images/people/estrella_popoca.jpg" width="75px;" alt="Ellie Popoca"/><br /><b>Ellie Popoca</b></a><br /><sub>Software Developer</sub></td>
+  <tr>
+    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/product/1014241/LINEStorePC/main.png" width="75px;" alt="Pusheen"/><br /><b>Pusheen</b></a><br /><sub>Product Manager</sub></td>
+    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637244/android/sticker.png" width="75px;" alt="Unicorn Pusheen"/><br /><b>Unicorn Pusheen</b></a><br /><sub>Technical Lead</sub></td>
+    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637275/android/sticker.png" width="75px;" alt="Pilot Pusheen"/><br /><b>Pilot Pusheen</b></a><br /><sub>Product Designer</sub></td>
+    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637273/android/sticker.png" width="75px;" alt="Angry Pusheen"/><br /><b>Angry Pusheen</b></a><br /><sub>Product Researcher</sub></td>
+    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637255/android/sticker.png" width="75px;" alt="Chef Pusheen"/><br /><b>Chef Pusheen</b></a><br /><sub>Software Developer</sub></td>
   </tr>
-</table>
-<table align="center">
-  <tr align="center">
-    <td align="center"><a href="https://www.linkedin.com/in/ishaan-r-sharma/"><img src="https://uiuc.hack4impact.org/images/people/ishaan_sharma.jpg" width="75px;" alt="Ishaan Sharma"/><br /><b>Ishaan Sharma</b></a><br /><sub>Software Developer</sub></td>
-    <td align="center"><a href="https://www.linkedin.com/in/jessica-singh7/"><img src="https://uiuc.hack4impact.org/images/people/jessica_singh.jpg" width="75px;" alt="Jessica Singh"/><br /><b>Jessica Singh</b></a><br /><sub>Software Developer</sub></td>
-    <td align="center"><a href="https://www.linkedin.com/in/nayonika-roy-0162291b5/"><img src="https://uiuc.hack4impact.org/images/people/nayonika_roy.jpg" width="75px;" alt="Nayonika Roy"/><br /><b>Nayonika Roy</b></a><br /><sub>Software Developer</sub></td>
+  <tr>
+    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637245/android/sticker.png" width="75px;" alt="Sad Pusheen"/><br /><b>Sad Pusheen</b></a><br /><sub>Software Developer</sub></td>
+    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637258/android/sticker.png" width="75px;" alt="Silly Pusheen"/><br /><b>Silly Pusheen</b></a><br /><sub>Software Developer</sub></td>
+    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637256/android/sticker.png" width="75px;" alt="Coffee Pusheen"/><br /><b>Coffee Pusheen</b></a><br /><sub>Software Developer</sub></td>
+    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637246/android/sticker.png" width="75px;" alt="Chatty Pusheen"/><br /><b>Chatty Pusheen</b></a><br /><sub>Software Developer</sub></td>
+    <td align="center"><a href="https://neeraj.lol"><img src="https://stickershop.line-scdn.net/stickershop/v1/sticker/637251/android/sticker.png" width="75px;" alt="Cookie Pusheen"/><br /><b>Cookie Pusheen</b></a><br /><sub>Software Developer</sub></td>
+
   </tr>
 </table>
 

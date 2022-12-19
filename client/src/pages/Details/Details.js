@@ -5,6 +5,7 @@ import {
 } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
+import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   root: {
@@ -25,10 +26,12 @@ const Details = ({ route, navigation }) => {
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />
-      <Text style={styles.title}>{`Details (from ${from})`}</Text>
+      <Text style={styles.title}>
+        {`${i18n.t('dialogue.details')} ${from})`}
+      </Text>
 
       <StyledButton
-        title="Go Back"
+        title={i18n.t('actions.goBack')}
         variant="secondary"
         onPress={navigation.goBack}
       />

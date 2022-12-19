@@ -9,11 +9,13 @@ module.exports.verifyIdTokenMockReturnValue = (data) => {
   const userData = GOOGLE_AUTH_USER_DATA;
   if (data.idToken !== DEFAULT_ID_TOKEN) {
     userData.sub = data.idToken;
+  } else {
+    userData.sub = DEFAULT_AUTH_ID;
   }
 
   return {
     getPayload() {
-      return GOOGLE_AUTH_USER_DATA;
+      return userData;
     },
   };
 };
