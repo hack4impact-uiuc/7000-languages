@@ -88,6 +88,8 @@ const SelectLanguage = ({ navigation }) => {
         return 'Suivant'
       case SPANISH:
         return 'Siguiente'
+      default:
+        return ''
     }
   }
 

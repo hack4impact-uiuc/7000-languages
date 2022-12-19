@@ -1,6 +1,8 @@
 import * as SecureStore from 'expo-secure-store'
 import { NativeModules, Platform } from 'react-native'
-import { ENGLISH, FRENCH, SPANISH, CURRENT_LANGUAGE } from 'utils/constants'
+import {
+  ENGLISH, FRENCH, SPANISH, CURRENT_LANGUAGE,
+} from 'utils/constants'
 
 export const storeLanguage = async (language) => {
   /**
@@ -28,15 +30,15 @@ export const retrieveLanguage = async () => {
 
 /* This is a function to map the locale to an existing language on our languageData json object. i.e. fr_DZ -> fr */
 const convertLanguage = (locale) => {
-  let selectedLocale = ENGLISH;
+  let selectedLocale = ENGLISH
 
   if (locale.indexOf(FRENCH) >= 0) {
-    selectedLocale = FRENCH;
+    selectedLocale = FRENCH
   } else if (locale.indexOf(SPANISH) >= 0) {
-    selectedLocale = SPANISH;
+    selectedLocale = SPANISH
   }
 
-  return selectedLocale;
+  return selectedLocale
 }
 
 export const getDeviceLocale = () => {

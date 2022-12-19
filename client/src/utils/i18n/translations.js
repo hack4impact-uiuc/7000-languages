@@ -1,6 +1,9 @@
 const translations = {
   en: {
     dict: {
+      noCourses: 'No Courses',
+      learner: 'LEARNER',
+      contributor: 'CONTRIBUTOR',
       congratulations: 'Congratulations',
       error: 'Error',
       none: 'None',
@@ -59,11 +62,11 @@ const translations = {
       taughtIn: 'Taught in',
       completed: 'Completed',
       inProgress: 'In Progress',
-      accountInfo: 'Account Info',
       learningLanguage: 'Learning Language',
       unitsAvailable: 'Units Available',
     },
     actions: {
+      accountInfo: 'Account Info',
       exitActivity: 'Exit Activity',
       pressAndSelect: 'Press Audio & Select',
       correct: 'Correct',
@@ -220,6 +223,9 @@ const translations = {
   },
   fr: {
     dict: {
+      noCourses: 'Pas de cours',
+      learner: 'APPRENTISSAGE',
+      contributor: 'CONTRIBUTEUR',
       congratulations: 'Félicitations',
       error: 'Erreur',
       none: 'Aucun',
@@ -334,7 +340,7 @@ const translations = {
       joinNow: 'Rejoindre maintenant',
     },
     dialogue: {
-
+      joinOrStartCourse: 'Rejoignez ou commencez un cours!',
       invalidCode: 'Code invalide fourni pour le cours privé',
       activityInstructions:
         "Des options vous seront proposées et vous devrez trouver l'option correspondante.",
@@ -443,6 +449,9 @@ const translations = {
   },
   es: {
     dict: {
+      noCourses: 'No hay cursos',
+      learner: 'ALUMNO',
+      contributor: 'COLABORADOR',
       congratulations: 'Felicidades',
       error: 'Error',
       none: 'Ninguno',
@@ -501,11 +510,11 @@ const translations = {
       taughtIn: 'Se imparte en',
       completed: 'Completado',
       inProgress: 'En curso',
-      accountInfo: 'Información de la cuenta',
       learningLanguage: 'Aprender idiomas',
       unitsAvailable: 'Unidades disponibles',
     },
     actions: {
+      accountInfo: 'Información de la cuenta',
       exitActivity: 'Actividad de Salida',
       pressAndSelect: 'Pulse Audio y Seleccione',
       correct: 'Correcto',
@@ -522,7 +531,7 @@ const translations = {
       becomeContributor: 'Conviértete en colaborador.',
       startLearning: 'Empieza a Aprender!',
       manageUnits: 'Gestionar Unidades',
-      notLeave: "No te vayas",
+      notLeave: 'No te vayas',
       saveChanges: 'Guardar Cambios',
       recordAudio: 'Grabar Audio',
       applyNow: 'Solicitar Ahora',
@@ -559,6 +568,7 @@ const translations = {
       joinNow: 'Únete Ahora',
     },
     dialogue: {
+      joinOrStartCourse: 'Inscríbase o inicie un curso',
       invalidCode: 'Código no válido para curso privado',
       activityInstructions:
         'Aquí se le presentarán algunas opciones y tendrá que encontrar la opción correspondiente con la que coincidir.',
@@ -577,17 +587,16 @@ const translations = {
       changeTeachingLanguage: 'Cambiar el lenguaje de enseñanza',
       changeCourseName: 'Cambiar el nombre del curso',
       editCourseDescription: 'Editar la descripción del curso',
-      teachingChosenLanguage:
-        'Usted imparte su curso en esta lengua elegida.',
+      teachingChosenLanguage: 'Usted imparte su curso en esta lengua elegida.',
       changeAlternativeText: 'Cambiar el texto alternativo',
       updateCourse: 'Al actualizar un curso, piense en cómo se utilizará.',
       updateUnit: 'Al actualizar una unidad, piense en cómo se va a utilizar.',
       updateLesson: 'Al actualizar una lección, piense en cómo se utilizará.',
-      notLearnerPrompt: "Parece que aún no eres alumno de ningún curso.",
+      notLearnerPrompt: 'Parece que aún no eres alumno de ningún curso.',
       ourMission:
         'Nuestra misión es ayudar a las comunidades a enseñar, aprender y mantener sus lenguas en peligro.',
       supportRevitalization:
-        "Nos encantaría apoyar sus esfuerzos de revitalización.",
+        'Nos encantaría apoyar sus esfuerzos de revitalización.',
       setDescriptionPrompt: '',
       unsavedChangesPrompt:
         'Tiene cambios sin guardar. ¿Estás seguro de descartarlos y salir de la pantalla?',
@@ -596,8 +605,7 @@ const translations = {
       errorCaught: 'useErrorWrap(): error detectado:',
       shareIndigenousLanguage:
         '¿Conoces alguna lengua indígena que te gustaría compartir con el mundo?',
-      learnIndigenousLanguage:
-        '¿Quieres aprender una lengua indígena?',
+      learnIndigenousLanguage: '¿Quieres aprender una lengua indígena?',
       nameRequired: 'Nombre Obligatorio',
       emailRequired: 'Correo Electrónico Obligatorio',
       languageRequired: 'El Idioma es Obligatorio',
@@ -608,8 +616,7 @@ const translations = {
         'Esperamos que esta aplicación apoye sus esfuerzos de revitalización lingüística. Tenemos algunas preguntas que hacerle antes de aprobar y crear su curso. Si se aprueba, su curso aparecerá en su página de inicio.',
       languageDescriptionPrompt:
         'Proporcione una descripción de 1-2 frases de su lengua y/o cultura. Esto se mostrará a los alumnos en este curso.',
-      teachingLanguagePrompt:
-        'Usted imparte su curso en esta lengua elegida.',
+      teachingLanguagePrompt: 'Usted imparte su curso en esta lengua elegida.',
       alternativeNamesPrompt: 'Nombre alternativo',
       ISOCodePrompt: 'Puede Encontrar el Código ISO Aquí',
       glottoCodePrompt: 'Puede encontrar el código Glotto aquí',
@@ -644,7 +651,8 @@ const translations = {
         'Estas unidades estarán disponibles para su alumno. Arrástrelas para reordenarlas.',
       unselectedUnitsPrompt:
         'Estas unidades no están incluidas en su curso. Puede seguir editándolas.',
-      itemDescriptionPrompt: 'Un elemento de vocabulario puede ser una palabra o una frase.',
+      itemDescriptionPrompt:
+        'Un elemento de vocabulario puede ser una palabra o una frase.',
       moreInfoPrompt:
         'Utilice este espacio para dar información adicional sobre el elemento de vocabulario, como información gramatical y cultural, uso o traducciones/significados adicionales.',
       courseSettingsDescription:

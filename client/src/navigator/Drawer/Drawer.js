@@ -209,7 +209,7 @@ const DrawerMenuContainer = (props) => {
       </View>
 
       <StyledButton
-        title="CONTRIBUTOR"
+        title={i18n.t('dict.contributor')}
         fontSize={15}
         variant="contributor"
         onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
@@ -223,7 +223,7 @@ const DrawerMenuContainer = (props) => {
         <DrawerMenu {...props} />
 
         <StyledButton
-          title="LEARNER"
+          title={i18n.t('dict.learner')}
           fontSize={15}
           variant="learner"
           onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
@@ -270,7 +270,7 @@ const DrawerMenuContainer = (props) => {
       </DrawerContentScrollView>
       <View style={drawerStyles.topDivider} />
       <StyledButton
-        title={i18n.t('dict.accountInfo')}
+        title={i18n.t('actions.accountInfo')}
         fontSize="sm"
         leftIcon={<FontAwesome name="user" size={20} color={colors.black} />}
         variant="settings"

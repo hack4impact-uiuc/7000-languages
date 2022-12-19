@@ -178,7 +178,7 @@ export const AppSettingsNavigator = () => (
       name="AccountInfo"
       component={AccountInfo}
       options={({ navigation }) => ({
-        title: i18n.t('dict.accountInfo'),
+        title: i18n.t('actions.accountInfo'),
         headerLeft: () => <BackButton navigation={navigation} color="black" />,
         cardStyle: { backgroundColor: 'white' },
       })}
