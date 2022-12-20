@@ -83,7 +83,13 @@ const TabNavigator = (navigationData) => {
           title: i18n.t('dict.courseHome'),
         })}
         children={(props) => (
-          <HomeNavigator {...props} courseId={navigationData.route.name} />
+          <HomeNavigator
+            {...props}
+            courseId={navigationData.route.name.split('-')[0]}
+            isContributor={
+              navigationData.route.name.split('-')[1] === 'contributor'
+            }
+          />
         )}
       />
       {currentCourseId !== '' && !isLearnerCourse ? (

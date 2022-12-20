@@ -10,7 +10,7 @@ import { getCourse } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 import i18n from 'utils/i18n'
 
-const Home = ({ navigation, courseId }) => {
+const Home = ({ navigation, courseId, isContributor }) => {
   const dispatch = useDispatch()
 
   const errorWrap = useErrorWrap()
@@ -65,7 +65,7 @@ const Home = ({ navigation, courseId }) => {
 
   const courseIndex = allCourses.findIndex((course) => course._id === courseId)
 
-  if (courseIndex >= 0 && !allCourses[courseIndex].isContributor) {
+  if (courseIndex >= 0 && !isContributor) {
     return (
       <LearnerCourseHome
         navigation={navigation}
@@ -92,6 +92,7 @@ Home.propTypes = {
     setOptions: PropTypes.func,
   }),
   courseId: PropTypes.string,
+  isContributor: PropTypes.bool,
 }
 
 Home.defaultProps = {
@@ -101,5 +102,6 @@ Home.defaultProps = {
     setOptions: () => null,
   },
   courseId: NO_COURSE_ID,
+  isContributor: false,
 }
 export default Home

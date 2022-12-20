@@ -66,8 +66,6 @@ const LearnerCourseHome = ({ navigation, courseDescription, courseName }) => {
 
   // Sets the title of the page
   useEffect(() => {
-    setName(courseName)
-    setDescription(courseDescription)
     navigation.setOptions({
       title: `${i18n.t('dict.courseHome')}`,
     })
