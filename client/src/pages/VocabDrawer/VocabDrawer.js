@@ -170,14 +170,11 @@ const VocabDrawer = ({ navigation }) => {
 
   const clearRecording = async (path) => {
     if (path !== null) {
-      const splitPath = path.split('.')
-      const fileType = splitPath.length === 2 ? splitPath[1] : 'caf'
       await deleteAudioFile(
         currentCourseId,
         currentUnitId,
         currentLessonId,
         currentVocabId,
-        fileType,
       )
     }
   }
@@ -192,15 +189,11 @@ const VocabDrawer = ({ navigation }) => {
 
   const clearImage = async (path) => {
     if (path !== null) {
-      const splitPath = path.split('.')
-      const fileType = splitPath.length === 2 ? splitPath[1] : 'jpg'
-
       await deleteImageFile(
         currentCourseId,
         currentUnitId,
         currentLessonId,
         currentVocabId,
-        fileType,
       )
     }
   }

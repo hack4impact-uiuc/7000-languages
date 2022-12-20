@@ -195,7 +195,7 @@ export const AppSettingsNavigator = () => (
   </SettingsStack.Navigator>
 )
 
-export const HomeNavigator = ({ courseId }) => (
+export const HomeNavigator = ({ courseId, isContributor }) => (
   <Stack.Navigator
     initialRouteName="Home"
     screenOptions={{
@@ -205,7 +205,9 @@ export const HomeNavigator = ({ courseId }) => (
   >
     <Stack.Screen
       name={courseId}
-      children={(props) => <Home {...props} courseId={courseId} />}
+      children={(props) => (
+        <Home {...props} courseId={courseId} isContributor={isContributor} />
+      )}
       options={({ navigation }) => ({
         title: i18n.t('dict.courseHome'),
         headerLeft: () => <DrawerButton navigation={navigation} />,
@@ -362,8 +364,10 @@ export const SettingsNavigator = () => (
 
 HomeNavigator.propTypes = {
   courseId: PropTypes.string,
+  isContributor: PropTypes.bool,
 }
 
 HomeNavigator.defaultProps = {
   courseId: NO_COURSE_ID,
+  isContributor: false,
 }

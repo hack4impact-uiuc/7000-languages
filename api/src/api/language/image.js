@@ -142,7 +142,7 @@ router.delete(
   errorWrap(async (req, res) => {
     const { course_id, unit_id, lesson_id, vocab_id } = req.params;
 
-    const { success, vocab } = deleteVocabImage(
+    const { success, vocab } = await deleteVocabImage(
       course_id,
       unit_id,
       lesson_id,

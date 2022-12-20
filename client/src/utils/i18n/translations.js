@@ -559,7 +559,7 @@ const translations = {
       removeImage: 'Eliminar Imagen',
       addImage: 'Añadir Imagen',
       editVocabItem: 'Editar Elemento de Vocabulario',
-      addVocabItem: 'Añadir un Elemento de Vocabulario',
+      addVocabItem: 'Añadir Vocabulario',
       addNew: 'Añadir Nuevo',
       manageVocab: 'Gestionar el Vocabulario',
       search: 'Buscar en',

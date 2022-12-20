@@ -114,8 +114,8 @@ const generateUnitLabel = (numUnits) => {
 
 const generateCourseTabs = (tabData, contributor) => tabData.map((element, index) => (
   <Drawer.Screen
-    key={element._id}
-    name={element._id}
+    key={`${element._id}-${contributor ? 'contributor' : 'learner'}`}
+    name={`${element._id}-${contributor ? 'contributor' : 'learner'}`}
     component={TabNavigator}
     options={() => ({
       drawerLabel: () => (
@@ -288,8 +288,10 @@ const DrawerNavigator = () => {
   const contributorCourses = allCourses.filter(
     (element) => element.isContributor === true,
   )
-  const learnerIds = learnerCourses.map((course) => course._id)
-  const contributorIds = contributorCourses.map((course) => course._id)
+  const learnerIds = learnerCourses.map((course) => `${course._id}-learner`)
+  const contributorIds = contributorCourses.map(
+    (course) => `${course._id}-contributor`,
+  )
 
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()

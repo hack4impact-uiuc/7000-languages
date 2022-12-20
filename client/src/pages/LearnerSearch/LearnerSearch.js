@@ -78,7 +78,7 @@ const LearnerSearch = ({ navigation }) => {
       }
     })
 
-    navigation.navigate(courseId)
+    navigation.navigate(`${courseId}-learner`)
   }
 
   const baseCase = (
