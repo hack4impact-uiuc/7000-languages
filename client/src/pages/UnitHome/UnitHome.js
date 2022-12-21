@@ -64,8 +64,10 @@ const UnitHome = ({ navigation }) => {
     )
     const unitData = allUnits[unitIndex]
 
-    setUnitDescription(unitData.description)
-    setUnitName(unitData.name)
+    if (unitData !== undefined) {
+      setUnitDescription(unitData.description)
+      setUnitName(unitData.name)
+    }
 
     // Sets the title of the page
     navigation.setOptions({
