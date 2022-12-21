@@ -63,29 +63,36 @@ export const getFileURI = async (vocabID, mediaType) => {
 
   if (fileURI) {
     // Check when was the last time this file was updated
-    const fileInfo = await FileSystem.getInfoAsync(fileURI)
-    if (!fileInfo.exists) {
-      deleteFileURI(vocabID, mediaType, false)
+    try {
+      const fileInfo = await FileSystem.getInfoAsync(fileURI)
+      if (!fileInfo.exists) {
+        deleteFileURI(vocabID, mediaType, false)
+        return {
+          fileURI,
+          shouldRefresh: true,
+        }
+      }
+
+      // If too much time has passed, we indicated that the file needs to get refreshed (fetched from the API again)
+      const timeDifference = Date.now() / 1000 - fileInfo.modificationTime
+
+      if (timeDifference >= INVALIDATION_SECONDS) {
+        return {
+          fileURI,
+          shouldRefresh: true,
+        }
+      }
+
+      // Valid file URI
       return {
         fileURI,
-        shouldRefresh: true,
+        shouldRefresh: false,
       }
-    }
-
-    // If too much time has passed, we indicated that the file needs to get refreshed (fetched from the API again)
-    const timeDifference = Date.now() / 1000 - fileInfo.modificationTime
-
-    if (timeDifference >= INVALIDATION_SECONDS) {
+    } catch (error) {
       return {
-        fileURI,
+        fileURI: null,
         shouldRefresh: true,
       }
-    }
-
-    // Valid file URI
-    return {
-      fileURI,
-      shouldRefresh: false,
     }
   }
 
