@@ -52,8 +52,6 @@ export const createUser = async (userData) => {
 export const getUser = async () => {
   const requestString = '/user'
   const res = await instance.get(requestString)
-
-  if (!res?.data?.success) throw new Error(res?.data?.message)
   return res.data
 }
 

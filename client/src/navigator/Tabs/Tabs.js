@@ -30,7 +30,18 @@ const TabNavigator = (navigationData) => {
   const courseIndex = allCourses.findIndex(
     (course) => course._id === currentCourseId,
   )
-  const isLearnerCourse = courseIndex >= 0 && !allCourses[courseIndex].isContributor
+
+  /* navigationData.route.name is formatted as "<mongodb id>-learner" if the selected course is a Learner course
+    and "<mongodb id>-contributor" if the select course is a Contributor course. We want to split this data by the
+  '-' delimiter to get the mongodb id and learner/contributor text.
+  */
+
+  const isProperRoute = navigationData.route.name.split('-').length === 2
+
+  const courseIdFromRoute = isProperRoute && navigationData.route.name.split('-')[0]
+  const isLearnerCourse = courseIndex >= 0
+    && isProperRoute
+    && navigationData.route.name.split('-')[1] === 'learner'
 
   return (
     <Tab.Navigator
@@ -83,7 +94,11 @@ const TabNavigator = (navigationData) => {
           title: i18n.t('dict.courseHome'),
         })}
         children={(props) => (
-          <HomeNavigator {...props} courseId={navigationData.route.name} />
+          <HomeNavigator
+            {...props}
+            courseId={courseIdFromRoute}
+            isContributor={!isLearnerCourse}
+          />
         )}
       />
       {currentCourseId !== '' && !isLearnerCourse ? (

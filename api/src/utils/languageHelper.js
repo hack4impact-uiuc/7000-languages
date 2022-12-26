@@ -281,17 +281,7 @@ const deleteVocabAudio = async (course_id, unit_id, lesson_id, vocab_id) => {
 
   const { success, vocab, lesson } = await findVocabItem(lesson_id, vocab_id);
   if (success) {
-    let fileType = 'm4a';
-    const splitAudioPath = vocab.audio.split('.');
-
-    if (splitAudioPath.length === 2) {
-      fileType = splitAudioPath[1];
-    }
-
-    // Delete file from S3
-    await deleteFile(
-      `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio.${fileType}`,
-    );
+    deleteVocabAudioFromS3(vocab, course_id, unit_id, lesson_id, vocab_id);
 
     vocab.audio = '';
 
@@ -311,17 +301,7 @@ const deleteVocabImage = async (course_id, unit_id, lesson_id, vocab_id) => {
 
   const { success, vocab, lesson } = await findVocabItem(lesson_id, vocab_id);
   if (success) {
-    let fileType = 'jpg';
-    const splitImagePath = vocab.image.split('.');
-
-    if (splitImagePath.length === 2) {
-      fileType = splitImagePath[1];
-    }
-
-    // Delete file from S3
-    await deleteFile(
-      `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.${fileType}`,
-    );
+    deleteVocabImageFromS3(vocab, course_id, unit_id, lesson_id, vocab_id);
 
     // Upadte path to image file in MongoDB
     vocab.image = '';
@@ -333,6 +313,55 @@ const deleteVocabImage = async (course_id, unit_id, lesson_id, vocab_id) => {
   return { success: false, vocab: undefined };
 };
 
+const deleteVocabAudioFromS3 = async (
+  vocab,
+  course_id,
+  unit_id,
+  lesson_id,
+  vocab_id,
+) => {
+  let fileType = 'm4a';
+  const splitAudioPath = vocab.audio.split('.');
+
+  if (splitAudioPath.length === 2) {
+    fileType = splitAudioPath[1];
+  }
+
+  try {
+    // Delete file from S3
+    await deleteFile(
+      `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/audio.${fileType}`,
+    );
+    return true;
+  } catch (e) {
+    console.error('deleteVocabAudioFromS3(): ', e);
+  }
+};
+
+const deleteVocabImageFromS3 = async (
+  vocab,
+  course_id,
+  unit_id,
+  lesson_id,
+  vocab_id,
+) => {
+  let fileType = 'jpg';
+  const splitImagePath = vocab.image.split('.');
+
+  if (splitImagePath.length === 2) {
+    fileType = splitImagePath[1];
+  }
+
+  try {
+    // Delete file from S3
+    await deleteFile(
+      `${course_id}/${unit_id}/${lesson_id}/${vocab_id}/image.${fileType}`,
+    );
+  } catch (e) {
+    console.error('deleteVocabImageFromS3(): ', e);
+  }
+};
+
 const deleteVocabItem = async (lesson_id, vocab_id) => {
   const isValid = await checkIds({ lesson_id, vocab_id });
 
@@ -340,13 +369,13 @@ const deleteVocabItem = async (lesson_id, vocab_id) => {
     return { success: false, message: ERR_MISSING_OR_INVALID_DATA };
   }
 
-  const { success, lesson } = await findVocabItem(lesson_id, vocab_id);
+  const { success, vocab, lesson } = await findVocabItem(lesson_id, vocab_id);
   if (success) {
     const course_id = lesson._course_id;
     const unit_id = lesson._unit_id;
     await Promise.all([
-      deleteVocabAudio(course_id, unit_id, lesson_id, vocab_id),
-      deleteVocabImage(course_id, unit_id, lesson_id, vocab_id),
+      deleteVocabAudioFromS3(vocab, course_id, unit_id, lesson_id, vocab_id),
+      deleteVocabImageFromS3(vocab, course_id, unit_id, lesson_id, vocab_id),
     ]);
     const index = getVocabIndexByID(vocab_id, lesson);
     lesson.vocab.splice(index, 1);

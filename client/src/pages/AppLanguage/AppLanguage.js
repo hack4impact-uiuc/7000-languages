@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import i18n from 'utils/i18n'
 import { colors } from 'theme'
 import { AntDesign } from '@expo/vector-icons'
-import { ENGLISH, FRENCH } from 'utils/constants'
+import { ENGLISH, FRENCH, SPANISH } from 'utils/constants'
 import { storeLanguage, retrieveLanguage } from 'utils/i18n/utils'
 import * as Updates from 'expo-updates'
 
@@ -119,6 +119,31 @@ const AppLanguage = () => {
             </Text>
           </View>
           {language === FRENCH && (
+            <AntDesign name="check" color="black" size={30} />
+          )}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => changeLanguage(SPANISH)}
+          style={{
+            ...styles.languageContainer,
+            backgroundColor: language === SPANISH ? colors.gray.light : 'white',
+          }}
+        >
+          <View>
+            <Text fontFamily="heading" fontWeight="regular" fontSize="lg">
+              Español
+            </Text>
+            <Text
+              fontFamily="body"
+              fontWeight="regular"
+              fontSize="md"
+              color="gray.medium"
+            >
+              Spanish
+            </Text>
+          </View>
+          {language === SPANISH && (
             <AntDesign name="check" color="black" size={30} />
           )}
         </TouchableOpacity>

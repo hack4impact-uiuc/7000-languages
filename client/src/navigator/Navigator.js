@@ -31,8 +31,8 @@ const Navigator = () => {
         dispatch(authenticate({ loggedIn: false }))
       }
       getUser()
-        .then(() => {
-          dispatch(authenticate({ loggedIn: true }))
+        .then(({ success }) => {
+          dispatch(authenticate({ loggedIn: success }))
         })
         .catch(() => {
           dispatch(authenticate({ loggedIn: false }))

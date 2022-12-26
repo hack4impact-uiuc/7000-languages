@@ -114,8 +114,8 @@ const generateUnitLabel = (numUnits) => {
 
 const generateCourseTabs = (tabData, contributor) => tabData.map((element, index) => (
   <Drawer.Screen
-    key={element._id}
-    name={element._id}
+    key={`${element._id}-${contributor ? 'contributor' : 'learner'}`}
+    name={`${element._id}-${contributor ? 'contributor' : 'learner'}`}
     component={TabNavigator}
     options={() => ({
       drawerLabel: () => (
@@ -209,7 +209,7 @@ const DrawerMenuContainer = (props) => {
       </View>
 
       <StyledButton
-        title="CONTRIBUTOR"
+        title={i18n.t('dict.contributor')}
         fontSize={15}
         variant="contributor"
         onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
@@ -223,7 +223,7 @@ const DrawerMenuContainer = (props) => {
         <DrawerMenu {...props} />
 
         <StyledButton
-          title="LEARNER"
+          title={i18n.t('dict.learner')}
           fontSize={15}
           variant="learner"
           onPress={() => props.navigation.navigate('Apply', { from: 'HomeBaseCase' })}
@@ -270,7 +270,7 @@ const DrawerMenuContainer = (props) => {
       </DrawerContentScrollView>
       <View style={drawerStyles.topDivider} />
       <StyledButton
-        title={i18n.t('dict.accountInfo')}
+        title={i18n.t('actions.accountInfo')}
         fontSize="sm"
         leftIcon={<FontAwesome name="user" size={20} color={colors.black} />}
         variant="settings"
@@ -288,8 +288,10 @@ const DrawerNavigator = () => {
   const contributorCourses = allCourses.filter(
     (element) => element.isContributor === true,
   )
-  const learnerIds = learnerCourses.map((course) => course._id)
-  const contributorIds = contributorCourses.map((course) => course._id)
+  const learnerIds = learnerCourses.map((course) => `${course._id}-learner`)
+  const contributorIds = contributorCourses.map(
+    (course) => `${course._id}-contributor`,
+  )
 
   const errorWrap = useErrorWrap()
   const trackPromise = useTrackPromise()
