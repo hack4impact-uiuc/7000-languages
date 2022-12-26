@@ -8,7 +8,7 @@ const { ERR_MISSING_OR_INVALID_DATA } = require('../../utils/constants');
 const { checkIds } = require('../../utils/languageHelper');
 
 /**
- * Marks the user as having completed a specific lesson
+ * Joins user in course with course_id
  */
 router.post(
   '/',
@@ -46,6 +46,46 @@ router.post(
     user.save();
 
     return sendResponse(res, 200, "Added course to user's learner languages");
+  }),
+);
+
+/**
+ * Removes user from course
+ */
+router.post(
+  '/remove',
+  requireAuthentication,
+  errorWrap(async (req, res) => {
+    const { course_id } = req.body;
+
+    if (course_id === undefined) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    const isValid = await checkIds({ course_id });
+
+    if (!isValid) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+
+    const learnerLanguages = req.user.learnerLanguages;
+
+    if (!learnerLanguages.includes(String(course_id))) {
+      return sendResponse(res, 400, 'User not in course');
+    }
+
+    const user = await models.User.findById(req.user._id);
+
+    user.learnerLanguages = user.learnerLanguages.filter(
+      (id) => id !== course_id,
+    );
+    user.save();
+
+    return sendResponse(
+      res,
+      200,
+      "Removed course from user's learner languages",
+    );
   }),
 );
 
