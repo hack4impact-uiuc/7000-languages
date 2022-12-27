@@ -23,3 +23,7 @@ module.exports.POST_INVALID_COURSE = {
 module.exports.POST_NONEXISTANT_COURSE = {
   course_id: '72391a30487d5ae343c82311',
 };
+
+module.exports.DELETE_LEAVE_COURSE = {
+  course_id: '62391a30487d5ae343c82311',
+};

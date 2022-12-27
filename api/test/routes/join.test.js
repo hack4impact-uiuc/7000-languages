@@ -8,6 +8,7 @@ const {
   POST_NO_CODE,
   POST_INVALID_COURSE,
   POST_NONEXISTANT_COURSE,
+  DELETE_LEAVE_COURSE,
 } = require('../mock-data/join-mock-data');
 const { withAuthentication } = require('../utils/auth');
 const _ = require('lodash');
@@ -140,5 +141,79 @@ describe('POST /learner/join/ ', () => {
     expect(message).toEqual(
       'Missing or invalid data in the request. Please try again.',
     );
+  });
+});
+
+describe('DELETE /learner/join/ ', () => {
+  /*
+        We have to make sure we connect to a MongoDB mock db before the test
+        and close the connection at the end.
+      */
+  afterAll(async () => await db.closeDatabase());
+  afterEach(async () => await db.resetDatabase());
+  beforeAll(async () => {
+    await db.connect();
+  });
+
+  test('Learner can leave course', async () => {
+    const joinResponse = await withAuthentication(
+      request(app).post('/learner/join').send(DELETE_LEAVE_COURSE),
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
+    );
+
+    expect(joinResponse.status).toBe(200);
+
+    const leaveResponse = await withAuthentication(
+      request(app).delete(`/learner/join?id=${DELETE_LEAVE_COURSE.course_id}`),
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
+    );
+
+    expect(leaveResponse.status).toBe(200);
+  });
+
+  test('Learner cannot leave course they are not in', async () => {
+    const leaveResponse = await withAuthentication(
+      request(app).delete(`/learner/join?id=${DELETE_LEAVE_COURSE.course_id}`),
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
+    );
+
+    expect(leaveResponse.status).toBe(400);
+    expect(leaveResponse.body.message).toBe('User not in course');
+  });
+
+  test('Learner duplicate leave course error', async () => {
+    const joinResponse = await withAuthentication(
+      request(app).post('/learner/join').send(DELETE_LEAVE_COURSE),
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
+    );
+
+    expect(joinResponse.status).toBe(200);
+
+    const leaveResponse = await withAuthentication(
+      request(app).delete(`/learner/join?id=${DELETE_LEAVE_COURSE.course_id}`),
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
+    );
+
+    expect(leaveResponse.status).toBe(200);
+
+    const leaveResponse2 = await withAuthentication(
+      request(app).delete(`/learner/join?id=${DELETE_LEAVE_COURSE.course_id}`),
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
+    );
+
+    expect(leaveResponse2.status).toBe(400);
+    expect(leaveResponse2.body.message).toBe('User not in course');
+  });
+
+  test('Learner cannot leave non-existing course', async () => {
+    const leaveResponse = await withAuthentication(
+      request(app).delete(
+        `/learner/join?id=${POST_NONEXISTANT_COURSE.course_id}`,
+      ),
+      '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
+    );
+    console.log(leaveResponse);
+    expect(leaveResponse.status).toBe(400);
+    expect(leaveResponse.body.message).toBe(ERR_MISSING_OR_INVALID_DATA);
   });
 });

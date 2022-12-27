@@ -52,11 +52,11 @@ router.post(
 /**
  * Removes user from course
  */
-router.post(
-  '/remove',
+router.delete(
+  '/',
   requireAuthentication,
   errorWrap(async (req, res) => {
-    const { course_id } = req.body;
+    const { id: course_id } = req.query;
 
     if (course_id === undefined) {
       return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);

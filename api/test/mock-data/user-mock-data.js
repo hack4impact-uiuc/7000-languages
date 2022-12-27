@@ -66,6 +66,6 @@ module.exports.EXPECTED_GET_USER_DATA = {
       num_units: 0,
     },
   ],
-  learnerLanguages: [],
+  learnerLanguages: ['62391a30487d5ae343c82311'],
   collaboratorLanguages: [],
 };
