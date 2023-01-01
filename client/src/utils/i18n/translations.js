@@ -1,6 +1,8 @@
 const translations = {
   en: {
     dict: {
+      leave: 'Leave',
+      leaveCourse: 'Leave Course',
       noCourses: 'No Courses',
       learner: 'LEARNER',
       contributor: 'CONTRIBUTOR',
@@ -129,6 +131,8 @@ const translations = {
       noActivitiesAvailable: 'No Activities Available',
       activitiesInDevelopment:
         'Learner activities are currently in development.',
+      areYouSureLeaveCourse:
+        'Are you sure you want to leave this course and delete your learner progress?',
       areYouSureDeleteCourse: 'Are you sure you want to delete this course?',
       areYouSureDelete: 'Are you sure you want to delete?',
       actionCannotBeUndone: 'This action cannot be undone.',
@@ -209,10 +213,12 @@ const translations = {
       itemDescriptionPrompt: 'A vocab item can be a word or phrase.',
       moreInfoPrompt:
         'Use this space to give additional information about the vocab item, such as grammatical and cultural information, usage, or additional translations/meanings.',
+      learnerCourseSettingsDescription:
+        'Here are the settings for you to manage your learning.',
       courseSettingsDescription:
-        'Here is the settings for you to manage your own course.',
+        'Here are the settings for you to manage your own course.',
       appSettingsDescription:
-        'Here is the settings for you to manage your app.',
+        'Here are the settings for you to manage your app.',
       courseSettingsSave:
         'You can save your changes by clicking the save button. If you leave this screen without pressing the button, your changes will be discarded.',
       courseSettingsChangeCode:
@@ -223,6 +229,8 @@ const translations = {
   },
   fr: {
     dict: {
+      leave: 'Laissez',
+      leaveCourse: 'Cours de congé',
       noCourses: 'Pas de cours',
       learner: 'APPRENTISSAGE',
       contributor: 'CONTRIBUTEUR',
@@ -349,6 +357,7 @@ const translations = {
       noActivitiesAvailable: 'Aucune activité disponible',
       activitiesInDevelopment:
         'Les activités pour les apprenants sont en cours de développement.',
+      areYouSureLeaveCourse: 'Êtes-vous sûr de vouloir quitter ce cours?',
       areYouSureDeleteCourse: 'Vous êtes sûr de vouloir supprimer ce cours?',
       areYouSureDelete: 'Etes-vous sûr que vous voulez supprimer?',
       actionCannotBeUndone: 'Cette action ne peut être annulée.',
@@ -434,6 +443,8 @@ const translations = {
         'Un élément de vocabulaire peut être un mot ou une phrase.',
       moreInfoPrompt:
         "Utilisez cet espace pour donner des informations supplémentaires sur l'élément de vocabulaire, par exemple grammaticale et culturelle, l'usage, ou des traductions/significations traductions/significations supplémentaires.",
+      learnerCourseSettingsDescription:
+        'Voici les paramètres qui vous permettent de gérer votre apprentissage',
       courseSettingsDescription:
         'Voici les paramètres qui vous permettront de gérer votre propre cours.',
       appSettingsDescription:
@@ -449,6 +460,8 @@ const translations = {
   },
   es: {
     dict: {
+      leave: 'Dejar',
+      leaveCourse: 'Dejar el curso',
       noCourses: 'No hay cursos',
       learner: 'ALUMNO',
       contributor: 'COLABORADOR',
@@ -577,6 +590,7 @@ const translations = {
       noActivitiesAvailable: 'No hay actividades disponibles',
       activitiesInDevelopment:
         'Actualmente se están desarrollando actividades para los alumnos.',
+      areYouSureLeaveCourse: '¿Estás seguro de que quieres dejar este curso?',
       areYouSureDeleteCourse: '¿Está seguro de que desea eliminar este curso?',
       areYouSureDelete: '¿Seguro que quieres borrar?',
       actionCannotBeUndone: 'Esta acción no puede deshacerse.',
@@ -655,12 +669,14 @@ const translations = {
         'Un elemento de vocabulario puede ser una palabra o una frase.',
       moreInfoPrompt:
         'Utilice este espacio para dar información adicional sobre el elemento de vocabulario, como información gramatical y cultural, uso o traducciones/significados adicionales.',
+      learnerCourseSettingsDescription:
+        'Aquí tiene la configuración para gestionar su aprendizaje',
       courseSettingsDescription:
-        'Aquí tienes la configuración para que puedas gestionar tu propio curso.',
+        'Aquí tiene la configuración para que puedas gestionar su propio curso.',
       appSettingsDescription:
-        'Aquí tienes la configuración para gestionar tu aplicación.',
+        'Aquí tiene la configuración para gestionar su aplicación.',
       courseSettingsSave:
-        'You can save your changes by clicking the save button. If you leave this screen without pressing the button, your changes will be discarded.',
+        'Puede guardar sus cambios pulsando el botón Guardar. Si abandonas esta pantalla sin pulsar el botón, tus cambios se descartarán',
       courseSettingsChangeCode:
         'Los alumnos tendrán que introducir este código para unirse a su curso.',
       startSearching: '¡Empieza a buscar cursos y nuevos idiomas que aprender!',

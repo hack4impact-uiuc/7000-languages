@@ -57,7 +57,7 @@ const CourseHome = ({ navigation, courseDescription, courseName }) => {
     navigation.setOptions({
       title: `${i18n.t('dict.courseHome')}`,
     })
-  }, navigation)
+  }, [navigation])
 
   /**
    * Navigates to the Manage Units Page

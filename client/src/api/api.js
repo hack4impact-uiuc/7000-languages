@@ -39,6 +39,14 @@ export const markLessonAsComplete = async (courseId, unitId, lessonId) => {
   return res.data
 }
 
+export const leaveCourse = async (courseId) => {
+  const requestString = `/learner/join?id=${courseId}`
+  const res = await instance.delete(requestString)
+
+  if (!res?.data?.success) throw new Error(res.data?.message)
+  return res.data
+}
+
 /* User Endpoints */
 
 export const createUser = async (userData) => {
