@@ -79,6 +79,7 @@ router.delete(
     user.learnerLanguages = user.learnerLanguages.filter(
       (id) => id !== course_id,
     );
+
     await user.save();
 
     // Delete course progress
