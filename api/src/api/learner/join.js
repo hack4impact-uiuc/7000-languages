@@ -79,7 +79,11 @@ router.delete(
     user.learnerLanguages = user.learnerLanguages.filter(
       (id) => id !== course_id,
     );
-    user.save();
+
+    await user.save();
+
+    // Delete course progress
+    await models.Complete.deleteMany({ user_id: req.user._id });
 
     return sendResponse(
       res,
