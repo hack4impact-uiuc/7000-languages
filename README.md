@@ -43,7 +43,7 @@ Written in [JavaScript](https://www.javascript.com/) and built with [React Nativ
     <td align="center"><a href="https://www.linkedin.com/in/jocelyn-xu-a931511b3/"><img src="https://uiuc.hack4impact.org/images/people/jocelyn_xu.jpg" width="75px;" alt="Jocelyn Xu"/><br /><b>Jocelyn Xu</b></a><br /><sub>Product Designer</sub></td>
     <td align="center"><a href="https://www.linkedin.com/in/madison-park/"><img src="https://uiuc.hack4impact.org/images/people/madison_park.jpg" width="75px;" alt="Madison Park"/><br /><b>Madison Park</b></a><br /><sub>Product Designer</sub></td>
     <td align="center"><a href="https://www.linkedin.com/in/alex-masgras-b055971b5"><img src="https://uiuc.hack4impact.org/images/people/alex_masgras.jpg" width="75px;" alt="Alex Masgras"/><br /><b>Alex Masgras</b></a><br /><sub>Software Developer</sub></td>
-    <td align="center"><a href="https://www.linkedin.com/in/feiyuwong/"><img src="https://uiuc.hack4impact.org/images/people/andy_wong.jpg" width="75px;" alt="Andy Wong"/><br /><b>Andy Wong</b></a><br /><sub>Software Developer</sub></td>
+    <td align="center"><a href="https://www.linkedin.com/in/feiyuwong/"><img src="https://images.ctfassets.net/xig6hkxlux4q/1V8t7Up2v8kpuRoJsggcBV/dc3247bc1be1c151823d04ac58dcf73d/andy_wong.jpeg" width="75px;" alt="Andy Wong"/><br /><b>Andy Wong</b></a><br /><sub>Software Developer</sub></td>
   </tr>
 </table>
 <table align="center">
