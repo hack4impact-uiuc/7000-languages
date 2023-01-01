@@ -43,6 +43,8 @@ const TabNavigator = (navigationData) => {
     && isProperRoute
     && navigationData.route.name.split('-')[1] === 'learner'
 
+  const shouldDisplayContributorSettings = currentCourseId !== '' && !isLearnerCourse
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -101,15 +103,22 @@ const TabNavigator = (navigationData) => {
           />
         )}
       />
-      {currentCourseId !== '' && !isLearnerCourse ? (
-        <Tab.Screen
-          name="Settings"
-          options={() => ({
-            title: i18n.t('dict.settings'),
-          })}
-          children={(props) => <SettingsNavigator {...props} />}
-        />
-      ) : null}
+      <Tab.Screen
+        name="Settings"
+        options={() => ({
+          title: i18n.t('dict.settings'),
+        })}
+        children={(props) => (
+          <SettingsNavigator
+            initialRouteName={
+              shouldDisplayContributorSettings
+                ? 'Settings'
+                : 'LearnerCourseSettings'
+            }
+            {...props}
+          />
+        )}
+      />
     </Tab.Navigator>
   )
 }

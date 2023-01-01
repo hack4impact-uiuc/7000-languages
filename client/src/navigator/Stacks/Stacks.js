@@ -30,6 +30,7 @@ import Activity2 from 'pages/Activity2'
 import AppLanguage from 'pages/AppLanguage'
 import AccountInfo from 'pages/AccountInfo'
 import Congrats from 'pages/Congrats'
+import LearnerCourseSettings from 'pages/LearnerCourseSettings'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
 
@@ -343,9 +344,9 @@ export const SearchNavigator = () => (
   </SearchStack.Navigator>
 )
 
-export const SettingsNavigator = () => (
+export const SettingsNavigator = ({ initialRouteName }) => (
   <Stack.Navigator
-    initialRouteName="CourseSettings"
+    initialRouteName={initialRouteName}
     screenOptions={{
       ...settingsNavigationProps,
       headerMode: 'screen',
@@ -359,8 +360,24 @@ export const SettingsNavigator = () => (
         cardStyle: { backgroundColor: 'white' },
       })}
     />
+    <Stack.Screen
+      name="LearnerCourseSettings"
+      component={LearnerCourseSettings}
+      options={() => ({
+        title: i18n.t('dict.settings'),
+        cardStyle: { backgroundColor: 'white' },
+      })}
+    />
   </Stack.Navigator>
 )
+
+SettingsNavigator.propTypes = {
+  initialRouteName: PropTypes.string,
+}
+
+SettingsNavigator.defaultProps = {
+  initialRouteName: 'Settings',
+}
 
 HomeNavigator.propTypes = {
   courseId: PropTypes.string,
