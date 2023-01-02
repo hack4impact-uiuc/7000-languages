@@ -19,6 +19,7 @@ const {
   checkIds,
   getNumLessonsInUnit,
   patchDocument,
+  deleteLesson,
 } = require('../../utils/languageHelper');
 
 /**
@@ -149,6 +150,25 @@ router.patch(
     patchDocument(lesson, updates);
     await lesson.save();
     return sendResponse(res, 200, SUCCESS_PATCHING_LESSON_DATA, lesson);
+  }),
+);
+
+router.delete(
+  '/',
+  requireAuthentication,
+  requireLanguageAuthorization,
+  errorWrap(async (req, res) => {
+    const { lesson_id } = req.query;
+
+    if (!lesson_id) {
+      return sendResponse(res, 400, ERR_MISSING_OR_INVALID_DATA);
+    }
+    deleteLesson(lesson_id).then(({ success, message }) => {
+      if (success) {
+        return sendResponse(res, 200, message);
+      }
+      return sendResponse(res, 400, message);
+    });
   }),
 );
 

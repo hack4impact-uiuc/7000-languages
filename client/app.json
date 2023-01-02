@@ -19,7 +19,17 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.languages7000.app",
+      "buildNumber": "0.0.1"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/app-icon.png",
+        "backgroundColor": "#df4e47"
+      },
+      "package": "com.languages7000.app",
+      "versionCode": 1
     },
     "packagerOpts": {
       "config": "metro.config.js",
@@ -32,6 +42,15 @@
           "photosPermission": "The app accesses your photos to let you capture images related to your course."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "a584bef5-9bb9-4c77-91dc-679921f7a6bf"
+      },
+      // "apiURL": "http://7000-languages-api-prod-env.eba-9hbad6za.us-east-1.elasticbeanstalk.com",
+      "apiDevelopmentPort": 3000,
+      "expoClientId": "1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com",
+      "clientSecret": "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"
+    }
   }
 }

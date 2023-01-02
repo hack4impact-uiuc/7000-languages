@@ -236,3 +236,6 @@ describe('POST /vocab/ ', () => {
     expect(result).toEqual(POST_BERBER_VOCAB_ITEM_EXPECTED);
   });
 });
+
+// This block tests the DELETE /vocab/ endpoint.
+describe('DELETE /vocab/ ', () => {});

@@ -6,6 +6,7 @@ import { AntDesign } from '@expo/vector-icons'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
+import i18n from 'utils/i18n'
 import { HomeNavigator, SettingsNavigator } from '../Stacks'
 import { NO_COURSE_ID } from '../../utils/constants'
 
@@ -29,7 +30,20 @@ const TabNavigator = (navigationData) => {
   const courseIndex = allCourses.findIndex(
     (course) => course._id === currentCourseId,
   )
-  const isLearnerCourse = courseIndex >= 0 && !allCourses[courseIndex].isContributor
+
+  /* navigationData.route.name is formatted as "<mongodb id>-learner" if the selected course is a Learner course
+    and "<mongodb id>-contributor" if the select course is a Contributor course. We want to split this data by the
+  '-' delimiter to get the mongodb id and learner/contributor text.
+  */
+
+  const isProperRoute = navigationData.route.name.split('-').length === 2
+
+  const courseIdFromRoute = isProperRoute && navigationData.route.name.split('-')[0]
+  const isLearnerCourse = courseIndex >= 0
+    && isProperRoute
+    && navigationData.route.name.split('-')[1] === 'learner'
+
+  const shouldDisplayContributorSettings = currentCourseId !== '' && !isLearnerCourse
 
   return (
     <Tab.Navigator
@@ -78,16 +92,33 @@ const TabNavigator = (navigationData) => {
     >
       <Tab.Screen
         name="Units"
+        options={() => ({
+          title: i18n.t('dict.courseHome'),
+        })}
         children={(props) => (
-          <HomeNavigator {...props} courseId={navigationData.route.name} />
+          <HomeNavigator
+            {...props}
+            courseId={courseIdFromRoute}
+            isContributor={!isLearnerCourse}
+          />
         )}
       />
-      {currentCourseId !== '' && !isLearnerCourse ? (
-        <Tab.Screen
-          name="Settings"
-          children={(props) => <SettingsNavigator {...props} />}
-        />
-      ) : null}
+      <Tab.Screen
+        name="Settings"
+        options={() => ({
+          title: i18n.t('dict.settings'),
+        })}
+        children={(props) => (
+          <SettingsNavigator
+            initialRouteName={
+              shouldDisplayContributorSettings
+                ? 'Settings'
+                : 'LearnerCourseSettings'
+            }
+            {...props}
+          />
+        )}
+      />
     </Tab.Navigator>
   )
 }

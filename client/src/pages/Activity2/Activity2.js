@@ -46,6 +46,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
+  feedbackContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
 })
 
 const Activity2 = ({ navigation }) => {
@@ -62,10 +68,10 @@ const Activity2 = ({ navigation }) => {
 
   const [selectedOptionIdx, setSelectedOptionIdx] = useState(-1) // Represents the current option that is selected by the user in the activity
 
-const allDone = async () => {
+  const allDone = async () => {
     await markLessonAsComplete(currentCourseId, currentUnitId, currentLessonId)
     dispatch(setLessonToComplete({}))
-    navigation.navigate('Drawer', { screen: 'LearnerHome' })
+    navigation.navigate('Activity', { screen: 'Congrats' })
   }
 
   useEffect(() => {
@@ -301,7 +307,7 @@ const allDone = async () => {
             fontFamily="heading"
             fontWeight="regular"
             color="orange.medium_dark"
-            fontSize="2xl"
+            fontSize={22}
           >
             {i18n.t('actions.tryAgain')}
           </Text>
@@ -312,7 +318,7 @@ const allDone = async () => {
             fontFamily="heading"
             fontWeight="regular"
             color="green.medium_light"
-            fontSize="2xl"
+            fontSize={22}
           >
             {i18n.t('actions.correct')}
           </Text>
@@ -368,21 +374,25 @@ const allDone = async () => {
   }
 
   return (
-    <View style={styles.root}>
-      <Text
-        fontFamily="heading"
-        fontWeight="regular"
-        color="gray.dark"
-        fontStyle="italic"
-        fontSize="lg"
-      >
-        {currentQuestionIdx + 1}/{questions.length}
-      </Text>
-      {generateL1Text()}
-      {generateFeedbackText()}
-      <View style={styles.answerContainer}>{generateOptions()}</View>
-      {generateConfirmButton()}
-    </View>
+    <>
+      <View style={styles.root}>
+        <Text
+          fontFamily="heading"
+          fontWeight="regular"
+          color="gray.dark"
+          fontStyle="italic"
+          fontSize="lg"
+        >
+          {currentQuestionIdx + 1}/{questions.length}
+        </Text>
+        <View style={styles.feedbackContainer}>
+          {generateL1Text()}
+          {generateFeedbackText()}
+        </View>
+        <View style={styles.answerContainer}>{generateOptions()}</View>
+        {generateConfirmButton()}
+      </View>
+    </>
   )
 }
 

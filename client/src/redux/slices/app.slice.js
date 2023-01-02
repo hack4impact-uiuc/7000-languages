@@ -12,6 +12,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isLoading: false,
+  language: '',
 }
 
 // ------------------------------------
@@ -19,16 +20,19 @@ const initialState = {
 // ------------------------------------
 
 const appSlice = createSlice({
-  name: 'auth',
+  name: 'app',
   initialState,
   reducers: {
     setLoading: (state, { payload }) => {
       state.isLoading = payload.isLoading
     },
+    updateLanguage: (state, { payload }) => {
+      state.language = payload.language
+    },
   },
 })
 
 export const { action } = appSlice
-export const { setLoading } = appSlice.actions
+export const { setLoading, updateLanguage } = appSlice.actions
 
 export default appSlice.reducer

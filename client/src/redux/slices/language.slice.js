@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 import { NO_COURSE_ID } from 'utils/constants'
+import i18n from 'utils/i18n'
 
 // ------------------------------------
 // Constants
@@ -10,8 +11,8 @@ const initialState = {
   allCourses: [
     {
       _id: NO_COURSE_ID,
-      name: 'No Courses',
-      num_units: 'Join or start a course!',
+      name: i18n.t('dict.noCourses'),
+      num_units: i18n.t('dialogue.joinOrStartCourse'),
       isContributor: true,
     },
   ],
