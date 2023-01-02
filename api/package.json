@@ -37,6 +37,7 @@
     "mpath": "^0.8.4",
     "multer": "^1.4.4",
     "nodemailer": "^6.8.0",
+    "nodemailer-express-handlebars": "^6.0.0",
     "omit-deep-lodash": "^1.1.6"
   },
   "devDependencies": {

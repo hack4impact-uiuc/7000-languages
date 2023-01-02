@@ -146,7 +146,6 @@ const Apply = ({ navigation }) => {
 
   const onSubmit = async () => {
     if (!isDisabled) {
-      sendMail()
       setDisabled(true)
       if (areRequiredFieldsFilled) {
         await applyCourse()

@@ -8,9 +8,8 @@ const apiRoutes = require('./api');
 const { errorHandler, errorWrap } = require('./middleware');
 const { initDB } = require('./utils/mongo-setup');
 const { ENV_TEST } = require('./utils/constants');
-// const fileUpload = require('express-fileupload');
 const bb = require('express-busboy');
-const nodemailer = require('nodemailer');
+require('./utils/emailHelper')
 
 const app = express();
 
@@ -22,31 +21,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// create reusable transporter object using the default SMTP transport
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'eesha.barua@gmail.com',
-    pass: '', // naturally, replace both with your real credentials or an application-specific password
-  },
-});
 
-const mailOptions = {
-  from: 'ebarua2@illinois.edu',
-  to: 'ebarua2@illinois.edu',
-  subject: '7000 Languages: Pending Course Approval',
-  text: 'You have a new pending course.',
-};
-
-transporter.sendMail(mailOptions, function (error, info) {
-  if (error) {
-    console.log(error);
-  } else {
-    console.log(`Email sent: ${info.response}`);
-  }
-});
-
-// app.use(fileUpload());
 bb.extend(app, {
   upload: true,
 });
