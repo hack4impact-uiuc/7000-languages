@@ -1,4 +1,5 @@
 module.exports.ENV_TEST = 'test';
+module.exports.ENV_PROD = 'production';
 module.exports.ROLE_ENUM = { USER: 0, ADMIN: 1 };
 module.exports.ERR_IMPROPER_ID_TOKEN =
   'Missing or improper ID Token. Please log out and try again.';

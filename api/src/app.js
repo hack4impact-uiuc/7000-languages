@@ -8,7 +8,6 @@ const apiRoutes = require('./api');
 const { errorHandler, errorWrap } = require('./middleware');
 const { initDB } = require('./utils/mongo-setup');
 const { ENV_TEST } = require('./utils/constants');
-// const fileUpload = require('express-fileupload');
 const bb = require('express-busboy');
 
 const app = express();
@@ -21,7 +20,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use(fileUpload());
 bb.extend(app, {
   upload: true,
 });
