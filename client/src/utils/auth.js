@@ -8,9 +8,18 @@ import {
 } from './constants'
 
 const GOOGLE_OAUTH_TOKEN_URL = 'https://www.googleapis.com/oauth2/v4/token'
-const redirectUri = AuthSession.makeRedirectUri({
+
+// The redirect uri must contain the iOS bundle identifier or android package name.
+const scheme = Constants.manifest.extra.platform === 'android'
+  ? 'com.languages7000.app://'
+  : 'com.7000languages.app://'
+
+// Set the redirectUri - this is neccessary for AuthSession.exchangeCodeAsync();
+export const redirectUri = AuthSession.makeRedirectUri({
+  native: scheme,
   useProxy: true,
 })
+
 /**
  * Obtains a user's Google ID Token from SecureStore
  * @returns {String} The user token saved in SecureStore
@@ -102,6 +111,37 @@ export const removeUserRefreshToken = async () => {
 }
 
 /**
+ * Returns the Google Auth Client Id and Client Secret (if exists) based
+ * on the app platform (Expo Go, iOS, Android)
+ * @returns {String} JSON object containing the Google Auth Client Id (required) and Client Secret (optional)
+ */
+export const getClientIdAndClientSecret = () => {
+  const {
+    iosClientId,
+    androidClientId,
+    expoClientSecret,
+    expoClientId,
+    platform,
+  } = Constants.manifest.extra
+
+  switch (platform) {
+    case 'ios':
+      return {
+        clientId: iosClientId,
+      }
+    case 'android':
+      return {
+        clientId: androidClientId,
+      }
+    default:
+      return {
+        clientId: expoClientId,
+        clientSecret: expoClientSecret,
+      }
+  }
+}
+
+/**
  * @typedef {Object} ExchangeResponse
  * @property {boolean} success - Whether exchange auth code was successful
  * @property {String} message - Response Message
@@ -166,7 +206,8 @@ export const refreshIDToken = async () => {
       return null
     }
 
-    const { clientSecret, expoClientId: clientId } = Constants.manifest.extra
+    const { clientId, clientSecret } = getClientIdAndClientSecret()
+
     return axios
       .post(GOOGLE_OAUTH_TOKEN_URL, {
         grant_type: 'refresh_token',

@@ -212,7 +212,6 @@ describe('DELETE /learner/join/ ', () => {
       ),
       '6c07121f-e2b0-48c3-a22f-3cb07b12ff79',
     );
-    console.log(leaveResponse);
     expect(leaveResponse.status).toBe(400);
     expect(leaveResponse.body.message).toBe(ERR_MISSING_OR_INVALID_DATA);
   });

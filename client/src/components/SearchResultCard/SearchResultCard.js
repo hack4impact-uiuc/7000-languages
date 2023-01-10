@@ -76,7 +76,7 @@ const SearchResultCard = ({
             <View
               display="flex"
               flexDirection="row-reverse"
-              justifyContent="right"
+              justifyContent="flex-start"
             >
               <StyledButton
                 title="Join"

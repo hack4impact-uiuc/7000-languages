@@ -9,7 +9,6 @@ const { errorHandler, errorWrap } = require('./middleware');
 const { initDB } = require('./utils/mongo-setup');
 const { ENV_TEST } = require('./utils/constants');
 const bb = require('express-busboy');
-require('./utils/emailHelper')
 
 const app = express();
 
@@ -20,7 +19,6 @@ app.use(logger('dev'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 
 bb.extend(app, {
   upload: true,

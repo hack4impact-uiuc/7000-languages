@@ -12,7 +12,11 @@ import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
 import { createUser } from 'api'
 import i18n from 'utils/i18n'
-import { exchangeAuthCode } from 'utils/auth'
+import {
+  exchangeAuthCode,
+  getClientIdAndClientSecret,
+  redirectUri,
+} from 'utils/auth'
 import Logo from '../../../assets/images/landing-logo.svg'
 
 const styles = StyleSheet.create({
@@ -53,8 +57,12 @@ const Landing = () => {
     https://docs.expo.dev/versions/latest/sdk/auth-session/
     https://stackoverflow.com/questions/71095191/refresh-token-with-expo-auth-sessions-google
   */
+
   const config = {
+    iosClientId: Constants.manifest.extra.iosClientId,
+    androidClientId: Constants.manifest.extra.androidClientId,
     expoClientId: Constants.manifest.extra.expoClientId,
+    redirectUri,
     scopes: ['profile'],
     responseType: 'code',
     shouldAutoExchangeCode: false,
@@ -71,11 +79,13 @@ const Landing = () => {
     errorWrap(async () => {
       if (response?.type === 'success') {
         const { code } = response.params
+        const { clientId, clientSecret } = getClientIdAndClientSecret()
+
         if (code !== undefined) {
           exchangeAuthCode(
             code,
-            config.expoClientId,
-            Constants.manifest.extra.clientSecret,
+            clientId,
+            clientSecret,
             request?.codeVerifier,
           ).then(async ({ success, message, idToken }) => {
             if (success) {
@@ -131,7 +141,7 @@ const Landing = () => {
           />
         )}
         variant="secondary"
-        onPress={() => promptAsync()}
+        onPress={() => promptAsync({ redirectUri })}
         style={styles.loginButton}
         fontSize={`${window.height}` / 40}
       />

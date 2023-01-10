@@ -182,7 +182,7 @@ const theme = extendTheme({
         settings: {
           bg: 'gray.300',
           borderRadius: 10,
-          h: '6.5%',
+          h: '50',
           minW: 100,
           my: 3,
           mx: 5,

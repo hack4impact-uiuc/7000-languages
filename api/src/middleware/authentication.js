@@ -2,6 +2,7 @@ const {
   ERR_AUTH_FAILED,
   ERR_IMPROPER_ID_TOKEN,
   ERR_NO_MONGO_DOCUMENT,
+  ENV_PROD,
 } = require('../utils/constants');
 const { sendResponse } = require('../utils/response');
 const { OAuth2Client } = require('google-auth-library');
@@ -56,10 +57,16 @@ const requireAuthentication = async (req, res, next) => {
  */
 const getUserByIDToken = async (idToken) => {
   try {
+    let audience = process.env.EXPO_CLIENT_ID;
+
+    if (process.env.NODE_ENV === ENV_PROD) {
+      audience = [process.env.IOS_CLIENT_ID, process.env.ANDROID_CLIENT_ID];
+    }
+
     if (idToken) {
       const ticket = await client.verifyIdToken({
         idToken,
-        audience: process.env.EXPO_CLIENT_ID,
+        audience: audience,
       });
       const data = ticket.getPayload();
       return data;
