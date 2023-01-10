@@ -84,6 +84,6 @@ buck-out/
 .expo/
 web-build/
 dist/
+eas.json
 
 # @end expo-cli
-eas.json
