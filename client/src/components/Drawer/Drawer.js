@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   body: {
+    marginTop: 15,
     width: '95%',
     flex: 1,
     height: '80%',

@@ -76,9 +76,9 @@ const LearnerSearch = ({ navigation }) => {
       if (courses.length > 0) {
         dispatch(setField({ key: 'allCourses', value: courses }))
       }
-    })
 
-    navigation.navigate(`${courseId}-learner`)
+      navigation.navigate(`${courseId}-learner`)
+    })
   }
 
   const baseCase = (

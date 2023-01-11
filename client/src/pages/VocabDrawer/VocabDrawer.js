@@ -84,6 +84,7 @@ const VocabDrawer = ({ navigation }) => {
   const [audioRecording, setAudioRecording] = useState(null) // stores audio recording uri
   const [recordingStage, setRecordingState] = useState(RECORDING.INCOMPLETE) // which recording stage the user is at
   const [listeningSound, setListeningSound] = useState(null) // the data for the recording when the user is listening to it
+  const [audioRecordingTime, setAudioRecordingTime] = useState(0); // If the audio recording already exists, then this represents the duration of it
 
   const [deleteAudioUri, setDeleteAudioUri] = useState('')
   const [deleteImageUri, setDeleteImageUri] = useState('')
@@ -124,6 +125,8 @@ const VocabDrawer = ({ navigation }) => {
             )
           }
 
+          const time = await getRecordingTime(uri);
+          setAudioRecordingTime(time);
           setAudioRecording(uri)
           setRecordingState(RECORDING.COMPLETE)
         }
@@ -452,6 +455,21 @@ const VocabDrawer = ({ navigation }) => {
     ])
   }
 
+  /**
+   * Gets the duration of an audio recording
+   * @param {String} uri Expo filesystem URI for audio recording
+   * @returns Rounded duration in seconds of the audio recording
+   */
+  const getRecordingTime = async (uri) => {
+    const { sound } = await Audio.Sound.createAsync({ uri })
+    try {
+      const { durationMillis } = await sound.getStatusAsync();
+      return Math.floor(durationMillis / 1000);
+    } catch {
+      return 0;
+    }
+  }
+
   const playRecording = async () => {
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
@@ -536,6 +554,7 @@ const VocabDrawer = ({ navigation }) => {
         playRecording={playRecording}
         discardRecording={discardRecording}
         stopPlayingRecording={stopPlayingRecording}
+        recordingSeconds={audioRecordingTime}
       />
       <RequiredField title={originalLanguage} />
       <Input
