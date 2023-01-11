@@ -7,8 +7,8 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
 import i18n from 'utils/i18n'
-import { HomeNavigator, SettingsNavigator } from '../Stacks'
 import { NO_COURSE_ID } from 'utils/constants'
+import { HomeNavigator, SettingsNavigator } from '../Stacks'
 
 const Tab = createBottomTabNavigator()
 
@@ -46,7 +46,7 @@ const TabNavigator = (navigationData) => {
     && navigationData.route.name.split('-')[1] === 'learner'
 
   // Don't display the settings tab when the user isn't viewing a course
-  const shouldDisplaySettings = currentCourseId !== NO_COURSE_ID && currentCourseId !== '';
+  const shouldDisplaySettings = currentCourseId !== NO_COURSE_ID && currentCourseId !== ''
 
   // Only display contributor settings when the course being viewed by the user is a course that they are learning
   const shouldDisplayContributorSettings = currentCourseId !== '' && !isLearnerCourse
@@ -109,7 +109,7 @@ const TabNavigator = (navigationData) => {
           />
         )}
       />
-      {shouldDisplaySettings ?
+      {shouldDisplaySettings ? (
         <Tab.Screen
           name="Settings"
           options={() => ({
@@ -126,9 +126,7 @@ const TabNavigator = (navigationData) => {
             />
           )}
         />
-        :
-        null
-      }
+      ) : null}
     </Tab.Navigator>
   )
 }
