@@ -134,7 +134,7 @@ const Apply = ({ navigation }) => {
           // On success, update the drawer tab
           dispatch(setField({ key: 'allCourses', value: courses }))
           // Navigate to newly created course
-          navigation.navigate(courseId)
+          navigation.navigate(`${courseId}-contributor`)
         }
 
         // Go to the home page

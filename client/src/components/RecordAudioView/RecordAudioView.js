@@ -81,8 +81,9 @@ const RecordAudioView = ({
   playRecording,
   discardRecording,
   stopPlayingRecording,
+  recordingSeconds,
 }) => {
-  const [seconds, setSeconds] = useState(0) // keeps track of how long the recording is in seconds
+  const [seconds, setSeconds] = useState(recordingSeconds) // keeps track of how long the recording is in seconds
   const [isActive, setIsActive] = useState(false) // true if the user is recording
   const [playSeconds, setPlaySeconds] = useState(0) // keeps track of how long the recording is playing
   const [isPlayActive, setIsPlayActive] = useState(false) // true if the user is listening to the recording
@@ -92,6 +93,10 @@ const RecordAudioView = ({
     setSeconds(0)
     setIsActive(false)
   }
+
+  useEffect(() => {
+    setSeconds(recordingSeconds)
+  }, [recordingSeconds])
 
   // Updates the timer for keeping track of recording length
   useEffect(() => {
@@ -257,6 +262,7 @@ RecordAudioView.propTypes = {
   playRecording: PropTypes.func,
   discardRecording: PropTypes.func,
   stopPlayingRecording: PropTypes.func,
+  recordingSeconds: PropTypes.number,
 }
 
 RecordAudioView.defaultProps = {
@@ -266,6 +272,7 @@ RecordAudioView.defaultProps = {
   playRecording: () => {},
   discardRecording: () => {},
   stopPlayingRecording: () => {},
+  recordingSeconds: 10,
 }
 
 export default RecordAudioView

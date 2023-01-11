@@ -7,8 +7,8 @@ import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
 import i18n from 'utils/i18n'
+import { NO_COURSE_ID } from 'utils/constants'
 import { HomeNavigator, SettingsNavigator } from '../Stacks'
-import { NO_COURSE_ID } from '../../utils/constants'
 
 const Tab = createBottomTabNavigator()
 
@@ -39,10 +39,16 @@ const TabNavigator = (navigationData) => {
   const isProperRoute = navigationData.route.name.split('-').length === 2
 
   const courseIdFromRoute = isProperRoute && navigationData.route.name.split('-')[0]
+
+  // We can determine if the course being viewed by the user is a learner course from the React Navigation route name
   const isLearnerCourse = courseIndex >= 0
     && isProperRoute
     && navigationData.route.name.split('-')[1] === 'learner'
 
+  // Don't display the settings tab when the user isn't viewing a course
+  const shouldDisplaySettings = currentCourseId !== NO_COURSE_ID && currentCourseId !== ''
+
+  // Only display contributor settings when the course being viewed by the user is a course that they are learning
   const shouldDisplayContributorSettings = currentCourseId !== '' && !isLearnerCourse
 
   return (
@@ -103,22 +109,24 @@ const TabNavigator = (navigationData) => {
           />
         )}
       />
-      <Tab.Screen
-        name="Settings"
-        options={() => ({
-          title: i18n.t('dict.settings'),
-        })}
-        children={(props) => (
-          <SettingsNavigator
-            initialRouteName={
-              shouldDisplayContributorSettings
-                ? 'Settings'
-                : 'LearnerCourseSettings'
-            }
-            {...props}
-          />
-        )}
-      />
+      {shouldDisplaySettings ? (
+        <Tab.Screen
+          name="Settings"
+          options={() => ({
+            title: i18n.t('dict.settings'),
+          })}
+          children={(props) => (
+            <SettingsNavigator
+              initialRouteName={
+                shouldDisplayContributorSettings
+                  ? 'Settings'
+                  : 'LearnerCourseSettings'
+              }
+              {...props}
+            />
+          )}
+        />
+      ) : null}
     </Tab.Navigator>
   )
 }

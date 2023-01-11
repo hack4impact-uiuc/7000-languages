@@ -5,6 +5,6 @@
   "minify": false,
   "urlRandomness": "pm-pr6",
   "https": false,
-  "devClient": true,
-  "scheme": "com.h4i-7000-languages.7000-languages"
+  "scheme": null,
+  "devClient": false
 }
