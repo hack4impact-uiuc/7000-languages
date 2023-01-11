@@ -5,10 +5,6 @@ let extraConfig = {
     apiDevelopmentPort: 3000,
 }
 
-process.env.API_URL = "http://7000-languages-api-prod-env.eba-9hbad6za.us-east-1.elasticbeanstalk.com";
-process.env.EAS_BUILD_PLATFORM = 'android';
-process.env.ANDROID_CLIENT_ID = "1534417123-64ut9fo6gggrncum4s9hmug9rg9df23g.apps.googleusercontent.com";
-
 if (process.env.EAS_BUILD_PLATFORM === 'ios') {
     extraConfig.apiURL = process.env.API_URL
     extraConfig.iosClientId = process.env.IOS_CLIENT_ID
