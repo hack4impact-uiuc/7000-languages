@@ -18,6 +18,7 @@ if (process.env.EAS_BUILD_PLATFORM === 'ios') {
     '1534417123-rirmc8ql9i0jqrqchojsl2plf5c102j6.apps.googleusercontent.com'
   extraConfig.expoClientSecret = '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'
   extraConfig.platform = 'expo'
+  extraConfig.apiDevelopmentPort = 3000;
 }
 
 export default ({ config }) => {
