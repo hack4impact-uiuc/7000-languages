@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     width: '90%',
-    height: '100%',
+    height: '95%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

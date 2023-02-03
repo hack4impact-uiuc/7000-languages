@@ -34,6 +34,7 @@ const colors = {
     medium_dark: '#F2F2F2',
     medium_darker: '#D6D6D6',
     dark: '#666666', // 800 opacity
+    darker: '#444',
   },
   white: {
     light: '#FAFAFA',

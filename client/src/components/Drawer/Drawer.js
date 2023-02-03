@@ -78,6 +78,7 @@ const Drawer = ({
         {body}
       </ScrollView>
       <StyledButton
+        style={{ marginBottom: 40 }}
         title={successText}
         onPress={onPress}
         isDisabled={isDisabled}

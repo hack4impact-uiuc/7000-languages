@@ -4,7 +4,7 @@ import { colors } from 'theme'
 import PropTypes from 'prop-types'
 import { ScrollView, Text, Pressable } from 'native-base'
 import StyledButton from 'components/StyledButton'
-import { Ionicons, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { Audio } from 'expo-av'
@@ -101,7 +101,7 @@ const LanguageHome = ({
             >
               {languageName}
             </Text>
-            <Ionicons
+            <MaterialCommunityIcons
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -109,8 +109,8 @@ const LanguageHome = ({
                 marginRight: 20,
                 marginTop: 30,
               }}
-              name="ios-pencil"
-              size={24}
+              name="pencil"
+              size={30}
               color={colors.white.dark}
               onPress={nextUpdate}
             />
@@ -171,7 +171,7 @@ const LanguageHome = ({
                 <MaterialCommunityIcons
                   name="pencil"
                   color="black"
-                  size={20}
+                  size={30}
                   onPress={() => nextPageCallback(element)}
                 />
               )}
@@ -219,7 +219,7 @@ const LanguageHome = ({
           >
             {languageName}
           </Text>
-          <Ionicons
+          <MaterialCommunityIcons
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -227,8 +227,8 @@ const LanguageHome = ({
               marginRight: 20,
               marginTop: 30,
             }}
-            name="ios-pencil"
-            size={24}
+            name="pencil"
+            size={30}
             color={colors.white.dark}
             onPress={nextUpdate}
           />
