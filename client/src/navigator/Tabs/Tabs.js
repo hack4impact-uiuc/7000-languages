@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { colors } from 'theme'
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign, Ionicons } from '@expo/vector-icons'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
@@ -73,17 +73,17 @@ const TabNavigator = (navigationData) => {
             case 'Units':
               return (
                 <AntDesign
-                  name="appstore1"
-                  color={focused ? colors.gray.dark : colors.gray.dark}
+                  name={focused ? 'appstore1' : 'appstore-o'}
+                  color={focused ? colors.gray.darker : colors.gray.dark}
                   size={20}
                   solid
                 />
               )
             case 'Settings':
               return (
-                <AntDesign
-                  name="setting"
-                  color={focused ? colors.gray.dark : colors.gray.dark}
+                <Ionicons
+                  name={focused ? 'settings' : 'settings-outline'}
+                  color={focused ? colors.gray.darker : colors.gray.dark}
                   size={25}
                   solid
                 />

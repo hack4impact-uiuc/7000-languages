@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue.medium_light,
     height: 130,
     width: 130,
-    borderRadius: '100%',
+    borderRadius: 130,
     margin: 20,
   },
   instructionsContainer: {

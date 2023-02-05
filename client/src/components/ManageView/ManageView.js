@@ -79,7 +79,7 @@ const ManageView = ({
   const [deletedData, setDeletedData] = useState([])
   const [shouldShowButtons, setShouldShowButtons] = useState(false)
 
-  // Updates the data shown in the draggable list component whenever the props update
+  /* Updates the data shown in the draggable list component whenever the props update */
   useEffect(() => {
     setSelectedData(initialSelectedData)
     setUnselectedData(initialUnselectedData)

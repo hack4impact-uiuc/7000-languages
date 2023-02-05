@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue.medium_light,
     height: 110,
     width: 110,
-    borderRadius: '100%',
+    borderRadius: 110,
     margin: 20,
     shadowColor: colors.gray.darker,
     shadowOffset: { width: 0, height: 4 },
