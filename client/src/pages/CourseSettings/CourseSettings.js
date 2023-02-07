@@ -88,7 +88,7 @@ const CourseSettings = () => {
     // Call delete course endpoint
     deleteCourse(currentCourseId)
     // Remove course from Redux
-    dispatch(removeCourse({ courseId: currentCourseId }))
+    dispatch(removeCourse({ courseId: currentCourseId, isContributor: true }))
   }
 
   const securityCode = visibility === 'private' ? (
