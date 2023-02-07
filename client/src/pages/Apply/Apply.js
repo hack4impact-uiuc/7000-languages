@@ -77,6 +77,9 @@ const Apply = ({ navigation }) => {
   const [acceptTerms, setAcceptTerms] = useState(false)
   const [teachingLanguage, setTeachingLanguage] = useState('')
 
+  const [isDisabled, setDisabled] = useState(false) // used to disable success button
+  // sets the initial state of isDisabled state to the isDisabled param
+
   const [link, setLink] = useState(false)
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
@@ -142,8 +145,6 @@ const Apply = ({ navigation }) => {
       },
     )
   }
-  const [isDisabled, setDisabled] = useState(false) // used to disable success button
-  // sets the initial state of isDisabled state to the isDisabled param
 
   useEffect(() => setDisabled(isDisabled), [isDisabled]) // always listening to when isDisabled is changed
 
@@ -417,7 +418,7 @@ const Apply = ({ navigation }) => {
                 title={i18n.t('dict.submit')}
                 variant="primary"
                 onPress={onSubmit}
-                isDisabled={!areRequiredFieldsFilled}
+                isDisabled={!areRequiredFieldsFilled || isDisabled}
               />
             </Box>
           </ScrollView>

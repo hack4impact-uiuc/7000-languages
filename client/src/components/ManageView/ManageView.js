@@ -104,7 +104,7 @@ const ManageView = ({
           {
             text: `${i18n.t('actions.notLeave')}`,
             style: 'cancel',
-            onPress: () => {},
+            onPress: () => { },
           },
           {
             text: `${i18n.t('dict.discard')}`,
@@ -212,7 +212,7 @@ const ManageView = ({
       {
         text: `${i18n.t('dict.cancel')}`,
         style: 'cancel',
-        onPress: () => {},
+        onPress: () => { },
       },
       {
         text: `${i18n.t('dict.delete')}`,
@@ -383,7 +383,7 @@ const ManageView = ({
           </View>
           <Text
             fontFamily="body"
-            fontWeight="normal"
+            fontWeight="regular"
             fontSize="md"
             color="gray.medium"
           >
@@ -418,10 +418,10 @@ ManageView.defaultProps = {
   unselectedTitleText: '',
   selectedBodyText: '',
   unselectedBodyText: '',
-  saveCallback: () => {},
+  saveCallback: () => { },
   initialSelectedData: [],
   initialUnselectedData: [],
-  playAudio: () => {},
+  playAudio: () => { },
   navigation: { addListener: () => null, dispatch: () => null },
 }
 
