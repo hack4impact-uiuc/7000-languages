@@ -275,6 +275,7 @@ const DrawerMenuContainer = (props) => {
         leftIcon={
           <FontAwesome name="user" size={20} color={colors.gray.dark} />
         }
+        style={{ marginBottom: 35 }}
         variant="settings"
         onPress={navigateToSettings}
       />

@@ -124,7 +124,7 @@ const LearnerHome = ({
           </Text>
         </View>
 
-        <View style={styles.cardContainer}>
+        <ScrollView contentContainerStyle={styles.cardContainer}>
           <ScrollView horizontal>
             {renderData.map((element) => (
               <VocabBox
@@ -149,8 +149,10 @@ const LearnerHome = ({
             onPress={startLearningCallback}
             style={{ height: 65, marginTop: 20, width: '90%' }}
             shadow
+            isDisabled={renderData.length === 0}
           />
-        </View>
+          <View style={{ height: 50 }} />
+        </ScrollView>
       </>
     )
   }

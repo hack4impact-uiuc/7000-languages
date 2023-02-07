@@ -383,7 +383,7 @@ const ManageView = ({
           </View>
           <Text
             fontFamily="body"
-            fontWeight="normal"
+            fontWeight="regular"
             fontSize="md"
             color="gray.medium"
           >
