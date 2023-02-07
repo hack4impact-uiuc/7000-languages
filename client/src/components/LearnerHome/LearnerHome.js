@@ -124,7 +124,7 @@ const LearnerHome = ({
           </Text>
         </View>
 
-        <View style={styles.cardContainer}>
+        <ScrollView contentContainerStyle={styles.cardContainer}>
           <ScrollView horizontal>
             {renderData.map((element) => (
               <VocabBox
@@ -151,7 +151,8 @@ const LearnerHome = ({
             shadow
             isDisabled={renderData.length === 0}
           />
-        </View>
+          <View style={{ height: 50 }} />
+        </ScrollView>
       </>
     )
   }
@@ -271,11 +272,11 @@ LearnerHome.defaultProps = {
   languageDescription: '',
   singularItemText: '',
   pluralItemText: '',
-  nextPageCallback: () => { },
+  nextPageCallback: () => {},
   data: [],
   isUnitHome: false,
   isLessonHome: false,
-  startLearningCallback: () => { },
+  startLearningCallback: () => {},
 }
 
 export default LearnerHome
