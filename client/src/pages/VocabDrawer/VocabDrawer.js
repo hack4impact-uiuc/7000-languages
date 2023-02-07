@@ -42,6 +42,7 @@ const expoImageSettings = {
 
 const styles = StyleSheet.create({
   imageSelectorContainer: {
+    margin: 10,
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'center',
