@@ -149,6 +149,7 @@ const LearnerHome = ({
             onPress={startLearningCallback}
             style={{ height: 65, marginTop: 20, width: '90%' }}
             shadow
+            isDisabled={renderData.length === 0}
           />
         </View>
       </>
@@ -270,11 +271,11 @@ LearnerHome.defaultProps = {
   languageDescription: '',
   singularItemText: '',
   pluralItemText: '',
-  nextPageCallback: () => {},
+  nextPageCallback: () => { },
   data: [],
   isUnitHome: false,
   isLessonHome: false,
-  startLearningCallback: () => {},
+  startLearningCallback: () => { },
 }
 
 export default LearnerHome

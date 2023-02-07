@@ -193,7 +193,7 @@ const translations = {
       createLessonDescription:
         'When creating a lesson, think about which vocab items will be associated with the lesson and how it will be used.',
       createUnitDescription:
-        'When creating a unit, think about how it will be used. More text here explaining what they should look for when making a unit.',
+        'When creating a unit, think about the high-level topics in your course.',
       unitNamePrompt: 'Give your unit a name',
       unitPurposePrompt: 'What is the purpose of this unit?',
       details: 'Details (from ___ )',
