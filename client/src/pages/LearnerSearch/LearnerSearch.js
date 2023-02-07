@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     color: colors.blue.dark,
   },
   body: {
-    marginVertical: '30%',
+    marginVertical: '20%',
     height: '100%',
     alignItems: 'center',
   },
@@ -99,6 +99,48 @@ const LearnerSearch = ({ navigation }) => {
     </View>
   )
 
+  const filterOptions = (
+    <View
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+      }}
+    >
+      <View
+        style={{
+          width: '50%',
+        }}
+      >
+        <StyledButton
+          variant={
+            searchField === 'name'
+              ? 'learner_filter_active'
+              : 'learner_filter_inactive'
+          }
+          title={i18n.t('dict.learningLanguage')}
+          onPress={() => setSearchField('name')}
+        />
+      </View>
+      <View
+        style={{
+          width: '40%',
+          marginLeft: '2%',
+        }}
+      >
+        <StyledButton
+          variant={
+            searchField === 'admin_name'
+              ? 'learner_filter_active'
+              : 'learner_filter_inactive'
+          }
+          title={i18n.t('dict.creator')}
+          onPress={() => setSearchField('admin_name')}
+        />
+      </View>
+    </View>
+  )
+
   const extraSpaceView = <View style={{ height: 400 }} />
 
   const searchResults = () => {
@@ -113,50 +155,17 @@ const LearnerSearch = ({ navigation }) => {
     }
 
     if (filteredCourses.length === 0) {
-      return baseCase
+      return (
+        <>
+          {filterOptions}
+          {baseCase}
+        </>
+      )
     }
 
     return (
       <>
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}
-        >
-          <View
-            style={{
-              width: '50%',
-            }}
-          >
-            <StyledButton
-              variant={
-                searchField === 'name'
-                  ? 'learner_filter_active'
-                  : 'learner_filter_inactive'
-              }
-              title={i18n.t('dict.learningLanguage')}
-              onPress={() => setSearchField('name')}
-            />
-          </View>
-          <View
-            style={{
-              width: '40%',
-              marginLeft: '2%',
-            }}
-          >
-            <StyledButton
-              variant={
-                searchField === 'admin_name'
-                  ? 'learner_filter_active'
-                  : 'learner_filter_inactive'
-              }
-              title={i18n.t('dict.creator')}
-              onPress={() => setSearchField('admin_name')}
-            />
-          </View>
-        </View>
+        {filterOptions}
         <View style={styles.results}>
           <ScrollView>
             {filteredCourses.map((courseData) => (

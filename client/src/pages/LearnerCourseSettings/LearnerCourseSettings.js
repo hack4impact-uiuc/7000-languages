@@ -38,7 +38,7 @@ const LearnerCourseSettings = () => {
     // Call delete course endpoint
     leaveCourse(currentCourseId)
     // Remove course from Redux
-    dispatch(removeCourse({ courseId: currentCourseId }))
+    dispatch(removeCourse({ courseId: currentCourseId, isContributor: false }))
   }
 
   return (

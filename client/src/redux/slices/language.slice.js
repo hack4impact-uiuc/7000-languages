@@ -75,8 +75,10 @@ const languageSlice = createSlice({
     removeCourse: (state, { payload }) => {
       // Removes a course from redux
       const courseIdx = state.allCourses.findIndex(
-        (element) => element._id === payload.courseId,
+        (element) => element._id === payload.courseId
+          && element.isContributor === payload.isContributor,
       )
+
       state.allCourses.splice(courseIdx, 1)
 
       if (state.allCourses.length === 0) {
